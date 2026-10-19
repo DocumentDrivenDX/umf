@@ -6,27 +6,27 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -79,7 +79,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.1.0"
+                                          "value": "urn:umf:core:0.10.0"
                                         }
                                       }
                                     }
@@ -116,7 +116,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.1.0"
+                                          "value": "urn:umf:core:0.10.0"
                                         }
                                       }
                                     }
@@ -179,7 +179,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.1.0"
+                              "value": "urn:umf:core:0.10.0"
                             }
                           }
                         }
@@ -657,7 +657,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -684,7 +684,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -729,9 +729,9 @@
   ],
   "sources": [
     {
-      "bytes": 4830,
+      "bytes": 4835,
       "path": "spec/projections/sqlserver-avro.schema.json",
-      "sha256": "bb43bd37720d66b1c23637ecbe0319bd2098baa915c903aa00daadb88637ac67"
+      "sha256": "4e9c44a83eca35b0f9f767a960f1668e781fae18ef96b85b3167ed9a5361b23a"
     }
   ],
   "summary": "spec/projections/sqlserver-avro.schema.json",

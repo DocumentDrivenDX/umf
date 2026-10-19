@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "other",
@@ -1418,7 +1418,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1445,7 +1445,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1515,13 +1515,13 @@
   "id": "[\"schema\",\"spec/core/parquet-cardinality-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 11926,
+      "bytes": 11928,
       "path": "spec/core/parquet-cardinality-classification.schema.json",
-      "sha256": "130e415489075a40603f721b08ab9e1da716e858751ccd1bde4e333ea844b5c8"
+      "sha256": "e31b92111d31ac05155585b8805466c848b9ff9d62d4a339d031c61f5822e535"
     }
   ],
   "summary": "spec/core/parquet-cardinality-classification.schema.json",

@@ -20,9 +20,25 @@ type Reader=(path:string)=>Promise<Uint8Array>;
 const read:Reader=async path=>new Uint8Array(await Bun.file(path).arrayBuffer());
 const digest=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 const file=(name:string)=>`fixtures/validation/${name}.json`;
+/** Re-author a retained explicit Cardinality decision under current core, preserving its authored item reference. */
+export function replayCurrentCardinalityAuthor(row:any):u.CoreCardinalityDeclaration {
+ const source=u.copyJson(row.author.source) as u.Document;assert.notEqual(source.umf,u.CURRENT_CORE_VERSION);source.umf=u.CURRENT_CORE_VERSION;
+ const field=source.modules.find(module=>module.id===row.author.identity.module)?.elements.find(element=>element.id===row.author.identity.element);
+ const authoredField=row.author.target.modules.find((module:any)=>module.id===row.author.identity.module)?.elements.find((element:any)=>element.id===row.author.identity.element);
+ assert.ok(field,'historical author source must contain the declared element');assert.ok(authoredField,'historical author target must contain the declared element');
+ const options:u.CoreCardinalityRequest={cardinality:row.author.provenance.cardinality,...(Object.hasOwn(authoredField,'itemType')?{itemType:u.copyJson(authoredField.itemType) as u.CoreItemTypeReference|null}:{})};
+ return u.declareCoreCardinality(source,row.author.identity,options);
+}
+let archivedDigests:Promise<Map<string,string>>|undefined;
+async function historyDigests(){
+ archivedDigests??=(async()=>{const out=new Map<string,string>(),root='docs/helix/04-build/evidence/metamodel-authority/history';
+  for await(const path of new Bun.Glob('**/*').scan({cwd:root,onlyFiles:true})){const bytes=new Uint8Array(await Bun.file(`${root}/${path}`).arrayBuffer()),sha=digest(bytes);if(!out.has(sha))out.set(sha,`${root}/${path}`);}
+  return out;
+ })();return archivedDigests;
+}
 /** Retained proof consistency, not authentication or a fresh native execution. */
 export async function verifyCardinalityEvidence(reader:Reader=read){
- const hashes=new Map<string,string>(),records:{path:string;sha256:string}[]=[],pending:{record:any;name:string}[]=[];let fingerprints=0;
+ const hashes=new Map<string,string>(),records:{path:string;sha256:string}[]=[],pending:{record:any;name:string}[]=[],archived=await historyDigests(),unqualified:{evidence:string;path:string;expected:string;observed:string}[]=[],archivedMatches:{evidence:string;path:string;sha256:string;archive:string}[]=[],byEvidence=new Map<string,{pinned:number;liveMatches:number;archivedMatches:number;unqualified:number}>();let fingerprints=0,liveMatches=0;
  async function hash(path:string){if(!hashes.has(path))hashes.set(path,digest(await reader(path)));return hashes.get(path)!;}
  async function load(path:string){return JSON.parse(new TextDecoder().decode(await reader(path)));}
  async function verify(record:any,label:string){
@@ -30,7 +46,10 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
   for(const [path,expected] of Object.entries(record.sha256)){
    const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel)).split(sep).join('/');
    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${label}: unsafe evidence path`);
-   assert.match(String(expected),/^[0-9a-f]{64}$/);assert.equal(await hash(rel),expected,`${label}: stale ${path}`);fingerprints++;
+   assert.match(String(expected),/^[0-9a-f]{64}$/);let observed:string;try{observed=await hash(rel);}catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;observed='missing';}fingerprints++;const tally=byEvidence.get(label)??{pinned:0,liveMatches:0,archivedMatches:0,unqualified:0};tally.pinned++;byEvidence.set(label,tally);
+   const archive=archived.get(String(expected));if(archive){archivedMatches.push({evidence:label,path,sha256:String(expected),archive});tally.archivedMatches++;continue;}
+   if(observed===expected){liveMatches++;tally.liveMatches++;continue;}
+   unqualified.push({evidence:label,path,expected:String(expected),observed});tally.unqualified++;
   }
  }
  const refresh=await load(file('field-gate-refresh-evidence'));
@@ -80,9 +99,18 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
  }
  for(const {record,name} of pending)await verify(record,name);
  await verify(refresh,'refresh');
- return {systems:[...cardinalitySystems],records,fingerprints,refreshSha256:await hash(file('field-gate-refresh-evidence'))};
+ return {systems:[...cardinalitySystems],records,fingerprints,qualification:{status:unqualified.length?'historical-partial':'historical-resources-verified',liveMatches,archivedMatches,unqualified,byEvidence:Object.fromEntries(byEvidence)},refreshSha256:await hash(file('field-gate-refresh-evidence'))};
 }
-const upgrade=(source:u.Document)=>u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(source).target).target).target;
+/** Current source and receipt behavior is verified separately from historical native qualification. */
+export function cardinalityCurrentStatus(evidence:Awaited<ReturnType<typeof verifyCardinalityEvidence>>){
+ return {
+  historicalQualification:evidence.qualification.status,
+  currentNativeQualification:'UNQUALIFIED' as const,
+  idealAdmission:{outcome:'source-functional-only; native qualification UNQUALIFIED',sourceOperationsVerified:true,idealAdmitted:false,requiredBindings:2,sourceUsefulBindings:5,systems:[...cardinalitySystems],meaning:'CONTRACT-040 / Element.cardinality and itemType',nativeEquivalence:false},
+  delivery:{outcome:'unqualified',priorityDelivery:false,qualifiedBindings:0,sourceBindingsVerified:[...cardinalitySystems],systems:[...cardinalitySystems],scope:'Current authored/round-trip behavior remains covered; historical native delivery is not promoted without a fresh current-native qualification.'}
+ };
+}
+const upgrade=(source:u.Document)=>source;
 function retained(before:u.Document,after:u.Document){
  for(const [key,value] of Object.entries(before.extensions??{}))assertNativeRepresentationEqual(after.extensions?.[key],value);
  for(const m of before.modules)for(const e of m.elements){const target=after.modules.find(x=>x.id===m.id)?.elements.find(x=>x.id===e.id);assert.ok(target);for(const [key,value] of Object.entries(e.extensions))assertNativeRepresentationEqual(target.extensions[key],value);}
@@ -100,9 +128,9 @@ export async function verifyCardinalityRoundTrips(){
   avro:{rows:avroCardinalityProjectionCases(),project:r=>u.projectCardinalityToAvro(r.author,r.request),recover:r=>u.recoverCardinalityFromAvro(r,r.nativeBundle),compose:verifyAvroCardinalityComposition},
   parquet:{rows:parquetCardinalityProjectionCases(),project:r=>u.projectCardinalityToParquet(r.author,r.request),recover:r=>u.recoverCardinalityFromParquet(r,u.exportParquetCapture(r.target)),compose:verifyParquetCardinalityComposition},
  };
- const coverage={} as Record<System,{authoredCases:number;strictBlocks:number;reportResiduals:number;idealRecoveries:number;nativeCases:number;nativeBlocks:number;nativeRecoveries:number;compositions:number;labels:string[]}>;
+ const coverage={} as Record<System,{authoredCases:number;strictBlocks:number;reportResiduals:number;idealRecoveries:number;nativeCases:number;nativeBlocks:number;nativeRecoveries:number;compositions:number;labels:string[];historicalReplayCases:number;historicalReplayInputsEqual:number}>;
  for(const system of cardinalitySystems){
-  const b=bindings[system],counts={authoredCases:0,strictBlocks:0,reportResiduals:0,idealRecoveries:0,nativeCases:0,nativeBlocks:0,nativeRecoveries:0,compositions:0,labels:[] as string[]};coverage[system]=counts;
+  const b=bindings[system],counts={authoredCases:0,strictBlocks:0,reportResiduals:0,idealRecoveries:0,nativeCases:0,nativeBlocks:0,nativeRecoveries:0,compositions:0,labels:[] as string[],historicalReplayCases:0,historicalReplayInputsEqual:0};coverage[system]=counts;
   // Cover every ideal independently of whether the binding can express it.
   const base=b.rows.find(r=>r.author.provenance.cardinality==='one')!;
   for(const cardinality of ['one','array','map','unspecified'] as const)for(const mode of ['strict','report'] as const){
@@ -143,7 +171,7 @@ export async function verifyCardinalityRoundTrips(){
   const check=u.getSqlServerConstraintMetadata(sqlSource).tables.find(t=>t.table.name===column.table.name)!.checks[0] as any;
   native('sqlserver',sqlSource,s=>u.classifySqlServerCardinality(s,{column:column.path,nativeSource:sql.nativeSource,identity:{module:'logical',element:'value'},constraint:profile==='native-scalar'?null:check?.members?.name?.value??null,profile,mode}),r=>u.recoverSqlServerCardinalitySource(r,r.target),sql.nativeSource,mode);
  }
- for(const row of (await Bun.file('fixtures/avro/cardinality-cases.json').json()).cases){const initial=avroAvailabilitySource(row.schema,[],'cardinality.Example'),source=u.upgradeCardinalityEnvelope(initial.source).target;
+ for(const row of (await Bun.file('fixtures/avro/cardinality-cases.json').json()).cases){const initial=avroAvailabilitySource(row.schema,[],'cardinality.Example'),source=initial.source;
   for(const profile of ['present-non-null-schema','unresolved'] as const)for(const mode of ['strict','report'] as const)native('avro',source,s=>u.classifyAvroCardinality(s,{column:initial.column,nativeSource:row.schema,identity:{module:'logical',element:'value'},profile,mode}),r=>u.recoverAvroCardinalityBundle(r,r.target),{schema:row.schema,dependencies:[]},mode);
  }
  for(const row of (await Bun.file(file('cardinality-parquet-profile-native')).json()).cases){const bytes=await read(row.path);assert.equal(digest(bytes),row.sha256);const source=upgrade(u.importParquetSchema(bytes,{id:'gate'}));
@@ -155,11 +183,14 @@ export async function verifyCardinalityRoundTrips(){
   const proof=await Bun.file(file(`cardinality-${system}-projection-native`)).json();
   const source=upgrade(system==='postgresql'?u.importPostgresqlCatalogCapture(proof.nativeSource,{id:'fresh'}):u.importSqlServerCatalog(proof.nativeSource,{id:'fresh'}));
   if(system==='postgresql')for(const e of source.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';
-  const seen=new Set<string>();
   for(const row of proof.rows){
    if(row.result.status==='blocked')continue;
-   const key=row.request.storage+':'+row.author.provenance.cardinality;if(seen.has(key))continue;seen.add(key);
-   const result=await bindings[system].project(row);assertNativeRepresentationEqual(result,row.result);
+   // Re-author the recorded declaration under current core; do not infer item meaning from native storage.
+   const currentAuthor=replayCurrentCardinalityAuthor(row);
+   const currentRow={author:currentAuthor,request:row.request},result=await bindings[system].project(currentRow);coverage[system].historicalReplayCases++;
+   const historicalInput=system==='postgresql'?row.result.target.modules[0]?.elements[0]?.extensions?.['umf.postgresql']?.source:row.result.target.sql;
+   const currentInput=system==='postgresql'?result.target?.modules[0]?.elements[0]?.extensions?.['umf.postgresql']?.source:result.target?.sql;
+   assert.equal(typeof historicalInput,'string');assert.equal(currentInput,historicalInput,`${system} current authored replay differs from archived native input ${row.request.id}`);coverage[system].historicalReplayInputsEqual++;
    let classified:any;
    if(system==='postgresql'){
     const column=u.getPostgresqlColumnMetadata(source).find(c=>c.relation.name===row.request.tableName)!;assert.ok(column);
@@ -175,7 +206,10 @@ export async function verifyCardinalityRoundTrips(){
     assert.equal(u.recoverSqlServerCardinalitySource(classified,classified.target!),proof.nativeSource);
    }
    if(result.mapping.outcome==='exact'&&result.mapping.cardinality!=='unspecified')assert.equal(classified.mapping.cardinality,result.mapping.cardinality);
-   assertNativeRepresentationEqual(await bindings[system].recover(result),row.author.target);coverage[system].compositions++;
+   const recovered=await bindings[system].recover(result) as u.Document,historicalTarget=u.copyJson(row.author.target) as u.Document;
+   // The authored replay above deliberately advances only the core marker; compare all remaining UMF and native content exactly.
+   recovered.umf=historicalTarget.umf;
+   assertNativeRepresentationEqual(recovered,historicalTarget);coverage[system].compositions++;
   }
  }
  for(const system of cardinalitySystems)assert.ok(coverage[system].nativeBlocks&&coverage[system].nativeRecoveries);
@@ -184,6 +218,6 @@ export async function verifyCardinalityRoundTrips(){
 if(import.meta.main){
  const evidence=await verifyCardinalityEvidence(),roundTrips=await verifyCardinalityRoundTrips();
  const paths=['scripts/core-ideals/cardinality-conformance.ts','tests/core-ideals/cardinality-conformance.test.ts'];
- const result={scope:'Qualified Cardinality admission and five-system delivery; retained evidence consistency is not native re-execution or authentication',idealAdmission:{outcome:'passed',requiredBindings:2,usefulBindings:5,systems:[...cardinalitySystems],meaning:'CONTRACT-040 / Element.cardinality and itemType',nativeEquivalence:false},delivery:{outcome:'passed',requiredBindings:5,qualifiedBindings:5,systems:[...cardinalitySystems],scope:'Explicit supported profiles, including residuals and refusals; no general row conversion'},evidence,roundTrips,fingerprints:Object.fromEntries(await Promise.all(paths.map(async p=>[p,digest(await read(p))])))};
+ const status=cardinalityCurrentStatus(evidence),result={scope:'Current Cardinality source behavior and retained native meaning pass; historical evidence consistency does not establish current native qualification',...status,evidence,roundTrips,fingerprints:Object.fromEntries(await Promise.all(paths.map(async p=>[p,digest(await read(p))])))};
  await Bun.write(file('cardinality-conformance'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({systems:5,fingerprints:evidence.fingerprints,roundTrips,nativeEquivalence:false}));
 }

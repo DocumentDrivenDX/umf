@@ -381,3 +381,78 @@ existing source-preview limit. Schema example presentation defaults to YAML;
 JSON is an explicit alternate view of the same values. Switching formats MUST
 NOT rewrite canonical examples, original schemas, source records or routes.
 This adds an asset; the reader record profile and existing fields are unchanged.
+
+## Current documentation amendment — 2026-10-18
+
+Owner direction supersedes historical core browsing, core-profile selection and
+migration-oriented reader requirements above. Document core 0.10.0 as the single
+current schema: no core version picker, history catalog or version badges. Old
+core links resolve to the current schema and preserve valid pointers; invalid
+pointers refuse visibly. Original source inventories and native/extension evidence
+keep their truthful identities and qualification; historical evidence is not
+relabelled as current support.
+
+Workbench examples use core 0.10.0 and open as YAML, with accessible YAML/JSON
+buttons converting current edited values through the public interoperable
+serialization API. Malformed, duplicate-key or inexact values refuse without
+replacing input. Cancellation and input edits invalidate pending conversion.
+Original bytes remain downloadable. Native Protobuf keeps its own syntax.
+Property/default execution APIs restricted to earlier envelopes are not offered
+by the current workbench; their API declarations retain their original limits.
+Every schema disclosure starts collapsed, including complete examples. Explicit
+user expansion and format switching remain keyboard accessible.
+
+Acceptance: verify all supplied examples execute, format parity after edits,
+conversion refusal and cancellation, current-only navigation, old-link recovery,
+and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Automated publication signing amendment — 2026-10-18
+
+Owner direction classifies all current first-party site HTML as model-primary.
+Root, Actions and Reference pages MUST use the registered build-role key and
+must not require human signatures or 1Password access. The active issuer and
+signer configuration select the build key only; private material is supplied
+through the existing CI environment secret. No interactive fallback is permitted.
+The exact signing inventory MUST cover every configured first-party HTML file.
+After sealing, copy public claims to the site's well-known tree before verifying
+cryptographic signatures, expected colophons, key roles and exact byte digests.
+Historical public keys/endorsements remain valid verification material; retaining
+them does not make human signing a prerequisite for new publication. This
+supersedes earlier curated/human signer requirements without relaxing integrity.
+
+## Self-model companion and unified entry — 2026-10-18
+
+`metamodel.json` uses `profile:umf.metamodel/1`, `document` (a valid current UMF
+Document) and `sources` (exact path/hash/byte source records). `umf.yaml` and
+`umf.json` are equivalent downloadable document serializations. All are
+manifest-bound. The `umf.metamodel` vocabulary carries source `{path,pointer}`,
+exact schema fragment, optional presence/role/concept/coverage and conceptual
+`connections:[{target:{module,element},label}]`. Connections MUST resolve to
+qualified metamodel Record definitions; they are not instance relationships.
+Its separately shipped package validates metadata shape; source drift and graph
+closure require the build comparison. Omitted or unfamiliar vocabulary meanings
+remain retained and incomplete under the ordinary UMF API.
+
+Primary Schemas navigation MUST use `reference/core.html`, initially Ontology.
+Its Object reference view retains entry/pointer/concept links. Existing
+`explorer.html` catalog routes are the Model catalog view under the same schema
+navigation. No separate competing schema destination appears in primary menus.
+The exact released renderer is consumed through its public component API; the
+catalog's released workspace/assets remain byte-identical to the pinned package.
+
+Required object-key presence MUST stay distinct from ideal value availability.
+The self-model retains required/conditional presence in its annotation metadata;
+it MUST NOT infer Field nullability from JSON Schema required. In particular, a
+required default.value key can carry a null literal. Native absence bindings and
+complete instance enforcement are not inferred by this projection.
+
+## Authority cutover amendment — 2026-10-18
+
+Owner direction supersedes the descriptive bootstrap projection and separate
+explorer-host arrangement above. ADR-005 and CONTRACT-080 require one authored
+current UMF metamodel generating schemas, shapes, portable semantic rules and
+reference/ontology data. TD-091 and STP-091 govern the current-core migration,
+retirement of duplicated rules/old runtime paths, and one route owner for
+ontology/reference/catalog. Native and extension release meanings and historical
+evidence remain exact. No raw authored JSON Schema fragment or handwritten
+per-core-rule callback may remain the model's hidden enforcement authority.

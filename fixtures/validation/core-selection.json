@@ -1,6 +1,6 @@
 {
   "source": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "mixed",
     "vocabularies": {
       "future.meaning": {
@@ -86,9 +86,9 @@
   },
   "result": {
     "scope": "core-elements",
-    "referenceScope": "explicit-core-references",
+    "referenceScope": "explicit-core-references-item-types-members-and-keys",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "mixed",
       "vocabularies": {
         "future.meaning": {
@@ -265,7 +265,10 @@
         },
         "targetPath": "/modules/2/elements/0"
       }
-    ]
+    ],
+    "boundaryItemTypes": [],
+    "boundaryMembers": [],
+    "boundaryKeyFields": []
   },
   "closureQuery": {
     "references": "transitive",
@@ -278,9 +281,9 @@
   },
   "closure": {
     "scope": "core-elements",
-    "referenceScope": "explicit-core-references",
+    "referenceScope": "explicit-core-references-item-types-members-and-keys",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "mixed",
       "vocabularies": {
         "future.meaning": {
@@ -441,6 +444,9 @@
         "includedBy": "reference"
       }
     ],
-    "boundaryReferences": []
+    "boundaryReferences": [],
+    "boundaryItemTypes": [],
+    "boundaryMembers": [],
+    "boundaryKeyFields": []
   }
 }

@@ -4,7 +4,7 @@ import type {NativeJson} from '../model/native-json';
 import {exportAvroBundle,importAvroSchema,getAvroNode} from '../adapters/avro';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';
+import legacy from '../../spec/core/schema.json';
 import schema from '../../spec/core/avro-key-classification.schema.json';
 import manifest from '../../spec/extensions/avro-keys/package.json';
 export const AVRO_KEYS_EXTENSION='umf.avro.keys';
@@ -15,7 +15,7 @@ export interface AvroKeyRequest {mode:'strict'|'report';profile:'schema-declarat
 export interface AvroKeyObservation {nativePath:string;name:string;fields:{name:string;nativePath:string}[];enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'schema-declaration'}
 const binding=schema.properties.binding.const,recovery='Original native archive retained; no authored key inferred' as const;
 export interface AvroKeyClassification {operation:'classify-avro-keys';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:AvroKeyRequest;binding:typeof binding;observations:AvroKeyObservation[];residuals:{path:string;value:Json;outcome:'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[]}
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys])validator.addSchema(s);
+const validator=createValidator(false);for(const s of [legacy])validator.addSchema(s);
 const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'a['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'o{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const same=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));

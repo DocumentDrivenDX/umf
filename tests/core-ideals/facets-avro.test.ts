@@ -1,10 +1,10 @@
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
-import {classifyAvroFacets as classify,recoverAvroFacetSource as recover,avroFacetsPackage,AVRO_FACETS_EXTENSION,type AvroFacetRequest} from '../../src/core-ideals/facets-avro';
+import {classifyAvroFacets as classify, recoverAvroFacetSource as recover, avroFacetsPackage, AVRO_FACETS_EXTENSION, type AvroFacetRequest} from '../../src/core-ideals/facets-avro';
 function sample(nativeSource='"int"',scalarType:u.ScalarType='integer',options:Partial<AvroFacetRequest>={}){
  const dependencies=options.dependencies;
  const native=u.importAvroSchema(nativeSource,{id:'avro-facets',...(dependencies?{dependencies}:{})});
- const document=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(native).target).target).target).target;
+ const document=native;
  document.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]});
  const request:AvroFacetRequest={location:{path:''},nativeSource,identity:{module:'logical',element:'value'},mode:'report',profile:'declared-schema',obligation:'value-domain',...options};
  return {document,request};

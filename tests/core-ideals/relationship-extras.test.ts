@@ -1,6 +1,6 @@
 import {expect,test} from 'bun:test';
 import {relationshipExtraCases} from '../../scripts/core-ideals/relationship-extras-cases';
-import {projectRelationshipToExtra,classifyRelationshipExtra,importRelationshipExtraArchive,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,readJsonValue,writeJsonValue,declareCoreRelationship,type Document,type RelationshipExtraArchive,type RelationshipExtraProjection,type RelationshipExtraSystem} from '../../src';
+import {projectRelationshipToExtra, classifyRelationshipExtra, importRelationshipExtraArchive, verifyRelationshipExtra, recoverRelationshipExtraIdeal, recoverRelationshipExtraNative, readJsonValue, writeJsonValue, declareCoreRelationship, type Document, type RelationshipExtraArchive, type RelationshipExtraProjection, type RelationshipExtraSystem} from '../../src';
 const cases=relationshipExtraCases();
 // @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 // @covers US-045-AC3 @covers US-045-AC5
@@ -65,7 +65,7 @@ test('CONTRACT-041 extras every unsafe policy or unknown governing qualifier ref
 
 test('CONTRACT-041 extras complete result schema rejects incomplete policy, source and native targets',async()=>{
  const {createValidator}=await import('../../src/validation/schema');const {relationshipExtrasSchema}=await import('../../src');const v=createValidator(false);
- for(const p of ['schema','field-document.schema','nullability-document.schema','cardinality-document.schema','facet-document.schema','key-document.schema','relationship-document.schema','relationship-operation.schema'])v.addSchema(await Bun.file('spec/core/'+p+'.json').json());
+ for(const p of ['schema','relationship-operation.schema'])v.addSchema(await Bun.file('spec/core/'+p+'.json').json());
  const check=v.compile(relationshipExtrasSchema),c=cases.find(c=>c.expected==='projected')!,r=projectRelationshipToExtra(c.source,c.author,c.request);expect(check(r)).toBe(true);
  for(const mutate of [(x:any)=>delete x.author,(x:any)=>delete x.request.relationship.id,(x:any)=>delete x.nativeArchive,(x:any)=>x.mappings[0].provenance='inferred',(x:any)=>x.status='blocked']){const bad=structuredClone(r);mutate(bad);expect(check(bad)).toBe(false);}
 });

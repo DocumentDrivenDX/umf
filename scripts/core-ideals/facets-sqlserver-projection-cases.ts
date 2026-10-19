@@ -1,6 +1,8 @@
-import {declareCoreFacets,declareCoreElementKind,type Document,type CoreFacetPatch,type CoreFacetDeclaration,type CoreKindDeclaration} from '../../src';
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreFacets, declareCoreElementKind, type Document, type CoreFacetPatch, type CoreFacetDeclaration, type CoreKindDeclaration} from '../../src';
 import type {FacetsSqlServerRequest} from '../../src/core-ideals/facets-sqlserver-projection';
-export const sqlserverFacetIdeal=(scalarType:string):Document=>({umf:'0.5.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType,extensions:{}}]}]});
+export const sqlserverFacetIdeal=(scalarType:string):Document=>({umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType,extensions:{}}]}]});
 export function facetsSqlServerProjectionCases(){
  const seeds:{name:string;family:string;type:FacetsSqlServerRequest['nativeType'];facets:CoreFacetPatch}[]=[
   ...[0,2,4001,2147483648].flatMap(max=>(['nvarchar','varchar','nchar'] as const).map(type=>({name:`length-${type}-${max}`,family:'string',type,facets:{length:{max,unit:'unicode-scalar' as const}}}))),

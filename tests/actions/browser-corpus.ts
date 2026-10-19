@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {runActionCaseCorpus} from './case-corpus';
 import type * as Umf from '../../src/index';
 import type {Document} from '../../src/model/types';
@@ -6,7 +7,7 @@ export function runActionsCorpus(api:typeof Umf,fixtures:Document[]) {
  const inspections=fixtures.map(source=>api.inspectActions(source,api.registerActions(api.dddRegistry())));
  const source=JSON.parse(JSON.stringify(fixtures[0])) as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];
  action.authorization.profile={id:'umf.actions.roles',version:'1'};const registry=api.createUmfRegistry(),inspection=api.inspectActions(source,registry),identity={module:'sales',action:'approve'};
- const profile:Umf.ActionExecutorProfile={id:'browser-declaration-only',version:'1',actionVersion:'0.1.0',coreVersion:'0.8.0',source,identity,claims:inspection.actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://declaration-only']}))};
+ const profile:Umf.ActionExecutorProfile={id:'browser-declaration-only',version:'1',actionVersion:'0.1.0',coreVersion:CURRENT_CORE_VERSION,source,identity,claims:inspection.actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://declaration-only']}))};
  const assessment=api.assessAction(source,identity,profile,registry),edited=api.editAction(source,identity,{...action,description:'Browser checked edit'},registry);
  const future=JSON.parse(JSON.stringify(source)) as Document;(future.modules[0]!.extensions!['umf.actions'] as any).actions[0]['future/~']={keep:[null,'exact']};
  const roundTrips=(['json','yaml'] as const).map(format=>({format,source:api.readDocument(api.writeDocument(future,format),format)}));

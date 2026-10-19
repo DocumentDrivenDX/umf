@@ -1,10 +1,14 @@
 # Check support and evidence
 
-The final action acceptance certificate is certified for its stated bounded profile, not for every possible UMF action or deployment. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.
+Support follows the exact source, inputs and bounded profile recorded by each qualification. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.
+
+## Current integration
+
+The current model migration passes all 62 security test files (324 tests) and all 41 action-reference files (123 tests), including their declared local native checks. The [complete per-file inventories and logs](../../evidence/metamodel-authority/regression/root-shards.json) identify these integration observations. Frozen certificates below remain bound to their original source. Current Truss native preparation awaits an upstream compiler/profile upgrade and renewed observations; its [scoped gate](../../evidence/metamodel-authority/external-truss-current-gate.json) records that boundary.
 
 ## Frozen integrated qualification
 
-The current [merged acceptance certificate](../../evidence/actions-integrated-certification.md) qualifies core 0.8.0 and umf.actions 0.1.0 on frozen source `1fa21f6ea1d7a3e1009746da99f1a61d444cd489`. Its [machine-readable certificate](../../evidence/actions-integrated-certification.json) and [independent audit](../../evidence/actions-merged-integration/audit.json) bind the actual commands, inputs, runtime versions and retained results.
+The retained [merged acceptance certificate](../../evidence/actions-integrated-certification.md) qualifies its recorded core and action profiles on frozen source `1fa21f6ea1d7a3e1009746da99f1a61d444cd489`. Its [machine-readable certificate](../../evidence/actions-integrated-certification.json) and [independent audit](../../evidence/actions-merged-integration/audit.json) bind the actual commands, inputs, runtime versions and retained results.
 
 - Fresh behavior regression: 2,448 distinct tests across 450 files, zero failures or skips; eight separate semantic checks also pass.
 - Actual PostgreSQL reference execution: 119 tests; 216 histories and 648 transitions with zero mismatches. All five implementation mutants are detected.
@@ -19,7 +23,7 @@ Two sessions with beginner readers remain a usability follow-up. The executable 
 
 ## Subsequent main integration
 
-Later main changes add shared security metadata and extend core 0.8 inspection. They have a [separate integration record](../../evidence/actions-security-integration/README.md); they do not change the frozen certificate above.
+Earlier integration added shared security metadata and core inspection. They have a [separate integration record](../../evidence/actions-security-integration/README.md); they do not change the frozen certificate above.
 
 Fresh checks passed for the native action consumer, public browser behavior, the beginner native tutorial and affected core/facet operations. The record identifies actual versions, supported subsets and refusals. Shared security backend acceptance remains open, and security declarations do not automatically become executable action authorization.
 
@@ -27,7 +31,7 @@ The retained qualification records identify the source revision and profile they
 
 ## Historical qualification
 
-- Core document version: 0.8.0. Action extension: umf.actions 0.1.0.
+- Exact core/action profiles and source fingerprints are recorded in the linked certificate.
 - Portable declarations: public registration, authoring, inspection, editing and profile comparison; 54 portable tests in the recorded campaign.
 - Explicit interpretation: bounded rules/1 and keys/1, with separately supplied state for evaluation.
 - Native reference consumer: the fixed owned PostgreSQL 17.9/Bun 1.4.2 profile; 119 recorded native tests.

@@ -2,16 +2,16 @@ import assert from 'node:assert/strict';
 import {copyJson} from '../../src/model/json';
 import type {Element} from '../../src/model/types';
 import {avroAvailabilitySource} from './nullability-avro-cases';
-import {upgradeCardinalityEnvelope} from '../../src/model/cardinality-transition';
-import {classifyAvroCardinality,recoverAvroCardinalityBundle} from '../../src/core-ideals/cardinality-avro';
-import {recoverCardinalityFromAvro,type CardinalityAvroProjection} from '../../src/core-ideals/cardinality-avro-projection';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+
+import {classifyAvroCardinality, recoverAvroCardinalityBundle} from '../../src/core-ideals/cardinality-avro';
+import {recoverCardinalityFromAvro, type CardinalityAvroProjection} from '../../src/core-ideals/cardinality-avro-projection';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 /** Fresh native import is independent of the retained author receipt. */
 export function verifyAvroCardinalityComposition(projection:CardinalityAvroProjection){
  assert.ok(projection.nativeBundle);const bundle=projection.nativeBundle,request=projection.request;
  const full=request.namespace?request.namespace+'.'+request.recordName:request.recordName;
  const initial=avroAvailabilitySource(bundle.schema,bundle.dependencies,full,request.fieldName);
- const source=upgradeCardinalityEnvelope(initial.source).target;
+ const source=initial.source;
  const classified=classifyAvroCardinality(source,{column:initial.column,nativeSource:bundle.schema,dependencies:bundle.dependencies,identity:{module:'logical',element:'value'},profile:'present-non-null-schema',mode:'report'});
  assert.ok(classified.target);
  if(projection.mapping.outcome==='exact')for(const pair of projection.mapping.items){

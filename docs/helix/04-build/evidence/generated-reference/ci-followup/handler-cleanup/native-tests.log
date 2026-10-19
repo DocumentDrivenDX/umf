@@ -1,0 +1,26 @@
+bun test v1.4.2 (744846f84)
+
+tests/actions-reference/sandbox-security.test.ts:
+(pass) handler clears image and client proxy credentials before any program/subprocess observes environment [947.81ms]
+(pass) native host sentinel/socket/listener and external route are inaccessible; kernel confinement is enforced [484.29ms]
+(pass) native process bound refuses additional forks while successful children are reaped [518.50ms]
+(pass) natural EOF preserves successful results and refuses an early exit without a result [2312.13ms]
+(pass) actual cgroup memory exhaustion yields LIMIT with native OOM evidence and confirmed removal [495.38ms]
+(pass) timeout, malformed protocol and dispatch refusal each independently confirm owned removal [3276.39ms]
+(pass) native watchdog stops an executing handler after its Bun supervisor is killed [10580.14ms]
+
+tests/actions-reference/sandbox.test.ts:
+(pass) actual isolated handler foundation > copied authenticated ordered gateway calls and isolated runtime [427.95ms]
+(pass) actual isolated handler foundation > asynchronous candidate dispatch is refused rather than outliving an attempt [396.63ms]
+(pass) actual isolated handler foundation > deployment build mismatch refuses before dispatch [0.16ms]
+(pass) actual isolated handler foundation > unauthenticated output and caught gateway refusal cannot finish successfully [875.49ms]
+(pass) actual isolated handler foundation > authenticated malformed requests and stderr flooding refuse [1734.38ms]
+(pass) actual isolated handler foundation > hostile numeric protocol payloads normalize to FRAME_ACCESS before dispatch [976.22ms]
+(pass) actual isolated handler foundation > absolute deadline refuses success even when synchronous dispatch delays timers [3526.00ms]
+(pass) actual isolated handler foundation > invalid and truncated UTF-8 fail through the profile protocol error [925.29ms]
+(pass) actual isolated handler foundation > infinite computation, protocol flood and operation 257 abort [2742.07ms]
+
+ 16 pass
+ 0 fail
+ 167 expect() calls
+Ran 16 tests across 2 files. [30.28s]

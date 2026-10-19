@@ -4,12 +4,12 @@ import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field
 import {sqlServerCarriers as carriers,sqlServerIdentifier as identifier,sqlServerLiteral as literal} from './sqlserver-syntax';
 import {type FieldSqlServerRequest,type FieldSqlServerProjection} from './field-sqlserver-projection';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/record-sqlserver-projection.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/record-sqlserver-projection.schema.json';
 export {default as recordSqlServerProjectionSchema} from '../../spec/core/record-sqlserver-projection.schema.json';
 export interface RecordSqlServerRequest {id:string;namespace:string;tableName:string;identifierCollation:'Latin1_General_100_BIN2';mode:'strict'|'report';fields:{author:CoreKindDeclaration;columnName:string;nativeType:FieldSqlServerRequest['nativeType']}[]}
 const binding={id:'umf.core.record.sqlserver',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Authored flat record with explicit builtin nullable carriers; requires database identifier collation Latin1_General_100_BIN2; no value-domain equivalence'} as const;
 export interface RecordSqlServerProjection {operation:'project-record-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordSqlServerRequest;binding:typeof binding;target?:{format:'sqlserver-ddl';sql:string};nativeSql?:string;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldSqlServerProjection['residuals'];diagnostics:Diagnostic[]}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 export function projectRecordToSqlServer(input:CoreKindDeclaration,options:RecordSqlServerRequest):RecordSqlServerProjection {
  const copied=copyJson(input) as unknown as CoreKindDeclaration,author=verifyCoreKindDeclaration(copied,copied.target),source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as RecordSqlServerRequest;
  if(!checkRequest(request))throw new UmfError('RECORD_SQLSERVER_REQUEST',JSON.stringify(checkRequest.errors));

@@ -22,8 +22,6 @@ export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:Re
  if(pointer.includes('/properties/')){const owner=pointer.slice(0,pointer.lastIndexOf('/properties/'));breadcrumb.append(el('span',' / '),anchor(concept?.title??owner.split('/').at(-1)??'Object',readerRoute(e.id,owner,concept?.key??'')));}if(pointer)breadcrumb.append(el('span',' / '+(concept&&concept.pointer===pointer?concept.title:name)));parent.append(breadcrumb);
  const title=concept&&concept.pointer===pointer?concept.title:pointer?name:'Document';
  parent.append(el('h2',title));const desc=concept&&concept.pointer===pointer?concept.description:(core?reader.propertyText[name]:undefined)||s?.description||'Inspect the value shape and rules for this definition.';parent.append(el('p',desc,'intro'));
- const profile=e.data.profileVersions[0];parent.append(el('p',profile===reader.latest.version?'Latest core · '+profile:profile?'Historical core · '+profile:'Separately versioned schema','version-context'));
- if(profile&&profile!==reader.latest.version)parent.append(anchor('View latest',readerRoute(reader.latest.id,pointer,concept?.key??'')));
  const copy=el('button','Copy exact link','secondary') as HTMLButtonElement;copy.onclick=async()=>{try{await navigator.clipboard.writeText(location.href);copy.textContent='Link copied';}catch{copy.textContent=location.href;}};parent.append(copy);
  if(concept?.role&&concept.pointer===pointer)parent.append(el('p','Use kind: "'+concept.role+'".'+(concept.role==='record'?' The keys below describe this definition. members lists its data Fields; keys declares identity tuples.':''),'callout'));
  const props=node?.members?.properties?.members;
@@ -53,13 +51,14 @@ export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:Re
   if(prohibited.length){const panel=el('div');forbidden=table(panel,['Key','Meaning','Value','Presence / applicability'],prohibited);disclosure(parent,'Keys not allowed on '+role+' ('+prohibited.length+')',panel);}
   filter.oninput=()=>{for(const row of [...Array.from(body.rows),...Array.from(forbidden?.rows??[])])row.hidden=!row.textContent!.toLowerCase().includes(filter.value.toLowerCase());};
  }
- const rules=schemaRules(node);const ownerPointer=pointer.includes('/properties/')?pointer.slice(0,pointer.lastIndexOf('/properties/')):undefined;
- const ownerRules=ownerPointer!==undefined?schemaRules(resolveSchema(root,schemaNode(root,ownerPointer))).filter(r=>JSON.stringify(r.source).includes('"'+name+'"')):[];
+ const role=concept?.pointer===pointer?concept.role:undefined;
+ const rules=schemaRules(node,role);const ownerPointer=pointer.includes('/properties/')?pointer.slice(0,pointer.lastIndexOf('/properties/')):undefined;
+ const ownerRules=ownerPointer!==undefined?schemaRules(resolveSchema(root,schemaNode(root,ownerPointer)),role).filter(r=>JSON.stringify(r.source).includes('"'+name+'"')):[];
  if(rules.length||ownerRules.length){heading(parent,'Rules and valid combinations');for(const r of [...ownerRules,...rules]){const block=el('div',undefined,'rule');block.append(el('p',r.text));disclosure(block,'Original rule',code(JSON.stringify(r.source,null,2)));parent.append(block);}}
  if(s?.default!==undefined)parent.append(el('p','Schema default annotation: '+JSON.stringify(s.default)+'. This does not insert a value.','callout'));
  if(pointer.includes('/properties/'))parent.append(el('p','Presence and explicit null are different. Omission is governed by the owner’s required/conditional rules; null is accepted only if the value schema explicitly permits it.','quiet'));
  if(e.id===reader.latest.id&&(concept||['scalarType','itemType','members','keys'].includes(name))){heading(parent,'Complete example');parent.append(el('p','A Record, a scalar Field, and an array Field with a separate item Field. All references use module and element IDs.'));
-  disclosure(parent,'Show complete valid UMF document',schemaExample(JSON.stringify(reader.examples[0],null,2),exampleYaml)).open=true;
+  disclosure(parent,'Show complete valid UMF document',schemaExample(JSON.stringify(reader.examples[0],null,2),exampleYaml));
   if(name==='itemType'||name==='scalarType')parent.append(el('p','Invalid combinations: itemType: "string" has the wrong shape; cardinality: "array" with scalarType: "string" assigns a scalar to the container. Use the separate tagValue Field shown above.','callout'));
  }
  const refs=new Set<string>();const visit=(n:any,depth=0)=>{if(depth>128||!n)return;if(n.kind==='object'){if(n.members.$ref?.value)refs.add(n.members.$ref.value);for(const v of Object.values(n.members))visit(v,depth+1);}else if(n.kind==='array')for(const v of n.items)visit(v,depth+1);};visit(original);

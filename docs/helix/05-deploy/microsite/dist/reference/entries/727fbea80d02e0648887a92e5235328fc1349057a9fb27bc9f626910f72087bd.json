@@ -5,8 +5,8 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -15,43 +15,43 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationship"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationship"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationshipTarget"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationshipTarget"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
       }
     ],
     "role": "other",
@@ -526,7 +526,7 @@
                                   "members": {
                                     "$ref": {
                                       "kind": "string",
-                                      "value": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                                      "value": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                                     }
                                   }
                                 }
@@ -636,7 +636,7 @@
                                               "members": {
                                                 "$ref": {
                                                   "kind": "string",
-                                                  "value": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                                                  "value": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                                                 }
                                               }
                                             },
@@ -686,7 +686,7 @@
                                               "members": {
                                                 "$ref": {
                                                   "kind": "string",
-                                                  "value": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                                                  "value": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                                                 }
                                               }
                                             },
@@ -739,7 +739,7 @@
                                               "members": {
                                                 "$ref": {
                                                   "kind": "string",
-                                                  "value": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                                                  "value": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                                                 }
                                               }
                                             },
@@ -789,7 +789,7 @@
                                               "members": {
                                                 "$ref": {
                                                   "kind": "string",
-                                                  "value": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                                                  "value": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                                                 }
                                               }
                                             },
@@ -855,7 +855,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.9.0#/$defs/relationship"
+                              "value": "urn:umf:core:0.10.0#/$defs/relationship"
                             }
                           }
                         },
@@ -886,7 +886,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                                          "value": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                                         }
                                       }
                                     }
@@ -953,7 +953,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.9.0#/$defs/relationshipTarget"
+                                          "value": "urn:umf:core:0.10.0#/$defs/relationshipTarget"
                                         }
                                       }
                                     }
@@ -1058,7 +1058,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1128,13 +1128,13 @@
   "id": "[\"schema\",\"spec/core/relationship-metadata-selection-v2.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8718,
+      "bytes": 8727,
       "path": "spec/core/relationship-metadata-selection-v2.schema.json",
-      "sha256": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8"
+      "sha256": "e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720"
     }
   ],
   "summary": "Retained-source metadata selection. Exact endpoint and key paths and filter results require semantic recomputation. Navigation is presentation, not instance edges or referential enforcement.",

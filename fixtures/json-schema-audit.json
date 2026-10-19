@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 427,
-  "passed": 427,
+  "schemas": 373,
+  "passed": 373,
   "results": [
     {
       "path": "spec/compilation/access-manifest.schema.json",
@@ -81,22 +81,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/bit128-document.schema.json",
-      "id": "urn:umf:core:0.9.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/bit128-selection.schema.json",
       "id": "urn:umf:core:bit128-selection:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/bit128-transition.schema.json",
-      "id": "urn:umf:core:bit128-transition:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -109,27 +95,6 @@
       "failures": []
     },
     {
-      "path": "spec/core/cardinality-document.schema.json",
-      "id": "urn:umf:core:0.4.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/cardinality-operation-v2.schema.json",
-      "id": "urn:umf:core:cardinality-operation:2.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/cardinality-operation-v3.schema.json",
-      "id": "urn:umf:core:cardinality-operation:3.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/cardinality-operation-v4.schema.json",
       "id": "urn:umf:core:cardinality-operation:4.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -137,22 +102,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/cardinality-operation-v5.schema.json",
-      "id": "urn:umf:core:cardinality-operation:5.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/cardinality-operation-v6.schema.json",
       "id": "urn:umf:core:cardinality-operation:6.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/cardinality-operation.schema.json",
-      "id": "urn:umf:core:cardinality-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -193,13 +144,6 @@
       "failures": []
     },
     {
-      "path": "spec/core/cardinality-transition.schema.json",
-      "id": "urn:umf:core:cardinality-transition:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/csv-boolean-lexical-operation.schema.json",
       "id": "urn:umf:csv-boolean-lexical-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -222,7 +166,7 @@
     },
     {
       "path": "spec/core/element-selection.schema.json",
-      "id": "urn:umf:core:element-selection:0.1.0",
+      "id": "urn:umf:core:element-selection:0.10.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -243,21 +187,7 @@
     },
     {
       "path": "spec/core/extension-package.schema.json",
-      "id": "urn:umf:extension-package:0.1.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/facet-document.schema.json",
-      "id": "urn:umf:core:0.5.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/facet-operation-v2.schema.json",
-      "id": "urn:umf:core:facet-operation:2.0.0",
+      "id": "urn:umf:extension-package:0.10.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -270,13 +200,6 @@
       "failures": []
     },
     {
-      "path": "spec/core/facet-operation-v4.schema.json",
-      "id": "urn:umf:core:facet-operation:4.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/facet-operation-v5.schema.json",
       "id": "urn:umf:core:facet-operation:5.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -284,22 +207,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/facet-operation.schema.json",
-      "id": "urn:umf:core:facet-operation:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/facet-selection.schema.json",
       "id": "urn:umf:core:element-selection:0.5.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/facet-transition.schema.json",
-      "id": "urn:umf:core:facet-transition:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -354,13 +263,6 @@
       "failures": []
     },
     {
-      "path": "spec/core/field-document.schema.json",
-      "id": "urn:umf:core:0.2.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/field-parquet-projection.schema.json",
       "id": "urn:umf:core:field-parquet-projection:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -403,22 +305,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/field-transition.schema.json",
-      "id": "urn:umf:core:field-transition:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/key-avro-projection.schema.json",
       "id": "urn:umf:core:key-avro-projection:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/key-document.schema.json",
-      "id": "urn:umf:core:0.6.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -431,22 +319,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/key-operation-v3.schema.json",
-      "id": "urn:umf:core:key-operation:3.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/key-operation-v4.schema.json",
       "id": "urn:umf:core:key-operation:4.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/key-operation.schema.json",
-      "id": "urn:umf:core:key-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -487,64 +361,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/key-transition.schema.json",
-      "id": "urn:umf:core:key-transition:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/key-tuple-operation-v2.schema.json",
-      "id": "urn:umf:core:key-tuple-operation:2.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/key-tuple-operation-v3.schema.json",
-      "id": "urn:umf:core:key-tuple-operation:3.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/key-tuple-operation-v4.schema.json",
       "id": "urn:umf:core:key-tuple-operation:4.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/key-tuple-operation.schema.json",
-      "id": "urn:umf:core:key-tuple-operation:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/kind-operation-v2.schema.json",
-      "id": "urn:umf:core:kind-operation:2.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/kind-operation-v3.schema.json",
-      "id": "urn:umf:core:kind-operation:3.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/kind-operation-v4.schema.json",
-      "id": "urn:umf:core:kind-operation:4.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/kind-operation-v5.schema.json",
-      "id": "urn:umf:core:kind-operation:5.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -557,22 +375,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/kind-operation-v7.schema.json",
-      "id": "urn:umf:core:kind-operation:7.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/kind-operation-v8.schema.json",
       "id": "urn:umf:core:kind-operation:8.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/kind-operation.schema.json",
-      "id": "urn:umf:core:kind-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -592,34 +396,6 @@
       "failures": []
     },
     {
-      "path": "spec/core/nullability-document.schema.json",
-      "id": "urn:umf:core:0.3.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/nullability-operation-v2.schema.json",
-      "id": "urn:umf:core:nullability-operation:2.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/nullability-operation-v3.schema.json",
-      "id": "urn:umf:core:nullability-operation:3.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/nullability-operation-v4.schema.json",
-      "id": "urn:umf:core:nullability-operation:4.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/nullability-operation-v5.schema.json",
       "id": "urn:umf:core:nullability-operation:5.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -627,22 +403,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/nullability-operation-v6.schema.json",
-      "id": "urn:umf:core:nullability-operation:6.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/nullability-operation-v7.schema.json",
       "id": "urn:umf:core:nullability-operation:7.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/nullability-operation.schema.json",
-      "id": "urn:umf:core:nullability-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -678,13 +440,6 @@
     {
       "path": "spec/core/nullability-tablespec-projection.schema.json",
       "id": "urn:umf:core:nullability-tablespec-projection:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/nullability-transition.schema.json",
-      "id": "urn:umf:core:nullability-transition:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -830,22 +585,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/record-members-inspection-v0.2.schema.json",
-      "id": "urn:umf:core:record-members-inspection:0.2.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/record-members-inspection-v0.3.schema.json",
       "id": "urn:umf:core:record-members-inspection:0.3.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/record-members-inspection.schema.json",
-      "id": "urn:umf:core:record-members-inspection:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -900,50 +641,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/record-type-operation-v2.schema.json",
-      "id": "urn:umf:core:record-type-operation:2.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/record-type-operation-v3.schema.json",
-      "id": "urn:umf:core:record-type-operation:3.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/record-type-operation-v4.schema.json",
-      "id": "urn:umf:core:record-type-operation:4.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/record-type-operation-v5.schema.json",
-      "id": "urn:umf:core:record-type-operation:5.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/record-type-operation-v6.schema.json",
       "id": "urn:umf:core:record-type-operation:6.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/record-type-operation.schema.json",
-      "id": "urn:umf:core:record-type-operation:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/reference-links-inspection-v0.2.schema.json",
-      "id": "urn:umf:core:reference-links-inspection:0.2.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -956,22 +655,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/reference-links-inspection.schema.json",
-      "id": "urn:umf:core:reference-links-inspection:0.1.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/relationship-avro-projection.schema.json",
       "id": "urn:umf:core:relationship-avro-projection:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/relationship-document.schema.json",
-      "id": "urn:umf:core:0.7.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -986,20 +671,6 @@
     {
       "path": "spec/core/relationship-metadata-selection-v2.schema.json",
       "id": "urn:umf:core:relationship-metadata-selection:2.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/relationship-metadata-selection.schema.json",
-      "id": "urn:umf:core:relationship-metadata-selection:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/relationship-operation-v2.schema.json",
-      "id": "urn:umf:core:relationship-operation:2.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -1054,36 +725,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/relationship-transition.schema.json",
-      "id": "urn:umf:core:relationship-transition:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/scalar-type-inspection-v0.2.schema.json",
-      "id": "urn:umf:core:scalar-type-inspection:0.2.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/scalar-type-inspection-v0.3.schema.json",
       "id": "urn:umf:core:scalar-type-inspection:0.3.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/scalar-type-inspection.schema.json",
-      "id": "urn:umf:core:scalar-type-inspection:0.1.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/schema-properties-document.schema.json",
-      "id": "urn:umf:core:0.8.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -1096,15 +739,8 @@
       "failures": []
     },
     {
-      "path": "spec/core/schema-properties-transition.schema.json",
-      "id": "urn:umf:core:schema-properties-transition:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
       "path": "spec/core/schema.json",
-      "id": "urn:umf:core:0.1.0",
+      "id": "urn:umf:core:0.10.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -1112,13 +748,6 @@
     {
       "path": "spec/core/semantic-type-reference.schema.json",
       "id": "urn:umf:core:semantic-type-reference:1.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/semantic-types-document.schema.json",
-      "id": "urn:umf:core:0.10.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -1133,13 +762,6 @@
     {
       "path": "spec/core/semantic-types-selection.schema.json",
       "id": "urn:umf:core:semantic-types-selection:2.0.0",
-      "dialect": "https://json-schema.org/draft/2020-12/schema",
-      "passed": true,
-      "failures": []
-    },
-    {
-      "path": "spec/core/semantic-types-transition.schema.json",
-      "id": "urn:umf:core:semantic-types-transition:2.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

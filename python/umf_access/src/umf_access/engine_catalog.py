@@ -14,6 +14,7 @@ from typing import Annotated, Any, TypeVar, Union, get_args, get_origin
 
 from pydantic import BaseModel
 
+from .generated_core import CURRENT_CORE_VERSION
 from .native_program import ProgramBuildError, canonical_json, program_json
 from .related_keys import transport_spec
 from .reviewed import (
@@ -231,13 +232,13 @@ def _truss_field_source(source: object, pins: list[Any], program: Mapping[str, A
         raise ReadBuildError("original Truss modules required")
     matched = [pin for pin in pins if type(pin) is dict and pin.get("documentId") == source["documentId"] and pin.get("revision") == source["revision"]]
     documents = [m for m in request["modules"] if type(m) is dict and m.get("pin") in matched and type(m.get("selectedModuleIds")) is list and source["module"] in m["selectedModuleIds"]]
-    if (len(matched) != 1 or matched[0].get("umfVersion") != "0.8.0" or len(documents) != 1
+    if (len(matched) != 1 or matched[0].get("umfVersion") != CURRENT_CORE_VERSION or len(documents) != 1
         or type(documents[0].get("documentJson")) is not str
         or hashlib.sha256(documents[0]["documentJson"].encode()).hexdigest() != matched[0].get("sha256")):
-        raise ReadBuildError("original Core08 Truss document pin differs")
+        raise ReadBuildError("original current-core Truss document pin differs")
     document = program_json(documents[0]["documentJson"])
-    if type(document) is not dict or document.get("id") != source["documentId"] or document.get("umf") != "0.8.0":
-        raise ReadBuildError("original Core08 Truss document identity differs")
+    if type(document) is not dict or document.get("id") != source["documentId"] or document.get("umf") != CURRENT_CORE_VERSION:
+        raise ReadBuildError("original current-core Truss document identity differs")
 
 
 def _truss_binary_output_custody(program: Mapping[str, Any], expected: list[dict[str, object]]) -> None:
@@ -281,7 +282,7 @@ def _truss_binary_output_custody(program: Mapping[str, Any], expected: list[dict
                 or type(representation) is not dict
                 or not (not missing and representation.get("kind") == "scalar" and representation.get("logicalType") == logical
                     or representation == {"kind": "value", "descriptor": source, "nativeNull": True})):
-                raise ReadBuildError("original Core08 scalar sibling state domain differs")
+                raise ReadBuildError("original current-core scalar sibling state domain differs")
             _truss_field_source(source, pins, program)
             continue
         if (set(output) != {"name", "carrier", "nullable", "missing", "source", "representation", "modelPins", "stateDomain", "decoder"}
@@ -304,7 +305,7 @@ def _truss_binary_output_custody(program: Mapping[str, Any], expected: list[dict
         if (output["nullable"] != optional or output["missing"] != optional
             or output["stateDomain"] != {"version": "umf.core08-binary/0.1", "states": ["missing", "null", "value"] if optional else ["value"]}
             or output["representation"] != {"kind": "value", "descriptor": source, "nativeNull": True}):
-            raise ReadBuildError("original Core08 binary state domain differs")
+            raise ReadBuildError("original current-core binary state domain differs")
         _truss_field_source(source, pins, program)
     if program["version"] == "weft.engine-page/0.2":
         selected = _selected_key(program.get("selectedKey"))

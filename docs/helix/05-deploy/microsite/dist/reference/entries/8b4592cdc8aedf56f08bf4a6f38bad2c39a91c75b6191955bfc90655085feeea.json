@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2995,
-        "line": 28,
-        "path": "src/model/types.ts",
-        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+        "bytes": 4966,
+        "line": 17,
+        "path": "src/generated/core-model.ts",
+        "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
       }
     ],
     "entrypoint": ".",
     "exportName": "Module",
     "runtime": "type-only",
     "signatureText": [
-      "export interface Module {\n  id: string; namespace: string; elements: Element[];\n  extensions?: Record<string, Json>;\n  [key: string]: unknown;\n}"
+      "export type Module = {\"id\":Id;\"namespace\":string;\"elements\":(Element)[];\"extensions\"?:Extensions;\"relationships\"?:(Relationship)[];\"title\"?:string;\"aliases\"?:(string)[];[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"Module\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2995,
-      "line": 28,
-      "path": "src/model/types.ts",
-      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+      "bytes": 4966,
+      "line": 17,
+      "path": "src/generated/core-model.ts",
+      "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
     }
   ],
-  "summary": "Type declaration · src/model/types.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "Module"
 }

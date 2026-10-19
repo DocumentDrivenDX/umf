@@ -1,6 +1,6 @@
 {
   "data": {
-    "body": "\nThe SDK package version, core document profile, extension version and native tool version are independent. Always select the version whose semantics you intend to use.\n\nThe reference enumerates every supported core document profile. Property and definition links preserve the profile and schema pointer. Structural comparison retains original values and reports changed positions; it cannot prove semantic compatibility.\n\nUse explicit public migration and rollback operations with their retained context. Do not rewrite a document version field to claim a migration. Unknown native and extension content must survive the declared operation or produce an explicit refusal. Core 0.9 UUID/bits128 examples retain the exact typed literal carriers.\n",
+    "body": "\nStructural comparison reports changed positions and retains original values. Use it to review edits to a schema; it cannot prove semantic compatibility or native equivalence.\n\nKeep unfamiliar extension content and exact literal carriers intact when editing. Native projections report constraints they cannot represent. A refusal retains the original source for recovery.\n",
     "relatedIds": []
   },
   "id": "[\"guide\",\"evolution\"]",
@@ -8,11 +8,11 @@
   "links": [],
   "sources": [
     {
-      "bytes": 793,
+      "bytes": 399,
       "path": "docs/helix/05-deploy/reference/guides/evolution.md",
-      "sha256": "5cf1dfbeebe18a3c3c23e642135e4a7aafe7668e46a66a8e5b92086d6d63f651"
+      "sha256": "838a38bb29f7c526c202860c74a53722bc2a522ec43b1d3b1b53648b55a015ba"
     }
   ],
-  "summary": "The SDK package version, core document profile, extension version and native tool version are independent. Always select the version whose semantics you intend to use.",
-  "title": "Versions, structural comparison and migration"
+  "summary": "Structural comparison reports changed positions and retains original values. Use it to review edits to a schema; it cannot prove semantic compatibility or native equivalence.",
+  "title": "Compare schema structure"
 }

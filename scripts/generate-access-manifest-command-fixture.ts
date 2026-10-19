@@ -1,4 +1,5 @@
 import {generateAccessPackage} from '../src/compilation/index';
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {createUmfRegistry,prepareActionPlanModel} from '../src/index';
 import {profile,request} from '../tests/compilation/access-fixtures';
 
@@ -8,7 +9,7 @@ const mixed=process.argv.includes('--mixed');
 const fixture='fixtures/access/manifest-command-public/';
 const original=await Bun.file(mixed?'fixtures/access/native-bulk-list/request.json':fixture+'request-base.json').json();
 const model=mixed?{mediaType:'application/json',utf8:original.binding.modelJson,sha256:original.binding.modelSha256}:original.model;
-const pin=mixed?{documentId:original.source.documentId,revision:model.sha256,umfVersion:'0.8.0',sha256:model.sha256}:original.modelPin;
+const pin=mixed?{documentId:original.source.documentId,revision:model.sha256,umfVersion:CURRENT_CORE_VERSION,sha256:model.sha256}:original.modelPin;
 const action=mixed?{identity:{module:'sales',action:'setStatus'},documentSha256:model.sha256,invocation:{id:'umf.actions.tx',version:'1'}}:original.action;
 const req=request();req.logical='logical';req.sources=[{id:'logical',format:'json',text:model.utf8}];
 req.records=[{module:'sales',element:mixed?'order':'customer'}];req.actions=[action.identity];req.package=mixed?'mixed_sales':'manifest_sales';req.projections=[];

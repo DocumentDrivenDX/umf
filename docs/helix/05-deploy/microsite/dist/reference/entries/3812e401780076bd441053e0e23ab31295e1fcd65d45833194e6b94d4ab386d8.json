@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 1620,
+        "bytes": 1621,
         "line": 1,
         "path": "spec/extensions/parquet/framing.schema.json",
-        "sha256": "6dfc1e757fdf3ebd18eae00efdbe9025d289857dd1e328d0ca4f66f73b4fb602"
+        "sha256": "358375744c222c7e246427712b333b6c14dc6b4cd75b2a957ccfa5a13f6f4593"
       }
     ],
     "entrypoint": ".",
     "exportName": "parquetFramingSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:parquet:framing:0.1.0\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"status\": {\n      \"enum\": [\n        \"located\",\n        \"invalid\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"byteLength\": {\n      \"type\": \"integer\",\n      \"minimum\": 0\n    },\n    \"footerRegion\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"offset\": {\n          \"type\": \"integer\",\n          \"minimum\": 0\n        },\n        \"length\": {\n          \"type\": \"integer\",\n          \"minimum\": 0\n        },\n        \"mode\": {\n          \"enum\": [\n            \"plaintext-or-signed\",\n            \"encrypted\"\n          ]\n        }\n      },\n      \"required\": [\n        \"offset\",\n        \"length\",\n        \"mode\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"required\": [\n    \"source\",\n    \"status\",\n    \"complete\",\n    \"byteLength\",\n    \"diagnostics\"\n  ],\n  \"additionalProperties\": false\n}\n"
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:parquet:framing:0.1.0\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"status\": {\n      \"enum\": [\n        \"located\",\n        \"invalid\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"byteLength\": {\n      \"type\": \"integer\",\n      \"minimum\": 0\n    },\n    \"footerRegion\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"offset\": {\n          \"type\": \"integer\",\n          \"minimum\": 0\n        },\n        \"length\": {\n          \"type\": \"integer\",\n          \"minimum\": 0\n        },\n        \"mode\": {\n          \"enum\": [\n            \"plaintext-or-signed\",\n            \"encrypted\"\n          ]\n        }\n      },\n      \"required\": [\n        \"offset\",\n        \"length\",\n        \"mode\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"required\": [\n    \"source\",\n    \"status\",\n    \"complete\",\n    \"byteLength\",\n    \"diagnostics\"\n  ],\n  \"additionalProperties\": false\n}\n"
     ]
   },
   "id": "[\"api\",\".\",\"parquetFramingSchema\"]",
@@ -22,10 +22,10 @@
   ],
   "sources": [
     {
-      "bytes": 1620,
+      "bytes": 1621,
       "line": 1,
       "path": "spec/extensions/parquet/framing.schema.json",
-      "sha256": "6dfc1e757fdf3ebd18eae00efdbe9025d289857dd1e328d0ca4f66f73b4fb602"
+      "sha256": "358375744c222c7e246427712b333b6c14dc6b4cd75b2a957ccfa5a13f6f4593"
     }
   ],
   "summary": "Public export · spec/extensions/parquet/framing.schema.json",

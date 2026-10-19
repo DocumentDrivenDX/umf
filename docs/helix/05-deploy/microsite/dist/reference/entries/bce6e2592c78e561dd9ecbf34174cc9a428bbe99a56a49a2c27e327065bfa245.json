@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+        "target": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
@@ -670,7 +670,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -883,7 +883,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.3.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -910,7 +910,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.3.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -981,14 +981,14 @@
   "kind": "schema",
   "links": [
     "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 6575,
+      "bytes": 6577,
       "path": "spec/core/postgresql-nullability-classification.schema.json",
-      "sha256": "d665d8c558d77682a649caaf9765ef1230e89075fa97dbaf5232736e1e9d2872"
+      "sha256": "66ff52e321e8ef85d9abe318e097d82adcb7d7f8efe28638925560c0d914985c"
     }
   ],
   "summary": "spec/core/postgresql-nullability-classification.schema.json",

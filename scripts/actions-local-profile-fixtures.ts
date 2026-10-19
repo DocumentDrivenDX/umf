@@ -1,7 +1,8 @@
+import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import {createHash} from 'node:crypto';
 import {createUmfRegistry,prepareActionPlanModel} from '../src/index';
 const root='docs/helix/03-test/fixtures/bulk-update/',utf8=await Bun.file(root+'local-products-model.json').text(),sha256=createHash('sha256').update(utf8).digest('hex'),document=JSON.parse(utf8);
-const snapshot={mediaType:'application/json',utf8,sha256},pin={documentId:document.id,revision:sha256,umfVersion:'0.8.0' as const,sha256},action={identity:{module:'sales',action:'set-name-local'},documentSha256:sha256,invocation:{id:'umf.actions.local-tx',version:'1'}};
+const snapshot={mediaType:'application/json',utf8,sha256},pin={documentId:document.id,revision:sha256,umfVersion:CURRENT_CORE_VERSION,sha256},action={identity:{module:'sales',action:'set-name-local'},documentSha256:sha256,invocation:{id:'umf.actions.local-tx',version:'1'}};
 const preparation=prepareActionPlanModel(pin,action,{registry:createUmfRegistry(),models:[{pin,artifact:snapshot}],actions:[{pin:action,artifact:snapshot}],selections:[]});
 const request={interfaceVersion:'weft-mutation-compile/0.1.0',dialect:'weft-mutation/0.1.0',sql:"UPDATE products SET name = 'Foo' WHERE id = 'bar'",parameters:{},model:snapshot,modelPin:pin,action,target:{module:'sales',element:'products',key:'pk'},selectionProfile:{id:'weft.update-selection',version:'1'},batchSize:2,limits:{maxItems:10000,maxManifestBytes:16777216}};
 const record=document.modules[0].elements.find((e:any)=>e.id==='products');

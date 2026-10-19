@@ -1,0 +1,19 @@
+{
+  "testProcess": "tests/core-ideals/projection-policy.test.ts",
+  "exitCode": 0,
+  "pass": 4,
+  "fail": 0,
+  "assertions": 539,
+  "completeSummary": true,
+  "logSha256": "c0726352e5ddf0e6729b661fb3f5fcf5493fa1dcd71d3175175c81140d01e4b4",
+  "profile": "umf.metamodel-authority.current-projection-policy/1",
+  "runtime": "Bun1.4.2",
+  "integrationLog": "umf-projection-policy-current-final.log",
+  "testSourceSha256": "5de51d585b3659c96791dcd529cabc3e80248c307de9f19201a805b87ebc3905",
+  "retainedFixtureSha256": {
+    "fixtures/validation/field-tablespec-projection.json": "c9362772bce7ed85c5ed012a0a4f3399529fc025f13fe0d31cf76d53797f08bd",
+    "fixtures/validation/field-postgresql-projection-native.json": "8a665b0b72ea9b9a320aed4ce10d84fc49289b3809f6822dae79a2b3c6953cdd"
+  },
+  "cases": 70,
+  "qualification": "Fresh current authoring/projection receipts are generated in memory. Original fixtures remain byte-identical to Git19fe. Current author meaning, status, residual counts, mappings and SQL/TableSpec native input bytes match all retained cases. Every historical receipt still fails current schema admission. Original strict/report/atomic candidate mutations remain. No fresh database/native execution qualification is claimed."
+}

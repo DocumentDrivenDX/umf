@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
@@ -8,13 +9,13 @@ import {verifyCoreRelationshipOperation,lookupCoreRelationship,type CoreRelation
 import {validatePostgresqlRelationshipLayout,type PostgresqlRelationshipLayoutPolicy,type PostgresqlRelationshipLayoutResult,type PostgresqlLayoutType} from '../projections/ddd-postgresql/relationship-layout';
 import {identifier,literal} from './postgresql-syntax';
 import {createValidator} from '../validation/schema';
-import core from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';import relationships from '../../spec/core/relationship-document.schema.json';import operation from '../../spec/core/relationship-operation.schema.json';import native from '../../spec/core/native-json.schema.json';import layoutSchema from '../../spec/projections/postgresql-relationship-layout.schema.json';import layoutResult from '../../spec/projections/postgresql-relationship-layout-result.schema.json';
+import core from '../../spec/core/schema.json';import operation from '../../spec/core/relationship-operation.schema.json';import native from '../../spec/core/native-json.schema.json';import layoutSchema from '../../spec/projections/postgresql-relationship-layout.schema.json';import layoutResult from '../../spec/projections/postgresql-relationship-layout-result.schema.json';
 import classificationSchema from '../../spec/core/postgresql-relationship-classification.schema.json';import projectionSchema from '../../spec/core/relationship-postgresql-projection.schema.json';import manifest from '../../spec/extensions/postgresql-relationships/package.json';
 export const POSTGRESQL_RELATIONSHIPS_EXTENSION='umf.postgresql.relationships';
 export const postgresqlRelationshipsPackage=manifest as unknown as ExtensionPackage;
 export {default as postgresqlRelationshipClassificationSchema} from '../../spec/core/postgresql-relationship-classification.schema.json';
 export {default as relationshipPostgresqlProjectionSchema} from '../../spec/core/relationship-postgresql-projection.schema.json';
-const validator=createValidator(false);for(const schema of [core,fields,availability,containers,facets,keys,relationships,operation,native,layoutSchema,layoutResult])validator.addSchema(schema);
+const validator=createValidator(false);for(const schema of [core,operation,native,layoutSchema,layoutResult])validator.addSchema(schema);
 const classificationCheck=validator.compile(classificationSchema),classificationRequestCheck=validator.compile(classificationSchema.properties.request),projectionCheck=validator.compile(projectionSchema),projectionRequestCheck=validator.compile(projectionSchema.properties.request);
 const binding=classificationSchema.properties.binding.const;
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
@@ -92,7 +93,7 @@ export interface RelationshipPostgresqlProjection {operation:'project-relationsh
 export async function projectRelationshipsToPostgresql(input:Document,physicalInput:Document,authorInput:CoreRelationshipDeclaration[],options:RelationshipPostgresqlRequest,backend:PostgresqlBackend):Promise<RelationshipPostgresqlProjection>{
  const source=copyJson(input) as unknown as Document,physicalBinding=copyJson(physicalInput) as unknown as Document,authors=copyJson(authorInput) as unknown as CoreRelationshipDeclaration[],request=copyJson(options) as unknown as RelationshipPostgresqlRequest;
  if(!projectionRequestCheck(request))throw new UmfError('RELATIONSHIP_POSTGRESQL_REQUEST',JSON.stringify(projectionRequestCheck.errors));
- if(source.umf!=='0.7.0'||!validateDocument(source).valid)throw new UmfError('RELATIONSHIP_POSTGRESQL_SOURCE','Valid authored core 0.7.0 source required');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('RELATIONSHIP_POSTGRESQL_SOURCE','Valid authored core 0.10.0 source required');
  const layout=validatePostgresqlRelationshipLayout(source,physicalBinding,request.policy,'report'),result:RelationshipPostgresqlProjection={operation:'project-relationships-postgresql',version:'1.0.0',status:'projected',source,physicalBinding,authors,request,binding,layout,mappings:[],residuals:[],diagnostics:[]};
  const loss=(origin:Residual['source'],path:string,value:unknown,reason:string,outcome:Residual['outcome']='not-expressible')=>result.residuals.push({source:origin,path,value:copyJson(value),reason,outcome});
  const seen=new Set<string>();

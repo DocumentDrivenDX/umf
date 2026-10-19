@@ -1,10 +1,11 @@
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {migrateBindingRelationships,type Document,type PostgresqlRelationshipLayoutPolicy} from '../src';
 import graph from '../fixtures/projections/ddd-authored-relationships/base.json';
 import proposal from '../fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json';
 export function postgresqlLayoutCase():{logical:Document;binding:Document;policy:PostgresqlRelationshipLayoutPolicy}{
- const logical=structuredClone(graph.logical) as unknown as Document;logical.umf='0.7.0';
+ const logical=structuredClone(graph.logical) as unknown as Document;logical.umf=CURRENT_CORE_VERSION;
  for(const p of graph.relationshipProposals){const module=logical.modules.find(m=>m.id===p.module)!;(module.relationships??=[] as any[]);(module.relationships as any[]).push(structuredClone(p.assertion));}
- const old=structuredClone(proposal.binding) as unknown as Document,p=old.extensions!['umf.binding'] as any;p.logical.coreVersion='0.7.0';p.target.version='17.4';
+ const old=structuredClone(proposal.binding) as unknown as Document,p=old.extensions!['umf.binding'] as any;old.umf=CURRENT_CORE_VERSION;p.logical.coreVersion=CURRENT_CORE_VERSION;p.target.version='17.4';
  p.relationships=proposal.physicalRelationshipChoices.map(c=>({module:c.module,name:graph.relationshipProposals.find(r=>r.module===c.module&&r.assertion.id===c.id)!.assertion.name,storage:c.storage}));
  const binding=migrateBindingRelationships(old,logical).document;
  const policy=structuredClone(proposal.policy) as any;

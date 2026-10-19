@@ -3,7 +3,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlKeyProjectionCases} from './key-postgresql-projection-cases';
 import {projectKeysToPostgresql} from '../../src/core-ideals/key-postgresql-projection';
-import {identifier,literal} from '../../src/core-ideals/postgresql-syntax';
+import {identifier, literal} from '../../src/core-ideals/postgresql-syntax';
 const name='umf-key-projection-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,err||out);return out;}
 const exec=(args:string[],input?:string)=>run(['docker','exec',...(input===undefined?[]:['-i']),name,...args],input);

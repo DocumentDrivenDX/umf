@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -145,7 +145,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -212,7 +212,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -411,9 +411,9 @@
   ],
   "sources": [
     {
-      "bytes": 2526,
+      "bytes": 2528,
       "path": "spec/extensions/spark/rename-result.schema.json",
-      "sha256": "24cb2da7051f24ca2bd1563085486cd474741745f71af17df530d2b542e5dd99"
+      "sha256": "c08c3bc3a02c9b0c90a8f1f3a0b833679a8d6c81d51b9b24f5ff7d13e67d35c5"
     }
   ],
   "summary": "spec/extensions/spark/rename-result.schema.json",

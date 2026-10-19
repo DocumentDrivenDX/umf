@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {lookupCoreRelationship,verifyCoreRelationshipOperation,type CoreRelationshipDeclaration,type CoreRelationshipIdentity} from '../model/relationships';
@@ -7,14 +8,14 @@ import {validateDocument} from '../validation/document';
 import {getBinding} from '../extensions/binding';
 import {sqlServerIdentifier as quote} from './sqlserver-syntax';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';import relationships from '../../spec/core/relationship-document.schema.json';import authorSchema from '../../spec/core/relationship-operation.schema.json';
+import legacy from '../../spec/core/schema.json';import authorSchema from '../../spec/core/relationship-operation.schema.json';
 import schema from '../../spec/core/relationship-sqlserver-projection.schema.json';
 export {default as relationshipSqlServerProjectionSchema} from '../../spec/core/relationship-sqlserver-projection.schema.json';
 export interface SqlServerRelationshipKey {keyId:string;constraintName:string;columns:{field:RelationshipEndpoint;name:string;nativeType:'bit'|'tinyint'|'smallint'|'int'|'bigint'}[]}
 export interface RelationshipSqlServerRequest {id:string;relationship:CoreRelationshipIdentity;profile:'new-key-tables';mode:'strict'|'report';namespace:string;sourceKey:SqlServerRelationshipKey;targetKey:SqlServerRelationshipKey;referenceColumns:string[];constraintName:string;deleteAction:'NO_ACTION'|'CASCADE'|'SET_NULL';updateAction:'NO_ACTION'|'CASCADE'|'SET_NULL';junction?:{tableName:string;sourceColumns:string[];sourceConstraintName:string;pairConstraintName:string}}
 const binding=schema.properties.binding.const;
 export interface RelationshipSqlServerProjection {operation:'project-relationship-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreRelationshipDeclaration;bindingSource:Document;request:RelationshipSqlServerRequest;binding:typeof binding;target?:{format:'sqlserver-ddl';sql:string};mappings:{idealPath:string;nativePath:string;storage:'foreign_key'|'junction';targetKey:string;sourceKey:string;enforcement:'enabled-trusted-stored-values';outcome:'approximated'}[];residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible'|'approximated';recovery:string}[];diagnostics:Diagnostic[]}
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys,relationships,authorSchema])validator.addSchema(s);const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
+const validator=createValidator(false);for(const s of [legacy,authorSchema])validator.addSchema(s);const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const same=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));const identity=(r:{module:string;element:string})=>JSON.stringify([r.module,r.element]);
 function locate(d:Document,ref:RelationshipEndpoint){const mi=d.modules.findIndex(x=>x.id===ref.module),ei=d.modules[mi]?.elements.findIndex(x=>x.id===ref.element)??-1;if(mi<0||ei<0)throw new UmfError('RELATIONSHIP_SQLSERVER_REFERENCE','Unresolved logical element');return {element:d.modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}`};}
@@ -22,7 +23,7 @@ function locate(d:Document,ref:RelationshipEndpoint){const mi=d.modules.findInde
 export function projectRelationshipToSqlServer(input:Document,authorInput:CoreRelationshipDeclaration,bindingInput:Document,options:RelationshipSqlServerRequest):RelationshipSqlServerProjection {
  const source=copyJson(input) as unknown as Document,author=copyJson(authorInput) as unknown as CoreRelationshipDeclaration,bindingSource=copyJson(bindingInput) as unknown as Document,request=copyJson(options) as unknown as RelationshipSqlServerRequest;
  if(!requestCheck(request))throw new UmfError('RELATIONSHIP_SQLSERVER_REQUEST',JSON.stringify(requestCheck.errors));
- if(source.umf!=='0.7.0'||!validateDocument(source).valid)throw new UmfError('RELATIONSHIP_SQLSERVER_SOURCE','Valid core 0.7.0 required');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('RELATIONSHIP_SQLSERVER_SOURCE','Valid core 0.10.0 required');
  if(author.operation!=='declare-core-relationship')throw new UmfError('RELATIONSHIP_SQLSERVER_AUTHOR','Explicit relationship declaration required');verifyCoreRelationshipOperation(author,author.target);
  if(author.target.id!==source.id||author.identity.module!==request.relationship.module||author.request.id!==request.relationship.id)throw new UmfError('RELATIONSHIP_SQLSERVER_AUTHOR','Mismatched author identity');
  const current=lookupCoreRelationship(source,request.relationship),prior=lookupCoreRelationship(author.target,request.relationship),rel=current.relationship;

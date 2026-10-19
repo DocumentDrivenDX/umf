@@ -20,6 +20,13 @@
       "name": "registry",
       "optional": true,
       "type": "Registry"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "meter",
+      "optional": true,
+      "type": "ConstraintMeter | undefined"
     }
   ],
   "purpose": "Check core structure and registered extension semantics. Read diagnostics and completeness alongside valid; a valid retained document may contain unknown meaning.",
@@ -29,5 +36,5 @@
   ],
   "returns": "Validation",
   "task": "Read and validate",
-  "type": "(input: unknown, registry?: Registry) => Validation"
+  "type": "(input: unknown, registry?: Registry, meter?: ConstraintMeter) => Validation"
 }

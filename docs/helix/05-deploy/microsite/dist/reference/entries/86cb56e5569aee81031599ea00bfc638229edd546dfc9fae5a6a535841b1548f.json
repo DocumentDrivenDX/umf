@@ -16,7 +16,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -607,7 +607,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -652,9 +652,9 @@
   ],
   "sources": [
     {
-      "bytes": 4041,
+      "bytes": 4042,
       "path": "spec/extensions/delta-log/inspection.schema.json",
-      "sha256": "8860a03aea2857569286486429b20657cd19f058c38d611f4824332aed50b06b"
+      "sha256": "a79ebbbed6f88c1107eaa5c76b5b4cb4582bacc88a6b67e852faa4ba4df5534b"
     }
   ],
   "summary": "spec/extensions/delta-log/inspection.schema.json",

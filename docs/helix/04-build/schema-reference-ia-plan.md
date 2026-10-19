@@ -271,3 +271,105 @@ coverage, passing named journeys, preserved historical routes and original sourc
 reviewed screenshots, and an explicit account of any unverified human usability.
 Plans, generated counts and green layout assertions alone cannot establish that
 readers understand the reference.
+
+## Current-only reader and workbench follow-up — 2026-10-18
+
+Owner direction supersedes the optional History presentation above. The reader
+now documents core 0.10.0 without release controls or badges; earlier core links
+resolve to the current schema while preserving a valid pointer. Current guides
+explain concepts rather than core release history. Exact inventories, original
+schema sources and native/extension qualifications remain retained.
+
+All authored UMF workbench examples now validate as core 0.10.0. Inputs open as
+YAML; YAML/JSON buttons format current edited values through a verified worker.
+The output serialization choice also defaults to YAML. Malformed, duplicate-key
+and noninteroperable numeric conversions retain the input and selected format.
+The original loaded/edited source remains downloadable after formatting.
+Protobuf source retains native syntax. The public property/default execution API
+still rejects the current envelope, so its workbench operation is unavailable
+rather than relabeling user documents or claiming current support. Its authored
+schema-properties example now demonstrates current validation.
+
+Every schema disclosure, including complete examples, starts closed. Chromium
+checks explicit expansion, keyboard format switching, old links, desktop/mobile
+layout, current validator execution, unknown preservation, native projection,
+strict refusal and cancellation. Both browser suites passed 43 checks with zero
+page errors/external requests. Reference tests passed 18 tests/13,964 assertions;
+type checking and the 19-file boundary checker passed. The separately integrated
+main-branch catalog parser changes passed three additional tests.
+
+Self-description investigation: FR-35 remains a deferred requirement. No authored
+UMF model of the UMF metamodel was found; JSON Schemas and TypeScript declarations
+are the existing machine-readable authorities. A concept graph derived from a
+self-model is distinct from the generated JSON Schema reference graph. No
+self-model or ontology diagram is claimed by this documentation patch.
+
+Confirmed clarification: “all schemas collapsed” applies to both the reference
+and the separate schema catalog. The site host closes the initial catalog groups,
+then relinquishes control so user expansion, search and navigation use the
+released browser normally. No installed renderer, CSS or workspace markup is
+modified. Independent Chromium inspection found 115 groups/zero open on startup,
+with explicit expansion and 17 expanded matching groups after medical search.
+
+The final combined browser replay passed 44 checks with zero page errors or
+external requests; the installed package asset/workspace parity check and type
+checking passed after the catalog host change.
+
+Publication follow-up: CI's legacy artifact collection driver waited for a button
+inside the initially expanded first catalog group. It now asserts the collapsed
+startup state and explicitly opens that group before continuing. Its full local
+Chromium journey passes 37 checks over six collections and four bookmark aliases,
+including ontology graph interactions and field-filter history, with no external
+data requests. This corrects the driver for the new desired behavior; the catalog
+startup policy is unchanged.
+
+## Publication signature refresh — 2026-10-18
+
+After the operator unlocked 1Password, the pinned Innsigle CLI refreshed the
+catalog page's mixed-composition signature using the existing human-role key.
+The colophon retains the existing page contributions and records Codex's catalog
+startup change without inventing a human-input percentage. Public claims were
+copied into the site's well-known tree; all seven curated page signatures now
+verify locally. No private key material is stored in the repository or evidence.
+
+
+## Owner correction: automated signing for all content — 2026-10-18
+
+The owner clarified that no site content requires human authorship signatures.
+The attempted mixed catalog seal above is superseded before publication and is
+not being shipped. All current first-party HTML uses model-primary provenance
+and the existing registered build key. Remove manual/curated signature gates,
+1Password configuration and any interactive fallback. Keep full inventory,
+digest, role and cryptographic verification. Historical public keys remain.
+
+Automated-policy verification: five tests/29 assertions pass, including all 24
+inventoried pages, missing-key refusal and rejection of human/1Password settings.
+The pinned Innsigle CLI sealed and cryptographically verified three representative
+root/Actions/Reference fixture pages using an ephemeral Ed25519 environment key;
+a trap confirmed zero 1Password invocations. Public claims were synchronized
+before verification. No production private material was accessed by this test.
+Type checking passes; the reference was regenerated for the changed publication
+configuration, workflow and governing contract.
+
+## Authorized self-description and consolidation execution — 2026-10-18
+
+The owner now authorizes FR-35's current core projection, a graphical ontology,
+one Schemas entry point, browser verification and deployment. This supersedes
+the deferred-self-description investigation above. Governing PRD, feature,
+story, solution/technical design, contract and test plan are amended in place.
+
+Build the traceable YAML model and explicit annotation vocabulary first; refuse
+bootstrap drift. Reuse the pinned public graph renderer. Add Ontology/Object
+reference/Model catalog navigation while preserving legacy routes and exact
+catalog workspace. Verify Bun, boundaries, typing, Chromium, screenshots and
+live signatures after automated publication. Record outcomes under
+`evidence/generated-reference/ontology/`; no recruited-reader proof is assumed.
+
+Self-description local execution is complete: 21 reference tests /13,998 assertions,
+13 ontology Chromium journeys, 44 existing reader/workbench checks and 37 catalog
+checks pass. Type checking, the 23-file boundary scan, exact package workspace/asset
+parity, guide regeneration and the 24-page signing inventory pass. Required-key
+presence is retained separately from nullability; the null-literal regression
+prevents an overstrong self-model claim. A four-minute deterministic-test timeout
+was raised to ten minutes without weakening its assertions; final full replay
+passes in94.51 seconds. Live publication remains a subsequent gated action.

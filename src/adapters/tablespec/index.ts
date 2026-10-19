@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/tablespec/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -24,7 +25,7 @@ function columns(root:NativeJson):{name:string;elements:Element[];native:NativeJ
 export function importTableSpec(text:string,options:{id:string;format:'json'|'yaml'}):Document {
  if(!['json','yaml'].includes(options.format))throw new UmfError('TABLESPEC_FORMAT','Expected json or yaml');
  const root=parse(text,options.format),table=columns(root),payload:Payload={profile:'tablespec-table-1',root,originalSource:text,originalFormat:options.format};
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[TABLESPEC_EXTENSION]:{version:'0.1.0'}},extensions:{[TABLESPEC_EXTENSION]:payload as unknown as Json},modules:[{id:'table',namespace:table.name,elements:table.elements}]};
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[TABLESPEC_EXTENSION]:{version:'0.1.0'}},extensions:{[TABLESPEC_EXTENSION]:payload as unknown as Json},modules:[{id:'table',namespace:table.name,elements:table.elements}]};
  if(!inspectTableSpec(doc).valid)throw new UmfError('TABLESPEC_DOCUMENT','Invalid UMF representation');return doc;
 }
 export function inspectTableSpec(document:Document){return validateDocument(document,new Registry().register(tablespecPackage));}

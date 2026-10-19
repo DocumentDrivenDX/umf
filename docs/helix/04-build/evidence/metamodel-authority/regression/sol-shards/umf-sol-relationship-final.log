@@ -1,0 +1,95 @@
+{"testProcess":"tests/relationship/authored-corpus.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/authored-corpus.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/authored-corpus.test.ts:
+(pass) @covers US-045-AC2: keyed authored shape corpus uses exact owned endpoint and target Key IDs [0.43ms]
+
+ 1 pass
+ 0 fail
+ 130 expect() calls
+Ran 1 test across 1 file. [10.00ms]
+{"testProcess":"tests/relationship/authored-corpus.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":130,"completeSummary":true,"logSha256":"75351c1ae67c840b985294080e0bf4a18c17e1389215f72c438280e446f91367"}
+{"testProcess":"tests/relationship/graphql-native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/graphql-native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/graphql-native.test.ts:
+(pass) @covers US-045-AC5 @covers US-045-AC7: object-returning SDL fields stay native observations [276.69ms]
+(pass) @covers US-045-AC5: two native object fields with the same type do not prove association intent [0.03ms]
+
+ 2 pass
+ 0 fail
+ 10 expect() calls
+Ran 2 tests across 1 file. [7.30s]
+{"testProcess":"tests/relationship/graphql-native.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":10,"completeSummary":true,"logSha256":"21b0d3da2cf8b21b6a3baaa142ce3c499e76768d34b09cb98e5a741035afb692"}
+{"testProcess":"tests/relationship/graphql-target.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/graphql-target.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/graphql-target.test.ts:
+(pass) @covers US-049-AC3 @covers US-049-AC5: expected SDL carries declared navigations while native import preserves source without author intent [311.61ms]
+
+ 1 pass
+ 0 fail
+ 19 expect() calls
+Ran 1 test across 1 file. [5.62s]
+{"testProcess":"tests/relationship/graphql-target.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":19,"completeSummary":true,"logSha256":"f21a7270544f4618017ee9f08d68dba9914f8d7d1e608312052a66b384bf654f"}
+{"testProcess":"tests/relationship/keyed-ddd-graph.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/keyed-ddd-graph.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/keyed-ddd-graph.test.ts:
+(pass) @covers US-045-AC2 @covers US-046-AC1 @covers US-048-AC1 @covers US-049-AC1: shared authored DDD graph gains explicit Key ownership without changing DDD meaning [0.58ms]
+
+ 1 pass
+ 0 fail
+ 78 expect() calls
+Ran 1 test across 1 file. [16.00ms]
+{"testProcess":"tests/relationship/keyed-ddd-graph.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":78,"completeSummary":true,"logSha256":"3b202a66d3a8d7d9fc761af67ae9c773918893af6bb68029e9817c277174a6e7"}
+{"testProcess":"tests/relationship/native-avro-parquet.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/native-avro-parquet.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/native-avro-parquet.test.ts:
+(pass) @covers US-045-AC4: native Avro and Parquet value/id carriers preserve sources without authored relationship inference [238.69ms]
+
+ 1 pass
+ 0 fail
+ 15 expect() calls
+Ran 1 test across 1 file. [6.55s]
+{"testProcess":"tests/relationship/native-avro-parquet.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":15,"completeSummary":true,"logSha256":"70e0a2f43bc7c13e9922ed0bd452354596f85461fc00bbce47f213c7bfabefa2"}
+{"testProcess":"tests/relationship/postgresql-layout-proposal.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/postgresql-layout-proposal.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/postgresql-layout-proposal.test.ts:
+(pass) @covers US-048-AC1 @covers US-048-AC8: Key/relationship layout proposal resolves exact IDs and never widens a partitioned authored Key [0.52ms]
+
+ 1 pass
+ 0 fail
+ 72 expect() calls
+Ran 1 test across 1 file. [20.00ms]
+{"testProcess":"tests/relationship/postgresql-layout-proposal.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":72,"completeSummary":true,"logSha256":"d0b2cd4e5dce497a6f5ecea7c970399b4b7f8b80ba0829727f7f2f38c2aaf4ad"}
+{"testProcess":"tests/relationship/postgresql-native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/postgresql-native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/postgresql-native.test.ts:
+(pass) @covers US-045-AC5 @covers US-045-AC7: native FK refinements remain observations with exact source recovery [468.31ms]
+(pass) @covers US-045-AC5: pinned catalog distinguishes validation, MATCH SIMPLE and alternate UNIQUE target [0.07ms]
+
+ 2 pass
+ 0 fail
+ 11 expect() calls
+Ran 2 tests across 1 file. [7.04s]
+{"testProcess":"tests/relationship/postgresql-native.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":11,"completeSummary":true,"logSha256":"45dc84d9f046516446a336639febe1c0dfee1dc08f062a5890657a02da7727a7"}
+{"testProcess":"tests/relationship/postgresql-target.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship/postgresql-target.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship/postgresql-target.test.ts:
+(pass) @covers US-048-AC5 @covers US-048-AC7: expected relationship DDL is native-valid and its archive remains recoverable [546.17ms]
+
+ 1 pass
+ 0 fail
+ 16 expect() calls
+Ran 1 test across 1 file. [6.62s]
+{"testProcess":"tests/relationship/postgresql-target.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":16,"completeSummary":true,"logSha256":"65d47532a779501327e0c3620caaef6f59624d223699188fd9e816bdc96f67a5"}
+
+ 10 pass
+ 0 fail
+ 351 expect() calls
+Ran 10 tests across 8 files. [33.34s]

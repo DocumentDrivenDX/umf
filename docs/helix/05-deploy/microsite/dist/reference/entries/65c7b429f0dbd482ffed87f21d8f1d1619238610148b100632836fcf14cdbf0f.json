@@ -10,8 +10,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -47,7 +47,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.7.0"
+                              "value": "urn:umf:core:0.10.0"
                             }
                           }
                         }
@@ -451,14 +451,14 @@
   "id": "[\"schema\",\"spec/projections/postgresql-relationship-layout-result.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]",
     "[\"schema\",\"spec/projections/postgresql-relationship-layout.schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 2651,
+      "bytes": 2652,
       "path": "spec/projections/postgresql-relationship-layout-result.schema.json",
-      "sha256": "57e54f677fe829efc0e35bfd38c3fa963b208381a29b46f6c853dd947b536498"
+      "sha256": "e5c156aaae6cabdfc4c32d2abf5a8b8b14e52c8b4e0d077003fcc04b1754d3fb"
     }
   ],
   "summary": "spec/projections/postgresql-relationship-layout-result.schema.json",

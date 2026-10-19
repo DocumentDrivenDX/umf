@@ -4,12 +4,12 @@ import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field
 import {importTableSpec,exportTableSpec} from '../adapters/tablespec';
 import {type FieldTableSpecRequest,type FieldTableSpecProjection} from './field-tablespec-projection';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/record-tablespec-projection.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/record-tablespec-projection.schema.json';
 export {default as recordTableSpecProjectionSchema} from '../../spec/core/record-tablespec-projection.schema.json';
 export interface RecordTableSpecRequest {id:string;tableName:string;mode:'strict'|'report';fields:{author:CoreKindDeclaration;columnName:string;nativeType:FieldTableSpecRequest['nativeType']}[]}
 const binding={id:'umf.core.record.tablespec',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Authored record with explicit flat field carriers; no value-domain or execution equivalence'} as const;
 export interface RecordTableSpecProjection {operation:'project-record-tablespec';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordTableSpecRequest;binding:typeof binding;target?:Document;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldTableSpecProjection['residuals'];diagnostics:Diagnostic[]}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 export function projectRecordToTableSpec(input:CoreKindDeclaration,options:RecordTableSpecRequest):RecordTableSpecProjection {
  const copied=copyJson(input) as unknown as CoreKindDeclaration,author=verifyCoreKindDeclaration(copied,copied.target),source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as RecordTableSpecRequest;
  if(!checkRequest(request))throw new UmfError('RECORD_TABLESPEC_REQUEST',JSON.stringify(checkRequest.errors));

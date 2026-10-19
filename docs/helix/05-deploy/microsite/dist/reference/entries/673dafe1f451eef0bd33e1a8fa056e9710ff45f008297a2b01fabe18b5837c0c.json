@@ -5,8 +5,8 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -292,7 +292,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.8.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -475,14 +475,14 @@
   "id": "[\"schema\",\"spec/extensions/actions/inspection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]",
     "[\"schema\",\"spec/extensions/actions/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 3319,
+      "bytes": 3320,
       "path": "spec/extensions/actions/inspection.schema.json",
-      "sha256": "af441517d4b1b45ca0c0c950a4baeb0fe660f815f9670d3813373959d38760a4"
+      "sha256": "83bbd251ea513ccbcaad1f5391a8b750906102ca1ebe357dd14663935005b286"
     }
   ],
   "summary": "spec/extensions/actions/inspection.schema.json",

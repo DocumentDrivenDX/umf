@@ -1,0 +1,115 @@
+{
+  "umf": "0.1.0",
+  "id": "cpp-21.0.0/generated_binary_zerolength.arrow_file/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "binary_nullable",
+                          "nullable": true,
+                          "type": {
+                            "type": "Binary",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "binary_nonnullable",
+                          "type": {
+                            "type": "Binary",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "utf8_nullable",
+                          "nullable": true,
+                          "type": {
+                            "type": "Utf8",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "utf8_nonnullable",
+                          "type": {
+                            "type": "Utf8",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "fixedsizebinary_19_nullable",
+                          "nullable": true,
+                          "type": {
+                            "type": "FixedSizeBinary",
+                            "value": {
+                              "byteWidth": 19
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "fixedsizebinary_19_nonnullable",
+                          "type": {
+                            "type": "FixedSizeBinary",
+                            "value": {
+                              "byteWidth": 19
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "fixedsizebinary_120_nullable",
+                          "nullable": true,
+                          "type": {
+                            "type": "FixedSizeBinary",
+                            "value": {
+                              "byteWidth": 120
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "fixedsizebinary_120_nonnullable",
+                          "type": {
+                            "type": "FixedSizeBinary",
+                            "value": {
+                              "byteWidth": 120
+                            }
+                          },
+                          "children": []
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

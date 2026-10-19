@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11531,
-        "line": 20,
+        "bytes": 10292,
+        "line": 18,
         "path": "src/model/relationships.ts",
-        "sha256": "8929351add3903d0ab1deec8e060541c2bb4a6ce5ade9b936f7af71619263b90"
+        "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreRelationshipInspection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreRelationshipInspection extends OperationContext {operation:'inspect-core-relationships';version:'3.0.0'|'1.0.0'|'2.0.0';source:Source;identity:RelationshipModuleIdentity;path:string;meaning:CoreRelationshipMeaning;provenance:'unverified'}"
+      "export interface CoreRelationshipInspection extends OperationContext {operation:'inspect-core-relationships';version:'3.0.0';source:Source;identity:RelationshipModuleIdentity;path:string;meaning:CoreRelationshipMeaning;provenance:'unverified'}"
     ]
   },
   "id": "[\"api\",\".\",\"CoreRelationshipInspection\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11531,
-      "line": 20,
+      "bytes": 10292,
+      "line": 18,
       "path": "src/model/relationships.ts",
-      "sha256": "8929351add3903d0ab1deec8e060541c2bb4a6ce5ade9b936f7af71619263b90"
+      "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
     }
   ],
   "summary": "Type declaration · src/model/relationships.ts",

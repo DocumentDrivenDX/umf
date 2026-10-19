@@ -30,129 +30,7 @@
       }
     },
     "source": {
-      "$ref": "urn:umf:core:0.7.0"
-    },
-    "lookup": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "operation",
-        "version",
-        "source",
-        "identity",
-        "path",
-        "meaning",
-        "provenance"
-      ],
-      "properties": {
-        "operation": {
-          "const": "inspect-core-cardinality"
-        },
-        "version": {
-          "const": "4.0.0"
-        },
-        "source": {
-          "$ref": "#/$defs/source"
-        },
-        "identity": {
-          "$ref": "#/$defs/identity"
-        },
-        "path": {
-          "type": "string"
-        },
-        "provenance": {
-          "const": "unverified"
-        },
-        "meaning": {
-          "oneOf": [
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state",
-                "cardinality"
-              ],
-              "properties": {
-                "state": {
-                  "const": "known"
-                },
-                "cardinality": {
-                  "$ref": "#/$defs/cardinality"
-                },
-                "itemType": {
-                  "$ref": "#/$defs/itemType"
-                }
-              },
-              "allOf": [
-                {
-                  "if": {
-                    "required": [
-                      "itemType"
-                    ],
-                    "properties": {
-                      "itemType": {}
-                    }
-                  },
-                  "then": {
-                    "properties": {
-                      "cardinality": {
-                        "enum": [
-                          "array",
-                          "map"
-                        ]
-                      }
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state"
-              ],
-              "properties": {
-                "state": {
-                  "const": "missing"
-                }
-              }
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state",
-                "value"
-              ],
-              "properties": {
-                "state": {
-                  "const": "unknown"
-                },
-                "value": {
-                  "type": "string",
-                  "minLength": 1,
-                  "not": {
-                    "$ref": "#/$defs/cardinality"
-                  }
-                }
-              }
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state"
-              ],
-              "properties": {
-                "state": {
-                  "const": "inapplicable"
-                }
-              }
-            }
-          ]
-        }
-      }
+      "$ref": "urn:umf:core:0.10.0"
     },
     "declaration": {
       "type": "object",
@@ -174,10 +52,10 @@
           "const": "4.0.0"
         },
         "source": {
-          "$ref": "urn:umf:core:0.7.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "target": {
-          "$ref": "urn:umf:core:0.7.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "identity": {
           "$ref": "#/$defs/identity"
@@ -287,9 +165,6 @@
     }
   },
   "oneOf": [
-    {
-      "$ref": "#/$defs/lookup"
-    },
     {
       "$ref": "#/$defs/declaration"
     }

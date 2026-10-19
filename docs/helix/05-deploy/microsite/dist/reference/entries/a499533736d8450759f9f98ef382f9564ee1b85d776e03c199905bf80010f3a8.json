@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -562,7 +562,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -598,7 +598,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -647,9 +647,9 @@
   ],
   "sources": [
     {
-      "bytes": 3992,
+      "bytes": 3994,
       "path": "spec/projections/postgresql-row-json-schema.schema.json",
-      "sha256": "3671a7c5c2d82310f1d2d84d10970f28cd825f439a7af98db25178a1a5f7d4f1"
+      "sha256": "37d8c1014f91cedc5e8408e6074777c40478dafd1e17e2593e48002233a72ec1"
     }
   ],
   "summary": "spec/projections/postgresql-row-json-schema.schema.json",

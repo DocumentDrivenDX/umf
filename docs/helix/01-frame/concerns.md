@@ -117,3 +117,15 @@ browser and runtime modules mapped in Architecture. CONTRACT-077 owns shared
 surfaces; TD-089 requires boundary-checker adoption and negative controls before
 dependent implementation. This selection does not claim an existing checker
 already enforces those new paths.
+
+## Generated ontology access
+
+FEAT-033 follows the existing fidelity, identity, reproducibility, bounded
+processing and consumer-runtime constraints. ADR-002 governs the generator;
+generated Python uses only the standard library. Future generator/codec modules
+retain the existing encapsulation requirements. Developers need no extra setup.
+
+The owner's shared-API clarification makes stdlib-only generated models and
+runtime expression composition common to table and ontology access. Compilation,
+preparation and optional runtime dependencies belong inside consumer bindings;
+mandatory `@query`/`Param` application scaffolding is superseded by ADR-004.

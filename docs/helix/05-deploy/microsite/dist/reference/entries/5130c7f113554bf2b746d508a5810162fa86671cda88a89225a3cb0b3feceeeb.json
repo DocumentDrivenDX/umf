@@ -16,7 +16,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -868,7 +868,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -927,9 +927,9 @@
   ],
   "sources": [
     {
-      "bytes": 7445,
+      "bytes": 7446,
       "path": "spec/extensions/parquet/rows.schema.json",
-      "sha256": "5b1896386e33acad85d0810ff2c9a0869a34cb4c08c563b8436608d07866fc3e"
+      "sha256": "c3035bc55e63af1ffa41e3ff973f0e25d24471eb958a23595d2e92e347864cf6"
     }
   ],
   "summary": "spec/extensions/parquet/rows.schema.json",

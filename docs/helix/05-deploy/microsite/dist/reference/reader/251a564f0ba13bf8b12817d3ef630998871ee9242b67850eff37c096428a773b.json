@@ -2,7 +2,7 @@
   "alternatives": [],
   "authored": false,
   "id": "[\"api\",\".\",\"ExtensionPackage\"]",
-  "kind": "Interface",
+  "kind": "Type alias",
   "members": [
     {
       "description": "",
@@ -23,7 +23,7 @@
       "links": [],
       "name": "coreVersion",
       "optional": false,
-      "type": "\"0.1.0\""
+      "type": "\"0.10.0\""
     },
     {
       "description": "",
@@ -34,12 +34,10 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"JsonObject\"]"
-      ],
+      "links": [],
       "name": "schema",
       "optional": false,
-      "type": "boolean | JsonObject"
+      "type": "boolean | { [key: string]: unknown; }"
     },
     {
       "description": "",
@@ -50,23 +48,21 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Scope\"]"
-      ],
+      "links": [],
       "name": "scopes",
       "optional": false,
-      "type": "Scope[]"
+      "type": "(\"module\" | \"element\" | \"document\")[]"
     },
     {
       "description": "",
       "links": [],
       "name": "capabilities",
       "optional": false,
-      "type": "{ validation: \"structural\" | \"semantic\"; directions: (\"import\" | \"export\")[]; evidence: string[]; native?: { system: string; version: string; subset: string; }; }"
+      "type": "{ [key: string]: unknown; validation: \"structural\" | \"semantic\"; directions: (\"import\" | \"export\")[]; evidence: (string)[]; native?: { \"system\": string; \"version\": string; \"subset\": string; [key: string]: unknown; }; }"
     }
   ],
   "parameters": [],
-  "purpose": "ExtensionPackage is a interface in Extensions. Its exact structure is documented below.",
+  "purpose": "ExtensionPackage is a type alias in Extensions. Its exact structure is documented below.",
   "related": [],
   "returns": "",
   "task": "Extensions",

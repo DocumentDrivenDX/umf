@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {getBinding,inspectBinding} from './index';
 import {copyJson} from '../../model/json';
 import {inspectCoreRecordMembers} from '../../model/record-members';
@@ -31,7 +32,7 @@ export function inspectRawTableBinding(binding:Document,logical:Document,target:
   if(!base.complete)add('','Uninterpreted binding content blocks the declarative profile');
   const p=getBinding(binding,logical);
   if(p.profile!=='umf-binding-2'||binding.vocabularies['umf.binding']?.version!=='0.2.0')add('/profile','Expected stable-ID binding 0.2.0');
-  if(logical.umf!=='0.8.0')add('/logical/coreVersion','Expected core 0.8.0 logical model');
+  if(logical.umf!==CURRENT_CORE_VERSION)add('/logical/coreVersion','Expected core 0.10.0 logical model');
   if(!rawTableBindingProfiles.some(profile=>profile.system===p.target.system)||p.target.subset!==RAW_TABLE_BINDING_SUBSET)add('/target','Unsupported declarative target profile');
   if(!target||typeof target!=='object'||Array.isArray(target)||Object.keys(target).some(key=>!['platform','majorVersion'].includes(key))||typeof target.platform!=='string'||typeof target.majorVersion!=='string'||!target.majorVersion.length||target.platform!==p.target.system||target.majorVersion!==p.target.version)add('/target','ColumnSet target must match the exact authored platform and version identity');
   if(typeof module!=='string'||!logical.modules.some(m=>m.id===module)||!p.elements.some(e=>e.module===module))add('/elements','ColumnSet module must have an explicit bound Record');
@@ -44,7 +45,7 @@ export function inspectRawTableBinding(binding:Document,logical:Document,target:
     const record=logical.modules.find(m=>m.id===row.module)?.elements.find(e=>e.id===row.element);
     if(record?.kind!=='record'||!row.table||Object.hasOwn(row,'partition'))add(`/elements/${index}`,'Expected explicit Record table without partition semantics');
     if(row.table){if(tables.has(row.table))add(`/elements/${index}/table`,'Duplicate physical table identity');tables.add(row.table);}
-    if(record?.kind==='record'&&logical.umf==='0.8.0'){
+    if(record?.kind==='record'&&logical.umf===CURRENT_CORE_VERSION){
       const {meaning}=inspectCoreRecordMembers(logical,{module:row.module,element:row.element});
       if(meaning.state!=='known')add(`/elements/${index}`,'Explicit fully interpreted Record membership is required');
       else for(const member of meaning.members){const id=key(member),list=owners.get(id)??[];list.push(key(row));owners.set(id,list);}

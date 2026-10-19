@@ -1,4 +1,4 @@
-# Document research tools 1.0.1
+# Document research tools 1.0.2
 
 UMF distributes tools, configuration and evidence. Generated dataset and tool
 ZIPs are consumer outputs and are not published release assets.
@@ -10,7 +10,7 @@ TableSpec 0.0.9 remains the installable native Python collector wheel.
 ```sh
 git clone --branch main https://github.com/DocumentDrivenDX/umf.git
 cd umf
-# Produce fixed-corpus archives in your own directory, with Bun 1.3.14:
+# Produce fixed-corpus archives in your own directory, with Bun 1.4.2:
 bun scripts/build-domain-pack-releases.ts --output /absolute/path/local-pack-archives
 # Optional authored research-tools archive; contains no acquired originals:
 python3 scripts/build-document-research-release.py --archive /absolute/path/document-research-tools.zip
@@ -47,6 +47,6 @@ genuine contact user agent. Databricks authentication/read-only discovery passed
 live serverless collection and Unity Catalog volume behavior remain pending
 caller-designated scratch targets. No screening, scheduler, PACER or email claim.
 
-[Local Spark evidence](https://documentdrivendx.github.io/umf/research/supreme-court-spark-runtime.md)
-and [SEC/Databricks preparation](https://documentdrivendx.github.io/umf/research/public-company-live-qualification.md)
-retain machine-readable JSON receipts in the same directory.
+[Local Spark evidence](https://github.com/documentdrivendx/umf/blob/19fe5f1bc98840e3177e0d05584321c1e274bfdd/docs/helix/04-build/evidence/supreme-court-spark-runtime.md)
+and [SEC/Databricks preparation](https://github.com/documentdrivendx/umf/blob/19fe5f1bc98840e3177e0d05584321c1e274bfdd/docs/helix/04-build/evidence/public-company-live-qualification.md)
+retain machine-readable JSON receipts beside the original reports at that immutable revision. These historical observations do not qualify the current model or runtime. Current release inventories link and hash this evidence without republishing it as current artifacts.

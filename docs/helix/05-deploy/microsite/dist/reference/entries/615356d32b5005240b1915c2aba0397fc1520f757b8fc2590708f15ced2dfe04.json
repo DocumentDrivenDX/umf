@@ -21,7 +21,7 @@
         },
         "validation": "structural"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "Avro scalar facet classification and authored projection with retained native semantics",
       "id": "umf.avro.facets",
       "schema": {
@@ -158,7 +158,7 @@
       "scopes": [
         "element"
       ],
-      "semantics": "CONTRACT-040 and TD-043; core 0.5.0 profile-qualified facet classification; declaration meaning is separate from native enforcement; classification and authored projection are experimental; binding qualification is recorded separately in versioned acceptance evidence",
+      "semantics": "CONTRACT-040 and TD-043; profile-qualified facet classification; declaration meaning is separate from native enforcement; classification and authored projection are experimental; binding qualification is recorded separately in versioned acceptance evidence",
       "version": "1.0.0"
     },
     "registration": {
@@ -179,9 +179,9 @@
   ],
   "sources": [
     {
-      "bytes": 4212,
+      "bytes": 4202,
       "path": "spec/extensions/avro-facets/package.json",
-      "sha256": "7d62ff05399c6daf1b7689a66bd5180cd3f11454bebbc31edce84b04a60c577d"
+      "sha256": "e028099e1ba1d6c1fc584444d302f165184469acbcaf69990073c178a433d313"
     }
   ],
   "summary": "Avro scalar facet classification and authored projection with retained native semantics",

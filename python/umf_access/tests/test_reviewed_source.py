@@ -22,7 +22,7 @@ from umf_access.types import StrictModel
 
 
 class StaleKey(StrictModel):
-    KEY_IDENTITY: ClassVar[dict[str, str]] = {"documentId": "praxis-read-test", "coreVersion": "0.8.0", "module": "commerce", "element": "Order", "key": "Order_key"}
+    KEY_IDENTITY: ClassVar[dict[str, str]] = {"documentId": "praxis-read-test", "coreVersion": "0.10.0", "module": "commerce", "element": "Order", "key": "Order_key"}
     UMF_SOURCE: ClassVar[GeneratedSource] = replace(SOURCE, input_digest="b" * 64)
     id: int
 

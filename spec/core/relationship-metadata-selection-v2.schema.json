@@ -11,7 +11,7 @@
       "const": "2.0.0"
     },
     "source": {
-      "$ref": "urn:umf:core:0.9.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "query": {
       "$ref": "#/$defs/query"
@@ -43,7 +43,7 @@
             "type": "string"
           },
           "relationship": {
-            "$ref": "urn:umf:core:0.9.0#/$defs/relationship"
+            "$ref": "urn:umf:core:0.10.0#/$defs/relationship"
           },
           "sources": {
             "type": "array",
@@ -51,7 +51,7 @@
               "type": "object",
               "properties": {
                 "reference": {
-                  "$ref": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                  "$ref": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                 },
                 "recordPath": {
                   "type": "string"
@@ -70,7 +70,7 @@
               "type": "object",
               "properties": {
                 "reference": {
-                  "$ref": "urn:umf:core:0.9.0#/$defs/relationshipTarget"
+                  "$ref": "urn:umf:core:0.10.0#/$defs/relationshipTarget"
                 },
                 "recordPath": {
                   "type": "string"
@@ -91,7 +91,7 @@
             "type": "object",
             "properties": {
               "reference": {
-                "$ref": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                "$ref": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
               },
               "recordPath": {
                 "type": "string"
@@ -123,13 +123,13 @@
                   "from": {
                     "type": "array",
                     "items": {
-                      "$ref": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                      "$ref": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                     }
                   },
                   "to": {
                     "type": "array",
                     "items": {
-                      "$ref": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                      "$ref": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                     }
                   }
                 },
@@ -157,13 +157,13 @@
                   "from": {
                     "type": "array",
                     "items": {
-                      "$ref": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                      "$ref": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                     }
                   },
                   "to": {
                     "type": "array",
                     "items": {
-                      "$ref": "urn:umf:core:0.9.0#/$defs/relationshipEndpoint"
+                      "$ref": "urn:umf:core:0.10.0#/$defs/relationshipEndpoint"
                     }
                   }
                 },

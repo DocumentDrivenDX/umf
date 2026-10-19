@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/shacl/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -13,7 +14,7 @@ const key=(v:Value)=>JSON.stringify(v.kind==='literal'?[v.kind,v.value,v.datatyp
 const unique=(values:Value[])=>[...new Map(values.map(v=>[key(v),v])).values()];
 function rdfEnvelope(p:Json):Document {
  const payload=copyJson(p) as Record<string,Json>;delete payload.shaclVersion;
- return {umf:'0.1.0',id:'shacl:graph',vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:payload}}]}]};
+ return {umf:CURRENT_CORE_VERSION,id:'shacl:graph',vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:payload}}]}]};
 }
 function inspect(p:Json):Diagnostic[]{return [...inspectRdfDocument(rdfEnvelope(p)).diagnostics,{code:'SHACL_SCOPE',path:'',severity:'warning',message:'SHACL 1.0 graph preservation, property paths and Core target selection only. Constraint validation, imports, general entailment and SHACL 1.2 are not implemented.'}];}
 export function shaclRegistry(){return new Registry().register(shaclPackage,inspect);}

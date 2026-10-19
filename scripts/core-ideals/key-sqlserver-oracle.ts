@@ -2,11 +2,11 @@ import {assertJsonDataEqual} from './json-data-assert';
 /** Independent SQL Server execution of projector-generated DDL. Host-only. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerIndexMetadata,getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
-import {readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerIndexMetadata, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
+import {readDocument, writeDocument} from '../../src';
 import {sqlserverKeyProjectionCases} from './key-sqlserver-projection-cases';
-import {projectKeysToSqlServer,recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';
-import {classifySqlServerKeys,recoverSqlServerKeySource} from '../../src/core-ideals/key-sqlserver';
+import {projectKeysToSqlServer, recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';
+import {classifySqlServerKeys, recoverSqlServerKeySource} from '../../src/core-ideals/key-sqlserver';
 import {sqlServerKeySessionOptions} from '../../src/core-ideals/key-sqlserver-carriers';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-key-projector-'+randomUUID(),password='Umf!'+randomUUID()+'A9';
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';

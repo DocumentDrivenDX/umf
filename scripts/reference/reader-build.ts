@@ -1,3 +1,4 @@
+import {buildSelfModel} from './self-model';
 import {join} from 'node:path';
 import {identity,latestProfile,schemaNode,treeValue,type Entry,type ReaderCatalog} from '../../docs/helix/05-deploy/reference/model';
 import {apiDocumentation} from './extract';
@@ -5,6 +6,7 @@ import {concepts,propertyText,scalarMeanings,examples} from './reader-content';
 import {sha,json,config} from './io';
 import {validateDocument,writeDocument,readDocument,type Document} from '../../src/index';
 export async function buildReader(stage:string,entries:Entry[],profiles:any,validate:(name:string,value:unknown)=>Promise<void>){
+ await buildSelfModel(stage);
  const latest=latestProfile<{version:string;schemaPath:string}>(profiles.coreProfiles),id=identity('schema',latest.schemaPath,''),source=entries.find(e=>e.id===id);
  if(!source)throw Error('REFERENCE_LINK missing latest core');
  for(const c of concepts)schemaNode(source.data.sourceData,c.pointer);

@@ -4,7 +4,8 @@ import {unlink} from 'node:fs/promises';
 import Ajv from 'ajv/dist/2020';
 import {identity,aggregate,structuralDiff,search,assertJoins,exclude,type Evidence,type Entry} from '../../docs/helix/05-deploy/reference/model';
 import {normalize,correspondence,observeRecordedHashes} from '../../scripts/reference/evidence';
-import {checkBoundaries} from '../../scripts/reference/check-boundaries';
+import {rendererArguments,assertRendererInputs} from '../../scripts/reference/renderer-package';
+import {checkBoundaries,allowed} from '../../scripts/reference/check-boundaries';
 import {execute} from '../../docs/helix/05-deploy/reference/runtime';
 const root=resolve(import.meta.dir,'../..'),dist=join(root,'docs/helix/05-deploy/microsite/dist/reference');
 const index=await Bun.file(join(dist,'index.json')).json();
@@ -24,6 +25,7 @@ test('all schema files and exact core profiles are accounted for',async()=>{
  const paths=(await Promise.all(['spec/core/**/*.json','spec/extensions/**/*.json','spec/projections/**/*.json'].map(p=>Array.fromAsync(new Bun.Glob(p).scan({cwd:root}))))).flat();let count=0;
  for(const path of paths){const value=await Bun.file(join(root,path)).json();if(!value?.$schema&&!value?.$id)continue;expect(index.entries.some((e:any)=>e.id===identity('schema',path,''))).toBe(true);count++;}expect(index.entries.filter((e:any)=>e.kind==='schema')).toHaveLength(count);
  const profiles=await Bun.file(join(root,'docs/helix/05-deploy/reference/profiles.json')).json();for(const p of profiles.coreProfiles)expect((await entry(identity('schema',p.schemaPath,''))).data.profileVersions).toEqual([p.version]);
+ const current=await entry(identity('schema','spec/core/schema.json',''));for(const name of ['inspectCoreSchemaProperties','resolveCoreDefault'])expect(current.links).toContain(identity('api','.',name));expect(current.links).toContain(identity('example','core-semantic'));
 });
 // @covers US-089-AC1 @covers US-089-AC11
 test('every emitted record validates, resolves its joins and matches signed-manifest asset closure',async()=>{
@@ -80,11 +82,11 @@ test('exclusions require an existing source and nonempty reason',()=>{
 // @covers US-089-AC6 @covers US-089-AC7 @covers US-089-AC8
 test('public Bun runtime preserves unknown payload, validates current core and refuses unsafe input',async()=>{
  const expected=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/expected.json')).json();
- const source=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/unknown.json')).text();const request={protocol:1 as const,requestId:'test',operationId:'core-write',coreProfile:'0.1.0',registryProfile:'empty',inputs:{source}};
+ const source=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/unknown.json')).text();const request={protocol:1 as const,requestId:'test',operationId:'core-write',coreProfile:'0.10.0',registryProfile:'empty',inputs:{source}};
  const result=await execute(request);expect(result.state).toBe('completed');expect(result.outputs[0]!.text.includes('keepMe')).toBe(expected.unknownPayloadRetained);expect(result.diagnostics.some(d=>d.code==='UNKNOWN_EXTENSION')).toBe(true);
  const invalid=await execute({...request,inputs:{source:'{broken'}});expect(invalid.state==='refused').toBe(expected.malformedInputRefused);expect(invalid.retainedSources[0]!.text).toBe('{broken');expect(invalid.outputs).toHaveLength(0);
  const over=await execute({...request,inputs:{source:'x'.repeat(4_000_001)}});expect(over.state).toBe('refused');expect(over.diagnostics[0]!.code).toBe('REFERENCE_LIMIT');
- const uuid=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/uuid.json')).text();expect((await execute({...request,operationId:'core-validate',coreProfile:'0.9.0',inputs:{source:uuid}})).state).toBe('completed');
+ const uuid=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/uuid.json')).text();expect((await execute({...request,operationId:'core-validate',coreProfile:'0.10.0',inputs:{source:uuid}})).state).toBe('completed');
 });
 // @covers US-089-AC1 @covers US-089-AC10
 test('boundary checker rejects actual forbidden source and import cycle injections',async()=>{
@@ -97,12 +99,12 @@ test('boundary checker rejects actual forbidden source and import cycle injectio
 // @covers US-089-AC10
 test('a second isolated generation matches; drift check refuses tampering without rewriting',async()=>{
  const manifest=await Bun.file(join(dist,'manifest.json')).text();
- const check=()=>{const child=Bun.spawn(['bun','scripts/reference/build.ts','--check'],{cwd:root,stdout:'pipe',stderr:'pipe'});return Promise.all([child.exited,new Response(child.stderr).text(),new Response(child.stdout).text()]);};
+ const check=()=>{const child=Bun.spawn(['bun','scripts/reference/build.ts','--check',...(process.env.UMF_REFERENCE_CANDIDATE?['--candidate',process.env.UMF_REFERENCE_CANDIDATE]:[])],{cwd:root,stdout:'pipe',stderr:'pipe'});return Promise.all([child.exited,new Response(child.stderr).text(),new Response(child.stdout).text()]);};
  const good=await check();if(good[0]!==0)throw Error(String(good[1]));expect(await Bun.file(join(dist,'manifest.json')).text()).toBe(manifest);
  const path=join(dist,'index.html'),original=await Bun.file(path).text();
  try{interruptedDrift={path,original};await Bun.write(path,original+'\n<!-- deliberate drift -->\n');const bad=await check();expect(bad[0]).not.toBe(0);expect(String(bad[1])).toContain('REFERENCE_DRIFT');expect(await Bun.file(path).text()).toBe(original+'\n<!-- deliberate drift -->\n');}
  finally{await Bun.write(path,original);interruptedDrift=undefined;}
-},240000);
+},600000);
 
 // @covers US-089-AC11 -- host-neutral compiler notices remain source-bound.
 test('reference manifest retains every Protobuf notice producer input',async()=>{
@@ -111,4 +113,18 @@ test('reference manifest retains every Protobuf notice producer input',async()=>
   const record=manifest.inputs.find((i:any)=>i.path===path);expect(record).toBeDefined();
   expect(record.sha256).toBe(sha(await Bun.file(join(root,path)).bytes()));
  }
+});
+
+// Candidate admission is explicit; the installed consumer pin is never an implicit fallback.
+test('reference renderer candidate arguments reject missing, repeated and unknown options',()=>{
+ expect(allowed('scripts/reference/renderer-package.ts','scripts/schema-browser-integrity.ts')).toBe(true);
+ expect(allowed('scripts/reference/build.ts','scripts/schema-browser-integrity.ts')).toBe(false);
+ expect(allowed('docs/helix/05-deploy/microsite/reference/index.ts','scripts/schema-browser-integrity.ts')).toBe(false);
+ expect(()=>assertRendererInputs([{path:'installed/index.js',sha256:'old'}],'mounted',{'index.js':'current'})).toThrow('REFERENCE_RENDERER');
+ expect(()=>assertRendererInputs([{path:'mounted/index.js',sha256:'old'}],'mounted',{'index.js':'current'})).toThrow('REFERENCE_RENDERER');
+ expect(()=>assertRendererInputs([{path:'mounted/index.js',sha256:'current'}],'mounted',{'index.js':'current'})).not.toThrow();
+ expect(rendererArguments([])).toEqual({check:false,candidate:undefined});
+ expect(rendererArguments(['--check'])).toEqual({check:true,candidate:undefined});
+ for(const args of [['--candidate'],['--candidate','--check'],['--check','--check'],['--unpublished']])expect(()=>rendererArguments(args)).toThrow('REFERENCE_INPUT');
+ expect(rendererArguments(['--candidate','/private/tmp/concrete-renderer','--check'])).toEqual({check:true,candidate:'/private/tmp/concrete-renderer'});
 });

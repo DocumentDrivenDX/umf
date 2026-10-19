@@ -1,0 +1,14 @@
+2026-10-18 17:06:45.525 EDT [25043] LOG:  starting PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 17:06:45.526 EDT [25043] LOG:  listening on IPv4 address "127.0.0.1", port 51140
+2026-10-18 17:06:45.539 EDT [25043] LOG:  listening on Unix socket "/tmp/.s.PGSQL.51140"
+2026-10-18 17:06:45.557 EDT [25049] LOG:  database system was shut down at 2026-10-18 17:06:40 EDT
+2026-10-18 17:06:45.571 EDT [25043] LOG:  database system is ready to accept connections
+2026-10-18 17:07:07.064 EDT [25373] FATAL:  lock file "postmaster.pid" already exists
+2026-10-18 17:07:07.064 EDT [25373] HINT:  Is another postmaster (PID 25043) running in data directory "/private/tmp/umf-unified-access-05.0-native.xWSck9/data"?
+2026-10-18 17:08:02.219 EDT [25043] LOG:  received fast shutdown request
+2026-10-18 17:08:02.219 EDT [25043] LOG:  aborting any active transactions
+2026-10-18 17:08:02.221 EDT [25043] LOG:  background worker "logical replication launcher" (PID 25054) exited with exit code 1
+2026-10-18 17:08:02.222 EDT [25047] LOG:  shutting down
+2026-10-18 17:08:02.222 EDT [25047] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 17:08:02.240 EDT [25047] LOG:  checkpoint complete: wrote 57 buffers (0.3%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.004 s, total=0.019 s; sync files=45, longest=0.002 s, average=0.001 s; distance=288 kB, estimate=288 kB; lsn=0/17D5068, redo lsn=0/17D5068
+2026-10-18 17:08:02.259 EDT [25043] LOG:  database system is shut down

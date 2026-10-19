@@ -72,7 +72,7 @@ class GeneratedModels(unittest.TestCase):
             dict(OrderKey.KEY_IDENTITY),
             {
                 "documentId": "commerce-model",
-                "coreVersion": "0.8.0",
+                "coreVersion": "0.10.0",
                 "module": "commerce",
                 "element": "Order",
                 "key": "order-key",

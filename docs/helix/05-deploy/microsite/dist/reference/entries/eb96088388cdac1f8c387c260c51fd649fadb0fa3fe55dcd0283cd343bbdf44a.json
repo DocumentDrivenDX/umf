@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       }
     ],
     "role": "other",
@@ -779,7 +779,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -923,7 +923,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -950,7 +950,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1020,14 +1020,14 @@
   "id": "[\"schema\",\"spec/core/parquet-field-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7297,
+      "bytes": 7299,
       "path": "spec/core/parquet-field-classification.schema.json",
-      "sha256": "edf20b952abd2a1b1a69a079244792a2612dacd7fc718f5ada436cea041339be"
+      "sha256": "08ce1d2f6f5d3ee353e5ec029f5c707a4023e41f8bdac41ff113aa3495634c7e"
     }
   ],
   "summary": "spec/core/parquet-field-classification.schema.json",

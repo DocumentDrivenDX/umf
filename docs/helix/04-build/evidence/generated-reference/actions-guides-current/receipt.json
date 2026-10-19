@@ -1,0 +1,42 @@
+{
+  "scope": "Local current Actions guide browser verification before publication; source/output hashes are in generation-manifest.json. No live deployment or renewed historic certificate claim.",
+  "status": "passed",
+  "routes": 10,
+  "viewportWidths": [
+    1440,
+    390
+  ],
+  "browser": "153.0.8010.12",
+  "pageErrors": [],
+  "externalRequests": [],
+  "retained": [
+    {
+      "path": "browser.json",
+      "sha256": "e1f9d2de71f2576822e39ea2b607f52fbd1e6df239c6ba16157315d71c5bda15"
+    },
+    {
+      "path": "1440-index-viewport.png",
+      "sha256": "5fa3e42784c25456e46a624b0ea2d027528cb1d11e86e92b3a5b1216f116ca0d"
+    },
+    {
+      "path": "390-index-viewport.png",
+      "sha256": "42ed27d3697a5b16fdf87d91cb34df40e23f74ea47af4a80cd2e729ea255ab36"
+    },
+    {
+      "path": "1440-getting-started-viewport.png",
+      "sha256": "f2f3a4eeda93e8a3de7f4bfecb1e797960f73ce0e9652466dc196f6ddd752e61"
+    },
+    {
+      "path": "390-getting-started-viewport.png",
+      "sha256": "b2fa75d556b169aa435e0befd532cc7b57a3bb81c46a807214d49230d616b2b4"
+    }
+  ],
+  "screenshots": "Four viewport screenshots retained. The original browser.json lists additional transient .cache screenshots produced during the reproducible gate; those are not all checked-in artifacts.",
+  "commands": [
+    "bun run build:docs",
+    "bun run test:docs:build",
+    "bun run test:docs:examples",
+    "bun run test:docs:browser"
+  ],
+  "navigationCorrection": "Main-navigation Actions links are resolved relative to their actual nested schema page; the canonical ontology route replaces the retired top-level host."
+}

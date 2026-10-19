@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/arrow/package.json';
 import schema from '../../../spec/extensions/arrow/integration-schema.json';
 import {Registry} from '../../registry/registry';
@@ -56,7 +57,7 @@ function payload(document:Document):Payload{
  if(!value||document.vocabularies[ARROW_EXTENSION]?.version!=='0.1.0')throw new UmfError('ARROW_PAYLOAD','Expected Arrow schema payload');return copyJson(value) as unknown as Payload;
 }
 export function importArrowSchema(text:string,options:{id:string}):Document{
- const document:Document={umf:'0.1.0',id:options.id,vocabularies:{[ARROW_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[ARROW_EXTENSION]:{profile:'arrow-integration-schema',root:parseNativeJson(text)} as unknown as Json}}]}]};payload(document);return document;
+ const document:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[ARROW_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[ARROW_EXTENSION]:{profile:'arrow-integration-schema',root:parseNativeJson(text)} as unknown as Json}}]}]};payload(document);return document;
 }
 export function exportArrowSchema(document:Document){const p=payload(document);if(inspectArrow(document).diagnostics.some(d=>d.code==='ARROW_REPRESENTATION'))throw new UmfError('ARROW_EXPORT','Unknown representation fields cannot be discarded');return renderTree(p.root);}
 export function getArrowNode(document:Document,path:string){let n=payload(document).root;for(const part of nativePointer(path))n=treeChild(n,part);return copyJson(n) as unknown as NativeJson;}

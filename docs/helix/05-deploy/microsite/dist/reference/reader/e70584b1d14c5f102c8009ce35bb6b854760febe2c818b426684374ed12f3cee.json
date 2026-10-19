@@ -1,12 +1,12 @@
 {
   "alternatives": [
+    "\"description\"",
     "\"role\"",
     "\"required\"",
     "\"key\"",
-    "\"pattern\"",
-    "\"description\"",
-    "\"domain\"",
     "\"range\"",
+    "\"pattern\"",
+    "\"domain\"",
     "\"inherited\"",
     "\"readonly\"",
     "\"ifabsent\"",
@@ -39,5 +39,5 @@
   "related": [],
   "returns": "",
   "task": "Other APIs",
-  "type": "\"role\" | \"required\" | \"key\" | \"pattern\" | \"description\" | \"domain\" | \"range\" | \"inherited\" | \"readonly\" | \"ifabsent\" | \"list_elements_unique\" | \"list_elements_ordered\" | \"shared\" | \"identifier\" | \"designates_type\" | \"relational_role\" | \"recommended\" | \"multivalued\" | \"inlined\" | \"inlined_as_list\" | \"minimum_value\" | \"maximum_value\" | \"value_presence\" | \"equals_string\" | \"equals_number\" | \"equals_expression\" | \"exact_cardinality\" | \"minimum_cardinality\" | \"maximum_cardinality\""
+  "type": "\"description\" | \"role\" | \"required\" | \"key\" | \"range\" | \"pattern\" | \"domain\" | \"inherited\" | \"readonly\" | \"ifabsent\" | \"list_elements_unique\" | \"list_elements_ordered\" | \"shared\" | \"identifier\" | \"designates_type\" | \"relational_role\" | \"recommended\" | \"multivalued\" | \"inlined\" | \"inlined_as_list\" | \"minimum_value\" | \"maximum_value\" | \"value_presence\" | \"equals_string\" | \"equals_number\" | \"equals_expression\" | \"exact_cardinality\" | \"minimum_cardinality\" | \"maximum_cardinality\""
 }

@@ -1,9 +1,9 @@
 import native from '../../fixtures/validation/facets-tablespec-profile-native.json';
-import {importTableSpec,upgradeFieldEnvelope,classifyTableSpecField,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,upgradeFacetEnvelope,type Document,type TableSpecFacetRequest} from '../../src';
+import {importTableSpec, classifyTableSpecField, type Document, type TableSpecFacetRequest} from '../../src';
 const providers=await Bun.file('native/tablespec/sources/examples/providers.yaml').text();
 export function tableSpecFacetSource(text:string,format:'json'|'yaml'='json',column=0):Document{
- const imported=importTableSpec(text,{id:'facets',format}),fields=classifyTableSpecField(upgradeFieldEnvelope(imported).target,{column,mode:'strict'}).target!;
- return upgradeFacetEnvelope(upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(fields).target).target).target;
+ const imported=importTableSpec(text,{id:'facets',format}),fields=classifyTableSpecField(imported,{column,mode:'strict'}).target!;
+ return fields;
 }
 export function facetTableSpecCases(){
  const rows=[];

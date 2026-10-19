@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Nullability,type ExtensionPackage} from '../model/types';
 import {type NativeJson,parseNativeJson,renderTree} from '../model/native-json';
@@ -5,10 +6,9 @@ import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '
 import {exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,getPostgresqlCatalogNode} from '../adapters/postgresql/catalog';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import core from '../../spec/core/nullability-document.schema.json';
-import authorSchema from '../../spec/core/nullability-operation.schema.json';
+
+import core from '../../spec/core/schema.json';
+import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/postgresql-nullability-classification.schema.json';
 import manifest from '../../spec/extensions/postgresql-nullability/package.json';
@@ -25,7 +25,7 @@ export interface PostgresqlNullabilityClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:PostgresqlNullabilityRequest['scope'];carrier:PostgresqlNullabilityRequest['carrier'];basis:'Captured declarations for stored relation values; not query results, omitted inputs or live enforcement verification'};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
 const str=(node:NativeJson|undefined)=>node?.kind==='string'?node.value:undefined;
@@ -34,7 +34,7 @@ const empty=(node:NativeJson|undefined)=>node?.kind==='null'||node?.kind==='arra
 export function classifyPostgresqlNullability(input:Document,options:PostgresqlNullabilityRequest):PostgresqlNullabilityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as PostgresqlNullabilityRequest;
  if(!checkRequest(request))throw new UmfError('POSTGRESQL_NULLABILITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.3.0')throw new UmfError('POSTGRESQL_NULLABILITY_SOURCE','Valid core 0.3.0 required; migrate explicitly');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('POSTGRESQL_NULLABILITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const exported=exportPostgresqlCatalogCapture(source);
  if(exported.state!=='captured')throw new UmfError('POSTGRESQL_NULLABILITY_STATE','Modified native metadata needs a fresh capture before classification');
  if(renderTree(parseNativeJson(request.nativeSource))!==exported.json)throw new UmfError('POSTGRESQL_NULLABILITY_ARCHIVE','Native text differs from retained capture');

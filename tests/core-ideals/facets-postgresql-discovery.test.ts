@@ -2,8 +2,8 @@ import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {inspectPostgresqlFacetType} from '../../src/adapters/postgresql/facet-typmod';
 import {parseNativeJson} from '../../src/model/native-json';
-import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
-import {copyJson,readJsonValue,writeJsonValue,type Document} from '../../src';
+import {importPostgresqlCatalogCapture, exportPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {copyJson, readJsonValue, writeJsonValue, type Document} from '../../src';
 import evidence from '../../fixtures/validation/facets-postgresql-discovery-native.json';
 const snapshot=JSON.parse(evidence.sourceText).snapshot;
 const relation=(name:string)=>snapshot.relations.find((r:any)=>r.schema==='facet'&&r.name===name);
@@ -12,7 +12,8 @@ const inspect=(name:string)=>inspectPostgresqlFacetType(type(name));
 const value=(id:string)=>evidence.cases.find(r=>r.id===id)!;
 test('native evidence is pinned and preserves counterexamples to direct core promotion',async()=>{
  expect(evidence.serverVersion).toBe(170004);expect(evidence.encoding).toBe('UTF8');expect(evidence.cases).toHaveLength(74);
- for(const [path,sha] of Object.entries(evidence.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(sha);
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
+ for(const [path,sha] of Object.entries(evidence.sha256 as Record<string,string>)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(sha);}
  expect(value('decimal-nan').value).toBe('NaN');expect(value('finite-still-rounds').value).toBe('1.24');expect(value('exact-round-refusal').sqlstate).toBe('23514');expect(value('exact-trailing-zero').value).toBe('1.2300');
  expect(value('float-narrowing').value).toBe('1');expect(value('float64-retains').value).toBe('1.0000000000000002');
  expect(value('varchar-space-truncation').value).toBe('a ');expect(value('varchar-explicit-cast').value).toBe('ab');expect(value('text-bound-spaces').sqlstate).toBe('23514');

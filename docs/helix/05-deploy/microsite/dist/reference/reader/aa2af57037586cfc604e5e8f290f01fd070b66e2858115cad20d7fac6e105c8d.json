@@ -2,14 +2,14 @@
   "alternatives": [],
   "authored": false,
   "id": "[\"api\",\".\",\"RelationshipCandidate\"]",
-  "kind": "Interface",
+  "kind": "Type alias",
   "members": [
     {
       "description": "",
       "links": [],
       "name": "umf",
       "optional": false,
-      "type": "\"0.7.0\""
+      "type": "\"0.10.0\""
     },
     {
       "description": "",
@@ -23,32 +23,43 @@
       "links": [],
       "name": "vocabularies",
       "optional": false,
-      "type": "Record<string, { [key: string]: unknown; version: string; }>"
+      "type": "{ [key: string]: { [key: string]: unknown; version: Version; }; }"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"Module\"]",
-        "[\"api\",\".\",\"CoreRelationship\"]"
+        "[\"api\",\".\",\"Module\"]"
       ],
       "name": "modules",
       "optional": false,
-      "type": "(Module & { relationships?: CoreRelationship[]; })[]"
+      "type": "Module[]"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Json\"]"
-      ],
+      "links": [],
       "name": "extensions",
       "optional": true,
-      "type": "Record<string, Json>"
+      "type": "Extensions"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "aliases",
+      "optional": true,
+      "type": "string[]"
     }
   ],
   "parameters": [],
-  "purpose": "RelationshipCandidate is a interface in Other APIs. Its exact structure is documented below.",
+  "purpose": "RelationshipCandidate is a type alias in Other APIs. Its exact structure is documented below.",
   "related": [],
   "returns": "",
   "task": "Other APIs",
-  "type": "RelationshipCandidate"
+  "type": "Document"
 }

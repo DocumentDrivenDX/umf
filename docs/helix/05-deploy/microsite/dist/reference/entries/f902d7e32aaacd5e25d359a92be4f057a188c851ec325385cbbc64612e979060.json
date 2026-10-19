@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -101,7 +101,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -280,7 +280,7 @@
                                   "members": {
                                     "$ref": {
                                       "kind": "string",
-                                      "value": "urn:umf:core:0.1.0"
+                                      "value": "urn:umf:core:0.10.0"
                                     }
                                   }
                                 },
@@ -657,9 +657,9 @@
   ],
   "sources": [
     {
-      "bytes": 4069,
+      "bytes": 4071,
       "path": "spec/extensions/linkml/merge-schema.json",
-      "sha256": "1f40e3cbd2a6ff3b4b305c0578f99c85e4ad781b7c0cb353c828dbfc3b64a2f3"
+      "sha256": "5fb0f3bacff99a8aa135453bd7f00bbdaf05a3e35bd2ae651202dbe20decc091"
     }
   ],
   "summary": "spec/extensions/linkml/merge-schema.json",

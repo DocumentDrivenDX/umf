@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../../generated/core-model';
 import {ProtectionFieldIndex} from './core-fields';
 /** Qualified core-definition closure; no function compatibility or native admission. */
 import schema from '../../../../spec/extensions/security-protection/domain-resolution.schema.json';

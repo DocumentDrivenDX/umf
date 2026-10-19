@@ -1,3 +1,4 @@
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
@@ -6,7 +7,7 @@ import {inspectLinkmlImportContext,exportLinkmlDocument,type LinkmlImportContext
 const fixture=await Bun.file('fixtures/linkml/imports/results.json').json();
 const context=(id:string):LinkmlImportContext=>structuredClone(fixture.cases.find((c:any)=>c.id===id).context);
 test('US-024-AC5: report schema, exact supplied sources and native reachable sets',async()=>{
- const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(reportSchema);
+ const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core).compile(reportSchema);
  const oracle=await Bun.file('fixtures/linkml/imports/oracle-results.json').json();
  for(const c of fixture.cases){for(const row of c.reports){const report=inspectLinkmlImportContext(row.report.context);expect(report).toEqual(row.report);expect(check(report)).toBe(true);expect(report.complete).toBe(false);for(const s of report.context.schemas)expect(exportLinkmlDocument(s.document)).toBe(c.sources.find((x:any)=>x.key===s.key).text);const native=oracle.results.find((x:any)=>x.id===c.id);if(native.comparison==='reachable-set')expect([...report.nodes].sort()).toEqual([...native.nativeClosure].sort());}}
 });

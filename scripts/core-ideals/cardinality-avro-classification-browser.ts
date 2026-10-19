@@ -2,11 +2,11 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {avroAvailabilitySource} from './nullability-avro-cases';
-import {upgradeCardinalityEnvelope} from '../../src/model/cardinality-transition';
-import {classifyAvroCardinality,type AvroCardinalityRequest,type AvroCardinalityClassification} from '../../src/core-ideals/cardinality-avro';
+
+import {classifyAvroCardinality, type AvroCardinalityRequest, type AvroCardinalityClassification} from '../../src/core-ideals/cardinality-avro';
 const fixture='fixtures/avro/cardinality-cases.json',cases:{source:AvroCardinalityClassification['source'];request:AvroCardinalityRequest;expected:AvroCardinalityClassification}[]=[];
 for(const row of (await Bun.file(fixture).json()).cases){
- const initial=avroAvailabilitySource(row.schema,[],'cardinality.Example'),source=upgradeCardinalityEnvelope(initial.source).target;
+ const initial=avroAvailabilitySource(row.schema,[],'cardinality.Example'),source=initial.source;
  for(const profile of ['present-non-null-schema','unresolved'] as const)for(const mode of ['strict','report'] as const){
   const request={column:initial.column,nativeSource:row.schema,identity:{module:'logical',element:'value'},profile,mode};
   cases.push({source,request,expected:classifyAvroCardinality(source,request)});

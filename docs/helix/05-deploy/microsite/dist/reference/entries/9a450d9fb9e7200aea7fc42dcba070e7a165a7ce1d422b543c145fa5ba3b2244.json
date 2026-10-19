@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -609,7 +609,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -636,7 +636,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -681,9 +681,9 @@
   ],
   "sources": [
     {
-      "bytes": 4267,
+      "bytes": 4269,
       "path": "spec/projections/ddd-json-schema.schema.json",
-      "sha256": "1e1894e6ef6490e9db53c2e094a922c7a67db6d0ff1841a8375c556299f511f5"
+      "sha256": "4f0f72aa7dcbbce8b7898ddeb64aef919620a8b44976738d7cac75926e30a361"
     }
   ],
   "summary": "spec/projections/ddd-json-schema.schema.json",

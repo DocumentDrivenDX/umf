@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 /** Private draft normalization. No public ontology version, fact authority,
  * policy admission or runtime permission is established by these plans. */
 import {copyJson} from '../../model/json';
@@ -25,7 +26,7 @@ export function resolveCandidateRelationship(selector:unknown,document:unknown,e
  const packet:any=copyJson(selector),model:any=readCandidateCoreSource(document),identities:any=copyJson(entities);
  shape(packet,['kind','relationship','witness','endpoints']);if(packet.kind!=='core-relationship')fail();
  shape(packet.relationship,['documentId','moduleId','relationshipId']);for(const v of Object.values(packet.relationship))text(v);
- if(model.umf!=='0.10.0'||packet.relationship.documentId!==model.id||!Array.isArray(model.modules)||!Array.isArray(identities)||identities.length>256)fail();
+ if(model.umf!==CURRENT_CORE_VERSION||packet.relationship.documentId!==model.id||!Array.isArray(model.modules)||!Array.isArray(identities)||identities.length>256)fail();
  const chosen=new Map<string,string>();for(const e of identities){shape(e,['type','keyId']);ref(e.type);text(e.keyId);if(chosen.has(identity(e.type)))fail();chosen.set(identity(e.type),e.keyId);}
  const module=model.modules.filter((m:any)=>m.id===packet.relationship.moduleId);if(module.length!==1||!Array.isArray(module[0].relationships))fail();
  const relations=module[0].relationships.filter((r:any)=>r.id===packet.relationship.relationshipId);if(relations.length!==1)fail();const relation=relations[0];

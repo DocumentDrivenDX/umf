@@ -2,15 +2,8 @@
   "alternatives": [],
   "authored": false,
   "id": "[\"api\",\".\",\"RelationshipTarget\"]",
-  "kind": "Interface",
+  "kind": "Type alias",
   "members": [
-    {
-      "description": "",
-      "links": [],
-      "name": "key",
-      "optional": false,
-      "type": "string"
-    },
     {
       "description": "",
       "links": [],
@@ -24,10 +17,17 @@
       "name": "element",
       "optional": false,
       "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "key",
+      "optional": false,
+      "type": "string"
     }
   ],
   "parameters": [],
-  "purpose": "RelationshipTarget is a interface in Other APIs. Its exact structure is documented below.",
+  "purpose": "RelationshipTarget is a type alias in Other APIs. Its exact structure is documented below.",
   "related": [],
   "returns": "",
   "task": "Other APIs",

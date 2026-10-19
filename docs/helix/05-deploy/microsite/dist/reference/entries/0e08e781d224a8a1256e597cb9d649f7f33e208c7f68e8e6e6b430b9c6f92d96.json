@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       }
     ],
     "role": "operation",
@@ -450,7 +450,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+                  "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                 }
               }
             },
@@ -976,7 +976,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1121,14 +1121,14 @@
   "id": "[\"schema\",\"spec/core/field-sqlserver-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7772,
+      "bytes": 7773,
       "path": "spec/core/field-sqlserver-projection.schema.json",
-      "sha256": "d7283e5f6fa2f623f7d8cd158b0500c507bbe7db0d1ba91ffbe1a4ae834c5121"
+      "sha256": "b22a85649b77ac1402b000c41e422865483d6f1951a1417c48dd9b73418e070a"
     }
   ],
   "summary": "spec/core/field-sqlserver-projection.schema.json",

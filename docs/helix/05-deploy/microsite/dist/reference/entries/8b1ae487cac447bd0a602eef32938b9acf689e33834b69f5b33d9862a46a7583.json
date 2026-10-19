@@ -5,28 +5,28 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationship"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationship"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationship"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationship"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/relationship"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/relationship"
       },
       {
         "keyword": "$ref",
@@ -289,7 +289,7 @@
                                           "members": {
                                             "$ref": {
                                               "kind": "string",
-                                              "value": "urn:umf:core:0.9.0#/$defs/relationship"
+                                              "value": "urn:umf:core:0.10.0#/$defs/relationship"
                                             }
                                           }
                                         },
@@ -373,7 +373,7 @@
                                           "members": {
                                             "$ref": {
                                               "kind": "string",
-                                              "value": "urn:umf:core:0.9.0#/$defs/relationship"
+                                              "value": "urn:umf:core:0.10.0#/$defs/relationship"
                                             }
                                           }
                                         },
@@ -493,7 +493,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.9.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -747,7 +747,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.9.0#/$defs/relationship"
+                          "value": "urn:umf:core:0.10.0#/$defs/relationship"
                         }
                       }
                     },
@@ -773,7 +773,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.9.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -1487,13 +1487,13 @@
   "id": "[\"schema\",\"spec/core/relationship-operation-v3.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 11026,
+      "bytes": 11031,
       "path": "spec/core/relationship-operation-v3.schema.json",
-      "sha256": "58c3d8a0ba0a0261ef3954f2952df62830c28b2570f523e11eab612206e67603"
+      "sha256": "42a3a7ad1e3ef7ac80ef5044948aad12847de22aaf63367e6264bfcb2434bda7"
     }
   ],
   "summary": "Structure only. Verify retained operation and current context by recomputation; do not infer native enforcement or authenticated authorship.",

@@ -1,0 +1,17 @@
+{"testProcess":"tests/consumers/tablespec-chain.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/consumers/tablespec-chain.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/consumers/tablespec-chain.test.ts:
+(pass) CONTRACT-039 priority-system chains retain native source, every stage and qualified diagnostics [5068.61ms]
+(pass) CONTRACT-039 blocked stages retain evidence without exposing a partial final target [2681.60ms]
+
+ 2 pass
+ 0 fail
+ 99 expect() calls
+Ran 2 tests across 1 file. [15.07s]
+{"testProcess":"tests/consumers/tablespec-chain.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":99,"completeSummary":true,"logSha256":"4caedebfc9007daa956968d84b77f4790e3642e31c6f3df782befe90afcede50"}
+
+ 2 pass
+ 0 fail
+ 99 expect() calls
+Ran 2 tests across 1 files. [15.09s]

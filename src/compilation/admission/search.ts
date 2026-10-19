@@ -1,5 +1,5 @@
 /** Selected search declaration admission. Native capability proof stays at catalog build. */
-import type {Document} from '../../index';
+import type {Document} from '../../model/types';
 import type {Ref,ResolvedRecord,ResolvedSearch} from '../ir/index';
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v);
 const exact=(v:unknown,required:string[],optional:string[]=[]):v is Record<string,unknown>=>object(v)&&required.every(k=>Object.hasOwn(v,k))&&Object.keys(v).every(k=>required.includes(k)||optional.includes(k));

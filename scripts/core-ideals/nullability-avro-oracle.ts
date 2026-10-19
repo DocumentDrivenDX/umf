@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
 import {avroAvailabilitySource} from './nullability-avro-cases';
-import {classifyAvroNullability,recoverAvroNullabilityBundle} from '../../src/core-ideals/nullability-avro';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifyAvroNullability, recoverAvroNullabilityBundle} from '../../src/core-ideals/nullability-avro';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const fixture='fixtures/avro/nullability-cases.json';
 const cases=await Bun.file(fixture).json();const rows=[];
 for(const c of cases.cases){

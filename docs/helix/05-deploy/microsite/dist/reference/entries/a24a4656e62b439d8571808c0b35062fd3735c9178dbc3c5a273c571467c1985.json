@@ -25,7 +25,7 @@
         },
         "validation": "structural"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "PostgreSQL facet classification and authored projection with retained source meaning",
       "id": "umf.postgresql.facets",
       "schema": {
@@ -144,7 +144,7 @@
       "scopes": [
         "element"
       ],
-      "semantics": "CONTRACT-040 and TD-043; core 0.5.0 facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance remains gated by the compatibility refresh",
+      "semantics": "CONTRACT-040 and TD-043; facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance remains gated by the compatibility refresh",
       "version": "1.0.0"
     },
     "registration": {
@@ -165,9 +165,9 @@
   ],
   "sources": [
     {
-      "bytes": 4086,
+      "bytes": 4076,
       "path": "spec/extensions/postgresql-facets/package.json",
-      "sha256": "7d23e36bf63642b63ab625529e980749f14ef89143997fa87a6278b283fbcf41"
+      "sha256": "183011f98327c0af7ab96ac083696cea6546fe3a209f36e5f4e60aca8f5244a4"
     }
   ],
   "summary": "PostgreSQL facet classification and authored projection with retained source meaning",

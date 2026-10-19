@@ -10,13 +10,13 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -25,8 +25,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -115,8 +115,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -145,8 +145,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -155,8 +155,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -273,7 +273,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.8.0#/$defs/literal"
+                              "value": "urn:umf:core:0.10.0#/$defs/literal"
                             }
                           }
                         },
@@ -334,7 +334,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.8.0#/$defs/literal"
+                              "value": "urn:umf:core:0.10.0#/$defs/literal"
                             }
                           }
                         },
@@ -356,7 +356,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.8.0#/$defs/literal"
+                                          "value": "urn:umf:core:0.10.0#/$defs/literal"
                                         }
                                       }
                                     },
@@ -893,7 +893,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.8.0#/$defs/literal"
+                                          "value": "urn:umf:core:0.10.0#/$defs/literal"
                                         }
                                       }
                                     },
@@ -1108,7 +1108,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.8.0#/$defs/literal"
+                                          "value": "urn:umf:core:0.10.0#/$defs/literal"
                                         }
                                       }
                                     },
@@ -1130,7 +1130,7 @@
                                                   "members": {
                                                     "$ref": {
                                                       "kind": "string",
-                                                      "value": "urn:umf:core:0.8.0#/$defs/literal"
+                                                      "value": "urn:umf:core:0.10.0#/$defs/literal"
                                                     }
                                                   }
                                                 },
@@ -1316,14 +1316,14 @@
   "id": "[\"schema\",\"spec/extensions/actions/manifest.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]",
     "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8787,
+      "bytes": 8793,
       "path": "spec/extensions/actions/manifest.schema.json",
-      "sha256": "089cfaa99541feda42837fd74e223c7c879ad5e8193e3eb21370a79e7a24c64c"
+      "sha256": "14a110cfcfae7cc9bcc1db2360bae912e2c6472f76249d889c9ab5438a01d9c7"
     }
   ],
   "summary": "spec/extensions/actions/manifest.schema.json",

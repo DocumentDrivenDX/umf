@@ -16,12 +16,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -455,7 +455,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.1.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -609,7 +609,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.1.0"
+                              "value": "urn:umf:core:0.10.0"
                             }
                           }
                         },
@@ -976,9 +976,9 @@
   ],
   "sources": [
     {
-      "bytes": 5988,
+      "bytes": 5990,
       "path": "spec/extensions/delta-log/reconciliation.schema.json",
-      "sha256": "f5a5126a1134af8ff8cd27acb29b7bdb0c23367a922bc6076e6d384ec69c2c18"
+      "sha256": "15313e9aefe2f78501f97f37bdfe51effb34ef008ffcb34858e77a104cdc726e"
     }
   ],
   "summary": "spec/extensions/delta-log/reconciliation.schema.json",

@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:scalar-type-inspection:0.3.0",
+  "title": "Core 0.9.0 scalar-type-inspection-v0.3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "source",
+    "identity",
+    "path",
+    "meaning",
+    "provenance"
+  ],
+  "properties": {
+    "operation": {
+      "const": "inspect-core-scalar-type"
+    },
+    "version": {
+      "const": "0.3.0"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.10.0"
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^/modules/[0-9]+/elements/[0-9]+/scalarType$"
+    },
+    "meaning": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "scalarType"
+          ],
+          "properties": {
+            "state": {
+              "const": "known"
+            },
+            "scalarType": {
+              "enum": [
+                "boolean",
+                "integer",
+                "decimal",
+                "float",
+                "string",
+                "binary",
+                "date",
+                "time",
+                "timestamp",
+                "bits128",
+                "uuid"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "value"
+          ],
+          "properties": {
+            "state": {
+              "const": "unknown"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "enum": [
+                  "boolean",
+                  "integer",
+                  "decimal",
+                  "float",
+                  "string",
+                  "binary",
+                  "date",
+                  "time",
+                  "timestamp",
+                  "bits128",
+                  "uuid"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "const": "missing"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "const": "inapplicable"
+            },
+            "authoredScalarType": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "const": "unverified"
+    }
+  }
+}

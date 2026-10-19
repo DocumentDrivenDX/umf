@@ -17,7 +17,7 @@
         },
         "validation": "structural"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "Qualified TableSpec column shape observations with native refinements retained",
       "id": "umf.tablespec.cardinality",
       "schema": {
@@ -70,7 +70,7 @@
       "scopes": [
         "element"
       ],
-      "semantics": "CONTRACT-040 and TD-042; core 0.4.0 shape classification, not native replacement",
+      "semantics": "CONTRACT-040 and TD-042; shape classification, not native replacement",
       "version": "1.0.0"
     },
     "registration": {
@@ -90,9 +90,9 @@
   ],
   "sources": [
     {
-      "bytes": 1930,
+      "bytes": 1920,
       "path": "spec/extensions/tablespec-cardinality/package.json",
-      "sha256": "5c8c7b1ad26231dfb056c07088e1d8aa8397129870bf2bd25028a4d3670c2626"
+      "sha256": "d9b1b0d22034751deb8515b9afa4cb9336fa364efbb3ff266cc1e6e68d2aaa2a"
     }
   ],
   "summary": "Qualified TableSpec column shape observations with native refinements retained",

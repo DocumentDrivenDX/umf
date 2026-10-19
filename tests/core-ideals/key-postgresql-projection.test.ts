@@ -1,9 +1,9 @@
 import {test,expect} from 'bun:test';
 import {postgresqlKeyAuthors,postgresqlKeyProjectionCases} from '../../scripts/core-ideals/key-postgresql-projection-cases';
-import {projectKeysToPostgresql,verifyKeysPostgresqlProjection,recoverKeysPostgresqlIdeal} from '../../src/core-ideals/key-postgresql-projection';
+import {projectKeysToPostgresql, verifyKeysPostgresqlProjection, recoverKeysPostgresqlIdeal} from '../../src/core-ideals/key-postgresql-projection';
 import {backend} from '../../native/postgresql/runtime';
-import {getPostgresqlSource,importPostgresqlSql} from '../../src/adapters/postgresql';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {getPostgresqlSource, importPostgresqlSql} from '../../src/adapters/postgresql';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const row of postgresqlKeyProjectionCases())test('PostgreSQL authored keys: '+row.name,async()=>{
  const before=JSON.stringify(row),r=await projectKeysToPostgresql(row.source,row.authors,row.request,backend);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);expect(r.mappings.length).toBe(row.authors.length);expect(r.residuals.filter(x=>/\/keys\//.test(x.path)).length).toBeGreaterThanOrEqual(row.authors.length);if(row.expectedEquality)expect(r.mappings[0]!.equality).toBe(row.expectedEquality);
  if(r.status==='blocked'){expect(r.nativeSql).toBeUndefined();expect(r.target).toBeUndefined();return;}

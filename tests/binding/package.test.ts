@@ -1,11 +1,11 @@
 import {expect,test} from 'bun:test';
 import {bindingRegistry,copyJson,getBinding,inspectBinding,readBindingDocument,writeBindingDocument,type Document} from '../../src';
 
-const logical:Document={umf:'0.1.0',id:'orders-v1',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'Order',extensions:{}},{id:'details',kind:'field',extensions:{}}]}]};
+const logical:Document={umf:'0.10.0',id:'orders-v1',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'Order',extensions:{}},{id:'details',kind:'field',extensions:{}}]}]};
 const binding:Document={
-  umf:'0.1.0',id:'orders-postgresql',vocabularies:{'umf.binding':{version:'0.1.0'}},modules:[],
+  umf:'0.10.0',id:'orders-postgresql',vocabularies:{'umf.binding':{version:'0.1.0'}},modules:[],
   extensions:{'umf.binding':{
-    profile:'umf-binding-1',logical:{documentId:'orders-v1',coreVersion:'0.1.0'},
+    profile:'umf-binding-1',logical:{documentId:'orders-v1',coreVersion:'0.10.0'},
     target:{system:'postgresql',version:'17',subset:'declared-tables'},
     elements:[{module:'sales',element:'Order',table:'orders'}],
     fields:[{module:'sales',element:'details',storage:'embedded',documentColumn:'payload',path:['order','details']}],

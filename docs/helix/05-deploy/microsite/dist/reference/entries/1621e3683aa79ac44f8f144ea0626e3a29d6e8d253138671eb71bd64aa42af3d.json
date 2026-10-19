@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -647,7 +647,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -680,9 +680,9 @@
   ],
   "sources": [
     {
-      "bytes": 4904,
+      "bytes": 4905,
       "path": "spec/extensions/dbt-manifest/selection-schema.json",
-      "sha256": "57f8e07b5a93c87553512c5f341082818fad03bbfac7abe1796157de5680bcb2"
+      "sha256": "59e3254e3796a5ab6fb6ac4404fd2c2e0f2faa8916f93605fd1924c20b4acb77"
     }
   ],
   "summary": "spec/extensions/dbt-manifest/selection-schema.json",

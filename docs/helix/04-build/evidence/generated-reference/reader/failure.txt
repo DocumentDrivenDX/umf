@@ -9,7 +9,7 @@ Ecosystem
 Actions
 GitHub ↗
 Reference
-Schema
+Schemas
 Extensions
 Integrations
 API
@@ -18,109 +18,28 @@ Workbench
 
 UMF / GENERATED REFERENCE
 
-Try it. Keep the meaning.
+Schemas
 
-Validate, inspect, select or transform a supplied schema. Your input stays in this browser; original sources remain available.
+Explore UMF’s own model, look up object keys and values, or browse models written in UMF.
 
-411 schemas
-70 extension versions
-1899 API exports
-Reference index ↧
-Build provenance ↧
+Source-bound reference · 2415 entries · assets verified on use
 
-Source-bound reference · 2542 entries · assets verified on use
+Ontology
+Object reference
+Model catalog
+Search this reference
 
-Operation
-Inspect properties and defaults
-Select copied metadata
-Validate a core document
-Serialize JSON / YAML
-Validate explicit extension registration
-Project JSON Schema to Protobuf
-Compile a Protobuf source bundle
-Compare two schema structures
-Core profile
-0.1.0
-0.2.0
-0.3.0
-0.4.0
-0.5.0
-0.6.0
-0.7.0
-0.8.0
-0.9.0
-0.10.0
-Registry
-Explicitly empty
-SDK default · actions
-DDD · explicit
-JSON Schema · explicit
-Protobuf · explicit
-Output
-JSON
-YAML
-Example
-core current
-core properties
-core semantic
-metadata selection
-projection loss
-unknown preservation
-Load example
-Open local source
-Original input
-Operation options
-Output
-Validation
-{
-  "valid": true,
-  "complete": false,
-  "diagnostics": [
-    {
-      "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
-      "path": "/umf",
-      "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
-      "severity": "warning"
-    },
-    {
-      "code": "SEMANTIC_TYPE_EXTERNAL",
-      "path": "/modules/0/elements/0/semanticTypes",
-      "message": "Exact external semantic definitions and value validators are resolved separately",
-      "severity": "warning"
-    }
-  ],
-  "coreProfile": "0.10.0",
-  "registryProfile": "empty",
-  "modules": [
-    {
-      "id": "example",
-      "namespace": "example.identity",
-      "elements": [
-        {
-          "id": "identifier",
-          "kind": "field",
-          "scalarType": "uuid",
-          "references": []
-        }
-      ]
-    }
-  ]
-}
-Download Validation
-Run operation
-Cancel
-Download original
+Searches concepts, keys, values and API names from the generated reference.
 
-Completed · inspect diagnostics and interpretation limits
+1 entries
 
-Diagnostics and interpretation limits
+Field → scalarType
+The scalar value family. Recognized labels have UMF meaning; other nonempty labels remain retained with incomplete interpretation. Any of: boolean | integer | decimal | f
+Reference unavailable
 
-WARNING EXPERIMENTAL_CORE_SEMANTIC_TYPES /umf: Experimental semantic references; publisher-owned meanings and native enforcement are not inferred
+Error: REFERENCE_LINK unknown entry
 
-WARNING SEMANTIC_TYPE_EXTERNAL /modules/0/elements/0/semanticTypes: Exact external semantic definitions and value validators are resolved separately
-
-Core validation uses fixed build-time validators. Native source inspection, schema projection and instance validation are separate operations. Optional Protobuf compilation uses the pinned local WASM compiler; it requires WebAssembly permission.
-
+Open Document
 UMF / Schema interchange fabric
-Experimental · Versioned definitions and scoped evidence · Licenses and notices
+Experimental · Scoped evidence · Licenses and notices
 Complete evidence path inventory ↧

@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -228,7 +228,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -291,9 +291,9 @@
   ],
   "sources": [
     {
-      "bytes": 1620,
+      "bytes": 1621,
       "path": "spec/extensions/parquet/framing.schema.json",
-      "sha256": "6dfc1e757fdf3ebd18eae00efdbe9025d289857dd1e328d0ca4f66f73b4fb602"
+      "sha256": "358375744c222c7e246427712b333b6c14dc6b4cd75b2a957ccfa5a13f6f4593"
     }
   ],
   "summary": "spec/extensions/parquet/framing.schema.json",

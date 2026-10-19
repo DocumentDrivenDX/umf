@@ -6,6 +6,7 @@ import {mkdtemp,writeFile,readFile} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 import {readDocument,validateCoreFieldValue,validateCoreRecordValues} from '../src/index';
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {request,profile} from '../tests/compilation/access-fixtures';
 import type {CoreLiteral} from '../src/model/schema-literals';
 const args=new Map<string,string>();for(let i=2;i<process.argv.length;i+=2)args.set(process.argv[i]!,process.argv[i+1]!);
@@ -35,7 +36,7 @@ try{
  const evidenceFields=[{id:'evidenceId',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}},{id:'nullableItem',kind:'field',scalarType:'string',cardinality:'one',nullability:'absent-allowed',extensions:{}},{id:'nullableArray',kind:'field',cardinality:'array',itemType:ref('nullableItem'),nullability:'required',extensions:{}},{id:'nullableMap',kind:'field',cardinality:'map',itemType:ref('nullableItem'),nullability:'required',extensions:{}},{id:'defaulted',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',default:{on:'missing',value:{string:'native-default'}},extensions:{}}];
  elements.push(...evidenceFields,{id:'ContainerEvidence',kind:'record',members:['evidenceId','nullableArray','nullableMap','defaulted'].map(ref),keys:[{id:'evidenceKey',name:'Evidence',primary:true,fields:[ref('evidenceId')]}],extensions:{}});records.push(ref('ContainerEvidence'));
  views.push({record:ref('ContainerEvidence'),selectedKey:{...ref('ContainerEvidence'),key:'evidenceKey'},fields:[evidenceFields[0]!,evidenceFields[2]!,evidenceFields[3]!,evidenceFields[4]!,evidenceFields[1]!].map(f=>{const out=viewField(f,f.id==='nullableItem');if(f.id==='evidenceId')out.mutable=false;if(f.id==='defaulted')out.create.missing=true;return out;})});
- const document={umf:'0.8.0',id:'generated-golden-matrix',vocabularies:{'umf.access':{version:'0.1.0'}},modules:[{id:'golden',namespace:'golden',elements,extensions:{'umf.access':{views,columns:[],search:[],searchBindings:[]}}}]};
+ const document={umf:CURRENT_CORE_VERSION,id:'generated-golden-matrix',vocabularies:{'umf.access':{version:'0.1.0'}},modules:[{id:'golden',namespace:'golden',elements,extensions:{'umf.access':{views,columns:[],search:[],searchBindings:[]}}}]};
  const source=JSON.stringify(document),loaded=readDocument(source,'json');
  for(const vector of vectors as {id:string;record:string;field:string;literal:CoreLiteral;expected:boolean}[]){const field=validateCoreFieldValue(loaded,ref(vector.field),vector.literal);const row=validateCoreRecordValues(loaded,ref(vector.record),[{field:ref(vector.field),state:'present',value:vector.literal},{field:ref('identity'+vector.record.slice(4)),state:'present',value:{string:'oracle'}}]);assert.equal(field.valid,vector.expected,vector.id+' field');assert.equal(row.validation.valid,vector.expected,vector.id+' row');}
  const q=request();q.package='golden_matrix';q.records=records;q.sources=[{id:'logical',format:'json',text:source}];q.projections=[];q.names=[];

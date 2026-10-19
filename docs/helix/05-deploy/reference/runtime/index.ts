@@ -1,4 +1,4 @@
-import {readDocument,writeDocument,validateDocument,Registry,createUmfRegistry,dddRegistry,jsonSchemaRegistry,protobufRegistry,selectCoreElements,inspectCoreSchemaProperties,resolveCoreDefault,importJsonSchema,projectJsonSchemaToProtobuf,importProtobufSources,parseNativeJson} from '../../../../../src/index';
+import {readJsonValue,writeJsonValue,readDocument,writeDocument,validateDocument,Registry,createUmfRegistry,dddRegistry,jsonSchemaRegistry,protobufRegistry,selectCoreElements,inspectCoreSchemaProperties,resolveCoreDefault,importJsonSchema,projectJsonSchemaToProtobuf,importProtobufSources,parseNativeJson} from '../../../../../src/index';
 import {structuralDiff} from '../model';
 import type {Request,Response} from './protocol';
 const profiles:Record<string,()=>Registry>={empty:()=>new Registry(),sdk:createUmfRegistry,ddd:dddRegistry,'json-schema':jsonSchemaRegistry,protobuf:protobufRegistry};
@@ -10,12 +10,13 @@ export async function execute(request:Request,compiler?:any):Promise<Response>{
   if(request.protocol!==1||typeof request.requestId!=='string'||!request.requestId||!profiles[request.registryProfile]||Object.keys(request).some(k=>!['protocol','requestId','operationId','coreProfile','registryProfile','inputs'].includes(k))||!request.inputs||typeof request.inputs!=='object'||Array.isArray(request.inputs))throw Error('REFERENCE_PROTOCOL unsupported request or registry');
   if(Object.values(request.inputs).some(t=>typeof t!=='string'||t.length>4_000_000)||Object.values(request.inputs).reduce((n,t)=>n+t.length,0)>8_000_000)throw Error('REFERENCE_LIMIT source text');
   const source=request.inputs.source??'';
-  if(request.operationId==='schema-diff'){output('Structural changes · no semantic compatibility claim',structuralDiff(parseNativeJson(source),parseNativeJson(request.inputs.after??'')));return response;}
+  if(request.operationId==='format-source'){const format=request.inputs.outputFormat==='json'?'json':'yaml';response.outputs.push({name:'source.'+format,mediaType:'text/plain',text:writeJsonValue(readJsonValue(source,request.inputs.format==='json'?'json':'yaml'),format)});return response;}
+  if(request.operationId==='schema-diff'){output('Structural changes · no semantic compatibility claim',structuralDiff(parseNativeJson(request.inputs.format==='yaml'?writeJsonValue(readJsonValue(source),'json'):source),parseNativeJson(request.inputs.after??'')));return response;}
   if(request.operationId==='protobuf-source'){
    if(!compiler)throw Error('REFERENCE_UNAVAILABLE pinned compiler not loaded');const doc=await importProtobufSources({files:{'example.proto':source},roots:['example.proto']},compiler,{id:'workbench:protobuf'});output('UMF source archive and descriptors',doc);return response;
   }
   if(request.operationId==='json-schema-protobuf'){
-   if(!compiler)throw Error('REFERENCE_UNAVAILABLE pinned compiler not loaded');const native=importJsonSchema(source,{id:'workbench:json-schema',baseUri:'https://umf.invalid/workbench/root.json'});
+   if(!compiler)throw Error('REFERENCE_UNAVAILABLE pinned compiler not loaded');const native=importJsonSchema(request.inputs.format==='yaml'?writeJsonValue(readJsonValue(source),'json'):source,{id:'workbench:json-schema',baseUri:'https://umf.invalid/workbench/root.json'});
    const fields=JSON.parse(request.inputs.fields??'{"/properties/name":{"number":1},"/properties/age":{"number":2}}');
    const projected=await projectJsonSchemaToProtobuf(native,{id:'workbench:projection',packageName:'umf.example',messageName:'Example',fields,integerType:'int64',lossPolicy:request.inputs.policy==='strict'?'strict':'allow-reported-loss'},compiler);
    output('Projection result, retained source and losses',projected);if(projected.nativeSource)response.outputs.push({name:'schema.proto',mediaType:'text/plain',text:projected.nativeSource});

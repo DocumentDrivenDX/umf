@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJsonCharged} from '../json';
 import {reserveSourceSchemaWork,reserveLiteralSchemaWork,reserveInputSchemaWork} from './schema-work';
 import {UmfError,type Json,type Document,type Validation,type Element} from '../types';
@@ -31,14 +32,8 @@ export function createValueContext(sourceInput:Document,inputInput:unknown,work=
  const source=work.copy(sourceInput) as unknown as Document,input=work.copy(inputInput) as unknown as CoreDatasetInput;
  const sourceCount=work.count(source);
  if(preflightBytes(source,work)+preflightBytes(input,work)>4_000_000)throw new WorkExceeded('Compact aggregate source/input serialized bytes exceeded');
- // Eight original copy/view passes: document0.8, schema-properties,
- // legacy0.7 view, document0.7, relationship candidate, key0.6 view,
- // key candidate and its0.5 view. Twenty linear walks conservatively cover
- // document unknown/reference/facet walks (8), relationship/key indices and
- // declaration walks (8), diagnostic merges/status and context indices (4).
- // Source schemas and every possible recursive branch are reserved explicitly;
- // input-dependent semantic products and declarations are charged below.
- work.charge('source-copy-linear-semantics',28*sourceCount);
+ // Structural branches are reserved before generated validation; the inert
+ // semantic interpreter charges its actual instructions and value visits below.
  reserveSourceSchemaWork(source,work);
  const modules=source!==null&&typeof source==='object'&&Array.isArray(source.modules)?source.modules:[];
  const elements=modules.flatMap(m=>m!==null&&typeof m==='object'&&Array.isArray(m.elements)?m.elements:[]);
@@ -58,8 +53,8 @@ export function createValueContext(sourceInput:Document,inputInput:unknown,work=
   const declarations=[...(Array.isArray(e.examples)?e.examples:[]),...(Array.isArray(e.allowedValues)?e.allowedValues:[]),...((e.default as any)?.value!==undefined?[(e.default as any).value]:[])];
   for(const value of declarations)work.charge('source-declaration-validation',sourceCount*work.count(value));
  }
- const documentValidation=validateDocument(source);
- if(!documentValidation.valid||source?.umf!=='0.8.0')throw new UmfError('CORE_DATASET_SOURCE','Original valid core0.8 source required');
+ const documentValidation=validateDocument(source,undefined,(category,n)=>work.charge(category,n));
+ if(!documentValidation.valid||source?.umf!==CURRENT_CORE_VERSION)throw new UmfError('CORE_DATASET_SOURCE','Valid current core 0.10.0 source required');
  work.walk('context-freeze',source);work.walk('context-freeze',input);freeze(source);freeze(input);work.walk('validation-freeze',documentValidation);freeze(documentValidation);
  const locations=new Map<string,{node:Element,path:string}>();
  source.modules.forEach((m,mi)=>m.elements.forEach((node,ei)=>locations.set(JSON.stringify([m.id,node.id]),{node,path:`/modules/${mi}/elements/${ei}`})));
@@ -75,16 +70,16 @@ export function createValueContext(sourceInput:Document,inputInput:unknown,work=
  const field=(identity:CoreRecordValueIdentity,value:CoreLiteral)=>evaluateFieldValue(identity,value,id=>{
   const found=locations.get(JSON.stringify([id.module,id.element]));if(!found)throw new UmfError('CORE_SCHEMA_PROPERTIES','Element not found');
   work.walk('field-identity',id);return {source,node:found.node};
- },v=>work.copy(v),literal,v=>reserveLiteralSchemaWork(v,work));
+ },v=>work.copy(v),(doc,field,value)=>literal(doc,field,value as CoreLiteral),v=>reserveLiteralSchemaWork(v,work));
  const record=(identity:CoreRecordValueIdentity,values:CoreRecordFieldValue[])=>{
   const found=locations.get(JSON.stringify([identity.module,identity.element]));if(!found||found.node.kind!=='record')throw new UmfError('CORE_RECORD_VALUE_IDENTITY','Record identity required');
   work.walk('record-index',found.node);work.walk('record-values',values);work.walk('record-document-diagnostics',documentValidation);
-  return work.copy({...evaluateRecordBody(source,identity,values,documentValidation,field,ref=>{work.walk('record-member-lookup',ref);return locations.get(JSON.stringify([ref.module,ref.element]))?.node;},relationships.length>0),sourceRef:'#/source'}) as unknown as CoreCompactRecordValueCheck;
+  return work.copy({...evaluateRecordBody(source,identity,values,documentValidation,(id,value)=>field(id,value as CoreLiteral),ref=>{work.walk('record-member-lookup',ref);return locations.get(JSON.stringify([ref.module,ref.element]))?.node;},relationships.length>0),version:'2.0.0',sourceRef:'#/source'}) as unknown as CoreCompactRecordValueCheck;
  };
  const key=(identity:CoreKeyIdentity,values:CoreKeyTupleValue[])=>{
   work.walk('key-index-identity',identity);work.charge('key-component-index',values.length);work.charge('key-relevant-diagnostic-scans',3*(1+2*values.length)*documentValidation.diagnostics.length);work.walk('key-values',values);work.walk('key-document-diagnostics',documentValidation);
   const selected=keyLocations.get(JSON.stringify([identity.module,identity.element,identity.key]));if(!selected)throw new UmfError('KEY_TUPLE_MISSING','Explicit Record/Key identity does not resolve','/identity');
-  return work.copy({...encodeCoreKeyTupleBody(source as unknown as Json,identity,values,documentValidation,literal,selected),sourceRef:'#/source'}) as unknown as CoreCompactKeyTupleReceipt;
+  return work.copy({...encodeCoreKeyTupleBody(source as unknown as Json,identity,values,documentValidation,(doc,field,value)=>literal(doc,field,value as CoreLiteral),selected),sourceRef:'#/source'}) as unknown as CoreCompactKeyTupleReceipt;
  };
  return {source,input,documentValidation,work,record,key,reserveInput:()=>reserveInputSchemaWork(input,work),copy:(v:unknown)=>work.copy(v),literal};
 }

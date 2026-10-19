@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3962,
-        "line": 16,
+        "bytes": 3265,
+        "line": 13,
         "path": "src/model/record-members.ts",
-        "sha256": "6b80acfc01ac70d3c01479b86a5a421a6eb82f071e208e153a14b5163b3e9a0d"
+        "sha256": "d30572a4100c80c34662dbe0ba623a13f8cbd4c5391ada7214763d2fc152f9eb"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreRecordMembersInspection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreRecordMembersInspection {operation:'inspect-core-record-members';version:'0.1.0'|'0.2.0'|'0.3.0';source:Document;identity:CoreRecordMembersIdentity;path:string;meaning:CoreRecordMembersMeaning;provenance:'unverified'}"
+      "export interface CoreRecordMembersInspection {operation:'inspect-core-record-members';version:'0.3.0';source:Document;identity:CoreRecordMembersIdentity;path:string;meaning:CoreRecordMembersMeaning;provenance:'unverified'}"
     ]
   },
   "id": "[\"api\",\".\",\"CoreRecordMembersInspection\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3962,
-      "line": 16,
+      "bytes": 3265,
+      "line": 13,
       "path": "src/model/record-members.ts",
-      "sha256": "6b80acfc01ac70d3c01479b86a5a421a6eb82f071e208e153a14b5163b3e9a0d"
+      "sha256": "d30572a4100c80c34662dbe0ba623a13f8cbd4c5391ada7214763d2fc152f9eb"
     }
   ],
   "summary": "Type declaration · src/model/record-members.ts",

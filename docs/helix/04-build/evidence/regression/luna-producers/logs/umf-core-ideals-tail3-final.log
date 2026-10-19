@@ -1,0 +1,53 @@
+{"testProcess":"tests/core-ideals/facets-evidence.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-evidence.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-evidence.test.ts:
+124 |  // unrelated stale fingerprints. Every actual file is read once per verification.
+125 |  for (const {path, record} of pending) for (const [p, h] of Object.entries(record.sha256)) {
+126 |   const current = digest(await content(p)), expected = String(h);
+127 |   if (current !== expected) {
+128 |    const key = local(p), row = replay.changes[key];
+129 |    assert.ok(row, `${path}: stale ${p}`);
+                ^
+AssertionError: fixtures/validation/field-gate-refresh-evidence.json: stale dist/avro-facet-selection.js
+ generatedMessage: false,
+     actual: undefined,
+   expected: true,
+   operator: "==",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at verifyFacetEvidence (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/facets-evidence.ts:129:11)
+      at /Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/facets-evidence.test.ts:7:23
+(fail) facet evidence requires all five accepted bindings without granting ideal admission [81.39ms]
+(pass) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [555.55ms]
+124 |  // unrelated stale fingerprints. Every actual file is read once per verification.
+125 |  for (const {path, record} of pending) for (const [p, h] of Object.entries(record.sha256)) {
+126 |   const current = digest(await content(p)), expected = String(h);
+127 |   if (current !== expected) {
+128 |    const key = local(p), row = replay.changes[key];
+129 |    assert.ok(row, `${path}: stale ${p}`);
+                ^
+AssertionError: fixtures/validation/field-gate-refresh-evidence.json: stale dist/avro-facet-selection.js
+ generatedMessage: false,
+     actual: undefined,
+   expected: true,
+   operator: "==",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at verifyFacetEvidence (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/facets-evidence.ts:129:11)
+      at /Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/facets-evidence.test.ts:54:16
+(fail) facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries [69.73ms]
+
+ 1 pass
+ 2 fail
+ 15 expect() calls
+Ran 3 tests across 1 file. [734.00ms]
+{"testProcess":"tests/core-ideals/facets-evidence.test.ts","exitCode":1,"pass":1,"fail":2,"assertions":15,"completeSummary":true,"logSha256":"ad4d4cce93be3166dbd2ae488cce3ef44b46e7da5d7236f9fae656915a250351"}
+Complete test file failed or terminated: tests/core-ideals/facets-evidence.test.ts
+
+ 1 pass
+ 2 fail
+ 15 expect() calls
+Ran 3 tests across 1 files. [0.74s]

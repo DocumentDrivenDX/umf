@@ -1,5 +1,10 @@
 # Discover
 
+The [Praxis ontology access request](praxis-ontology-access-input.md) informs
+[generated ontology access](../01-frame/features/FEAT-033-generated-ontology-access.md).
+The owner's subsequent direction targets the latest UMF directly, without
+compatibility selection or a second access model.
+
 Research the problem, audience, and existing solutions; use that evidence
 to write `product-vision.md`.
 

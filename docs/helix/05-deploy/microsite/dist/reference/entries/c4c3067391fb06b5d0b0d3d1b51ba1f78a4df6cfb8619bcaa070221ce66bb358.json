@@ -12,7 +12,7 @@
         "inputHashes": [
           {
             "path": "scripts/core-ideals/facets-conformance.ts",
-            "sha256": "2493daf433d6fcb92e504968a0d96b3c88d8df9348ab1aafb1314cb07799c162"
+            "sha256": "e618834a109cf6d5163a084a9ae6cff82ace82ecba682d7324073a6aa67f6509"
           },
           {
             "path": "scripts/core-ideals/facets-evidence.ts",
@@ -24,7 +24,7 @@
           },
           {
             "path": "tests/core-ideals/facets-conformance.test.ts",
-            "sha256": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c"
+            "sha256": "695d2bdc16167ca978bfbf2c2afa151ebc684a0baab726a0bd8c28860cf34659"
           },
           {
             "path": "tests/core-ideals/facets-evidence.test.ts",
@@ -213,21 +213,22 @@
         ],
         "limitations": [
           "Recorded scope only; native equivalence and production adoption are separate.",
-          "Profiles and native versions remain bounded by each binding acceptance record",
+          "Source round trips preserve authored meanings but do not establish current native qualification",
+          "Profiles and native versions remain bounded by each historical binding acceptance record",
           "Matching facets do not erase native refinements, execution differences or other residuals",
           "SQL recovery preserves captured catalogs; arbitrary DDL or live database discovery is not claimed",
           "Unknown extension content remains attached; no native concept is replaced",
           "Recorded distribution artifact hashes are retained but not independently verified by this source profile; local build output is not qualification evidence.",
           "Complete tested dependency closure is not recorded; current-source qualification is unknown."
         ],
-        "outcome": "passed",
+        "outcome": "failed",
         "readerId": "core-gate",
-        "scope": "Qualified scalar facet bindings across the five priority systems; retained recovery does not establish native equivalence",
+        "scope": "Current source round trips verified; historical native evidence is partially revalidated and current-core native qualification is unavailable",
         "selector": "",
         "source": {
-          "bytes": 12610,
+          "bytes": 13027,
           "path": "fixtures/validation/facets-conformance.json",
-          "sha256": "5f0e8135a8137722441878a542a336916a8464e98c3e9afc882bf1a793d483a3"
+          "sha256": "324e3424d6d44b275e5ebdaeda7f6eec3bb7b0f1562d40c8ed0fa940bffd6153"
         },
         "supersedes": [],
         "versions": {}
@@ -261,9 +262,9 @@
   "links": [],
   "sources": [
     {
-      "bytes": 134720,
+      "bytes": 134795,
       "path": "docs/helix/05-deploy/reference/operations.json",
-      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
     }
   ],
   "summary": "Published facets binding subsets; ideal admission and delivery are distinct.",

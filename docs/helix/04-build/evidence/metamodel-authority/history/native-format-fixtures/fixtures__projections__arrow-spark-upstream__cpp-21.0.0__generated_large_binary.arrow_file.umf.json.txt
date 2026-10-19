@@ -1,0 +1,73 @@
+{
+  "umf": "0.1.0",
+  "id": "cpp-21.0.0/generated_large_binary.arrow_file/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "largebinary_nullable",
+                          "nullable": true,
+                          "type": {
+                            "type": "LargeBinary",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "largebinary_nonnullable",
+                          "type": {
+                            "type": "LargeBinary",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "largeutf8_nullable",
+                          "nullable": true,
+                          "type": {
+                            "type": "LargeUtf8",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "largeutf8_nonnullable",
+                          "type": {
+                            "type": "LargeUtf8",
+                            "value": {}
+                          },
+                          "children": []
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -10,8 +10,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -696,7 +696,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -724,13 +724,13 @@
   "id": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 4986,
+      "bytes": 4987,
       "path": "spec/core/cardinality-operation-v6.schema.json",
-      "sha256": "ad379c477298cffc32e72c8722a3d06f3dc81694ac9d1cb0d5b1d23e942f2bf5"
+      "sha256": "c606cf71b5fe0b2afb15f0ffd3fcce20c449857b954852e63d944040dacf6595"
     }
   ],
   "summary": "spec/core/cardinality-operation-v6.schema.json",

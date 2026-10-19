@@ -19,3 +19,8 @@ No protection semantics are implemented or natively evidenced yet.
 Status: core-envelope implementation and tests exist; scoped execution evidence
 is in the plan. Native adapters and the broader extension inventory remain to
 implement. No work tracker has been configured.
+
+[Unified generated Python access](guides/unified-python-access.md) implements
+the common model/query/action API on UMF 0.10. SQL compilation remains in Weft.
+[Execution evidence](evidence/unified-python-access.md) distinguishes the tested
+Python cut from the broader Praxis requirements.

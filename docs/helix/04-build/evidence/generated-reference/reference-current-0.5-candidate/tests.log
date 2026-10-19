@@ -1,0 +1,69 @@
+{"testProcess":"tests/domain-packs/schema-browser-site-parity.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/domain-packs/schema-browser-site-parity.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/domain-packs/schema-browser-site-parity.test.ts:
+(pass) site verifies the complete package and removes the old root renderer while keeping current host assets [1078.40ms]
+(pass) site rejects empty package inventories and altered package bytes [237.53ms]
+
+ 2 pass
+ 0 fail
+ 23 expect() calls
+Ran 2 tests across 1 file. [1323.00ms]
+{"testProcess":"tests/domain-packs/schema-browser-site-parity.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":23,"completeSummary":true,"logSha256":"38a9535465087e31ed8ade57da309b352a5feb877b9a76c112207bc84daa3398"}
+{"testProcess":"tests/reference/reader.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/reference/reader.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/reference/reader.test.ts:
+(pass) latest uses numeric core versions and preserves conditional, open and recursive meaning [8.49ms]
+(pass) reader census, exact API kind, examples and member documentation are emitted [9.75ms]
+(pass) complete schema examples reject invalid item/container shapes and usage snippets execute [3.58ms]
+(pass) the generated YAML example preserves all JSON example values [4.22ms]
+(pass) workbench formatting retains edited values and refuses silent loss [13.93ms]
+
+ 5 pass
+ 0 fail
+ 55 expect() calls
+Ran 5 tests across 1 file. [6.21s]
+{"testProcess":"tests/reference/reader.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":55,"completeSummary":true,"logSha256":"b49831c4aa015703fd27f180bed36bdc4721925acecde0e5c598f947cf3bcdd6"}
+{"testProcess":"tests/reference/reference.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/reference/reference.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/reference/reference.test.ts:
+(pass) every extension version and its exact manifest/schema are present [80.29ms]
+(pass) all schema files and exact core profiles are accounted for [214.28ms]
+(pass) every emitted record validates, resolves its joins and matches signed-manifest asset closure [2455.70ms]
+(pass) real independent oracle failures and qualified priority results remain separate [3.35ms]
+(pass) source hash changes and missing dependency closures cannot become current evidence [0.12ms]
+(pass) ambient distribution artifacts never enter evidence observations [0.98ms]
+(pass) conflicting observations and supersession cycles refuse optimistic aggregation [0.32ms]
+(pass) schema comparison is structural, bounded and preserves exact token spelling [0.46ms]
+(pass) exclusions require an existing source and nonempty reason [0.20ms]
+(pass) public Bun runtime preserves unknown payload, validates current core and refuses unsafe input [25.04ms]
+(pass) boundary checker rejects actual forbidden source and import cycle injections [117.91ms]
+(pass) a second isolated generation matches; drift check refuses tampering without rewriting [148380.94ms]
+(pass) reference manifest retains every Protobuf notice producer input [4.67ms]
+(pass) reference renderer candidate arguments reject missing, repeated and unknown options [0.27ms]
+
+ 14 pass
+ 0 fail
+ 13219 expect() calls
+Ran 14 tests across 1 file. [157.11s]
+{"testProcess":"tests/reference/reference.test.ts","exitCode":0,"pass":14,"fail":0,"assertions":13219,"completeSummary":true,"logSha256":"fc3af537039c6cdf996853bebe46c7bed19ccc2df568be88dbf2c5c6e4b781de"}
+{"testProcess":"tests/reference/self-model.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/reference/self-model.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/reference/self-model.test.ts:
+(pass) US-089-AC17: reference reads authored current model and verifies compiler provenance [129.84ms]
+(pass) US-089-AC17: the reference consumes authored Record members and Field shapes, never reverse-extracts schema fragments [0.19ms]
+(pass) US-089-AC18: graph uses one node per authored Record and Field and refuses unresolved members [1.22ms]
+
+ 3 pass
+ 0 fail
+ 18 expect() calls
+Ran 3 tests across 1 file. [212.00ms]
+{"testProcess":"tests/reference/self-model.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":18,"completeSummary":true,"logSha256":"f9d555a6f7698f66a94aabcfde007e13f7801efc3eef28d8e626fd0d234688e6"}
+
+ 24 pass
+ 0 fail
+ 13315 expect() calls
+Ran 24 tests across 4 files. [120.88s]

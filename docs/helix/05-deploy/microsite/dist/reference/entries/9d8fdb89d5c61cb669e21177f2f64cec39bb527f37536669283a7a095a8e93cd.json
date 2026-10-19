@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -146,7 +146,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -155,7 +155,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -214,9 +214,9 @@
   ],
   "sources": [
     {
-      "bytes": 1151,
+      "bytes": 1153,
       "path": "spec/extensions/arrow-ipc/rename-result.schema.json",
-      "sha256": "c28a5fa2e2fd83a551cdc4d6d75cec69ab432d4c0ec5d7e7719d7efa23dfeaa9"
+      "sha256": "ff0b712cddf3ee907eed082b3db915ea61c22232dff6417e1971b070920deb1b"
     }
   ],
   "summary": "spec/extensions/arrow-ipc/rename-result.schema.json",

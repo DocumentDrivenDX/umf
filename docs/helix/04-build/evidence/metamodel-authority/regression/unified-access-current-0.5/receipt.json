@@ -1,0 +1,95 @@
+{
+  "profile": "umf.unified-access-native/1",
+  "status": "passed; scoped current unified-access qualification; package 0.5.0 candidate, unpublished",
+  "source": {
+    "version": "0.5.0",
+    "beforeSha256": {
+      "package.json": "52e99cb101e96dd5adb7a97b165a552ae8109650bc18d591c088c01f13c5c998",
+      "python/umf_access/src/umf_access/unified/__init__.py": "a1791f3add87cdc159a6aa0404b218fe8be8e357c02f0484523eb6009579d946",
+      "python/umf_access/tests/test_unified_binding_identity.py": "94e89deb25a2705c86867fd5f8bdd82da849e7dcedaca1d242aebe8fe1cb9362",
+      "src/access/index.ts": "a658a89077e0c80ad517dff1e3512e233d2bdd085a485da01aae216196db03bd"
+    },
+    "afterSha256": {
+      "package.json": "52e99cb101e96dd5adb7a97b165a552ae8109650bc18d591c088c01f13c5c998",
+      "python/umf_access/src/umf_access/unified/__init__.py": "a1791f3add87cdc159a6aa0404b218fe8be8e357c02f0484523eb6009579d946",
+      "python/umf_access/tests/test_unified_binding_identity.py": "94e89deb25a2705c86867fd5f8bdd82da849e7dcedaca1d242aebe8fe1cb9362",
+      "src/access/index.ts": "a658a89077e0c80ad517dff1e3512e233d2bdd085a485da01aae216196db03bd",
+      "tests/access-unified.test.ts": "ec07223d00dc5ac6bb1a7881a245e408c0c9dd77fe7a18bda968cf24e5d0a77f",
+      "tests/access-unified-generation.test.ts": "f3394001949c0deede1cf0f70ee746e2b3c43737612df40f5bdf0a1bb5a796a4",
+      "tests/access-unified-browser.test.ts": "6b249ba611158152727d53c50f6b8a0fde8cbb449c60d738d84ccffa98b008dc",
+      "tests/metamodel/authority-boundaries.test.ts": "a3c73dd9cccbc67cdd76ecaca8913665df6f8f2b2111ce61f51b88cf0e75032e"
+    },
+    "changedDuringCampaign": {
+      "package.json": false,
+      "python/umf_access/src/umf_access/unified/__init__.py": false,
+      "python/umf_access/tests/test_unified_binding_identity.py": false,
+      "src/access/index.ts": false
+    }
+  },
+  "runtime": {
+    "bun": "1.4.2",
+    "pythonHost": "3.14.8",
+    "pythonGeneratedClient": "3.11.17",
+    "psycopg": "3.3.6",
+    "weft": "0.4.43",
+    "weftModuleSha256": "732961936653c6f8951bfa7d0efb06517612deb46a36a73a2927f3ea563a8c67",
+    "postgresql": "18.6 (Homebrew)",
+    "platform": "macOS arm64"
+  },
+  "configuration": {
+    "cluster": "isolated temporary cluster",
+    "dataDirectory": "/private/tmp/umf-unified-access-05.0-native.xWSck9/data",
+    "port": 51140,
+    "dsn": "postgresql://erik@127.0.0.1:51140/postgres",
+    "authentication": "trust on loopback; isolated cluster",
+    "shutdown": "successful; pg_ctl fast stop exit 0"
+  },
+  "tests": {
+    "bunFiles": {
+      "tests/access-unified-generation.test.ts": 3,
+      "tests/access-unified.test.ts": 2,
+      "tests/access-unified-browser.test.ts": 1,
+      "tests/metamodel/authority-boundaries.test.ts": 12
+    },
+    "bunTotal": 18,
+    "bunFailures": 0,
+    "bunAssertions": 154,
+    "bunSkipped": 0,
+    "pythonFile": "python/umf_access/tests/test_unified_binding_identity.py",
+    "pythonPassed": 6,
+    "pythonFailures": 0,
+    "pythonSkipped": 0
+  },
+  "scope": {
+    "covers": [
+      "unified Python access client generation",
+      "configured PostgreSQL/Weft execution path",
+      "Chromium parity for generated client",
+      "current-core authority-boundary gates",
+      "Python binding identity and callback-admission checks"
+    ],
+    "doesNotClaim": [
+      "broader Truss integration or native-format qualification",
+      "publication or installed consumer release"
+    ]
+  },
+  "runnerNote": "Bun returned exit 0 and all listed tests passed. The outer Python wrapper later raised AttributeError while printing its final return code because the result variable had been shadowed by a path in its log-hash loop; PostgreSQL cleanup had already succeeded. This post-pass reporting error does not change the captured Bun result.",
+  "logs": {
+    "native-suite.log": {
+      "sha256": "7a952e50c10c81222d04283a74472b23397241dde628885b3184e27511781163",
+      "bytes": 2384
+    },
+    "postgres.log": {
+      "sha256": "48c70384b6eab7e1a7d733914604f3f026cd91317aaa2ed45e5219038272d49b",
+      "bytes": 1592
+    },
+    "postgres-stop.log": {
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+      "bytes": 56
+    },
+    "python-identity.log": {
+      "sha256": "9ba67b336af643148adf343994fd09eb13abe1b6123812d20da80d2531d105cb",
+      "bytes": 1336
+    }
+  }
+}

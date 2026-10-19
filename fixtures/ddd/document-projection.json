@@ -1,7 +1,7 @@
 {
   "status": "projected",
   "source": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddd:sales-example",
     "vocabularies": {
       "umf.ddd": {
@@ -709,7 +709,7 @@
   ],
   "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/order-document\",\n  \"$ref\": \"#/$defs/concept_0\",\n  \"$defs\": {\n    \"concept_0\": {\n      \"type\": \"object\",\n      \"title\": \"sales.Order\",\n      \"properties\": {\n        \"order_id\": {\n          \"type\": \"string\"\n        },\n        \"total\": {\n          \"$ref\": \"#/$defs/concept_1\"\n        },\n        \"lines\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/concept_2\"\n          }\n        },\n        \"shipping\": {\n          \"$ref\": \"#/$defs/concept_3\"\n        },\n        \"customer\": {\n          \"$ref\": \"#/$defs/concept_4\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"order_id\",\n        \"total\",\n        \"shipping\",\n        \"customer\"\n      ]\n    },\n    \"concept_1\": {\n      \"type\": \"object\",\n      \"title\": \"sales.Money\",\n      \"properties\": {\n        \"amount\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?$\"\n        },\n        \"currency\": {\n          \"type\": \"string\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"amount\",\n        \"currency\"\n      ]\n    },\n    \"concept_2\": {\n      \"type\": \"object\",\n      \"title\": \"sales.OrderLine\",\n      \"properties\": {\n        \"line_id\": {\n          \"type\": \"string\"\n        },\n        \"sku\": {\n          \"type\": \"string\"\n        },\n        \"quantity\": {\n          \"type\": \"integer\"\n        },\n        \"price\": {\n          \"$ref\": \"#/$defs/concept_1\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"line_id\",\n        \"sku\",\n        \"quantity\",\n        \"price\"\n      ]\n    },\n    \"concept_3\": {\n      \"type\": \"object\",\n      \"title\": \"sales.ShippingAddress\",\n      \"properties\": {\n        \"street\": {\n          \"type\": \"string\"\n        },\n        \"city\": {\n          \"type\": \"string\"\n        },\n        \"postal_code\": {\n          \"type\": \"string\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"street\",\n        \"city\",\n        \"postal_code\"\n      ]\n    },\n    \"concept_4\": {\n      \"type\": \"object\",\n      \"title\": \"sales.Customer identity\",\n      \"properties\": {\n        \"customer_id\": {\n          \"type\": \"string\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"customer_id\"\n      ]\n    }\n  }\n}\n",
   "target": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "order-document",
     "vocabularies": {
       "umf.json-schema": {

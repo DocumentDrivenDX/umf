@@ -300,7 +300,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
         class UnitActionInput(StrictModel):
             memo: str
 
-        action = ActionRef(module="commerce", action="annotate-orders", input_type=UnitActionInput, output_type=type(None), source=ActionSource("unit", "0.8.0", "commerce", "annotate-orders", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
+        action = ActionRef(module="commerce", action="annotate-orders", input_type=UnitActionInput, output_type=type(None), source=ActionSource("unit", "0.10.0", "commerce", "annotate-orders", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
 
         @command(action=action)
         def declaration(minimum: Param[Decimal], memo_value: Param[str]):

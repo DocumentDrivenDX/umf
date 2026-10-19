@@ -150,3 +150,54 @@ entries. Concept navigation defaults to latest core; property explanations and
 conditional rules precede source details. API task groups and symbol-specific
 layouts precede full declarations. The reader companion owns presentation and
 search metadata; canonical schemas/contracts/compiler symbols own facts.
+
+## Current documentation amendment — 2026-10-18
+
+Owner direction supersedes historical core browsing, core-profile selection and
+migration-oriented reader requirements above. Document core 0.10.0 as the single
+current schema: no core version picker, history catalog or version badges. Old
+core links resolve to the current schema and preserve valid pointers; invalid
+pointers refuse visibly. Original source inventories and native/extension evidence
+keep their truthful identities and qualification; historical evidence is not
+relabelled as current support.
+
+Workbench examples use core 0.10.0 and open as YAML, with accessible YAML/JSON
+buttons converting current edited values through the public interoperable
+serialization API. Malformed, duplicate-key or inexact values refuse without
+replacing input. Cancellation and input edits invalidate pending conversion.
+Original bytes remain downloadable. Native Protobuf keeps its own syntax.
+Property/default execution APIs restricted to earlier envelopes are not offered
+by the current workbench; their API declarations retain their original limits.
+Every schema disclosure starts collapsed, including complete examples. Explicit
+user expansion and format switching remain keyboard accessible.
+
+Acceptance: verify all supplied examples execute, format parity after edits,
+conversion refusal and cancellation, current-only navigation, old-link recovery,
+and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Current core self-description — 2026-10-18
+
+Implement FR-35 / US-089-AC17–18 as a descriptive projection with exact schema
+fragments retained in the explicit `umf.metamodel` vocabulary. Model language
+objects as UMF Records and their properties as Fields; model collection items
+through itemType and typed record references. Conceptual connections distinguish
+serialized containment, role specialization and reference resolution. They are
+not population relationships and assert no instance cardinality. Bootstrap
+JSON Schema and semantic validators remain authoritative (ADR-001).
+
+The canonical Schemas landing page is `reference/core.html`. Ontology and Object
+reference are views there; the released model catalog keeps its existing URL and
+bookmark grammar as the third view with matching host navigation. All first-party
+Schemas navigation uses the landing page. This preserves catalog/package behavior
+without an iframe or a new competing entry point. API reference remains separate.
+
+## Authority cutover amendment — 2026-10-18
+
+Owner direction supersedes the descriptive bootstrap projection and separate
+explorer-host arrangement above. ADR-005 and CONTRACT-080 require one authored
+current UMF metamodel generating schemas, shapes, portable semantic rules and
+reference/ontology data. TD-091 and STP-091 govern the current-core migration,
+retirement of duplicated rules/old runtime paths, and one route owner for
+ontology/reference/catalog. Native and extension release meanings and historical
+evidence remain exact. No raw authored JSON Schema fragment or handwritten
+per-core-rule callback may remain the model's hidden enforcement authority.

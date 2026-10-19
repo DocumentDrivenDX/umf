@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {resolveBit128ModelLayout} from './bit128-layout';
 import manifest from '../../../spec/extensions/binding-128/package.json';
 import {Registry} from '../../registry/registry';
@@ -13,7 +14,7 @@ const carrierRegistry=new Registry().register(bit128BindingPackage);
 export type Bit128Carrier={kind:'native-uuid'|'bytes16'|'uuid-text'|'hex128-text';column:string}|{kind:'words64';highColumn:string;lowColumn:string;signed:boolean};
 export interface Bit128FieldBinding {module:string;element:string;storage:'scalar-carrier';carrier:Bit128Carrier}
 export interface Bit128BindingPayload {
- profile:'umf-binding-3';logical:{documentId:string;coreVersion:'0.9.0'};target:{system:string;version:string;subset:string};
+ profile:'umf-binding-3';logical:{documentId:string;coreVersion:typeof CURRENT_CORE_VERSION};target:{system:string;version:string;subset:string};
  elements:{module:string;element:string;table?:string;partition?:string|null}[];
  fields:(Bit128FieldBinding|{module:string;element:string;field?:string;storage:'column'|'embedded';column?:string;documentColumn?:string;path?:string[]})[];
  relationships:unknown[];indexes:unknown[];
@@ -28,7 +29,7 @@ export function inspectBit128Binding(bindingInput:Document,logicalInput:Document
   const payload=binding.extensions?.['umf.binding'] as unknown as Bit128BindingPayload;
   if(binding.modules.length||binding.vocabularies['umf.binding']?.version!=='0.3.0'||payload?.profile!=='umf-binding-3')throw new UmfError('BINDING_PROFILE','Expected separate binding3 document');
   const logicalValidation=validateDocument(logical);
-  if(logical.umf!=='0.9.0'||!logicalValidation.valid||payload.logical.documentId!==logical.id||payload.logical.coreVersion!==logical.umf)throw new UmfError('BINDING_MODEL','Exact valid core0.9 source required');
+  if(logical.umf!==CURRENT_CORE_VERSION||!logicalValidation.valid||payload.logical.documentId!==logical.id||payload.logical.coreVersion!==logical.umf)throw new UmfError('BINDING_MODEL','Exact valid current core source required');
   const unknown=(o:object,known:string[],path:string)=>{for(const k of Object.keys(o))if(!known.includes(k))add('BINDING_UNKNOWN',path+'/'+pointer(k),'Unknown carrier meaning retained','warning');};
   unknown(payload,['profile','logical','target','elements','fields','relationships','indexes',...(payload.target.subset==='uuid-model2'?['groups']:[])],'/extensions/umf.binding');
   unknown(payload.logical,['documentId','coreVersion'],'/logical');unknown(payload.target,['system','version','subset'],'/target');

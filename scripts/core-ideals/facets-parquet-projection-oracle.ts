@@ -2,8 +2,8 @@ import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {parquetFacetProjectionCases} from './facets-parquet-projection-cases';
-import {projectFacetsToParquet,recoverFacetsFromParquet} from '../../src/core-ideals/facets-parquet-projection';
-import {exportParquetCapture,readJsonValue,writeJsonValue,copyJson} from '../../src';
+import {projectFacetsToParquet, recoverFacetsFromParquet} from '../../src/core-ideals/facets-parquet-projection';
+import {exportParquetCapture, readJsonValue, writeJsonValue, copyJson} from '../../src';
 let blocked=0,recoveries=0;const rows=[];
 for(const c of parquetFacetProjectionCases()){
  const result=projectFacetsToParquet(c.author,c.request);

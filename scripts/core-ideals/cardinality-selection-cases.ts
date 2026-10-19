@@ -1,6 +1,8 @@
-import type {Document,CoreElementQuery} from '../../src';
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import type {Document, CoreElementQuery} from '../../src';
 export function cardinalitySelectionCases(){
- const source:Document={umf:'0.4.0',id:'container-selection',vocabularies:{future:{version:'1.0.0'}},modules:[
+ const source:Document={umf:CURRENT_CORE_VERSION,id:'container-selection',vocabularies:{future:{version:'1.0.0'}},modules:[
   {id:'sales',namespace:'shared',elements:[
    {id:'Order',kind:'record',extensions:{},references:[{role:'member',module:'sales',element:'rows'},{role:'member',module:'sales',element:'tags'}]},
    {id:'rows',name:'value',kind:'field',cardinality:'array',nullability:'required',itemType:{module:'sales',element:'row',future:{native:'retained'}},extensions:{future:{physical:'repeated'}}},

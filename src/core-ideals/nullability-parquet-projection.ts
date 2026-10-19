@@ -6,9 +6,9 @@ import {exportParquetCapture} from '../adapters/parquet';
 import {importParquetSchema,getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/nullability-operation.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
+
+import kinds from '../../spec/core/nullability-operation-v5.schema.json';
+
 import schema from '../../spec/core/nullability-parquet-projection.schema.json';
 export {default as nullabilityParquetProjectionSchema} from '../../spec/core/nullability-parquet-projection.schema.json';
 export interface NullabilityParquetRequest {id:string;recordName:string;fieldName:string;nativeType:keyof typeof parquetCarriers;mode:'strict'|'report';scope:'row-leaf-value'|'repeated-element-value'|'write-input'|'unresolved';carrier:'definition-level'|'unresolved'}
@@ -18,7 +18,7 @@ export interface NullabilityParquetProjection {
  mapping:{origin:'authored';nullability:'required'|'absent-allowed'|'unspecified';encoding:'required'|'optional';basis:'authored-requirement'|'no-authored-requirement'|'unprojected-requirement';scope:NullabilityParquetRequest['scope'];carrier:NullabilityParquetRequest['carrier'];idealPath:string;nativePath:'/schema/1/repetition_type';outcome:'exact'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);validator.addSchema(availability);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export function projectNullabilityToParquet(input:CoreNullabilityDeclaration,options:NullabilityParquetRequest):NullabilityParquetProjection & {diagnostics:Diagnostic[]} {
  const copied=copyJson(input) as unknown as CoreNullabilityDeclaration;

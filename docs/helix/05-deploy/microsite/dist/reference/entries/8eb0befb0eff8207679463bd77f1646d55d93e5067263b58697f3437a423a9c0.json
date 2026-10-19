@@ -16,12 +16,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -410,7 +410,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -732,7 +732,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -807,9 +807,9 @@
   ],
   "sources": [
     {
-      "bytes": 4888,
+      "bytes": 4890,
       "path": "spec/extensions/jsonld/framing-schema.json",
-      "sha256": "2110c02f7493fa88fcb5124ee09fa45a9341f83c093886d0557c69f09210b213"
+      "sha256": "ddf9f42886e6a4dd94cbbdaf1689508f5602bf46f058af6a47d30dce085e8187"
     }
   ],
   "summary": "spec/extensions/jsonld/framing-schema.json",

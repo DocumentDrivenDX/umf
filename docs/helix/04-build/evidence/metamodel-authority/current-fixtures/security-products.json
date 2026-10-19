@@ -1,0 +1,15 @@
+{
+  "qualification": "Authored current logical declaration only. Original Truss packet/nativebinding/compilerprovenance remain unchanged and are NOT current-core evidence. Current native preparation remains unsupported pending upstream consumer/profile upgrade.",
+  "originalPath": "tests/security/original-products-action-packet.json",
+  "originalSha256": "b5ec19900e4355538395200f65e3f70a4edf2e6b9dd1753deac04a6d9ef41337",
+  "originalPointer": "/request/model/utf8 (decoded JSON)",
+  "currentPath": "tests/security/fixtures/current-products-model.json",
+  "currentSha256": "ff88e5667b6f4f3853e959d80ae8c3a00e2f3b0d70cc72ca95c3881da2010176",
+  "changes": [
+    {
+      "path": "/umf",
+      "before": "0.8.0",
+      "after": "0.10.0"
+    }
+  ]
+}

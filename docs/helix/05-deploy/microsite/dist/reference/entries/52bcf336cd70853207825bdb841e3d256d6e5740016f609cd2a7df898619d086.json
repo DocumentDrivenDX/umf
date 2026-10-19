@@ -5,23 +5,23 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       }
     ],
     "role": "other",
@@ -803,7 +803,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+                              "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                             }
                           }
                         },
@@ -818,7 +818,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -996,7 +996,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1023,7 +1023,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1093,14 +1093,14 @@
   "id": "[\"schema\",\"spec/core/parquet-record-type-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7908,
+      "bytes": 7910,
       "path": "spec/core/parquet-record-type-classification.schema.json",
-      "sha256": "7a5a9050dc44cff0cdce918a36826942a14bdfc03a87cca7248c6a63a844d244"
+      "sha256": "a8c8333ee1ef797ca45b6ba6d427dc02f531331f1b64092ed6e58c2e54d77f33"
     }
   ],
   "summary": "spec/core/parquet-record-type-classification.schema.json",

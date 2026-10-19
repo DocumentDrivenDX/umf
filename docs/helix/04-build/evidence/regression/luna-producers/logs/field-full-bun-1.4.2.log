@@ -1,0 +1,18 @@
+{"testProcess":"tests/core-ideals/field-conformance.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/field-conformance.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/field-conformance.test.ts:
+(pass) all five binding contracts enforce policy and recover ideal/native representations [3936.99ms]
+(pass) historical native/browser evidence reports partial replay; current qualification remains unavailable [2386.96ms]
+(pass) group names and opaque scalar-like metadata do not assert records; historical core markers refuse authoring [4.45ms]
+
+ 3 pass
+ 0 fail
+ 30 expect() calls
+Ran 3 tests across 1 file. [11.15s]
+{"testProcess":"tests/core-ideals/field-conformance.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":30,"completeSummary":true,"logSha256":"49d254e0ca9727a60fe3a1ad5a42b6266ad9212e6c1df66e83d2e31e588a703d"}
+
+ 3 pass
+ 0 fail
+ 30 expect() calls
+Ran 3 tests across 1 files. [11.18s]

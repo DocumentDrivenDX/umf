@@ -1,5 +1,5 @@
 import {nullabilityTableSpecProjectionCases} from './nullability-tablespec-projection-cases';
-import {projectNullabilityToTableSpec,recoverNullabilityFromTableSpec,exportTableSpec,writeJsonValue,readJsonValue,copyJson} from '../../src';
+import {projectNullabilityToTableSpec, recoverNullabilityFromTableSpec, exportTableSpec, writeJsonValue, readJsonValue, copyJson} from '../../src';
 const rows=[];
 for(const c of nullabilityTableSpecProjectionCases()){
  const result=projectNullabilityToTableSpec(c.author,c.request),recoveries=[];if(result.status!==c.status||result.mapping.encoding!==c.encoding)throw Error('Unexpected projection');

@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -163,7 +163,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.1.0"
+                              "value": "urn:umf:core:0.10.0"
                             }
                           }
                         },
@@ -252,9 +252,9 @@
   ],
   "sources": [
     {
-      "bytes": 1475,
+      "bytes": 1476,
       "path": "spec/extensions/linkml/import-context-schema.json",
-      "sha256": "30a15e9c3e085188b88b1c068408b310bf1110ae6d8cf4be47526d1efea4e380"
+      "sha256": "f42673a88c916b977e18747b2c6c5549976fcd58de5a23f169902f8db680395a"
     }
   ],
   "summary": "spec/extensions/linkml/import-context-schema.json",

@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4478,
-        "line": 19,
+        "bytes": 3778,
+        "line": 16,
         "path": "src/model/reference-links.ts",
-        "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+        "sha256": "fa786d2579e1091f67f58531dec85db80e85702ca7d68664b998e2d4c36b0598"
       }
     ],
     "entrypoint": ".",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4478,
-      "line": 19,
+      "bytes": 3778,
+      "line": 16,
       "path": "src/model/reference-links.ts",
-      "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+      "sha256": "fa786d2579e1091f67f58531dec85db80e85702ca7d68664b998e2d4c36b0598"
     }
   ],
   "summary": "Resolve only direct core links, preserving order, repetition, roles and opaque qualifiers.\nCONTRACT-040 requires separate verified receipts for authored record-type assertions.",

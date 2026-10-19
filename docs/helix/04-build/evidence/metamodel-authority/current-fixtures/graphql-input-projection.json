@@ -1,0 +1,20 @@
+{
+  "path": "fixtures/graphql/input-projection.json",
+  "originalHead": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+  "originalSha256": "724f83cc3e8b072064fb33a4fe09f24a2c657e15a67261906d5c1b274ef467b8",
+  "currentSha256": "4621a5fdf0e1ee58a90e6d4e025d5678e1151c3091baee871bc7c1efc05047ae",
+  "originalArchive": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/graphql-input-projection.json.txt",
+  "deltas": [
+    {
+      "pointer": "/target/umf",
+      "before": "0.1.0",
+      "after": "0.10.0"
+    },
+    {
+      "pointer": "/source/umf",
+      "before": "0.1.0",
+      "after": "0.10.0"
+    }
+  ],
+  "qualification": "Fresh current producer regression; exact nativeSchema and issues remain unchanged. Original stored example preserved separately; no renewed native-oracle claim."
+}

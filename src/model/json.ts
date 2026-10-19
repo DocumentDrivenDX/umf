@@ -1,4 +1,5 @@
-import { UmfError, type Json, pointer } from './types';
+import {UmfError,pointer} from './errors';
+import type {Json} from './types';
 export const LIMITS = { maxDepth: 128, maxValues: 100_000, maxTextLength: 4_000_000 } as const;
 // Synchronous, isolated invocation scope. Ordinary callers keep the bootstrap bound.
 let catalogDepth=0;

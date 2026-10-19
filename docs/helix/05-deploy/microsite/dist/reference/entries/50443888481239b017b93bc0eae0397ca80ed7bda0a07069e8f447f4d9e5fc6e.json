@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       }
     ],
     "role": "other",
@@ -762,7 +762,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -923,7 +923,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -950,7 +950,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1020,14 +1020,14 @@
   "id": "[\"schema\",\"spec/core/postgresql-field-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7250,
+      "bytes": 7252,
       "path": "spec/core/postgresql-field-classification.schema.json",
-      "sha256": "2a10dcf781f719b58f214aa26ccbb89c0bcfb19e0cd29eef88fbfd91be3182ac"
+      "sha256": "1c3326e49bd26e311c4c9ef9d82e8c2db19b4616ed63617529cb93987f5d9acd"
     }
   ],
   "summary": "spec/core/postgresql-field-classification.schema.json",

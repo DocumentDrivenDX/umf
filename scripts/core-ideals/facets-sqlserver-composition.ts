@@ -17,7 +17,7 @@ for(const [index,row] of facetsSqlServerProjectionCases().entries()){
  // Full aggregate catalog recovery is qualified separately by the native oracle.
  const nativeSource=JSON.stringify({...capture,tables:[table]},null,2)+'\n';
  let source=u.importSqlServerCatalog(nativeSource,{id:'sqlserver-facet-composition'});
- source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(source).target).target).target).target;
+
  const column=u.getSqlServerColumnMetadata(source)[0]!,identity={module:'logical',element:'value'};
  source.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',name:column.element.name!,cardinality:'one',...(column.element.scalarType?{scalarType:column.element.scalarType}:{}),extensions:{}}]});
  const classification=u.classifySqlServerFacets(source,{column:column.path,nativeSource,identity,mode:'report',profile:'stored-value',obligation:row.request.obligation});assert.equal(classification.status,'classified');assert.ok(classification.target);
@@ -32,7 +32,7 @@ for(const [index,row] of facetsSqlServerProjectionCases().entries()){
 assert.equal(results.length,proof.projected);
 // Also exercise the original aggregate capture, not only table views.
 let full=u.importSqlServerCatalog(proof.sourceText,{id:'sqlserver-full-composition'});
-full=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(full).target).target).target).target;
+
 const fullRow=facetsSqlServerProjectionCases().find(r=>r.name==='smallint-8-true'&&r.request.mode==='report'&&r.request.encoding==='checked')!;
 const fullColumn=u.getSqlServerColumnMetadata(full).find(c=>c.table.name===fullRow.request.tableName)!;
 full.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',name:'value',cardinality:'one',scalarType:'integer',extensions:{}}]});

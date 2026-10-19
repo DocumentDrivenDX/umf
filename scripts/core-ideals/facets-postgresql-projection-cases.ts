@@ -1,5 +1,7 @@
-import {declareCoreFacets,declareCoreElementKind,type Document,type CoreFacetPatch,type FacetsPostgresqlRequest,type CoreFacetDeclaration,type CoreKindDeclaration} from '../../src';
-export const postgresqlFacetIdeal=(scalarType:string):Document=>({umf:'0.5.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType,extensions:{}}]}]});
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreFacets, declareCoreElementKind, type Document, type CoreFacetPatch, type FacetsPostgresqlRequest, type CoreFacetDeclaration, type CoreKindDeclaration} from '../../src';
+export const postgresqlFacetIdeal=(scalarType:string):Document=>({umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType,extensions:{}}]}]});
 export function facetsPostgresqlProjectionCases(){
  const seeds:{name:string;family:string;type:FacetsPostgresqlRequest['nativeType'];facets:CoreFacetPatch}[]=[
   ...[0,2,10485760,10485761].flatMap(max=>(['text','varchar','char'] as const).map(type=>({name:`length-${type}-${max}`,family:'string',type,facets:{length:{max,unit:'unicode-scalar' as const}}}))),

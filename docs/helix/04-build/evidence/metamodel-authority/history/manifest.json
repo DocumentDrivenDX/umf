@@ -1,0 +1,860 @@
+{
+  "capturedAt": "2026-10-18",
+  "currentCore": "0.10.0",
+  "entries": [
+    {
+      "path": "fixtures/core/record-values-source.umf.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__core__record-values-source.umf.json",
+      "sha256": "60d446310ba1bdebf36a1d066aadeb099336c7a551b3e563bd50ae938eeff085",
+      "source": "HEAD",
+      "reason": "0.7 historical record-value input retained byte-exactly; current record-value test now uses a separately authored 0.10 fixture with identical native field meaning."
+    },
+    {
+      "path": "fixtures/relationship/authored/corpus.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__relationship__authored__corpus.json",
+      "sha256": "aa751e8d09ad68e9423f3067f38ee51dd6bc9885a43bed22d1c8df3919a421bb",
+      "source": "HEAD",
+      "reason": "Preparatory 0.6 relationship corpus retained byte-exact as historical proposal input; active current conformance now uses an independently authored 0.10 base while reusing the explicitly identified relationship shapes and preserving their expected source behaviors."
+    },
+    {
+      "path": "fixtures/validation/cardinality-conformance.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__cardinality-conformance.json",
+      "sha256": "ded344e8b0d5d42e22b1e5118c56f12860d7ab1c9ae1efabbfe3a8aba9962c51",
+      "source": "HEAD",
+      "reason": "Superseded Cardinality summary retained byte-exact; current summary separates passing source/receipt behavior from partially revalidated historical native evidence and UNQUALIFIED current native delivery."
+    },
+    {
+      "path": "fixtures/validation/facets-conformance.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__facets-conformance.json",
+      "sha256": "5f0e8135a8137722441878a542a336916a8464e98c3e9afc882bf1a793d483a3",
+      "source": "HEAD",
+      "reason": "Superseded facet conformance summary retained byte-exact; current source round trips remain verified while native admission and delivery are UNQUALIFIED pending current-core native evidence."
+    },
+    {
+      "path": "fixtures/validation/facets-sqlserver-projection-native.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__facets-sqlserver-projection-native.json",
+      "sha256": "d39b865b96fea832d9e6343f3bbfce0b9ab341b17e9b55e6ff92cab880499c68",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition input retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by current projection and round-trip tests."
+    },
+    {
+      "path": "fixtures/validation/field-conformance.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__field-conformance.json",
+      "sha256": "370bae1ea9f66ff435762e00044c2479a29129af3451a17451599ccc134b2141",
+      "source": "HEAD",
+      "reason": "Superseded Field conformance summary retained byte-exact; current source behavior remains verified while native admission and delivery are UNQUALIFIED pending current-core native evidence."
+    },
+    {
+      "path": "fixtures/validation/key-conformance.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__key-conformance.json",
+      "sha256": "bb2749d9d6700357a63308a76443775d543b464c518f769b65242a462ac8a813",
+      "source": "HEAD",
+      "reason": "Superseded Key conformance summary retained byte-exact; current source behavior is preserved while native admission and delivery are UNQUALIFIED pending current-native evidence."
+    },
+    {
+      "path": "fixtures/validation/nullability-conformance.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__nullability-conformance.json",
+      "sha256": "a0e76e8b9eeb69687dc31862fdc16e1245a55ad1034c2dcf73e3cc575e0fee70",
+      "source": "HEAD",
+      "reason": "Superseded conformance status retained byte-exact; current report separates verified source operations from unavailable historical native qualification."
+    },
+    {
+      "path": "fixtures/validation/relationship-admission.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__relationship-admission.json",
+      "sha256": "69db8906cf24eee3dc8060c8b9e8a1d749b3bc33b460a8410418e8f9ec817f8a",
+      "source": "HEAD",
+      "reason": "Superseded relationship admission status retained byte-exact; current report leaves native admission UNQUALIFIED until the pinned historical artifacts can be recovered."
+    },
+    {
+      "path": "fixtures/validation/relationship-conformance.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__relationship-conformance.json",
+      "sha256": "1fd1bd701f132283aeeeb18cf2a846a1d6a2567559b48abad2f75732b1008b61",
+      "source": "HEAD",
+      "reason": "Superseded relationship conformance status retained byte-exact; current report separates source-authored relationship behavior from partially revalidated historical native qualification."
+    },
+    {
+      "path": "fixtures/validation/relationship-delivery.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/fixtures__validation__relationship-delivery.json",
+      "sha256": "2b492ff2439d7d661b609b44b357e08d91de5c2f6ac3568114708cc45eea547d",
+      "source": "HEAD",
+      "reason": "Superseded relationship delivery status retained byte-exact; current report leaves priority native delivery UNQUALIFIED until the pinned historical artifacts can be recovered."
+    },
+    {
+      "path": "scripts/core-cardinality-browser.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-cardinality-browser.ts",
+      "sha256": "4a66e535d220a9b19652ee60398d0994d353343e48833048489033d243a58087",
+      "source": "pre-current-browser-migration",
+      "reason": "Historical core Cardinality browser harness retained byte-exact; live harness now covers current-core validation and lossless JSON/YAML round trips."
+    },
+    {
+      "path": "scripts/core-cardinality-operation-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-cardinality-operation-schema.ts",
+      "sha256": "6ac51df089a7142575d0f5135d63b22426720e4a3ad1d377e66ec1d259bcf675",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-cardinality-operations-browser.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-cardinality-operations-browser.ts",
+      "sha256": "97a2c86550a3d0d83ad218c5a8e8c01d0f1a88bcc42cea0a2ff39d35c0cf7d67",
+      "source": "pre-current-browser-migration",
+      "reason": "Historical Cardinality operation harness retained byte-exact; live harness now covers current-only authoring and inspection receipts."
+    },
+    {
+      "path": "scripts/core-cardinality-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-cardinality-schema.ts",
+      "sha256": "b877c782a9e8b27858d2dc848554553befcd4600a3908c4d16caab42afdcbcfa",
+      "source": "HEAD",
+      "reason": "One-off layered core document schema generator retired with the profile-specific document schemas; the authoritative core schema and derived artifacts are emitted by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-cardinality-transition-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-cardinality-transition-schema.ts",
+      "sha256": "a6271154fb2a7098cc01cfbb14435700d8c7dfebe4f8d3a1bc09f60200624940",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-facet-operation-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-facet-operation-schema.ts",
+      "sha256": "a517ec455e1c3fddf960a52002eb93a6d1e027835d14c05f70bb398e80a3fd7a",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-facet-operations-browser.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-facet-operations-browser.ts",
+      "sha256": "006992dc3f7ee92ebedb10c3c13fd197142c04f668eb2a0dac84c18432010837",
+      "source": "pre-current-browser-migration",
+      "reason": "Historical facet operation harness retained byte-exact; live harness now covers current-only facet authoring and inspection."
+    },
+    {
+      "path": "scripts/core-facet-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-facet-schema.ts",
+      "sha256": "a176609d28aea92abdde6308effd02bff832712d3529db2e00efb31077b1effd",
+      "source": "HEAD",
+      "reason": "One-off layered core document schema generator retired with the profile-specific document schemas; the authoritative core schema and derived artifacts are emitted by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-facet-transition-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-facet-transition-schema.ts",
+      "sha256": "92e98bdc2bdb11e7af6d1adf279bb8b1c2d6485b97d0db3bcf8c233bb231e6b1",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-field-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-field-schema.ts",
+      "sha256": "07df76436bccf3d2edec5f4b6b7954fb9674fee039a6ed7667928cb2254d7b61",
+      "source": "HEAD",
+      "reason": "One-off layered core document schema generator retired with the profile-specific document schemas; the authoritative core schema and derived artifacts are emitted by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-field-transition-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-field-transition-schema.ts",
+      "sha256": "924ad32846369d0bec4be57c52a1e4ffbcdd268f5cc5a373e02bd45adaba61c3",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-ideals/cardinality-field-operations-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__cardinality-field-operations-schema.ts",
+      "sha256": "8c5f4748b24cd796e24d10d3647df28b85a16173767edfbca5cdcbac5b78f477",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-ideals/facet-operations-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facet-operations-schema.ts",
+      "sha256": "fbd0598e51e1d759f2a03b768e47dcfcfe8b231b35adc89b21fbe07b4cfeea65",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-ideals/facets-postgresql-composition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-postgresql-composition.ts",
+      "sha256": "d84d74380a576f9cdd6da3c3096e92256e4714b859805c88c2fb9d0cf0dfc201",
+      "source": "HEAD",
+      "reason": "The original PostgreSQL facet native discovery/composition producer is retained byte-exactly as a historical evidence source. Its pinned native/browser observations remain historical; current operation/schema behavior is independently tested against the current core."
+    },
+    {
+      "path": "scripts/core-ideals/facets-postgresql-discovery.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-postgresql-discovery.ts",
+      "sha256": "389bfa9382d88f371b64c30a173f11048fe990a2dfb90d36f767013a7bdff141",
+      "source": "HEAD",
+      "reason": "The original PostgreSQL facet native discovery/composition producer is retained byte-exactly as a historical evidence source. Its pinned native/browser observations remain historical; current operation/schema behavior is independently tested against the current core."
+    },
+    {
+      "path": "scripts/core-ideals/facets-postgresql-projection-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-postgresql-projection-cases.ts",
+      "sha256": "d78ebd7742f3c4a414a3a0b1273b326e99bac5695e7252ed13ff6d1f7f75f8d3",
+      "source": "HEAD",
+      "reason": "Original PostgreSQL facet native evidence input/tool is retained byte-exactly for historical proof replay; current generated current-core behavior is covered by active tests."
+    },
+    {
+      "path": "scripts/core-ideals/facets-postgresql-projection-native.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-postgresql-projection-native.ts",
+      "sha256": "ce6f4e4c0eab2bfd5777368527fcee890a5c02422c12e28fec65039587598232",
+      "source": "HEAD",
+      "reason": "Original PostgreSQL facet native projection schema/source is retained byte-exactly to validate its historical native observation; current schema behavior is covered by current-core tests."
+    },
+    {
+      "path": "scripts/core-ideals/facets-postgresql-resolved-native.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-postgresql-resolved-native.ts",
+      "sha256": "f5575e85b885e54f5da9ce03623e8929fbda7473d75cbdb3bc0e62dd303e2b9f",
+      "source": "HEAD",
+      "reason": "Original PostgreSQL resolved-facet native Datum producer retained byte-exactly for historical source fingerprint verification; current core changes are separately tested."
+    },
+    {
+      "path": "scripts/core-ideals/facets-sqlserver-association-native.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-sqlserver-association-native.ts",
+      "sha256": "13201ae15f4a0a721d45b46b51cd75401d28eb0309a93083f431182df66cc181",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet association probe source retained byte-exact; active current functionality remains covered by its migrated current-core browser and adapter test."
+    },
+    {
+      "path": "scripts/core-ideals/facets-sqlserver-composition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-sqlserver-composition.ts",
+      "sha256": "370547efe6d85d04f8effc78b5d9dc14761d9b081cb7cece50dcf25bdcf20f51",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition generator retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by projection, native and round-trip tests."
+    },
+    {
+      "path": "scripts/core-ideals/facets-sqlserver-discovery.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-sqlserver-discovery.ts",
+      "sha256": "1a7859969e54023981eba0a5ebb867629de2c50ebf82dcd48f502f777db837ba",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet discovery source retained byte-exact for historical evidence fingerprint verification; current discovery behavior remains covered by active adapter tests."
+    },
+    {
+      "path": "scripts/core-ideals/facets-sqlserver-projection-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-sqlserver-projection-cases.ts",
+      "sha256": "33710e009c987a923660f97e05a0523b5d11f3e69fba59943a9c1c19b07cfdef",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition input retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by current projection and round-trip tests."
+    },
+    {
+      "path": "scripts/core-ideals/facets-sqlserver-projection-native.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-sqlserver-projection-native.ts",
+      "sha256": "702d7e3b07fed0525adbc82bcd0c08e83c1225f34045f895556498583665f1a1",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet projection input retained byte-exact for historical evidence fingerprint verification; active current classification and projection remain under test."
+    },
+    {
+      "path": "scripts/core-ideals/key-avro-projection-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-avro-projection-cases.ts",
+      "sha256": "73aa0bace86f88afb97df8c30e5820563aa4ce081573bde012812d11d75cc84e",
+      "source": "HEAD",
+      "reason": "Frozen Avro key native proof dependency retained byte-exact for historical evidence fingerprint verification; current key projection behavior remains covered by active tests."
+    },
+    {
+      "path": "scripts/core-ideals/key-avro-projection-oracle.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-avro-projection-oracle.ts",
+      "sha256": "1fd4d355ab6fc42309db83307e420b73a47612de65fb1111879a967c0de1690f",
+      "source": "HEAD",
+      "reason": "Frozen Avro key native proof dependency retained byte-exact for historical evidence fingerprint verification; current key projection behavior remains covered by active tests."
+    },
+    {
+      "path": "scripts/core-ideals/key-parquet-projection-oracle.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-parquet-projection-oracle.ts",
+      "sha256": "8b7a7fd866c6db193d4378ae1ce826dcce3de3d5435b02d948ec39df9121dadf",
+      "source": "HEAD",
+      "reason": "Frozen Apache Parquet native key proof generator retained byte-exact for historical evidence fingerprint verification; active key projection tests continue to validate current output bytes and recovery."
+    },
+    {
+      "path": "scripts/core-ideals/key-sqlserver-encoding-discovery.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-sqlserver-encoding-discovery.ts",
+      "sha256": "66bb3ff278a900dc001b19f47b7c5a4c0cbf4c221cbae48308252c570427cc1d",
+      "source": "HEAD",
+      "reason": "Original SQL Server Key encoding discovery builder retained byte-exact for the frozen native encoding evidence; current observations and tuple encoding remain covered by active tests."
+    },
+    {
+      "path": "scripts/core-ideals/key-sqlserver-oracle.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-sqlserver-oracle.ts",
+      "sha256": "d99e9c23c392b670243f64fcda685c985da97bd297e4a6dbb3b8d61c59814c5c",
+      "source": "HEAD",
+      "reason": "Original SQL Server Key native oracle builder retained byte-exact for its frozen native projection proof; current projection behavior remains covered by active tests."
+    },
+    {
+      "path": "scripts/core-ideals/key-sqlserver-projection-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-sqlserver-projection-cases.ts",
+      "sha256": "06e471947ed85c4c433db4bc995e57eca206a1ee724b9c64909afff574ec9c03",
+      "source": "HEAD",
+      "reason": "Original authored projection case generator retained byte-exact for the frozen SQL Server Key native proof; current authored behavior remains covered by active tests."
+    },
+    {
+      "path": "scripts/core-ideals/key-tablespec-projection-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-tablespec-projection-cases.ts",
+      "sha256": "e5ee2a0bf222486801f248eb6c6969b4fae66b2849ad36fb1717aa0d122fe8cb",
+      "source": "HEAD",
+      "reason": "Original authored Key/TableSpec case generator retained byte-exact for the frozen Parquet Key proof; current case generation remains exercised by active projection tests."
+    },
+    {
+      "path": "scripts/core-ideals/record-type-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__record-type-schema.ts",
+      "sha256": "d640fa190299b6fc40ceee45d4dd27cb03b3576d67314a21aabf24dbac28553b",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-ideals/relationship-avro-carrier-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__relationship-avro-carrier-cases.ts",
+      "sha256": "92e9a271900c2c3a1b0202bc6428766ed88fb1ccb5d0682eff62a4c091043faf",
+      "source": "HEAD",
+      "reason": "Original Avro relationship carrier cases retained byte-exact so frozen native codec evidence pins remain verifiable; active current codec behavior remains covered separately."
+    },
+    {
+      "path": "scripts/core-ideals/relationship-avro-projection-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__relationship-avro-projection-cases.ts",
+      "sha256": "91188079d3f39a4eb211fa90a3dd33171ca141c07b8c5eefd536af846ef78562",
+      "source": "HEAD",
+      "reason": "Original Avro relationship current-input case generator retained byte-exact so historical native codec evidence can be rechecked; current functional tests continue exercising the migrated generator."
+    },
+    {
+      "path": "scripts/core-key-operation-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-key-operation-schema.ts",
+      "sha256": "0d2164775fcb9eea1326ef516321857cc4e4f72b47b7860049e638e0e5f4e55c",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-key-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-key-schema.ts",
+      "sha256": "88c547e101b4a65147439adf1d494b2156242077a1dcb90337f2f408d87eef48",
+      "source": "working-tree-before-current-only-retirement",
+      "reason": "Historical key-envelope schema builder retired; the generated current-core schema is produced from the authoritative metamodel."
+    },
+    {
+      "path": "scripts/core-key-transition-browser.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-key-transition-browser.ts",
+      "sha256": "8674dce38020c123f1b1b278462ab94b59ecd3d93ff7d534b23a657c72d698a8",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "scripts/core-key-transition-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-key-transition-cases.ts",
+      "sha256": "c01109abb6f6caa9ef6e9e84f7bf9583568ea6813d7ea51780d0e717e0ac5f39",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "scripts/core-key-transition-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-key-transition-schema.ts",
+      "sha256": "801a207087e41bb3bc421cc8a80f886795e9bf1b1faf6c074b29bd13a13a7f66",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-key-versioned-schemas.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-key-versioned-schemas.ts",
+      "sha256": "3db1ee14d9d7bf540ed1e4d046e5360990f3226c82c5e1f027f40daf35c87453",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-kind-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-kind-schema.ts",
+      "sha256": "3f584d26fa53910a6ef0b602d809b5fb43216551489a2d384266ee24138d15c0",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-nullability-operation-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-nullability-operation-schema.ts",
+      "sha256": "8b047701de3cf49523234cd6bec88239be826a113c0446ba5739861cd4070e70",
+      "source": "HEAD",
+      "reason": "Historical one-off core operation schema generator retired with its profile-specific validation resources; the current UMF schema and generated type/validator outputs are produced by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-nullability-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-nullability-schema.ts",
+      "sha256": "57750c1dd7faee3a4ef5ae48d258cbcb1617536b73086d80512f27fdd1a5758d",
+      "source": "HEAD",
+      "reason": "One-off layered core document schema generator retired with the profile-specific document schemas; the authoritative core schema and derived artifacts are emitted by the metamodel compiler."
+    },
+    {
+      "path": "scripts/core-nullability-transition-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-nullability-transition-schema.ts",
+      "sha256": "56ef28b06860eb45d17004e5a286a870dfc37d494bd0a413ef496671db4a600c",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-relationship-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-relationship-schema.ts",
+      "sha256": "471d0f3fe5accbcf7b75d25cf5131ac08cc16919f1fdf520df6c78cf10e50653",
+      "source": "working-tree-before-current-only-retirement",
+      "reason": "Historical relationship-envelope schema builder retired; the generated current-core schema is produced from the authoritative metamodel."
+    },
+    {
+      "path": "scripts/core-relationship-transition-browser.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-relationship-transition-browser.ts",
+      "sha256": "787faaccf1ebd0aec25e711b5147f5e90df2d849417d7cd20408788bed9feb25",
+      "source": "working-tree-before-current-only-retirement",
+      "reason": "Historical version-upgrade/rollback browser proof retained as dated evidence; current relationship authoring/receipt browser coverage remains in scripts/core-ideals/relationship-conformance-browser.ts."
+    },
+    {
+      "path": "scripts/core-relationship-transition-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-relationship-transition-cases.ts",
+      "sha256": "4eab41c4c42620bf50f39ae838404c89a957b407e7060d76f0cb9406714ff90a",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-relationship-transition-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-relationship-transition-schema.ts",
+      "sha256": "9d5f942aa2c6b541e9e9986e599dafdbae939e2b4e1523702222e2987841f615",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/core-relationship-versioned-schemas.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-relationship-versioned-schemas.ts",
+      "sha256": "133f24ae549cf639711aed2c23600931ac118ba458ed1df9458a64217139a823",
+      "source": "HEAD",
+      "reason": "Historical core profile transition or schema-version generator retired with the old core dialects; no active runtime consumer remains."
+    },
+    {
+      "path": "scripts/uuid-browser.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__uuid-browser.ts",
+      "sha256": "7b244f6ee832cd1204bdcb53ce883975ecfcaa1ad5999156a9a6675fe750de08",
+      "source": "pre-current-browser-migration",
+      "reason": "Historical UUID browser transition harness retained byte-exact; current harness preserves codec/carrier/authoring coverage and refuses retired core markers."
+    },
+    {
+      "path": "spec/core/bit128-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__bit128-document.schema.json",
+      "sha256": "d10476a91845c430df0852d8da9fa7b53a1700410109fec15e0c9954eec11c2b",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/bit128-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__bit128-transition.schema.json",
+      "sha256": "60e1ad76e41ca2f3b3bb42a07057ddfcc7c72cc1cfb750395c2f04a180d485a8",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/cardinality-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__cardinality-document.schema.json",
+      "sha256": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/cardinality-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__cardinality-transition.schema.json",
+      "sha256": "7542f458ae6f04cbd38bb26ddbb3b3b428c8c288ee792e844226a1d5e487ca0f",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/facet-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__facet-document.schema.json",
+      "sha256": "db4945cbe9faae8101096ef5fe57dedbd4efa5eb8b82277d0bf181a72f525ecb",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/facet-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__facet-transition.schema.json",
+      "sha256": "f67a32df85ee0c5a730e588f09a11b228f4d8a4c34b7cc8d018c1a6d00f44682",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/facets-postgresql-projection.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__facets-postgresql-projection.schema.json",
+      "sha256": "ed76ebc56b23843f95bf4a19bb66e0a08a055090838c14ac2f4ccc8890a93675",
+      "source": "HEAD",
+      "reason": "Original PostgreSQL facet native projection schema/source is retained byte-exactly to validate its historical native observation; current schema behavior is covered by current-core tests."
+    },
+    {
+      "path": "spec/core/facets-sqlserver-projection.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__facets-sqlserver-projection.schema.json",
+      "sha256": "a539e3fd69967c44c60f8a4757a0d8aeb743e889a41a4532699380230a3d7ef8",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet projection input retained byte-exact for historical evidence fingerprint verification; active current classification and projection remain under test."
+    },
+    {
+      "path": "spec/core/field-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__field-document.schema.json",
+      "sha256": "1c8cabaa17e7dbcd4b5cd51fdf26c69e8db3de1511ac825952a11d9ad02411bc",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/field-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__field-transition.schema.json",
+      "sha256": "893873b8e5bbd40be702209b42b040af2d978a485fba67438464a31418b0777e",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/key-avro-projection.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__key-avro-projection.schema.json",
+      "sha256": "09600e303c9e595d8f9c83ef6d3d3b163595fd2d4508b4ee5b6a0e08d21d912e",
+      "source": "HEAD",
+      "reason": "Frozen Avro key native proof dependency retained byte-exact for historical evidence fingerprint verification; current key projection behavior remains covered by active tests."
+    },
+    {
+      "path": "spec/core/key-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__key-document.schema.json",
+      "sha256": "2957e2ca8b0b800ad0e52a53e5cb1f053519c415aaed834f7fe650d21aeae4bf",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/key-parquet-projection.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__key-parquet-projection.schema.json",
+      "sha256": "6f20b105839cb176c178ccec4add0c130b503ab80d280392a3388170874c9ff4",
+      "source": "HEAD",
+      "reason": "Original projection receipt schema retained byte-exact for the frozen Parquet Key native proof; active schema identity and current projection receipts remain covered by current tests."
+    },
+    {
+      "path": "spec/core/key-sqlserver-projection.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__key-sqlserver-projection.schema.json",
+      "sha256": "8350853615336e06bcaeeaf22ace1efa0e7431f2008610a8c7a2505ff8fc3a2c",
+      "source": "HEAD",
+      "reason": "Original projection receipt schema retained byte-exact for the frozen SQL Server Key native proof; current schema identity and receipts remain covered by current tests."
+    },
+    {
+      "path": "spec/core/key-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__key-transition.schema.json",
+      "sha256": "2b6b920fdb1cb78933947a81b730c776ac0f5bceee95c533a96d0e7a2e9ee192",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/nullability-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__nullability-document.schema.json",
+      "sha256": "eaaf77c2f22370335baeb49daed162e31cf84b0b6493633960025785d0bf0156",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/nullability-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__nullability-transition.schema.json",
+      "sha256": "718bd9783b520faf87754d6e008c93eee918478309ca0a434e9d37299bbb43a3",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/relationship-avro-projection.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__relationship-avro-projection.schema.json",
+      "sha256": "f90741b434a672f63ea8a1c395a2904f217cf193ec714f5000a74fb97fe5b61a",
+      "source": "HEAD",
+      "reason": "Original Avro relationship projection receipt schema retained byte-exact for historical evidence fingerprint verification; current schema authority is the generated current metamodel resource."
+    },
+    {
+      "path": "spec/core/relationship-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__relationship-document.schema.json",
+      "sha256": "1ba5a38f95e135c3d4e6757259e6c7c75edb9aaa3fff98931f92e1890ded450d",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/relationship-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__relationship-transition.schema.json",
+      "sha256": "50c0d1d593395e1cfc33b605c6e35c13fe5cda872ca44ce596d13d8022804c6d",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/schema-properties-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__schema-properties-document.schema.json",
+      "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/schema-properties-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__schema-properties-transition.schema.json",
+      "sha256": "76e7115be996ae74963144bef06edb998fa592ed3f3ee717190abe13480a2d70",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "spec/core/semantic-types-document.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__semantic-types-document.schema.json",
+      "sha256": "52974654564b0edbf53e63471ec391ab5bceaa115d53fdf3eccd2934c684fd61",
+      "source": "HEAD",
+      "reason": "Layered core document schema retired in favor of the authoritative generated current-core UMF schema; byte-exact historical resource preserved for provenance."
+    },
+    {
+      "path": "spec/core/semantic-types-transition.schema.json",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/spec__core__semantic-types-transition.schema.json",
+      "sha256": "cf4f17c13fd27c07bddfee7aee05340486c55498b5466c618c98a0e99e18cf38",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/adapters/sqlserver/facet-constraints.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__sqlserver__facet-constraints.ts",
+      "sha256": "ed642046a2385bc016a21e7ea7c7d0d0dcd661f49b1cf5b7697f861a3dea4f04",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition input retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by current projection and round-trip tests."
+    },
+    {
+      "path": "src/adapters/sqlserver/facet-predicate.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__sqlserver__facet-predicate.ts",
+      "sha256": "53edc4e5f5611c91c06170551fde20c280f5a65cbf64e857e87c7b584d08d579",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition input retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by current projection and round-trip tests."
+    },
+    {
+      "path": "src/adapters/sqlserver/facet-type.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__sqlserver__facet-type.ts",
+      "sha256": "8831415c9ca140be4a3d7eec773e164abd1858597f42805fa7ca67e3331706ff",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition input retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by current projection and round-trip tests."
+    },
+    {
+      "path": "src/core-ideals/facets-postgresql-projection.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__facets-postgresql-projection.ts",
+      "sha256": "14b171761d661519fe46cc0a93780a28538e64936b35b9d95318fd47597dd2a5",
+      "source": "HEAD",
+      "reason": "Original PostgreSQL facet native evidence input/tool is retained byte-exactly for historical proof replay; current generated current-core behavior is covered by active tests."
+    },
+    {
+      "path": "src/core-ideals/facets-postgresql.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__facets-postgresql.ts",
+      "sha256": "4f3176f7e17a311ddeb5637132e7dce266a17f588c0a1300153bb9b5878ec6d0",
+      "source": "HEAD",
+      "reason": "Original PostgreSQL facet native evidence input/tool is retained byte-exactly for historical proof replay; current generated current-core behavior is covered by active tests."
+    },
+    {
+      "path": "src/core-ideals/facets-sqlserver-projection.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__facets-sqlserver-projection.ts",
+      "sha256": "e4a5a0f72c2d6c219105aba99327e1c20835bf279137f0ece1678a2f4983d2f3",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition input retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by current projection and round-trip tests."
+    },
+    {
+      "path": "src/core-ideals/facets-sqlserver.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__facets-sqlserver.ts",
+      "sha256": "f0b77c6f98aafff72dd89d544e5c9c1251991cda57cd225aad0b20e160e40d8d",
+      "source": "HEAD",
+      "reason": "Frozen SQL Server native facet composition input retained byte-exact for historical evidence fingerprint verification; active current behavior remains exercised by current projection and round-trip tests."
+    },
+    {
+      "path": "src/core-ideals/key-avro-projection.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__key-avro-projection.ts",
+      "sha256": "5451b02e0d546583666e07815b94eaace287ed4f62343bf73790103219b7823d",
+      "source": "HEAD",
+      "reason": "Frozen Avro key native proof dependency retained byte-exact for historical evidence fingerprint verification; current key projection behavior remains covered by active tests."
+    },
+    {
+      "path": "src/core-ideals/key-parquet-projection.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__key-parquet-projection.ts",
+      "sha256": "902c4305942fc204d4d75d9e05a8a5351c46e434cffabdb3413500198b81a27c",
+      "source": "HEAD",
+      "reason": "Original implementation retained byte-exact for the frozen Parquet Key native projection proof; current behavior remains exercised by active projection/recovery tests."
+    },
+    {
+      "path": "src/core-ideals/key-sqlserver-projection.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__key-sqlserver-projection.ts",
+      "sha256": "8973415a4aa9b380b20e093cc78d125528f00cfc0a148d2f1e84600d6a9fe67d",
+      "source": "HEAD",
+      "reason": "Original SQL Server Key projection implementation retained byte-exact for its frozen native proof; current behavior remains covered by active projection and recovery tests."
+    },
+    {
+      "path": "src/core-ideals/relationship-avro-projection.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__relationship-avro-projection.ts",
+      "sha256": "4e7e9773271f3e460e3a105ff802b9e9b89f50ca123bd956e2d71dc337456e7a",
+      "source": "HEAD",
+      "reason": "Original Avro relationship projection implementation retained byte-exact for historical native evidence fingerprints; current implementation has independent current source tests."
+    },
+    {
+      "path": "src/model/bit128-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__bit128-transition.ts",
+      "sha256": "ce8a9b031dbc88db077b43c05a2d4afd097ce502d02a622a0bfcc7e2f79252a7",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/cardinality-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__cardinality-transition.ts",
+      "sha256": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/facet-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__facet-transition.ts",
+      "sha256": "ece8b2c276c93177cdc45ee4cfd5a50517acf2e0af7f41847c0a488f78f1a3dc",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/field-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__field-transition.ts",
+      "sha256": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/key-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__key-transition.ts",
+      "sha256": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/nullability-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__nullability-transition.ts",
+      "sha256": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/relationship-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__relationship-transition.ts",
+      "sha256": "9891f28b7fd0d0a1ff1fbafdd18b700c42e5682a44b41c63bc4ec0eb42ecbc36",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/schema-properties-transition-schema.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__schema-properties-transition-schema.ts",
+      "sha256": "620628fb3f7e92e5bcd422f3210bd89c8f1e42be326b4e446d6b83febdf51597",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/schema-properties-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__schema-properties-transition.ts",
+      "sha256": "e8e4a567c2073c5cd07b66d13b970ec21c2cfc6e1725601cafbc8308967a4e56",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "src/model/semantic-types-transition.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__model__semantic-types-transition.ts",
+      "sha256": "aa2231bf97fae5770f6b45454bcfcb9c89cb13f3a448cc7f2333b915b12f2b32",
+      "source": "HEAD",
+      "reason": "Historical core transition API retired from active current-core runtime; preserved byte-exact for identity and provenance."
+    },
+    {
+      "path": "tests/core-uuid-transition.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core-uuid-transition.test.ts",
+      "sha256": "60a558597bb24265266d922337bf5149ab6ce6c061a80b6987e2582ea8d90abc",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "tests/core-uuid.test.ts#caller-visible-schema-mutation-test",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core-uuid__caller-visible-schema-mutation-test.txt",
+      "sha256": "dd61730394ba479f064d8241d6d9dcdeda81b18fcafa6ce25eb020e9ee3a9753",
+      "source": "HEAD",
+      "reason": "Historical layered-schema mutation behavior retired with old validators; current generated-runtime ownership is covered by tests/metamodel/compiler-runtime.test.ts and current UUID behavior remains in tests/core-uuid.test.ts."
+    },
+    {
+      "path": "tests/core/cardinality-ideals.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__cardinality-ideals.test.ts",
+      "sha256": "188687476e22bbe3145a9cbbaaa0ddcecc569ba45512bbc223d429b3777069ad",
+      "source": "HEAD",
+      "reason": "Historical-profile transition assertions are retired; current cardinality semantics remain actively covered by tests/core/cardinality-ideals.test.ts."
+    },
+    {
+      "path": "tests/core/facet-authoring.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__facet-authoring.test.ts",
+      "sha256": "cb679df072a24374049de0140eeb9c8521eb666f8593f54a431c1156bbba2501",
+      "source": "HEAD",
+      "reason": "Historical facet patch and rollback assertions are retired; current explicit facet declarations remain actively covered by tests/core/facet-authoring.test.ts."
+    },
+    {
+      "path": "tests/core/facet-schema-properties.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__facet-schema-properties.test.ts",
+      "sha256": "57f63321202721f79ae4ff026ccfdaf44693385cbed0ba4389a434278067fc2a",
+      "source": "HEAD",
+      "reason": "Archived original source preserves historical inspection/patch assertions. Active current facet inspection, unknown/missing/inapplicable qualifier mappings and declarations are in tests/core/facet-schema-properties.test.ts, tests/core/facet-ideals.test.ts and tests/core/facet-authoring.test.ts."
+    },
+    {
+      "path": "tests/core/facet-transition.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__facet-transition.test.ts",
+      "sha256": "0503673fcda1f21d785ddfefb4317421a78a783029b0df81377bd75d606e7f8f",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "tests/core/field-ideals.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__field-ideals.test.ts",
+      "sha256": "cd1bb39569832d74ee6da0d7e6ab4b9f4f7d9af8a9983437937465d404b666d8",
+      "source": "HEAD",
+      "reason": "Replaced historical core-profile/opaque-collision acceptance with current-core role semantics and explicit retired-marker refusal. Original test source is preserved byte-exact."
+    },
+    {
+      "path": "tests/core/field-kind.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__field-kind.test.ts",
+      "sha256": "554b79cac17fbad177130800c396ced9b80371bce4eaa88167d24a85f8038dca",
+      "source": "HEAD",
+      "reason": "Historical role interpretation assertions are retired; current field, record and group declarations and inspections remain actively covered by tests/core/field-kind.test.ts."
+    },
+    {
+      "path": "tests/core/field-transition.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__field-transition.test.ts",
+      "sha256": "41144357beb4667a4f00df2e7718775c7108649065c63d9feac419aaed5df0fe",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "tests/core/key-transition.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__key-transition.test.ts",
+      "sha256": "a35701d3631548c8e8bc588c9c072ef7ab563f8ebad611cc95fc74070d70f2b6",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "tests/core/nullability-authoring.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__nullability-authoring.test.ts",
+      "sha256": "8a6c0e45c37593d0e4e62387bbda954af10d2bbab3a88711fdc04aea74137936",
+      "source": "HEAD",
+      "reason": "Replaced historical nullability transition and legacy-envelope assertions with current-core authoring, inspection, and provenance verification; original test source is preserved byte-exact."
+    },
+    {
+      "path": "tests/core/nullability-schema-properties.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__nullability-schema-properties.test.ts",
+      "sha256": "56ca176e4b56c1695875a7e210e786b4f85e75f9a7e179a8ce3790c7e14b260a",
+      "source": "HEAD",
+      "reason": "Archived original source preserves historical inspection/patch assertions. Active current nullability known/unknown/missing/inapplicable mappings and declarations are in tests/core/nullability-schema-properties.test.ts and tests/core/nullability-ideals.test.ts."
+    },
+    {
+      "path": "tests/core/nullability-transition.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__nullability-transition.test.ts",
+      "sha256": "8833c37f4b50d037dfb666c780ab3e22c7a67d1a93115902401332b500db8cb1",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "tests/core/relationship-public.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__relationship-public.test.ts",
+      "sha256": "edb6b4a14e4845295454b2bf84f8bebe3553e2efde5f1247d98f4d36687eeadf",
+      "source": "HEAD",
+      "reason": "Archived original bytes preserve historical-profile input construction; all useful public validation/round-trip, operation/receipt, tuple encoding, selection and callback-context behaviors remain active in tests/core/relationship-public.test.ts using current-core sources."
+    },
+    {
+      "path": "tests/core/relationship-transition.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests__core__relationship-transition.test.ts",
+      "sha256": "4425c8304e253ce5ab7efa7225195246ddb05653ed285f2026d2dc0a57243720",
+      "source": "HEAD",
+      "reason": "Historical current-core upgrade/rollback conformance retired from the current-only runtime; preserved byte-exact."
+    },
+    {
+      "path": "tests/semantic-types/composition.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests/semantic-types-composition.test.ts",
+      "sha256": "705d7f52e77aed1a4bcc397045bdeee9d869d37721dd9d7891cd3c8e9114888e",
+      "source": "HEAD",
+      "reason": "Original mixed-version semantic-type tests retained byte-exactly; current semantic-reference structure, declarations, registries, validation, selection, serialization and native round-trip behavior are actively tested in the current replacement file."
+    },
+    {
+      "path": "tests/semantic-types/core.test.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/tests/semantic-types-core.test.ts",
+      "sha256": "cb063e24b8a9f0d739c3547ed84a29bdbe00b11eeb9971bfd3504b28a3c7f896",
+      "source": "HEAD",
+      "reason": "Original mixed-version semantic-type tests retained byte-exactly; current semantic-reference structure, declarations, registries, validation, selection, serialization and native round-trip behavior are actively tested in the current replacement file."
+    }
+  ]
+}

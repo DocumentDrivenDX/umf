@@ -1,0 +1,33 @@
+/** One-time pre-cutover observation tool. Its outputs are immutable evidence. */
+import {createHash} from 'node:crypto';
+import {mkdir,rename,rm,mkdtemp} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import {validateDocument} from '../src/validation/document';
+import {Registry} from '../src/registry/registry';
+import {copyJson} from '../src/model/json';
+import {checkSchemaLiteral,type CoreLiteral} from '../src/model/schema-literals';
+import {resolveCoreDefault} from '../src/model/schema-properties';
+import type {Document,ExtensionPackage,Json} from '../src/model/types';
+const root=resolve(import.meta.dir,'..'),parent=join(root,'docs/helix/04-build/evidence/metamodel-authority');
+const baseline=join(parent,'baseline'),output=join(parent,'baseline-current');
+const digest=(value:string|Uint8Array)=>createHash('sha256').update(value).digest('hex');
+const stable=(v:any):any=>Array.isArray(v)?v.map(stable):v!==null&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,stable(v[k])])):v;
+const json=(v:any)=>JSON.stringify(stable(v),null,2)+'\n';
+const old=await Bun.file(join(baseline,'cases.json')).json(),receipt=await Bun.file(join(baseline,'receipt.json')).json();
+const sourceHashes:Record<string,string>={};
+for(const [path,expected]of Object.entries(receipt.sourceHashes) as [string,{sha256:string}][]){const actual=digest(await Bun.file(join(root,path)).bytes());if(actual!==expected.sha256)throw Error('PRE_CUTOVER_SOURCE_CHANGED '+path);sourceHashes[path]=actual;}
+if(await Bun.file(join(output,'receipt.json')).exists())throw Error('REFUSE_FROZEN_OVERWRITE');
+const rows=old.cases.map((row:any)=>({...row,source:{baselineCaseId:row.id,baselineVersion:row.document.umf,baselineDocumentSha256:digest(json(row.document)),transformation:'Copy all source values; replace only top-level umf with 0.10.0 for a separate pre-cutover composite observation.'},document:{...row.document,umf:'0.10.0'}}));
+const register=(spec:any)=>{const registry=new Registry();if(spec){const manifest:ExtensionPackage={id:spec.id,version:spec.version,coreVersion:'0.1.0',description:'Frozen cross-runtime baseline callback',schema:true,semantics:'Baseline callback that exposes exact source context',scopes:[spec.scope],capabilities:{validation:'semantic',directions:[],evidence:['metamodel-authority-baseline']}};registry.register(manifest,(payload,context)=>[{code:'BASELINE_CALLBACK',path:context.path,message:`${context.document.id}:${context.scope}:${(payload as Record<string,Json>).kind}`,severity:'warning'}]);}return registry;};
+const results=rows.map((row:any)=>{
+ const validation=validateDocument(row.document,register(row.registry));const result:any={id:row.id,...validation};
+ if(row.defaultProbe)try{const resolved=resolveCoreDefault(row.document,row.defaultProbe.field,row.defaultProbe.state);result.defaultResolution={applied:resolved.applied,result:resolved.result};}catch(error){result.defaultResolution={error:String(error instanceof Error?error.message:error)};}
+ if(row.uuidLiteralProbe){const evaluate=(document:Document)=>{const element=document.modules.find(m=>m.id===row.uuidLiteralProbe.module)!.elements.find(e=>e.id===row.uuidLiteralProbe.element)!;try{checkSchemaLiteral(document,element,row.uuidLiteralProbe.value as CoreLiteral);return {accepted:true};}catch(error){return {accepted:false,error:String(error instanceof Error?error.message:error)};}};const inherited=copyJson(row.document) as unknown as Document;inherited.umf='0.9.0';for(const m of inherited.modules)for(const e of m.elements)delete e.semanticTypes;result.uuidLiteralEntryPoints={direct010:evaluate(row.document),privateInheritedView:evaluate(inherited),documentValidation:validation};}
+ return result;
+});
+const casesData={format:'umf.current-core-baseline/1',sourceHead:receipt.sourceHead,derivedFrom:{path:'../baseline/cases.json',sha256:digest(await Bun.file(join(baseline,'cases.json')).bytes())},cases:rows};
+const outputs:Record<string,string>={'cases.json':json(casesData),'ts-results.json':json({runtime:`Bun ${Bun.version}`,results}),'source-hashes.json':json({sourceHead:receipt.sourceHead,sources:sourceHashes,captureScriptSha256:digest(await Bun.file(import.meta.path).bytes())})};
+outputs['receipt.json']=json({id:'umf.metamodel-authority.baseline-current',status:'frozen-current-composite-observations',sourceHead:receipt.sourceHead,createdAt:new Date().toISOString(),command:'bun scripts/capture-current-core-baseline.ts',caseCount:rows.length,allCurrentCore:rows.every((r:any)=>r.document.umf==='0.10.0'),validCases:results.filter((r:any)=>r.valid).length,invalidCases:results.filter((r:any)=>!r.valid).length,outputHashes:Object.fromEntries(Object.entries(outputs).map(([path,value])=>[path,digest(value)])),notes:['Original baseline is unchanged and retains exact historical outcomes.','All original case identities and source document hashes are retained. Only the top-level marker is replaced for these separately observed composite tests. This is a test construction, not a native migration or semantic-equivalence claim.','Historical Python does not admit core0.10; its original unsupported-profile observations remain in ../baseline/python-results.json. Successor Python must implement the current TS rule corpus; prior incompleteness is not a parity target.','Current direct UUID literal evaluation and default-resolution entry points have known old-profile guards; successor corrections require explicit review.']});
+await mkdir(parent,{recursive:true});const stage=await mkdtemp(join(parent,'.current-capture-'));
+try{for(const [path,value]of Object.entries(outputs))await Bun.write(join(stage,path),value);await rename(stage,output);}catch(error){await rm(stage,{recursive:true,force:true});throw error;}
+console.log(json({output,caseCount:rows.length,allCurrentCore:true,validCases:results.filter((r:any)=>r.valid).length,invalidCases:results.filter((r:any)=>!r.valid).length}));

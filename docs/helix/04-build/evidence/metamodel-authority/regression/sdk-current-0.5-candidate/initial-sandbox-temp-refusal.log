@@ -1,0 +1,13 @@
+bun add v1.4.2 (744846f84)
+error: bun is unable to write files to tempdir: EPERM
+1 | import {checkCoreDistribution} from './check-core-authority';
+2 | import {mkdtemp,rm} from 'node:fs/promises';
+3 | import {tmpdir} from 'node:os';
+4 | import {join,resolve} from 'node:path';
+5 | const directory=await mkdtemp(join(tmpdir(),'umf-sdk-install-'));
+6 | async function run(command:string[]){const child=Bun.spawn(command,{cwd:directory,stdout:'inherit',stderr:'inherit'});if(await child.exited)throw Error('Installed SDK check failed: '+command[0]);}
+                                                                                                                                                      ^
+error: Installed SDK check failed: /private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun
+      at run (/Users/erik/.codex/worktrees/d8be/umf/scripts/test-sdk-install.ts:6:147)
+
+Bun v1.4.2 (macOS arm64)

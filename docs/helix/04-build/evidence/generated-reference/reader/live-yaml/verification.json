@@ -1,0 +1,91 @@
+{
+  "profile": "umf.reference.reader.live/1",
+  "commit": "bfcf9fb4c718111c547b0a662174fe00808f9c15",
+  "workflow": "https://github.com/DocumentDrivenDX/umf/actions/runs/39096762789",
+  "baseUrl": "https://documentdrivendx.github.io/umf/",
+  "manifestSha256": "5c2b730e661959e6883609ecb1eab3c52452548375aa724e6e0a97cb495340cc",
+  "browser": "153.0.8010.12",
+  "checks": [
+    "Live index, reader, JavaScript, CSS, schema and API shards match served manifest and tested local bytes",
+    "Live schema/API pages bind the served manifest and have valid registered build-key Ed25519 signatures",
+    "Live complete example defaults to verified YAML, switches to equivalent JSON and returns by keyboard without changing route",
+    "Live latest Document and Record key navigation",
+    "Live inline reference defaults to YAML and toggles to the same JSON target",
+    "Live cold property search, itemType reference shape and scalarType value explanation",
+    "Live supplied constant deep link, function parameters and linked interface members",
+    "Live schema/API mobile views at 390px without document overflow",
+    "Live latest workbench executes fixed core validator"
+  ],
+  "assets": [
+    {
+      "path": "example.yaml",
+      "sha256": "173adf97f763bd784ffd8d414285909389011cdd650cbaae3bb10e66f5a9bb12",
+      "bytes": 964,
+      "identicalToLocal": true
+    },
+    {
+      "path": "index.json",
+      "sha256": "9335c69e6e876196b15b0ff89e4627b540e0626ed3744baffdcb1057ca66a367",
+      "bytes": 1091933,
+      "identicalToLocal": true
+    },
+    {
+      "path": "reader.json",
+      "sha256": "538f4ae1a3e78441055286262552ea184e806bf200b210900f7187c7d2c82d84",
+      "bytes": 729777,
+      "identicalToLocal": true
+    },
+    {
+      "path": "assets/reference.js",
+      "sha256": "8f42fed08d1601ca356e9a82162801c5b3c31fc3f9c81bcc1c416fc8a39a9dc9",
+      "bytes": 31006,
+      "identicalToLocal": true
+    },
+    {
+      "path": "assets/reference.css",
+      "sha256": "e2967a301fce9a4711a02ed66ec09672f3f25c2ef2f94e66a7f7ecef61cb1a12",
+      "bytes": 9941,
+      "identicalToLocal": true
+    },
+    {
+      "path": "reader/f1644040222edfde331f49433d48d986d97ac025a90ed0d50a2cfb6ebde4acc9.json",
+      "sha256": "0625c072c6ae35f20dc47ab0510f904fce5b46a0b3f7a2ad74a1983562c94665",
+      "bytes": 913,
+      "identicalToLocal": true
+    },
+    {
+      "path": "reader/14bf9f2da9b7af84aac43239df578f4ddeb96650c20802fb2f2a2d752f48fc13.json",
+      "sha256": "6718ac6cae90ff0a21d939692c4eb32868977b3b46db4d5977c93ac363211cfd",
+      "bytes": 1106,
+      "identicalToLocal": true
+    },
+    {
+      "path": "entries/3e4c579131b24a19bc79afb3efbc78ac69617170055a806c29088a5319774892.json",
+      "sha256": "1c42230c6f2833e9038e3432d03ed9105e11f831a92ed6be1b73e58518315598",
+      "bytes": 148805,
+      "identicalToLocal": true
+    },
+    {
+      "path": "entries/f1644040222edfde331f49433d48d986d97ac025a90ed0d50a2cfb6ebde4acc9.json",
+      "sha256": "4e3443bbdd656cf4411f7e121b5d03cb3d984be3e785152b72f9424a9d6a3ef9",
+      "bytes": 783,
+      "identicalToLocal": true
+    }
+  ],
+  "signatures": [
+    {
+      "page": "core.html",
+      "sha256": "b696ee64ff681d5146fbf9548686ed31c8f716a8bc42b9508c0c142d9734622b",
+      "keyId": "ed25519:c63e7352e15127ee63b9ae2f071602bb",
+      "verified": true
+    },
+    {
+      "page": "api.html",
+      "sha256": "5599a627f6e292cfc355bf9b245ee63dc33754692e2f478d739ad1b0941fdcf3",
+      "keyId": "ed25519:c63e7352e15127ee63b9ae2f071602bb",
+      "verified": true
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": []
+}

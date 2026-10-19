@@ -1,0 +1,55 @@
+{
+  "scope": "Local unpublished renderer2candidate3 mounted in current SDK0.5 site; pre-final-reference preview, not final clean release proof",
+  "runtime": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12"
+  },
+  "checks": [
+    "Actual Workbench worker starts, defaults to YAML and validates current core with fixed profile",
+    "Playground defaults preserve unknown extension content in YAML",
+    "Developers links target SDK0.5.0 release identity; publication remains pending"
+  ],
+  "errors": [],
+  "referenceExternalRequests": [],
+  "siteFontRequests": [
+    {
+      "page": "http://127.0.0.1:65221/umf/demo.html",
+      "url": "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
+    },
+    {
+      "page": "http://127.0.0.1:65221/umf/demo.html",
+      "url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2"
+    },
+    {
+      "page": "http://127.0.0.1:65221/umf/demo.html",
+      "url": "https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYthqQBK6PYK0.woff2"
+    },
+    {
+      "page": "http://127.0.0.1:65221/umf/docs.html",
+      "url": "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
+    },
+    {
+      "page": "http://127.0.0.1:65221/umf/docs.html",
+      "url": "https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYthqQBK6PYK0.woff2"
+    },
+    {
+      "page": "http://127.0.0.1:65221/umf/docs.html",
+      "url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2"
+    },
+    {
+      "page": "http://127.0.0.1:65221/umf/docs.html",
+      "url": "https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvumzEYOtbYf-Vlg.woff2"
+    }
+  ],
+  "developerDownloadLinks": [
+    "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.0"
+  ],
+  "qualification": "Actual local pre-final-reference candidate preview. Reference made zero external requests; existing product-site Google Fonts requests are recorded separately. No renderer publication/final clean producer or final consumerpinB qualification is claimed.",
+  "sha256": {
+    "workbench-yaml.png": "b21bdf360596463ead7a5b46ac32a3d659ef90cd7d543a1c034bab57784689f8",
+    "runner.ts.txt": "8254800b70230f9ce6226c569a12d27cf2affe4379c26858a28bda0cc06a38f0",
+    "global-font-check.log": "ef74d9036ca1b9c5ae7ba1e13298d88a1899d557c3265fea743232a40b75b4f6",
+    "playground-default.png": "4833aae659c1e985a23199ea2713a1d628a7a0719c2c8467f86db555146f9a41",
+    "verification.log": "945bbff079d4a11c0de44cfce776a6de9e091d2aa1ad2fc4da9396688539b4df"
+  }
+}

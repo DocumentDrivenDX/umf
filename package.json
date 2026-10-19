@@ -1,6 +1,6 @@
 {
   "name": "@umf/core",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "packageManager": "bun@1.4.2",
@@ -45,8 +45,13 @@
     "test:access-e2e": "bun scripts/access-e2e.ts",
     "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
     "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
-    "test:reference:browser": "bun scripts/reference/browser.ts && bun scripts/reference/reader-browser.ts",
-    "check:reference-boundaries": "bun scripts/reference/check-boundaries.ts"
+    "test:reference:browser": "bun scripts/reference/browser.ts && bun scripts/reference/reader-browser.ts && bun scripts/reference/ontology-browser.ts",
+    "check:reference-boundaries": "bun scripts/reference/check-boundaries.ts",
+    "build:metamodel": "bun scripts/metamodel/build.ts",
+    "check:metamodel": "bun scripts/metamodel/build.ts --check",
+    "test:metamodel": "bun test tests/metamodel && bun scripts/metamodel-browser.ts",
+    "check:core-authority": "bun scripts/check-core-authority.ts",
+    "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",
@@ -80,6 +85,8 @@
     "yaml": "2.9.1"
   },
   "devDependencies": {
+    "@dagrejs/dagre": "3.1.1",
+    "@documentdrivendx/umf-schema-browser": "2.0.0",
     "@launchql/protobufjs": "7.2.6",
     "@types/bun": "1.4.2",
     "@types/n3": "1.26.4",
@@ -87,8 +94,7 @@
     "playwright": "1.63.0",
     "rdfxml-streaming-parser": "3.3.0",
     "typescript": "7.0.2",
-    "typescript-api": "npm:typescript@5.9.3",
-    "@documentdrivendx/umf-schema-browser": "1.1.2"
+    "typescript-api": "npm:typescript@5.9.3"
   },
   "patchedDependencies": {
     "jsonld@9.0.0": "patches/jsonld@9.0.0.patch"

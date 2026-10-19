@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {Parser,Writer,DataFactory} from 'n3/browser/n3.esm.min.js';
 import type {Term,Quad as NativeQuad} from '@rdfjs/types';
 import manifest from '../../../spec/extensions/rdf/package.json';
@@ -40,7 +41,7 @@ function inspect(input:Json):Diagnostic[]{const p=input as unknown as Payload,ds
 export function rdfRegistry(){return new Registry().register(rdfPackage,inspect);}
 export function inspectRdfDocument(document:Document){return validateDocument(document,rdfRegistry());}
 function payload(document:Document):Payload {const checked=inspectRdfDocument(document);if(!checked.valid)throw new UmfError('RDF_DOCUMENT',JSON.stringify(checked.diagnostics));const p=document.modules.find(m=>m.id==='dataset')?.elements.find(e=>e.id==='dataset')?.extensions[RDF_EXTENSION];if(!p||document.vocabularies[RDF_EXTENSION]?.version!=='0.1.0')throw new UmfError('RDF_PAYLOAD','Expected pinned RDF dataset payload');return copyJson(p) as unknown as Payload;}
-export function importRdfNQuads(text:string,options:{id:string;blankNodeScope?:string}):Document {const p:Payload={profile:'rdf11-nquads',blankNodeScope:options.blankNodeScope??options.id,quads:parse(text),originalSource:text};const d:Document={umf:'0.1.0',id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;}
+export function importRdfNQuads(text:string,options:{id:string;blankNodeScope?:string}):Document {const p:Payload={profile:'rdf11-nquads',blankNodeScope:options.blankNodeScope??options.id,quads:parse(text),originalSource:text};const d:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;}
 export function getRdfQuads(document:Document):RdfQuad[]{return payload(document).quads;}
 export function exportRdfNQuads(document:Document,options:{preserveSource?:boolean}={}):string {if(options.preserveSource!==undefined&&typeof options.preserveSource!=='boolean')throw new UmfError('RDF_OPTIONS','Expected boolean preserveSource');const p=payload(document);if(inspectRdfDocument(document).diagnostics.some(d=>d.code==='RDF_REPRESENTATION'))throw new UmfError('RDF_EXPORT','Unknown encoding fields cannot be discarded');if(graphs(p).some(g=>!p.quads.some(q=>q.graph.kind===g.kind&&'value' in q.graph&&q.graph.value===g.value)))throw new UmfError('RDF_GRAPH_LOSS','N-Quads cannot represent empty named graphs');return options.preserveSource!==false&&p.profile==='rdf11-nquads'&&canonical(parse(p.originalSource))===canonical(p.quads)?p.originalSource:render(p.quads);}
 export function proposeRdfQuadEdit(document:Document,index:number,replacement:RdfQuad){const p=payload(document);if(!Number.isSafeInteger(index)||index<0||index>=p.quads.length)throw new UmfError('RDF_EDIT','Expected existing quad index');p.quads[index]=copyJson(replacement) as unknown as RdfQuad;const next=copyJson(document) as unknown as Document;next.modules.find(m=>m.id==='dataset')!.elements.find(e=>e.id==='dataset')!.extensions[RDF_EXTENSION]=p as unknown as Json;payload(next);return {document:next,validation:inspectRdfDocument(next)};}
@@ -74,7 +75,7 @@ function checkBase(baseIRI:string):void {
 }
 export function importRdfTurtle(text:string,options:{id:string;baseIRI:string;blankNodeScope?:string}):Document {
  checkBase(options.baseIRI);const p:Payload={profile:'rdf11-turtle',baseIRI:options.baseIRI,blankNodeScope:options.blankNodeScope??options.id,quads:parse(text,'Turtle',options.baseIRI),originalSource:text};
- const d:Document={umf:'0.1.0',id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;
+ const d:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;
 }
 export function exportRdfTurtle(document:Document):string {
  const p=payload(document);if(inspectRdfDocument(document).diagnostics.some(d=>d.code==='RDF_REPRESENTATION'))throw new UmfError('RDF_EXPORT','Unknown encoding fields cannot be discarded');if(graphs(p).length)throw new UmfError('RDF_GRAPH_LOSS','Turtle export cannot silently discard named graphs');
@@ -90,7 +91,7 @@ function trig(p:Payload):string {
 }
 export function importRdfTriG(text:string,options:{id:string;baseIRI:string;blankNodeScope?:string}):Document {
  checkBase(options.baseIRI);const namedGraphs:RdfNode[]=[],p:Payload={profile:'rdf11-trig',baseIRI:options.baseIRI,blankNodeScope:options.blankNodeScope??options.id,namedGraphs,quads:parse(text,'TriG',options.baseIRI,namedGraphs),originalSource:text};
- const d:Document={umf:'0.1.0',id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;
+ const d:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;
 }
 export function exportRdfTriG(document:Document):string {
  const p=payload(document);if(inspectRdfDocument(document).diagnostics.some(d=>d.code==='RDF_REPRESENTATION'))throw new UmfError('RDF_EXPORT','Unknown encoding fields cannot be discarded');
@@ -121,7 +122,7 @@ export function proposeRdfDatasetMerge(documents:Document[],options:{id:string;g
    if(quads.length>10000)throw new UmfError('RDF_LIMIT','Merged dataset exceeds 10,000 quad occurrences');
   });
   const p:Payload={profile:'rdf11-trig',baseIRI:'urn:umf:merge:',blankNodeScope:options.id,quads,namedGraphs:[],originalSource:''};p.namedGraphs=graphs({...p,namedGraphs});if(p.namedGraphs.length>10000)throw new UmfError('RDF_LIMIT','Merged dataset exceeds 10,000 named graphs');p.originalSource=trig(p);
-  const candidate:Document={umf:'0.1.0',id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};
+  const candidate:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:p as unknown as Json}}]}]};
   exportRdfTriG(candidate);r.candidate=candidate;r.blankNodes=blankNodes;r.quadOrigins=quadOrigins;r.status='candidate';
   r.diagnostics.push({code:'RDF_MERGE_CONTEXT',path:'',severity:'warning',message:'RDF dataset projection only. Default graphs and identical IRI graph names are unioned; every input occurrence has a disjoint blank-node space, even for identical document ids or scope strings. Quad occurrences and empty graphs are retained. Complete source documents, unknown metadata and original archives remain in sources, not in the candidate RDF payload. No shared-blank inference, ontology consistency, entailment or canonicalization is asserted.'});
  }catch(e){r.diagnostics.push({code:'RDF_MERGE_INPUT',path:'',severity:'error',message:String(e)});}

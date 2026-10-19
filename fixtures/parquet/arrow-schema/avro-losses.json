@@ -3,7 +3,7 @@
     {
       "file": "stored.parquet",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "stored.parquet",
         "vocabularies": {
           "umf.parquet": {
@@ -40,7 +40,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "stored.parquet",
           "vocabularies": {
             "umf.parquet": {
@@ -217,7 +217,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Sample\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"events\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"elapsed\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"created\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"label\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "arrow-loss",
           "vocabularies": {
             "umf.avro": {
@@ -412,7 +412,7 @@
     {
       "file": "physical-only.parquet",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "physical-only.parquet",
         "vocabularies": {
           "umf.parquet": {
@@ -449,7 +449,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "physical-only.parquet",
           "vocabularies": {
             "umf.parquet": {
@@ -598,7 +598,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Sample\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"events\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"elapsed\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"created\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"label\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "arrow-loss",
           "vocabularies": {
             "umf.avro": {
@@ -794,7 +794,7 @@
   "chain": {
     "status": "projected",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "stored.parquet",
       "vocabularies": {
         "umf.parquet": {
@@ -858,7 +858,7 @@
       "sourceToAvro": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "stored.parquet",
           "vocabularies": {
             "umf.parquet": {
@@ -1035,7 +1035,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Sample\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"events\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"elapsed\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"created\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"label\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "arrow-loss",
           "vocabularies": {
             "umf.avro": {
@@ -1229,7 +1229,7 @@
       "avroToTableSpec": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "arrow-loss",
           "vocabularies": {
             "umf.avro": {
@@ -1546,7 +1546,7 @@
         ],
         "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Sample\",\n  \"columns\": [\n    {\n      \"name\": \"events\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"elapsed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"label\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "table",
           "vocabularies": {
             "umf.tablespec": {
@@ -1959,7 +1959,7 @@
       }
     ],
     "target": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "table",
       "vocabularies": {
         "umf.tablespec": {

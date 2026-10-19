@@ -1,8 +1,8 @@
 {
   "version": "umf-access-authored-census-expectations/0.1",
-  "review": "Authored independently from core0.8 PostgreSQL18 model, its explicit binding and declared shipOrder action. Expected leaves enumerated from these authored scope roots, never generator dispositions. Native execution and temporal qualification are not claimed.",
+  "review": "Current-core fixture constructed from the independently authored PostgreSQL18 logical model, explicit binding and shipOrder action; core markers/references updated, authored scope roots and expected leaf census retained. Native execution and temporal qualification are not claimed.",
   "logical": {
-    "umf": "0.8.0",
+    "umf": "0.10.0",
     "id": "commerce-model",
     "vocabularies": {
       "umf.access": {
@@ -568,7 +568,7 @@
     ]
   },
   "binding": {
-    "umf": "0.8.0",
+    "umf": "0.10.0",
     "id": "orders-binding",
     "vocabularies": {
       "umf.binding": {
@@ -581,7 +581,7 @@
         "profile": "umf-binding-2",
         "logical": {
           "documentId": "commerce-model",
-          "coreVersion": "0.8.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "postgresql",
@@ -633,8 +633,8 @@
     }
   },
   "sourceSha256": {
-    "logical": "322a49e7512fba982eeab8d4d3300cba3e7c4509687190b01cd61ac0fe1621ce",
-    "binding": "a8d523d74def9a8e9c795071a3297c2cfb775ecda914b5eaf2ce3d7bd872dc04"
+    "logical": "dc8ce54ad13eea3d62885f3a5e53516c1d9b5e240b4b129691d3b77108c6b82f",
+    "binding": "f35559b60070beb5312ee57ebeec8bf9ac5065eecf97a3f5a9f017a5ade1064c"
   },
   "scopeRoots": {
     "headers": [

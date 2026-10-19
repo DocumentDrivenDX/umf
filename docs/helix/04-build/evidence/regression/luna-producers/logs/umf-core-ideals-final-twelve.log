@@ -1,0 +1,203 @@
+{"testProcess":"tests/core-ideals/facet-operations.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facet-operations.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facet-operations.test.ts:
+(pass) current author APIs preserve facets and both receipt serializations [41.14ms]
+(pass) record-type v4 respects faceted-value conflicts and preserves unrelated facet metadata [17.82ms]
+(pass) current native Cardinality projections retain facet-envelope source [752.60ms]
+
+ 3 pass
+ 0 fail
+ 33 expect() calls
+Ran 3 tests across 1 file. [6.83s]
+{"testProcess":"tests/core-ideals/facet-operations.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":33,"completeSummary":true,"logSha256":"b65379caf45730361e511682da1ffffde1e68d3ecd7976b93aa8f71572babd06"}
+{"testProcess":"tests/core-ideals/facets-postgresql-composition.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-composition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-postgresql-composition.test.ts:
+(pass) native emitted schemas recover authored facets or explicit residuals and retain native refinements [7.67ms]
+
+ 1 pass
+ 0 fail
+ 103 expect() calls
+Ran 1 test across 1 file. [15.00ms]
+{"testProcess":"tests/core-ideals/facets-postgresql-composition.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":103,"completeSummary":true,"logSha256":"7d81be1cd3294e0e281b92ed0fd94e998780df0bc12ff1e1964fcb1095269430"}
+{"testProcess":"tests/core-ideals/facets-postgresql-discovery.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-discovery.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-postgresql-discovery.test.ts:
+(pass) native evidence is pinned and preserves counterexamples to direct core promotion [38.06ms]
+(pass) signed numeric modifiers are decoded without importing misleading information_schema scale [9.54ms]
+(pass) unknown qualifiers survive and unsafe or reserved modifier layouts cannot become native facts [1.42ms]
+(pass) catalog observations and native refinements survive both envelope forms without core facet assertions [404.05ms]
+
+ 4 pass
+ 0 fail
+ 94 expect() calls
+Ran 4 tests across 1 file. [4.50s]
+{"testProcess":"tests/core-ideals/facets-postgresql-discovery.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":94,"completeSummary":true,"logSha256":"2bfd8d798c9141f92e6f88c172375815e6508ffcece54cb59977e276b711b4b7"}
+{"testProcess":"tests/core-ideals/facets-postgresql-projection-native.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-projection-native.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-postgresql-projection-native.test.ts:
+(pass) emitted PostgreSQL DDL and independent values have current pinned evidence [3.63ms]
+
+ 1 pass
+ 0 fail
+ 499 expect() calls
+Ran 1 test across 1 file. [12.00ms]
+{"testProcess":"tests/core-ideals/facets-postgresql-projection-native.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":499,"completeSummary":true,"logSha256":"c76c612493049d0f81738215eda2713d57098dcdfce22714ed6384fa3dccb86d"}
+{"testProcess":"tests/core-ideals/facets-sqlserver-association.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-association.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-sqlserver-association.test.ts:
+(pass) independent table declaration probes establish catalog association and counterexamples [560.28ms]
+
+ 1 pass
+ 0 fail
+ 56 expect() calls
+Ran 1 test across 1 file. [4.39s]
+{"testProcess":"tests/core-ideals/facets-sqlserver-association.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":56,"completeSummary":true,"logSha256":"1d31ef329f250bb27c1d50a6989d7e4ebfb64e007b96ae8947d804769ad6dbda"}
+{"testProcess":"tests/core-ideals/facets-sqlserver-composition.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-composition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-sqlserver-composition.test.ts:
+(pass) native projected schemas recover authored facets or explicit residuals without inventing authorship [24.84ms]
+
+ 1 pass
+ 0 fail
+ 106 expect() calls
+Ran 1 test across 1 file. [66.00ms]
+{"testProcess":"tests/core-ideals/facets-sqlserver-composition.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":106,"completeSummary":true,"logSha256":"6ba5ecd16edc752246047a477e2a559b792cd4289b899962a8f0f6dfdb328350"}
+{"testProcess":"tests/core-ideals/facets-sqlserver-discovery.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-discovery.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [46.84ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [2.17ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.12ms]
+
+ 3 pass
+ 0 fail
+ 304 expect() calls
+Ran 3 tests across 1 file. [4.94s]
+{"testProcess":"tests/core-ideals/facets-sqlserver-discovery.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":304,"completeSummary":true,"logSha256":"43375ff1f1c965c3bcad57a6539412fc27c44335f1d1468f64873521853c93d3"}
+{"testProcess":"tests/core-ideals/facets-sqlserver-projection-native.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-projection-native.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-sqlserver-projection-native.test.ts:
+(pass) pinned native execution matches current authored DDL and keeps exact value counterexamples [201.87ms]
+
+ 1 pass
+ 0 fail
+ 547 expect() calls
+Ran 1 test across 1 file. [5.21s]
+{"testProcess":"tests/core-ideals/facets-sqlserver-projection-native.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":547,"completeSummary":true,"logSha256":"9b4e1d0686fae00a817966148887616a0484403f79ffd6c136766cd8d608369a"}
+{"testProcess":"tests/core-ideals/field-parquet-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/field-parquet-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/field-parquet-projection.test.ts:
+(pass) explicit Parquet carrier/repetition schemas recover authored meaning through both formats [7562.28ms]
+(pass) unsupported meaning is explicit and malformed names or wrong roles never project [266.74ms]
+
+ 2 pass
+ 0 fail
+ 155 expect() calls
+Ran 2 tests across 1 file. [8.05s]
+{"testProcess":"tests/core-ideals/field-parquet-projection.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":155,"completeSummary":true,"logSha256":"15d941c7f478e9eb7ce2d9251d7834d70adf559a7e0b0051d238dca9dcecbcc1"}
+{"testProcess":"tests/core-ideals/field-tablespec.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/field-tablespec.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/field-tablespec.test.ts:
+(pass) classifies an unknown native column type without inventing scalar family and recovers exact text [139.99ms]
+(pass) verified authored field agrees; authored record/group and unknown or unverified labels block atomically [285.15ms]
+(pass) stale author receipts and metadata cannot be used as a native classification basis [112.13ms]
+(pass) split sources retain sidecars and shadowed metadata after classification [55.97ms]
+(pass) native classification receipts reject tampering and subsequent native changes [87.13ms]
+(pass) new results always diagnose conflicts while historical receipts remain verifiable [113.85ms]
+
+ 6 pass
+ 0 fail
+ 72 expect() calls
+Ran 6 tests across 1 file. [989.00ms]
+{"testProcess":"tests/core-ideals/field-tablespec.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":72,"completeSummary":true,"logSha256":"2e82146dd71130125cc4824b533007b605a54503e063c449c722e839c2afd99d"}
+{"testProcess":"tests/core-ideals/key-avro-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/key-avro-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/key-avro-projection.test.ts:
+(pass) Avro authored Key: primary-strict [12.41ms]
+(pass) Avro authored Key: primary-report [225.40ms]
+(pass) Avro authored Key: no-primary-strict [3.18ms]
+(pass) Avro authored Key: no-primary-report [199.50ms]
+(pass) Avro authored Key: rename-and-reorder [179.66ms]
+(pass) Avro authored Key: boolean [168.03ms]
+(pass) Avro authored Key: decimal [179.85ms]
+(pass) Avro authored Key: binary [182.75ms]
+(pass) Avro authored Key: integer-width [181.68ms]
+(pass) Avro authored Key: unsigned [175.78ms]
+(pass) Avro authored Key: string-length [166.24ms]
+(pass) Avro authored Key: binary-length [179.75ms]
+(pass) Avro authored Key: compound-ordered [178.19ms]
+(pass) Avro authored Key: multiple-alternates [173.50ms]
+(pass) Avro authored Key: unknown-extension [181.24ms]
+(pass) Avro authored Key: unknown-key-qualifier [165.46ms]
+(pass) Avro authored Key: unknown-member-qualifier [169.69ms]
+(pass) Avro authored Key: unknown-facet-qualifier [178.27ms]
+(pass) Avro authored Key: family-conflict [4.08ms]
+(pass) Avro authored Key: quoted-identifiers [5.81ms]
+(pass) stable key identities, explicit physical order and alternate residuals remain separate [74.00ms]
+(pass) missing authors, stale tuples, absent membership, invalid names and mismatched fields refuse [72.58ms]
+(pass) forged per-key reports, edited native schemas and getters refuse [120.08ms]
+(pass) generated native proof preserves duplicates and the boolean null coercion counterexample [1354.54ms]
+(pass) reimport without retained authors cannot reconstruct core identity [348.64ms]
+(pass) cross-record ownership, changed stable key IDs and duplicate physical mappings refuse [5.20ms]
+
+ 26 pass
+ 0 fail
+ 334 expect() calls
+Ran 26 tests across 1 file. [5.12s]
+{"testProcess":"tests/core-ideals/key-avro-projection.test.ts","exitCode":0,"pass":26,"fail":0,"assertions":334,"completeSummary":true,"logSha256":"37512cec3f7eb62be5525814b436f321138f65396534337a4b09816fef024dc6"}
+{"testProcess":"tests/core-ideals/key-parquet-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/key-parquet-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/key-parquet-projection.test.ts:
+(pass) Parquet authored Key: primary-strict [99.00ms]
+(pass) Parquet authored Key: primary-report [381.86ms]
+(pass) Parquet authored Key: no-primary-strict [75.26ms]
+(pass) Parquet authored Key: no-primary-report [342.25ms]
+(pass) Parquet authored Key: rename-and-reorder [365.74ms]
+(pass) Parquet authored Key: boolean [363.35ms]
+(pass) Parquet authored Key: decimal [362.05ms]
+(pass) Parquet authored Key: binary [353.45ms]
+(pass) Parquet authored Key: integer-width [354.14ms]
+(pass) Parquet authored Key: unsigned [392.43ms]
+(pass) Parquet authored Key: string-length [368.56ms]
+(pass) Parquet authored Key: binary-length [356.32ms]
+(pass) Parquet authored Key: compound-ordered [365.88ms]
+(pass) Parquet authored Key: multiple-alternates [343.99ms]
+(pass) Parquet authored Key: unknown-extension [348.69ms]
+(pass) Parquet authored Key: unknown-key-qualifier [321.92ms]
+(pass) Parquet authored Key: unknown-member-qualifier [336.75ms]
+(pass) Parquet authored Key: unknown-facet-qualifier [363.57ms]
+(pass) Parquet authored Key: family-conflict [76.88ms]
+(pass) Parquet authored Key: quoted-identifiers [339.19ms]
+(pass) Parquet authored Key: fixed-binary [330.40ms]
+(pass) Parquet authored Key: decimal-int32 [342.08ms]
+(pass) Parquet authored Key: decimal-bytes [428.86ms]
+(pass) Parquet authored Key: decimal-fixed [425.45ms]
+(pass) stable IDs and compound field ordering remain distinct from native field IDs [239.69ms]
+(pass) missing or stale authors, changed tuples, ownership conflicts and malformed physical mappings refuse [108.28ms]
+(pass) forged residuals, edited original bytes and getters cannot recover authorship [290.42ms]
+(pass) native-only reimport cannot reconstruct authored keys [311.88ms]
+(pass) native generated-schema proof verifies actual types, duplicate writing and retained file bytes [2790.53ms]
+
+ 29 pass
+ 0 fail
+ 391 expect() calls
+Ran 29 tests across 1 file. [11.84s]
+{"testProcess":"tests/core-ideals/key-parquet-projection.test.ts","exitCode":0,"pass":29,"fail":0,"assertions":391,"completeSummary":true,"logSha256":"ab81a29e81998e0348d92ac440ffd7b6e72cca1cbb56b712888d783603103363"}
+
+ 78 pass
+ 0 fail
+ 2694 expect() calls
+Ran 78 tests across 12 files. [52.30s]

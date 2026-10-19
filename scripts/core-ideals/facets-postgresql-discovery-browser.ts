@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {parseNativeJson} from '../../src/model/native-json';
 import {inspectPostgresqlFacetType} from '../../src/adapters/postgresql/facet-typmod';
-import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {importPostgresqlCatalogCapture, exportPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
 const proofPath='fixtures/validation/facets-postgresql-discovery-native.json',proof=await Bun.file(proofPath).json();
 for(const [path,expected] of Object.entries(proof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),expected,`Stale native proof: ${path}`);
 const source=importPostgresqlCatalogCapture(proof.sourceText,{id:'facet-browser'}),snapshot=JSON.parse(proof.sourceText).snapshot;

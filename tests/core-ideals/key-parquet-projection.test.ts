@@ -1,10 +1,10 @@
 import {recordedRepositoryPath} from '../helpers/recorded-repository-path';
 import {test,expect} from 'bun:test';
 import {parquetKeyProjectionCases,parquetKeyAuthors} from '../../scripts/core-ideals/key-parquet-projection-cases';
-import {projectKeysToParquet,verifyKeysParquetProjection,recoverKeysParquetIdeal} from '../../src/core-ideals/key-parquet-projection';
+import {projectKeysToParquet, verifyKeysParquetProjection, recoverKeysParquetIdeal} from '../../src/core-ideals/key-parquet-projection';
 import {exportParquetCapture} from '../../src/adapters/parquet';
-import {importParquetSchema,getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const c of parquetKeyProjectionCases())test('Parquet authored Key: '+c.name,()=>{
  const before=JSON.stringify(c),r=projectKeysToParquet(c.source,c.authors,c.request);expect(JSON.stringify(c)).toBe(before);expect(r.status).toBe(c.expected);expect(r.mappings.length).toBe(c.authors.length);expect(r.residuals.filter(r=>r.path.includes('/keys/')).length).toBe(c.authors.length);expect(r.mappings.every(m=>m.enforcement==='not-expressible')).toBe(true);
  if(r.status==='blocked'){expect(r.target).toBeUndefined();return;}
@@ -18,7 +18,7 @@ test('stable IDs and compound field ordering remain distinct from native field I
 test('missing or stale authors, changed tuples, ownership conflicts and malformed physical mappings refuse',()=>{
  const c=parquetKeyAuthors();expect(()=>projectKeysToParquet(c.source,c.authors.slice(1),c.request)).toThrow();expect(()=>projectKeysToParquet(c.source,[c.authors[0]!,c.authors[0]!],c.request)).toThrow();
  const missing=structuredClone(c.source);delete missing.modules[0]!.elements[0]!.members;expect(()=>projectKeysToParquet(missing,c.authors,c.request)).toThrow();
- const cross=structuredClone(c.source);cross.modules[0]!.elements.push({id:'other',kind:'record',members:[c.request.columns[0]!.field],extensions:{}});expect(()=>projectKeysToParquet(cross,c.authors,c.request)).toThrow();
+ const cross=structuredClone(c.source);cross.modules[0]!.elements.push({id:'other',kind:'record',members:[c.request.columns[0]!.field as any],extensions:{}});expect(()=>projectKeysToParquet(cross,c.authors,c.request)).toThrow();
  const changed=structuredClone(c.source);(changed.modules[0]!.elements[0]!.keys as any[])[0].id='changed';expect(()=>projectKeysToParquet(changed,c.authors,c.request)).toThrow();
  const wrong=structuredClone(c.request);wrong.columns[0]!.field.module='other';expect(()=>projectKeysToParquet(c.source,c.authors,wrong)).toThrow();
  const duplicate=structuredClone(c.request);duplicate.columns[1]!.fieldId=duplicate.columns[0]!.fieldId!;expect(projectKeysToParquet(c.source,c.authors,duplicate).status).toBe('blocked');
@@ -35,10 +35,10 @@ test('native-only reimport cannot reconstruct authored keys',async()=>{
  expect(observation.observations.every(o=>o.authorIntent==='unknown'&&o.enforcement==='not-expressible')).toBe(true);expect(observation.target!.modules.every(m=>m.elements.every(e=>e.keys===undefined))).toBe(true);expect(recoverParquetKeySource(observation,observation.target!)).toEqual(bytes);
 });
 test('native generated-schema proof verifies actual types, duplicate writing and retained file bytes',async()=>{
- const {createHash}=await import('node:crypto'),proof=await Bun.file('fixtures/validation/key-parquet-projection-native.json').json(),corpus=await Bun.file('fixtures/validation/key-parquet-projection-corpus.json').json();expect(proof.runtime).toBe('PyArrow 21.0.0');expect(proof.rows.length).toBe(21);
+ const {createHash}=await import('node:crypto'),proof=await Bun.file('fixtures/validation/key-parquet-projection-native.json').json(),corpus=await Bun.file('fixtures/validation/key-parquet-projection-corpus.json').json(),history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();expect(proof.runtime).toBe('PyArrow 21.0.0');expect(proof.rows.length).toBe(21);
  for(const row of proof.rows){expect(row.decoded[0]).toEqual(row.decoded[1]);expect(row.requiredNullRefused).toBeTruthy();expect(row.fields.every((f:any)=>f.definitionLevel===0&&f.repetitionLevel===0)).toBe(true);}
  expect(proof.rows.find((r:any)=>r.name==='fixed-binary').shortFixedRefused).toBeTruthy();
  expect(proof.rows.filter((r:any)=>r.inputTruncation).length).toBe(12);
- for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(recordedRepositoryPath(path)).arrayBuffer())).digest('hex')).toBe(hash as string);
+ for(const [path,hash] of Object.entries(proof.sha256)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??recordedRepositoryPath(path);expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(hash as string);}
  for(const item of corpus.rows){const c=parquetKeyProjectionCases().find(c=>c.name===item.name)!,r=projectKeysToParquet(c.source,c.authors,c.request);expect(exportParquetCapture(r.target!)).toEqual(new Uint8Array(await Bun.file(item.path).arrayBuffer()));expect(r.mappings).toEqual(item.mappings);}
 });

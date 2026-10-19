@@ -1,6 +1,6 @@
 import {assertJsonDataEqual} from './json-data-assert';
 import {facetsAvroProjectionCases} from './facets-avro-projection-cases';
-import {projectFacetsToAvro,recoverFacetsFromAvro} from '../../src/core-ideals/facets-avro-projection';
+import {projectFacetsToAvro, recoverFacetsFromAvro} from '../../src/core-ideals/facets-avro-projection';
 import assert from 'node:assert/strict';
 const rows=facetsAvroProjectionCases(),targets=[];
 for(const row of rows){const r=projectFacetsToAvro(row.author,row.request);if(r.status==='blocked'){assert.equal(r.target,undefined);assert.ok(r.residuals.length);continue;}assertJsonDataEqual(recoverFacetsFromAvro(r,r.nativeSchema!),row.author.target);targets.push({id:row.id,request:row.request,schema:r.nativeSchema});}

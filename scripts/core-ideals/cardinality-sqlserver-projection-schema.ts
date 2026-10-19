@@ -1,8 +1,8 @@
 import base from '../../spec/core/field-sqlserver-projection.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:cardinality-sqlserver-projection:1.0.0';schema.title='Authored Cardinality projection to SQL Server stored columns';
-schema.properties.operation.const='project-cardinality-sqlserver';schema.properties.source.$ref='urn:umf:core:0.4.0';
-schema.properties.author.$ref='urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration';
+schema.properties.operation.const='project-cardinality-sqlserver';schema.properties.source.$ref='urn:umf:core:0.10.0';
+schema.properties.author.$ref='urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration';
 schema.properties.binding.const={id:'umf.core.cardinality.sqlserver',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Single authored Field Cardinality with explicit builtin carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence'};
 const req=schema.properties.request;
 Object.assign(req.properties,{storage:{enum:['scalar','json-array','json-object']},requireExactValues:{type:'boolean'}});req.required.push('storage','requireExactValues');

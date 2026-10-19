@@ -5,8 +5,8 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -144,7 +144,7 @@
               "members": {
                 "const": {
                   "kind": "string",
-                  "value": "0.8.0"
+                  "value": "0.10.0"
                 }
               }
             },
@@ -223,7 +223,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.8.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -285,13 +285,13 @@
   "id": "[\"schema\",\"spec/extensions/actions/executor-profile.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 1640,
+      "bytes": 1642,
       "path": "spec/extensions/actions/executor-profile.schema.json",
-      "sha256": "6c337a80199ec4f46103b4dbe2ae4eab906dc865ebdc913c0093a089a880171f"
+      "sha256": "4c426434c5c395b8f10bd393b4abcc46dd6946a7f514b2d0037afd15485c9230"
     }
   ],
   "summary": "spec/extensions/actions/executor-profile.schema.json",

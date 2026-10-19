@@ -1,0 +1,73 @@
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/nullability-avro-projection.test.ts:
+(pass) authored Avro availability projects null carriers and recovers every ideal and residual [7753.05ms]
+(pass) null-only required, unbound absence and unprojected exactness cannot pass strict mode [93.23ms]
+(pass) native changes, forged source/meaning and invalid Avro names refuse [128.48ms]
+(pass) unmapped document, module, relationship and extension meaning remains recoverable [94.92ms]
+
+tests/core-ideals/nullability-parquet-projection.test.ts:
+16 | const checker=(version:unknown)=>version==='7.0.0'?checkInspection:checkDeclaration;
+17 | function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_NULLABILITY_RESULT',JSON.stringify(check.errors));return result as T;}
+18 | function locate(input:Document,identityInput:CoreNullabilityIdentity){
+19 |  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreNullabilityIdentity;
+20 |  if(!identity||typeof identity!=='object'||Array.isArray(identity)||Object.keys(identity).some(k=>k!=='module'&&k!=='element')||typeof identity.module!=='string'||!identity.module||typeof identity.element!=='string'||!identity.element)throw new UmfError('CORE_NULLABILITY_IDENTITY','Expected explicit module and element identities');
+21 |  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_NULLABILITY_SOURCE',JSON.stringify(validation.diagnostics));
+                                                                                                                                                        ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must NOT be valid","severity":"error"},{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must match \"then\" schema","severity":"error"}]
+      at locate (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:21:148)
+      at declareCoreNullability (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:38:16)
+      at add (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:23:16)
+      at parquetNullabilityProjectionCases (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:28:241)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/nullability-parquet-projection.test.ts:9:17)
+(fail) authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals [8.54ms]
+16 | const checker=(version:unknown)=>version==='7.0.0'?checkInspection:checkDeclaration;
+17 | function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_NULLABILITY_RESULT',JSON.stringify(check.errors));return result as T;}
+18 | function locate(input:Document,identityInput:CoreNullabilityIdentity){
+19 |  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreNullabilityIdentity;
+20 |  if(!identity||typeof identity!=='object'||Array.isArray(identity)||Object.keys(identity).some(k=>k!=='module'&&k!=='element')||typeof identity.module!=='string'||!identity.module||typeof identity.element!=='string'||!identity.element)throw new UmfError('CORE_NULLABILITY_IDENTITY','Expected explicit module and element identities');
+21 |  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_NULLABILITY_SOURCE',JSON.stringify(validation.diagnostics));
+                                                                                                                                                        ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must NOT be valid","severity":"error"},{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must match \"then\" schema","severity":"error"}]
+      at locate (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:21:148)
+      at declareCoreNullability (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:38:16)
+      at add (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:23:16)
+      at parquetNullabilityProjectionCases (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:28:241)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/nullability-parquet-projection.test.ts:19:17)
+(fail) scope, cardinality, defaults and precision obligations remain explicit losses [10.49ms]
+16 | const checker=(version:unknown)=>version==='7.0.0'?checkInspection:checkDeclaration;
+17 | function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_NULLABILITY_RESULT',JSON.stringify(check.errors));return result as T;}
+18 | function locate(input:Document,identityInput:CoreNullabilityIdentity){
+19 |  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreNullabilityIdentity;
+20 |  if(!identity||typeof identity!=='object'||Array.isArray(identity)||Object.keys(identity).some(k=>k!=='module'&&k!=='element')||typeof identity.module!=='string'||!identity.module||typeof identity.element!=='string'||!identity.element)throw new UmfError('CORE_NULLABILITY_IDENTITY','Expected explicit module and element identities');
+21 |  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_NULLABILITY_SOURCE',JSON.stringify(validation.diagnostics));
+                                                                                                                                                        ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must NOT be valid","severity":"error"},{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must match \"then\" schema","severity":"error"}]
+      at locate (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:21:148)
+      at declareCoreNullability (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:38:16)
+      at add (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:23:16)
+      at parquetNullabilityProjectionCases (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:28:241)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/nullability-parquet-projection.test.ts:23:10)
+(fail) changed bytes, forged receipts, stale authors and invalid native names refuse [7.60ms]
+16 | const checker=(version:unknown)=>version==='7.0.0'?checkInspection:checkDeclaration;
+17 | function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_NULLABILITY_RESULT',JSON.stringify(check.errors));return result as T;}
+18 | function locate(input:Document,identityInput:CoreNullabilityIdentity){
+19 |  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreNullabilityIdentity;
+20 |  if(!identity||typeof identity!=='object'||Array.isArray(identity)||Object.keys(identity).some(k=>k!=='module'&&k!=='element')||typeof identity.module!=='string'||!identity.module||typeof identity.element!=='string'||!identity.element)throw new UmfError('CORE_NULLABILITY_IDENTITY','Expected explicit module and element identities');
+21 |  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_NULLABILITY_SOURCE',JSON.stringify(validation.diagnostics));
+                                                                           ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must NOT be valid","severity":"error"},{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must match \"then\" schema","severity":"error"}]
+ path: "",
+ code: "CORE_NULLABILITY_SOURCE"
+
+      at locate (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:21:71)
+      at declareCoreNullability (/Users/erik/.codex/worktrees/d8be/umf/src/model/nullability.ts:38:16)
+      at add (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:23:16)
+      at parquetNullabilityProjectionCases (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/nullability-parquet-projection-cases.ts:28:241)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/nullability-parquet-projection.test.ts:29:10)
+(fail) document/module metadata and relationships survive report-mode ideal recovery [9.78ms]
+
+ 4 pass
+ 4 fail
+ 600 expect() calls
+Ran 8 tests across 2 files. [8.28s]

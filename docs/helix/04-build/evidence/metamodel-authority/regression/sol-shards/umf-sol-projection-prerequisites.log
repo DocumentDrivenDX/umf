@@ -1,0 +1,57 @@
+{"testProcess":"tests/parquet/avro-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/avro-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/avro-projection.test.ts:
+(pass) CONTRACT-035 nested Parquet shapes preserve nullable lists, map entries and scalar precision in Avro [1709.81ms]
+(pass) CONTRACT-035 logical and legacy container corpora lower or report blocked source shapes [4997.92ms]
+(pass) CONTRACT-035 unknown native fields on normalized-away LIST wrappers still block lowering [104.04ms]
+
+ 3 pass
+ 0 fail
+ 179 expect() calls
+Ran 3 tests across 1 file. [14.11s]
+{"testProcess":"tests/parquet/avro-projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":179,"completeSummary":true,"logSha256":"1aabe29f22eee7c0015212a3af36a3a35f73778328da23818e1b002951ada154"}
+{"testProcess":"tests/postgresql/avro-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/postgresql/avro-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/postgresql/avro-projection.test.ts:
+(pass) CONTRACT-034 PostgreSQL captured columns project with explicit restricted domains and native recovery [1617.30ms]
+(pass) CONTRACT-034 numeric typmods are decoded without truncation or inventing unconstrained precision [2708.58ms]
+(pass) CONTRACT-034 unsupported mappings, ambiguity, stale metadata and modified captures block [3880.95ms]
+
+ 3 pass
+ 0 fail
+ 58 expect() calls
+Ran 3 tests across 1 file. [15.33s]
+{"testProcess":"tests/postgresql/avro-projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":58,"completeSummary":true,"logSha256":"c0f1b80b722966d9cd7893bd29590fd5ee919e48f094f9e2432c6111bf3dc2ae"}
+{"testProcess":"tests/sqlserver/avro-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/sqlserver/avro-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/sqlserver/avro-projection.test.ts:
+(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [569.23ms]
+(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [659.80ms]
+(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [1751.71ms]
+
+ 3 pass
+ 0 fail
+ 48 expect() calls
+Ran 3 tests across 1 file. [10.90s]
+{"testProcess":"tests/sqlserver/avro-projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":48,"completeSummary":true,"logSha256":"dd268bba426fd340ab8d4cb5d43ab8544568d90885a6af5117a6478d6014fcd8"}
+{"testProcess":"tests/sqlserver/indexes.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/sqlserver/indexes.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/sqlserver/indexes.test.ts:
+(pass) CONTRACT-031 index observations preserve physical ordering, filter and enforcement state [436.56ms]
+(pass) CONTRACT-031 v3 requires observations; older, unavailable and unknown index semantics stay qualified [805.34ms]
+(pass) CONTRACT-032 index-specific losses accompany SQL Server to Avro projection [844.35ms]
+
+ 3 pass
+ 0 fail
+ 42 expect() calls
+Ran 3 tests across 1 file. [9.77s]
+{"testProcess":"tests/sqlserver/indexes.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":42,"completeSummary":true,"logSha256":"7b309bea363cb93bbeb7d9bc616b697d676ea2bcbd68306703a9a702faa18a50"}
+
+ 12 pass
+ 0 fail
+ 327 expect() calls
+Ran 12 tests across 4 files. [50.21s]

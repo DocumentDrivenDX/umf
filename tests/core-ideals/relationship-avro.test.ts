@@ -1,7 +1,7 @@
 import {test,expect} from 'bun:test';
-import {classifyAvroRelationships,recoverAvroRelationshipSource,verifyAvroRelationshipClassification} from '../../src/core-ideals/relationship-avro';
-import {importAvroSchema,exportAvroBundle} from '../../src/adapters/avro';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifyAvroRelationships, recoverAvroRelationshipSource, verifyAvroRelationshipClassification} from '../../src/core-ideals/relationship-avro';
+import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const cases=(await Bun.file('fixtures/avro/relationship-discovery-cases.json').json()).cases as {id:string;schemaText:string}[];
 for(const c of cases)test('Avro relationship classification: '+c.id,()=>{
  const source=importAvroSchema(c.schemaText,{id:c.id}),before=JSON.stringify(source),nativeSource={schema:c.schemaText,dependencies:[]};
@@ -37,11 +37,10 @@ test('grammar distinguishes named tokens from record endpoints and ignores metad
  expect(recoverAvroRelationshipSource(r,r.target!)).toEqual(nativeSource);
  const tampered=structuredClone(r);tampered.observations.pop();expect(()=>verifyAvroRelationshipClassification(tampered,r.target!)).toThrow();
 });
-test('all supported envelope versions retain modules and unknown content without migration',()=>{
- for(const version of ['0.1.0','0.2.0','0.3.0','0.4.0','0.5.0','0.6.0','0.7.0'] as const){
-  const nativeSource={schema:'"string"',dependencies:[]},source=importAvroSchema(nativeSource.schema,{id:'versions'});source.umf=version;
-  const r=classifyAvroRelationships(source,{nativeSource,mode:'report',profile:'schema-structure'});expect(r.target!.umf).toBe(version);expect(r.target!.modules).toEqual(source.modules);expect(r.observations).toEqual([]);expect(recoverAvroRelationshipSource(r,r.target!)).toEqual(nativeSource);
- }
+test('current adapter envelope is retained and retired core markers refuse classification',()=>{
+ const nativeSource={schema:'"string"',dependencies:[]},source=importAvroSchema(nativeSource.schema,{id:'versions'});
+ expect(source.umf).toBe('0.10.0');const r=classifyAvroRelationships(source,{nativeSource,mode:'report',profile:'schema-structure'});expect(r.target!.umf).toBe('0.10.0');expect(r.target!.modules).toEqual(source.modules);expect(r.observations).toEqual([]);expect(recoverAvroRelationshipSource(r,r.target!)).toEqual(nativeSource);
+ for(const version of ['0.1.0','0.2.0','0.3.0','0.4.0','0.5.0','0.6.0','0.7.0'] as const)expect(()=>classifyAvroRelationships({...source,umf:version} as any,{nativeSource,mode:'report',profile:'schema-structure'})).toThrow();
 });
 test('conflicting vocabulary and dependency archive changes block; input accessors are rejected',()=>{
  const nativeSource={schema:'"D"',dependencies:[{id:'dep',schema:'{"type":"record","name":"D","fields":[]}'}]},source=importAvroSchema(nativeSource.schema,{id:'conflicts',dependencies:nativeSource.dependencies});

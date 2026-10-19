@@ -2,7 +2,7 @@ import * as u from '../../src';
 import selection from '../../fixtures/avro/facet-selection-cases.json';
 export function avroFacetCase(nativeSource:string,scalarType:u.ScalarType,options:Partial<u.AvroFacetRequest>={}){
  const native=u.importAvroSchema(nativeSource,{id:'avro-facets',...(options.dependencies?{dependencies:options.dependencies}:{})});
- const document=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(native).target).target).target).target;
+ const document=native;
  document.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]});
  const request:u.AvroFacetRequest={location:{path:''},nativeSource,identity:{module:'logical',element:'value'},mode:'report',profile:'declared-schema',obligation:'value-domain',...options};
  return {document,request};

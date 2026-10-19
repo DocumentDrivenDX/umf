@@ -1,0 +1,16 @@
+{
+  "profile": "umf.ci-followup.reference/1",
+  "qualification": "Installed renderer2.0.0, pinnedBun1.4.2 build followed by independent drift check; refreshed census evidence metadata. Previously verified browser executable/style bytes remain identical. This is not a new live deployment claim.",
+  "inputDigest": "5c95260f79b5dc3bf4466eb0682f82bdb38b70a5a78c2e1aa0281edb755681a9",
+  "checkedManifestOutputs": 5107,
+  "unchangedBrowserAssets": [
+    {
+      "path": "assets/reference.js",
+      "sha256": "8aa08cca3c6b7357a6a927c05850c686aacabad26547d1f699edbcdede9a2b0e"
+    },
+    {
+      "path": "assets/reference.css",
+      "sha256": "8d2842c98cd532f51455d83a099576ed0e52e585ec433a80205a6de17ad5dfe1"
+    }
+  ]
+}

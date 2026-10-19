@@ -48,7 +48,7 @@ def main():
             for field, carrier in [('id', 'string'), ('body', 'string'), ('count', 'integer'), ('amount', 'decimal')]
         ]}],
         'nativeColumns': {'target': {'platform': 'postgresql', 'majorVersion': '18'}, 'sets': [{
-            'columnSet': {'documentId': json.loads(text)['id'], 'coreVersion': '0.8.0',
+            'columnSet': {'documentId': json.loads(text)['id'], 'coreVersion': '0.10.0',
                           'documentSha256': hashlib.sha256(text.encode()).hexdigest(), 'module': 'search',
                           'pointer': '/modules/0/extensions/umf.access/columns/0'},
             'binding': {'sourceId': physical['id'], 'documentJson': physical['text'],

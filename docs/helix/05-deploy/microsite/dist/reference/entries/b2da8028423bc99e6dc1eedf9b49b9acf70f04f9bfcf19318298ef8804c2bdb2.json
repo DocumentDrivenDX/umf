@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+        "target": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -455,7 +455,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+                  "value": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
                 }
               }
             },
@@ -1137,7 +1137,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.3.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1164,7 +1164,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1238,15 +1238,14 @@
   "id": "[\"schema\",\"spec/core/nullability-postgresql-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8603,
+      "bytes": 8605,
       "path": "spec/core/nullability-postgresql-projection.schema.json",
-      "sha256": "073104796361bc965b6b51655d0d27dad59b90094d1c6d8f8279286f2f684570"
+      "sha256": "2e2ae52aac7d0e4b1b30065c179452cae5e485bfd8aa996163d017030f73bc02"
     }
   ],
   "summary": "spec/core/nullability-postgresql-projection.schema.json",

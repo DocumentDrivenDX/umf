@@ -13,10 +13,12 @@
     },
     {
       "description": "",
-      "links": [],
+      "links": [
+        "[\"api\",\".\",\"CURRENT_CORE_VERSION\"]"
+      ],
       "name": "logical",
       "optional": false,
-      "type": "{ documentId: string; coreVersion: \"0.9.0\"; }"
+      "type": "{ documentId: string; coreVersion: typeof CURRENT_CORE_VERSION; }"
     },
     {
       "description": "",

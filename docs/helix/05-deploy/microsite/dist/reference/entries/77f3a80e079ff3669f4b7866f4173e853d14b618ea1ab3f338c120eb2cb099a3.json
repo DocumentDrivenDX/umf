@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
@@ -622,7 +622,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -822,7 +822,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -849,7 +849,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -919,15 +919,15 @@
   "id": "[\"schema\",\"spec/core/postgresql-cardinality-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 6161,
+      "bytes": 6163,
       "path": "spec/core/postgresql-cardinality-classification.schema.json",
-      "sha256": "ea0f34a7ebd8a525a57ab8579987c379a617e8d17296bf36cfa5378fb2c03041"
+      "sha256": "85d86f5c7464c65180f4292f0d94c3f65797cb363293c8d5ab576d085d1bd56b"
     }
   ],
   "summary": "spec/core/postgresql-cardinality-classification.schema.json",

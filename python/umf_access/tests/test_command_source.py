@@ -15,8 +15,13 @@ class Empty(StrictModel):
 
 
 class CommandSourceTests(unittest.TestCase):
+    def test_action_source_refuses_historical_core_pin(self):
+        with self.assertRaisesRegex(ValueError, 'unsupported original action source profile'):
+            ActionSource('document', '0.8.0', 'commerce', 'approve', 'a' * 64,
+                         '/modules/0/extensions/umf.actions/actions/0', 'umf.actions.tx', '1')
+
     def test_exact_action_source_compiles_but_same_ids_changed_source_refuse(self):
-        source = ActionSource('document', '0.8.0', 'commerce', 'approve', 'a' * 64,
+        source = ActionSource('document', '0.10.0', 'commerce', 'approve', 'a' * 64,
                               '/modules/0/extensions/umf.actions/actions/0', 'umf.actions.tx', '1')
         reference = ActionRef('commerce', 'approve', Empty, Empty, source)
         variant = CapturedVariant((), Node('update', ()), ())

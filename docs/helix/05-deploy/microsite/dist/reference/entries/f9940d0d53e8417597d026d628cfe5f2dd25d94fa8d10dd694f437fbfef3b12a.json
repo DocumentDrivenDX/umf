@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9736,
-        "line": 6,
-        "path": "src/model/schema-literals.ts",
-        "sha256": "f44cf08ed2b4b9e349ef534af79a58b6ea6c560f41e146fc680959c7accdf6a4"
+        "bytes": 4966,
+        "line": 29,
+        "path": "src/generated/core-model.ts",
+        "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreLiteral",
     "runtime": "type-only",
     "signatureText": [
-      "export type CoreLiteral = null | {boolean:boolean} | {integerToken:string} | {decimalToken:string} |\n {string:string} | {binaryHex:string} | {floatToken:string} | {date:string} | {time:string} |\n {timestamp:string} | {bits128Hex:string} | {uuid:string} | {array:CoreLiteral[]} | {map:Record<string,CoreLiteral>};"
+      "export type Literal = null | {\"boolean\":boolean;} | {\"integerToken\":string;} | {\"decimalToken\":string;} | {\"string\":string;} | {\"binaryHex\":string;} | {\"floatToken\":string;} | {\"date\":string;} | {\"time\":string;} | {\"timestamp\":string;} | {\"array\":(Literal)[];} | {\"map\":{[key:string]:Literal;};} | {\"bits128Hex\":string;} | {\"uuid\":string;};"
     ]
   },
   "id": "[\"api\",\".\",\"CoreLiteral\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9736,
-      "line": 6,
-      "path": "src/model/schema-literals.ts",
-      "sha256": "f44cf08ed2b4b9e349ef534af79a58b6ea6c560f41e146fc680959c7accdf6a4"
+      "bytes": 4966,
+      "line": 29,
+      "path": "src/generated/core-model.ts",
+      "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
     }
   ],
-  "summary": "Type declaration · src/model/schema-literals.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "CoreLiteral"
 }

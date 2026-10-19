@@ -2,7 +2,7 @@
   "alternatives": [],
   "authored": false,
   "id": "[\"api\",\".\",\"Module\"]",
-  "kind": "Interface",
+  "kind": "Type alias",
   "members": [
     {
       "description": "",
@@ -29,16 +29,35 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Json\"]"
-      ],
+      "links": [],
       "name": "extensions",
       "optional": true,
-      "type": "Record<string, Json>"
+      "type": "Extensions"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "relationships",
+      "optional": true,
+      "type": "Relationship[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "aliases",
+      "optional": true,
+      "type": "string[]"
     }
   ],
   "parameters": [],
-  "purpose": "Module is a interface in Other APIs. Its exact structure is documented below.",
+  "purpose": "Module is a type alias in Other APIs. Its exact structure is documented below.",
   "related": [],
   "returns": "",
   "task": "Other APIs",

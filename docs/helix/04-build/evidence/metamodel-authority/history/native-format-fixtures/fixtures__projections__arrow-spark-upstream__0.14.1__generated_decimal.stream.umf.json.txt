@@ -1,0 +1,52 @@
+{
+  "umf": "0.1.0",
+  "id": "0.14.1/generated_decimal.stream/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V4",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "f0",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 3,
+                              "scale": 2
+                            }
+                          },
+                          "children": [],
+                          "custom_metadata": []
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

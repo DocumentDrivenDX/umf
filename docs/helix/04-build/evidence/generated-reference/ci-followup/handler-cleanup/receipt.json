@@ -1,0 +1,75 @@
+{
+  "profile": "umf.ci-followup.handler-cleanup/1",
+  "recordedAt": "2026-10-18T23:48:01.489883+00:00",
+  "baselineCommit": "9f743fbef6051bee3ddfe6cb2ef4d76739a4f97b",
+  "qualification": "Local macOS pinned-Bun1.4.2 verification of the uncommitted host-only cleanup follow-up. Exact source hashes identify the patch tested. Published SDK excludes these host scripts; immutable SDK/wheel/package assets are unchanged. Hosted failure is retained, not relabeled as passed; latest remote rerun status is separately owned by CI.",
+  "failure": {
+    "runId": "39177248278",
+    "source": "process.exit(137);",
+    "initialAndFinalState": {
+      "ExitCode": 137,
+      "OOMKilled": false,
+      "Running": false
+    },
+    "cleanupConfirmed": true,
+    "diagnostic": "settlement-timeout",
+    "elapsedMs": 1021.205195,
+    "cause": "Optional final inspection timer could fire before the fractional clock deadline, causing a mandatory inspection diagnostic to replace the original FRAME_ACCESS refusal despite confirmed removal.",
+    "log": "hosted-failure.log",
+    "sha256": "dc676d0378f2977bcded9a661b907c4527040c2e91f8f8a3265dbd12829b97ef"
+  },
+  "change": "A typed timeout records whether the optional settlement budget or mandatory command/global cleanup budget fired. Only the former preserves the last validated state. Initial/non-timeout/malformed/nonzero inspection, removal, absence and owner-release failures remain fail-closed. Existing two-second total cleanup bound and native OOM evidence semantics are unchanged.",
+  "runtime": "Bun1.4.2",
+  "nativeLaunchDirectory": "/private/tmp/umf-ci-cleanup-sandbox-native-a9f781fc",
+  "sourceSha256": {
+    "scripts/actions-reference/sandbox.ts": "a469eb830bb0ce1d01502157e39fb829e937fe85e52c8d4eec43b7a5d9b53016",
+    "scripts/actions-reference/sandbox-state.ts": "81b8b9f0d55b12c03a906030174d73e63bf33597d0251b8f099e3ea861b70e6a",
+    "tests/actions-reference/sandbox-state.test.ts": "90f2f96f998e6ca78086124ffc01c7f7913e2bc75d7dacfd93357817a573c2ec",
+    "tests/actions-reference/sandbox-security.test.ts": "c3c2e5c334c35d3e406afd267d186791cb0e4448dfc8986ee1785aae5210c0c9",
+    "tests/actions-reference/sandbox.test.ts": "bf25102cfe9e624762f7aa961bef2aa3963f301c8dc96750b237f423ad3c78e2"
+  },
+  "checks": [
+    {
+      "command": "bun test ./tests/actions-reference/sandbox-state.test.ts",
+      "exitCode": 0,
+      "passed": 4,
+      "failed": 0,
+      "assertions": 31,
+      "log": "state-tests.log",
+      "sha256": "1141907203538e3519690d47c7d096c43ff79e009c34ced0271215008a3a8b48",
+      "qualification": "Deterministic injected scheduler fires1.75ms timer after1ms while clock remains before deadline. Includes mandatory/global budgets and forged-error, malformed/nonzero/non-timeout negative controls."
+    },
+    {
+      "command": "bun test ./tests/actions-reference/sandbox-security.test.ts ./tests/actions-reference/sandbox.test.ts",
+      "exitCode": 0,
+      "passed": 16,
+      "failed": 0,
+      "assertions": 167,
+      "files": {
+        "tests/actions-reference/sandbox-security.test.ts": 7,
+        "tests/actions-reference/sandbox.test.ts": 9
+      },
+      "log": "native-tests.log",
+      "sha256": "a3166bbf9348627ae6edba6b87820aedbae67fd386e3d2945d8f430daf1a5224",
+      "qualification": "One combined Bun process, two existing native Docker suites with unchanged assertions/time bounds. Aggregate assertion count is not invented per file. Includes exact exit137 naturalEOF, actual cgroupOOM, watchdog, owned removal, protocol and absolute execution deadline cases."
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
+      "exitCode": 0,
+      "log": "types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "qualification": "Successful compiler invocation produced no output."
+    },
+    {
+      "command": "bun scripts/check-core-authority.ts",
+      "exitCode": 0,
+      "log": "authority.log",
+      "sha256": "df49f8a46da1ddf266517a9342f7f608999a478d9f5aa4c9c66551f7b4c5097c"
+    }
+  ],
+  "testInventoryVerification": {
+    "files": 590,
+    "sha256Mismatches": 0,
+    "qualification": "All currentTestSourceSha256 inventory entries were recomputed against actual files after the3sandbox-row updates. This verifies current inventory, not single-revision execution of all590files."
+  }
+}

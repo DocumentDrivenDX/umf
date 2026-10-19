@@ -6,7 +6,7 @@
     "pyarrow": "21.0.0",
     "python": "3.13.16 (main, Oct  3 2026, 00:54:36) [Clang 22.1.3 ]"
   },
-  "inputSha256": "e7ef5c61726c77b23768d56c4667d0f39a9a213a51e66162482d8e60144c1eca",
+  "inputSha256": "68000a9019c7659227bb801b0edf006d8e446288f619a78aaef39be7d86375b8",
   "observations": [
     {
       "system": "avro",
@@ -87,7 +87,7 @@
       "signed": null,
       "checks": 390,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10c663440>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id (UUID);\n  optional fixed_len_byte_array(16) field_id=-1 parent (UUID);\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b0516c0>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id (UUID);\n  optional fixed_len_byte_array(16) field_id=-1 parent (UUID);\n}\n",
       "warnings": []
     },
     {
@@ -97,7 +97,7 @@
       "signed": null,
       "checks": 390,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b478080>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id;\n  optional fixed_len_byte_array(16) field_id=-1 parent;\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x108ed6b80>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id;\n  optional fixed_len_byte_array(16) field_id=-1 parent;\n}\n",
       "warnings": []
     },
     {
@@ -107,7 +107,7 @@
       "signed": null,
       "checks": 390,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10c8aba40>\nrequired group field_id=-1 schema {\n  required binary field_id=-1 id (String);\n  optional binary field_id=-1 parent (String);\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10aa419c0>\nrequired group field_id=-1 schema {\n  required binary field_id=-1 id (String);\n  optional binary field_id=-1 parent (String);\n}\n",
       "warnings": []
     },
     {
@@ -117,7 +117,7 @@
       "signed": true,
       "checks": 391,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10cede880>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi;\n    required int64 field_id=-1 id_lo;\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi;\n    required int64 field_id=-1 parent_lo;\n  }\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b12afc0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi;\n    required int64 field_id=-1 id_lo;\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi;\n    required int64 field_id=-1 parent_lo;\n  }\n}\n",
       "warnings": []
     },
     {
@@ -127,7 +127,7 @@
       "signed": false,
       "checks": 391,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10c86e3c0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 id_lo (Int(bitWidth=64, isSigned=false));\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 parent_lo (Int(bitWidth=64, isSigned=false));\n  }\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b1194c0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 id_lo (Int(bitWidth=64, isSigned=false));\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 parent_lo (Int(bitWidth=64, isSigned=false));\n  }\n}\n",
       "warnings": []
     },
     {
@@ -137,7 +137,7 @@
       "signed": null,
       "checks": 390,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10ce60500>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id;\n  optional fixed_len_byte_array(16) field_id=-1 parent;\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10ab42100>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id;\n  optional fixed_len_byte_array(16) field_id=-1 parent;\n}\n",
       "warnings": []
     },
     {
@@ -147,7 +147,7 @@
       "signed": null,
       "checks": 390,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10ce831c0>\nrequired group field_id=-1 schema {\n  required binary field_id=-1 id (String);\n  optional binary field_id=-1 parent (String);\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b14ab40>\nrequired group field_id=-1 schema {\n  required binary field_id=-1 id (String);\n  optional binary field_id=-1 parent (String);\n}\n",
       "warnings": []
     },
     {
@@ -157,7 +157,7 @@
       "signed": true,
       "checks": 391,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10c947180>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi;\n    required int64 field_id=-1 id_lo;\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi;\n    required int64 field_id=-1 parent_lo;\n  }\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b14b500>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi;\n    required int64 field_id=-1 id_lo;\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi;\n    required int64 field_id=-1 parent_lo;\n  }\n}\n",
       "warnings": []
     },
     {
@@ -167,7 +167,7 @@
       "signed": false,
       "checks": 391,
       "independentOracleFields": true,
-      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10ce4b8c0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 id_lo (Int(bitWidth=64, isSigned=false));\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 parent_lo (Int(bitWidth=64, isSigned=false));\n  }\n}\n",
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b1340c0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 id_lo (Int(bitWidth=64, isSigned=false));\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 parent_lo (Int(bitWidth=64, isSigned=false));\n  }\n}\n",
       "warnings": []
     }
   ]

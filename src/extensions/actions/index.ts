@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJson} from '../../model/json';
 import {canonicalSchemaJson} from '../../model/schema-literals';
 import {UmfError,type Document,type Json,type Diagnostic,pointer} from '../../model/types';
@@ -15,7 +16,7 @@ const fail=(code:string,message:string,path=''):never=>{throw new UmfError(code,
 export function registerActions(registry:Registry):Registry {
  return registry.register(actionsPackage,(payload,context)=>{
   const diagnostics:Diagnostic[]=[];
-  if(context.document.umf!=='0.10.0')return [{code:'ACTION_STRUCTURE',path:context.path,message:'Action semantics require exact core 0.10.0',severity:'error'}];
+  if(context.document.umf!==CURRENT_CORE_VERSION)return [{code:'ACTION_STRUCTURE',path:context.path,message:'Actions require exact core 0.10.0',severity:'error'}];
   const data=payload as unknown as {actions:Action[]},ids=new Set<string>(),names=new Set<string>();
   for(const key of Object.keys(data))if(key!=='actions')diagnostics.push({code:'ACTION_UNCHECKED',path:context.path+'/'+pointer(key),message:'Unknown action attachment meaning',severity:'warning'});
   data.actions.forEach((action,i)=>{
@@ -27,7 +28,7 @@ export function registerActions(registry:Registry):Registry {
 }
 function admit(sourceInput:Document,registry:Registry):Document {
  const source=copy(sourceInput);
- if(source.umf!=='0.8.0')fail('ACTION_STRUCTURE','Actions require exact core 0.8.0');
+ if(source.umf!==CURRENT_CORE_VERSION)fail('ACTION_STRUCTURE','Actions require exact core 0.10.0');
  if(!registry.get('umf.actions','0.1.0')?.semantics)fail('ACTION_STRUCTURE','Explicit action semantic registration is required');
  if(!checkSchemaProperties(source))fail('ACTION_STRUCTURE',JSON.stringify(checkSchemaProperties.errors));
  const declared=source.vocabularies['umf.actions'];
@@ -90,7 +91,7 @@ export function editAction(sourceInput:Document,identity:ActionIdentity,replacem
 }
 export function assessAction(sourceInput:Document,identityInput:ActionIdentity,profileInput:ActionExecutorProfile,registry:Registry):ActionAssessment {
  const inspection=inspectActions(sourceInput,registry);valid(inspection.source,registry);const target=locate(inspection,identityInput),identity=copy(identityInput),profile=copy(profileInput);
- if(!profile||typeof profile.id!=='string'||!profile.id||typeof profile.version!=='string'||!profile.version||profile.actionVersion!=='0.1.0'||profile.coreVersion!=='0.8.0'||!Array.isArray(profile.claims)||Object.keys(profile).some(k=>!['id','version','actionVersion','coreVersion','claims','source','identity'].includes(k)))fail('ACTION_PROFILE','Invalid exact executor profile');
+ if(!profile||typeof profile.id!=='string'||!profile.id||typeof profile.version!=='string'||!profile.version||profile.actionVersion!=='0.1.0'||profile.coreVersion!==CURRENT_CORE_VERSION||!Array.isArray(profile.claims)||Object.keys(profile).some(k=>!['id','version','actionVersion','coreVersion','claims','source','identity'].includes(k)))fail('ACTION_PROFILE','Invalid exact executor profile');
  if(canonicalSchemaJson(profile.source)!==canonicalSchemaJson(inspection.source)||canonicalSchemaJson(profile.identity)!==canonicalSchemaJson(identity))fail('ACTION_PROFILE','Profile must retain the exact declaration document and identity');
  if(profile.claims.length>target.obligations.length)fail('ACTION_PROFILE','Claim count exceeds obligation inventory');
  const claims=new Map<string,ActionExecutorProfile['claims'][number]>();

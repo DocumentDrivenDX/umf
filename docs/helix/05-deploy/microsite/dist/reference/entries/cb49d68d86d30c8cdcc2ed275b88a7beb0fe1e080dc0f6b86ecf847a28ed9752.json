@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4478,
-        "line": 15,
+        "bytes": 3778,
+        "line": 12,
         "path": "src/model/reference-links.ts",
-        "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+        "sha256": "fa786d2579e1091f67f58531dec85db80e85702ca7d68664b998e2d4c36b0598"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreReferenceLinksInspection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreReferenceLinksInspection {operation:'inspect-core-reference-links';version:'0.1.0'|'0.2.0'|'0.3.0';source:Document;identity:CoreReferenceLinkIdentity;path:string;meaning:{state:'missing'}|{state:'present';links:CoreReferenceLink[]};provenance:'unverified'}"
+      "export interface CoreReferenceLinksInspection {operation:'inspect-core-reference-links';version:'0.3.0';source:Document;identity:CoreReferenceLinkIdentity;path:string;meaning:{state:'missing'}|{state:'present';links:CoreReferenceLink[]};provenance:'unverified'}"
     ]
   },
   "id": "[\"api\",\".\",\"CoreReferenceLinksInspection\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4478,
-      "line": 15,
+      "bytes": 3778,
+      "line": 12,
       "path": "src/model/reference-links.ts",
-      "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+      "sha256": "fa786d2579e1091f67f58531dec85db80e85702ca7d68664b998e2d4c36b0598"
     }
   ],
   "summary": "Type declaration · src/model/reference-links.ts",

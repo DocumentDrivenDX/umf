@@ -29,10 +29,10 @@
       ]
     },
     "source": {
-      "$ref": "urn:umf:core:0.3.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "target": {
-      "$ref": "urn:umf:core:0.3.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "request": {
       "type": "object",
@@ -65,7 +65,7 @@
           ]
         },
         "author": {
-          "$ref": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+          "$ref": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
         },
         "index": {
           "type": "integer",

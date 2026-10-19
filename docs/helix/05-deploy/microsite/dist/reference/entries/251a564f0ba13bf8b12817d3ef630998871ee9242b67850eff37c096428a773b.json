@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2995,
-        "line": 40,
-        "path": "src/model/types.ts",
-        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+        "bytes": 4966,
+        "line": 31,
+        "path": "src/generated/core-model.ts",
+        "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
       }
     ],
     "entrypoint": ".",
     "exportName": "ExtensionPackage",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ExtensionPackage {\n  id: string; version: string; coreVersion: '0.1.0'; description: string;\n  schema: JsonObject | boolean; semantics: string; scopes: Scope[];\n  capabilities: { validation: 'structural' | 'semantic'; directions: ('import' | 'export')[]; evidence: string[]; native?: {system: string; version: string; subset: string} };\n}"
+      "export type ExtensionPackage = {\"id\":string;\"version\":string;\"coreVersion\":\"0.10.0\";\"description\":string;\"schema\":{[key:string]:unknown;} | boolean;\"semantics\":string;\"scopes\":(\"document\" | \"module\" | \"element\")[];\"capabilities\":{\"validation\":\"structural\" | \"semantic\";\"directions\":(\"import\" | \"export\")[];\"evidence\":(string)[];\"native\"?:{\"system\":string;\"version\":string;\"subset\":string;[key:string]:unknown;};[key:string]:unknown;};[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"ExtensionPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2995,
-      "line": 40,
-      "path": "src/model/types.ts",
-      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+      "bytes": 4966,
+      "line": 31,
+      "path": "src/generated/core-model.ts",
+      "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
     }
   ],
-  "summary": "Type declaration · src/model/types.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "ExtensionPackage"
 }

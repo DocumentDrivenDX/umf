@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {projectRelationshipToTableSpec} from '../../src/core-ideals/relationship-tablespec-projection';
-import {getTableSpecTable,exportTableSpec,exportTableSpecBundle} from '../../src/adapters/tablespec';
+import {getTableSpecTable, exportTableSpec, exportTableSpecBundle} from '../../src/adapters/tablespec';
 import {renderTree} from '../../src/model/native-json';
 import {lookupCoreRelationship} from '../../src/model/relationships';
 import {relationshipTableSpecProjectionCases} from './relationship-tablespec-projection-cases';

@@ -1,8 +1,7 @@
 import {resolveBit128ModelSources} from '../extensions/binding/model-source';
 import {compositeMappings,type CompositeMapping} from './model-shape-mappings';
 import modelSchema from '../../spec/projections/bit128-model.schema.json';
-import document09 from '../../spec/core/bit128-document.schema.json';
-import document01 from '../../spec/core/schema.json';
+import coreSchema from '../../spec/core/schema.json';
 import {createValidator} from '../validation/schema';
 import {snapshotSchema} from '../validation/internal-schema';
 import {renderBit128FileModel} from './bit128-file-model';
@@ -13,7 +12,7 @@ import {inspectBit128Binding,type Bit128BindingPayload} from '../extensions/bind
 import {resolveBit128ModelLayout,type Resolved128Layout} from '../extensions/binding/bit128-layout';
 import {bit128SqlServerSessionStatements,renderBit128SqlModel,type Bit128ModelResidual} from './bit128-sql-model';
 import {assertBit128OutputBudget} from './bit128-output-budget';
-const validator=createValidator();validator.addSchema(snapshotSchema(document09));validator.addSchema(snapshotSchema(document01));const check=validator.compile(snapshotSchema(modelSchema));
+const validator=createValidator();validator.addSchema(snapshotSchema(coreSchema));const check=validator.compile(snapshotSchema(modelSchema));
 export interface Bit128ModelProjection {
  operation:'project-bit128-model';version:'1.0.0';source:Document;binding:Document;lossPolicy:'strict'|'report';
  status:'projected'|'reported'|'blocked';nativeRequirements:{scope:'connection';statements:string[]}[];residuals:Bit128ModelResidual[];

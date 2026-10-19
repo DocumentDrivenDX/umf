@@ -15,7 +15,7 @@ test('closed grammar/version/Field scope refuses whitespace, case, numeric, abse
  for(const changed of [{...request('true'),profile:'future'},{...request('true'),future:true},{...request('true'),field:{...field,future:true}},{...request('true'),field:{module:'domain',element:'patients.birth_date'}},{...request('true'),field:{module:'domain',element:'patients'}}])expect(()=>validateCsvBooleanLexical(source,changed as any)).toThrow();
  const missing:any=request('true');delete missing.token;expect(()=>validateCsvBooleanLexical(source,missing)).toThrow();
  for(const cardinality of ['array','map']){const collection=structuredClone(source);collection.modules[0]!.elements.find(e=>e.id===field.element)!.cardinality=cardinality;expect(()=>validateCsvBooleanLexical(collection,request('true'))).toThrow();}
- const old=structuredClone(source);old.umf='0.7.0';expect(()=>validateCsvBooleanLexical(old,request('true'))).toThrow();
+ const old=structuredClone(source);(old as {umf:string}).umf='0.7.0';expect(()=>validateCsvBooleanLexical(old,request('true'))).toThrow();
 });
 test('successful token conversion never changes invalid or unknown public Field verdict',()=>{
  const restricted=structuredClone(source);restricted.modules[0]!.elements.find(e=>e.id===field.element)!.allowedValues=[{boolean:false}];

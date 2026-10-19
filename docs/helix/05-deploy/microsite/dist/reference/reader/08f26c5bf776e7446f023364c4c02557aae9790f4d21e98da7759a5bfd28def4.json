@@ -10,10 +10,10 @@
     "{ date: string; }",
     "{ time: string; }",
     "{ timestamp: string; }",
+    "{ array: (CoreLiteral)[]; }",
+    "{ map: { [key: string]: CoreLiteral; }; }",
     "{ bits128Hex: string; }",
     "{ uuid: string; }",
-    "{ array: CoreLiteral[]; }",
-    "{ map: Record<string, CoreLiteral>; }",
     "{ group: { field: { module: string; element: string; }; value: ModelLiteral; }[]; }",
     "{ array: ModelLiteral[]; }",
     "{ map: { [key: string]: ModelLiteral; }; }"

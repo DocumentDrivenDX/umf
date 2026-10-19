@@ -1,6 +1,8 @@
-import type {Document,CoreElementQuery} from '../../src';
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import type {Document, CoreElementQuery} from '../../src';
 export function nullabilitySelectionCases(){
- const source:Document={umf:'0.3.0',id:'availability-selection',vocabularies:{future:{version:'1.0.0'}},modules:[
+ const source:Document={umf:CURRENT_CORE_VERSION,id:'availability-selection',vocabularies:{future:{version:'1.0.0'}},modules:[
   {id:'sales',namespace:'sales',elements:[
    {id:'Order',kind:'record',extensions:{},references:[{role:'member',module:'sales',element:'required'},{role:'member',module:'sales',element:'optional'}]},
    {id:'required',name:'value',kind:'field',nullability:'required',extensions:{future:{nativeNull:false}},references:[{role:'future-link',module:'support',element:'required',future:true}]},

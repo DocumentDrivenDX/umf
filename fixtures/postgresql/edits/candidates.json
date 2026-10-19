@@ -2,7 +2,7 @@
   "source": "CREATE SCHEMA sales;\nCREATE TABLE sales.edits (\n  id bigint GENERATED ALWAYS AS IDENTITY (START WITH 9007199254740993),\n  amount numeric(8,2) DEFAULT 1.25,\n  label varchar(8) NOT NULL,\n  qty integer CONSTRAINT qty_floor CHECK (qty >= 1)\n);\nCOMMENT ON COLUMN sales.edits.label IS 'Original label';\nCREATE UNIQUE INDEX edits_label_unique ON sales.edits(label) WHERE qty > 0;\n",
   "expectedSource": "CREATE SCHEMA sales;\nCREATE TABLE sales.edits (\n  id bigint GENERATED ALWAYS AS IDENTITY (START WITH 9007199254740993),\n  amount numeric(10,3) DEFAULT 1.234,\n  label varchar(32),\n  qty integer CONSTRAINT qty_floor CHECK (qty >= 10)\n);\nCOMMENT ON COLUMN sales.edits.label IS 'Edited customer''s label — 注文';\nCREATE UNIQUE INDEX edits_label_unique ON sales.edits(label) WHERE qty > 10;\n",
   "document": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddl-edit-source",
     "vocabularies": {
       "umf.postgresql": {
@@ -1005,7 +1005,7 @@
     }
   },
   "candidate": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddl-edit-source",
     "vocabularies": {
       "umf.postgresql": {

@@ -1,0 +1,1051 @@
+{
+  "format": "umf.current-api-corrections/1",
+  "cases": [
+    {
+      "id": "defaults/missing/missing",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      }
+    },
+    {
+      "id": "defaults/missing/null",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": null
+      }
+    },
+    {
+      "id": "defaults/missing/value",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": {
+          "integerToken": "2"
+        }
+      }
+    },
+    {
+      "id": "defaults/null/missing",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "null",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      }
+    },
+    {
+      "id": "defaults/null/null",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "null",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": null
+      }
+    },
+    {
+      "id": "defaults/null/value",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "null",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": {
+          "integerToken": "2"
+        }
+      }
+    },
+    {
+      "id": "defaults/missing-or-null/missing",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing-or-null",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      }
+    },
+    {
+      "id": "defaults/missing-or-null/null",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing-or-null",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": null
+      }
+    },
+    {
+      "id": "defaults/missing-or-null/value",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing-or-null",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": {
+          "integerToken": "2"
+        }
+      }
+    },
+    {
+      "id": "defaults/undeclared/missing",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      }
+    },
+    {
+      "id": "defaults/undeclared/value",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": {
+          "integerToken": "2"
+        }
+      }
+    },
+    {
+      "id": "defaults/invalid-allowed",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "present",
+        "value": {
+          "integerToken": "3"
+        }
+      }
+    },
+    {
+      "id": "defaults/unknown-qualifier",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  },
+                  "future": true
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      }
+    },
+    {
+      "id": "defaults/unknown-default-member",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  },
+                  "future": true
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      }
+    },
+    {
+      "id": "literals/uuid/valid",
+      "operation": "literal",
+      "document": {
+        "umf": "0.10.0",
+        "id": "literal-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "id": "uuid",
+                "kind": "field",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "uuid"
+      },
+      "value": {
+        "uuid": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "literals/uuid/invalid",
+      "operation": "literal",
+      "document": {
+        "umf": "0.10.0",
+        "id": "literal-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "id": "uuid",
+                "kind": "field",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "uuid"
+      },
+      "value": {
+        "uuid": "bad"
+      }
+    },
+    {
+      "id": "literals/bits128/valid",
+      "operation": "literal",
+      "document": {
+        "umf": "0.10.0",
+        "id": "literal-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "id": "bits128",
+                "kind": "field",
+                "scalarType": "bits128",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "bits128"
+      },
+      "value": {
+        "bits128Hex": "00000000000000000000000000000000"
+      }
+    },
+    {
+      "id": "literals/bits128/invalid",
+      "operation": "literal",
+      "document": {
+        "umf": "0.10.0",
+        "id": "literal-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "id": "bits128",
+                "kind": "field",
+                "scalarType": "bits128",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "bits128"
+      },
+      "value": {
+        "bits128Hex": "00"
+      }
+    },
+    {
+      "id": "defaults/depth-budget",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      },
+      "construction": {
+        "depth": 130
+      }
+    },
+    {
+      "id": "defaults/value-budget",
+      "operation": "default",
+      "document": {
+        "umf": "0.10.0",
+        "id": "default-api-corrections",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:corrections",
+            "elements": [
+              {
+                "aliases": [
+                  "qty"
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "cardinality": "one",
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "integerToken": "1"
+                  }
+                },
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "id": "quantity",
+                "kind": "field",
+                "name": "quantity",
+                "nullability": "required",
+                "scalarType": "integer",
+                "title": "Quantity"
+              }
+            ]
+          }
+        ]
+      },
+      "field": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "state": {
+        "state": "missing"
+      },
+      "construction": {
+        "values": 100001
+      }
+    }
+  ]
+}

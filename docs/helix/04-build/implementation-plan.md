@@ -13066,3 +13066,21 @@ complete UMF conformance, rebuilt consumer assets and installed Truss native
 adoption remain separate pending qualification. CONTRACT-062 and CONTRACT-078
 record the bounded source scope; this result grants no native enforcement
 or caller authority.
+
+## Current metamodel authority cutover — 2026-10-18
+
+The [scoped completion plan](metamodel-authority-plan.md) owns ADR-005 /
+CONTRACT-080 / TD-091 / STP-091 execution: authored current metamodel, generated
+schema/validation/types, active consumer migration, old authority/path retirement,
+real-browser qualification and deployed build-signature verification. Historical
+execution evidence above retains its original source and support boundaries.
+
+## Unified generated Python access — 2026-10-18
+
+Owner-authorized FEAT-033 / SD-033 / CONTRACT-079 implements the same typed
+Python read, relationship and Action calls for table and ontology bindings.
+The portable generator accepts UMF 0.10 with UUID and bits128; generated Python
+is stdlib-only. Existing Weft raw/related compilers remain the SQL authority.
+[Execution evidence](evidence/unified-python-access.md) records the independent
+graph fixture, native PostgreSQL 18 run and current feature limits. This does
+not change qualification of earlier SDK/backend work.

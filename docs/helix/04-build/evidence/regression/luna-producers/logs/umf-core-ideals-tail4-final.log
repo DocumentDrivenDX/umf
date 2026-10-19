@@ -1,0 +1,41 @@
+{"testProcess":"tests/core-ideals/avro-cardinality-type.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/avro-cardinality-type.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/avro-cardinality-type.test.ts:
+(pass) native discovery types retain outer shape, branch order and item paths without claiming item or availability equivalence [25.52ms]
+(pass) qualified dependency and recursive references retain separate definition locations [4.39ms]
+(pass) ambiguous, missing and invalid structural type syntax refuses rather than defaulting to one [2.91ms]
+(pass) nested item/value traversal uses registered type locations and keeps container/member availability separate [2.39ms]
+
+ 4 pass
+ 0 fail
+ 214 expect() calls
+Ran 4 tests across 1 file. [131.00ms]
+{"testProcess":"tests/core-ideals/avro-cardinality-type.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":214,"completeSummary":true,"logSha256":"cf5c6ca6a2720c1d3b63bf6653909044bab3552b988bed552d50c00df3ab928f"}
+{"testProcess":"tests/core-ideals/avro-namespace.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/avro-namespace.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/avro-namespace.test.ts:
+(pass) Avro namespace changes report loss for both Field and record projections [744.54ms]
+
+ 1 pass
+ 0 fail
+ 14 expect() calls
+Ran 1 test across 1 file. [1138.00ms]
+{"testProcess":"tests/core-ideals/avro-namespace.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":14,"completeSummary":true,"logSha256":"5e3f324cfd51c7b3bc171bc06b7e6a59a01587e35e0c24b3988fcd76326a079c"}
+{"testProcess":"tests/core-ideals/avro-record-type.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/avro-record-type.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/avro-record-type.test.ts:
+(pass) Avro direct/qualified/recursive record links preserve bundle text; containers and unions block [20814.79ms]
+(pass) author conflicts, existing type assertions and stale sources cannot be overwritten [2707.34ms]
+
+ 2 pass
+ 0 fail
+ 105 expect() calls
+Ran 2 tests across 1 file. [23.98s]
+{"testProcess":"tests/core-ideals/avro-record-type.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":105,"completeSummary":true,"logSha256":"35acdc53419c0e136a6d885e4c566d1abab60f049ff4d5c2a4c0a151626f00b8"}
+{"testProcess":"tests/core-ideals/cardinality-avro-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/cardinality-avro-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/cardinality-avro-projection.test.ts:

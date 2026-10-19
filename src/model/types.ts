@@ -1,50 +1,18 @@
-export type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
-export type JsonObject = { [key: string]: Json };
+import {coreVocabulary,CURRENT_CORE_VERSION} from '../generated/core-model';
+export {CURRENT_CORE_VERSION} from '../generated/core-model';
+export type {Json,Document,Module,Element,CoreItemTypeReference,CoreSemanticTypeReference,ExtensionPackage} from '../generated/core-model';
+export type JsonObject = { [key: string]: import('../generated/core-model').Json };
 export type Scope = 'document' | 'module' | 'element';
-/** Value family only; native refinements determine the actual domain and behavior. */
-export const SCALAR_TYPES=Object.freeze(['boolean','integer','decimal','float','string','binary','date','time','timestamp'] as const);
-export const SCALAR_TYPES_V09=Object.freeze([...SCALAR_TYPES,'bits128','uuid'] as const);
-export type ScalarType=typeof SCALAR_TYPES_V09[number];
-export const scalarTypesForVersion=(version:string):readonly string[]=>['0.9.0','0.10.0'].includes(version)?SCALAR_TYPES_V09:SCALAR_TYPES;
-export const ELEMENT_KINDS=['field','record','group'] as const;
+/** Shared model-owned current value families; native refinements remain separate. */
+export const SCALAR_TYPES=Object.freeze(coreVocabulary.scalarType);
+export type ScalarType=typeof SCALAR_TYPES[number];
+export const scalarTypesForVersion=(version:string):readonly string[]=>version===CURRENT_CORE_VERSION?SCALAR_TYPES:[];
+export const ELEMENT_KINDS=coreVocabulary.kind;
 export type ElementKind=typeof ELEMENT_KINDS[number];
-/** Ideal availability only; native absence representations require explicit bindings. */
-export const NULLABILITIES=['required','absent-allowed','unspecified'] as const;
+export const NULLABILITIES=coreVocabulary.nullability;
 export type Nullability=typeof NULLABILITIES[number];
-/** Ideal container shape; native repetition and storage encodings remain separate. */
-export const CARDINALITIES=['one','array','map','unspecified'] as const;
+export const CARDINALITIES=coreVocabulary.cardinality;
 export type Cardinality=typeof CARDINALITIES[number];
-export interface CoreItemTypeReference {module:string;element:string;[key:string]:unknown}
-export interface CoreSemanticTypeReference {vocabulary:string;version:string;term:string;[key:string]:unknown}
-export interface Element {
-  id: string;
-  name?: string;
-  description?: string;
-  scalarType?: ScalarType | (string & {});
-  extensions: Record<string, Json>;
-  references?: { role: string; module: string; element: string; [key: string]: unknown }[];
-  [key: string]: unknown;
-}
-export interface Module {
-  id: string; namespace: string; elements: Element[];
-  extensions?: Record<string, Json>;
-  [key: string]: unknown;
-}
-export interface Document {
-  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.7.0' | '0.8.0' | '0.9.0' | '0.10.0'; id: string;
-  vocabularies: Record<string, { version: string; [key: string]: unknown }>;
-  modules: Module[];
-  extensions?: Record<string, Json>;
-  [key: string]: unknown;
-}
-export interface ExtensionPackage {
-  id: string; version: string; coreVersion: '0.1.0'; description: string;
-  schema: JsonObject | boolean; semantics: string; scopes: Scope[];
-  capabilities: { validation: 'structural' | 'semantic'; directions: ('import' | 'export')[]; evidence: string[]; native?: {system: string; version: string; subset: string} };
-}
 export interface Diagnostic { code: string; path: string; message: string; severity: 'error' | 'warning' }
 export interface Validation { valid: boolean; complete: boolean; diagnostics: Diagnostic[] }
-export class UmfError extends Error {
-  constructor(readonly code: string, message: string, readonly path = '') { super(message); this.name = 'UmfError'; }
-}
-export const pointer = (key: string) => key.replace(/~/g, '~0').replace(/\//g, '~1');
+export {UmfError,pointer} from './errors';

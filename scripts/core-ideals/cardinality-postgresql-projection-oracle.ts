@@ -1,10 +1,10 @@
 import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource} from '../../src';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource} from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlCardinalityProjectionCases} from './cardinality-postgresql-projection-cases';
-import {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql} from '../../src/core-ideals/cardinality-postgresql-projection';
+import {projectCardinalityToPostgresql, recoverCardinalityFromPostgresql} from '../../src/core-ideals/cardinality-postgresql-projection';
 const name='umf-cardinality-down-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){
  const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});
@@ -40,7 +40,7 @@ try{
  const pair=(await sql('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;\n'+query+'\n'+supplementQuery+'\nCOMMIT;')).trim().split('\n').map(v=>JSON.parse(v));assert.equal(pair.length,2);
  const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query,snapshot:pair[0],reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
  const nativeSource=JSON.stringify(capture),supplement=JSON.stringify(pair[1]);
- const model=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'projected-capture'})).target).target).target;
+ const model=importPostgresqlCatalogCapture(nativeSource,{id:'projected-capture'});
  for(const e of model.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';
  const observations=[];
  for(const row of rows){

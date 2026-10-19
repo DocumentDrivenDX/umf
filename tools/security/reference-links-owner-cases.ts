@@ -1,12 +1,13 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {inspectCoreReferenceLinks} from '../../src/model/reference-links';
 import type {Document} from '../../src/model/types';
-import sourceSchema from '../../spec/core/relationship-document.schema.json';
-import resultSchema from '../../spec/core/reference-links-inspection.schema.json';
+import sourceSchema from '../../spec/core/schema.json';
+import resultSchema from '../../spec/core/reference-links-inspection-v0.3.schema.json';
 import {createValidator} from '../../src/validation/schema';
 export function runReferenceLinksOwnerCases(){
  const rows:{id:string;passed:boolean}[]=[];
  const identity={module:'m',element:'v'},ref={role:'record-type',module:'m',element:'R'};
- const source=(properties:Record<string,unknown>={}):Document=>({umf:'0.7.0',id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',kind:'field',extensions:{},...properties},{id:'R',kind:'record',members:[],extensions:{}}]}]});
+ const source=(properties:Record<string,unknown>={}):Document=>({umf:CURRENT_CORE_VERSION,id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',kind:'field',extensions:{},...properties},{id:'R',kind:'record',members:[],extensions:{}}]}]});
  const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
  function check(id:string,passed:boolean){rows.push({id,passed});if(!passed)throw Error(id)}
  function refuse(id:string,run:()=>unknown,code:string){let actual='';try{run()}catch(error){actual=(error as {code:string}).code}check(id,actual===code)}
@@ -31,8 +32,9 @@ export function runReferenceLinksOwnerCases(){
  for(const kind of ['future-kind',undefined]){const doc=source({references:[ref]});delete doc.modules[0]!.elements[1]!.members;if(kind===undefined)delete doc.modules[0]!.elements[1]!.kind;else doc.modules[0]!.elements[1]!.kind=kind;check('target-kind-presence-'+String(kind),same((inspectCoreReferenceLinks(doc,identity).meaning as any).links[0].target,{identity:{module:'m',element:'R'},path:'/modules/0/elements/1',...(kind===undefined?{}:{kind})}))}
  for(const [id,properties] of [['missing-target',{references:[{...ref,element:'absent'}]}],['missing-module',{references:[{...ref,module:'absent'}]}],['missing-role',{references:[{module:'m',element:'R'}]}],['nonarray-links',{references:{}}]] as const)refuse(id,()=>inspectCoreReferenceLinks(source(properties),identity),'CORE_REFERENCE_LINKS_SOURCE');
  const duplicate=source({references:[ref]});duplicate.modules[0]!.elements.push({...duplicate.modules[0]!.elements[1]!});refuse('duplicate-target-identities',()=>inspectCoreReferenceLinks(duplicate,identity),'CORE_REFERENCE_LINKS_SOURCE');
- for(const umf of ['0.8.0','0.9.0']){const doc={...d,umf} as Document,result=inspectCoreReferenceLinks(doc,identity);check('supported-envelope-'+umf,same(result.meaning,r.meaning)&&same(result.source,doc)&&result.version===(umf==='0.8.0'?'0.2.0':'0.3.0')&&result.provenance==='unverified')}
- for(const umf of ['0.1.0','0.6.0','0.10.0','future'])refuse('unsupported-'+umf,()=>inspectCoreReferenceLinks({...d,umf} as Document,identity),'CORE_REFERENCE_LINKS_VERSION');
+ check('current-inspection-format',r.version==='0.3.0');
+ check('current-source-marker',r.source.umf===CURRENT_CORE_VERSION);
+ for(const umf of ['0.1.0','0.6.0','0.7.0','0.8.0','0.9.0','future'])refuse('unsupported-'+umf,()=>inspectCoreReferenceLinks({...d,umf} as Document,identity),'CORE_REFERENCE_LINKS_VERSION');
  for(const value of [null,[],{}, {module:'m',element:''},{...identity,extra:true}])refuse('bad-identity-'+JSON.stringify(value),()=>inspectCoreReferenceLinks(d,value as any),'CORE_REFERENCE_LINKS_IDENTITY');
  refuse('missing-owner',()=>inspectCoreReferenceLinks(d,{module:'m',element:'absent'}),'CORE_REFERENCE_LINKS_MISSING');
  let calls=0;const hostile={...d};Object.defineProperty(hostile,'modules',{enumerable:true,get(){calls++;return d.modules}});refuse('getter-refusal',()=>inspectCoreReferenceLinks(hostile,identity),'NON_JSON');check('getter-not-invoked',calls===0);

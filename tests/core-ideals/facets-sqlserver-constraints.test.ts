@@ -1,6 +1,6 @@
 import {test,expect} from 'bun:test';
 import {parseNativeJson} from '../../src/model/native-json';
-import {importSqlServerCatalog,exportSqlServerCatalog} from '../../src/adapters/sqlserver';
+import {importSqlServerCatalog, exportSqlServerCatalog} from '../../src/adapters/sqlserver';
 import {inspectSqlServerFacetConstraints as inspect} from '../../src/adapters/sqlserver/facet-constraints';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-discovery-native.json').json();
 const source=JSON.parse(proof.sourceText);

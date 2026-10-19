@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+        "target": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
       }
     ],
     "role": "other",
@@ -829,7 +829,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -1025,7 +1025,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.3.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1052,7 +1052,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.3.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1122,14 +1122,14 @@
   "id": "[\"schema\",\"spec/core/parquet-nullability-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7779,
+      "bytes": 7781,
       "path": "spec/core/parquet-nullability-classification.schema.json",
-      "sha256": "809dfbb4d0a51cb3347e23cedcd70e18519f345df3b2376ce2ca292f096131cf"
+      "sha256": "0544aa7283e5f3c5a1fbde6bc3a9cb63ec4ae741bea2b0301c742201b093aaf1"
     }
   ],
   "summary": "spec/core/parquet-nullability-classification.schema.json",

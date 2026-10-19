@@ -22,7 +22,7 @@
       }
     },
     "source": {
-      "$ref": "urn:umf:core:0.7.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "bounds": {
       "type": "object",
@@ -151,123 +151,6 @@
       },
       "minProperties": 1
     },
-    "lookup": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "operation",
-        "version",
-        "source",
-        "identity",
-        "path",
-        "meaning",
-        "provenance"
-      ],
-      "properties": {
-        "operation": {
-          "const": "inspect-core-facets"
-        },
-        "version": {
-          "const": "3.0.0"
-        },
-        "source": {
-          "$ref": "#/$defs/source"
-        },
-        "identity": {
-          "$ref": "#/$defs/identity"
-        },
-        "path": {
-          "type": "string"
-        },
-        "meaning": {
-          "oneOf": [
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state",
-                "facets",
-                "interpreted",
-                "uninterpretedPaths"
-              ],
-              "properties": {
-                "state": {
-                  "const": "known"
-                },
-                "facets": {
-                  "$ref": "urn:umf:core:0.7.0#/$defs/facets"
-                },
-                "interpreted": {
-                  "$ref": "#/$defs/bounds"
-                },
-                "uninterpretedPaths": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 0
-                }
-              }
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state",
-                "facets",
-                "interpreted",
-                "uninterpretedPaths"
-              ],
-              "properties": {
-                "state": {
-                  "const": "partial"
-                },
-                "facets": {
-                  "$ref": "urn:umf:core:0.7.0#/$defs/facets"
-                },
-                "interpreted": {
-                  "$ref": "#/$defs/bounds"
-                },
-                "uninterpretedPaths": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1
-                }
-              }
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state"
-              ],
-              "properties": {
-                "state": {
-                  "const": "missing"
-                }
-              }
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "state"
-              ],
-              "properties": {
-                "state": {
-                  "const": "inapplicable"
-                }
-              }
-            }
-          ]
-        },
-        "provenance": {
-          "const": "unverified"
-        }
-      }
-    },
     "declaration": {
       "type": "object",
       "additionalProperties": false,
@@ -288,10 +171,10 @@
           "const": "3.0.0"
         },
         "source": {
-          "$ref": "urn:umf:core:0.7.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "target": {
-          "$ref": "urn:umf:core:0.7.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "identity": {
           "$ref": "#/$defs/identity"
@@ -344,9 +227,6 @@
     }
   },
   "oneOf": [
-    {
-      "$ref": "#/$defs/lookup"
-    },
     {
       "$ref": "#/$defs/declaration"
     }

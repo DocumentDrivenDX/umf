@@ -3,9 +3,9 @@ import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model
 import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '../model/nullability';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/nullability-operation.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
+
+import kinds from '../../spec/core/nullability-operation-v5.schema.json';
+
 import schema from '../../spec/core/nullability-sqlserver-projection.schema.json';
 export {default as nullabilitySqlServerProjectionSchema} from '../../spec/core/nullability-sqlserver-projection.schema.json';
 import {sqlServerCarriers as carriers,sqlServerIdentifier as identifier,sqlServerLiteral as literal} from './sqlserver-syntax';
@@ -16,7 +16,7 @@ export interface NullabilitySqlServerProjection {
  mapping:{origin:'authored';nullability:'required'|'absent-allowed'|'unspecified';encoding:'not-null'|'null';basis:'authored-requirement'|'no-authored-requirement'|'unprojected-requirement';scope:NullabilitySqlServerRequest['scope'];carrier:NullabilitySqlServerRequest['carrier'];idealPath:string;nativePath:'/sql';outcome:'exact'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(kinds);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export function projectNullabilityToSqlServer(input:CoreNullabilityDeclaration,options:NullabilitySqlServerRequest):NullabilitySqlServerProjection {
  const copied=copyJson(input) as unknown as CoreNullabilityDeclaration;

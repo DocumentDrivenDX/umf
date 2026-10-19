@@ -1,0 +1,938 @@
+{
+  "scope": "Current named Key authoring/receipt behavior and historical native evidence are reported separately",
+  "idealAdmitted": false,
+  "sourceOperationsVerified": true,
+  "sourceUsefulSystems": [
+    "postgresql",
+    "sqlserver"
+  ],
+  "currentNativeQualification": "UNQUALIFIED",
+  "historicalQualification": "PARTIALLY_REVALIDATED",
+  "priorityDelivery": false,
+  "qualifiedBindings": 0,
+  "nativeEquivalence": false,
+  "evidence": {
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "records": [
+      {
+        "path": "fixtures/validation/key-tablespec-discovery-native.json",
+        "sha256": "269cb30e0abd3b9898d846a7159a3c509575fb57e9a43c99f4b49ccc505d256d"
+      },
+      {
+        "path": "fixtures/validation/key-tablespec-projection-native.json",
+        "sha256": "ddd7d4670bee50b60b4010b0e9734d130b161f8a604957e765cb1436ce0e98c2"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-discovery-native.json",
+        "sha256": "edef1894645cd877076d39a1b17497b9d80e614c75c01693e3fc70b83ca9dee9"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-projection-native.json",
+        "sha256": "4869a6eb986f8283cd96c138893127846d89cc72ea1986fab66f6ed7018ed20d"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-discovery-native.json",
+        "sha256": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-projection-native.json",
+        "sha256": "7f7472b8d99daf44f104f2f2fd018ba357d9eaf3c2fe3bc6cfb8cf2bf2edda8c"
+      },
+      {
+        "path": "fixtures/validation/key-avro-discovery-native.json",
+        "sha256": "1d46bfb059fe862c364080417a7650671cc218109601351fb86320ba7830d7d1"
+      },
+      {
+        "path": "fixtures/validation/key-avro-projection-native.json",
+        "sha256": "9009810781f65cf584c08b0b1c4c5f19eabf07c78c59fb8e36ba6bfd511dccca"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-discovery-native.json",
+        "sha256": "d00051c35ab2654128b774d34c5e4a46e17c35be39f9430c1bd57b1d1899f275"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-projection-native.json",
+        "sha256": "d0a60c1314466c1a91844f1252b25e68a3580f66e41f083a20b3e6d2ee77338d"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-encoding-native.json",
+        "sha256": "b8a0d5df49b023caf87b08889a3ff501dd9b05ebbde7bc85e03b4334e174c650"
+      },
+      {
+        "path": "fixtures/validation/key-tablespec-classification-browser.json",
+        "sha256": "3548a4669bf4fc0cc8f48b0209e916adcea406b237753d6a80300e8b8cf4563e"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-catalog-browser.json",
+        "sha256": "6b6c7edb2193d245b6810b481e7b264711cdbb9ede9780b7eb8971e28a4f6702"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-browser.json",
+        "sha256": "25f029184a33e1f7fa5fb4c73ad5ec391b59170177ed46a46f3f7d11ac896f93"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-browser.json",
+        "sha256": "1667c77b5010d54af51e4290b6980d48b38c97edf277f460979a2dcfbecac464"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-encoding-browser.json",
+        "sha256": "085230baec4ffe8eba368d4a8ac14686c18c13dac4c5bb23e1d55369a1555b0f"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-projection-browser.json",
+        "sha256": "0f796ec3c73bc0cd143e1e52a52834eef8ee6fd20c449f09189f3f3f6a176bcd"
+      },
+      {
+        "path": "fixtures/validation/key-avro-browser.json",
+        "sha256": "6d40413fcdca458c581e501beb5293948071bf39248c1c024fb375c7604cd314"
+      },
+      {
+        "path": "fixtures/validation/key-avro-projection-browser.json",
+        "sha256": "c083cd7bb7dd44ac70667be6219b64515badd2e15be8119db5284a6441f38b4e"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-browser.json",
+        "sha256": "13c3f34c1aeaef755d30e38095e57fad7a34ffc980539211327b8311a656803a"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-projection-browser.json",
+        "sha256": "7874530a04e1185ab76b925b1e9835db059cc756f79914e620de5f9af10593ad"
+      }
+    ],
+    "fingerprints": 519,
+    "refreshSha256": "7ebb1c9f68846708abc875486b12d85d788a84ac5ac06203ef6e88b97a2d9533",
+    "idealAdmitted": false,
+    "nativeEquivalence": false,
+    "historicalQualification": "PARTIALLY_REVALIDATED",
+    "currentCoreQualification": "UNQUALIFIED",
+    "unqualified": [
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "dist/postgresql/runtime.js",
+        "pinnedSha256": "22c52b9b6c371edce19b91dd87ab2b34ca4702c455e7fd04720703019e97870f",
+        "observedSha256": "edc7fce04c93abe6b603ae2d01bdfd2ce8774cd2245ad82b10e4669394c096d7"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-avro-browser.ts",
+        "pinnedSha256": "9243ab9508f5b3873cb9c7a39cec2a016647fcde0513748ee53220a6e430cb83",
+        "observedSha256": "f644e073fbeb9b9e246477ab3ede71d08e868f8a140f67aff30580bf57101115"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-avro-schema.ts",
+        "pinnedSha256": "6d07f0f902d378dd9c02d0ce49c16bb558e1df7d29bb7f02b1f88b7fc1e15b3a",
+        "observedSha256": "33b0bc2f3c431e1dde5c1871d7fc4bb5fac936d6caee7349422b79045d422af9"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-parquet-schema.ts",
+        "pinnedSha256": "e1c2c5b184bda867eb36778cdc29fa6b6d2931a295e2f8dd0b12dc1b4fd402c7",
+        "observedSha256": "d5cd79425bac15994348ac21295c466efcec924dc6c099f7fd2fab3d3ac5efe4"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-postgresql-oracle.ts",
+        "pinnedSha256": "49552585b89d39bdcd3fee83ec35b18a850901d6fea96f41e76f4484f68e551b",
+        "observedSha256": "131d43f46f54dd312586742ae2eacfd346228059fe3d8c9756ced4f51bc0251f"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-postgresql-projection-cases.ts",
+        "pinnedSha256": "6f074d32f6af648acf8d9aecc5c0778aca74b4d943f607ae69e04e35e61042fa",
+        "observedSha256": "63fbf283120097cd93ce5f16e8f4fb02d11114566fa82b874de9e8208a64b0c3"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-postgresql-projection-schema.ts",
+        "pinnedSha256": "9bae2fd0fac5c8629d9ef93fca924443ef372f799792075d96c3a1a22f825d89",
+        "observedSha256": "5dd5dfce3b86c10e9e83a6c4d816780579c5d6e0de4dba975740023c30e4142f"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-postgresql-schema.ts",
+        "pinnedSha256": "ed9116a87bebca8aa6d41aaf0e35c4642d24778822e5ca7cc0903d1a69a447e6",
+        "observedSha256": "e3954ae6d919fbe595239fc84542b08bcc2080a746aaeff626f42ab8e5802bcb"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-sqlserver-discovery.ts",
+        "pinnedSha256": "3bbc7002a84daf46a876f0d8cd2d7da7fd7fd40b5609dee1185f7f62262962fd",
+        "observedSha256": "7fcd489566ca668b1875b79a43d4c285658558323ff2d9ddeef7d366bb3eba04"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-sqlserver-encoding-browser.ts",
+        "pinnedSha256": "d53e521b0035d2589838651cde3f534da998d008175cf9cd5783fc6c6da3f2e1",
+        "observedSha256": "b7f6fb45e29b95f65df1e4cb48a9b5cb3c7f6442a25b99c021299ac3322cc91e"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-sqlserver-schema.ts",
+        "pinnedSha256": "479b42a42f2617571687cae260ba15719d437e7f2e3f9aeb7f5ead890233bbe7",
+        "observedSha256": "6da7514c1e7fb57d264f85760c5159c160a5cfa31eb9063dbab7a761c15742b9"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-tablespec-projection-schema.ts",
+        "pinnedSha256": "864f377cc33f1db84d47395be66e642d6bda9d789e700541c997e599190097fa",
+        "observedSha256": "2cc043841d228e1797f2720310d5c5f349212e3fb14b2b8e9c0df94e820e684b"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "scripts/core-ideals/key-tablespec-schema.ts",
+        "pinnedSha256": "4d356f4988dfe3411e16b241a02ad4d4be03d1965fefa5f33a243977ca936894",
+        "observedSha256": "4e8ff9c16487b0f64ed9d2762910ae244d1811994a5d2932b0a74180eac1b1a3"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/core/avro-key-classification.schema.json",
+        "pinnedSha256": "3964f8c9658de70aca1283eeeae2a930418edc32440a974aad5779cb1278d430",
+        "observedSha256": "b62553868495c390b59758b595954eab252017da3e3651012720c12270537577"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/core/key-postgresql-projection.schema.json",
+        "pinnedSha256": "b5cf3d0cab8e128ed225c855bec1ce1cd19d8ced578a65c291f4807d84c317fe",
+        "observedSha256": "3025f2fa4a92b46ce0c44a52527b75819b4fd1c9b749bd1341d791aadcdb76c0"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/core/key-tablespec-projection.schema.json",
+        "pinnedSha256": "019d38b819c9bc288f428e43e9974c71c6d0fb9033e69f1bc3d429a460c59d62",
+        "observedSha256": "6dec12eaa8835bfa798f617e55202ccaf453e164935d3e3b7bccf26dca9da600"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/core/parquet-key-classification.schema.json",
+        "pinnedSha256": "ef33915a6f2484dcd09a16e0dbea7186b35b27576267fa0478bb58ce55096b16",
+        "observedSha256": "12bf36b7f0e41470297b571da0528fba797e67292d52ea3e4243e509c4f6f8f3"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/core/postgresql-key-classification.schema.json",
+        "pinnedSha256": "f58fd86e54c54925199d014a184fc6a5c9a8a6d5f92e354f171c8b9a6b95975e",
+        "observedSha256": "3be0cf62bd16ca2247827ace2e5954fd3bfb043b2d473a60fe8db3ba885fee46"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/core/sqlserver-key-classification.schema.json",
+        "pinnedSha256": "427aebea35e781a2b90c91c95704bffb68ff3c87230e6841fdbf3c4cb32fb097",
+        "observedSha256": "d976caf6a2efed173f87cd313cede56623ae762b1ff4f304808f885cc52aeca4"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/core/tablespec-key-classification.schema.json",
+        "pinnedSha256": "eb7c4968e1e62e6b95e136b774b21e177f8e968a3d627260f444cc7d74b9ef98",
+        "observedSha256": "b95e2766a0235e501cc3f0fa0e3475f7723af540c2710f3e1cb6b549a1fef023"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/extensions/avro-keys/package.json",
+        "pinnedSha256": "feebd03e9e3b45e82f6234eb35e38d512d14ee141b0a2c20e1fbdf5379032819",
+        "observedSha256": "11e7606893740c5342823e05d9ee51480f7b2309c6b31e9ffe645e51467eadec"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/extensions/parquet-keys/package.json",
+        "pinnedSha256": "ac574711e148e432d7d7bb3b728561d7731cf3bf65d07a95e23d0d272b0cc7a8",
+        "observedSha256": "07ded1b736567f80875a44756ef1d7172b804d088d94da622deaed6f8fed619b"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/extensions/postgresql-keys/package.json",
+        "pinnedSha256": "516b2991c9d53ff430b426f253b2dab51fe4158703ebf30135d5db1d9e56a4e4",
+        "observedSha256": "ba9d60f1548364d7bcfb51b25fa10c1fc5055e65ed1c44c7407b2a5434542e33"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/extensions/sqlserver-keys/package.json",
+        "pinnedSha256": "3b7b5bf6e05924a6b8c381052b5b42438b10254fa6cd7994dfbf35ad99cfe17f",
+        "observedSha256": "5746365036738facbaf07b8dadbec79b048346d4ae3b4e99ff3e7691303506ef"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "spec/extensions/tablespec-keys/package.json",
+        "pinnedSha256": "dc1a4e7d2e7a10056c234e7a33a743ee3123beea498aa15a96d1399a1db398c3",
+        "observedSha256": "2055935576949397cd43caa2cd01f0a15ec7091700f506f8aec9fe4a4a8a5994"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/adapters/sqlserver/index.ts",
+        "pinnedSha256": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40",
+        "observedSha256": "c3293b45da791d1566524ca4388107d8110776b7cb2ab8996d529e553b1594d4"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/core-ideals/key-avro.ts",
+        "pinnedSha256": "961e6034d943691d1c1a79a40c7ba41438b343ccc4877bd4237a5db9582dbfc6",
+        "observedSha256": "2a613118190de3ee3fe61302b460343e2d7d6bb6a7779706702e49123d348ac6"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/core-ideals/key-parquet.ts",
+        "pinnedSha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2",
+        "observedSha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/core-ideals/key-postgresql-projection.ts",
+        "pinnedSha256": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8",
+        "observedSha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/core-ideals/key-postgresql.ts",
+        "pinnedSha256": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f",
+        "observedSha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/core-ideals/key-sqlserver.ts",
+        "pinnedSha256": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5",
+        "observedSha256": "50b3eb2d072df4b15abe6de9bc222a1d4cdf441f7e2a5672b6a20fcddf62c18f"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/core-ideals/key-tablespec-projection.ts",
+        "pinnedSha256": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef",
+        "observedSha256": "ac8a77b416798a618aac34ccbcf480c842fae50fbc728d43309cb1cde1a0951d"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/core-ideals/key-tablespec.ts",
+        "pinnedSha256": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
+        "observedSha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/model/key-tuple.ts",
+        "pinnedSha256": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
+        "observedSha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "src/validation/schema.ts",
+        "pinnedSha256": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+        "observedSha256": "ccebcd833b25b6520ee03cdbc1d3d84a6f9705960f7691963c1360402d695e90"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-avro.test.ts",
+        "pinnedSha256": "c3daaea09eabd4dbdd9cbd9d4f48ade341c23ced3cbec4025f096f89ed7389db",
+        "observedSha256": "892cab713c315d27f9dd7e5b3e2a2de1f1382a453882fc4c75d274c946727049"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-parquet.test.ts",
+        "pinnedSha256": "015cfbc21c00cac34180413c5d4ee531986dbd850d73d9d03f1f1386c2c05c74",
+        "observedSha256": "5540c3f304954a8c9d5dac25a023fa9c893a3d873e14dbd7fb72e0f317f18cad"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-postgresql-correlation.test.ts",
+        "pinnedSha256": "5af7522cbedfd31fb8ce5f0005b77ccd802b31302795da3f61e8f17b6b8c7f2f",
+        "observedSha256": "5e63f74c6912d5f736b92de6f63153dc10dbf32a203fb304f7b653f56d770d73"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-postgresql-projection.test.ts",
+        "pinnedSha256": "4a17ec8b4bb11907c6f1ae146a5780ece36e2beb06523a7e4952e39c61fd5ad4",
+        "observedSha256": "23102133ef4a35a1fcf5a56e17f8647b71e1ad5f56a2b910bb22411beca06021"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-postgresql.test.ts",
+        "pinnedSha256": "bc90d70ff832e181546a0e7523f7480fad1bae83f83cd8884778afbcfac8d107",
+        "observedSha256": "d93e30fff7e67236219c50139d47e539e9a22da209d01094fd80a9d10fd6b0d7"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-sqlserver-encoding.test.ts",
+        "pinnedSha256": "b1a5c3cf5478ff77deecdf7b116d65c040a3bcda1f4a4ccb7888c62d4fc5de64",
+        "observedSha256": "b4325a978fe82fdf63b5a2aaaec784413d77730854675c7e66e53705784c7c68"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-sqlserver.test.ts",
+        "pinnedSha256": "df4a9f1823565f696b33b72befa4c7bf89118c96a0fcb2a0032c5b6c53a50616",
+        "observedSha256": "c9decfb8b9afb70c13dc4fb03f78c16dec9713b47bd9f49590c60c108e91caee"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-tablespec-projection.test.ts",
+        "pinnedSha256": "bf22e88c32bc29c8c8937b3efce94234d566b1d1a1dba8ae3e59481e7f085996",
+        "observedSha256": "16d79ad1fb0c82b4a97dd7133d6be4da0b9402d11a0f8638d67db9139a2d0f40"
+      },
+      {
+        "proof": "fixtures/validation/key-gate-refresh-evidence.json",
+        "path": "tests/core-ideals/key-tablespec.test.ts",
+        "pinnedSha256": "c3392e220dd46b5d097272d0ea1dd799e2bba6e218a158f98d59828e6281e342",
+        "observedSha256": "1be7888e8cca5dc6126a20df258e0adfb80c43252be536192d60aeb3ca14fa80"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-projection-native.json",
+        "path": "scripts/core-ideals/key-postgresql-oracle.ts",
+        "pinnedSha256": "49552585b89d39bdcd3fee83ec35b18a850901d6fea96f41e76f4484f68e551b",
+        "observedSha256": "131d43f46f54dd312586742ae2eacfd346228059fe3d8c9756ced4f51bc0251f"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-projection-native.json",
+        "path": "scripts/core-ideals/key-postgresql-projection-cases.ts",
+        "pinnedSha256": "6f074d32f6af648acf8d9aecc5c0778aca74b4d943f607ae69e04e35e61042fa",
+        "observedSha256": "63fbf283120097cd93ce5f16e8f4fb02d11114566fa82b874de9e8208a64b0c3"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-projection-native.json",
+        "path": "src/core-ideals/key-postgresql-projection.ts",
+        "pinnedSha256": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8",
+        "observedSha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-projection-native.json",
+        "path": "scripts/core-ideals/key-postgresql-projection-schema.ts",
+        "pinnedSha256": "9bae2fd0fac5c8629d9ef93fca924443ef372f799792075d96c3a1a22f825d89",
+        "observedSha256": "5dd5dfce3b86c10e9e83a6c4d816780579c5d6e0de4dba975740023c30e4142f"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-projection-native.json",
+        "path": "spec/core/key-postgresql-projection.schema.json",
+        "pinnedSha256": "b5cf3d0cab8e128ed225c855bec1ce1cd19d8ced578a65c291f4807d84c317fe",
+        "observedSha256": "3025f2fa4a92b46ce0c44a52527b75819b4fd1c9b749bd1341d791aadcdb76c0"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-discovery-native.json",
+        "path": "scripts/core-ideals/key-sqlserver-discovery.ts",
+        "pinnedSha256": "3bbc7002a84daf46a876f0d8cd2d7da7fd7fd40b5609dee1185f7f62262962fd",
+        "observedSha256": "7fcd489566ca668b1875b79a43d4c285658558323ff2d9ddeef7d366bb3eba04"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "src/core-ideals/key-tablespec-projection.ts",
+        "pinnedSha256": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef",
+        "observedSha256": "ac8a77b416798a618aac34ccbcf480c842fae50fbc728d43309cb1cde1a0951d"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "scripts/core-ideals/key-tablespec-projection-schema.ts",
+        "pinnedSha256": "864f377cc33f1db84d47395be66e642d6bda9d789e700541c997e599190097fa",
+        "observedSha256": "2cc043841d228e1797f2720310d5c5f349212e3fb14b2b8e9c0df94e820e684b"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "tests/core-ideals/key-tablespec-projection.test.ts",
+        "pinnedSha256": "bf22e88c32bc29c8c8937b3efce94234d566b1d1a1dba8ae3e59481e7f085996",
+        "observedSha256": "16d79ad1fb0c82b4a97dd7133d6be4da0b9402d11a0f8638d67db9139a2d0f40"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "spec/core/key-tablespec-projection.schema.json",
+        "pinnedSha256": "019d38b819c9bc288f428e43e9974c71c6d0fb9033e69f1bc3d429a460c59d62",
+        "observedSha256": "6dec12eaa8835bfa798f617e55202ccaf453e164935d3e3b7bccf26dca9da600"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "scripts/core-ideals/key-tablespec-schema.ts",
+        "pinnedSha256": "4d356f4988dfe3411e16b241a02ad4d4be03d1965fefa5f33a243977ca936894",
+        "observedSha256": "4e8ff9c16487b0f64ed9d2762910ae244d1811994a5d2932b0a74180eac1b1a3"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "src/core-ideals/key-tablespec.ts",
+        "pinnedSha256": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
+        "observedSha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "tests/core-ideals/key-tablespec.test.ts",
+        "pinnedSha256": "c3392e220dd46b5d097272d0ea1dd799e2bba6e218a158f98d59828e6281e342",
+        "observedSha256": "1be7888e8cca5dc6126a20df258e0adfb80c43252be536192d60aeb3ca14fa80"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "spec/core/tablespec-key-classification.schema.json",
+        "pinnedSha256": "eb7c4968e1e62e6b95e136b774b21e177f8e968a3d627260f444cc7d74b9ef98",
+        "observedSha256": "b95e2766a0235e501cc3f0fa0e3475f7723af540c2710f3e1cb6b549a1fef023"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "spec/extensions/tablespec-keys/package.json",
+        "pinnedSha256": "dc1a4e7d2e7a10056c234e7a33a743ee3123beea498aa15a96d1399a1db398c3",
+        "observedSha256": "2055935576949397cd43caa2cd01f0a15ec7091700f506f8aec9fe4a4a8a5994"
+      },
+      {
+        "proof": "fixtures/validation/key-tablespec-classification-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-catalog-browser.json",
+        "path": "tests/core-ideals/key-postgresql-correlation.test.ts",
+        "pinnedSha256": "5af7522cbedfd31fb8ce5f0005b77ccd802b31302795da3f61e8f17b6b8c7f2f",
+        "observedSha256": "5e63f74c6912d5f736b92de6f63153dc10dbf32a203fb304f7b653f56d770d73"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-catalog-browser.json",
+        "path": "dist/postgresql/runtime.js",
+        "pinnedSha256": "22c52b9b6c371edce19b91dd87ab2b34ca4702c455e7fd04720703019e97870f",
+        "observedSha256": "edc7fce04c93abe6b603ae2d01bdfd2ce8774cd2245ad82b10e4669394c096d7"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-catalog-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-catalog-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "src/core-ideals/key-postgresql-projection.ts",
+        "pinnedSha256": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8",
+        "observedSha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "spec/core/key-postgresql-projection.schema.json",
+        "pinnedSha256": "b5cf3d0cab8e128ed225c855bec1ce1cd19d8ced578a65c291f4807d84c317fe",
+        "observedSha256": "3025f2fa4a92b46ce0c44a52527b75819b4fd1c9b749bd1341d791aadcdb76c0"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "scripts/core-ideals/key-postgresql-projection-schema.ts",
+        "pinnedSha256": "9bae2fd0fac5c8629d9ef93fca924443ef372f799792075d96c3a1a22f825d89",
+        "observedSha256": "5dd5dfce3b86c10e9e83a6c4d816780579c5d6e0de4dba975740023c30e4142f"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "scripts/core-ideals/key-postgresql-projection-cases.ts",
+        "pinnedSha256": "6f074d32f6af648acf8d9aecc5c0778aca74b4d943f607ae69e04e35e61042fa",
+        "observedSha256": "63fbf283120097cd93ce5f16e8f4fb02d11114566fa82b874de9e8208a64b0c3"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "tests/core-ideals/key-postgresql-projection.test.ts",
+        "pinnedSha256": "4a17ec8b4bb11907c6f1ae146a5780ece36e2beb06523a7e4952e39c61fd5ad4",
+        "observedSha256": "23102133ef4a35a1fcf5a56e17f8647b71e1ad5f56a2b910bb22411beca06021"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "scripts/core-ideals/key-postgresql-schema.ts",
+        "pinnedSha256": "ed9116a87bebca8aa6d41aaf0e35c4642d24778822e5ca7cc0903d1a69a447e6",
+        "observedSha256": "e3954ae6d919fbe595239fc84542b08bcc2080a746aaeff626f42ab8e5802bcb"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "src/core-ideals/key-postgresql.ts",
+        "pinnedSha256": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f",
+        "observedSha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "src/core-ideals/key-tablespec.ts",
+        "pinnedSha256": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
+        "observedSha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "src/core-ideals/key-tablespec-projection.ts",
+        "pinnedSha256": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef",
+        "observedSha256": "ac8a77b416798a618aac34ccbcf480c842fae50fbc728d43309cb1cde1a0951d"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "src/validation/schema.ts",
+        "pinnedSha256": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+        "observedSha256": "ccebcd833b25b6520ee03cdbc1d3d84a6f9705960f7691963c1360402d695e90"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "tests/core-ideals/key-postgresql.test.ts",
+        "pinnedSha256": "bc90d70ff832e181546a0e7523f7480fad1bae83f83cd8884778afbcfac8d107",
+        "observedSha256": "d93e30fff7e67236219c50139d47e539e9a22da209d01094fd80a9d10fd6b0d7"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "spec/core/postgresql-key-classification.schema.json",
+        "pinnedSha256": "f58fd86e54c54925199d014a184fc6a5c9a8a6d5f92e354f171c8b9a6b95975e",
+        "observedSha256": "3be0cf62bd16ca2247827ace2e5954fd3bfb043b2d473a60fe8db3ba885fee46"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "spec/extensions/postgresql-keys/package.json",
+        "pinnedSha256": "516b2991c9d53ff430b426f253b2dab51fe4158703ebf30135d5db1d9e56a4e4",
+        "observedSha256": "ba9d60f1548364d7bcfb51b25fa10c1fc5055e65ed1c44c7407b2a5434542e33"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-postgresql-browser.json",
+        "path": "dist/postgresql/runtime.js",
+        "pinnedSha256": "22c52b9b6c371edce19b91dd87ab2b34ca4702c455e7fd04720703019e97870f",
+        "observedSha256": "edc7fce04c93abe6b603ae2d01bdfd2ce8774cd2245ad82b10e4669394c096d7"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "scripts/core-ideals/key-sqlserver-schema.ts",
+        "pinnedSha256": "479b42a42f2617571687cae260ba15719d437e7f2e3f9aeb7f5ead890233bbe7",
+        "observedSha256": "6da7514c1e7fb57d264f85760c5159c160a5cfa31eb9063dbab7a761c15742b9"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "src/core-ideals/key-sqlserver.ts",
+        "pinnedSha256": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5",
+        "observedSha256": "50b3eb2d072df4b15abe6de9bc222a1d4cdf441f7e2a5672b6a20fcddf62c18f"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "src/adapters/sqlserver/index.ts",
+        "pinnedSha256": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40",
+        "observedSha256": "c3293b45da791d1566524ca4388107d8110776b7cb2ab8996d529e553b1594d4"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "tests/core-ideals/key-sqlserver.test.ts",
+        "pinnedSha256": "df4a9f1823565f696b33b72befa4c7bf89118c96a0fcb2a0032c5b6c53a50616",
+        "observedSha256": "c9decfb8b9afb70c13dc4fb03f78c16dec9713b47bd9f49590c60c108e91caee"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "spec/core/sqlserver-key-classification.schema.json",
+        "pinnedSha256": "427aebea35e781a2b90c91c95704bffb68ff3c87230e6841fdbf3c4cb32fb097",
+        "observedSha256": "d976caf6a2efed173f87cd313cede56623ae762b1ff4f304808f885cc52aeca4"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "spec/extensions/sqlserver-keys/package.json",
+        "pinnedSha256": "3b7b5bf6e05924a6b8c381052b5b42438b10254fa6cd7994dfbf35ad99cfe17f",
+        "observedSha256": "5746365036738facbaf07b8dadbec79b048346d4ae3b4e99ff3e7691303506ef"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-encoding-browser.json",
+        "path": "scripts/core-ideals/key-sqlserver-encoding-browser.ts",
+        "pinnedSha256": "d53e521b0035d2589838651cde3f534da998d008175cf9cd5783fc6c6da3f2e1",
+        "observedSha256": "b7f6fb45e29b95f65df1e4cb48a9b5cb3c7f6442a25b99c021299ac3322cc91e"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-encoding-browser.json",
+        "path": "tests/core-ideals/key-sqlserver-encoding.test.ts",
+        "pinnedSha256": "b1a5c3cf5478ff77deecdf7b116d65c040a3bcda1f4a4ccb7888c62d4fc5de64",
+        "observedSha256": "b4325a978fe82fdf63b5a2aaaec784413d77730854675c7e66e53705784c7c68"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-encoding-browser.json",
+        "path": "src/core-ideals/key-sqlserver.ts",
+        "pinnedSha256": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5",
+        "observedSha256": "50b3eb2d072df4b15abe6de9bc222a1d4cdf441f7e2a5672b6a20fcddf62c18f"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-encoding-browser.json",
+        "path": "src/model/key-tuple.ts",
+        "pinnedSha256": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
+        "observedSha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-encoding-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-projection-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-sqlserver-projection-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "scripts/core-ideals/key-avro-browser.ts",
+        "pinnedSha256": "9243ab9508f5b3873cb9c7a39cec2a016647fcde0513748ee53220a6e430cb83",
+        "observedSha256": "f644e073fbeb9b9e246477ab3ede71d08e868f8a140f67aff30580bf57101115"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "scripts/core-ideals/key-avro-schema.ts",
+        "pinnedSha256": "6d07f0f902d378dd9c02d0ce49c16bb558e1df7d29bb7f02b1f88b7fc1e15b3a",
+        "observedSha256": "33b0bc2f3c431e1dde5c1871d7fc4bb5fac936d6caee7349422b79045d422af9"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "src/core-ideals/key-avro.ts",
+        "pinnedSha256": "961e6034d943691d1c1a79a40c7ba41438b343ccc4877bd4237a5db9582dbfc6",
+        "observedSha256": "2a613118190de3ee3fe61302b460343e2d7d6bb6a7779706702e49123d348ac6"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "tests/core-ideals/key-avro.test.ts",
+        "pinnedSha256": "c3daaea09eabd4dbdd9cbd9d4f48ade341c23ced3cbec4025f096f89ed7389db",
+        "observedSha256": "892cab713c315d27f9dd7e5b3e2a2de1f1382a453882fc4c75d274c946727049"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "spec/core/avro-key-classification.schema.json",
+        "pinnedSha256": "3964f8c9658de70aca1283eeeae2a930418edc32440a974aad5779cb1278d430",
+        "observedSha256": "b62553868495c390b59758b595954eab252017da3e3651012720c12270537577"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "spec/extensions/avro-keys/package.json",
+        "pinnedSha256": "feebd03e9e3b45e82f6234eb35e38d512d14ee141b0a2c20e1fbdf5379032819",
+        "observedSha256": "11e7606893740c5342823e05d9ee51480f7b2309c6b31e9ffe645e51467eadec"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-projection-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-avro-projection-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-browser.json",
+        "path": "scripts/core-ideals/key-parquet-schema.ts",
+        "pinnedSha256": "e1c2c5b184bda867eb36778cdc29fa6b6d2931a295e2f8dd0b12dc1b4fd402c7",
+        "observedSha256": "d5cd79425bac15994348ac21295c466efcec924dc6c099f7fd2fab3d3ac5efe4"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-browser.json",
+        "path": "src/core-ideals/key-parquet.ts",
+        "pinnedSha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2",
+        "observedSha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-browser.json",
+        "path": "tests/core-ideals/key-parquet.test.ts",
+        "pinnedSha256": "015cfbc21c00cac34180413c5d4ee531986dbd850d73d9d03f1f1386c2c05c74",
+        "observedSha256": "5540c3f304954a8c9d5dac25a023fa9c893a3d873e14dbd7fb72e0f317f18cad"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-browser.json",
+        "path": "spec/core/parquet-key-classification.schema.json",
+        "pinnedSha256": "ef33915a6f2484dcd09a16e0dbea7186b35b27576267fa0478bb58ce55096b16",
+        "observedSha256": "12bf36b7f0e41470297b571da0528fba797e67292d52ea3e4243e509c4f6f8f3"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-browser.json",
+        "path": "spec/extensions/parquet-keys/package.json",
+        "pinnedSha256": "ac574711e148e432d7d7bb3b728561d7731cf3bf65d07a95e23d0d272b0cc7a8",
+        "observedSha256": "07ded1b736567f80875a44756ef1d7172b804d088d94da622deaed6f8fed619b"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-projection-browser.json",
+        "path": "src/index.ts",
+        "pinnedSha256": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+        "observedSha256": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602"
+      },
+      {
+        "proof": "fixtures/validation/key-parquet-projection-browser.json",
+        "path": "dist/umf.js",
+        "pinnedSha256": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+        "observedSha256": "c7d0b4932b6e79e565a43477d922cefee996fc918ab67ac3938aec00bb750fa5"
+      }
+    ],
+    "artifactRecovery": {
+      "path": "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json",
+      "archiveSha256": "a60ab9c3c190fc18a11ffd6968f6b6defc15c934e417979dee506f3cf425c943",
+      "outcome": "No missing historical artifact recovered: SDK lacks standalone test bundles; only the already-available libpg-query.wasm matches. Current native qualification remains unknown for those original artifact pins."
+    }
+  },
+  "authored": {
+    "tablespec": {
+      "cases": 28,
+      "projected": 12,
+      "blocked": 16,
+      "recoveries": 24,
+      "forgedRefusals": 24,
+      "strictBlocks": 12,
+      "usefulStoredValueMappings": 0
+    },
+    "postgresql": {
+      "cases": 20,
+      "projected": 17,
+      "blocked": 3,
+      "recoveries": 34,
+      "forgedRefusals": 34,
+      "strictBlocks": 17,
+      "usefulStoredValueMappings": 14
+    },
+    "sqlserver": {
+      "cases": 26,
+      "projected": 19,
+      "blocked": 7,
+      "recoveries": 38,
+      "forgedRefusals": 38,
+      "strictBlocks": 19,
+      "usefulStoredValueMappings": 16
+    },
+    "avro": {
+      "cases": 20,
+      "projected": 16,
+      "blocked": 4,
+      "recoveries": 32,
+      "forgedRefusals": 32,
+      "strictBlocks": 16,
+      "usefulStoredValueMappings": 0
+    },
+    "parquet": {
+      "cases": 24,
+      "projected": 21,
+      "blocked": 3,
+      "recoveries": 42,
+      "forgedRefusals": 42,
+      "strictBlocks": 21,
+      "usefulStoredValueMappings": 0
+    }
+  },
+  "native": {
+    "tablespec": {
+      "cases": 28,
+      "classified": 28,
+      "blocked": 0,
+      "recoveries": 56,
+      "refusals": 112,
+      "strictBlocks": 26
+    },
+    "postgresql": {
+      "cases": 1,
+      "classified": 1,
+      "blocked": 0,
+      "recoveries": 2,
+      "refusals": 4,
+      "strictBlocks": 1
+    },
+    "sqlserver": {
+      "cases": 3,
+      "classified": 3,
+      "blocked": 0,
+      "recoveries": 6,
+      "refusals": 12,
+      "strictBlocks": 3
+    },
+    "avro": {
+      "cases": 28,
+      "classified": 28,
+      "blocked": 0,
+      "recoveries": 56,
+      "refusals": 112,
+      "strictBlocks": 28
+    },
+    "parquet": {
+      "cases": 29,
+      "classified": 28,
+      "blocked": 1,
+      "recoveries": 58,
+      "refusals": 112,
+      "strictBlocks": 29
+    }
+  },
+  "conflicts": {
+    "tablespec": 4,
+    "postgresql": 4,
+    "sqlserver": 4,
+    "avro": 4,
+    "parquet": 4
+  },
+  "limits": [
+    "SQL enforcement applies to the qualified required stored-value domains; conversion, session, index-size and scope restrictions remain residuals.",
+    "TableSpec declarations and Avro/Parquet encodings do not enforce collection identity.",
+    "SQL Server authored recovery retains explicit DDL; classification uses independent engine catalogs, not a DDL parser.",
+    "PostgreSQL native classification uses independent discovery catalogs; generated DDL enforcement is verified by separate native insertion controls.",
+    "Native-only imports cannot infer authored stable key IDs, names, primary intent or unknown qualifiers. Receipts establish consistency, not authentication."
+  ],
+  "sha256": {
+    "scripts/core-ideals/key-conformance.ts": "d4e0d710768933728cb0d228ec34fbcd836c1ea1fb8fc5e30fdfab72e937a54e",
+    "scripts/core-ideals/key-evidence.ts": "d15aeb670df0bd2a8be5c319951176ce755097a04dadc49921ec24df9a421eab",
+    "scripts/core-ideals/key-roundtrips.ts": "0eafe387c2801d13bd86761d7b1a3f11a0051ac0289857e3d54fcc238813d9d9",
+    "scripts/core-ideals/key-native-roundtrips.ts": "d4e1fa3a24de514c42196733a4506e587b8058495d0fdac362865a3480a50c9d",
+    "tests/core-ideals/key-conformance.test.ts": "7d11f6806e4e5182f4c9f3ac41390e3fb0e70931624ee501348ab372ad659bc3",
+    "tests/core-ideals/key-evidence.test.ts": "ad4f03a6ade8219623e94eb9d9b61e993d996b81a4c4bd2143c3c36254cdde23",
+    "tests/core-ideals/key-authored-roundtrips.test.ts": "284cbc3514bc78b57ac59f6cc5325498e1259c4be1feb0713fafa5eb771356bc",
+    "tests/core-ideals/key-native-roundtrips.test.ts": "1d292d7cd9f9f9716b12851b4bfaecd55bda0414350d5e57ed35fb858962499a",
+    "fixtures/validation/key-gate-refresh-evidence.json": "7ebb1c9f68846708abc875486b12d85d788a84ac5ac06203ef6e88b97a2d9533"
+  }
+}

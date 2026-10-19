@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -408,7 +408,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -435,7 +435,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -480,9 +480,9 @@
   ],
   "sources": [
     {
-      "bytes": 2843,
+      "bytes": 2845,
       "path": "spec/projections/graphql-input-json-schema.schema.json",
-      "sha256": "7d77853dd22584b4e863ea30a191cfc1f957140ff6f03142b547a377b77ce9c9"
+      "sha256": "6701f1e55bd7b74d7ed4b6fcb5dbf095b6333a1f6d7ab1fb1ef609f4fb05a993"
     }
   ],
   "summary": "spec/projections/graphql-input-json-schema.schema.json",

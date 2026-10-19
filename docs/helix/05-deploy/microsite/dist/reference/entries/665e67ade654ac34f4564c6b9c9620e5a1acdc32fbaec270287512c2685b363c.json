@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -451,7 +451,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -514,9 +514,9 @@
   ],
   "sources": [
     {
-      "bytes": 3484,
+      "bytes": 3485,
       "path": "spec/extensions/odcs/relationship-schema.json",
-      "sha256": "8db1521328943a9bf3d56a87542c1d5de0be2dcea724460e9b353a59f0ffd3a4"
+      "sha256": "fdfe1526465cafdf6a56d3eda5ed6ea23cc29d082227f795f98d654807a119f9"
     }
   ],
   "summary": "spec/extensions/odcs/relationship-schema.json",

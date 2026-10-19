@@ -20,7 +20,7 @@ from umf_access.dsl.navigation import (
 )
 
 SOURCE = GeneratedSource(
-    "metadata-only", "0.8.0", "1" * 64, "2" * 64, "umf-access-runtime/0.1"
+    "metadata-only", "0.10.0", "1" * 64, "2" * 64, "umf-access-runtime/0.1"
 )
 
 
@@ -53,6 +53,13 @@ def many(**changes):
 
 
 class ManyNavigationTests(unittest.TestCase):
+    def test_generated_source_refuses_historical_core_pin(self):
+        with self.assertRaisesRegex(TypeError, 'exact document, generation and runtime pins'):
+            GeneratedSource(
+                "historical", "0.8.0", "1" * 64, "2" * 64,
+                "umf-access-runtime/0.1",
+            )
+
     def setUp(self):
         token = CURRENT.set(CaptureContext(frozenset(), frozenset()))
         self.addCleanup(CURRENT.reset, token)

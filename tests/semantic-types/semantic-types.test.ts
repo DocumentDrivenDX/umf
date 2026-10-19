@@ -5,7 +5,7 @@ import {readDocument,writeDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
 import type {Document,JsonObject,Json} from '../../src/model/types';
 const ref={vocabulary:'example.contact',version:'1.0.0',term:'email'};
-const doc=():Document=>({umf:'0.1.0',id:'semantic',vocabularies:{[id]:{version:'0.1.0'},future:{version:'9.0.0'}},modules:[{id:'m',namespace:'example',elements:[{id:'e',scalarType:'string',extensions:{[id]:{types:[ref],future:{opaque:true}},future:{domain_type:'email',recipe:{type:'native'}}}}]}]});
+const doc=():Document=>({umf:'0.10.0',id:'semantic',vocabularies:{[id]:{version:'0.1.0'},future:{version:'9.0.0'}},modules:[{id:'m',namespace:'example',elements:[{id:'e',scalarType:'string',extensions:{[id]:{types:[ref],future:{opaque:true}},future:{domain_type:'email',recipe:{type:'native'}}}}]}]});
 test('exact vocabulary and version identities never fall back',()=>{
  const registry=new SemanticTypeRegistry().register(ref,{description:'Publisher meaning'},()=>({status:'valid',complete:true,issues:[]}));
  expect(validateSemanticTypeValue(ref,'x',registry).status).toBe('valid');
@@ -89,7 +89,7 @@ test('public package mutation cannot weaken the original prototype registry sche
  const previous=semanticTypesPackage.schema;
  try {
   semanticTypesPackage.schema={};
-  const invalid={umf:'0.1.0',id:'tampered-package',vocabularies:{'umf.semantic-types':{version:'0.1.0'}},modules:[{id:'m',namespace:'example',elements:[{id:'e',extensions:{'umf.semantic-types':{types:[{vocabulary:1,version:'1',term:'term'}]}}}]}]};
+  const invalid={umf:'0.10.0',id:'tampered-package',vocabularies:{'umf.semantic-types':{version:'0.1.0'}},modules:[{id:'m',namespace:'example',elements:[{id:'e',extensions:{'umf.semantic-types':{types:[{vocabulary:1,version:'1',term:'term'}]}}}]}]};
   expect(validateDocument(invalid,semanticTypesRegistry()).valid).toBe(false);
  } finally {semanticTypesPackage.schema=previous;}
 });

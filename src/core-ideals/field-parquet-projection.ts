@@ -6,8 +6,8 @@ import {exportParquetCapture} from '../adapters/parquet';
 import {importParquetSchema,getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/kind-operation.schema.json';
+
+import kinds from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/field-parquet-projection.schema.json';
 export {default as fieldParquetProjectionSchema} from '../../spec/core/field-parquet-projection.schema.json';
 export interface FieldParquetRequest {id:string;recordName:string;repetition:'required'|'optional'|'repeated';fieldName:string;nativeType:keyof typeof parquetCarriers;mode:'strict'|'report'}
@@ -17,7 +17,7 @@ export interface FieldParquetProjection {
  mapping:{origin:'authored';idealPath:string;nativePath:'/schema/1';outcome:'exact'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export function projectFieldToParquet(input:CoreKindDeclaration,options:FieldParquetRequest):FieldParquetProjection & {diagnostics:Diagnostic[]} {
  const copied=copyJson(input) as unknown as CoreKindDeclaration;

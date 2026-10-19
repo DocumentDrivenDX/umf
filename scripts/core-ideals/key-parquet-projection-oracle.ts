@@ -2,7 +2,7 @@ import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {parquetKeyProjectionCases} from './key-parquet-projection-cases';
-import {projectKeysToParquet,recoverKeysParquetIdeal} from '../../src/core-ideals/key-parquet-projection';
+import {projectKeysToParquet, recoverKeysParquetIdeal} from '../../src/core-ideals/key-parquet-projection';
 import {exportParquetCapture} from '../../src/adapters/parquet';
 import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
 const rows=[];

@@ -4,13 +4,13 @@ import {schemaPropertiesFixture} from '../../scripts/core-schema-properties-case
 import type {ExtensionPackage} from '../../src/model/types';
 import type {CoreLiteral} from '../../src/model/schema-literals';
 
-test('extension validators receive complete isolated 0.8.0 context at every scope',()=>{
+test('extension validators receive complete isolated current-core context at every scope',()=>{
  const doc=schemaPropertiesFixture(),id='fixture.context';doc.vocabularies[id]={version:'1.0.0'};
  doc.extensions={[id]:{}};doc.modules[0]!.extensions={[id]:{}};doc.modules[0]!.elements[1]!.extensions={[id]:{}};
  const before=JSON.stringify(doc),scopes:string[]=[];
- const manifest:ExtensionPackage={id,version:'1.0.0',coreVersion:'0.1.0',description:'Context regression',schema:{type:'object'},semantics:'Synthetic context check',scopes:['document','module','element'],capabilities:{validation:'semantic',directions:[],evidence:[]}};
+ const manifest:ExtensionPackage={id,version:'1.0.0',coreVersion:'0.10.0',description:'Context regression',schema:{type:'object'},semantics:'Synthetic context check',scopes:['document','module','element'],capabilities:{validation:'semantic',directions:[],evidence:[]}};
  const registry=new Registry().register(manifest,(_payload,context)=>{
-  scopes.push(context.scope);expect(context.document.umf).toBe('0.8.0');
+  scopes.push(context.scope);expect(context.document.umf).toBe('0.10.0');
   expect(context.document.title).toBe('Orders');expect(context.document.modules[0]!.elements[1]!.facets).toEqual(doc.modules[0]!.elements[1]!.facets);
   context.document.title='mutated private copy';
   return [{code:'RANGE_POLICY',path:context.path,message:'Declared range refused',severity:'error'}];
@@ -25,7 +25,7 @@ test('nullable numeric Fields reject null bounds without throwing',()=>{
  for(const scalarType of ['integer','decimal'])for(const end of ['min','max'])for(const paired of [false,true]){
   const wrapper=scalarType==='integer'?'integerToken':'decimalToken';
   const range:Record<string,unknown>={[end]:null};if(paired)range[end==='min'?'max':'min']={[wrapper]:'1'};
-  const doc={umf:'0.8.0',id:'bounds',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,nullability:'absent-allowed',extensions:{},facets:{...(scalarType==='decimal'?{precision:20,scale:2}:{}),range}}]}]} as any;
+  const doc={umf:'0.10.0',id:'bounds',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,nullability:'absent-allowed',extensions:{},facets:{...(scalarType==='decimal'?{precision:20,scale:2}:{}),range}}]}]} as any;
   expect(validateDocument(doc).valid).toBe(false);
   expect(validateCoreFieldValue(doc,{module:'m',element:'f'},{[wrapper]:'1'} as any).valid).toBe(false);
  }
@@ -34,7 +34,7 @@ test('nullable numeric Fields reject null bounds without throwing',()=>{
 });
 
 function numericDocument(scalarType='integer',range:Record<string,unknown>={min:{integerToken:'0'},max:{integerToken:'10'}}):any {
- return {umf:'0.8.0',id:'numeric',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,extensions:{},facets:{...(scalarType==='decimal'?{precision:20,scale:2}:{}),range}}]}]};
+ return {umf:'0.10.0',id:'numeric',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,extensions:{},facets:{...(scalarType==='decimal'?{precision:20,scale:2}:{}),range}}]}]};
 }
 const numericIdentity={scope:'element' as const,module:'m',element:'f'};
 test('unknown facets cannot bypass known range validation',()=>{
@@ -128,9 +128,9 @@ test('explicit malformed facet patches reject atomically',()=>{
 
 test('unknown length units remain incomplete and block extension edits for every bound shape',()=>{
  const id='fixture.length-unit';
- const registry=new Registry().register({id,version:'1.0.0',coreVersion:'0.1.0',description:'Length unit regression',schema:{type:'object'},semantics:'Accept extension payload',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[]);
+ const registry=new Registry().register({id,version:'1.0.0',coreVersion:'0.10.0',description:'Length unit regression',schema:{type:'object'},semantics:'Accept extension payload',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[]);
  for(const bounds of [{min:1},{max:0},{min:0,max:0},{max:1}]){
-  const doc={umf:'0.8.0',id:'unknown-unit',vocabularies:{[id]:{version:'1.0.0'}},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType:'string',extensions:{[id]:{}},facets:{length:{...bounds,unit:'future-unit'}}}]}]} as any;
+  const doc={umf:'0.10.0',id:'unknown-unit',vocabularies:{[id]:{version:'1.0.0'}},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType:'string',extensions:{[id]:{}},facets:{length:{...bounds,unit:'future-unit'}}}]}]} as any;
   const before=JSON.stringify(doc),result=validateDocument(doc,registry);
   expect(result.valid).toBe(true);expect(result.complete).toBe(false);
   expect(result.diagnostics.filter(d=>d.code==='UNKNOWN_FACET_UNIT')).toEqual([{code:'UNKNOWN_FACET_UNIT',path:'/modules/0/elements/0/facets/length/unit',message:'Length unit retained without interpretation',severity:'warning'}]);

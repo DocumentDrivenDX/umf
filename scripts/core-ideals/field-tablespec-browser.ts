@@ -1,12 +1,12 @@
 import {chromium} from 'playwright';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {classifyTableSpecRecord,verifyTableSpecRecordClassification} from '../../src/core-ideals/tablespec-record';
+import {importTableSpec, exportTableSpec} from '../../src/adapters/tablespec';
+
+import {classifyTableSpecRecord, verifyTableSpecRecordClassification} from '../../src/core-ideals/tablespec-record';
 import {classifyTableSpecField} from '../../src/core-ideals/tablespec-field';
-import {readDocument,writeDocument} from '../../src/model/document';
+import {readDocument, writeDocument} from '../../src/model/document';
 const corpus=await Bun.file('fixtures/tablespec/roundtrip.json').json();const rows:any[]=[];
 for(const sample of corpus.results){
- const source=upgradeFieldEnvelope(importTableSpec(sample.input,{id:sample.id,format:sample.format})).target;
+ const source=importTableSpec(sample.input,{id:sample.id,format:sample.format});
  for(let column=0;column<source.modules[0]!.elements.length;column++)for(const mode of ['strict','report'] as const){
   const result=classifyTableSpecField(source,{column,mode});if(!result.target)throw Error('Missing native field');
   const exports=['json','yaml'].map(format=>({format,text:exportTableSpec(readDocument(writeDocument(result.target!,format as any),format as any))}));
@@ -34,7 +34,7 @@ try{
    for(const format of ['json','yaml']){if(umf.exportTableSpec(umf.readDocument(umf.writeDocument(result.target,format),format))!==row.input)throw Error('Native recovery');recoveries++;}
   }
   const original='{"version":"1.0","table_name":"T","columns":[{"name":"x","data_type":"FUTURE"}]}';
-  const source=umf.upgradeFieldEnvelope(umf.importTableSpec(original,{id:'conflict',format:'json'})).target;
+  const source=umf.umf.importTableSpec(original,{id:'conflict',format:'json'});
   for(const mode of ['strict','report']){const author=umf.declareCoreElementKind(source,{module:'table',element:'column:0'},'record');const result=umf.classifyTableSpecField(author.target,{column:0,mode,author});if(result.status!=='blocked'||'target'in result||result.source.modules[0].elements[0].kind!=='record')throw Error('Conflict overwritten');if(result.diagnostics.length!==1||result.diagnostics[0].severity!=='error')throw Error('Conflict diagnostics');conflicts++;}
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {classifications:rows.length,recoveries,conflicts,records};
  });

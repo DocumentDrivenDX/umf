@@ -3,7 +3,6 @@
     "{ state: \"known\"; cardinality: Cardinality; itemType?: CoreItemTypeReference; }",
     "{ state: \"missing\"; }",
     "{ state: \"inapplicable\"; }",
-    "{ state: \"legacy\"; value: Json; }",
     "{ state: \"unknown\"; value: string; }"
   ],
   "authored": false,

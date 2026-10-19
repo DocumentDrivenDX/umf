@@ -1,6 +1,6 @@
 {
   "logical": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddd-postgresql-graph",
     "vocabularies": {
       "umf.ddd": {
@@ -185,7 +185,7 @@
     ]
   },
   "binding": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddd-postgresql-layout",
     "vocabularies": {
       "umf.binding": {
@@ -198,7 +198,7 @@
         "profile": "umf-binding-1",
         "logical": {
           "documentId": "ddd-postgresql-graph",
-          "coreVersion": "0.1.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "postgresql",

@@ -1,6 +1,6 @@
 {
   "logical": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "sqlserver-table-logical",
     "vocabularies": {
       "umf.ddd": {
@@ -97,7 +97,7 @@
     ]
   },
   "binding": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "sqlserver-table-layout",
     "vocabularies": {
       "umf.binding": {
@@ -110,7 +110,7 @@
         "profile": "umf-binding-1",
         "logical": {
           "documentId": "sqlserver-table-logical",
-          "coreVersion": "0.1.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "sqlserver",

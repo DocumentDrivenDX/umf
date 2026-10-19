@@ -985,22 +985,6 @@
       "title": "Bit128RecordValue"
     },
     {
-      "href": "reader/a991f67c35ecae24a84a1212905f9c02eff61cb82bc99c2878f4ec833361a0cd.json",
-      "id": "[\"api\",\".\",\"Bit128UpgradeOptions\"]",
-      "kind": "Interface",
-      "summary": "Bit128UpgradeOptions is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "Bit128UpgradeOptions"
-    },
-    {
-      "href": "reader/68ad73a7a3ebad0ecb524d72227bdee8682998427cdaa225ae94a03416be25e4.json",
-      "id": "[\"api\",\".\",\"Bit128UpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "Bit128UpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "Bit128UpgradeReceipt"
-    },
-    {
       "href": "reader/22179be188bdcf1a1ea298bb2d6067d912a95f2d70596fcde5ce68545cac3a2a.json",
       "id": "[\"api\",\".\",\"Bit128Value\"]",
       "kind": "Interface",
@@ -1020,9 +1004,17 @@
       "href": "reader/3123711b1b57da6cd6db7e2e964a92c8a7261e814b5118b3d27f641f7b539578.json",
       "id": "[\"api\",\".\",\"CARDINALITIES\"]",
       "kind": "Constant",
-      "summary": "Ideal container shape; native repetition and storage encodings remain separate.",
+      "summary": "CARDINALITIES is a constant in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "CARDINALITIES"
+    },
+    {
+      "href": "reader/a4456a133c73e5854d3a97c42cb0a37853b2a6a237609ed1c828ea57883cb2bc.json",
+      "id": "[\"api\",\".\",\"CURRENT_CORE_VERSION\"]",
+      "kind": "Constant",
+      "summary": "CURRENT_CORE_VERSION is a constant in Other APIs. Its exact structure is documented below.",
+      "task": "Other APIs",
+      "title": "CURRENT_CORE_VERSION"
     },
     {
       "href": "reader/fd116f283dc4c8ef1b6328ecaf77b4f6488207f4c92ddf81676a22849d814360.json",
@@ -1081,14 +1073,6 @@
       "title": "CardinalityPostgresqlRequest"
     },
     {
-      "href": "reader/af042f838cc604cf9e205a2476373d4e91b70d39d6066e101a1bd7308976c48c.json",
-      "id": "[\"api\",\".\",\"CardinalityRollbackReceipt\"]",
-      "kind": "Interface",
-      "summary": "CardinalityRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "CardinalityRollbackReceipt"
-    },
-    {
       "href": "reader/fb7b0905f8dc2131172bf30491434bf056b18d354ab4d312366d23981925f07d.json",
       "id": "[\"api\",\".\",\"CardinalitySqlServerProjection\"]",
       "kind": "Interface",
@@ -1119,14 +1103,6 @@
       "summary": "CardinalityTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "CardinalityTableSpecRequest"
-    },
-    {
-      "href": "reader/95e193f830e9f9f74baa2177fbaff327950c12eab03fcb3453b1c8c8687e7a77.json",
-      "id": "[\"api\",\".\",\"CardinalityUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "CardinalityUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "CardinalityUpgradeReceipt"
     },
     {
       "href": "reader/e7c981d9886385b86db805acb77e8a146e16e1923a85ba38fd58706be40be87f.json",
@@ -1347,8 +1323,8 @@
     {
       "href": "reader/91c2ab92fefe255996eaab6f08743b5b245a51dae2999d1e94e4fdf6bf4f961e.json",
       "id": "[\"api\",\".\",\"CoreItemTypeReference\"]",
-      "kind": "Interface",
-      "summary": "CoreItemTypeReference is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "CoreItemTypeReference is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "CoreItemTypeReference"
     },
@@ -1363,16 +1339,16 @@
     {
       "href": "reader/4dcf3df633ad9f117bdfafd2768db99f41d5e16eb6cbe6e999917edc9ce4b14a.json",
       "id": "[\"api\",\".\",\"CoreKeyDefinition\"]",
-      "kind": "Interface",
-      "summary": "CoreKeyDefinition is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "CoreKeyDefinition is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "CoreKeyDefinition"
     },
     {
       "href": "reader/ef0712ca73488e931f3e823708fb5e6325d85df204ffcbbeb4dc194e73c31141.json",
       "id": "[\"api\",\".\",\"CoreKeyFieldReference\"]",
-      "kind": "Interface",
-      "summary": "CoreKeyFieldReference is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "CoreKeyFieldReference is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "CoreKeyFieldReference"
     },
@@ -1611,8 +1587,8 @@
     {
       "href": "reader/06a58b9ad4a2d54906f7198ee38a8b5cc0d4ec53aaf7c7f576adf90a3c41cd28.json",
       "id": "[\"api\",\".\",\"CoreRelationship\"]",
-      "kind": "Interface",
-      "summary": "CoreRelationship is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "CoreRelationship is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "CoreRelationship"
     },
@@ -1771,8 +1747,8 @@
     {
       "href": "reader/c9cd2a8957efcd9db88d889150f9d9dcec4f585eeb0c75d69e0d787efd0b602f.json",
       "id": "[\"api\",\".\",\"CoreSemanticTypeReference\"]",
-      "kind": "Interface",
-      "summary": "CoreSemanticTypeReference is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "CoreSemanticTypeReference is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "CoreSemanticTypeReference"
     },
@@ -2443,8 +2419,8 @@
     {
       "href": "reader/9562edb330d4e9b5ce4427cceacd981eddd79957c0d25a6f5ed9fecd3d2bfd74.json",
       "id": "[\"api\",\".\",\"Document\"]",
-      "kind": "Interface",
-      "summary": "The programmatic UMF document envelope: core version, stable identity, vocabulary declarations and modules.",
+      "kind": "Type alias",
+      "summary": "The programmatic UMF document envelope: document marker, stable identity, vocabulary declarations and modules.",
       "task": "Other APIs",
       "title": "Document"
     },
@@ -2459,8 +2435,8 @@
     {
       "href": "reader/f56f4f420963bd982256c4e56d88dd143bb7fcb6b00057dea294485c5b2cbf52.json",
       "id": "[\"api\",\".\",\"Element\"]",
-      "kind": "Interface",
-      "summary": "Element is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "Element is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "Element"
     },
@@ -2483,26 +2459,10 @@
     {
       "href": "reader/251a564f0ba13bf8b12817d3ef630998871ee9242b67850eff37c096428a773b.json",
       "id": "[\"api\",\".\",\"ExtensionPackage\"]",
-      "kind": "Interface",
-      "summary": "ExtensionPackage is a interface in Extensions. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "ExtensionPackage is a type alias in Extensions. Its exact structure is documented below.",
       "task": "Extensions",
       "title": "ExtensionPackage"
-    },
-    {
-      "href": "reader/908f85fe8b2344a93bcfd55009b8b23ab1904b62e66e6a53170ce889007218bf.json",
-      "id": "[\"api\",\".\",\"FacetRollbackReceipt\"]",
-      "kind": "Interface",
-      "summary": "FacetRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "FacetRollbackReceipt"
-    },
-    {
-      "href": "reader/b9a69342f3ad9d5cf13efe06df5108e2d9da017b11aa7f31ad8f79f403b04b63.json",
-      "id": "[\"api\",\".\",\"FacetUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "FacetUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "FacetUpgradeReceipt"
     },
     {
       "href": "reader/80f9426bc494495adf111fa353f015090cf341b3912582ffd8d5baec0e9aba77.json",
@@ -2649,14 +2609,6 @@
       "title": "FieldProjectionInspection"
     },
     {
-      "href": "reader/a00b2eeb08bccbf2d2bf7cb36809a281eacbe4f50822883a8a072118d9142b54.json",
-      "id": "[\"api\",\".\",\"FieldRollbackReceipt\"]",
-      "kind": "Interface",
-      "summary": "FieldRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "FieldRollbackReceipt"
-    },
-    {
       "href": "reader/cac6d74243e4e07f3cca3956ed0f315d78d97cfa0313b7fb1d539a0bdad04c13.json",
       "id": "[\"api\",\".\",\"FieldSqlServerProjection\"]",
       "kind": "Interface",
@@ -2687,14 +2639,6 @@
       "summary": "FieldTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "FieldTableSpecRequest"
-    },
-    {
-      "href": "reader/2fdd00a29b79cef1170b52072da58160394b121e1e22e08a512b776609706284.json",
-      "id": "[\"api\",\".\",\"FieldUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "FieldUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "FieldUpgradeReceipt"
     },
     {
       "href": "reader/7209be042745a9c25e3afe2f22e2c7208046dab6655d7fa9556693aa80bd9123.json",
@@ -3001,14 +2945,6 @@
       "title": "KeyAvroRequest"
     },
     {
-      "href": "reader/13429310be622fcd737608b6754da48050ae31dcb54f0640da6fe161b0ce9cf7.json",
-      "id": "[\"api\",\".\",\"KeyCandidateDocument\"]",
-      "kind": "Interface",
-      "summary": "KeyCandidateDocument is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "KeyCandidateDocument"
-    },
-    {
       "href": "reader/a2bafe148bca8cd9f5f86391f59fc1e3f59a209cfce288901f06b38844b02186.json",
       "id": "[\"api\",\".\",\"KeyParquetProjection\"]",
       "kind": "Interface",
@@ -3041,14 +2977,6 @@
       "title": "KeyPostgresqlRequest"
     },
     {
-      "href": "reader/76a758b009308a508820df2ea02030236e0242fb3dcb969915a1cacb782d2021.json",
-      "id": "[\"api\",\".\",\"KeyRollbackReceipt\"]",
-      "kind": "Interface",
-      "summary": "KeyRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "KeyRollbackReceipt"
-    },
-    {
       "href": "reader/5021b431da086d0d8643c3d7493b6918f5c0505ee15cd0b3778e1400ab4281af.json",
       "id": "[\"api\",\".\",\"KeySqlServerProjection\"]",
       "kind": "Interface",
@@ -3079,14 +3007,6 @@
       "summary": "KeyTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "KeyTableSpecRequest"
-    },
-    {
-      "href": "reader/0b08ef232e550d60425d5da0a06e8a1b0c3ef99851cc21841b688fe624eb01b5.json",
-      "id": "[\"api\",\".\",\"KeyUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "KeyUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "KeyUpgradeReceipt"
     },
     {
       "href": "reader/af7ad732e63c3091319f4a6a77eae0146c37532741806c0425de483c20225c64.json",
@@ -3203,8 +3123,8 @@
     {
       "href": "reader/8b4592cdc8aedf56f08bf4a6f38bad2c39a91c75b6191955bfc90655085feeea.json",
       "id": "[\"api\",\".\",\"Module\"]",
-      "kind": "Interface",
-      "summary": "Module is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "Module is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "Module"
     },
@@ -3212,7 +3132,7 @@
       "href": "reader/d43ae8035ce319f5e7baf23f958956ae7d0033bc2ee56b2aef0862947ff45af0.json",
       "id": "[\"api\",\".\",\"NULLABILITIES\"]",
       "kind": "Constant",
-      "summary": "Ideal availability only; native absence representations require explicit bindings.",
+      "summary": "NULLABILITIES is a constant in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "NULLABILITIES"
     },
@@ -3297,14 +3217,6 @@
       "title": "NullabilityPostgresqlRequest"
     },
     {
-      "href": "reader/987d059084f248a09de275737eeb098a9525969d309642af4d25d5acb166cfd9.json",
-      "id": "[\"api\",\".\",\"NullabilityRollbackReceipt\"]",
-      "kind": "Interface",
-      "summary": "NullabilityRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "NullabilityRollbackReceipt"
-    },
-    {
       "href": "reader/b1d6673491830f3ddabd62f84c1debe9a4d1b7da06a6d121a649a863576531cd.json",
       "id": "[\"api\",\".\",\"NullabilitySqlServerProjection\"]",
       "kind": "Interface",
@@ -3335,14 +3247,6 @@
       "summary": "NullabilityTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "NullabilityTableSpecRequest"
-    },
-    {
-      "href": "reader/df93cff700b9fec8356c8c7d9d539b8c971395361244b35ec69b04bb79d29a3c.json",
-      "id": "[\"api\",\".\",\"NullabilityUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "NullabilityUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "NullabilityUpgradeReceipt"
     },
     {
       "href": "reader/c828c8eda5048432ac3d2fa72685cc968b61565eb444313e348224c011e94eef.json",
@@ -4729,6 +4633,22 @@
       "title": "PublicCompanyRow"
     },
     {
+      "href": "reader/e17b536f8b62a95ba7384c4bb7bbc5697a63d9cd91fd33ce52b0f6576a7f2478.json",
+      "id": "[\"api\",\".\",\"PythonClientRequest\"]",
+      "kind": "Interface",
+      "summary": "PythonClientRequest is a interface in Other APIs. Its exact structure is documented below.",
+      "task": "Other APIs",
+      "title": "PythonClientRequest"
+    },
+    {
+      "href": "reader/24477d8408ef1f5138f221de6b55c0897b09e851702b3d3a8058e081fd3cea5d.json",
+      "id": "[\"api\",\".\",\"PythonClientResult\"]",
+      "kind": "Interface",
+      "summary": "PythonClientResult is a interface in Other APIs. Its exact structure is documented below.",
+      "task": "Other APIs",
+      "title": "PythonClientResult"
+    },
+    {
       "href": "reader/a4f126d5d57d16456bbd33138d02b51671443c8938b5337649f0d496715f4b20.json",
       "id": "[\"api\",\".\",\"RAW_TABLE_BINDING_SUBSET\"]",
       "kind": "Constant",
@@ -4939,16 +4859,16 @@
     {
       "href": "reader/aa2af57037586cfc604e5e8f290f01fd070b66e2858115cad20d7fac6e105c8d.json",
       "id": "[\"api\",\".\",\"RelationshipCandidate\"]",
-      "kind": "Interface",
-      "summary": "RelationshipCandidate is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "RelationshipCandidate is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "RelationshipCandidate"
     },
     {
       "href": "reader/fdea4a05a768bce65ea77c931caf8deddc7a1982b6fe598d62a8d861e4ee5caf.json",
       "id": "[\"api\",\".\",\"RelationshipEndpoint\"]",
-      "kind": "Interface",
-      "summary": "RelationshipEndpoint is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "RelationshipEndpoint is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "RelationshipEndpoint"
     },
@@ -5027,8 +4947,8 @@
     {
       "href": "reader/482c2c2c6f7cdd38a6273793ce1d81d9d75c3726914b5f683b940d932d20a673.json",
       "id": "[\"api\",\".\",\"RelationshipMultiplicity\"]",
-      "kind": "Interface",
-      "summary": "RelationshipMultiplicity is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "RelationshipMultiplicity is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "RelationshipMultiplicity"
     },
@@ -5065,14 +4985,6 @@
       "title": "RelationshipPostgresqlRequest"
     },
     {
-      "href": "reader/3449417c0b8fd89466d3e7c4c12be1aadc237cab857e9836823e1f275eaaabe3.json",
-      "id": "[\"api\",\".\",\"RelationshipRollbackReceipt\"]",
-      "kind": "Interface",
-      "summary": "RelationshipRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "RelationshipRollbackReceipt"
-    },
-    {
       "href": "reader/2da77beda4535fe08c63c148a9f904bd17214baa916d7d9e11c6befe24e63b81.json",
       "id": "[\"api\",\".\",\"RelationshipSqlServerProjection\"]",
       "kind": "Interface",
@@ -5107,18 +5019,10 @@
     {
       "href": "reader/4117438546d57d743b61ab6bc33754716cf0543556f3c39b4f54180cc66d92cd.json",
       "id": "[\"api\",\".\",\"RelationshipTarget\"]",
-      "kind": "Interface",
-      "summary": "RelationshipTarget is a interface in Other APIs. Its exact structure is documented below.",
+      "kind": "Type alias",
+      "summary": "RelationshipTarget is a type alias in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "RelationshipTarget"
-    },
-    {
-      "href": "reader/ac75aeed4f61f81d44bdea10a0c5ea119f939067527b4b5d10cd108514bb38f9.json",
-      "id": "[\"api\",\".\",\"RelationshipUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "RelationshipUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "RelationshipUpgradeReceipt"
     },
     {
       "href": "reader/1bd43582e5f6fbc8a8e2d8b5718320d58c0e300372f1b29d40f44531b28d09ff.json",
@@ -5132,17 +5036,9 @@
       "href": "reader/1361bdea5c3a8f224f3f5da83b4d04ba9a841f57e95f159916e6d80ceb8c1de5.json",
       "id": "[\"api\",\".\",\"SCALAR_TYPES\"]",
       "kind": "Constant",
-      "summary": "Value family only; native refinements determine the actual domain and behavior.",
+      "summary": "Shared model-owned current value families; native refinements remain separate.",
       "task": "Other APIs",
       "title": "SCALAR_TYPES"
-    },
-    {
-      "href": "reader/342b3d8b962c247860550392edb7cd8be96870b65fcc646102a7cbc735397c0f.json",
-      "id": "[\"api\",\".\",\"SCALAR_TYPES_V09\"]",
-      "kind": "Constant",
-      "summary": "SCALAR_TYPES_V09 is a constant in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "SCALAR_TYPES_V09"
     },
     {
       "href": "reader/26d1fecc98e272a90e993152357b25b3a834c2483be01b5c798503ac38e481f8.json",
@@ -5247,14 +5143,6 @@
       "summary": "SchemaPosition is a interface in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "SchemaPosition"
-    },
-    {
-      "href": "reader/2fc1b79b0d47ced115ce932810e8ed442931bdb39a78058ef3e0e6a640c8b030.json",
-      "id": "[\"api\",\".\",\"SchemaPropertiesUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "SchemaPropertiesUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "SchemaPropertiesUpgradeReceipt"
     },
     {
       "href": "reader/1afafa2eb782399f853fbc8ed74bc461755315e213b9f0ea61a21ced1b1d5dfc.json",
@@ -5703,30 +5591,6 @@
       "summary": "SemanticTypeValueResult is a interface in Other APIs. Its exact structure is documented below.",
       "task": "Other APIs",
       "title": "SemanticTypeValueResult"
-    },
-    {
-      "href": "reader/fe6da863a60215d19853809fcc1ed8fc415c2d8a6f08604b620b0e05e234ac7f.json",
-      "id": "[\"api\",\".\",\"SemanticTypesRollbackReceipt\"]",
-      "kind": "Interface",
-      "summary": "SemanticTypesRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "SemanticTypesRollbackReceipt"
-    },
-    {
-      "href": "reader/be358a185a99b8e08dfeacef3f5b6e55e14b9767dcedbf0800a40c1159e7c1f7.json",
-      "id": "[\"api\",\".\",\"SemanticTypesUpgradeReceipt\"]",
-      "kind": "Interface",
-      "summary": "SemanticTypesUpgradeReceipt is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "SemanticTypesUpgradeReceipt"
-    },
-    {
-      "href": "reader/86bd5aca1c64e765c03b6a3404584a0a5348c85bd609664402ea2059e6942076.json",
-      "id": "[\"api\",\".\",\"SemanticTypesUpgradeRequest\"]",
-      "kind": "Interface",
-      "summary": "SemanticTypesUpgradeRequest is a interface in Other APIs. Its exact structure is documented below.",
-      "task": "Other APIs",
-      "title": "SemanticTypesUpgradeRequest"
     },
     {
       "href": "reader/3e6b144ce31241bd992abd16586c0dab6c6390595fd86806290d0f20e1d47a35.json",
@@ -6516,7 +6380,7 @@
       "href": "reader/a6f58f6d3591ce46c941927e89da5eb0ee3c29100b6791b8093414747250536b.json",
       "id": "[\"api\",\".\",\"UmfError\"]",
       "kind": "Class",
-      "summary": "UmfError is a class in Other APIs. Its exact structure is documented below.",
+      "summary": "Generic errors have no generated/core-language dependency.",
       "task": "Other APIs",
       "title": "UmfError"
     },
@@ -7017,14 +6881,6 @@
       "title": "cardinalityTableSpecProjectionSchema"
     },
     {
-      "href": "reader/a4751c2c9a958ddbf91e67ec1c5ecda8098b5395ff0ecf5172d0ea676186c481.json",
-      "id": "[\"api\",\".\",\"cardinalityTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as cardinalityTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "cardinalityTransitionSchema"
-    },
-    {
       "href": "reader/be01bbbded8c6b8856f172d58fa0ade72a16db774374d37656fb83e76a0f5b09.json",
       "id": "[\"api\",\".\",\"classifyAvroCardinality\"]",
       "kind": "Function",
@@ -7409,14 +7265,6 @@
       "title": "copyJson"
     },
     {
-      "href": "reader/f2c3dd51758bf25f6a7c1c0a5665a7dcd1f01841c9d2066fa39946b70420dc8a.json",
-      "id": "[\"api\",\".\",\"coreBit128DocumentSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreBit128DocumentSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreBit128DocumentSchema"
-    },
-    {
       "href": "reader/77dadf3814113fabd38a0356f080907ee8544a6775124027a7b0b44118c95dc0.json",
       "id": "[\"api\",\".\",\"coreBit128KeyTupleSchema\"]",
       "kind": "Schema",
@@ -7441,36 +7289,12 @@
       "title": "coreBit128SelectionSchema"
     },
     {
-      "href": "reader/2027d16870f5bdc2509a60f78fd4b3d5968896a17194b879ceadd409fa3f5f15.json",
-      "id": "[\"api\",\".\",\"coreBit128TransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreBit128TransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreBit128TransitionSchema"
-    },
-    {
       "href": "reader/4231b2a9c1ae5d11c9bc65a3a5edc9185a5ca20cfaedb34ee62fbe611e9c49fe.json",
       "id": "[\"api\",\".\",\"coreCardinalityOperationSchema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreCardinalityOperationSchema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreCardinalityOperationSchema"
-    },
-    {
-      "href": "reader/6f12ae1cd07c617752961daf50b496768f86970128e2800686725f4e020a87a9.json",
-      "id": "[\"api\",\".\",\"coreCardinalityOperationV2Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreCardinalityOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreCardinalityOperationV2Schema"
-    },
-    {
-      "href": "reader/ef5a14f1f5ce791791ab6ec20200c69596fc119632a9ee6dc80e57aac26fab51.json",
-      "id": "[\"api\",\".\",\"coreCardinalityOperationV3Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreCardinalityOperationV3Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreCardinalityOperationV3Schema"
     },
     {
       "href": "reader/1994ba634daf6d6c0e5fa7fab9488816befe44c47f44292eaa0450d1bd5967b1.json",
@@ -7481,28 +7305,12 @@
       "title": "coreCardinalityOperationV4Schema"
     },
     {
-      "href": "reader/1a889e150fe90cdec022915aeb7f87307040fdb7246370f74573c1dbfe60b746.json",
-      "id": "[\"api\",\".\",\"coreCardinalityOperationV5Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreCardinalityOperationV5Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreCardinalityOperationV5Schema"
-    },
-    {
       "href": "reader/1f3cb2c065ed7631d67e22cf5ee45428febabd500bbd6008bdd55144177b0cb9.json",
       "id": "[\"api\",\".\",\"coreCardinalityOperationV6Schema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreCardinalityOperationV6Schema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreCardinalityOperationV6Schema"
-    },
-    {
-      "href": "reader/4b4eca262afd4a12b7e36fa0938dd4e8565589099f2d01cfdf60e07b1163e531.json",
-      "id": "[\"api\",\".\",\"coreCardinalitySchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreCardinalitySchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreCardinalitySchema"
     },
     {
       "href": "reader/6d824d203cb6e90580acece653401ef6280eb517cd745ffe8b4a264e1190bf1b.json",
@@ -7561,14 +7369,6 @@
       "title": "coreFacetOperationSchema"
     },
     {
-      "href": "reader/9e0a64343f301d7cf5d86073af84007eaf79e99f118b0b477a416c4a68c0b48f.json",
-      "id": "[\"api\",\".\",\"coreFacetOperationV2Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreFacetOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreFacetOperationV2Schema"
-    },
-    {
       "href": "reader/47301096c23e3b1e90db7e16d156f9aa6ef7f44368b537d8f63835610e9bbca9.json",
       "id": "[\"api\",\".\",\"coreFacetOperationV3Schema\"]",
       "kind": "Schema",
@@ -7577,28 +7377,12 @@
       "title": "coreFacetOperationV3Schema"
     },
     {
-      "href": "reader/bc92ce4f98663536c92d46999f9f6926d0c14f8aae5d66e78cfca5f33f1e1ca7.json",
-      "id": "[\"api\",\".\",\"coreFacetOperationV4Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreFacetOperationV4Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreFacetOperationV4Schema"
-    },
-    {
       "href": "reader/09b0ad7a2663ac080640728f2298a457489831a830e1967f579580a0ff41fee5.json",
       "id": "[\"api\",\".\",\"coreFacetOperationV5Schema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreFacetOperationV5Schema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreFacetOperationV5Schema"
-    },
-    {
-      "href": "reader/ed30b833acac23b3120d1040e4b2a22dc774f4dcfaf2ec96ccdc860d03387057.json",
-      "id": "[\"api\",\".\",\"coreFacetSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreFacetSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreFacetSchema"
     },
     {
       "href": "reader/378b95a916919d0b6b5c2ae12e48c959bc5fb14a601a292c656827affd7d0954.json",
@@ -7617,14 +7401,6 @@
       "title": "coreFieldSelectionSchema"
     },
     {
-      "href": "reader/de90b678f13066a9056fd234103793dd5ff09fd9d669fa9da5ba2c709e7366c6.json",
-      "id": "[\"api\",\".\",\"coreKeyDocumentSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKeyDocumentSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKeyDocumentSchema"
-    },
-    {
       "href": "reader/6512b169d85931a06b9deb433b6a221568a4dadbc9e75e7dc891deb3dfc1b45b.json",
       "id": "[\"api\",\".\",\"coreKeyOperationSchema\"]",
       "kind": "Schema",
@@ -7639,14 +7415,6 @@
       "summary": "JSON Schema exported as coreKeyOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreKeyOperationV2Schema"
-    },
-    {
-      "href": "reader/0cfbb33fba4838814a40dd7d88cb6b15155db33aae36ae66b6d451f355559624.json",
-      "id": "[\"api\",\".\",\"coreKeyOperationV3Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKeyOperationV3Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKeyOperationV3Schema"
     },
     {
       "href": "reader/34419d8b374ff5c9f15e80227ec283265875119e8b579372d3eb83628a728b59.json",
@@ -7665,28 +7433,12 @@
       "title": "coreKeySelectionSchema"
     },
     {
-      "href": "reader/9e0d7afe27b5cfd2eb4cb46a20c2a5bdeac11864b724b35fcfe1c27050bd7cca.json",
-      "id": "[\"api\",\".\",\"coreKeyTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKeyTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKeyTransitionSchema"
-    },
-    {
       "href": "reader/1bca1ec835447244ca69d99cdc19edc1eb1e914480653e0d588bc9f9d6604b42.json",
       "id": "[\"api\",\".\",\"coreKeyTupleOperationSchema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreKeyTupleOperationSchema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreKeyTupleOperationSchema"
-    },
-    {
-      "href": "reader/44ca1ed2d8643bdb99b94e0241e7a2229c64d107fd895be76923c8cc1dbb70e0.json",
-      "id": "[\"api\",\".\",\"coreKeyTupleOperationV2Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKeyTupleOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKeyTupleOperationV2Schema"
     },
     {
       "href": "reader/c44e30e4ca5adef3e0c657536e82106079489d6835a57f3a7dd1ef85a6bba33f.json",
@@ -7697,52 +7449,12 @@
       "title": "coreKindOperationSchema"
     },
     {
-      "href": "reader/f84bd5c891b71b4a32d374d82a2a7eddeb010b1df0f04d8419676357f3fe5542.json",
-      "id": "[\"api\",\".\",\"coreKindOperationV2Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKindOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKindOperationV2Schema"
-    },
-    {
-      "href": "reader/588cb5878b5001ce682e52b9304626c68712dcc3cd4f0000535f6683aae117b1.json",
-      "id": "[\"api\",\".\",\"coreKindOperationV3Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKindOperationV3Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKindOperationV3Schema"
-    },
-    {
-      "href": "reader/d1a543556922f13be4a9c378c0ecbe469a3d0593d7090e7ec32395ef8bbc86a7.json",
-      "id": "[\"api\",\".\",\"coreKindOperationV4Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKindOperationV4Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKindOperationV4Schema"
-    },
-    {
-      "href": "reader/f5bd69d953d55d9e56f538345a6426daf84810607f350d05fefbe7a02fa853f8.json",
-      "id": "[\"api\",\".\",\"coreKindOperationV5Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKindOperationV5Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKindOperationV5Schema"
-    },
-    {
       "href": "reader/297e2a1a704985af83a88a50a030a23faa633fd1d451eff2949c58ca4277f002.json",
       "id": "[\"api\",\".\",\"coreKindOperationV6Schema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreKindOperationV6Schema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreKindOperationV6Schema"
-    },
-    {
-      "href": "reader/bf07923c2e5d7891ee9976093ac62950c64d50812a923046bbf9466434b1f56d.json",
-      "id": "[\"api\",\".\",\"coreKindOperationV7Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreKindOperationV7Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreKindOperationV7Schema"
     },
     {
       "href": "reader/dafed054b74d98a4c3c889653f1209ef5f8914ff3e310eab86db53ee66258e9c.json",
@@ -7761,30 +7473,6 @@
       "title": "coreNullabilityOperationSchema"
     },
     {
-      "href": "reader/56b4fb96695d0acd49fecb59ed531e5fd1e327d72a4269183d06037e3bc8e0b6.json",
-      "id": "[\"api\",\".\",\"coreNullabilityOperationV2Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreNullabilityOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreNullabilityOperationV2Schema"
-    },
-    {
-      "href": "reader/c160cbb502101d0c2ec5dd1e3c667f406f6cf018dc1dbe9ecc67dc97f907d1de.json",
-      "id": "[\"api\",\".\",\"coreNullabilityOperationV3Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreNullabilityOperationV3Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreNullabilityOperationV3Schema"
-    },
-    {
-      "href": "reader/0b67425a78fabb42ff3544bd174dbeec25a32603b28f72150f937a62c86d0cc1.json",
-      "id": "[\"api\",\".\",\"coreNullabilityOperationV4Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreNullabilityOperationV4Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreNullabilityOperationV4Schema"
-    },
-    {
       "href": "reader/61df8d262692f9ae6205175a807b3f73a18ba2b202de54a3147d7b417e087098.json",
       "id": "[\"api\",\".\",\"coreNullabilityOperationV5Schema\"]",
       "kind": "Schema",
@@ -7793,28 +7481,12 @@
       "title": "coreNullabilityOperationV5Schema"
     },
     {
-      "href": "reader/4bbb6575ef4c6a8a927f7904bd62ce76103abbd410e19ba216596eddcaff420e.json",
-      "id": "[\"api\",\".\",\"coreNullabilityOperationV6Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreNullabilityOperationV6Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreNullabilityOperationV6Schema"
-    },
-    {
       "href": "reader/2937a682d37e0caeb06011a840bc539e2a32ca1889eca970a19ac096d41ff2a9.json",
       "id": "[\"api\",\".\",\"coreNullabilityOperationV7Schema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreNullabilityOperationV7Schema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreNullabilityOperationV7Schema"
-    },
-    {
-      "href": "reader/c97887bba54c84ddbbff45488a31f2840cd24da0602a2e871a900995eba285ea.json",
-      "id": "[\"api\",\".\",\"coreNullabilitySchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreNullabilitySchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreNullabilitySchema"
     },
     {
       "href": "reader/ca396b4c63dbfdbee031370c646c451c602da85a8d09ba83464d99b14f82fbf1.json",
@@ -7833,52 +7505,12 @@
       "title": "coreRecordTypeOperationSchema"
     },
     {
-      "href": "reader/31d9392c1ad35a73f6a979754ca2df559bd29b9e960e927af457b8c75c62e12b.json",
-      "id": "[\"api\",\".\",\"coreRecordTypeOperationV2Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreRecordTypeOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreRecordTypeOperationV2Schema"
-    },
-    {
-      "href": "reader/411de66bb358af4ce9787f2a9ac806f0b20441ad6f9611289fb27ab074dcc908.json",
-      "id": "[\"api\",\".\",\"coreRecordTypeOperationV3Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreRecordTypeOperationV3Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreRecordTypeOperationV3Schema"
-    },
-    {
-      "href": "reader/2efc70b24a68fe7b1626d48065337cb00fb67a84091e1c8d15e2f7d2ebb1bf24.json",
-      "id": "[\"api\",\".\",\"coreRecordTypeOperationV4Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreRecordTypeOperationV4Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreRecordTypeOperationV4Schema"
-    },
-    {
-      "href": "reader/d8637f896f8857ed47da1bc811a3812ecc275e8451b5cf7895f3ece1f69ab7ef.json",
-      "id": "[\"api\",\".\",\"coreRecordTypeOperationV5Schema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreRecordTypeOperationV5Schema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreRecordTypeOperationV5Schema"
-    },
-    {
       "href": "reader/b80a31d21a603ac47e8ac6f5c235c86a6017465e9443d7349554aac73f11a520.json",
       "id": "[\"api\",\".\",\"coreRecordTypeOperationV6Schema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreRecordTypeOperationV6Schema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreRecordTypeOperationV6Schema"
-    },
-    {
-      "href": "reader/1e285b9810bbf7418e8de1cf6da0d6316ed01ada39c7b661433922564f53b390.json",
-      "id": "[\"api\",\".\",\"coreRelationshipDocumentSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreRelationshipDocumentSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreRelationshipDocumentSchema"
     },
     {
       "href": "reader/aae581e5dcbdfd63515a15b0b42fe4025daa0ab78964c8cb00bed4ed20c8592b.json",
@@ -7913,14 +7545,6 @@
       "title": "coreRelationshipSelectionSchema"
     },
     {
-      "href": "reader/09fc5db4828c72fd4ce44eca7f9984370f818532df3d718b314f48d2436ae7eb.json",
-      "id": "[\"api\",\".\",\"coreRelationshipTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreRelationshipTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreRelationshipTransitionSchema"
-    },
-    {
       "href": "reader/097ccd8b90e0cda51d278d98254e1563b33287d932d2daca4dfb2699b9ee3ecf.json",
       "id": "[\"api\",\".\",\"coreSchema\"]",
       "kind": "Schema",
@@ -7945,28 +7569,12 @@
       "title": "coreSchemaPropertiesSelectionSchema"
     },
     {
-      "href": "reader/47ec3d0bcc591ac3648366c33d59bc50ccbbc2e09abb9577af411a68e6918b67.json",
-      "id": "[\"api\",\".\",\"coreSchemaPropertiesTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreSchemaPropertiesTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreSchemaPropertiesTransitionSchema"
-    },
-    {
       "href": "reader/29a7199844e6934573475764abf3c62b0843e1b3aa0dccf7fd222f2d8ef39aac.json",
       "id": "[\"api\",\".\",\"coreSemanticTypeReferenceSchema\"]",
       "kind": "Schema",
       "summary": "JSON Schema exported as coreSemanticTypeReferenceSchema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreSemanticTypeReferenceSchema"
-    },
-    {
-      "href": "reader/be713313d9cdf6f9167f67ad91bb2d828e3fb03ed5200ddf6f8998a931ea56df.json",
-      "id": "[\"api\",\".\",\"coreSemanticTypesDocumentSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreSemanticTypesDocumentSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreSemanticTypesDocumentSchema"
     },
     {
       "href": "reader/5156a69e169bc2ba47bf32d1c667d48bf46cbe6061355f891e322d6454e1310a.json",
@@ -7983,14 +7591,6 @@
       "summary": "JSON Schema exported as coreSemanticTypesSelectionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "coreSemanticTypesSelectionSchema"
-    },
-    {
-      "href": "reader/1362132e7d317b8f78105c7827e1c8c5c5532b2f9c1c0d0769c5f72927473bad.json",
-      "id": "[\"api\",\".\",\"coreSemanticTypesTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as coreSemanticTypesTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "coreSemanticTypesTransitionSchema"
     },
     {
       "href": "reader/7c82806bb9962b0ac4eab4b7602cbea5ccae16258174f33080f3384d9e67e2de.json",
@@ -9113,14 +8713,6 @@
       "title": "extractOpenapiSchema"
     },
     {
-      "href": "reader/17a28beffe429e560866513f0c31ed95cc132e55bf7e2db98e35f30adad94810.json",
-      "id": "[\"api\",\".\",\"facetTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as facetTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "facetTransitionSchema"
-    },
-    {
       "href": "reader/1ec9bf176e6623616e7b1829949cb42bc09f1389df1752d1f6f37d8deb5dfdc2.json",
       "id": "[\"api\",\".\",\"facetsAvroProjectionSchema\"]",
       "kind": "Schema",
@@ -9217,14 +8809,6 @@
       "title": "fieldTableSpecProjectionSchema"
     },
     {
-      "href": "reader/9da1ec4d2f70347257dc4a598e46218f9900b56bf5e1114099df4ddcc91a4852.json",
-      "id": "[\"api\",\".\",\"fieldTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as fieldTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "fieldTransitionSchema"
-    },
-    {
       "href": "reader/7e90bc387ac4739f6fc26fe3ac24f01f3c2396001ea3411e026d6999b6cef2e9.json",
       "id": "[\"api\",\".\",\"findPostgresqlCatalogRelation\"]",
       "kind": "Function",
@@ -9303,6 +8887,14 @@
       "summary": "Finite explicit selection; no URL discovery or execution is implied.",
       "task": "Other APIs",
       "title": "generateLoaderInventorySchema"
+    },
+    {
+      "href": "reader/b2b8bfeb4d2866b510be1be5a578df9367498101c2a2b6082769a1da45060266.json",
+      "id": "[\"api\",\".\",\"generatePythonClient\"]",
+      "kind": "Function",
+      "summary": "Pure portable generator: current UMF source -> stdlib-only typed Python requests.",
+      "task": "Other APIs",
+      "title": "generatePythonClient"
     },
     {
       "href": "reader/e6c331e49c6a82508f74fa90fa1c2893460d472f61ad9b21d0aa1e5c4183bfd7.json",
@@ -10260,7 +9852,7 @@
       "href": "reader/815c4a8067d599ed11107d17fd058f87adc2d5f92acc153dde236cc4687b1bc7.json",
       "id": "[\"api\",\".\",\"inspectCoreSchemaProperties\"]",
       "kind": "Function",
-      "summary": "inspectCoreSchemaProperties accepts input, identity and returns { operation: \"inspect-core-schema-properties\"; version: \"1.0.0\" | \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: ",
+      "summary": "inspectCoreSchemaProperties accepts input, identity and returns { operation: \"inspect-core-schema-properties\"; version: \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\";",
       "task": "Inspect and select",
       "title": "inspectCoreSchemaProperties"
     },
@@ -10951,14 +10543,6 @@
       "summary": "JSON Schema exported as nullabilityTableSpecProjectionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
       "task": "Other APIs",
       "title": "nullabilityTableSpecProjectionSchema"
-    },
-    {
-      "href": "reader/d9d488a53497d7b9c3a2b20430317bc9d84ae653215c76f9dbd03ea47f03efb7.json",
-      "id": "[\"api\",\".\",\"nullabilityTransitionSchema\"]",
-      "kind": "Schema",
-      "summary": "JSON Schema exported as nullabilityTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
-      "task": "Other APIs",
-      "title": "nullabilityTransitionSchema"
     },
     {
       "href": "reader/d5b5ebc70ec0885401884ac51d76d79143d3c1b5f61b9088363d875cf31beff4.json",
@@ -13620,7 +13204,7 @@
       "href": "reader/48eca752e6b065a0d181b34b3ae34fc04904f8a70c904458b90bbbcff489ce6f.json",
       "id": "[\"api\",\".\",\"resolveCoreDefault\"]",
       "kind": "Function",
-      "summary": "resolveCoreDefault accepts input, fieldInput, stateInput and returns { operation: \"resolve-core-default\"; version: \"1.0.0\" | \"2.0.0\"; source: Document; identity: Json; input: CoreDefaultInput; result: CoreDefaultInput; applied: boolean; }.",
+      "summary": "resolveCoreDefault accepts input, fieldInput, stateInput and returns { operation: \"resolve-core-default\"; version: \"2.0.0\"; source: Document; identity: Json; input: CoreDefaultInput; result: CoreDefaultInput; applied: boolean; }.",
       "task": "Inspect and select",
       "title": "resolveCoreDefault"
     },
@@ -13687,78 +13271,6 @@
       "summary": "Restore the exact original; retain every later edit explicitly, without name reassociation.",
       "task": "Author and edit",
       "title": "rollbackBindingRelationships"
-    },
-    {
-      "href": "reader/ef01176cdcf4f9c3c3c152968173a4fd2efeb7d5313c33f1cbf19e08d669dec1.json",
-      "id": "[\"api\",\".\",\"rollbackBit128Envelope\"]",
-      "kind": "Function",
-      "summary": "rollbackBit128Envelope accepts input, currentInput and returns { restored: Document; later: Document; }.",
-      "task": "Author and edit",
-      "title": "rollbackBit128Envelope"
-    },
-    {
-      "href": "reader/fa55268650e8a307a1b414f511ad7e12f6343db6f13dd32b04dad9dff6852d6d.json",
-      "id": "[\"api\",\".\",\"rollbackCardinalityEnvelope\"]",
-      "kind": "Function",
-      "summary": "Restore original model; retain the entire current model separately, including later assertions/edits.",
-      "task": "Author and edit",
-      "title": "rollbackCardinalityEnvelope"
-    },
-    {
-      "href": "reader/25005e1e8794a76cca4ac7e36d4d347c44ed3bb5d66bd66a56e771dd27926751.json",
-      "id": "[\"api\",\".\",\"rollbackFacetEnvelope\"]",
-      "kind": "Function",
-      "summary": "Restore original model; retain the entire current model separately, including later assertions/edits.",
-      "task": "Author and edit",
-      "title": "rollbackFacetEnvelope"
-    },
-    {
-      "href": "reader/bf3a7402d1728aa3783ca65dc8de0955adb82f16cca8f196fce1029ddf99c85f.json",
-      "id": "[\"api\",\".\",\"rollbackFieldEnvelope\"]",
-      "kind": "Function",
-      "summary": "Restore original model; retain the entire current model separately, including later assertions/edits.",
-      "task": "Author and edit",
-      "title": "rollbackFieldEnvelope"
-    },
-    {
-      "href": "reader/829746513a12c8b2a77246ec095c80277505e278e8fc98bad803332f841b9066.json",
-      "id": "[\"api\",\".\",\"rollbackKeyEnvelope\"]",
-      "kind": "Function",
-      "summary": "Source consistency, not authentication. Later assertions stay in the separately retained current envelope.",
-      "task": "Author and edit",
-      "title": "rollbackKeyEnvelope"
-    },
-    {
-      "href": "reader/a20100d82726e7302486892f495727bfdd42e8991965d36e26a9f121400ea01f.json",
-      "id": "[\"api\",\".\",\"rollbackNullabilityEnvelope\"]",
-      "kind": "Function",
-      "summary": "Restore original model; retain the entire current model separately, including later assertions/edits.",
-      "task": "Author and edit",
-      "title": "rollbackNullabilityEnvelope"
-    },
-    {
-      "href": "reader/d37fd6ee17b2da1995c42c895c2c3d936afa9902a25fafb287b87cd13dbb0eb3.json",
-      "id": "[\"api\",\".\",\"rollbackRelationshipEnvelope\"]",
-      "kind": "Function",
-      "summary": "Restore exactly the old document; later assertions and native changes remain in source.",
-      "task": "Author and edit",
-      "title": "rollbackRelationshipEnvelope"
-    },
-    {
-      "href": "reader/f7f1d40fe82e2b793b41176e35353bf8ec9d951eb1ced6d19eeb17354ce43e0b.json",
-      "id": "[\"api\",\".\",\"rollbackSchemaPropertiesEnvelope\"]",
-      "kind": "Function",
-      "summary": "rollbackSchemaPropertiesEnvelope accepts input, current and returns { operation: \"rollback-schema-properties-envelope\"; version: \"1.0.0\"; source: Document; target: Document; receipt: SchemaPropertiesUpgradeReceipt; reason: string; }.",
-      "task": "Author and edit",
-      "title": "rollbackSchemaPropertiesEnvelope"
-    },
-    {
-      "href": "reader/b13fdbb3bd836e13a4e9b316f9601910a50b111a7658dfb471ad684accf6eae1.json",
-      "id": "[\"api\",\".\",\"rollbackSemanticTypesEnvelope\"]",
-      "kind": "Function",
-      "summary": "Restore the exact legacy source; preserve subsequent edits in the current-source archive.",
-      "task": "Author and edit",
-      "title": "rollbackSemanticTypesEnvelope"
     },
     {
       "href": "reader/c8c5b7859ec787e822882f257534a41524b4e548ee954d585677176c3f476021.json",
@@ -14353,84 +13865,12 @@
       "title": "typespecSyntaxLocationsSchema"
     },
     {
-      "href": "reader/21e3a8605aabeb50de6a67259a0b8f219d6e9b6438a2e697afa3af18ada1f648.json",
-      "id": "[\"api\",\".\",\"upgradeBit128Envelope\"]",
-      "kind": "Function",
-      "summary": "upgradeBit128Envelope accepts input, optionsInput and returns Bit128UpgradeReceipt.",
-      "task": "Other APIs",
-      "title": "upgradeBit128Envelope"
-    },
-    {
-      "href": "reader/33ac71ac1773b729b30daf2899984acba10cd15e420e5f77ef1241f4b738dece.json",
-      "id": "[\"api\",\".\",\"upgradeCardinalityEnvelope\"]",
-      "kind": "Function",
-      "summary": "Explicit version opt-in. Every legacy cardinality/itemType is archived, including known-looking values.",
-      "task": "Other APIs",
-      "title": "upgradeCardinalityEnvelope"
-    },
-    {
-      "href": "reader/0eca1394633a9623250f3449116efcce671e4b6bc6ca7a928742226ebee8f7b6.json",
-      "id": "[\"api\",\".\",\"upgradeFacetEnvelope\"]",
-      "kind": "Function",
-      "summary": "Explicit version opt-in. Every legacy facets member is archived, including known-looking values.",
-      "task": "Other APIs",
-      "title": "upgradeFacetEnvelope"
-    },
-    {
-      "href": "reader/1de62390b501278d4a9a79b33c7b6f268d33322c03cc854ed26cf0fe6f5aad64.json",
-      "id": "[\"api\",\".\",\"upgradeFieldEnvelope\"]",
-      "kind": "Function",
-      "summary": "Explicit version opt-in. Every legacy kind is archived, including known-looking strings.",
-      "task": "Other APIs",
-      "title": "upgradeFieldEnvelope"
-    },
-    {
-      "href": "reader/a7dd1e42812641c3308d26e6f9c8ba258b94b212f4384d15ead86330aee12d01.json",
-      "id": "[\"api\",\".\",\"upgradeKeyEnvelope\"]",
-      "kind": "Function",
-      "summary": "Explicit opt-in: every element collision is archived, even if it looks like a valid key or membership assertion.",
-      "task": "Other APIs",
-      "title": "upgradeKeyEnvelope"
-    },
-    {
-      "href": "reader/202c617a25c2b7b48024fc6bc61a7325c3bf2cb7a5ff4547fb896f511f0b7d80.json",
-      "id": "[\"api\",\".\",\"upgradeNullabilityEnvelope\"]",
-      "kind": "Function",
-      "summary": "Explicit version opt-in. Every legacy nullability is archived, including known-looking strings.",
-      "task": "Other APIs",
-      "title": "upgradeNullabilityEnvelope"
-    },
-    {
-      "href": "reader/d3a7ede272d796645628ea1b61bb2d62bdaf51cb927cfe3039925e49fe3a040d.json",
-      "id": "[\"api\",\".\",\"upgradeRelationshipEnvelope\"]",
-      "kind": "Function",
-      "summary": "All module collisions are archived, including content that looks like a valid assertion.",
-      "task": "Other APIs",
-      "title": "upgradeRelationshipEnvelope"
-    },
-    {
-      "href": "reader/86b773cc7977a6a9c07a2b9fdbe695ff3b28f8381675e45efb7ea35c55199251.json",
-      "id": "[\"api\",\".\",\"upgradeSchemaPropertiesEnvelope\"]",
-      "kind": "Function",
-      "summary": "upgradeSchemaPropertiesEnvelope accepts input and returns SchemaPropertiesUpgradeReceipt.",
-      "task": "Other APIs",
-      "title": "upgradeSchemaPropertiesEnvelope"
-    },
-    {
       "href": "reader/bbc17c76ddd28958dd879b09b8f1acb4ea2be19a6e9ee3cb7cf8108fdc2a4806.json",
       "id": "[\"api\",\".\",\"upgradeSecurityPolicySource\"]",
       "kind": "Function",
       "summary": "upgradeSecurityPolicySource accepts input, revision and returns SecurityPolicySourceMigration.",
       "task": "Other APIs",
       "title": "upgradeSecurityPolicySource"
-    },
-    {
-      "href": "reader/7db69509675f917b77e72b507699dd2af32ec0836c13a6dcfa2745daa4809491.json",
-      "id": "[\"api\",\".\",\"upgradeSemanticTypesEnvelope\"]",
-      "kind": "Function",
-      "summary": "upgradeSemanticTypesEnvelope accepts input, requestInput and returns SemanticTypesUpgradeReceipt.",
-      "task": "Other APIs",
-      "title": "upgradeSemanticTypesEnvelope"
     },
     {
       "href": "reader/69e1f9431d701ee5fe51416e1f99f8cb8002f2a581266b0b49ee18f61cd26d52.json",
@@ -14548,7 +13988,7 @@
       "href": "reader/7b73668e07c43c6c196156282f6b44552578a9e8b33b14aabbbd3b76fcc35976.json",
       "id": "[\"api\",\".\",\"validateRelationshipCandidate\"]",
       "kind": "Function",
-      "summary": "Explicit candidate validator; never reinterprets an older envelope.",
+      "summary": "Current structural admission followed by the authored ordered rule program.",
       "task": "Read and validate",
       "title": "validateRelationshipCandidate"
     },
@@ -14556,7 +13996,7 @@
       "href": "reader/e73fc5995c39d0e93a591b5c3799406335e7649329357a621a7fcab9a4984f58.json",
       "id": "[\"api\",\".\",\"validateSchemaPropertiesDocument\"]",
       "kind": "Function",
-      "summary": "validateSchemaPropertiesDocument accepts input, registry and returns Validation.",
+      "summary": "Current structural admission followed by the authored ordered rule program.",
       "task": "Read and validate",
       "title": "validateSchemaPropertiesDocument"
     },
@@ -14953,30 +14393,6 @@
       "title": "verifyRelationshipTableSpecProjection"
     },
     {
-      "href": "reader/0a1051350cda2a8bad2face6aef4662972fd5cfd8cf8ba00d5d7e6432c8eba38.json",
-      "id": "[\"api\",\".\",\"verifyRelationshipTransition\"]",
-      "kind": "Function",
-      "summary": "verifyRelationshipTransition accepts input and returns RelationshipRollbackReceipt | RelationshipUpgradeReceipt.",
-      "task": "Other APIs",
-      "title": "verifyRelationshipTransition"
-    },
-    {
-      "href": "reader/4c3e5b1a51838c1ff8c58ce17900db480b6b3be1b46fc1846c693f8ef3528a95.json",
-      "id": "[\"api\",\".\",\"verifySchemaPropertiesUpgrade\"]",
-      "kind": "Function",
-      "summary": "verifySchemaPropertiesUpgrade accepts input and returns SchemaPropertiesUpgradeReceipt.",
-      "task": "Other APIs",
-      "title": "verifySchemaPropertiesUpgrade"
-    },
-    {
-      "href": "reader/9ac585c3e4b23fdf917daf62782cfe04c2520439d24d19650c13fbd4555f32b2.json",
-      "id": "[\"api\",\".\",\"verifySemanticTypesTransition\"]",
-      "kind": "Function",
-      "summary": "verifySemanticTypesTransition accepts input and returns SemanticTypesRollbackReceipt | SemanticTypesUpgradeReceipt.",
-      "task": "Other APIs",
-      "title": "verifySemanticTypesTransition"
-    },
-    {
       "href": "reader/f4cb44403305fbb43a854be1027c7b2851786ed446853a2a797415f73717739b.json",
       "id": "[\"api\",\".\",\"verifySqlServerCardinalityClassification\"]",
       "kind": "Function",
@@ -15343,7 +14759,7 @@
     }
   ],
   "latest": {
-    "id": "[\"schema\",\"spec/core/semantic-types-document.schema.json\",\"\"]",
+    "id": "[\"schema\",\"spec/core/schema.json\",\"\"]",
     "version": "0.10.0"
   },
   "profile": "umf.reference.reader/1",
@@ -15377,7 +14793,7 @@
     "scalarType": "The scalar value family. Recognized labels have UMF meaning; other nonempty labels remain retained with incomplete interpretation.",
     "semanticTypes": "Version-qualified vocabulary term references. Native or external meaning is not inferred from a label alone.",
     "title": "Display title for people reading the model.",
-    "umf": "The exact core schema version used by this document.",
+    "umf": "Required document marker. Use the literal string 0.10.0.",
     "value": "The literal value in its declared carrier, retaining exact numeric spelling.",
     "version": "The exact independently versioned vocabulary declaration.",
     "vocabularies": "Vocabulary identifiers mapped to exact independently versioned declarations."

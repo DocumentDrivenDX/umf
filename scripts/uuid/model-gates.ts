@@ -1,3 +1,4 @@
+import {uuidModelQualificationTests} from './qualification-inventory';
 /** Source-bound gate aggregation. Does not turn a bounded model profile into universal adapter support. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
@@ -25,7 +26,10 @@ const runDir=process.env.UMF_UUID_QUALIFICATION_RUN_DIR??'/tmp',runLog=(name:str
 const commands={typecheck:runLog('uuid-model-typecheck.log'),build:runLog('uuid-model-build.log'),schemas:runLog('uuid-model-schemas.log'),tests:runLog('uuid-model-tests.log'),bindingRegression:runLog('uuid-model-binding-regression.log')};
 // Exit records are written by the orchestrating command, never guessed from a quiet log.
 const exits=await Bun.file(runLog('uuid-model-exits.json')).json();for(const name of ['build','typecheck','schemas','tests','bindingRegression','postgresql','sqlserver','artifacts','files','tablespec','nativeAdapters','returned','browser','coreBrowser'])assert.equal(exits[name],0,name+' did not pass');
-const tests=await Bun.file(commands.tests).text();assert.match(tests,/0 fail/);assert.match(tests,/Ran 3[0-9] tests across 9 files/);
+const tests=await Bun.file(commands.tests).text();assert.match(tests,/0 fail/);
+const completed=tests.split('\n').filter(line=>line.startsWith('{\"testProcess\":')).map(line=>JSON.parse(line)).filter(row=>Object.hasOwn(row,'exitCode'));
+assert.deepEqual(completed.map(row=>row.testProcess).sort(),[...uuidModelQualificationTests].sort(),'Complete current UUID test inventory');for(const row of completed){assert.equal(row.exitCode,0);assert.equal(row.fail,0);assert.equal(row.completeSummary,true);assert.ok(row.pass>0);}
+
 const regression=await Bun.file(commands.bindingRegression).text();assert.match(regression,/0 fail/);
 const logPaths:string[]=[];
 for(const [name,path] of Object.entries(commands)){const target='fixtures/validation/uuid/model-runs/'+name+'.log';await Bun.write(target,await Bun.file(path).arrayBuffer());logPaths.push(target);}
@@ -34,7 +38,7 @@ async function paths(pattern:string){const found:string[]=[];for await(const pat
 const sourcePaths=['package.json','bun.lock','tsconfig.json','tsconfig.tools.json','scripts/run-tests.ts','scripts/build.ts','scripts/uuid-browser.ts','native/postgresql/runtime.ts','native/sqlserver/catalog-v3.sql','tests/helpers/uuid-fixtures.ts','fixtures/validation/uuid/bit128-oracle.json',...await paths('src/**/*.ts'),...await paths('spec/**/*.json'),...await paths('scripts/uuid/*'),...await paths('fixtures/validation/uuid/model-files/*'),...await paths('tests/*uuid*.test.ts'),...await paths('tests/binding/*.test.ts'),'tests/bit128.test.ts','tests/uuid-model.test.ts','tests/uuid-file-model.test.ts','tests/helpers/uuid-model-fixtures.ts'];
 const proofs=['postgresql-model','sqlserver-model','file-model-artifacts','file-model-native','file-model-returned','tablespec-model-native','tablespec-model-returned','returned-verification','model-browser','model-core-browser','native-adapter-roundtrips','sqlserver-model-catalogs'].map(s=>'fixtures/validation/uuid/'+s+'.json');
 const fingerprints=Object.fromEntries(await Promise.all([...new Set([...sourcePaths,...proofs,...logPaths])].sort().map(async path=>[path,await sha(path)])));
-const result={date:'2026-10-16',profile:'uuid-model1',boundedModelQualification:true,twoDatabaseValueAndNativeUuidClassificationGate:true,fiveTargetModelValueDeliveryGate:true,databases,fileCases:file.observations.length,fileChecks:file.observations.reduce((n:number,c:any)=>n+c.checks,0),sparkRows:780,returnedNativeRows:returned.checks,returnedNativeRefusals:returned.refusals,browser:browser.result,commands:exits,fingerprints,
+const result={date:new Date().toISOString().slice(0,10),profile:'uuid-model1',boundedModelQualification:true,twoDatabaseValueAndNativeUuidClassificationGate:true,fiveTargetModelValueDeliveryGate:true,databases,fileCases:file.observations.length,fileChecks:file.observations.reduce((n:number,c:any)=>n+c.checks,0),sparkRows:780,returnedNativeRows:returned.checks,returnedNativeRefusals:returned.refusals,browser:browser.result,commands:exits,fingerprints,
  idealAdmitted:false,priorityDelivery:false,nativeEquivalence:false,consumerRuntimeAdoption:false,
  limits:['Qualified singular128-bit Record/carrier subset; mixed legacy scalar/container/group composition is not implied','Association and partition layouts beyond the declared foreign-key subset refuse','Native UUID and signed-pair indexes are not portable unsigned-byte order','Consumer deployment/cutover, wider drivers/isolation modes and native equivalence need separate qualification','This scoped UUID/native and legacy-binding replay is not a full repository replay']};
 await Bun.write('fixtures/validation/uuid/model-qualification.json',JSON.stringify(result,null,2)+'\n');console.log({boundedModelQualification:true,idealAdmitted:false,priorityDelivery:false,limits:result.limits});

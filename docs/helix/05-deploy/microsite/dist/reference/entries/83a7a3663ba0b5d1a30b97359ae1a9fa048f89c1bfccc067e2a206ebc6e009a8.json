@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -456,7 +456,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -535,9 +535,9 @@
   ],
   "sources": [
     {
-      "bytes": 3422,
+      "bytes": 3423,
       "path": "spec/extensions/typespec/json-schema-emission.schema.json",
-      "sha256": "dc15956762046ae812f8d9c83dfc1de0caadd1dbf4226d31f58bf4103107bae0"
+      "sha256": "efaa5e007d4e0c7e4bb5e16105cf6e3b1493e0162dd804e0cb87520611648e4b"
     }
   ],
   "summary": "spec/extensions/typespec/json-schema-emission.schema.json",

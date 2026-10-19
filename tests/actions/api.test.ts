@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
 import {Registry} from '../../src/registry/registry';
@@ -9,7 +10,7 @@ const registry=()=>registerActions(new Registry());
 const id={module:'sales',action:'approve'};
 function completeProfile(source:Document):ActionExecutorProfile {
  const action=inspectActions(source,registry()).actions[0]!;
- return {id:'reference-postgresql',version:'1',actionVersion:'0.1.0',coreVersion:'0.8.0',source,identity:id,claims:action.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['fixture-only://no-runtime-proof']}))};
+ return {id:'reference-postgresql',version:'1',actionVersion:'0.1.0',coreVersion:CURRENT_CORE_VERSION,source,identity:id,claims:action.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['fixture-only://no-runtime-proof']}))};
 }
 test('inspection reports inert profiles and every primitive/dependency obligation',()=>{
  const source=document(),inspection=inspectActions(source,registry());
@@ -22,7 +23,7 @@ test('inspection reports inert profiles and every primitive/dependency obligatio
 test('duplicate registration refuses; unrelated registry semantic errors propagate',()=>{
  const r=registry();expect(()=>registerActions(r)).toThrow();
  const source=document();source.vocabularies['test.guard']={version:'1.0.0'};source.modules[0]!.extensions!['test.guard']={};
- r.register({id:'test.guard',version:'1.0.0',coreVersion:'0.1.0',description:'guard',schema:true,semantics:'guard',scopes:['module'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[{code:'GUARD_REJECT',path:'',message:'guard',severity:'error'}]);
+ r.register({id:'test.guard',version:'1.0.0',coreVersion:CURRENT_CORE_VERSION,description:'guard',schema:true,semantics:'guard',scopes:['module'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[{code:'GUARD_REJECT',path:'',message:'guard',severity:'error'}]);
  expect(inspectActions(source,r).validation.diagnostics.some(d=>d.code==='GUARD_REJECT')).toBe(true);
  expect(()=>assessAction(source,id,completeProfile(source),r)).toThrow();
 });
@@ -90,14 +91,14 @@ test('registry callbacks cannot suppress recognized action errors',()=>{
 });
 test('warnings at existing model obligations and transitive package qualifiers block compatibility',async()=>{
  const source=document(),r=registry();source.vocabularies['test.guard']={version:'1.0.0'};source.modules[0]!.extensions!['test.guard']={};
- r.register({id:'test.guard',version:'1.0.0',coreVersion:'0.1.0',description:'guard',schema:true,semantics:'guard',scopes:['module'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[{code:'GUARD_UNKNOWN',path:'/modules/0/elements/2',message:'unknown model meaning',severity:'warning'}]);
+ r.register({id:'test.guard',version:'1.0.0',coreVersion:CURRENT_CORE_VERSION,description:'guard',schema:true,semantics:'guard',scopes:['module'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[{code:'GUARD_UNKNOWN',path:'/modules/0/elements/2',message:'unknown model meaning',severity:'warning'}]);
  expect(assessAction(source,id,completeProfile(source),r).declaredCompatible).toBe(false);
  expect(()=>editAction(source,id,inspectActions(source,r).actions[0]!.action,r)).toThrow();
  const {default:fixture}=await import('../../fixtures/actions/ddd-binding.json'),{dddPackage,dddRegistry}=await import('../../src/extensions/ddd');
  const d=structuredClone(fixture) as unknown as Document,dr=registerActions(new Registry().register(dddPackage,dddRegistry().get('umf.ddd','0.1.0')!.semantics));
  (d.vocabularies['umf.ddd'] as any).future={unknown:true};
  const target=inspectActions(d,dr).actions[0]!,identity={module:target.module,action:target.action.id};
- const profile:ActionExecutorProfile={id:'claims',version:'1',coreVersion:'0.8.0',actionVersion:'0.1.0',source:d,identity,claims:target.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://claim']}))};
+ const profile:ActionExecutorProfile={id:'claims',version:'1',coreVersion:CURRENT_CORE_VERSION,actionVersion:'0.1.0',source:d,identity,claims:target.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://claim']}))};
  expect(assessAction(d,identity,profile,dr).declaredCompatible).toBe(false);expect(()=>editAction(d,identity,target.action,dr)).toThrow();
 });
 
@@ -105,7 +106,7 @@ test('relationship dependency indexes do not import unrelated element vocabulary
  const {default:create}=await import('../../fixtures/actions/create-link.json'),source=structuredClone(create) as unknown as Document;
  source.vocabularies['future.note']={version:'1.0.0',future:{retained:true}} as any;source.modules[0]!.elements.unshift({id:'unrelated',extensions:{'future.note':{uninterpreted:true}}});
  const r=registry(),target=inspectActions(source,r).actions[0]!,identity={module:target.module,action:target.action.id};
- const profile:ActionExecutorProfile={id:'claims',version:'1',coreVersion:'0.8.0',actionVersion:'0.1.0',source,identity,claims:target.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://claim']}))};
+ const profile:ActionExecutorProfile={id:'claims',version:'1',coreVersion:CURRENT_CORE_VERSION,actionVersion:'0.1.0',source,identity,claims:target.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://claim']}))};
  expect(assessAction(source,identity,profile,r).declaredCompatible).toBe(true);
 });
 

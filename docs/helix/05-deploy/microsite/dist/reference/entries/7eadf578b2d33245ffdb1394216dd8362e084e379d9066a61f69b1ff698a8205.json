@@ -5,23 +5,23 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       }
     ],
     "role": "operation",
@@ -466,7 +466,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+                  "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                 }
               }
             },
@@ -745,7 +745,7 @@
                                   "members": {
                                     "$ref": {
                                       "kind": "string",
-                                      "value": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+                                      "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                                     }
                                   }
                                 },
@@ -1026,7 +1026,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1053,7 +1053,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1127,15 +1127,14 @@
   "id": "[\"schema\",\"spec/core/record-tablespec-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/kind-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8101,
+      "bytes": 8103,
       "path": "spec/core/record-tablespec-projection.schema.json",
-      "sha256": "6136c23cc1f1e4c6c613f391095ed706fdc74c5e841fecf664333419c76d0291"
+      "sha256": "c774d6d915179de10aef1539ca1800df9dfc2ae7233ca888f5aa56bdcf1c0cd9"
     }
   ],
   "summary": "spec/core/record-tablespec-projection.schema.json",

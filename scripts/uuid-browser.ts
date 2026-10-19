@@ -46,18 +46,16 @@ try{
   refuses(()=>u.encodeCoreKeyTuple(doc,key,[{uuid:UUID}]));refuses(()=>u.encodeCoreKeyTuple(doc,key,[{uuid:UUID}],{profile:'umf-key-tuple-v1'}));
   assert(same(u.decodeBit128CarrierValue(binding,doc,field,u.encodeBit128CarrierValue(binding,doc,field,{uuid:UUID})),{uuid:UUID}));
   refuses(()=>u.decodeBit128CarrierValue(binding,doc,field,{hi:null,lo:'0'}));
-  const old=structuredClone(doc);old.umf='0.8.0';delete old.modules[0]!.elements[0]!.keys;
-  refuses(()=>u.upgradeBit128Envelope(old,{collisions:[]}));
-  const migration=u.upgradeBit128Envelope(old,{collisions:[{path:'/modules/0/elements/1/scalarType',expected:'uuid',replacement:'uuid'}]});
-  assert(same(u.rollbackBit128Envelope(migration,migration.target).restored,old));recoveries++;
+  const retired=structuredClone(doc);retired.umf='0.8.0';
+  if(u.validateDocument(retired).valid)throw Error('Retired core marker accepted');refusals++;
   refuses(()=>u.parseBits128('0'.repeat(31)+'\n'));
   refuses(()=>u.parseUuid(UUID+'suffix'));refuses(()=>u.bits128FromWords({high:'0',low:'18446744073709551616'},false));
   assert(!('process'in globalThis)&&!('Bun'in globalThis)&&!('Buffer'in globalThis));
   return {vectors:cases.length,codecChecks,keyChecks,recoveries,refusals,nodeGlobalsAbsent:true};
  },{cases:oracle.cases,doc:uuidDocument() as any,binding:uuidBinding() as any});
  if(externalRequests.length)throw Error('Unexpected external request');
- const sources=['src/model/types.ts','src/model/bit128-field.ts','src/projections/bit128-output-budget.ts','src/model/schema-properties.ts','src/model/relationship-selection.ts','spec/extensions/binding-128/schema.json','src/model/bit128.ts','src/model/uuid.ts','src/model/bit128-transition.ts','src/model/key-tuple.ts','src/model/schema-literals.ts','src/validation/schema-properties.ts','src/extensions/binding/bit128.ts','src/projections/bit128.ts','spec/core/bit128-document.schema.json','scripts/uuid-browser.ts'];
+ const sources=['src/model/types.ts','src/model/bit128-field.ts','src/projections/bit128-output-budget.ts','src/model/schema-properties.ts','src/model/relationship-selection.ts','spec/extensions/binding-128/schema.json','src/model/bit128.ts','src/model/uuid.ts','src/model/key-tuple.ts','src/model/schema-literals.ts','src/validation/schema-properties.ts','src/extensions/binding/bit128.ts','src/projections/bit128.ts','spec/core/schema.json','scripts/uuid-browser.ts'];
  const sha256=Object.fromEntries(await Promise.all(sources.map(async p=>[p,createHash('sha256').update(await Bun.file(p).text()).digest('hex')])));
- const evidence={scope:'Portable UUID/core0.9/carrier-codec qualification only; no native execution or full core acceptance',browser:browser.version(),result,externalRequests,negativeRejected,layerRejected,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256};
+ const evidence={scope:'Portable current-core UUID/carrier codec and authoring qualification; retired core markers refuse; no native execution or full core acceptance',browser:browser.version(),result,externalRequests,negativeRejected,layerRejected,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256};
  await Bun.write(process.env.UMF_UUID_BROWSER_EVIDENCE??'fixtures/validation/uuid/browser.json',JSON.stringify(evidence,null,2)+'\n');console.log(evidence);
 }finally{await browser?.close();server.stop(true);}

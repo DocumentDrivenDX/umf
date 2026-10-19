@@ -11,9 +11,9 @@ test('version-scoped validation, copied authoring, allowed values, defaults and 
  expect(u.resolveCoreDefault(authored,FIELD,{state:'missing'}).applied).toBe(true);
  expect(()=>u.declareCoreSchemaProperties(doc,{scope:'element',...FIELD},{allowedValues:[{uuid:UUID},{uuid:UUID.toUpperCase()}]})).toThrow();
  for(const format of ['json','yaml'] as const)expect(u.readDocument(u.writeDocument(authored,format),format)).toEqual(authored);
- const older=uuidDocument();older.umf='0.8.0';delete older.modules[0]!.elements[0]!.keys;
- expect(u.validateDocument(older).complete).toBe(false);expect(u.validateCoreFieldValue(older,FIELD,{uuid:UUID}).valid).toBe(false);
- expect(u.inspectCoreScalarType(older,FIELD).meaning.state).toBe('unknown');
+ const retired={...uuidDocument(),umf:'0.8.0'} as any;delete retired.modules[0]!.elements[0]!.keys;
+ expect(u.validateDocument(retired).valid).toBe(false);expect(u.validateCoreFieldValue(retired,FIELD,{uuid:UUID}).valid).toBe(false);
+ expect(()=>u.inspectCoreScalarType(retired,FIELD)).toThrow();
  const bits=uuidDocument('bits128');expect(u.validateCoreFieldValue(bits,FIELD,{bits128Hex:HEX}).valid).toBe(true);
  for(const facets of [{length:{max:16,unit:'byte'}},{integerWidth:{bits:128,signed:false}},{precision:38,scale:0},{range:{min:{integerToken:'0'}}}]){const invalid=uuidDocument();invalid.modules[0]!.elements[1]!.facets=facets;expect(u.validateDocument(invalid).valid).toBe(false);}
 });
@@ -35,22 +35,11 @@ test('explicit Field-domain authoring preserves the source and validates collisi
  const unknown=uuidDocument('future');expect(()=>u.declareCoreBit128Field(unknown,FIELD,'uuid')).toThrow();
  const constrained=uuidDocument('binary');constrained.modules[0]!.elements[1]!.facets={length:{min:16,max:16,unit:'byte'}};expect(()=>u.declareCoreBit128Field(constrained,FIELD,'uuid')).toThrow();
 });
-test('extension validators receive actual0.9 UUID semantics, not the structural compatibility view',()=>{
+test('extension validators receive the current UUID document directly',()=>{
  const d=uuidDocument();d.vocabularies['fixture.uuid']={version:'1.0.0'};d.modules[0]!.elements[1]!.extensions['fixture.uuid']={};
- let checks=0;const registry=new u.Registry().register({id:'fixture.uuid',version:'1.0.0',coreVersion:'0.1.0',description:'Synthetic context check',schema:{type:'object'},semantics:'Exact context',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},(_payload,context)=>{expect(context.document.umf).toBe('0.9.0');expect(context.document.modules[0]!.elements[1]!.scalarType).toBe('uuid');checks++;return [];});
+ let checks=0;const registry=new u.Registry().register({id:'fixture.uuid',version:'1.0.0',coreVersion:'0.10.0',description:'Synthetic context check',schema:{type:'object'},semantics:'Exact context',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},(_payload,context)=>{expect(context.document.umf).toBe('0.10.0');expect(context.document.modules[0]!.elements[1]!.scalarType).toBe('uuid');checks++;return [];});
  expect(u.validateDocument(d,registry).complete).toBe(true);expect(checks).toBe(1);
  expect(u.selectCoreRelationships(uuidDocument(),{}).version).toBe('2.0.0');
-});
-test('caller-visible schema mutations do not change internal0.9 validators or codec inventory',()=>{
- const docSchema:any=u.coreBit128DocumentSchema,tupleSchema:any=u.coreBit128KeyTupleSchema;
- const originalVersion=docSchema.properties.umf.const,originalProfile=tupleSchema.properties.profile.enum[1];
- try{
-  docSchema.properties.umf.const='caller-mutated';tupleSchema.properties.profile.enum[1]='caller-mutated';
-  const d=uuidDocument();expect(u.validateDocument(d).valid).toBe(true);expect(u.inspectCoreElementKind(d,FIELD).meaning.state).toBe('known');
-  expect(u.encodeCoreKeyTuple(d,{module:'m',element:'record',key:'id'},[{uuid:UUID}],{profile:'umf-key-tuple-v2'}).version).toBe('4.0.0');
-  expect(()=>{(u.SCALAR_TYPES_V09 as any).push('caller-mutated');}).toThrow();
-  expect(()=>{(u.SCALAR_TYPES as any).push('uuid');}).toThrow();
- }finally{docSchema.properties.umf.const=originalVersion;tupleSchema.properties.profile.enum[1]=originalProfile;}
 });
 test('signed and unsigned integer128 keep mathematical equality and lossless bigint context',()=>{
  for(const signed of [true,false]){

@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -355,7 +355,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -364,7 +364,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -436,9 +436,9 @@
   ],
   "sources": [
     {
-      "bytes": 2633,
+      "bytes": 2635,
       "path": "spec/extensions/parquet/metadata-transform.schema.json",
-      "sha256": "1cb7ad3b8f4a28026040c2d04246f37f756f95898a90c17c24606c5dd0a769fc"
+      "sha256": "559fb97ad7951e23c6de119f4598732d0cc1bf7d7252beedac5ba16ff81bb67f"
     }
   ],
   "summary": "spec/extensions/parquet/metadata-transform.schema.json",

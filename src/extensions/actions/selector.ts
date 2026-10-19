@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJson} from '../../model/json';
 import {validateDocument} from '../../validation/document';
 import {admitAction,checkActionLiteral} from './structure';
@@ -21,7 +22,7 @@ function selectedKey(document:Document,reference:ActionKeyReference):{record:Ele
 /** Typed admission, without store lookup or entity existence checks. */
 export function admitActionInputs(documentInput:Document,actionInput:Action,inputsInput:ActionInputs,outputs=false):ActionInputs {
  const document=copyJson(documentInput) as unknown as Document,action=admitAction(actionInput);
- if(document.umf!=='0.8.0'||!validateDocument(document).valid)actionExpressionError('ACTION_PARAMETER','Expected valid exact core 0.8.0 document');
+ if(document.umf!==CURRENT_CORE_VERSION||!validateDocument(document).valid)actionExpressionError('ACTION_PARAMETER','Expected valid exact core 0.10.0 document');
  exactActionReferences(action);
  return admitInputs(document,action,inputsInput,outputs,(key,values)=>encodeCoreKeyTuple(document,key,values));
 }
@@ -52,7 +53,7 @@ function admitInputs(document:Document,action:Action,inputsInput:ActionInputs,ou
 }
 export function compileActionSelector(documentInput:Document,actionInput:Action,frameInput:ActionFrame):CompiledActionSelector {
  const document=copyJson(documentInput) as unknown as Document,action=copyJson(actionInput) as unknown as Action,frame=copyJson(frameInput) as unknown as ActionFrame;
- admitAction(action);exactActionReferences(action);if(document.umf!=='0.10.0'||!validateDocument(document).valid)actionExpressionError('ACTION_SELECTOR_SOURCE','Expected valid exact core 0.10.0 document');
+ admitAction(action);exactActionReferences(action);if(document.umf!==CURRENT_CORE_VERSION||!validateDocument(document).valid)actionExpressionError('ACTION_SELECTOR_SOURCE','Expected valid exact core 0.10.0 document');
  if(new Set(action.parameters.map(p=>p.id)).size!==action.parameters.length||new Set([...action.reads,...action.writes].map(f=>f.id)).size!==action.reads.length+action.writes.length)actionExpressionError('ACTION_SELECTOR_SYNTAX','Duplicate input/frame identity is ambiguous');
  if(![...action.reads,...action.writes].some(f=>canonicalSchemaJson(f)===canonicalSchemaJson(frame)))actionExpressionError('ACTION_SELECTOR_FRAME','Selector must retain an exact declared frame');
  exactActionObject(frame.record,['module','element']);
@@ -105,7 +106,7 @@ export interface PreparedActionIdentities {
 /** Compile selectors against private immutable declarations, without store access. */
 export function prepareActionIdentities(documentInput:Document,actionInput:Action):PreparedActionIdentities {
  const document=copyJson(documentInput) as unknown as Document,action=admitAction(actionInput);
- if(document.umf!=='0.8.0'||!validateDocument(document).valid)actionExpressionError('ACTION_PARAMETER','Expected valid exact core 0.8.0 document');
+ if(document.umf!==CURRENT_CORE_VERSION||!validateDocument(document).valid)actionExpressionError('ACTION_PARAMETER','Expected valid exact core 0.10.0 document');
  exactActionReferences(action);
  const keys=prepareCoreKeyTuples(document);
  const frames=new Map([...action.reads,...action.writes].map(frame=>[frame.id,{frame,compiled:compileActionSelector(document,action,frame)}]));

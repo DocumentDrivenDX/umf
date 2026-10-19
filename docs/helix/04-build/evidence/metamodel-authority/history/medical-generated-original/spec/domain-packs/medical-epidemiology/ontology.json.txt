@@ -1,0 +1,565 @@
+{
+  "umf": "0.8.0",
+  "id": "urn:umf:domain:medical-epidemiology",
+  "title": "medical-epidemiology ontology",
+  "vocabularies": {},
+  "modules": [
+    {
+      "id": "domain",
+      "namespace": "urn:umf:domain:medical-epidemiology:",
+      "elements": [
+        {
+          "id": "measures",
+          "kind": "record",
+          "name": "measures",
+          "title": "measures",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 12 CDC/NCHS leading-causes-of-death aggregate records and two separate fabricated zero/suppression cases.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "measures.measure_key"
+            },
+            {
+              "module": "domain",
+              "element": "measures.source_id"
+            },
+            {
+              "module": "domain",
+              "element": "measures.year"
+            },
+            {
+              "module": "domain",
+              "element": "measures.geography"
+            },
+            {
+              "module": "domain",
+              "element": "measures.geography_vintage"
+            },
+            {
+              "module": "domain",
+              "element": "measures.cause"
+            },
+            {
+              "module": "domain",
+              "element": "measures.case_definition"
+            },
+            {
+              "module": "domain",
+              "element": "measures.measure"
+            },
+            {
+              "module": "domain",
+              "element": "measures.count"
+            },
+            {
+              "module": "domain",
+              "element": "measures.count_status"
+            },
+            {
+              "module": "domain",
+              "element": "measures.adjusted_rate"
+            },
+            {
+              "module": "domain",
+              "element": "measures.rate_status"
+            },
+            {
+              "module": "domain",
+              "element": "measures.rate_unit"
+            },
+            {
+              "module": "domain",
+              "element": "measures.adjustment"
+            },
+            {
+              "module": "domain",
+              "element": "measures.population_denominator"
+            },
+            {
+              "module": "domain",
+              "element": "measures.denominator_status"
+            },
+            {
+              "module": "domain",
+              "element": "measures.uncertainty_json"
+            },
+            {
+              "module": "domain",
+              "element": "measures.native_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "measures.measure_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "measures.measure_key",
+          "name": "measure_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "measure key",
+          "extensions": {}
+        },
+        {
+          "id": "measures.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source id",
+          "extensions": {}
+        },
+        {
+          "id": "measures.year",
+          "name": "year",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "year",
+          "extensions": {}
+        },
+        {
+          "id": "measures.geography",
+          "name": "geography",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "geography",
+          "extensions": {}
+        },
+        {
+          "id": "measures.geography_vintage",
+          "name": "geography_vintage",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "geography vintage",
+          "extensions": {}
+        },
+        {
+          "id": "measures.cause",
+          "name": "cause",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "cause",
+          "extensions": {}
+        },
+        {
+          "id": "measures.case_definition",
+          "name": "case_definition",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "case definition",
+          "extensions": {}
+        },
+        {
+          "id": "measures.measure",
+          "name": "measure",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "measure",
+          "extensions": {}
+        },
+        {
+          "id": "measures.count",
+          "name": "count",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "count",
+          "extensions": {}
+        },
+        {
+          "id": "measures.count_status",
+          "name": "count_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "count status",
+          "extensions": {}
+        },
+        {
+          "id": "measures.adjusted_rate",
+          "name": "adjusted_rate",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "adjusted rate",
+          "extensions": {}
+        },
+        {
+          "id": "measures.rate_status",
+          "name": "rate_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "rate status",
+          "extensions": {}
+        },
+        {
+          "id": "measures.rate_unit",
+          "name": "rate_unit",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "rate unit",
+          "extensions": {}
+        },
+        {
+          "id": "measures.adjustment",
+          "name": "adjustment",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "adjustment",
+          "extensions": {}
+        },
+        {
+          "id": "measures.population_denominator",
+          "name": "population_denominator",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "population denominator",
+          "extensions": {}
+        },
+        {
+          "id": "measures.denominator_status",
+          "name": "denominator_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "denominator status",
+          "extensions": {}
+        },
+        {
+          "id": "measures.uncertainty_json",
+          "name": "uncertainty_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "uncertainty json",
+          "extensions": {}
+        },
+        {
+          "id": "measures.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native json",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures",
+          "kind": "record",
+          "name": "supplemental_measures",
+          "title": "supplemental_measures",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 12 CDC/NCHS leading-causes-of-death aggregate records and two separate fabricated zero/suppression cases.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "supplemental_measures.measure_key"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.source_id"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.year"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.geography"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.geography_vintage"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.cause"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.case_definition"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.measure"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.count"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.count_status"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.adjusted_rate"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.rate_status"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.rate_unit"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.adjustment"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.population_denominator"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.denominator_status"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.uncertainty_json"
+            },
+            {
+              "module": "domain",
+              "element": "supplemental_measures.native_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "supplemental_measures.measure_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.measure_key",
+          "name": "measure_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "measure key",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source id",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.year",
+          "name": "year",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "year",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.geography",
+          "name": "geography",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "geography",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.geography_vintage",
+          "name": "geography_vintage",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "geography vintage",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.cause",
+          "name": "cause",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "cause",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.case_definition",
+          "name": "case_definition",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "case definition",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.measure",
+          "name": "measure",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "measure",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.count",
+          "name": "count",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "count",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.count_status",
+          "name": "count_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "count status",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.adjusted_rate",
+          "name": "adjusted_rate",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "adjusted rate",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.rate_status",
+          "name": "rate_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "rate status",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.rate_unit",
+          "name": "rate_unit",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "rate unit",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.adjustment",
+          "name": "adjustment",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "adjustment",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.population_denominator",
+          "name": "population_denominator",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "population denominator",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.denominator_status",
+          "name": "denominator_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "denominator status",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.uncertainty_json",
+          "name": "uncertainty_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "uncertainty json",
+          "extensions": {}
+        },
+        {
+          "id": "supplemental_measures.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native json",
+          "extensions": {}
+        }
+      ],
+      "relationships": []
+    }
+  ]
+}

@@ -7,7 +7,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "authored",
           "vocabularies": {
             "umf.tablespec": {
@@ -638,7 +638,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"large\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": \"double\"\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"date\"\n      }\n    },\n    {\n      \"name\": \"date_text\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"local_time\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"local-timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"vector\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"float\"\n        ]\n      }\n    },\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "target",
           "vocabularies": {
             "umf.avro": {
@@ -998,7 +998,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "providers",
           "vocabularies": {
             "umf.tablespec": {
@@ -1401,7 +1401,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"provider_id\",\n      \"type\": \"string\",\n      \"doc\": \"Unique provider identifier\"\n    },\n    {\n      \"name\": \"provider_name\",\n      \"type\": \"string\",\n      \"doc\": \"Provider full name\"\n    },\n    {\n      \"name\": \"provider_npi\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"National Provider Identifier\"\n    },\n    {\n      \"name\": \"state_code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"Provider state code\"\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "target",
           "vocabularies": {
             "umf.avro": {

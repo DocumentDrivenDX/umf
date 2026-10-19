@@ -1,8 +1,8 @@
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,readJsonValue,writeJsonValue,copyJson} from '../../src';
-import {classifySqlServerCardinality,recoverSqlServerCardinalitySource} from '../../src/core-ideals/cardinality-sqlserver';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, getSqlServerConstraintMetadata, readJsonValue, writeJsonValue, copyJson} from '../../src';
+import {classifySqlServerCardinality, recoverSqlServerCardinalitySource} from '../../src/core-ideals/cardinality-sqlserver';
 const fixture=await Bun.file('fixtures/validation/cardinality-sqlserver-profile-native.json').json(),nativeSource:string=fixture.nativeSource;
-function source(text=nativeSource){return upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importSqlServerCatalog(text,{id:'logical'})).target).target).target;}
+function source(text=nativeSource){return importSqlServerCatalog(text,{id:'logical'});}
 test('logical representations retain physical scalar metadata and exact native text',()=>{
  for(const column of getSqlServerColumnMetadata(source()))for(const profile of ['native-scalar','json-array','json-object','unresolved'] as const)for(const mode of ['strict','report'] as const){
   const input=source(),constraint=getSqlServerConstraintMetadata(input).tables.find(t=>t.table.name===column.table.name)!.checks[0];

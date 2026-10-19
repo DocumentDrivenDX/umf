@@ -16,7 +16,7 @@
       "links": [],
       "name": "version",
       "optional": false,
-      "type": "\"1.0.0\" | \"5.0.0\" | \"4.0.0\" | \"3.0.0\" | \"2.0.0\""
+      "type": "\"5.0.0\""
     },
     {
       "description": "",
@@ -52,7 +52,7 @@
       ],
       "name": "provenance",
       "optional": false,
-      "type": "{ origin: \"authored\"; idealPath: string; nullability: Nullability; binding: { id: \"umf.core.nullability.authoring\"; version: \"1.0.0\" | \"2.0.0\" | \"3.0.0\" | \"4.0.0\" | \"5.0.0\"; }; basis: \"explicit-author-declaration\"; nativePath: null; }"
+      "type": "{ origin: \"authored\"; idealPath: string; nullability: Nullability; binding: { id: \"umf.core.nullability.authoring\"; version: \"5.0.0\"; }; basis: \"explicit-author-declaration\"; nativePath: null; }"
     }
   ],
   "parameters": [],

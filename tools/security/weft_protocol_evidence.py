@@ -1,4 +1,7 @@
-"""Independent exact-scope oracle for transport evidence only."""
+"""Historical exact-scope transport receipt verification at the original checkout.
+This verifies retained observations only; it never qualifies current-core inputs,
+native implementation or current acceptance. Keep original source pins unchanged.
+"""
 import hashlib
 import shutil
 from pathlib import Path

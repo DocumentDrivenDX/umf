@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -431,7 +431,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -458,7 +458,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -503,9 +503,9 @@
   ],
   "sources": [
     {
-      "bytes": 3020,
+      "bytes": 3022,
       "path": "spec/projections/openapi-json-schema.schema.json",
-      "sha256": "2c94d8a8407cad226a4d80bbb5bbc4055db9b7fc14763d94b933491a8d1b4e7b"
+      "sha256": "62fb50abfba6cccdc65698834caec4acd88b129595d52cca7ae10925521bee97"
     }
   ],
   "summary": "spec/projections/openapi-json-schema.schema.json",

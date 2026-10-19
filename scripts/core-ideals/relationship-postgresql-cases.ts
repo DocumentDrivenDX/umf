@@ -1,4 +1,4 @@
-import {copyJson,declareCoreRelationship,type CoreRelationshipDeclaration,type CoreRelationshipRequest,type Document,type RelationshipPostgresqlRequest} from '../../src';
+import {copyJson, declareCoreRelationship, type CoreRelationshipDeclaration, type CoreRelationshipRequest, type Document, type RelationshipPostgresqlRequest} from '../../src';
 import {postgresqlLayoutCases} from '../relationship-postgresql-layout-cases';
 export function postgresqlRelationshipCases(){
  const selected=['keyed-association-and-fk','alternate-unique-target','nullable-composite','anonymous-junction','edge','heterogeneous-fk','type-mismatch','collation-mismatch','association-attribute-loss','partitioned-key'];

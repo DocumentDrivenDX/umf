@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 /** Host-side source compiler prototype. Output is never a native permission. */
 import {createHash} from 'node:crypto';
 import {copyJson} from '../../src/model/json';
@@ -18,7 +19,7 @@ export interface PreparationFieldRef {documentId:string;moduleId:string;elementI
 export interface PreparationSubjectMapping {
  version:'truss.preparation-subject/0.1-candidate';type:PreparationFieldRef;keyId:string;field:PreparationFieldRef;
  carrier:'truss.action_subject_binding.principal_identity/canonical-json-string-utf8';
- authenticationProfile:'truss.local-scram/0.1';subjectKind:'human';codec:'umf-key-tuple-v1/encode-core-key-tuple/3.0.0';
+ authenticationProfile:'truss.local-scram/0.1';subjectKind:'human';codec:'umf-key-tuple-v1/encode-core-key-tuple/4.0.0';
 }
 export interface PreparationSourceObligations {
  protocol:'truss.preparation-source-obligations/0.1-candidate';complete:false;authority:false;
@@ -48,7 +49,7 @@ function read(input:PreparationSourceArtifact):any{const a=copyJson(input) as un
 const freeze=(x:any):any=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x);}return x;};
 function subjectDescriptor(mapping:any,closure:any){
  shape(mapping,['version','type','keyId','field','carrier','authenticationProfile','subjectKind','codec']);
- if(mapping.version!=='truss.preparation-subject/0.1-candidate'||mapping.carrier!=='truss.action_subject_binding.principal_identity/canonical-json-string-utf8'||mapping.authenticationProfile!=='truss.local-scram/0.1'||mapping.subjectKind!=='human'||mapping.codec!=='umf-key-tuple-v1/encode-core-key-tuple/3.0.0')fail('Subject carrier/profile');
+ if(mapping.version!=='truss.preparation-subject/0.1-candidate'||mapping.carrier!=='truss.action_subject_binding.principal_identity/canonical-json-string-utf8'||mapping.authenticationProfile!=='truss.local-scram/0.1'||mapping.subjectKind!=='human'||mapping.codec!=='umf-key-tuple-v1/encode-core-key-tuple/4.0.0')fail('Subject carrier/profile');
  id(mapping.type);id(mapping.field);const document=closure.documents.find((d:any)=>d.document.id===mapping.type.documentId)?.document;if(!document)fail('original Subject document');
  const record=document.modules.find((m:any)=>m.id===mapping.type.moduleId)?.elements.find((e:any)=>e.id===mapping.type.elementId),key=record?.keys?.find((k:any)=>k.id===mapping.keyId);
  if(key?.fields?.length!==1||!same({documentId:document.id,moduleId:key.fields[0].module,elementId:key.fields[0].element},mapping.field))fail('one exact Subject String Key');
@@ -79,7 +80,7 @@ export function compilePreparationSourceObligations(input:PreparationSourceInput
  shape(plan,['action','execution','inputs','limits','model','protocol','selection','source','target']);
  shape(plan.model,['documentId','revision','sha256','umfVersion']);shape(plan.action,['documentSha256','identity','invocation']);shape(plan.action.identity,['module','action']);shape(plan.target,['module','element','key']);if(!same(plan.action.invocation,{id:'umf.actions.tx',version:'1'}))fail('original invocation profile');
  if(plan.protocol!=='umf.actions.plan/1'||!same(plan.model,request.modelPin)||plan.model.sha256!==request.model.sha256||model.id!==plan.model.documentId||!same(plan.action,request.action)||!same(plan.target,request.target)||!same(plan.limits,request.limits))fail('model/action/target/limits correspondence');
- if(model.umf!=='0.8.0'||plan.model.umfVersion!==model.umf||!Number.isSafeInteger(request.batchSize)||request.batchSize<1||request.batchSize>100)fail('selected core version/batch bound');
+ if(model.umf!==CURRENT_CORE_VERSION||plan.model.umfVersion!==model.umf||!Number.isSafeInteger(request.batchSize)||request.batchSize<1||request.batchSize>100)fail('selected current core/batch bound');
  if(plan.action.documentSha256!==request.model.sha256||!same(read(plan.source),{dialect:request.dialect,parameters:request.parameters,sql:request.sql})||!same(plan.execution,{atomicity:'batch',batchSize:request.batchSize,conflict:'stop',partition:'manifest-order',selection:'frozen'})||!same(plan.selection.profile,{id:'weft.update-selection',version:'1'})||!same(request.selectionProfile,plan.selection.profile))fail('original source/execution/selection profile');
  shape(response.provenance,['action','assignments','entityParameter','parameters','sourceSha256']);
  if(!same(response.provenance.action,plan.action)||response.provenance.entityParameter!==plan.inputs.entityParameter||response.provenance.sourceSha256!==plan.source.sha256||!same(read(response.provenance.parameters),request.parameters)||!same(response.provenance.assignments,plan.inputs.assignments.map((a:any,ordinal:number)=>({field:a.field,input:a.input,ordinal}))))fail('original compiler provenance correspondence');

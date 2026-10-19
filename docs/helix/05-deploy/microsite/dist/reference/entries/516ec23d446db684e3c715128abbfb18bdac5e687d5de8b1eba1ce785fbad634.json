@@ -5,8 +5,8 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "other",
@@ -418,7 +418,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -480,13 +480,13 @@
   "id": "[\"schema\",\"spec/core/scalar-type-inspection-v0.3.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 3147,
+      "bytes": 3148,
       "path": "spec/core/scalar-type-inspection-v0.3.schema.json",
-      "sha256": "8256cc5af8a8932d46b5d37ed92cffd37ae8725df675be96dda84fde8d2db324"
+      "sha256": "4008c64d26f3dbdc22e50c9ee7453c483c1bded78690869790fcde0e6a4c17dc"
     }
   ],
   "summary": "spec/core/scalar-type-inspection-v0.3.schema.json",

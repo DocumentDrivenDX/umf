@@ -3,7 +3,7 @@ import {resolve,relative} from 'node:path';
 const root=resolve(import.meta.dir,'../..');
 const roots=['scripts/reference/','docs/helix/05-deploy/reference/model/','docs/helix/05-deploy/reference/runtime/','docs/helix/05-deploy/microsite/reference/'];
 export function owner(path:string):string|undefined{return roots.find(r=>path.startsWith(r));}
-export function allowed(from:string,to:string):boolean {const a=owner(from),b=owner(to);if(!a)return false;if(a===b)return true;if(a===roots[0])return b===roots[1]||to==='docs/helix/05-deploy/schema-browser/notices.ts'||to==='src/index.ts'||to.startsWith('node:')||!to.startsWith('.')&&!/^(?:src|docs|scripts)\//.test(to);if(a===roots[1])return false;if(a===roots[2])return b===roots[1]||to==='src/index.ts';return b===roots[1]||to===roots[2]+'protocol.ts';}
+export function allowed(from:string,to:string):boolean {const a=owner(from),b=owner(to);if(!a)return false;if(a===b)return true;if(from==='scripts/reference/renderer-package.ts'&&['scripts/schema-browser-integrity.ts','docs/helix/05-deploy/schema-browser/site-assets.ts'].includes(to))return true;if(a===roots[0])return b===roots[1]||to==='docs/helix/05-deploy/schema-browser/notices.ts'||to==='src/index.ts'||to.startsWith('node:')||!to.startsWith('.')&&!/^(?:src|docs|scripts)\//.test(to);if(a===roots[1])return false;if(a===roots[2])return b===roots[1]||to==='src/index.ts';return b===roots[1]||to===roots[2]+'protocol.ts'||to==='@documentdrivendx/umf-schema-browser'||to==='@dagrejs/dagre'||to==='yaml';}
 export async function checkBoundaries(){
  const graph=new Map<string,string[]>();let count=0;
  for(const base of roots)for await(const file of new Bun.Glob(base+'**/*.ts').scan({cwd:root,onlyFiles:true})){

@@ -1,5 +1,5 @@
 {
-  "scope": "Published 0.10.0 JSON Schema shape only; neither inherited semantic rules nor external term meanings",
+  "scope": "Current generated JSON Schema shape only; neither inherited semantic rules nor external term meanings",
   "python": "3.13.16",
   "jsonschema": "4.26.0",
   "cases": 18,
@@ -115,8 +115,8 @@
     }
   ],
   "sha256": {
-    "spec/core/semantic-types-document.schema.json": "52974654564b0edbf53e63471ec391ab5bceaa115d53fdf3eccd2934c684fd61",
-    "spec/core/semantic-type-reference.schema.json": "cf098e7fe5efb2863466708964faeb63f8eeea254fb4fb2a65cab32c2821a009",
+    "spec/core/schema.json": "58d8de05c1f684017e8c426aae934c37485ee4728e9d9c1b5e743ada02a154d7",
+    "spec/core/semantic-type-reference.schema.json": "2330d89088c5ea285b5f761abd77c2d26fae77c0a7af8dd2d24b706582ef2b8c",
     "fixtures/validation/core-semantic-types-oracle-inputs.json": "92674567014b202a1f17486ca20eacd7c3de5313fdfbb11b7b70e3a159ea275c"
   }
 }

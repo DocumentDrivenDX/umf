@@ -122,3 +122,43 @@ no recruited-reader session may be claimed without actual participants.
 | Criterion | Executable proof |
 | --- | --- |
 | US-089-AC16 | Reader unit check of emitted YAML/JSON value parity; Chromium complete/inline YAML default, JSON and keyboard return toggle, unchanged route and mobile containment |
+
+## Current documentation amendment — 2026-10-18
+
+Owner direction supersedes historical core browsing, core-profile selection and
+migration-oriented reader requirements above. Document core 0.10.0 as the single
+current schema: no core version picker, history catalog or version badges. Old
+core links resolve to the current schema and preserve valid pointers; invalid
+pointers refuse visibly. Original source inventories and native/extension evidence
+keep their truthful identities and qualification; historical evidence is not
+relabelled as current support.
+
+Workbench examples use core 0.10.0 and open as YAML, with accessible YAML/JSON
+buttons converting current edited values through the public interoperable
+serialization API. Malformed, duplicate-key or inexact values refuse without
+replacing input. Cancellation and input edits invalidate pending conversion.
+Original bytes remain downloadable. Native Protobuf keeps its own syntax.
+Property/default execution APIs restricted to earlier envelopes are not offered
+by the current workbench; their API declarations retain their original limits.
+Every schema disclosure starts collapsed, including complete examples. Explicit
+user expansion and format switching remain keyboard accessible.
+
+Acceptance: verify all supplied examples execute, format parity after edits,
+conversion refusal and cancellation, current-only navigation, old-link recovery,
+and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Self-description and consolidation verification — 2026-10-18
+
+US-089-AC17: validate the authored YAML with its registered metadata vocabulary,
+compare all projected keys and retained fragments to bootstrap schemas, round-trip
+both serializations with unknown content, check graph closure and reject missing
+targets. Build drift checks remain mandatory; green counts are not equivalence.
+
+US-089-AC18: Chromium cold ontology landing, node/edge keyboard activation,
+reference key and scalar/item value links, refresh/Back, full and neighborhood
+focus, invalid-route recovery, download parity, all three views and one primary
+Schemas destination. Verify closed startup catalog/reference disclosures, mobile
+containment and screenshots; replay existing reader/workbench and artifact suites.
+Deploy only after local qualification and automated signing, then repeat the
+critical journeys and signature/manifest checks on live served bytes. Human
+comprehension remains unverified without recruited participants.

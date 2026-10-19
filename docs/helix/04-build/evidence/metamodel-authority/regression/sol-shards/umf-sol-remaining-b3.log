@@ -1,0 +1,90 @@
+{"testProcess":"tests/ddd/profile.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/ddd/profile.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/ddd/profile.test.ts:
+(pass) US-005-AC1: complete DDD profile survives JSON/YAML with distinct contexts and opaque invariants [411.07ms]
+(pass) US-005-AC2: semantic boundary corruptions fail independently of structural validity [736.38ms]
+(pass) US-005-AC3: unknown content and unproven equivalence survive but block conservative edits [181.28ms]
+(pass) US-005-AC4: fully understood semantic edits are atomic and do not change physical meaning [110.97ms]
+
+ 4 pass
+ 0 fail
+ 57 expect() calls
+Ran 4 tests across 1 file. [8.86s]
+{"testProcess":"tests/ddd/profile.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":57,"completeSummary":true,"logSha256":"c3825e6bcf58c872fc663da40dff928d200d46bb3b7beb935465c6e2c2adefc8"}
+{"testProcess":"tests/domain-packs/artifacts.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/domain-packs/artifacts.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/domain-packs/artifacts.test.ts:
+(pass) collections preserve unknown annotations and permit shared sources [33.84ms]
+(pass) structural and semantic refusal is explicit [25.02ms]
+(pass) empty collections require an explicit valid inventory [0.27ms]
+(pass) document-driven packs expose explicit original collections [16.41ms]
+
+ 4 pass
+ 0 fail
+ 22 expect() calls
+Ran 4 tests across 1 file. [319.00ms]
+{"testProcess":"tests/domain-packs/artifacts.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":22,"completeSummary":true,"logSha256":"5fdc79cc0eb992909cd5a8dc99dd79bd38e452381620964e3f21fb3840d00337"}
+{"testProcess":"tests/domain-packs/catalog.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/domain-packs/catalog.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/domain-packs/catalog.test.ts:
+(pass) @covers US-063-AC1 commerce has typed inventory, independent checks and graph schema closure [423.24ms]
+(pass) @covers US-064-AC1 supply-chain has typed inventory, independent checks and graph schema closure [458.30ms]
+(pass) @covers US-065-AC1 cybersecurity has typed inventory, independent checks and graph schema closure [362.19ms]
+(pass) @covers US-066-AC1 manufacturing has typed inventory, independent checks and graph schema closure [360.42ms]
+(pass) @covers US-067-AC1 payments has typed inventory, independent checks and graph schema closure [318.95ms]
+(pass) @covers US-068-AC1 education has typed inventory, independent checks and graph schema closure [306.13ms]
+(pass) @covers US-069-AC1 transit has typed inventory, independent checks and graph schema closure [311.24ms]
+(pass) @covers US-070-AC1 real-estate has typed inventory, independent checks and graph schema closure [526.36ms]
+(pass) @covers US-071-AC1 energy has typed inventory, independent checks and graph schema closure [324.95ms]
+(pass) @covers US-072-AC1 hr has typed inventory, independent checks and graph schema closure [296.08ms]
+(pass) @covers US-073-AC1 martech has typed inventory, independent checks and graph schema closure [403.33ms]
+(pass) @covers US-074-AC1 construction has typed inventory, independent checks and graph schema closure [615.40ms]
+(pass) @covers US-075-AC1 ecology has typed inventory, independent checks and graph schema closure [613.71ms]
+(pass) @covers US-076-AC1 archaeology has typed inventory, independent checks and graph schema closure [712.79ms]
+(pass) all sixteen packs declare graph schemas without replacing baseline source rows [317.00ms]
+(pass) @covers US-060-AC3 @covers US-060-AC7 invalid target, profile, inclusion and source identities refuse admission [6.08ms]
+(pass) JSON and YAML profile admission agree and malformed present profiles refuse [27.11ms]
+(pass) @covers US-076-AC9 @covers US-076-AC10 @covers US-076-AC11 archaeology asset and evidence schemas retain specialist lineage and exact asset revisions [1.16ms]
+
+ 18 pass
+ 0 fail
+ 672 expect() calls
+Ran 18 tests across 1 file. [6.55s]
+{"testProcess":"tests/domain-packs/catalog.test.ts","exitCode":0,"pass":18,"fail":0,"assertions":672,"completeSummary":true,"logSha256":"93c49bdd89edfd5400de0e155202c7ac4fea279335167ee5633576167e22e361"}
+{"testProcess":"tests/domain-packs/download.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/domain-packs/download.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/domain-packs/download.test.ts:
+(pass) all nine targets retain exact source and produce complete fields [382.73ms]
+(pass) unknown types and contextual nullability block rather than drop columns [64.78ms]
+(pass) SQL identifier quoting and source preservation [56.22ms]
+4 | import { Registry } from '../registry/registry';
+5 | import { UmfError, type Document, type Json } from './types';
+6 | export function readDocument(text: string, format: 'json' | 'yaml' = 'yaml'): Document {
+7 |   const value = readJsonValue(text, format);
+8 |   const result = validateDocument(value);
+9 |   if (!result.valid) throw new UmfError('INVALID_DOCUMENT', JSON.stringify(result.diagnostics));
+                                                                                                  ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/umf","message":"must pass \"const\" keyword validation","severity":"error"}]
+      at readDocument (/Users/erik/.codex/worktrees/d8be/umf/src/model/document.ts:9:95)
+      at parseEntry (/Users/erik/.codex/worktrees/d8be/umf/docs/helix/05-deploy/microsite/explorer-model.ts:31:17)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/domain-packs/download.test.ts:13:442)
+(fail) core optional members use explicit absence mapping and binary carriers [4.32ms]
+(pass) Protobuf schema parses with a native source parser [305.98ms]
+(pass) native recovery retains JSON Schema resource bundle [115.04ms]
+(pass) human schema exports default to YAML and JSON remains selectable [132.92ms]
+
+ 6 pass
+ 1 fail
+ 42 expect() calls
+Ran 7 tests across 1 file. [1362.00ms]
+{"testProcess":"tests/domain-packs/download.test.ts","exitCode":1,"pass":6,"fail":1,"assertions":42,"completeSummary":true,"logSha256":"420f7bff3867dab59b5c7952e90ec91f21402b2b829d18c949886e990a7e2201"}
+Complete test file failed or terminated: tests/domain-packs/download.test.ts
+
+ 32 pass
+ 1 fail
+ 793 expect() calls
+Ran 33 tests across 4 files. [17.15s]

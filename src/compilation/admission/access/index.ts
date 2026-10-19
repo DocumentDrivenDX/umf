@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../../generated/core-model';
 /** CONTRACT-070's presence policy; no storage or value semantics are inferred. */
 export interface Presence {missing:boolean;null:boolean}
 export interface FieldView {field?:{module:string;element:string};row:Presence;create:Presence;mutable:boolean;generated:boolean;temporal?:'instant'|'local'}
@@ -20,7 +21,16 @@ export function checkAccessPresence(f:PresenceFacts,v:FieldView):boolean {
  return v.row.missing&&v.row.null===f.admitsNull;
 }
 
-import {inspectCoreElementKind,inspectCoreNullability,inspectCoreCardinality,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,validateCoreFieldValue,validateDocument,getBinding,inspectBinding,inspectRawTableBinding,RAW_TABLE_BINDING_SUBSET,type Document,type Element} from '../../../index';
+import {inspectCoreElementKind} from '../../../model/field-kind';
+import {inspectCoreNullability} from '../../../model/nullability';
+import {inspectCoreCardinality} from '../../../model/cardinality';
+import {inspectCoreKeys} from '../../../model/keys';
+import {inspectCoreFacets} from '../../../model/facets';
+import {inspectCoreSchemaProperties,validateCoreFieldValue} from '../../../model/schema-properties';
+import {validateDocument} from '../../../validation/document';
+import {getBinding,inspectBinding} from '../../../extensions/binding';
+import {inspectRawTableBinding,RAW_TABLE_BINDING_SUBSET} from '../../../extensions/binding/raw-profiles';
+import type {Document,Element} from '../../../model/types';
 import type {AccessDiagnostic,Ref,ResolvedField,ResolvedRecord} from '../../ir/index';
 export interface SuppliedBinding {sourceId:string;document:Document}
 interface View {record:Ref;selectedKey:Ref&{key:string};fields:(FieldView&{field:Ref})[]}
@@ -37,7 +47,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
  const diagnostics:AccessDiagnostic[]=[],records:ResolvedRecord[]=[];
  const add=(accessCode:string,pointer:string)=>diagnostics.push({code:'ACCESS',accessCode,sourceId,pointer,message:'Authored access declaration violates '+accessCode});
  const unknown=(pointer:string)=>diagnostics.push({code:'UNKNOWN_RELEVANT',sourceId,pointer,message:'Selected access meaning is uninterpreted'});
- if(document.umf!=='0.8.0'||!validateDocument(document).valid){add('ACCESS_SHAPE','');return {records,diagnostics};}
+ if(document.umf!==CURRENT_CORE_VERSION||!validateDocument(document).valid){add('ACCESS_SHAPE','');return {records,diagnostics};}
  if(document.vocabularies['umf.access']?.version!=='0.1.0'){add('ACCESS_SHAPE','/vocabularies/umf.access');return {records,diagnostics};}
  const vectorDimensions=new Map<string,number>();
  for(const indexedModule of document.modules){const access=indexedModule.extensions?.['umf.access'];if(object(access)&&Array.isArray(access.search))for(const index of access.search)if(object(index)&&index.kind==='vector'&&object(index.vector)&&reference(index.vector.field)&&Number.isSafeInteger(index.vector.dimensions)&&Number(index.vector.dimensions)>0){const id=identity(index.vector.field),dimensions=Number(index.vector.dimensions),previous=vectorDimensions.get(id);vectorDimensions.set(id,previous===undefined||previous===dimensions?dimensions:0);}}
@@ -124,7 +134,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   for(const r of members)if(reference(r))collect(r,false,new Set());
   if(expected.length!==view.fields.length||expected.some((r,i)=>identity(r.ref)!==identity(view.fields[i]?.field??{module:'',element:''})))add('ACCESS_COVERAGE',path+'/fields');
   const keyMeaning=inspectCoreKeys(document,ref).meaning;
-  if(keyMeaning.state==='partial'||keyMeaning.state==='legacy')unknown(located.path+'/keys');
+  if(keyMeaning.state==='partial')unknown(located.path+'/keys');
   const keys=keyMeaning.state==='known'||keyMeaning.state==='partial'?keyMeaning.keys:[];
   const selection=view.selectedKey;
   if(!object(selection)||selection.module!==ref.module||selection.element!==ref.element||typeof selection.key!=='string'||!keys.some(k=>k.id===selection.key)||Object.keys(selection).some(k=>!['module','element','key'].includes(k)))add('ACCESS_REFERENCE',path+'/selectedKey');

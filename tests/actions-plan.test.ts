@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import fixture from '../docs/helix/03-test/fixtures/bulk-update/model.json';
@@ -8,7 +9,7 @@ import type {ActionPlanArtifact,ActionPlanInspectionContext,ActionPlanCapabiliti
 import type {Document} from '../src/model/types';
 const artifact=(v:unknown):ActionPlanArtifact=>{const utf8=typeof v==='string'?v:JSON.stringify(v);return {mediaType:'application/json',utf8,sha256:createHash('sha256').update(utf8).digest('hex')};};
 function setup(){
- const doc=structuredClone(fixture) as unknown as Document,model=artifact(doc),pin={documentId:doc.id,revision:'fixture1',umfVersion:'0.8.0' as const,sha256:model.sha256};
+ const doc=structuredClone(fixture) as unknown as Document,model=artifact(doc),pin={documentId:doc.id,revision:'fixture1',umfVersion:CURRENT_CORE_VERSION,sha256:model.sha256};
  const action={identity:{module:'sales',action:'set-active'},documentSha256:model.sha256,invocation:{id:'umf.actions.tx',version:'1'}};
  const field={module:'sales',element:'last-seen'},target={module:'sales',element:'customer',key:'pk'};
  const context:ActionPlanInspectionContext={registry:registerActions(new Registry()),models:[{pin,artifact:model}],actions:[{pin:action,artifact:model}],selections:[{profile:{id:'test.selection',version:'1'},inspect:()=>({eligible:true,dependencies:[field],diagnostics:[]})}]};
@@ -19,7 +20,7 @@ function capabilities(s:ReturnType<typeof setup>):ActionPlanCapabilities {
  const claims:Record<string,string[]>={plan:['integrity','actionBinding'],selection:['interpretation','completeRead'],manifest:['partition','sealCustody'],guard:['identityVersion'],snapshot:['coherentCut'],bulk:['atomicBatch','replay','principal','recovery','cancel','retention']};
  const profiles:Record<string,{id:string;version:string}>={plan:{id:'umf.actions.plan',version:'1'},selection:s.plan.selection.profile,manifest:{id:'umf.actions.manifest',version:'1'},bulk:{id:'umf.actions.bulk',version:'1'},guard:{id:'test.guard',version:'1'},snapshot:{id:'test.snapshot',version:'1'}};
  const caps:any={};for(const [family,ids] of Object.entries(claims))caps[family]={profile:profiles[family],claims:ids.map(id=>({id:family+'.'+id,status:'supported',evidence:['fixture://declaration-only']}))};
- caps.action={id:'test.executor',version:'1',coreVersion:'0.8.0',actionVersion:'0.1.0',source:s.doc,identity:s.action.identity,claims:inspectActions(s.doc,s.context.registry).actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['fixture://declaration-only']}))};return caps;
+ caps.action={id:'test.executor',version:'1',coreVersion:CURRENT_CORE_VERSION,actionVersion:'0.1.0',source:s.doc,identity:s.action.identity,claims:inspectActions(s.doc,s.context.registry).actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['fixture://declaration-only']}))};return caps;
 }
 test('@covers US-902-AC1 registered_action: owner preparation, exact binding and callback preservation',()=>{
  const s=setup(),r=s.context.registry.get('umf.actions','0.1.0'),before=JSON.stringify(s.doc);
@@ -74,7 +75,7 @@ test('@covers US-902-AC4 exact integer/string carriers retain original spelling 
 });
 test('@covers US-902-AC1 original unrelated semantic callbacks remain installed and enforced',()=>{
  const s=setup();s.doc.vocabularies['test.guard']={version:'1.0.0'};s.doc.modules[0]!.extensions!['test.guard']={};let calls=0;
- s.context.registry.register({id:'test.guard',version:'1.0.0',coreVersion:'0.1.0',description:'guard',schema:true,semantics:'guard',scopes:['module'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>{calls++;return [{code:'GUARD_REJECT',path:'/modules/0',message:'guard',severity:'error'}];});
+ s.context.registry.register({id:'test.guard',version:'1.0.0',coreVersion:CURRENT_CORE_VERSION,description:'guard',schema:true,semantics:'guard',scopes:['module'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>{calls++;return [{code:'GUARD_REJECT',path:'/modules/0',message:'guard',severity:'error'}];});
  const bytes=artifact(s.doc);s.pin.sha256=bytes.sha256;s.action.documentSha256=bytes.sha256;s.context.models[0]!.artifact=bytes;s.context.actions[0]!.artifact=bytes;
  expect(inspectActionPlan(artifact(s.plan),s.context).eligible).toBe(false);expect(calls).toBeGreaterThan(0);expect(()=>prepareActionPlanModel(s.pin,s.action,s.context)).toThrow();expect(s.context.registry.get('test.guard','1.0.0')?.semantics).toBeDefined();
 });

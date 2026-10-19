@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {importSqlServerCatalog,getSqlServerColumnMetadata} from '../../src';
+import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src';
 import {inspectSqlServerFacetType} from '../../src/adapters/sqlserver/facet-type';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-discovery-native.json').json();assert.equal(proof.observational,false);assert.equal(proof.serverVersion,'16.0.4295.3');
 for(const [path,sha] of Object.entries(proof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),sha);

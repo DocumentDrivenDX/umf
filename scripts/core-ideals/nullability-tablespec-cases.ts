@@ -1,9 +1,9 @@
 import native from '../../fixtures/validation/nullability-tablespec-profile-native.json';
-import {importTableSpec,upgradeFieldEnvelope,classifyTableSpecField,upgradeNullabilityEnvelope,writeJsonValue,copyJson} from '../../src';
-import type {Document,TableSpecNullabilityRequest} from '../../src';
+import {importTableSpec, classifyTableSpecField, writeJsonValue, copyJson} from '../../src';
+import type {Document, TableSpecNullabilityRequest} from '../../src';
 export function tableSpecAvailabilitySource(text:string,format:'json'|'yaml'='json'):Document{
- const imported=importTableSpec(text,{id:'availability',format}),fields=classifyTableSpecField(upgradeFieldEnvelope(imported).target,{column:0,mode:'strict'});
- return upgradeNullabilityEnvelope(fields.target!).target;
+ const imported=importTableSpec(text,{id:'availability',format}),fields=classifyTableSpecField(imported,{column:0,mode:'strict'});
+ return fields.target!;
 }
 export function nullabilityTableSpecCases(){
  const rows=[];

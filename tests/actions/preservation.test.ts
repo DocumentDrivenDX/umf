@@ -21,7 +21,7 @@ test('@covers US-900-AC6: an unrelated unknown extension survives a safe known-p
 });
 test('@covers US-900-AC8: structural/version/identity failures are atomic and getters stay inert',()=>{
  const document=source(),before=structuredClone(document),r=registry();
- expect(()=>inspectActions({...document,umf:'0.7.0'},r)).toThrow();expect(()=>inspectActions({...document,modules:null} as any,r)).toThrow();
+ expect(()=>inspectActions({...document,umf:'0.7.0'} as unknown as Document,r)).toThrow();expect(()=>inspectActions({...document,modules:null} as any,r)).toThrow();
  const version=source();version.vocabularies['umf.actions']!.version='9.0.0';expect(()=>inspectActions(version,r)).toThrow();
  const duplicate=source();(duplicate.modules[0]!.extensions!['umf.actions'] as any).actions.push(structuredClone(action(duplicate)));const errors=inspectActions(duplicate,r).validation.diagnostics;expect(errors.some(d=>d.code==='ACTION_IDENTITY'&&d.path.endsWith('/1/id')&&d.severity==='error')).toBe(true);
  let calls=0;const hostile=Object.defineProperty({},'id',{enumerable:true,get(){calls++;return 'evil'}});expect(()=>declareAction(document,'sales',hostile as any,r)).toThrow();expect(calls).toBe(0);expect(document).toEqual(before);

@@ -1,8 +1,8 @@
 import base from '../../spec/core/field-avro-projection.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:nullability-avro-projection:1.0.0';schema.title='Authored availability projection to Avro record field';
-schema.properties.operation.const='project-nullability-avro';schema.properties.source.$ref='urn:umf:core:0.3.0';
-schema.properties.author.$ref='urn:umf:core:nullability-operation:1.0.0#/$defs/declaration';
+schema.properties.operation.const='project-nullability-avro';schema.properties.source.$ref='urn:umf:core:0.10.0';
+schema.properties.author.$ref='urn:umf:core:nullability-operation:5.0.0#/$defs/declaration';
 schema.properties.binding.const={id:'umf.core.nullability.avro',version:'1.0.0',nativeVersion:'1.12.0',subset:'Single authored Field with explicit underlying carrier; null-first union for absence permission; no reader defaults, member omission or value-domain equivalence'};
 const req=schema.properties.request;
 Object.assign(req.properties,{scope:{enum:['underlying-field-value','write-input','reader-resolution','unresolved']},carrier:{enum:['avro-null','unresolved']}});req.required.push('scope','carrier');

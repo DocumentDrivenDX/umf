@@ -1,0 +1,45 @@
+{"testProcess":"tests/core-ideals/classification-report.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/classification-report.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/classification-report.test.ts:
+18 | const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+19 | /** Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding. */
+20 | export function classifyAvroField(input:Document,options:AvroFieldRequest):AvroFieldClassification {
+21 |  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as AvroFieldRequest;
+22 |  if(!checkRequest(request))throw new UmfError('AVRO_FIELD_REQUEST',JSON.stringify(checkRequest.errors));
+23 |  if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('AVRO_FIELD_VERSION','Valid current 0.10.0 envelope required');
+                                                                                  ^
+UmfError: Valid current 0.10.0 envelope required
+ path: "",
+ code: "AVRO_FIELD_VERSION"
+
+      at classifyAvroField (/Users/erik/.codex/worktrees/d8be/umf/src/core-ideals/avro-field.ts:23:78)
+      at classificationReportCases (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/classification-report-cases.ts:3:513)
+      at async <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/classification-report.test.ts:2:128)
+(fail) five native classifiers retain classified provenance, exact fragments and conflict residuals [420.77ms]
+18 | const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+19 | /** Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding. */
+20 | export function classifyAvroField(input:Document,options:AvroFieldRequest):AvroFieldClassification {
+21 |  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as AvroFieldRequest;
+22 |  if(!checkRequest(request))throw new UmfError('AVRO_FIELD_REQUEST',JSON.stringify(checkRequest.errors));
+23 |  if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('AVRO_FIELD_VERSION','Valid current 0.10.0 envelope required');
+                                                                                  ^
+UmfError: Valid current 0.10.0 envelope required
+ path: "",
+ code: "AVRO_FIELD_VERSION"
+
+      at classifyAvroField (/Users/erik/.codex/worktrees/d8be/umf/src/core-ideals/avro-field.ts:23:78)
+      at classificationReportCases (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/classification-report-cases.ts:3:513)
+      at async <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/classification-report.test.ts:3:118)
+(fail) dependency identity and tampered fragments/origin/bindings cannot change unnoticed [322.01ms]
+
+ 0 pass
+ 2 fail
+Ran 2 tests across 1 file. [1259.00ms]
+{"testProcess":"tests/core-ideals/classification-report.test.ts","exitCode":1,"pass":0,"fail":2,"assertions":0,"completeSummary":true,"logSha256":"6dc725420ca891505e32868389799ec3c100c1fcd50f823ce8a928a257496805"}
+Complete test file failed or terminated: tests/core-ideals/classification-report.test.ts
+
+ 0 pass
+ 2 fail
+ 0 expect() calls
+Ran 2 tests across 1 files. [1.27s]

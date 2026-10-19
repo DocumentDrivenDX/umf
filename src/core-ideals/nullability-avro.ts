@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Nullability,type ExtensionPackage} from '../model/types';
 import {type NativeJson,parseNativeJson,renderTree} from '../model/native-json';
@@ -6,10 +7,9 @@ import {exportAvroBundle,getAvroFieldMetadata,getAvroNode} from '../adapters/avr
 import {avroFieldAllowsNull} from './avro-availability-type';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import core from '../../spec/core/nullability-document.schema.json';
-import authorSchema from '../../spec/core/nullability-operation.schema.json';
+
+import core from '../../spec/core/schema.json';
+import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/avro-nullability-classification.schema.json';
 import manifest from '../../spec/extensions/avro-nullability/package.json';
@@ -26,13 +26,13 @@ export interface AvroNullabilityClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;dependencyId?:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:AvroNullabilityRequest['scope'];carrier:AvroNullabilityRequest['carrier'];basis:'Underlying field type in a present containing record; not member omission, reader defaults, ancestor availability or logical refinements'};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
 export function classifyAvroNullability(input:Document,options:AvroNullabilityRequest):AvroNullabilityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as AvroNullabilityRequest;
  if(!checkRequest(request))throw new UmfError('AVRO_NULLABILITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.3.0')throw new UmfError('AVRO_NULLABILITY_SOURCE','Valid core 0.3.0 required; migrate explicitly');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('AVRO_NULLABILITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const exported=exportAvroBundle(source);
  if(exported.schema!==renderTree(parseNativeJson(request.nativeSource))+'\n'||exported.dependencies.length!==(request.dependencies??[]).length||exported.dependencies.some((d,i)=>d.id!==request.dependencies![i]!.id||d.schema!==renderTree(parseNativeJson(request.dependencies![i]!.schema))+'\n'))throw new UmfError('AVRO_NULLABILITY_ARCHIVE','Native bundle differs from retained archive');
  const metadata=getAvroFieldMetadata(source).find(c=>c.element.id===request.column);

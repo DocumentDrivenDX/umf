@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2995,
-        "line": 15,
+        "bytes": 1306,
+        "line": 14,
         "path": "src/model/types.ts",
-        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+        "sha256": "74d776d2837c2476b1721eab933002b8526049cbae7368eb339022bef8306c71"
       }
     ],
     "entrypoint": ".",
     "exportName": "CARDINALITIES",
     "runtime": "unassessed",
     "signatureText": [
-      "CARDINALITIES=['one','array','map','unspecified'] as const"
+      "CARDINALITIES=coreVocabulary.cardinality"
     ]
   },
   "id": "[\"api\",\".\",\"CARDINALITIES\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2995,
-      "line": 15,
+      "bytes": 1306,
+      "line": 14,
       "path": "src/model/types.ts",
-      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+      "sha256": "74d776d2837c2476b1721eab933002b8526049cbae7368eb339022bef8306c71"
     }
   ],
-  "summary": "Ideal container shape; native repetition and storage encodings remain separate.",
+  "summary": "Public export · src/model/types.ts",
   "title": "CARDINALITIES"
 }

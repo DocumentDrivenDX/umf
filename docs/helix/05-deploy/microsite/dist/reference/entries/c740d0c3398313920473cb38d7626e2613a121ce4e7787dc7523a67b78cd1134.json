@@ -16,7 +16,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -524,7 +524,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -680,9 +680,9 @@
   ],
   "sources": [
     {
-      "bytes": 4050,
+      "bytes": 4051,
       "path": "spec/extensions/odcs/reference-schema.json",
-      "sha256": "1a5155603fb94cefbc8cf4e20db3ead24236c838fd0f546d13f8d37d21792363"
+      "sha256": "d1375a443cf8a69bc34a945bb79bfc7b157ddfa23232ffdcc2c20053f5ba0449"
     }
   ],
   "summary": "spec/extensions/odcs/reference-schema.json",
