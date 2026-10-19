@@ -104,6 +104,10 @@ jobs:
 
   native-sessions:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        weft-cohort: [published044, source-dbapi]
     services:
       postgres:
         image: postgres:18.6
@@ -131,22 +135,44 @@ jobs:
           pydantic==2.13.5 'psycopg[binary]==3.2.13' psycopg-pool==3.3.3
           psycopg2-binary==2.9.11 sqlalchemy==2.0.44 greenlet==3.2.4
       - name: Install immutable Weft compiler cohort
+        if: matrix.weft-cohort == 'published044'
         run: >-
           python -m pip install --no-deps
           'https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.44/weft_sql-0.4.44-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl#sha256=eeb8fd0a89a9aa15dbe3fb1e71fa8613baa879d4c7193e084926aaf243dcdcbb'
+      - uses: actions/checkout@v4
+        if: matrix.weft-cohort == 'source-dbapi'
+        with:
+          repository: DocumentDrivenDX/weft
+          ref: e686c27e8c05a17cfbd3a21d14ff5b38c6629b7b
+          path: .ci-weft
+      - uses: dtolnay/rust-toolchain@stable
+        if: matrix.weft-cohort == 'source-dbapi'
+        with:
+          toolchain: 1.90.0
+      - name: Build and install exact DBAPI compiler source
+        if: matrix.weft-cohort == 'source-dbapi'
+        run: |
+          python -m pip install maturin==1.9.6
+          maturin build --manifest-path .ci-weft/crates/weft-python/Cargo.toml --locked --out /tmp/weft-native-wheels
+          sha256sum /tmp/weft-native-wheels/*.whl > /tmp/umf-weft-wheel-sha256.txt
+          python -m pip install --no-deps /tmp/weft-native-wheels/*.whl
       - run: >-
           bun scripts/umf-client-generate.ts generate --schema tests/unified/commerce.json
           --package shop --output /tmp/umf-session-client
       - name: Verify generated reads and native session ownership
         env:
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          DBAPI_FLAG: ${{ matrix.weft-cohort == 'source-dbapi' && '--dbapi' || '' }}
         run: >-
           python -I tests/unified/session_native_e2e.py
           --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres"
           --generated /tmp/umf-session-client --report /tmp/umf-session-native.json
           --psycopg2 --sqlalchemy
+          $DBAPI_FLAG
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: native-session-postgresql18
-          path: /tmp/umf-session-native.json
+          name: native-session-postgresql18-${{ matrix.weft-cohort }}
+          path: |
+            /tmp/umf-session-native.json
+            /tmp/umf-weft-wheel-sha256.txt

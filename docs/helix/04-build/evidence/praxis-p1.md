@@ -322,3 +322,30 @@ DBAPI parameter transport is being implemented and must receive separate native
 qualification. SQLAlchemy supports transactional Core connections, not ORM
 Session, DBAPI autocommit, two-phase transactions or other dialects/drivers.
 The full lifecycle release remains pending; no prerelease has been published.
+
+## Compiler-owned parameter transport — successor local cohort
+
+UMF521f0a165 passes all six hosted
+[typed-access jobs39257824991](https://github.com/DocumentDrivenDX/umf/actions/runs/39257824991),
+including the106-assertion Linux PostgreSQL multi-driver gate and both installed
+generator platforms. Python support39257824882 also passes.
+
+Weft's isolated lifecycle branch now publishes source at
+e686c27e8c05a17cfbd3a21d14ff5b38c6629b7b. Its compiler adds digest-covered
+`dbapiSql`/`dbapiParameterOrder`, preserving original SQL and mapping only actual
+PostgreSQL placeholder tokens. Related composition finalizes the parameter
+inventory before producing that transport. The rebuilt local0.4.46 compiler
+candidate passes187 native assertions with this UMF host: parameterized generated
+filters, ordered keyset pages under each person/batch identity, and equivalent
+original/DBAPI execution of a Unicode literal containing percent and `$1` text.
+[The successor receipt](praxis-p1/session-dbapi-postgresql.json) retains exact
+source commits, wheels, test hash, driver versions and assertion inventory.
+`--dbapi` is explicit; the immutable0.4.44 compatibility cohort retains its
+parameter-free Psycopg2/SQLAlchemy fixture scope.
+
+Hosted native CI now has separate immutable0.4.44 and source-DBAPI jobs. The latter
+builds the exact pinned Weft commit using Rust1.90.0/maturin1.9.6 and records the
+wheel hash before installation. That successor Linux run is pending. The source
+change does not publish a Weft release or qualify the fixture executor as full
+production admission. Deployment, policies/grants, migrations, commands/replay,
+managed consumer acceptance and package-index/release delivery remain open.

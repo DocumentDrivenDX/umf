@@ -25,6 +25,7 @@ parser.add_argument('--psycopg')
 parser.add_argument('--pool')
 parser.add_argument('--psycopg2', action='store_true')
 parser.add_argument('--sqlalchemy', action='store_true')
+parser.add_argument('--dbapi', action='store_true')
 parser.add_argument('--report', required=True)
 args = parser.parse_args()
 sys.path[:0] = [args.generated, *[p for p in (args.weft,args.psycopg,args.pool) if p]]
@@ -89,7 +90,7 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
         admin.execute(sql.SQL('GRANT UPDATE ON {}.customers TO {}').format(sql.Identifier(schema),sql.Identifier(role)))
 
 connection_args = dict(psycopg.conninfo.conninfo_to_dict(args.dsn), user=login)
-report = {'serverMajor':18,'serverVersion':server_version,'psycopg':psycopg.__version__,'pool':psycopg_pool.__version__,
+report = {'dbapiTransport':args.dbapi,'serverMajor':18,'serverVersion':server_version,'psycopg':psycopg.__version__,'pool':psycopg_pool.__version__,
           'weft':weft.__version__,'schema':schema,'assertions':[],
           'limits':['fixture-only Weft executor; production catalog/privilege admission remains open',
                     'writes below test session transactions directly, not Weft action compilation']}
@@ -300,6 +301,48 @@ async def async_tests():
             check('replacement_pool_identity',await (await connection.execute('SELECT current_user')).fetchone()==(bob_role,))
 
 
+def verify_dbapi(client, expected, prefix):
+    for index,value in enumerate(('a1',"x' % $1 \\ 🙂",'50%','b1')):
+        values=Customer.objects.using(client).filter(Customer.c.customer_id.eq(value)).all(limit=100)
+        check(prefix+'_bound_'+str(index),[row.customer_id for row in values]==([value] if value in expected else []))
+    query=Customer.objects.using(client).order_by(Customer.c.customer_id.asc())
+    found=[]
+    after=None
+    for _ in range(10):
+        page=query.page(size=1,after=after)
+        found.extend(row.customer_id for row in page.items)
+        after=page.next_cursor
+        if after is None:break
+    else:raise AssertionError('paging did not terminate')
+    check(prefix+'_bound_cursor_pages',found==expected)
+
+async def verify_async_dbapi(client, expected, prefix):
+    for index,value in enumerate(('a1',"x' % $1 \\ 🙂",'50%','b1')):
+        values=await Customer.objects.using(client).filter(Customer.c.customer_id.eq(value)).all(limit=100)
+        check(prefix+'_bound_'+str(index),[row.customer_id for row in values]==([value] if value in expected else []))
+    query=Customer.objects.using(client).order_by(Customer.c.customer_id.asc())
+    found=[]
+    after=None
+    for _ in range(10):
+        page=await query.page(size=1,after=after)
+        found.extend(row.customer_id for row in page.items)
+        after=page.next_cursor
+        if after is None:break
+    else:raise AssertionError('paging did not terminate')
+    check(prefix+'_bound_cursor_pages',found==expected)
+
+literal_program=None
+if args.dbapi:
+    literal_request={'version':'weft.raw-read/0.1','target':'postgresql18','binding':binding,
+                     'parameters':[{'name':'key','carrier':'string','nullable':False}],
+                     'rowCap':10,'sql':"SELECT c.\"customerId\" AS \"customerId\" FROM \"example.commerce\".\"Customer\" c WHERE c.\"customerId\"=:key AND '雪50% $1'='雪50% $1' ORDER BY c.\"customerId\" LIMIT 10"}
+    literal_program=json.loads(weft.compile_raw_read_json(json.dumps(literal_request)))
+    assert literal_program['status']=='compiled',literal_program
+    with SyncSession(direct,policy).open(alice) as c:
+        with psycopg.RawCursor(c) as cursor:
+            cursor.execute(literal_program['sql'],('a1',))
+            check('dbapi_literal_original_transport',cursor.fetchall()==[('a1',)])
+
 if args.psycopg2:
     import psycopg2
     from psycopg2.pool import ThreadedConnectionPool
@@ -314,6 +357,8 @@ if args.psycopg2:
     def read2(connection, artifact, request):
         # Bounded parameter-free generated read only. Parameterized transport is
         # a separate Weft compiler gate; never rewrite $n SQL in this host.
+        if args.dbapi:
+            return rows(artifact, query2(connection, artifact['dbapiSql'], tuple(request['parameters'][name] for name in artifact['dbapiParameterOrder'])))
         assert artifact['parameterOrder'] == []
         return rows(artifact, query2(connection, artifact['sql']))
 
@@ -326,6 +371,10 @@ if args.psycopg2:
                 client = SyncClient(SyncSessionTransport(session2, identity, binding, weft, read2, cursor_secret=b'x'*32))
                 result = Customer.objects.using(client).all(limit=100)
                 check(f'psycopg2_{autocommit}_weft_{identity.subject}', sorted(row.customer_id for row in result) == expected)
+                if args.dbapi:verify_dbapi(client,expected,f'psycopg2_{autocommit}_{identity.subject}')
+            if args.dbapi:
+                with session2.open(alice) as leased:
+                    check(f'psycopg2_{autocommit}_literal_transport',query2(leased,literal_program['dbapiSql'],('a1',))==[('a1',)])
             committed = uuid4()
             with session2.open(alice, read_only=False) as leased:
                 check(f'psycopg2_{autocommit}_original_connection', leased is connection)
@@ -405,6 +454,8 @@ if args.sqlalchemy:
         engine=create_engine(URL.create('postgresql+'+driver),connect_args=connection_args,pool_size=1,max_overflow=0)
         session_sa=SQLAlchemySession(lambda _:engine.connect(),policy)
         def read_sa(c,artifact,request):
+            if args.dbapi:
+                return rows(artifact,c.exec_driver_sql(artifact['dbapiSql'],tuple(request['parameters'][name] for name in artifact['dbapiParameterOrder'])).fetchall())
             assert artifact['parameterOrder']==[]
             return rows(artifact,c.exec_driver_sql(artifact['sql']).fetchall())
         try:
@@ -412,6 +463,10 @@ if args.sqlalchemy:
                 client=SyncClient(SyncSessionTransport(session_sa,identity,binding,weft,read_sa,cursor_secret=b'x'*32))
                 result=Customer.objects.using(client).all(limit=100)
                 check(f'sqlalchemy_{driver}_weft_{identity.subject}', sorted(row.customer_id for row in result)==expected)
+                if args.dbapi:verify_dbapi(client,expected,f'sqlalchemy_{driver}_{identity.subject}')
+            if args.dbapi:
+                with session_sa.open(alice) as c:
+                    check(f'sqlalchemy_{driver}_literal_transport',[tuple(row) for row in c.exec_driver_sql(literal_program['dbapiSql'],('a1',)).fetchall()]==[('a1',)])
             committed=uuid4()
             with session_sa.open(alice,read_only=False) as c:
                 c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(committed),'a1'))
@@ -477,6 +532,8 @@ if args.sqlalchemy:
         engine=create_async_engine(URL.create('postgresql+psycopg'),connect_args=connection_args,pool_size=1,max_overflow=0)
         session_sa=AsyncSQLAlchemySession(lambda _:engine.connect(),policy)
         async def read_sa(c,artifact,request):
+            if args.dbapi:
+                return rows(artifact,(await c.exec_driver_sql(artifact['dbapiSql'],tuple(request['parameters'][name] for name in artifact['dbapiParameterOrder']))).fetchall())
             assert artifact['parameterOrder']==[]
             return rows(artifact,(await c.exec_driver_sql(artifact['sql'])).fetchall())
         try:
@@ -484,6 +541,10 @@ if args.sqlalchemy:
                 client=Client(AsyncSessionTransport(session_sa,identity,binding,weft,read_sa,cursor_secret=b'x'*32))
                 result=await Customer.objects.using(client).all(limit=100)
                 check('sqlalchemy_async_weft_'+identity.subject,sorted(row.customer_id for row in result)==expected)
+                if args.dbapi:await verify_async_dbapi(client,expected,'sqlalchemy_async_'+identity.subject)
+            if args.dbapi:
+                async with session_sa.open(alice) as c:
+                    check('sqlalchemy_async_literal_transport',[tuple(row) for row in (await c.exec_driver_sql(literal_program['dbapiSql'],('a1',))).fetchall()]==[('a1',)])
             committed=uuid4()
             async with session_sa.open(alice,read_only=False) as c:
                 await c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(committed),'a1'))
