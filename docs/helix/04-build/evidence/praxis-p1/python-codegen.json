@@ -88,15 +88,15 @@
   "externalJavascriptProcesses": "forbidden",
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "status": "local-candidate-not-published",
-  "baseCommit": "2cb873ab5",
+  "baseCommit": "5f19927eb",
   "nativeDatabaseQualification": false,
   "wheel": {
     "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
-    "sha256": "4a107efa02d307c6d2a917ad5146839c9708c47750406e63bf9d73b14119b5d8"
+    "sha256": "cc0a9af5fa6acffbe88eb5a969da489e83cbb6744c235127886ad7892fb9193d"
   },
   "sdist": {
     "name": "umf_codegen-0.1.0a1.tar.gz",
-    "sha256": "e4ebb40af1dd18dfad6e9eaa9c58b14e70ccfb6e12e762ef402f32ec8fca84ea"
+    "sha256": "3ae178af000b79c234213e3fa68335d98bc563d14f2293a90f92eee2a19293cd"
   },
   "reproducibility": {
     "sourceAndSdistWheelIdentical": true,
@@ -120,10 +120,10 @@
     "damaged-payload-refuses"
   ],
   "sourceHashes": {
-    "python/umf_codegen/src/umf_codegen/__init__.py": "f99a905ee4bd8c18adb812ec9c4a90e7aa24f3616b8369851fd198b129ec9d6f",
+    "python/umf_codegen/src/umf_codegen/__init__.py": "e7054b0d00c4178a1b13753e92165b8ca36131ab763f1d3c1e578e5d43432a50",
     "python/umf_codegen/src/umf_codegen/__main__.py": "a839c18cc28fbce5498e88a10057c6422e4c293eb719f39a17ffa039769e33a6",
-    "python/umf_codegen/src/umf_codegen/_embedded.py": "553930f310e9578a4f84b73570ffd823ba42914bfca317ab96e33b034cec2bef",
-    "python/umf_codegen/src/umf_codegen/_release.py": "3564eb9e1cce32ddda00bd85ff6ae2a95e2df86157433db9af0af37e55c20334",
+    "python/umf_codegen/src/umf_codegen/_embedded.py": "787c32a8a3a4af118c1b00e0a52921bf228df5a92760056fc45561d5a6eaf69a",
+    "python/umf_codegen/src/umf_codegen/_release.py": "dd78d866d1d63e1a7ff32c612abe539ce9fe7b37bc8e9135fe946f9fa7399004",
     "python/umf_codegen/src/umf_codegen/_writer.py": "61a30ef49ba532fdff09f4f86de985b527dcb7e0f6c777bc3f386d545c792082"
   },
   "corpusSha256": "34780dbadf9310ae35c75addfb67916f6065c75f2613c73b1742654962ffb22c",
@@ -150,6 +150,6 @@
       "macos-14"
     ],
     "result": "passed",
-    "scope": "current 16-case installed parity, packaging/freshness and writer/integrity controls"
+    "scope": "historical client-generator cohort; installed deployment compiler successor hosted gates pending"
   }
 }

@@ -119,11 +119,21 @@ jobs:
         run: >-
           python -I tests/codegen/installed_probe.py
           --corpus /tmp/umf-codegen-corpus.json --report /tmp/umf-codegen-report.json
+      - run: bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
+      - name: Installed original deployment compiler and tamper controls
+        run: >-
+          python -I tests/codegen/deployment_probe.py
+          --corpus /tmp/umf-deployment-corpus.json --report /tmp/umf-deployment-python.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegen-${{ matrix.os }}
           path: /tmp/umf-codegen-report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deployment-python-${{ matrix.os }}
+          path: /tmp/umf-deployment-python.json
 
 
   native-sessions:

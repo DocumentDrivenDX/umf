@@ -251,3 +251,11 @@ administrative executor, forward digest-checked ledger and drift/replay refusal.
 Then extend the shared Weft command model and typed generated lifecycle methods.
 Initial emitted SQL under a bounded fixture executor is not production migration
 or mutation support. Release readiness remains false under the full goal.
+
+The next administrative prerequisite now exposes this exact compiler/verifier
+through the installed Python `umf_codegen` wheel. A separate12-case corpus
+compares complete compiled/blocked objects and20 self-consistently rehashed
+tamper controls with external JavaScript processes and network forbidden.
+The original16 client-generation cases remain unchanged and pass. This
+toolchain interface provides source verification for the next host executor;
+it does not execute migrations or establish trusted installed authority.

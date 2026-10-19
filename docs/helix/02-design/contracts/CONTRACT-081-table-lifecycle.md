@@ -225,6 +225,18 @@ configuration and compares the complete bundle, so rehashing tampered SQL is
 insufficient. Hosts additionally require their own trusted installed digest;
 untrusted self-consistency cannot establish deployment authority.
 
+The installed `umf_codegen` Python API exposes the same implementation as
+`compile_table_deployment(text,configuration=...,format="json")` and
+`verify_table_deployment(bundle)`. The former returns the compiled/blocked
+discriminated result; verification raises `GenerationError` on any difference.
+Both execute the pinned original portable compiler in embedded V8 through fixed
+bridge functions, with the generator's manifest/asset integrity, deadline and
+memory gates. No external Bun/Node, executable discovery or network lookup is
+permitted. Python object results are inert JSON; no driver operation belongs in
+this package. Embedded requests additionally have a32MiB serialized JSON limit.
+An administrative executor can depend on this verifier; ordinary generated
+clients remain stdlib-only and do not acquire an embedded runtime dependency.
+
 Initial DDL creates all tables before foreign keys, declares original primary
 and alternate Keys, explicit indexes/checks, ENABLE/FORCE RLS, all8 audience
 command policies, required table/column privileges and schema USAGE. Key
@@ -295,6 +307,12 @@ identities, bounds, required capability and consistency. No raw SQL string is a
 named statement in this profile. Upsert declares an original nondeferrable Key,
 create input, update whitelist, conflict behavior and returned key/count shape.
 Native ON CONFLICT behavior and races require independent qualification.
+
+The owner selected declared typed operations for final consumer acceptance on
+2026-10-19. Existing consumer raw-SQL escape methods are migration inputs, not a
+required untyped public entry point. Each required read/write becomes a declared
+operation with exact inputs/results and module capability; unsupported SQL is
+reported for explicit conversion rather than delegated to a consumer query layer.
 
 Durable replay binds module, full source/deployment authority, authenticated
 principal, command identity, idempotency key and exact input digest. The write
