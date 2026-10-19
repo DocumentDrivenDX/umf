@@ -19,14 +19,15 @@ class GenerationError(ValueError):
 
 
 def execute(request: dict[str, object], timeout_seconds: float, *, operation: str = "generate") -> dict[str, object]:
-    functions = {"generate": "__umf_codegen", "deployment": "__umf_table_deploy", "verify_deployment": "__umf_table_verify"}
+    functions = {"generate": "__umf_codegen", "deployment": "__umf_table_deploy", "verify_deployment": "__umf_table_verify",
+                 "migration": "__umf_table_migrate", "verify_migration": "__umf_table_migration_verify"}
     if operation not in functions:
         raise ValueError("Unknown embedded operation")
     if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= 60:
         raise ValueError("timeout_seconds must be greater than zero and at most 60")
     end = time.monotonic() + timeout_seconds
     text = request.get("text")
-    if operation != "verify_deployment" and (type(text) is not str or len(text.encode("utf-8")) > 16 * 1024 * 1024):
+    if operation in ("generate", "deployment") and (type(text) is not str or len(text.encode("utf-8")) > 16 * 1024 * 1024):
         raise ValueError("source text must be at most 16 MiB of UTF-8")
     encoded = json.dumps(request, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
     if len(encoded) > 32 * 1024 * 1024:

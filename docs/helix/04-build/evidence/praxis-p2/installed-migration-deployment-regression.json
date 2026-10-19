@@ -1,0 +1,68 @@
+{
+  "scope": "installed initial deployment compiler and source recompilation only",
+  "cases": [
+    {
+      "name": "simple",
+      "status": "compiled",
+      "completeParity": true
+    },
+    {
+      "name": "parent-scope",
+      "status": "compiled",
+      "completeParity": true
+    },
+    {
+      "name": "yaml",
+      "status": "compiled",
+      "completeParity": true
+    },
+    {
+      "name": "quoted-unicode-default",
+      "status": "compiled",
+      "completeParity": true
+    },
+    {
+      "name": "shared-schema-refuses",
+      "status": "blocked",
+      "completeParity": true
+    },
+    {
+      "name": "principal-collision-refuses",
+      "status": "blocked",
+      "completeParity": true
+    },
+    {
+      "name": "unknown-configuration-refuses",
+      "status": "blocked",
+      "completeParity": true
+    },
+    {
+      "name": "invalid-unicode-configuration-refuses",
+      "status": "blocked",
+      "completeParity": true
+    },
+    {
+      "name": "unknown-selected-meaning-refuses",
+      "status": "blocked",
+      "completeParity": true
+    },
+    {
+      "name": "missing-native-mapping-refuses",
+      "status": "blocked",
+      "completeParity": true
+    },
+    {
+      "name": "unqualified-codec-refuses",
+      "status": "blocked",
+      "completeParity": true
+    },
+    {
+      "name": "unqualified-command-refuses",
+      "status": "blocked",
+      "completeParity": true
+    }
+  ],
+  "tamperControls": 20,
+  "externalJavascriptProcesses": "forbidden",
+  "nativeLifecycleReleaseQualified": false
+}

@@ -442,8 +442,16 @@ is the complete next source catalog, verified with native catalog, privileges an
 role scope; recovery is full transaction rollback. This captures atomic final
 verification without claiming each intermediate DDL statement alone matches the
 complete target. Browser/Bun plan parity does not qualify native execution,
-durable history, concurrency or recovery, and the Python entry point remains a
-separate toolchain extension.
+durable history, concurrency or recovery.
+
+The installed Python toolchain exposes the same compiler via
+`compile_table_migration(migration_id=...,predecessor=...,previous_bundle=...,next_bundle=...)`
+and `verify_table_migration(plan)`. These fixed embedded V8 bridge operations
+retain the generator's manifest/asset checks, deadline/memory bounds and32MiB
+serialized request limit. They do not discover or launch Bun/Node or use a
+network. Compiled/blocked diagnostics and complete verified plans match the
+portable implementation; this entry point supplies source consistency for a
+future native ledger, not predecessor authentication or execution admission.
 
 Each step states `kind`, source paths, transaction behavior, preconditions,
 expected native outcome, verification and recovery. Transactional failure rolls

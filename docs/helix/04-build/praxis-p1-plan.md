@@ -366,3 +366,20 @@ The existing embedded Python generator remains current because this separate
 portable module is not yet part of its interface. Native ledger execution,
 forward-history conflict/replay and the Python migration entry point remain
 next; this plan compiler does not close those gates or the full release goal.
+
+## Installed Python migration source verification — 2026-10-19
+
+The Python `umf_codegen` candidate now exposes the original migration compiler
+and complete-plan verifier through fixed embedded bridge calls. All12 portable
+cases agree, including initial JSON/YAML, appended tables and Unicode IDs;44
+self-consistently rehashed plan controls and4 invalid deadlines refuse while
+subprocesses, executable lookup and network access are forbidden. The original
+16 client and12 deployment cases retain their behavior. Source/sdist wheels
+match, manifest/stale-source/corrupt-payload gates pass and license metadata
+remains MIT OR Apache-2.0.
+
+The [installed migration packet](evidence/praxis-p2/installed-migration.json)
+records exact source/wheel identities and local qualification. Linux/macOS hosted
+CI includes the new corpus; publication and hosted results remain separate.
+Native durable ledger execution, approved-plan application and forward replay
+are the next required implementation step.

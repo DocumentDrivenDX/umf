@@ -124,6 +124,11 @@ jobs:
         run: >-
           python -I tests/codegen/deployment_probe.py
           --corpus /tmp/umf-deployment-corpus.json --report /tmp/umf-deployment-python.json
+      - run: bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
+      - name: Installed original migration compiler and rehashed tamper controls
+        run: >-
+          python -I tests/codegen/migration_probe.py
+          --corpus /tmp/umf-migration-corpus.json --report /tmp/umf-migration-python.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -133,7 +138,9 @@ jobs:
         if: always()
         with:
           name: deployment-python-${{ matrix.os }}
-          path: /tmp/umf-deployment-python.json
+          path: |
+            /tmp/umf-deployment-python.json
+            /tmp/umf-migration-python.json
 
 
   native-sessions:

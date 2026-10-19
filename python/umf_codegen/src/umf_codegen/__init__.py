@@ -56,6 +56,37 @@ class BlockedTableDeployment(TypedDict):
     diagnostics: list[TableDeploymentDiagnostic]
 
 
+class TableMigrationPredecessor(TypedDict):
+    id: str
+    digest: str
+
+
+class CompiledTableMigration(TypedDict):
+    status: Literal["compiled"]
+    plan: dict[str, object]
+    diagnostics: list[TableDeploymentDiagnostic]
+
+
+class BlockedTableMigration(TypedDict):
+    status: Literal["blocked"]
+    diagnostics: list[TableDeploymentDiagnostic]
+
+
+def compile_table_migration(*, migration_id: str, predecessor: TableMigrationPredecessor | None,
+                            previous_bundle: dict[str, object] | None, next_bundle: dict[str, object],
+                            timeout_seconds: float = 30) -> CompiledTableMigration | BlockedTableMigration:
+    """Compile an inert forward plan; native ledger and approval remain required."""
+    return cast(CompiledTableMigration | BlockedTableMigration,
+                execute({"id": migration_id, "predecessor": predecessor,
+                         "previous": previous_bundle, "next": next_bundle},
+                        timeout_seconds, operation="migration"))
+
+
+def verify_table_migration(plan: dict[str, object], *, timeout_seconds: float = 30) -> dict[str, object]:
+    """Recompile a complete plan; consistency cannot authenticate native history."""
+    return execute({"plan": plan}, timeout_seconds, operation="verify_migration")
+
+
 def compile_table_deployment(text: str, *, configuration: TableDeploymentConfiguration,
                              format: Literal["json", "yaml"] = "json", timeout_seconds: float = 30
                              ) -> CompiledTableDeployment | BlockedTableDeployment:
@@ -85,14 +116,19 @@ def generate_python_client(text: str, *, package: str, format: Literal["json", "
 __all__ = [
     "ActionSelection",
     "BlockedTableDeployment",
+    "BlockedTableMigration",
     "CompiledTableDeployment",
+    "CompiledTableMigration",
     "GeneratedFile",
     "GenerationError",
     "PythonClientResult",
     "RecordSelection",
     "TableDeploymentConfiguration",
     "TableDeploymentDiagnostic",
+    "TableMigrationPredecessor",
     "compile_table_deployment",
+    "compile_table_migration",
     "generate_python_client",
     "verify_table_deployment",
+    "verify_table_migration",
 ]

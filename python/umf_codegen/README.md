@@ -14,5 +14,27 @@ python -m umf_codegen check --schema plugin.json --package plugin_client --outpu
 `check` is read-only and exits nonzero for drift or refusal. `generate` refuses
 hand-edited output and unsafe paths. Pin release wheel hashes and the embedded
 runtime version in your build lock; a candidate wheel is not a release guarantee.
+
+The same wheel exposes inert `compile_table_deployment` / `verify_table_deployment`
+and `compile_table_migration` / `verify_table_migration` Python APIs. They call the
+original portable compiler in the same bounded embedded runtime:
+
+```python
+from umf_codegen import compile_table_migration, verify_table_migration
+
+result = compile_table_migration(
+    migration_id="001", predecessor=None,
+    previous_bundle=None, next_bundle=deployment_bundle,
+)
+if result["status"] == "compiled":
+    plan = verify_table_migration(result["plan"])
+```
+
+Initial and append-table plans retain both complete source bundles, require
+digest-bound host approval and report `nativeQualified:false`. Verification
+checks consistency; it cannot authenticate a supplied predecessor, apply DDL or
+establish installed ledger authority. Seed execution and changes to existing
+logical/native declarations remain explicit refusals in this plan subset.
+
 First-party files use MIT OR Apache-2.0. Bundled dependencies retain the notices
 in `_assets/notices/`; mini-racer retains its own ISC license and V8 notices.
