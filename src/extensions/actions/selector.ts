@@ -52,7 +52,7 @@ function admitInputs(document:Document,action:Action,inputsInput:ActionInputs,ou
 }
 export function compileActionSelector(documentInput:Document,actionInput:Action,frameInput:ActionFrame):CompiledActionSelector {
  const document=copyJson(documentInput) as unknown as Document,action=copyJson(actionInput) as unknown as Action,frame=copyJson(frameInput) as unknown as ActionFrame;
- admitAction(action);exactActionReferences(action);if(document.umf!=='0.8.0'||!validateDocument(document).valid)actionExpressionError('ACTION_SELECTOR_SOURCE','Expected valid exact core 0.8.0 document');
+ admitAction(action);exactActionReferences(action);if(document.umf!=='0.10.0'||!validateDocument(document).valid)actionExpressionError('ACTION_SELECTOR_SOURCE','Expected valid exact core 0.10.0 document');
  if(new Set(action.parameters.map(p=>p.id)).size!==action.parameters.length||new Set([...action.reads,...action.writes].map(f=>f.id)).size!==action.reads.length+action.writes.length)actionExpressionError('ACTION_SELECTOR_SYNTAX','Duplicate input/frame identity is ambiguous');
  if(![...action.reads,...action.writes].some(f=>canonicalSchemaJson(f)===canonicalSchemaJson(frame)))actionExpressionError('ACTION_SELECTOR_FRAME','Selector must retain an exact declared frame');
  exactActionObject(frame.record,['module','element']);

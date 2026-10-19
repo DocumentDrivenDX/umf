@@ -38,6 +38,30 @@ Hosts own authenticated identities, trusted context and complete fact supply.
 Consumers own enforcement. Native policy archives remain independently retained.
 The first interpreted subset is finite, nonrecursive and exact-typed.
 
+## Current core 0.10 computation subset
+
+The current catalog-program, private query-child and private native-disclosure
+profiles accept only actual core `0.10.0` source documents. They validate those
+sources with the core 0.10 semantic-reference validator; no older-envelope view
+is supplied to extension semantics or policy evaluation. Source identity, exact
+revision pins, field/key domains and complete authority/fact coverage remain
+required.
+
+For this selected profile, the document-level warning
+`EXPERIMENTAL_CORE_SEMANTIC_TYPES` at `/umf` is an envelope advisory. It alone
+does not make the selected scalar policy domains unresolved. The original
+validator result and diagnostics remain unchanged. Every other diagnostic still
+blocks the complete-source gate, including actual external `semanticTypes`
+references, unknown qualifiers and unresolved extensions. This does not install
+external semantic validators or claim semantic-type enforcement. UUID/128-bit
+policy domains remain outside the existing five-family scalar subset.
+
+The `umf.actions` semantic registry callback and static rule/selector compilers
+used by these profiles inspect the actual 0.10 document. This scope does not
+expand the separate action executor, public key-tuple receipt, schema-property
+authoring or native binding APIs to 0.10. The private computation profiles still
+claim neither database admission nor native enforcement authority.
+
 ## Normative Surface
 
 ### Identity and ontology
@@ -192,7 +216,7 @@ The representation schemas are `spec/extensions/security/schema.json` and
 `ontology.schema.json`; the policy schema is also embedded in the registered
 extension package. The document-scope extension payload is the policy itself.
 An explicit resolution argument carries `{ontology,documents}`; documents are
-`{revision,document}` entries, each an exact core 0.8.0 document. Neither URLs
+`{revision,document}` entries, each an exact current core 0.10.0 document. Neither URLs
 nor display names fetch or resolve a document. Duplicate document IDs, missing
 pins and revision disagreement refuse interpretation. Immutable revision
 provenance remains a host responsibility, not an authored string certificate.

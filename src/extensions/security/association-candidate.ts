@@ -17,7 +17,7 @@ export interface CandidateRecordAssociationPlan {
 export function resolveCandidateRecordAssociation(input:unknown,document:unknown,entities:unknown):CandidateRecordAssociationPlan {
  const s:any=copyJson(input),d:any=readCandidateCoreSource(document),choices:any=copyJson(entities);
  shape(s,['kind','type','keyId','endpoints']);if(s.kind!=='record-members')fail();ref(s.type);text(s.keyId);
- if(!['0.7.0','0.8.0'].includes(d.umf)||!Array.isArray(d.modules)||!Array.isArray(choices)||choices.length>256)fail();
+ if(d.umf!=='0.10.0'||!Array.isArray(d.modules)||!Array.isArray(choices)||choices.length>256)fail();
  const keys=new Map<string,string>();for(const e of choices){shape(e,['type','keyId']);ref(e.type);text(e.keyId);if(keys.has(id(e.type)))fail();keys.set(id(e.type),e.keyId);}
  function record(r:SecurityRef){ref(r);if(r.documentId!==d.id)fail();const ms=d.modules.filter((m:any)=>m.id===r.moduleId);if(ms.length!==1||!Array.isArray(ms[0].elements))return fail();const rs=ms[0].elements.filter((e:any)=>e.id===r.elementId);if(rs.length!==1||rs[0].kind!=='record'||!Array.isArray(rs[0].members)||!Array.isArray(rs[0].keys))return fail();return rs[0];}
  function selected(r:any,keyId:string){text(keyId);const ks=r.keys.filter((k:any)=>k.id===keyId);if(ks.length!==1)return fail();const k=ks[0];if(Object.keys(k).some(n=>!['id','name','fields','primary'].includes(n))||('primary'in k&&typeof k.primary!=='boolean')||!Array.isArray(k.fields)||!k.fields.length)return fail();const seen=new Set<string>();for(const f of k.fields){shape(f,['module','element']);text(f.module);text(f.element);const token=JSON.stringify([f.module,f.element]);if(seen.has(token)||!r.members.some((m:any)=>m.module===f.module&&m.element===f.element))fail();seen.add(token);}return k;}

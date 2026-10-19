@@ -39,7 +39,7 @@ export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:
  if(policy.ontology.documentId!==ontology.documentId||policy.ontology.revision!==ontology.revision)fail('Exact ontology pin required');
  const pins=new Map(packet.closure.pins.map((p:any)=>[p.documentId,p.revision]));
  if(pins.size!==ontology.documents.length||ontology.documents.some((p:any)=>pins.get(p.documentId)!==p.revision))fail('Ontology and core closure pins must coincide');
- for(const entry of root.documents as any[])if(entry.document.umf!=='0.8.0')fail('Known core0.8 source profile required');
+ for(const entry of root.documents as any[])if(entry.document.umf!=='0.10.0')fail('Known core0.10 source profile required');
  const entities=new Map<string,any>(ontology.entities.map((e:any)=>[id(e.type),e]));
  // Conservative descriptor/domain charge before any condition normalization.
  // It includes DTO refs and full Key component definitions, not merely AST counts.
