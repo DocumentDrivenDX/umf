@@ -23,7 +23,8 @@ const fail=(path:string,message:string):never=>{throw new UmfError('ACCESS_UNSUP
 const object=(v:unknown):Record<string,any>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,any>:{};
 const refId=(r:Ref)=>r.module+'.'+r.element;
 const keywords=new Set('False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case'.split(' '));
-const reserved=new Set(['Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
+const runtimeExports=['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','Page','Receipt','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'] as const;
+const reserved=new Set<string>([...runtimeExports,'Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
 function name(raw:string,kind:'class'|'field',path:string):string {
  const words=raw.replace(/([a-z0-9])([A-Z])/g,'$1_$2').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').split(/[_. -]+/);
  const value=kind==='class'?words.map(w=>w[0]?.toUpperCase()+w.slice(1)).join(''):words.map(w=>w.toLowerCase()).join('_');
@@ -169,7 +170,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   }
  }
  lines.push('AsyncClient = Client','AsyncActions = Actions','');
- const files=[{path:request.package+'/__init__.py',text:'# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import '+['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','Page','Receipt','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'].map(symbol=>symbol+' as '+symbol).join(', ')+'\n'},
+ const files=[{path:request.package+'/__init__.py',text:'# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import '+runtimeExports.map(symbol=>symbol+' as '+symbol).join(', ')+'\n'},
  {path:request.package+'/models.py',text:lines.join('\n')+'\n'},
  {path:request.package+'/_runtime.py',text:pythonRuntime},
  {path:request.package+'/source.json',text:request.text},

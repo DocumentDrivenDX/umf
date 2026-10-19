@@ -95,8 +95,12 @@ test('current Praxis handler declarations generate typed methods and omit MISSIN
 });
 
 // @covers US-091-AC7
-test('sync and async public client names remain reserved',()=>{
- for(const symbol of ['SyncClient','AsyncClient','SyncActions','AsyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError']){
+test('all runtime reexports and sync/async client names remain reserved',()=>{
+ const generated=generatePythonClient({text:original,package:'shop'});
+ const init=generated.files.find(file=>file.path==='shop/__init__.py')!.text;
+ const runtimeNames=init.match(/from \._runtime import ([^\n]+)/)![1]!.split(', ').map(binding=>binding.split(' as ')[1]!);
+ expect(runtimeNames).toEqual(expect.arrayContaining(['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown']));
+ for(const symbol of new Set([...runtimeNames,'SyncClient','AsyncClient','SyncActions','AsyncActions','SyncQuery'])){
   const text=changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='record').name=symbol;});
   expect(()=>generatePythonClient({text,package:'shop'})).toThrow();
  }
