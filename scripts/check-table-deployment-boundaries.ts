@@ -2,6 +2,7 @@
 import ts from 'typescript-api';
 import {readdir,readFile} from 'node:fs/promises';
 const owners:Record<string,readonly string[]>={
+ 'migration/index.ts':['../model/json','../model/document','../model/types','../compilation/bundle/hash','../table-deployment'],
  'types.ts':['../model/types','../extensions/tables'],
  'configuration.ts':['../model/json','../model/types','./types'],
  'sql.ts':['../model/schema-literals','../extensions/tables','./types','./configuration'],
@@ -26,6 +27,9 @@ export function checkTableDeploymentBoundaries(sources:Record<string,string>):st
 }
 if(import.meta.main){
  const base=new URL('../src/table-deployment/',import.meta.url),files=(await readdir(base)).filter(f=>f.endsWith('.ts'));
- const sources=Object.fromEntries(await Promise.all(files.map(async f=>[f,await readFile(new URL(f,base),'utf8')]))),errors=checkTableDeploymentBoundaries(sources);
- if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log('Table deployment boundaries: '+files.length+' pure browser modules; inert SQL; no host I/O');
+ const sources=Object.fromEntries(await Promise.all(files.map(async f=>[f,await readFile(new URL(f,base),'utf8')])));
+ const migration=new URL('../src/table-migration/',import.meta.url);
+ for(const file of (await readdir(migration)).filter(f=>f.endsWith('.ts')))sources['migration/'+file]=await readFile(new URL(file,migration),'utf8');
+ const errors=checkTableDeploymentBoundaries(sources);
+ if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log('Table deployment boundaries: '+Object.keys(sources).length+' pure browser modules; inert SQL; no host I/O');
 }

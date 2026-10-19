@@ -412,6 +412,39 @@ digest, bundle digests, ordered step outcomes and final admission status. Replay
 of an applied migration verifies every recorded digest; edits, reordering,
 missing predecessors, divergent histories and live schema drift refuse.
 
+The initial portable `compileTableMigration` implementation produces inert plans
+only. Its exact request is `{id,predecessor,previous,next}`: previous is the full
+verified deployment bundle or initial null; next is the full verified target
+bundle. A predecessor is exact `{id,digest}` or initial null. Both bundles retain
+their original source/configuration. IDs are nonempty, NUL-free and at most256
+UTF-8 bytes; predecessor SHA-256 values are lower-case64-character hex. Initial
+and predecessor-null states must agree. The result adds version, RFC8785
+canonicalization, from/to bundle digests, phased steps, `seedExecution:"none"`,
+`requiresApproval:true`, `nativeQualified:false` and a digest over every other
+member. A plan exceeding24MB refuses. `verifyTableMigration` recompiles both
+source bundles and the entire plan, including self-consistently rehashed edits.
+Consistency verification does not authenticate a supplied predecessor; the
+trusted native ledger and selected source authority remain required.
+
+This plan-generation subset supports initial deployment and appended tables.
+Root/module metadata, existing elements/relationships and native tables,
+columns/Keys/checks/FKs/indexes/policies must remain exact. New tables retain the
+target deployment compiler's original step ordering; existing steps are never
+re-executed. Namespace/role changes, table removal, edits to existing logical or
+native definitions, metadata-only/no-op revisions and seed execution refuse with
+diagnostics. Refusal is not a partial migration or a generated destructive plan.
+Every compiled candidate requires approval; compilation cannot grant it.
+
+Each phased step retains its original deployment identity/kind/source path/SQL
+and required transaction. Its before-plan precondition is either an empty private
+schema or the exact installed source cohort. Its before-commit expected outcome
+is the complete next source catalog, verified with native catalog, privileges and
+role scope; recovery is full transaction rollback. This captures atomic final
+verification without claiming each intermediate DDL statement alone matches the
+complete target. Browser/Bun plan parity does not qualify native execution,
+durable history, concurrency or recovery, and the Python entry point remains a
+separate toolchain extension.
+
 Each step states `kind`, source paths, transaction behavior, preconditions,
 expected native outcome, verification and recovery. Transactional failure rolls
 back its effects. A nontransactional concurrent-index step MUST track native

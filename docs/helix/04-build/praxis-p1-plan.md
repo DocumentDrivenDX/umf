@@ -348,3 +348,21 @@ history remain next. Administrative observations do not admit normal operations,
 freeze native catalogs or qualify identity sequences. Complete Weft lifecycle
 methods, native codecs, generated client conversion and consumer/release gates
 remain required by the active full goal.
+
+## Inert forward migration plans — 2026-10-19
+
+The portable `compileTableMigration`/`verifyTableMigration` now retain and reverify
+both source deployment bundles, explicit predecessor identity, full-plan digest
+and phased transactional preconditions/outcomes/recovery. Initial deployment and
+append-table candidates preserve original compiler statement order. Existing
+logical/native declarations cannot change in this subset. Seed execution,
+destructive/metadata-only revisions and role/namespace changes refuse. Every
+compiled plan requires digest-bound approval; none grants execution authority.
+
+The source-bound [plan packet](evidence/praxis-p2/forward-plan.json) records Bun
+tests, exact machine-schema and rehashed-tamper refusals, real Chromium parity for
+initial/append candidates, strict TypeScript and pure compilation boundaries.
+The existing embedded Python generator remains current because this separate
+portable module is not yet part of its interface. Native ledger execution,
+forward-history conflict/replay and the Python migration entry point remain
+next; this plan compiler does not close those gates or the full release goal.

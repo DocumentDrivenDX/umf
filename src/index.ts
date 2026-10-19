@@ -507,3 +507,5 @@ export {generatePythonClient,type PythonClientRequest,type PythonClientResult} f
 export * from './extensions/tables';
 // Inert initial deployment compilation; hosts retain native admission authority.
 export * from './table-deployment';
+// Inert source-bound forward plans; no ledger or execution authority.
+export * from './table-migration';
