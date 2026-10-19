@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {evaluationFixture} from './evaluation-fixture';
 import {ref} from './fixture';
 import {migrateCandidateSecurityOntology} from '../../src/extensions/security/ontology-migration-candidate';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getParquetArrowSchema} from './arrow-schema';
 import {inspectParquetContainers} from './containers';
 import {decodeParquetFooter,type ParquetWireValue} from './footer';

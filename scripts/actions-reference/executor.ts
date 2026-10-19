@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../src/model/json';
 import {ReferenceAttemptJournal,type ReferenceAttemptSink} from './attempts';
 import {ReferenceCommitUncertain,referenceKnownAbort} from './transaction-failures';

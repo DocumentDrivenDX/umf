@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import fixture from '../fixtures/core/semantic-types.json';
 import {copyJson} from '../src/model/json';
 import type {Document,CoreSemanticTypeReference} from '../src/model/types';

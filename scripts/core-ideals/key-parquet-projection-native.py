@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native empty-file schema acceptance and data-writing counterexamples."""
 import json,hashlib
 from decimal import Decimal

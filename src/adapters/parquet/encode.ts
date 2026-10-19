@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {ParquetWireKind,ParquetWireValue} from './footer';
 import {UmfError} from '../../model/types';
 const fields:Record<string,string[]>={bool:['kind','value'],i8:['kind','value'],i16:['kind','value'],i32:['kind','value'],i64:['kind','value'],double:['kind','bits'],binary:['kind','hex'],uuid:['kind','hex'],list:['kind','elementType','items'],set:['kind','elementType','items'],map:['kind','keyType','valueType','entries'],struct:['kind','fields']};

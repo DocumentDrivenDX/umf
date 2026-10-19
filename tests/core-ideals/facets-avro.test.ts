@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {classifyAvroFacets as classify, recoverAvroFacetSource as recover, avroFacetsPackage, AVRO_FACETS_EXTENSION, type AvroFacetRequest} from '../../src/core-ideals/facets-avro';

@@ -109,10 +109,14 @@ without applying changes and remains advisory.
 
 ### Keep one plugin calling convention
 
-Use async methods for portable plugin code. Both in-process and remote bindings
-implement the same transport Protocol; the consumer adapts synchronous backends
-using its scheduling policy. Plugin imports and call sites stay unchanged.
-UMF does not manage event loops or ship a production transport.
+Generate explicit synchronous and asynchronous clients from the same operation
+model and wire contract. Client/Actions remain the async compatibility names;
+AsyncClient/AsyncActions make that mode explicit, while SyncClient/SyncActions
+use a synchronous transport Protocol. Query binding selects typed synchronous
+or asynchronous terminals. Scheduling mode is explicit at the application
+boundary; changing storage within that mode does not change application calls.
+Neither mode manages event loops or embeds a production transport. This amends
+the original async-only convention following the 2026-10-18 Praxis P1 request.
 
 ### Preserve values and make errors useful
 

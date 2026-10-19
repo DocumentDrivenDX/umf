@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlAvailabilitySource,postgresqlNullabilityCases} from '../../scripts/core-ideals/nullability-postgresql-cases';
 import {classifyPostgresqlNullability, verifyPostgresqlNullabilityClassification, recoverPostgresqlNullabilitySource, postgresqlNullabilityPackage, POSTGRESQL_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';

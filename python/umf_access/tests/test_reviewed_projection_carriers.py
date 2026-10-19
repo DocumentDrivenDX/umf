@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native projection shapes never grant additional parameter carriers."""
 
 from __future__ import annotations

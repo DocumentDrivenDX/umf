@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,type CoreCardinalityRequest} from '../../src/model/cardinality';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';

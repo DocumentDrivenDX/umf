@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 export {};
 const node=(await Bun.file('spec/core/native-json.schema.json').json()).$defs.node,str={type:'string'},tree={$ref:'#/$defs/node'};

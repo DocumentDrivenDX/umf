@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {importPostgresqlSql} from '../../src/adapters/postgresql';

@@ -1,2 +1,3 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importDeltaTable,exportDeltaTable,renameDeltaMappedField} from '../src';
 for(const mode of ['name','id']){const base='fixtures/delta/mapped-data/'+mode+'/',text=await Bun.file(base+'context.json').text();let doc=importDeltaTable(text,{id:mode});for(const [fieldPointer,name] of [['/fields/0','order_id'],['/fields/1','area'],['/fields/2/type/fields/0','total']])doc=renameDeltaMappedField(doc,{fieldPointer:fieldPointer!,name:name!,uninterpretedReferences:'preserve-and-report'}).document;await Bun.write(base+'renamed.json',exportDeltaTable(doc));}console.log({modes:2,renames:6});

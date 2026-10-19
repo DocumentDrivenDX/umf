@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 const root='node_modules/@typespec/compiler';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Conservative candidate live-read closure; backend clock/writer mapping is not established. */
 import {requireIssuedCandidateSecurityPolicyChecks} from './policy-checks-candidate';
 const refId=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);

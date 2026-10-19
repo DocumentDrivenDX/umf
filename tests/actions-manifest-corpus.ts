@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type * as API from '../src/index';
 import {createPlanCorpusFixture,corpusCapabilities} from './actions-plan-corpus';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';

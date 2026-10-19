@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned Parquet collection-identity counterexamples and original byte fixtures."""
 import json,hashlib
 from pathlib import Path

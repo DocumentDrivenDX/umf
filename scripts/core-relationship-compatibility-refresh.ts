@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only compatibility replay. Historical records supply command inventory,
  * never passing outcomes for the current implementation. */
 import assert from 'node:assert/strict';

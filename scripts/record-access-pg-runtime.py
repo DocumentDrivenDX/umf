@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Qualification-only pass-through capture of actual Psycopg runtime calls.
 
 No SQL is rewritten, no parameter values are retained, and no native result or

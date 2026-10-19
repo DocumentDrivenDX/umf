@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {shapeAvro,shapeParquet} from './model-shape-schema';
 import {UmfError,type Json} from '../model/types';
 import type {Resolved128Layout,Resolved128Field} from '../extensions/binding/bit128-layout';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Real-browser verification entrypoint; full acceptance remains a separate gate. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,test,expect} from 'bun:test';
 import {importTableSpec, exportTableSpec, importTableSpecBundle, exportTableSpecBundle} from '../../src/adapters/tablespec';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';

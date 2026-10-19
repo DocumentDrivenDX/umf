@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Proposed logical Weft renderer goldens; no compiler/native execution claims.
 
 Base syntax: Weft SQL 0.2 EBNF at 94b2de5e. Extended predicates/order:
@@ -312,7 +313,7 @@ class LogicalFormCoverage(unittest.TestCase):
 
     # @covers US-082-AC1
     def test_absent_optional_omits_whole_top_level_filter(self):
-        from pydantic import MISSING
+        from umf_access.types import MISSING
         from umf_access.dsl import if_present
 
         @query

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Action execution ABI. Hosts supply executors; this module performs no I/O.
 
 Original JSON and transport bytes are retained exactly. Recovery custody is an

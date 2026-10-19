@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent C++ reads of UMF-renamed complete IPC datasets."""
 import json
 from pathlib import Path

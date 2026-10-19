@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parseNativeJson} from '../src/model/native-json';
 import {chromium} from 'playwright';
 const numericCases=await Bun.file('native/jsonld/examples/numeric-cases.json').json();for(const c of numericCases){if(c.expected)c.expectedTree=parseNativeJson(c.expected);if(c.editedExpected)c.editedTree=parseNativeJson(c.editedExpected);}

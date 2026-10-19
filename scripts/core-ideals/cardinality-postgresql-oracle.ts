@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only acceptance entrypoint for the qualified PostgreSQL Cardinality binding. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

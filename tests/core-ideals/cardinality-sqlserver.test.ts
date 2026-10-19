@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, getSqlServerConstraintMetadata, readJsonValue, writeJsonValue, copyJson} from '../../src';
 import {classifySqlServerCardinality, recoverSqlServerCardinalitySource} from '../../src/core-ideals/cardinality-sqlserver';

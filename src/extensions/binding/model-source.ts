@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../model/json';
 import {UmfError,type Document} from '../../model/types';
 import {inspectBit128Binding,type Bit128BindingPayload} from './bit128';

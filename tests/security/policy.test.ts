@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource,securityRegistry,securityPackage} from '../../src/extensions/security/policy';
 import {validateDocument} from '../../src/validation/document';

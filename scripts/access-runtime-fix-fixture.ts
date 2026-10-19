@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only actual source fixture for the installed two-wheel runtime proof. */
 import {mkdir,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';

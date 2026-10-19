@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {nullabilityTableSpecCases,tableSpecAvailabilitySource} from '../../scripts/core-ideals/nullability-tablespec-cases';
 import {classifyTableSpecNullability, verifyTableSpecNullabilityClassification, recoverTableSpecNullabilitySource, declareCoreNullability, writeJsonValue, readJsonValue, copyJson, importTableSpecBundle, classifyTableSpecField, TABLESPEC_NULLABILITY_EXTENSION, tableSpecNullabilityPackage, Registry, validateDocument} from '../../src';

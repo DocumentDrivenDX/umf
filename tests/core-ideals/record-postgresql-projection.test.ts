@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlRecordCase,postgresqlRecordProjectionCases} from '../../scripts/core-ideals/record-postgresql-projection-cases';
 import {projectRecordToPostgresql, recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';

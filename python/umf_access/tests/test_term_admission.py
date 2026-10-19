@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native term obligations must refuse mismatches before releasing rows."""
 
 from __future__ import annotations

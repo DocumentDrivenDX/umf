@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Publish current compatibility evidence only after native replay and regression pass.
 Historical acceptance counts/limits are retained, with explicit revalidation provenance.
 This command does not admit Relationship or close its core implementation task.

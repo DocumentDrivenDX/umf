@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertJsonDataEqual} from './json-data-assert';
 /** Independent native execution of authored facet projection output. */
 import assert from 'node:assert/strict';

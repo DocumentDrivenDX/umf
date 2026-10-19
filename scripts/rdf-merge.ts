@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importRdfNQuads,importRdfTurtle,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,readDocument,writeDocument} from '../src';
 const cases=[],anchorRaw=await Bun.file('native/rdf/examples/empty-graphs.trig').text(),anchor=importRdfTriG(anchorRaw,{id:'same-id',baseIRI:'https://example.org/schema.trig'});
 await Bun.write('fixtures/rdf/merge/anchor.trig',exportRdfTriG(anchor));

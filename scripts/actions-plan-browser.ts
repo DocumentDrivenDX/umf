@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {runActionPlanCorpus} from '../tests/actions-plan-corpus';
 import * as api from '../src/index';

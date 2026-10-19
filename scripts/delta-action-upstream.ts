@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureDeltaLog,inspectDeltaActions} from '../src';
 const base='fixtures/delta/upstream/',manifest=await Bun.file(base+'manifest.json').json(),results=[];
 for(const f of manifest.files){if(!f.path.endsWith('.json'))continue;const bytes=new Uint8Array(await Bun.file(base+f.path).arrayBuffer());if(new Bun.CryptoHasher('sha256').update(bytes).digest('hex')!==f.sha256)throw Error('Hash changed');const text=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(bytes),r=inspectDeltaActions(captureDeltaLog(text,{id:f.path}));results.push({path:f.path,valid:r.knownShapesValid,diagnostics:r.diagnostics.filter(d=>d.code!=='DELTA_LOG_UNVERIFIED'&&d.code!=='DELTA_ACTION_CONTEXT_UNVERIFIED')});}

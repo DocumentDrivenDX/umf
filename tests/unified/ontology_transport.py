@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent in-memory ontology host for the generated transport contract.
 
 The graph is stored as nodes and labeled edges. It intentionally does not use
@@ -143,6 +144,9 @@ class OntologyTransport:
         return rows
 
     async def execute(self, request: dict[str, Any]) -> dict[str, Any]:
+        return self.execute_sync(request)
+
+    def execute_sync(self, request: dict[str, Any]) -> dict[str, Any]:
         self.calls.append(request)
         response: dict[str, Any] = {"schema": request["schema"]}
         if request["kind"] == "read":

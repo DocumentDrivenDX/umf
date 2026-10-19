@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Canonical proposed ontology0.2; retained narrower prototype plus action purposes."""
 import copy,json
 from pathlib import Path

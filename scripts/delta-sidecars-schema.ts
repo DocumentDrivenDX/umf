@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const schema=await Bun.file('spec/extensions/delta-log/reconciliation.schema.json').json(),object=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false}),array=(items:any)=>({type:'array',items}),row={type:'integer',minimum:1},index={type:'integer',minimum:0};
 schema.$id='urn:umf:delta-log:sidecar-reconciliation:0.1.0';schema.required.push('checkpoint','sidecars');

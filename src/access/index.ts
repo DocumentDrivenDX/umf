@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readDocument} from '../model/document';
 import {CURRENT_CORE_VERSION,UmfError, type Document, type Element} from '../model/types';
 import {admitAction} from '../extensions/actions/structure';
@@ -22,7 +23,7 @@ const fail=(path:string,message:string):never=>{throw new UmfError('ACCESS_UNSUP
 const object=(v:unknown):Record<string,any>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,any>:{};
 const refId=(r:Ref)=>r.module+'.'+r.element;
 const keywords=new Set('False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case'.split(' '));
-const reserved=new Set(['Any','ClassVar','Literal','RuntimeClient','Client','Actions','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
+const reserved=new Set(['Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
 function name(raw:string,kind:'class'|'field',path:string):string {
  const words=raw.replace(/([a-z0-9])([A-Z])/g,'$1_$2').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').split(/[_. -]+/);
  const value=kind==='class'?words.map(w=>w[0]?.toUpperCase()+w.slice(1)).join(''):words.map(w=>w.toLowerCase()).join('_');
@@ -133,7 +134,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  const metadata=Object.fromEntries(records.map(r=>[r.id,{fields:r.fields,key:r.key,key_id:r.keyId,selected:r.selected}]));
  const actionMetadata=Object.fromEntries(actions.map(a=>[a.id,{parameters:a.parameters,affected:a.affected,declaration:a.raw}]));
  const description={contract:'umf.access/1',umf:doc.umf,sourceDigest,records:metadata,relationships:rels,actions:actionMetadata,limits:{page:100,getManyKeys:100}};
- const lines=['# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, Query, Field, Relationship, Missing, MISSING, Transport, Receipt, ExactTimestamp, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
+ const lines=['# SPDX-License-Identifier: MIT OR Apache-2.0','# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, SyncClient as RuntimeSyncClient, Query, SyncQuery, Field, Relationship, Missing, MISSING, Transport, SyncTransport, AsyncTransport, Receipt, ExactTimestamp, AccessError, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
  for(const r of records){
   lines.push('@dataclass(frozen=True)',`class ${r.python}Key:`);
   for(const f of r.key)lines.push(`    ${f.python}: ${type(f,false)}`);
@@ -153,14 +154,22 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   }
   lines.push('',`${r.python}.c = ${r.python}Columns()`,`${r.python}.objects = Query(${py(r.id)})`,`cast(dict[str, Any], _METADATA[${py(r.id)}]).update(row_type=${r.python}, key_type=${r.python}Key)`,'');
  }
- lines.push('class Client(RuntimeClient):','    def __init__(self, transport: Transport) -> None:','        super().__init__(transport, SOURCE_DIGEST, _METADATA, _ACTIONS)','','class Actions:','    def __init__(self, client: Client) -> None:','        self._client = client','');
- for(const a of actions){
-  const params=a.parameters.map(p=>p.python+': '+(p.record?records.find(r=>r.id===p.record)!.python+'Key':type(p.field,false))+(p.required?'':' | Missing = MISSING'));
-  const affected=a.affected.map(id=>records.find(r=>r.id===id)!.python+'Key').join(' | ')||'None';
-  lines.push(`    async def ${a.python}(self, *, ${[...params,'idempotency_key: str | None = None'].join(', ')}) -> Receipt[${affected}, None]:`,
-   `        return cast(Receipt[${affected}, None], await self._client.apply(${py(a.id)}, {${a.parameters.map(p=>py(p.python)+': '+p.python).join(', ')}}, idempotency_key=idempotency_key))`,'');
+ for(const mode of [{client:'Client',base:'RuntimeClient',actions:'Actions',async:true},{client:'SyncClient',base:'RuntimeSyncClient',actions:'SyncActions',async:false}]){
+  const transport=mode.async?'Transport':'SyncTransport';
+  lines.push(`class ${mode.client}(${mode.base}):`,`    def __init__(self, transport: ${transport}) -> None:`,
+   '        super().__init__(transport, SOURCE_DIGEST, _METADATA, _ACTIONS)','',`class ${mode.actions}:`,
+   `    def __init__(self, client: ${mode.client}) -> None:`,
+   `        if not isinstance(client, ${mode.base}): raise AccessError('CLIENT_TYPE')`,
+   '        self._client = client','');
+  for(const a of actions){
+   const params=a.parameters.map(p=>p.python+': '+(p.record?records.find(r=>r.id===p.record)!.python+'Key':type(p.field,false))+(p.required?'':' | Missing = MISSING'));
+   const affected=a.affected.map(id=>records.find(r=>r.id===id)!.python+'Key').join(' | ')||'None';
+   lines.push(`    ${mode.async?'async ':''}def ${a.python}(self, *, ${[...params,'idempotency_key: str | None = None'].join(', ')}) -> Receipt[${affected}, None]:`,
+    `        return cast(Receipt[${affected}, None], ${mode.async?'await ':''}self._client.apply(${py(a.id)}, {${a.parameters.map(p=>py(p.python)+': '+p.python).join(', ')}}, idempotency_key=idempotency_key))`,'');
+  }
  }
- const files=[{path:request.package+'/__init__.py',text:'from .models import *\nfrom ._runtime import AccessError, Unsupported, SchemaMismatch, PreconditionFailed, WriteOutcomeUnknown, Page, Receipt, ExactTimestamp, MISSING, Missing, Transport\n'},
+ lines.push('AsyncClient = Client','AsyncActions = Actions','');
+ const files=[{path:request.package+'/__init__.py',text:'# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import '+['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','Page','Receipt','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'].map(symbol=>symbol+' as '+symbol).join(', ')+'\n'},
  {path:request.package+'/models.py',text:lines.join('\n')+'\n'},
  {path:request.package+'/_runtime.py',text:pythonRuntime},
  {path:request.package+'/source.json',text:request.text},

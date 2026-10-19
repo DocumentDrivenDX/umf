@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Rebuild the bounded legal corpus from local PDFs; no retrieval or OCR.
 Requires pypdf 6.10.0. Original bytes are never rewritten.
 """

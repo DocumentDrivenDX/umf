@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Typed, capture-only logical expressions."""
 
 from __future__ import annotations
@@ -8,7 +9,8 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import Any, Generic, Literal, Never, TypeVar, cast, overload
 
-from pydantic import MISSING, BaseModel
+from pydantic import BaseModel
+from ..types import MISSING
 
 from ._context import CaptureError, require_capture
 from ._nodes import FieldRef, KeyLiteral, Node, RecordRef, literal, owner_identity

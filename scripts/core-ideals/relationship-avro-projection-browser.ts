@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipAvroProjectionCases} from './relationship-avro-projection-cases';
 import {projectRelationshipToAvro} from '../../src/core-ideals/relationship-avro-projection';
 import assert from 'node:assert/strict';

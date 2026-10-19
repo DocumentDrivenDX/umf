@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,join} from 'node:path';
 import {mkdir,cp,rm} from 'node:fs/promises';
 const source=import.meta.dir,site=resolve(source,'../microsite/dist'),repo=resolve(source,'../../../..');
 const output=resolve(process.argv[2]??join(repo,'dist/schema-browser'));
 await rm(output,{recursive:true,force:true});await mkdir(join(output,'assets'),{recursive:true});
-for(const name of ['package.json','README.md','LICENSE-MIT','LICENSE-APACHE','catalog.schema.json','HOST_CONTRACT.md','CHANGELOG.md'])await cp(join(source,name),join(output,name));
+for(const name of ['package.json','README.md','LICENSE.md','LICENSE-MIT','LICENSE-APACHE','NOTICE','catalog.schema.json','HOST_CONTRACT.md','CHANGELOG.md'])await cp(join(source,name),join(output,name));
 await cp(join(source,'examples'),join(output,'examples'),{recursive:true});
 await cp(join(source,'explorer.css'),join(output,'assets/explorer.css'));await cp(join(source,'components.css'),join(output,'assets/components.css'));
 const {staticValidators}=await import('./static-validators');const validators=join(output,'fixed-validators.js');await staticValidators(validators);const optionalValidators=join(output,'optional-validators.js');await staticValidators(optionalValidators,true);

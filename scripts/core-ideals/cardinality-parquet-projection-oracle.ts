@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {projectCardinalityToParquet, exportParquetCapture} from '../../src';
 import {parquetCardinalityProjectionCases} from './cardinality-parquet-projection-cases';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Authored non-PII rows, independent PyArrow Parquet writer, pinned Iceberg field IDs."""
 import hashlib,json,struct
 from decimal import Decimal

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,DddGraphqlPolicy} from '../../src';
 import fixture from '../../fixtures/projections/ddd-graphql/case.json';
 import shared from '../../fixtures/projections/ddd-authored-relationships/base.json';

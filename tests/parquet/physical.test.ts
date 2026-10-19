@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {captureParquet,exportParquetCapture,decodeParquetPhysical,coreSchema,parquetPhysicalSchema} from '../../src';
 import {decodeParquetPlain} from '../../src/adapters/parquet/plain';

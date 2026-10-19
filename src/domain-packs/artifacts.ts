@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Original resource collections; semantic kind, media type and browser view are independent. */
 export function generateArtifactCollectionSchema(){
  const text={type:'string',minLength:1};

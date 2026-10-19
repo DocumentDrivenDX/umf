@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {ReferenceHandlerRegistry,type ReferenceHandlerDeployment} from './handlers';
 import {referenceCreationRelationships} from './creation-relationships';
 import {admitReferenceInputs} from './inputs';

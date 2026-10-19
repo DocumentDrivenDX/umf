@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {semanticTypeReferenceSchema} from '../generated/core-model';
 import Ajv2020 from 'ajv/dist/2020';
 import {canonicalJson} from './json-equality';

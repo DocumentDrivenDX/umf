@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {verifyKeyNativeRoundTrips} from '../../scripts/core-ideals/key-native-roundtrips';
 test('five-system native Key observations preserve unknown meanings and exact archives without author inference',async()=>{

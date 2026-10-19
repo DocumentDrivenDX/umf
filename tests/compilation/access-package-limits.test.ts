@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {packageAccessFiles} from '../../src/compilation/bundle/index';
 import type {Disposition} from '../../src/compilation/ir/index';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlRelationshipCases} from './relationship-postgresql-cases';

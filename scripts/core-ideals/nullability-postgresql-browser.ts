@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {postgresqlNullabilityCases} from './nullability-postgresql-cases';
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';

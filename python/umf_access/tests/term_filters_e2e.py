@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual generated DSL -> Weft catalog -> PostgreSQL term-filter witnesses.
 
 Run explicitly with a freshly generated search fixture and an owned receipt

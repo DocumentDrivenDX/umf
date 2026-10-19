@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Synthetic current-core fixture for active operation/projection behavior.
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

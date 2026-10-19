@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const graph=await Bun.file('spec/extensions/dbt-manifest/graph-schema.json').json(),str={type:'string'},node={...graph.properties.nodes.items,properties:{...graph.properties.nodes.items.properties,depth:{type:'integer',minimum:0,maximum:128}},required:[...graph.properties.nodes.items.required,'depth']};
 const object=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false});

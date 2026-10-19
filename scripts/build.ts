@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 const metamodel=Bun.spawn([process.execPath,'scripts/metamodel/build.ts'],{stdout:'inherit',stderr:'inherit'});if(await metamodel.exited)process.exit(1);
 const identity=Bun.spawn([process.execPath,'scripts/actions-plan-identity.ts'],{stdout:'inherit',stderr:'inherit'});if(await identity.exited)process.exit(1);
 import { rm, cp } from 'node:fs/promises';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent fastavro role checks and cross-codec authored projection samples."""
 import io
 import json

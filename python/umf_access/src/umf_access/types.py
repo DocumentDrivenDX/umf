@@ -1,11 +1,19 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Shared generated-model ABI. Imports perform no host operations."""
 
 import re
 from dataclasses import dataclass
-from typing import ClassVar, Generic, TypeAlias, TypeVar, final
+from typing import TYPE_CHECKING, ClassVar, Generic, TypeAlias, TypeVar, final
 
 # Explicit public re-export is required by static consumers.
-from pydantic import MISSING as MISSING  # noqa: PLC0414
+if TYPE_CHECKING:
+    # Both supported releases expose this static alias to the same sentinel.
+    from pydantic.experimental.missing_sentinel import MISSING as MISSING
+else:
+    try:
+        from pydantic import MISSING as MISSING
+    except ImportError:
+        from pydantic.experimental.missing_sentinel import MISSING as MISSING
 from pydantic import BaseModel, ConfigDict
 
 from .generated_core import CURRENT_CORE_VERSION, CoreVersion

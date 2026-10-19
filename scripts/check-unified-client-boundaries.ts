@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Checks the portable generator and the shipped Python template, without importing it. */
 import ts from 'typescript-api';
 import {readFile,readdir} from 'node:fs/promises';
@@ -17,6 +18,6 @@ for(const file of await readdir(new URL('../src/access',import.meta.url))){
  visit(source);
 }
 const imports=[...pythonRuntime.matchAll(/^[ \t]*(?:from|import) ([\w.]+)/gm)].map(m=>m[1]!.split('.')[0]);
-const stdlib=new Set(['__future__','asyncio','collections','dataclasses','datetime','decimal','enum','typing','uuid','base64','re']);
+const stdlib=new Set(['__future__','asyncio','collections','dataclasses','datetime','decimal','enum','typing','uuid','base64','re','inspect']);
 for(const module of imports)if(!stdlib.has(module!))errors.push('Python template: unapproved import '+module);
 if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log('Unified client boundaries: portable generator; stdlib-only request builders; no SQL compiler or host I/O');

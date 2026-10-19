@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,copy
 from pathlib import Path
 from pyiceberg.schema import Schema

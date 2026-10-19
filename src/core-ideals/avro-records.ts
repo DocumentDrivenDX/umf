@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getAvroNode,exportAvroBundle} from '../adapters/avro';
 import {type Document} from '../model/types';import {type NativeJson} from '../model/native-json';
 /** Declaration traversal only: never follow named references or inspect arbitrary annotations. */

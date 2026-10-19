@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getOwlExpressionView,getOwlQuads,importOwlTurtle} from '../src';
 const rows=[];for(const file of ['primer-corrected','authored','expressions']){const doc=importOwlTurtle(await Bun.file('native/owl/'+file+'.ttl').text(),{id:file,baseIRI:'https://example.org/'}),qs=getOwlQuads(doc),predicates=['intersectionOf','unionOf','oneOf','complementOf','datatypeComplementOf','inverseOf','onDatatype','onProperty','onProperties'].map(p=>'http://www.w3.org/2002/07/owl#'+p),nodes=[...new Map(qs.filter(q=>predicates.includes(q.predicate.value)).map(q=>[JSON.stringify(q.subject),q.subject])).values()];const summary=[];
 for(const node of nodes){const e=getOwlExpressionView(doc,node).expression;summary.push({kind:e.kind,size:'members'in e?e.members.length:'facets'in e?e.facets.length:1});}summary.sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));rows.push({file,summary});}

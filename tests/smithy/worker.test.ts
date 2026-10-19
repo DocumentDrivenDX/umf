@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createSmithyWorkerBackend,assembleSmithyDocument,importSmithySources} from '../../src';
 const files={'model.smithy':'$version: "2"\nnamespace test\nstring X'};

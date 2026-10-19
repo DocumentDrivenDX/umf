@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Authored native edge probes in a disposable, network-isolated PostgreSQL instance.
 export {};
 const name='umf-pg-avro-'+crypto.randomUUID(),image=(await Bun.file('native/postgresql/catalog/image.json').json()).reference;

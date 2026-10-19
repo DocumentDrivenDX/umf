@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
 const base='fixtures/dbt/rich/',report=await Bun.file(base+'results.json').json(),native=await Bun.file(base+'oracle-results.json').json(),input={raw:await Bun.file(base+'manifest.json').text(),edits:report.edits,expected:native.results,sourceHash:createHash('sha256').update(await Bun.file(base+'roundtrip.json.json').bytes()).digest('hex')};

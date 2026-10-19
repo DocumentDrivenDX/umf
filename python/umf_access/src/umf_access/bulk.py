@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Bulk plan delegation; engines retain original control and attempt authority."""
 
 from __future__ import annotations

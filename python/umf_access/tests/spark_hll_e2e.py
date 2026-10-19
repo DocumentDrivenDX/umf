@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real generated public-CLI Spark HLL++ correspondence and exact-cardinality observations.
 
 Run with an owned generated fixture directory and the repository fixture source.

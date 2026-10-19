@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {evaluateRecordBody} from './internal/record-body';
 import {copyJson} from './json';

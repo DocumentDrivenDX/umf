@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Red helper tests against a proposed ABI; generator integration still pending."""
 
 import unittest

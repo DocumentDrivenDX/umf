@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Enforce current-core authority boundaries independently of generated output. */
 import ts from 'typescript-api';
 import {posix,resolve} from 'node:path';

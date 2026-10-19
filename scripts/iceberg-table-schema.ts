@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 export {};
 const obj=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:true}),arr=(items:any)=>({type:'array',items}),str={type:'string'},i32={type:'integer',minimum:-2147483648,maximum:2147483647},i64={type:'integer',format:'int64'},map=(v:any)=>({type:'object',additionalProperties:v}),nullable=(v:any)=>({anyOf:[v,{type:'null'}]}),ref=(s:string)=>({$ref:'#/$defs/'+s});

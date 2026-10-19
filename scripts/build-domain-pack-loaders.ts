@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,join} from 'node:path';
 import {readFile,mkdir,rm,cp} from 'node:fs/promises';
 import {generateDomainPackLoaderSchema} from '../src/domain-packs/loader';

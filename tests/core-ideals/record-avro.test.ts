@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';import {avroFieldCases} from '../../scripts/core-ideals/avro-field-cases';import {classifyAvroRecord, recoverAvroRecordBundle} from '../../src/core-ideals/avro-record';import {avroRecords} from '../../src/core-ideals/avro-records';import {importAvroSchema, getAvroFieldMetadata} from '../../src/adapters/avro';import {declareCoreElementKind} from '../../src/model/field-kind';import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 test('declared empty, nested, recursive and dependency records retain ordered direct members',()=>{
  for(const c of avroFieldCases){const source=importAvroSchema(c.schema,{id:c.id,dependencies:c.dependencies});

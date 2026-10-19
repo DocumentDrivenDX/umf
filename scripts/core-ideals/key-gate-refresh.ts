@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only fresh qualification runs; this does not itself admit the Key ideal. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

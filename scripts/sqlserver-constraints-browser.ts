@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const source=await Bun.file('fixtures/sqlserver/constraints-catalog.json').text(),view=await Bun.file('fixtures/sqlserver/constraint-metadata.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/sqlserver-constraints-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));

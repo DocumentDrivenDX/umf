@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Parquet availability counterexamples, pinned to PyArrow 21.0.0."""
 import json,hashlib
 from pathlib import Path

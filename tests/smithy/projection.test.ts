@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {projectSmithyToJsonSchema,importSmithyJson,createSmithyJavaScriptJsonSchemaBackend,exportJsonSchema} from '../../src';
 const text='{"smithy":"2.0","shapes":{"test#X":{"type":"string"}}}';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,inspectPostgresqlCatalog,findPostgresqlCatalogRelation,proposePostgresqlCatalogEdit,getPostgresqlCatalogReconstruction,getPostgresqlCatalogNode,queryPostgresqlCatalogDependencies,readDocument,writeDocument} from '../../src';
 const source=await Bun.file('fixtures/postgresql/catalog-capture.json').text();

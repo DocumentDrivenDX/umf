@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import csv,json,tempfile,hashlib,inspect,sys,os
 from pathlib import Path
 os.environ['PYSPARK_PYTHON']=sys.executable;os.environ['PYSPARK_DRIVER_PYTHON']=sys.executable

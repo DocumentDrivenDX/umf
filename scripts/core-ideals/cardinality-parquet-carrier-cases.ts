@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
 import type {ParquetCardinalityCarrier} from '../../src/core-ideals/parquet-cardinality-carrier';
 export function parquetCardinalityCarrierCases(){

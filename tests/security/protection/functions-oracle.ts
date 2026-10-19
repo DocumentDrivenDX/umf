@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../../src/generated/core-model';
 import {evaluateProtectionValue,inspectProtectionFunction,inspectProtectionCatalog,parseGregorianDate,truncateGregorianDate} from '../../../src/index';
 import packet from './functions-fixtures.json';

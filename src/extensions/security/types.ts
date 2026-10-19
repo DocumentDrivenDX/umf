@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Json} from '../../model/types';
 import type {CoreLiteral} from '../../model/schema-literals';
 

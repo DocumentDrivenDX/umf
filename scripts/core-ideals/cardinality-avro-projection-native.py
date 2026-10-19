@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Cross-codec reads of generated projection candidates, including explicit binary/integer fixture tags."""
 import io,json,hashlib
 from pathlib import Path

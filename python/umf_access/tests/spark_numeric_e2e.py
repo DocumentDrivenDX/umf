@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real generated public-CLI Spark numeric predicates against an exact Python oracle.
 
 Run with an owned generated fixture directory and the repository fixture source.

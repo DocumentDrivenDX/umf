@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json, pathlib, hashlib
 import pyarrow, pyarrow.parquet as pq
 assert pyarrow.__version__ == '21.0.0'

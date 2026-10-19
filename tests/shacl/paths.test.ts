@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import pathSchema from '../../spec/extensions/shacl/path-schema.json';

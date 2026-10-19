@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test, expect} from 'bun:test';
 import {facetSystems, verifyFacetEvidence} from '../../scripts/core-ideals/facets-evidence';
 import {facetConformanceStatus} from '../../scripts/core-ideals/facets-conformance';

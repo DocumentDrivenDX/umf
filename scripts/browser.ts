@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 // @covers US-001-AC5 US-002-AC6
 import {chromium} from 'playwright';

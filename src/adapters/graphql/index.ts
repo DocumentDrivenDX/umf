@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {parse,print,buildASTSchema,validateSchema,type DocumentNode} from 'graphql';
 import manifest from '../../../spec/extensions/graphql/package.json';

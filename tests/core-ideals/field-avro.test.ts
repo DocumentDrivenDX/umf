@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';import {avroFieldCases} from '../../scripts/core-ideals/avro-field-cases';import {classifyAvroField, recoverAvroFieldBundle} from '../../src/core-ideals/avro-field';import {importAvroSchema, getAvroFieldMetadata} from '../../src/adapters/avro';import {declareCoreElementKind} from '../../src/model/field-kind';import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 test('Avro nested, recursive, union and dependency fields retain source-qualified roles and exact bundles',()=>{
  for(const c of avroFieldCases){const source=importAvroSchema(c.schema,{id:c.id,dependencies:c.dependencies}),metadata=getAvroFieldMetadata(source);

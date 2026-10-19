@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture a local catalog; this profile is isolated from both existing dbt fixtures."""
 import os,json,subprocess,hashlib,uuid
 from pathlib import Path

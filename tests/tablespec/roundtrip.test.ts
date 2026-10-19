@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importTableSpec,exportTableSpec,getTableSpecColumn,editTableSpecColumn,inspectTableSpec,readDocument,writeDocument} from '../../src';
 test('CONTRACT-030 TableSpec ingestion exposes core scalars and preserves contextual and unknown native metadata',async()=>{

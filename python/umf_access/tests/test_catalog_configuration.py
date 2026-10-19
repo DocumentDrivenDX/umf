@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit source custody precedes declaration imports or compiler calls."""
 
 import hashlib

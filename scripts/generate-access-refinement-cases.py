@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Emit the closed 76-edge x 2-phase typed join-refinement corpus.
 
 The transition table is the reviewed SQL null-extension oracle, separate from

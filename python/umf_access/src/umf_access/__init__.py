@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Typed access runtime; capability qualification is recorded per build profile."""
 
 from .capture import (

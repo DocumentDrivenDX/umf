@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Build bridge custody controls; native compiler replay is a separate gate."""
 
 import copy

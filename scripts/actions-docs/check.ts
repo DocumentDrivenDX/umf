@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {runPortableExample} from './portable-example';

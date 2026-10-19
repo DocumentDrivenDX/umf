@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Draft ontology purpose declarations only; never permission or route completeness. */
 import {copyJson} from '../../model/json';
 import {UmfError,type Json,type Diagnostic} from '../../model/types';

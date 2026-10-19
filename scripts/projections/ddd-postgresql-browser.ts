@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-048-AC3 @covers US-048-AC4 @covers US-048-AC6 @covers US-048-AC7 @covers US-048-AC9
 import {chromium} from 'playwright';import {createHash} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';import {dddPostgresqlCases} from './ddd-postgresql-cases';import {projectDddToPostgresql} from '../../src';

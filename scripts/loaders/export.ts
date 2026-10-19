@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,dirname,relative,isAbsolute,join,sep} from 'node:path';
 import {mkdir,readFile,realpath,rename,rm,readdir,lstat} from 'node:fs/promises';
 import {readJsonValue} from '../../src/model/serialization';

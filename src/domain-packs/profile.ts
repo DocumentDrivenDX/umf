@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectArtifactReferences} from './artifacts';
 import {inspectDomainPackLoader} from './loader';
 import {generateDomainPackSchema} from './schema';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Spark 4.0.1 legacy Murmur3 UTF8 hashing, including signed individual tail bytes. */
 export function sparkStringHash(value:string|null,seed=42):number {
  if(value===null)return seed|0;const b=new TextEncoder().encode(value);if(new TextDecoder('utf-8',{ignoreBOM:true}).decode(b)!==value)throw Error('Hash key must round trip UTF-8');const d=new DataView(b.buffer),rotate=(v:number,n:number)=>(v<<n)|(v>>>(32-n));

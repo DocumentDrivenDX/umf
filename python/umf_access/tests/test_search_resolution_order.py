@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original-owner strict search packets; native qualification is separate."""
 import json
 import time

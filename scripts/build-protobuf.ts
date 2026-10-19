@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {licenseModules,moduleNotice,dependencyLicenseBasename} from './protobuf-module-notices';
 import {mkdir,rm,copyFile as copySource,chmod,readdir} from 'node:fs/promises';
 // Go toolchain cache files can be read-only; repeated builds own their output copies.

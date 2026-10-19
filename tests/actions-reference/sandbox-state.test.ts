@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectHandlerState,inspectionFailure,armCleanupCommandTimeout,settlementInspectionFailure} from '../../scripts/actions-reference/sandbox-state';
 test('cleanup diagnostic distinguishes initial and settlement native inspection failures',()=>{

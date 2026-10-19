@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 
 test('FEAT-006: staged DDL and SDL fixtures share the same authored DDD graph',async()=>{

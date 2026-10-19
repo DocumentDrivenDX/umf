@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export * from './model/types';
 export * from './model/nullability';
 export * from './adapters/tablespec';

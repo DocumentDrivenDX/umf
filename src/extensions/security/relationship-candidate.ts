@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 /** Private draft normalization. No public ontology version, fact authority,
  * policy admission or runtime permission is established by these plans. */

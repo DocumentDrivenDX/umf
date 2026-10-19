@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import schema from '../../../spec/extensions/actions/schema.json';
 import manifest from '../../../spec/extensions/actions/package.json';
 import {createValidator} from '../../validation/schema';

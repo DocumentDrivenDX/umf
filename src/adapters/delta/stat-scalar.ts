@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {ParquetTypedValue} from '../parquet/values';
 import type {NativeJson} from '../../model/native-json';
 /** Exact JSON view for annotated checkpoint statistics; no INT96/timezone inference. */

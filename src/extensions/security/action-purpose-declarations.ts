@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Internal consistency over copied source, never an operational action designation. */
 import {UmfError} from '../../model/types';
 export const SECURITY_ACTION_PURPOSES=Object.freeze(['read','field','original-authorized','reverse','vault-write','other'] as const);

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {copyJson} from '../../src/model/json';
 /** Compare admitted JSON data, including every unknown member and array position.

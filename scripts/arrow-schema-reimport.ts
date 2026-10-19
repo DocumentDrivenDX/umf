@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {RecordBatchReader} from 'apache-arrow';
 import {describe} from '../native/arrow/schema-probe';
 const source=await Bun.file('fixtures/arrow/capability-results.json').json();

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parseNativeJson, renderTree, type NativeJson} from '../model/native-json';
 
 export type PublicCompanyRow = Record<string, string | null>;

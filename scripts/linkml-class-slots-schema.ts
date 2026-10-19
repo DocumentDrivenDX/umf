@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const string={type:'string'},obj=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false});
 const declaration=obj({className:string,path:string,kind:{enum:['slot','attribute']}});

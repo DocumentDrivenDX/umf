@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original bounded search filters preserve facets without widening action inputs."""
 
 import copy

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Validate generated schema files and exercise native writer behavior separately."""
 import datetime, hashlib, io, json, pathlib
 import pyarrow as pa

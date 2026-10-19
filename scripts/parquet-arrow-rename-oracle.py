@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import base64,copy,hashlib,importlib.util,json,sys
 from pathlib import Path
 import pyarrow as pa,pyarrow.parquet as pq

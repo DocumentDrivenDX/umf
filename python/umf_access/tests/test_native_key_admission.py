@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native catalog controls for the narrow raw-read Key equality profile."""
 import os
 import unittest

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent temporal interpretation and recovery probes; no inferred conformance."""
 import io, json, warnings
 from pathlib import Path

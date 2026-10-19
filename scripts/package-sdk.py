@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Create one deterministic, installable SDK archive from the actual build."""
 from pathlib import Path
 import gzip, hashlib, io, json, tarfile
@@ -24,6 +25,7 @@ with (output / 'umf-sdk.tgz').open('wb') as raw:
         with tarfile.open(fileobj=compressed, mode='w|') as archive:
             entries = [(p, str(p)) for p in files]
             entries += [(output / name, name) for name in ['package.json', 'README.md', 'manifest.json']]
+            entries += [(Path(name), name) for name in ['LICENSE.md', 'LICENSE-MIT', 'LICENSE-APACHE']]
             for path, name in entries:
                 data = path.read_bytes()
                 entry = tarfile.TarInfo('package/' + name)

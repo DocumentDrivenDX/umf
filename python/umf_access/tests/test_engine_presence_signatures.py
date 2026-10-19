@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Signature-only presence controls and actual original0.1 byte preservation.
 
 Missing-only signatures are hypothetical: real Core0.8 absent Fields also admit

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {compile,NodeHost} from '@typespec/compiler';
 import {mkdtemp,mkdir,rm} from 'node:fs/promises';
 import {join,dirname,basename} from 'node:path';

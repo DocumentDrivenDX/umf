@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlserverKeyAuthors,sqlserverKeyProjectionCases} from '../../scripts/core-ideals/key-sqlserver-projection-cases';
 import {projectKeysToSqlServer, verifyKeysSqlServerProjection, recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';

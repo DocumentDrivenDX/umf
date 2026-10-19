@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/types';
 export const carriers={boolean:['bool','boolean'],smallint:['int2','integer'],integer:['int4','integer'],bigint:['int8','integer'],numeric:['numeric','decimal'],real:['float4','float'],'double precision':['float8','float'],text:['text','string'],bytea:['bytea','binary'],date:['date','date'],time:['time','time'],'time with time zone':['timetz','time'],timestamp:['timestamp','timestamp'],'timestamp with time zone':['timestamptz','timestamp']} as const;
 export function identifier(value:string):string {

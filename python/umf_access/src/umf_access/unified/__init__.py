@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host binding for the generated UMF access transport.
 
 This module is deliberately an adapter boundary: generated clients send inert

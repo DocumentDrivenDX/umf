@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh-process generated import guard; no native services or credentials."""
 
 import importlib

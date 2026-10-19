@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {afterEach,expect,test} from 'bun:test';
 import {mkdtemp,readFile,readdir,writeFile,rm,symlink,mkdir,realpath,lstat} from 'node:fs/promises';
 import {tmpdir} from 'node:os';

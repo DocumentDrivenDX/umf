@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 const text={type:'string',minLength:1},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const binding={id:'umf.parquet.keys',version:'1.0.0',nativeVersion:'PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017',subset:'Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence'};

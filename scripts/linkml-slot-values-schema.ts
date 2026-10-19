@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {LINKML_SCALAR_SLOT_FIELDS} from '../src/adapters/linkml/slot-values';
 const node=(await Bun.file('spec/core/native-json.schema.json').json()).$defs.node,string={type:'string'},obj=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false});
 const properties=Object.fromEntries(Object.keys(LINKML_SCALAR_SLOT_FIELDS).map(k=>[k,{allOf:[{$ref:'#/$defs/node'},{properties:{kind:{const:LINKML_SCALAR_SLOT_FIELDS[k as keyof typeof LINKML_SCALAR_SLOT_FIELDS]}}}]}]));

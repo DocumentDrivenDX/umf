@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {migrateBindingRelationships,type Document,type PostgresqlRelationshipLayoutPolicy} from '../src';
 import graph from '../fixtures/projections/ddd-authored-relationships/base.json';

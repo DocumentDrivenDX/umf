@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {captureArrowIpc,exportArrowIpcCapture,observeArrowIpcCapture,inspectArrowIpcCapture,readDocument,writeDocument,ARROW_IPC_MAX_BYTES} from '../../src';
 import {observationBackend} from '../../native/arrow/runtime';

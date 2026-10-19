@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Host-side dependency checker. Keep policy synchronized with Architecture's module map.
 import ts from "typescript-api";
 import { existsSync, readFileSync, readdirSync, realpathSync } from "node:fs";

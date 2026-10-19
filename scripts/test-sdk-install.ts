@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {checkCoreDistribution} from './check-core-authority';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';

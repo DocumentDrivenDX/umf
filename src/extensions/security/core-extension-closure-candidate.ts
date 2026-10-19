@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private, locally issued extension semantics. Neither provenance nor authority. */
 import {Registry} from '../../registry/registry';
 import {registerActions,actionsPackage} from '../actions';

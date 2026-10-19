@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import idl from '../../../spec/extensions/parquet/idl.json';
 import type {ParquetWireValue} from './footer';
 import type {Diagnostic,Json} from '../../model/types';

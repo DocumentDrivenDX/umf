@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {classifyParquetRecordType, recoverParquetRecordTypeBytes} from '../../src/core-ideals/parquet-record-type';
 import {classifyParquetRecord, recoverParquetRecordBytes} from '../../src/core-ideals/parquet-record';
 import {parquetFieldPaths} from './parquet-field-cases';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/delta-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));const cases=await Promise.all((await Bun.file('fixtures/delta/cases.json').json()).map(async(c:any)=>({id:c.id,text:await Bun.file('fixtures/delta/'+c.id+'.json').text()})));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/delta-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Delta schema evidence</title>');}});let browser;

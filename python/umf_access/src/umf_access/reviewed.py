@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Build-time reviewed reads and immutable catalog artifacts.
 
 The compiler is supplied explicitly at build time. Runtime never imports Weft.

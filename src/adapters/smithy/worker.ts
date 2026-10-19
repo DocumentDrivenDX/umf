@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/types';
 import {LIMITS} from '../../model/json';
 import {importSmithySources,exportSmithySources} from './sources';

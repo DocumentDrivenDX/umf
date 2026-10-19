@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned native discovery for Cardinality; no UMF classification is inferred."""
 import hashlib, io, json, warnings
 from pathlib import Path

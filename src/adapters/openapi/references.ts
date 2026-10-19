@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {standaloneOpenapiObjectSchema as standalone} from './validation';
 import schema31 from '../../../spec/extensions/openapi/upstream/3.1-schema.json';
 import schema32 from '../../../spec/extensions/openapi/upstream/3.2-schema.json';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {referenceObservedDeployment} from './attribution';
 import {ReferenceHandlerRegistry} from './handlers';
 import type {SQL} from 'bun';

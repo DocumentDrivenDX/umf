@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, readDocument, writeDocument} from '../../src';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-nullability-sqlserver-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';

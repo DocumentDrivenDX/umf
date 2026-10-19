@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import currentModel from './fixtures/current-products-model.json';
 import original from './original-products-action-packet.json';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../model/json';
 import bulk from '../../../spec/extensions/actions/bulk.schema.json';
 import txResults from '../../../spec/extensions/actions/tx-results.schema.json';

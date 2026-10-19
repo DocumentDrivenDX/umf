@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Check emitted declarations with pinned TableSpec; never infer key enforcement."""
 import hashlib, importlib, json, runpy
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent mapped-instance checks for the explicit Avro document binding."""
 import json,io,datetime,copy
 from decimal import Decimal

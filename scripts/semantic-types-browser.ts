@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 const built=await Bun.build({entrypoints:['src/extensions/semantic-types/index.ts','src/model/document.ts'],outdir:'dist/semantic-types',target:'browser',format:'esm',splitting:true});

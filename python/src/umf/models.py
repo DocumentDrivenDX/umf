@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pydantic access models derived from generated current-core shapes."""
 
 from __future__ import annotations

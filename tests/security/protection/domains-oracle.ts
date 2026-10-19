@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../../src/generated/core-model';
 /** Independently authored S13/S14 expectations; no resolver output is used as its own oracle. */
 import * as api from '../../../src/index';

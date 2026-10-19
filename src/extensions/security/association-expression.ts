@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../validation/schema';
 import documentSchema from '../../../spec/core/schema.json';
 import {checkSchemaLiteral} from '../../model/schema-literals';

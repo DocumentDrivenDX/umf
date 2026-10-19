@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {uuidDocument,UUID,KEY} from '../helpers/uuid-fixtures';
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';

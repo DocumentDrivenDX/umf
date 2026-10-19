@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../../generated/core-model';
 /** CONTRACT-070's presence policy; no storage or value semantics are inferred. */
 export interface Presence {missing:boolean;null:boolean}

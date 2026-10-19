@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Independent atomic-preparation controls, not a compiler or native-authority oracle. */
 import {catalogRuntimeFixture,graphRuntimeFixture} from './catalog-runtime-fixture';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';

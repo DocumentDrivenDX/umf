@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHmac,timingSafeEqual,randomBytes} from 'node:crypto';
 import {copyJson} from '../../src/model/json';
 // Each accepted UTF-16 unit can require six JSON escape bytes, then base64url encoding.

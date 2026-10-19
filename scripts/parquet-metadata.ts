@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureParquet,inspectParquetMetadata} from '../src';
 const base='fixtures/parquet/metadata/',m=await Bun.file(base+'manifest.json').json(),results=[];
 function canonical(v:any):string{return v!==null&&typeof v==='object'?Array.isArray(v)?'['+v.map(canonical).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);}

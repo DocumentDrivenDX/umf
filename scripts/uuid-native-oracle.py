@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute generated artifacts with independent pinned native Avro/Parquet runtimes."""
 import io,json,tempfile,uuid,warnings,sys
 from pathlib import Path

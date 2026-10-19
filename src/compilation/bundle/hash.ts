@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** RFC 8785 over admitted JSON. Reject lone surrogates rather than replacing. */
 export function validateUnicode(text:string):void {for(let i=0;i<text.length;i++){const c=text.charCodeAt(i);if(c>=0xd800&&c<=0xdbff){const n=text.charCodeAt(++i);if(!(n>=0xdc00&&n<=0xdfff))throw new Error('INPUT');}else if(c>=0xdc00&&c<=0xdfff)throw new Error('INPUT');}}
 export function canonical(value:unknown):string {

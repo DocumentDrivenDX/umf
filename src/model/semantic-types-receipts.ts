@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 
 import {snapshotSchema} from '../validation/internal-schema';
 import core from '../../spec/core/schema.json';

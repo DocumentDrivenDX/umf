@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Actual field-free route evidence + separate supplied action duties, one logical operation. */
 import source from './protection/query-value-modes-source.json';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';

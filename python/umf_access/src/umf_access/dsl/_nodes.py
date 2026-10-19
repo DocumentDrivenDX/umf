@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Immutable logical identity and expression data; no backend names or handles."""
 
 from __future__ import annotations
@@ -8,7 +9,8 @@ from datetime import UTC, date, datetime, timezone
 from decimal import Decimal
 from typing import Generic, Literal, TypeVar, cast, get_args
 
-from pydantic import MISSING, BaseModel
+from pydantic import BaseModel
+from ..types import MISSING
 
 from ..generated_core import CURRENT_CORE_VERSION, CoreVersion
 from ._context import CaptureError

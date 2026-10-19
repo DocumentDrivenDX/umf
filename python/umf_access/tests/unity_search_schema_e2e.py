@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Load real generated full-shape models and exercise installed SDK codecs.
 
 Run after the public schema generator, with its output directory as argument.

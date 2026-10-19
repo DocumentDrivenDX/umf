@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated original-source related target sets through installed compiler and PG18.
 
 Caller owns PG. Only the dedicated fixture schema is created and removed.

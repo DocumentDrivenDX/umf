@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document,type Element} from '../../model/types';
 import type {Bit128Carrier,Bit128BindingPayload} from './bit128';
 import {checkModelScalar,type ScalarCarrier} from './model-scalar';

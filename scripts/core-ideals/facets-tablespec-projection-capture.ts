@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {projectFacetsToTableSpec, exportTableSpec, recoverFacetsFromTableSpec, copyJson, writeJsonValue, readJsonValue, type FacetsTableSpecProjection} from '../../src';
 import {facetsTableSpecProjectionCases} from './facets-tablespec-projection-cases';
 const rows=facetsTableSpecProjectionCases().map(row=>{

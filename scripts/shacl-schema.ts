@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 export {};
 const rdf=await Bun.file('spec/extensions/rdf/schema.json').json();

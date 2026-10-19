@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private metering around the original core literal semantics. */
 import {checkSchemaLiteralTracked,literalIdentity,type CoreLiteral} from '../../../model/schema-literals';
 import {UmfError,type Document,type Element} from '../../../model/types';

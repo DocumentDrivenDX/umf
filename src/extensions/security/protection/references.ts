@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Exact source addresses only; matching labels never qualifies a domain or action. */
 import {inspectSecurityPolicyV2Source} from '../policy-representation-v2';
 import {inspectProtectionCatalog} from './catalog';

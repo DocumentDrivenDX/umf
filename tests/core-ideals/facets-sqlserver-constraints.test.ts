@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parseNativeJson} from '../../src/model/native-json';
 import {importSqlServerCatalog, exportSqlServerCatalog} from '../../src/adapters/sqlserver';

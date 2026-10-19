@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipCandidate} from '../core-relationship-cases';
 import {declareCoreRelationship} from '../../src/model/relationships';
 import registry from '../../native/tablespec/relationship-runtime/domain-base-types.json';

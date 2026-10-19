@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {currentConstraints,currentDomainPolicy} from './current-policy';
 import {canonicalJson} from './json-equality';
 import {copyJson,copyJsonCharged,LIMITS} from '../model/json';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {evaluateSecurityWrite} from '../../src/index';
 import packet from './write-read-fixtures.json';
 /** Independent finite legacy-write correction oracle; not S24/S25 qualification. */

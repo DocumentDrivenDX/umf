@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {postgresqlRecordProjectionCases} from './record-postgresql-projection-cases';
 import {projectRecordToPostgresql, recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';
 import {randomUUID} from 'node:crypto';

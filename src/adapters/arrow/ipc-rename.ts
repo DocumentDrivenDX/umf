@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectArrowIpcConsistency,type ArrowIpcConsistency} from './ipc-consistency';
 import {exportArrowIpcCapture,captureArrowIpc,ARROW_IPC_MAX_BYTES,ARROW_IPC_EXTENSION} from './capture';
 import {exportArrowFlatbufferModel,importArrowFlatbufferModel} from './flatbuffer-model';

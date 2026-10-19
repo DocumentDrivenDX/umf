@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importIcebergTable,exportIcebergTable,inspectIcebergTable,getIcebergTableNode,proposeIcebergTableNodeEdit,writeDocument,readDocument,ICEBERG_TABLE_EXTENSION} from '../../src';
 const base='fixtures/iceberg/table/',report=await Bun.file(base+'results.json').json(),minimal=await Bun.file('fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json').text();

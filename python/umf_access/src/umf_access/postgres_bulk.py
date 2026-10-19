@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native set-based bulk driver over the original action settlement machinery."""
 
 from __future__ import annotations

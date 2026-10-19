@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {uuidModel,CHILD} from './uuid-model-fixtures';
 export function mixedModel(system='postgresql'){
  const m=uuidModel(system==='tablespec'?'uuid-text':'words64',system),p=m.binding.extensions!['umf.binding'] as any;p.target.subset='uuid-model2';

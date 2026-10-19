@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import native from '../../fixtures/validation/nullability-tablespec-profile-native.json';
 import {importTableSpec, classifyTableSpecField, writeJsonValue, copyJson} from '../../src';
 import type {Document, TableSpecNullabilityRequest} from '../../src';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import schema from '../../../spec/extensions/postgresql-catalog/cardinality-v1.schema.json';
 import {createValidator} from '../../validation/schema';
 import {catalogIntegerErrors} from '../../validation/catalog-integers';

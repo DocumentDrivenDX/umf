@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importIcebergSchema,exportIcebergSchema,readDocument,writeDocument,proposeIcebergNodeEdit} from '../src';
 const base='fixtures/iceberg/',m=await Bun.file(base+'manifest.json').json(),results=[];
 for(const c of m.cases){const raw=await Bun.file(c.path).text();let error:string|undefined;try{const source=importIcebergSchema(raw,{id:c.id});if(!c.umfValid)throw Error('Unexpected UMF acceptance');for(const format of ['json','yaml'] as const){const text=exportIcebergSchema(readDocument(writeDocument(source,format),format));await Bun.write(base+c.id+'.'+format+'.roundtrip.json',text);}results.push({id:c.id,status:'roundtripped'});}catch(e){error=(e as Error).message;if(c.umfValid)throw e;results.push({id:c.id,status:'rejected',error});}}

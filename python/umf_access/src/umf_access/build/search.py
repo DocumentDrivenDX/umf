@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Search capture -> original Weft owner programs. No execution or embedder calls."""
 
 from __future__ import annotations
@@ -73,7 +74,7 @@ def emit_search(
         from types import UnionType
         from typing import Union, get_args, get_origin
 
-        from pydantic import MISSING
+        from umf_access.types import MISSING
 
         for parameter in declaration.parameters:
             if parameter.optional and parameter.name not in variant.presence:

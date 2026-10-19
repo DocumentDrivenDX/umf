@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Captured command -> original Weft native-bulk request, build only."""
 
 from __future__ import annotations
@@ -223,7 +224,7 @@ def emit_command(
     package: str,
     type_name: Any,
 ) -> tuple[list[str], list[dict[str, Any]]]:
-    from pydantic import MISSING
+    from umf_access.types import MISSING
 
     from ..types import ActionSource, StrictModel
     references=[a for a in action_refs if isinstance(declaration.action,ActionSource) and a.source==declaration.action]

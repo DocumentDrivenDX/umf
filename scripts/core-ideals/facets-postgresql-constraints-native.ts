@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only resolved catalog observations; not a core facet classifier. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';

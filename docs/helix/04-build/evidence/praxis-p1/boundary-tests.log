@@ -1,0 +1,29 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/compilation/boundaries.test.ts:
+(pass) actual compilation boundary checker > allows public IR dependency [227.52ms]
+(pass) actual compilation boundary checker > rejects forbidden direction and private reach-through [445.81ms]
+(pass) actual compilation boundary checker > rejects host imports, globals, dynamic loading and unresolved imports [1394.26ms]
+(pass) actual compilation boundary checker > rejects cycles including re-exports [334.11ms]
+(pass) actual compilation boundary checker > IR external dependencies are type-only, including relative imports [1321.58ms]
+(pass) actual compilation boundary checker > admits direct public semantic symbols through renamed and star re-exports [720.56ms]
+(pass) actual compilation boundary checker > refuses private or same-named impostor symbols and leaf module loading [2837.55ms]
+(pass) actual compilation boundary checker > IR admits erased public type queries but refuses runtime use [1612.27ms]
+(pass) actual compilation boundary checker > Python metadata's generated marker seam admits no other generated or semantic APIs [1742.46ms]
+(pass) actual compilation boundary checker > rejects network and runtime code execution in portable modules [1061.10ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3 [150.89ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3.14 [209.00ms]
+(pass) actual Python boundary checker > allows runtime to DSL public boundary [124.52ms]
+(pass) actual Python boundary checker > rejects drivers and Weft outside owned integrations [213.42ms]
+(pass) actual Python boundary checker > rejects private access and relative-import cycles [140.61ms]
+(pass) actual Python boundary checker > bulk exception is narrow; target cannot import generated packages or engines [324.34ms]
+(pass) actual Python boundary checker > rejects dynamic imports and malformed syntax [127.09ms]
+(pass) actual Python boundary checker > discovers src layout and rejects host I/O and dynamic import APIs [514.02ms]
+(pass) actual Python boundary checker > rejects empty scans and scans both source layouts [147.59ms]
+(pass) actual Python boundary checker > named runtime foundations have explicit ownership; arbitrary helpers refuse [270.60ms]
+(pass) local command and installed pre-commit hook reject real violations [1721.54ms]
+
+ 21 pass
+ 0 fail
+ 130 expect() calls
+Ran 21 tests across 1 file. [15.67s]

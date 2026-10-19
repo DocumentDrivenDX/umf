@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private index over an already validated immutable closure, not a resolver credential. */
 import type {Document,Element} from '../../../model/types';
 import type {SecurityRef} from '../types';

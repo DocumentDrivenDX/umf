@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual selected-action emitted types, without clients or target execution."""
 
 import unittest
@@ -12,7 +13,7 @@ from commerce.actions import (
     ShipOrderRejected,
 )
 from commerce.keys import OrderKey
-from pydantic import MISSING
+from umf_access.types import MISSING
 from umf_access.codec_support import (
     initialize_action_rejection,
     initialize_rejection,

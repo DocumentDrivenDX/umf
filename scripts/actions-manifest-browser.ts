@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {runManifestCorpus} from '../tests/actions-manifest-corpus';
 import * as api from '../src/index';

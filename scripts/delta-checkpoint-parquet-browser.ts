@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/delta/checkpoint-upstream/',native=await Bun.file(base+'native-results.json').json(),boundary=await Bun.file(base+'decimal-boundaries/manifest.json').json(),cases=[];
 for(const c of native.results)cases.push({id:c.id,sha256:c.sha256,bytes:Array.from(new Uint8Array(await Bun.file(base+c.path).arrayBuffer())),expected:await Bun.file(base+'typed/'+c.id+'.json').json()});for(const c of boundary.cases)cases.push({id:c.id,sha256:c.sha256,bytes:Array.from(new Uint8Array(await Bun.file(base+'decimal-boundaries/'+c.id+'.parquet').arrayBuffer())),expected:await Bun.file(base+'decimal-boundaries/'+c.id+'.json').json()});

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {projectFieldToTableSpec, recoverFieldFromTableSpec, type FieldTableSpecRequest} from '../../src/core-ideals/field-tablespec-projection';
 import {declareCoreElementKind} from '../../src/model/field-kind';

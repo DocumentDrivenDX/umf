@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type SHACLValidator from 'rdf-validate-shacl';
 import ShapesGraph from 'rdf-validate-shacl/src/shapes-graph.js';
 import {rdfListToArray} from 'rdf-validate-shacl/src/dataset-utils.js';

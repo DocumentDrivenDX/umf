@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Installed native read/search replay in one explicitly owned temporary Lakebase.
 
 The caller provisions the dedicated project and supplies its original UID. No

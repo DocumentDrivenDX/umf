@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Driver result decoding controls; native engine qualification is separate."""
 
 from __future__ import annotations

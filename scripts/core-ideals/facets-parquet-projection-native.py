@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read independently emitted native declarations with pinned PyArrow."""
 import hashlib,json,datetime
 from decimal import Decimal

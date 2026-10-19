@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Build a local prerelease wheel with pinned tooling; never publishes."""
 
 import argparse
@@ -13,6 +14,7 @@ import tomllib
 from pathlib import Path
 
 from packaging.specifiers import SpecifierSet
+from packaging.requirements import Requirement
 from replay_installed import inspect_wheel
 
 
@@ -41,10 +43,15 @@ def main() -> int:
             or project["version"] != pin["version"]
         ):
             raise ValueError("package metadata differs from runtime profile")
-        if (project["requires-python"] != profile["requiresPython"] or not SpecifierSet(project["requires-python"]).contains(profile["python"])) or project[
-            "dependencies"
-        ] != [name + "==" + profile["runtimeDependencies"][name] for name in ("pydantic", "typing-extensions")]:
-            raise ValueError("Python/runtime dependency metadata differs from local profile")
+        requirements = [Requirement(item) for item in project["dependencies"]]
+        if (project["requires-python"] != profile["requiresPython"]
+                or not SpecifierSet(project["requires-python"]).contains(profile["python"])
+                or len(requirements) != 2
+                or {item.name for item in requirements} != {"pydantic", "typing-extensions"}
+                or any(item.url or item.extras or item.marker
+                       or not item.specifier.contains(profile["runtimeDependencies"][item.name])
+                       for item in requirements)):
+            raise ValueError("Python/runtime dependency lock is outside library requirements")
 
         def sha(path):
             return hashlib.sha256(path.read_bytes()).hexdigest()

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only native discovery. No UMF facet binding support is implied. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

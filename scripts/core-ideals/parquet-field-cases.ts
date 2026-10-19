@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export const parquetFieldPaths=[
  'fixtures/parquet/rename/none.parquet',
  ...['decimal32','uint32','int8','timestamp-local','uuid'].map(id=>`fixtures/parquet/logical/${id}.parquet`),

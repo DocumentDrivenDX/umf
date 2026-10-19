@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {recordCase} from '../../scripts/core-ideals/record-tablespec-cases';
 import {projectRecordToTableSpec, recoverRecordFromTableSpec} from '../../src/core-ideals/record-tablespec-projection';

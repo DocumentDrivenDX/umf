@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const string={type:'string'},boolean={type:'boolean'},long={type:'integer',format:'int64'},int={type:'integer',minimum:-2147483648,maximum:2147483647},nullable=(s:any)=>({anyOf:[s,{type:'null'}]}),map={type:'object',additionalProperties:nullable(string)},object=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:true});
 const dv=object({storageType:{enum:['u','i','p']},pathOrInlineDv:string,offset:nullable(int),sizeInBytes:int,cardinality:long},['storageType','pathOrInlineDv','sizeInBytes','cardinality']);

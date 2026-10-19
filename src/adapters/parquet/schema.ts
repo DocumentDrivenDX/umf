@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectParquetMetadata,type ParquetMetadataInspection} from './metadata';
 import type {Document} from '../../model/types';
 export interface ParquetSchemaNode {index:number;name:string;path:string[];definitionLevel:number;repetitionLevel:number;children:ParquetSchemaNode[]}

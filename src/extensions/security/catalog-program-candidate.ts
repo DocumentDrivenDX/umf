@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 /** Private canonical .2 logical source compiler. No fact supply or enforcement authority. */
 import {copyJson} from '../../model/json';

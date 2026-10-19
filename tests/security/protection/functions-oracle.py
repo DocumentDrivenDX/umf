@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent expected values; no UMF implementation/fixtures imported.
 Python Unicode scalars, fractions/Decimal, datetime.date. Refusal expectations
 are authored contract obligations, not a competing core/domain interpreter."""

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {postgresqlLayoutCases} from '../relationship-postgresql-layout-cases';
 import proposal from '../../fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json';
 import type {Document,DddPostgresqlPolicy} from '../../src';

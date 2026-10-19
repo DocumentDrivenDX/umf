@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import classification from '../../spec/core/avro-facet-classification.schema.json';
 const text={type:'string',minLength:1},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const name={type:'string',pattern:'^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])'},namespace={type:'string',pattern:'^(?:[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)?(?![\\s\\S])'};

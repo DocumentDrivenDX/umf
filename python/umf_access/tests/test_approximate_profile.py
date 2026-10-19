@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original HLL descriptor custody; native statistical behavior is tested separately."""
 import copy
 import unittest

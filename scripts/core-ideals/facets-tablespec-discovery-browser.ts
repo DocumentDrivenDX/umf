@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Real browser archive compatibility for native facet discovery inputs; not a facet binding. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

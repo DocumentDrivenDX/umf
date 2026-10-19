@@ -1,8 +1,9 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture's in-memory boundary: no catalog writer or Weft substitute."""
 
 import unittest
 
-from pydantic import MISSING
+from umf_access.types import MISSING
 from umf_access.capture import CaptureError, capture
 from umf_access.dsl import Column, FieldRef, Param, Query, RecordRef, if_present, query
 

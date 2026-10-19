@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/sqlserver/avro-projection.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/sqlserver-avro-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));

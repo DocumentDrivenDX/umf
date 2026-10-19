@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {probeIpc} from '../native/arrow/ipc-probe';
 const base='fixtures/arrow/ipc-inputs/';const manifest=await Bun.file(base+'manifest.json').json();const results=[];

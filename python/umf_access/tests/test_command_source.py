@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Command selection retains complete captured ActionSource custody."""
 import unittest
 from dataclasses import replace

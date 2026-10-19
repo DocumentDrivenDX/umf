@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent finite S21/S22/S23 declaration oracle. No UMF imports or execution."""
 import copy,json
 from pathlib import Path

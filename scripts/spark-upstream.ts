@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importSparkSchema,exportSparkSchema,readDocument,writeDocument} from '../src';
 import {parseNativeJson,renderTree} from '../src/model/native-json';
 const cases=parseNativeJson(await Bun.file('fixtures/spark/upstream-cases.json').text());if(cases.kind!=='array'||cases.items.length!==42)throw Error('Upstream corpus changed');

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectHandlerState,inspectionFailure,armCleanupCommandTimeout,settlementInspectionFailure,type CleanupInspectionReason} from './sandbox-state';
 import {ReferenceHandlerLaunchOwner} from './launch-owner';
 import {createHash} from 'node:crypto';

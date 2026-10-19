@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import currentGraphFixture from './fixtures/current-graph-qualifier.json';
 import {resolveCandidateRecordAssociationChecks,resolveCandidateGraphRelationshipChecks,resolveCandidateAssociationChecks} from '../../src/extensions/security/association-checks';
 import {resolveCandidateRecordAssociation,requireCandidateEndpointDomainCorrespondence,requireCandidateAssociationClassifications,checkCandidateRecordClassifications} from '../../src/extensions/security/association-candidate';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../src/model/types';
 export type ReferenceFailure={status:'denied'|'unsupported'|'failed';code:string};
 /** Classify only known callback errors after transaction rollback; unknown SQL/commit errors stay unknown. */

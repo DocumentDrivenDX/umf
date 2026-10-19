@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Browser facets use the current public bundle. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

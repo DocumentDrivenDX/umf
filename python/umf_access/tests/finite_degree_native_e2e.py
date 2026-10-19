@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual generated catalog finite inverse degree and native equality admission E2E.
 
 Caller owns an isolated PostgreSQL18 cluster; no emitted SQL is modified.

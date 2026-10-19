@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {encodeModelScalar,scalarSqlType} from '../extensions/binding/model-scalar';
 import type {Document} from '../model/types';
 import {UmfError} from '../model/types';

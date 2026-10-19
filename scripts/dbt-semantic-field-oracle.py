@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare every pinned native field's serialized boundary values with the derived schema."""
 import json,hashlib,copy,importlib.metadata as metadata
 from pathlib import Path

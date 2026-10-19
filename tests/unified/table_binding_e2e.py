@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Run the shared generated application against PostgreSQL through real Weft SQL.
 
 Requires an explicit ephemeral PostgreSQL DSN, the isolated current Weft build,

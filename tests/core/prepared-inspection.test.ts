@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {prepareCoreInspection,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,readDocument,validateDocument} from '../../src/index';
 import {request} from '../compilation/access-fixtures';

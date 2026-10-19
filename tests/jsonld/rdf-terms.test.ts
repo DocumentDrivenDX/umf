@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {wellFormedIri,wellFormedLanguage} from '../../src/adapters/jsonld/rdf-terms';
 test('US-026-AC15: RFC IRI components preserve valid spellings and reject malformed boundaries',()=>{

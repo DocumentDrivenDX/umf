@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {ProtectionFieldIndex} from './core-fields';
 import {UmfError,type Json,type Diagnostic} from '../../../model/types';
 import {resolveSecurityProtectionDomains,type SecurityProtectionDomainResolution,type ProtectionCoreClosure} from './domains';

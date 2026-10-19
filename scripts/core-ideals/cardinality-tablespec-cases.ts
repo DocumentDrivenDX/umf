@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import native from '../../fixtures/validation/cardinality-tablespec-profile-native.json';
 import {importTableSpec, classifyTableSpecField, writeJsonValue, copyJson, type Document, type TableSpecCardinalityRequest} from '../../src';
 export function tableSpecCardinalitySource(text:string,format:'json'|'yaml'='json'):Document{

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getPostgresqlNode,inspectPostgresql,validatePostgresqlAst} from './index';
 import {copyJson} from '../../model/json';
 import {renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';

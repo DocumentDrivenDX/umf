@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only packaging probe using the actual generator, never a stand-in emitter. */
 import {generateAccessPackage} from '../../../../src/compilation/index';
 import {profile,request} from '../../../../tests/compilation/access-fixtures';

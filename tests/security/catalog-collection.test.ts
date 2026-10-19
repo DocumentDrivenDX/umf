@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-079-AC3 @covers US-079-AC4 @covers US-079-AC5 @covers US-079-AC6 @covers US-079-AC10 */
 import {test,expect} from 'bun:test';
 import {ref} from './fixture';

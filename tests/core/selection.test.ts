@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {selectCoreElements,readDocument,writeDocument,coreSchema,Registry,importTableSpec,importPostgresqlCatalogCapture,importSqlServerCatalog,importAvroSchema,importParquetSchema,exportTableSpec,exportPostgresqlCatalogCapture,exportSqlServerCatalog,exportAvroSchema,exportParquetCapture,type Document,type ExtensionPackage} from '../../src';
 import {createValidator} from '../../src/validation/schema';

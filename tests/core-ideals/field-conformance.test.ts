@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {verifyFieldEvidence,verifyFieldRoundTrips,requireCurrentCoreFieldQualification,fieldConformanceStatus,fieldSystems} from '../../scripts/core-ideals/field-conformance';
 import {declareCoreElementKind, inspectCoreElementKind} from '../../src';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only browser bundles consumed by adapter regression/evidence tests. */
 const bundles: Record<string, string> = {
  'avro-facet-selection': 'src/core-ideals/avro-facet-selection.ts',

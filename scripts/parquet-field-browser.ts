@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const report=await Bun.file('fixtures/parquet/field-metadata.json').json(),cases=[];for(const c of report.results)cases.push({...c,bytes:Array.from(new Uint8Array(await Bun.file(c.path).arrayBuffer()))});
 const renameBytes=Array.from(new Uint8Array(await Bun.file('fixtures/parquet/rename/none.parquet').arrayBuffer()));

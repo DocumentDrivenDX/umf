@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Native browser-codec discovery; independent of the unfinished UMF binding. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

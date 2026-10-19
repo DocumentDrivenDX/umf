@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Independent complete-population expectations; supplied logical facts, no native authority. */
 import {catalogRuntimeFixture,graphRuntimeFixture} from './catalog-runtime-fixture';
 import source from './protection/current-query-source.json';

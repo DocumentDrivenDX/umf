@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {encodeSecurityDisclosure,decodeSecurityDisclosure,type SecurityDisclosureBatch} from '../../src/extensions/security/disclosure';
 import {securityFixture,ref} from './fixture';

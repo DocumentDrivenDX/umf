@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Selected search declaration admission. Native capability proof stays at catalog build. */
 import type {Document} from '../../model/types';
 import type {Ref,ResolvedRecord,ResolvedSearch} from '../ir/index';

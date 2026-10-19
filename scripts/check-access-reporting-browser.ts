@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Actual Chromium parity for the portable generator; host code stays here. */
 import {chromium} from 'playwright';
 import {generateAccessPackage} from '../src/compilation/index';

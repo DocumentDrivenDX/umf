@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {displayLabel,numericLexeme} from '../../docs/helix/05-deploy/microsite/presentation';
 import {matches,parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-model';

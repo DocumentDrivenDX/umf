@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {securityFixture,ref} from './fixture';
 import type {SecurityFact,SecurityFactCut} from '../../src/extensions/security/evaluate';
 import type {CoreLiteral} from '../../src/model/schema-literals';

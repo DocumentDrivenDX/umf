@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Mapped array/map field renames verified with physical Parquet and DataFusion reads."""
 import json,tempfile,hashlib
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createValidator} from '../../src/validation/schema';
 import core from '../../spec/core/schema.json';import {coreKindOperationSchema as kinds} from '../../src/model/field-kind';

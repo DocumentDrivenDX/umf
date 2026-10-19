@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectParquetContainers} from './containers';
 import type {ParquetSchemaNode} from './schema';
 import {decodeParquetFooter,type ParquetWireValue} from './footer';

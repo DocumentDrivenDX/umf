@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parseShaclFloat} from '../../src/adapters/shacl/float';
 import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,readDocument,writeDocument,getRdfQuads,exportShaclTurtle,exportRdfTurtle} from '../../src';

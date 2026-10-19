@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readDocument,projectArrowToSpark,exportSparkSchema,exportArrowFlatbufferModel} from '../../src';
 test('US-017-AC7: complete pinned upstream IPC schema recovery agrees with native outcomes',async()=>{

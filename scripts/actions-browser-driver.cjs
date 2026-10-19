@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 const {chromium}=require('playwright');
 const fs=require('node:fs'),http=require('node:http'),assert=require('node:assert/strict');
 (async()=>{

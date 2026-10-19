@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import model from '../../fixtures/access/search/unity-catalog-model.json';
 import physical from '../../fixtures/access/search/unity-catalog-binding.json';

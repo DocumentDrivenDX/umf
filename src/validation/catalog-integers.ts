@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {NativeJson} from '../model/native-json';
 import {readJsonValue} from '../model/serialization';
 /** Exact integer preflight for the owned catalog schemas. Not a JSON Schema validator.

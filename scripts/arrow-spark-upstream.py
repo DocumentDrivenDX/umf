@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native reverse-schema outcomes for the entire pinned Arrow integration binary subtree."""
 import json,os,hashlib,sys
 from pathlib import Path

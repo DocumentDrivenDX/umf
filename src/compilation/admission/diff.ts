@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readDocument} from '../../model/document';
 import type {Document} from '../../model/types';
 import {inspectAccessViews} from './access/index';

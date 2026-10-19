@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 export {};
 const object=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:true}),string={type:'string'},boolean={type:'boolean'},id={type:'integer',minimum:-2147483648,maximum:2147483647},type={$ref:'#/$defs/type'};

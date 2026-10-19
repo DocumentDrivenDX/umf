@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectActions,registerActions} from '../../src/extensions/actions';
 import {Registry} from '../../src/registry/registry';
 import {knownActionModel} from '../../src/extensions/actions/known-model';

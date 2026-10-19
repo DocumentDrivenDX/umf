@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {mkdtemp,readFile,writeFile,realpath} from 'node:fs/promises';
 import {join} from 'node:path';
@@ -91,4 +92,12 @@ test('current Praxis handler declarations generate typed methods and omit MISSIN
  const proc=Bun.spawn([process.env.UMF_UNIFIED_PYTHON??'python3.11','-S','-c',program],{cwd:root,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'},stdout:'pipe',stderr:'pipe'});
  const [stdout,stderr,exitCode]=await Promise.all([new Response(proc.stdout).text(),new Response(proc.stderr).text(),proc.exited]);
  expect({exitCode,stdout,stderr}).toEqual({exitCode:0,stdout:'',stderr:''});
+});
+
+// @covers US-091-AC7
+test('sync and async public client names remain reserved',()=>{
+ for(const symbol of ['SyncClient','AsyncClient','SyncActions','AsyncActions','SyncTransport','AsyncTransport','SyncQuery']){
+  const text=changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='record').name=symbol;});
+  expect(()=>generatePythonClient({text,package:'shop'})).toThrow();
+ }
 });

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only qualification. Admission follows actual native observations, never retained source alone. */
 import {createHash} from 'node:crypto';
 import {mkdir,copyFile} from 'node:fs/promises';

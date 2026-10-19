@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {classifyTableSpecRecord, verifyTableSpecRecordClassification} from '../../src/core-ideals/tablespec-record';
 import {declareCoreElementKind} from '../../src/model/field-kind';

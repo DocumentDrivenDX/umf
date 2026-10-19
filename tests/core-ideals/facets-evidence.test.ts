@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {test, expect} from 'bun:test';
 import {facetSystems, requireCurrentCoreFacetQualification, verifyFacetEvidence} from '../../scripts/core-ideals/facets-evidence';

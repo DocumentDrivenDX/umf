@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {boundedJsonBytes} from '../../model/internal/json-byte-budget';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Element} from '../../model/types';

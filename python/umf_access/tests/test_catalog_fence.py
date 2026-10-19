@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fence metadata/transport faults; synthetic guards confer no native authority."""
 
 import copy

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated current-core schema and isolated consumer schema validators."""
 
 from __future__ import annotations

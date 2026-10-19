@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Local regression controls for retained graph-candidate provenance."""
 import copy
 import importlib.util

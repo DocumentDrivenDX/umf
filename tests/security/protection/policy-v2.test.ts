@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {evaluateSecurityPolicyV2LegacyAccess} from '../../../src/extensions/security/policy-v2-legacy-access';
 import {test,expect} from 'bun:test';
 import {securityFixture,ref} from '../fixture';

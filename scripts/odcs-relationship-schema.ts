@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const str={type:'string'},obj=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false}),diagnostics={type:'array',items:obj({code:str,path:str,severity:{enum:['error','warning']},message:str})};
 const row={...obj({path:str,scope:{enum:['schema','property']},status:{enum:['resolved','blocked']},pairs:{type:'array',items:obj({fromPath:str,toPath:str})},diagnostics}),allOf:[{if:{properties:{status:{const:'blocked'}}},then:{properties:{pairs:{maxItems:0}}},else:{properties:{pairs:{minItems:1}}}}]};

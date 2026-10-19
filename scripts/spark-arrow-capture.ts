@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importSparkSchema,exportSparkSchema,captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcLayout,readDocument,writeDocument} from '../src';
 const base='fixtures/projections/spark-arrow/',report=await Bun.file(base+'native-results.json').json();let captured=0;const sources=new Set<string>();
 for(const row of report.results){if(!sources.has(row.case)){const text=await Bun.file(base+row.case+'.spark.json').text(),doc=importSparkSchema(text,{id:row.case});for(const format of ['json','yaml'] as const)if(exportSparkSchema(readDocument(writeDocument(doc,format),format))!==text)throw Error('Spark source changed');sources.add(row.case);}

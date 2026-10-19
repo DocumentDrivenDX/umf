@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare projected JSON actions with independently read PyArrow checkpoint rows."""
 import json,datetime
 from decimal import Decimal

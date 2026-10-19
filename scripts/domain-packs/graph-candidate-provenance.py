@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify declared graph candidates against their original local source artifacts.
 
 Historical candidates retain their own pack revision. This host-only audit does

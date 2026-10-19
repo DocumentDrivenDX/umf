@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Version the operation contracts; existing native bindings retain their v1 schemas.
 for (const name of ['kind', 'record-type']) {
  const previous=await Bun.file(`spec/core/${name}-operation.schema.json`).text();

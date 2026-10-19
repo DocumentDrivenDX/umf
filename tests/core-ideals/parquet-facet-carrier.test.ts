@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetFacetFile, type ParquetFacetFileRequest} from '../../src/core-ideals/parquet-facet-carrier';
 import {importParquetSchema, getParquetFieldMetadata, inspectParquetMetadata} from '../../src';

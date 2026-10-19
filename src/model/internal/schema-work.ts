@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import coreInput from '../../../spec/core/schema.json';
 import referenceInput from '../../../spec/core/semantic-type-reference.schema.json';
 import keyReceiptInput from '../../../spec/core/key-tuple-operation-v4.schema.json';

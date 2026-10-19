@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Current-core structural and model-program validation."""
 
 from .constraint_kernel import run_core_constraints

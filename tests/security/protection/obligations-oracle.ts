@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import * as api from '../../../src/index';
 import packet from './obligations-fixtures.json';
 const sdk=api as any;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Parser and fail-closed negative acceptance controls; no compiler/native mocks."""
 from pathlib import Path
 import hashlib

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned TableSpec facet discovery. Explicit native expectations precede observations."""
 import os,sys,json,hashlib,runpy,importlib,importlib.metadata
 from decimal import Decimal

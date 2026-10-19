@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {exportIcebergTable,getIcebergTableNode,proposeIcebergTableNodeEdit} from './table';
 import {inspectIcebergTableContext} from './table-context';
 import {inspectIcebergTableTransforms,type IcebergTableTransforms} from './table-transforms';

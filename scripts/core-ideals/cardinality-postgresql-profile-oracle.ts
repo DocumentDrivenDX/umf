@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Native discovery: array layout, domain and JSON boundaries; no binding claim. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';

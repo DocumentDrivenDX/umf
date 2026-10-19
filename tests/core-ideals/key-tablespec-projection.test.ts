@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {tableSpecKeyProjectionCases,tableSpecKeyAuthors,keyRecord,keyId,keyCode} from '../../scripts/core-ideals/key-tablespec-projection-cases';
 import {projectKeysToTableSpec, verifyKeysTableSpecProjection, recoverKeysTableSpecIdeal} from '../../src/core-ideals/key-tablespec-projection';

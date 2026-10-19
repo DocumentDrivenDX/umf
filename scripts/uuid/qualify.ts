@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {uuidModelQualificationTests} from './qualification-inventory';
 /** Host-only reproducible fresh qualification. No dependency installation or production deployment. */
 import {mkdtemp} from 'node:fs/promises';

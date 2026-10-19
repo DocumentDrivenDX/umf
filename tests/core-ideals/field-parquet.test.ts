@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetFieldPaths} from '../../scripts/core-ideals/parquet-field-cases';
 import {classifyParquetField, recoverParquetFieldBytes} from '../../src/core-ideals/parquet-field';

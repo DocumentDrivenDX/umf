@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Source-derived conditional alternatives, not runtime branch activation or permission. */
 import {runQueryValueRouteGuardCorpus} from './query-value-route-guards-corpus';
 import modesSource from './protection/query-value-modes-source.json';

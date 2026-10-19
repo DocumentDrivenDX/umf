@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original generated target-set navigation retains both query meanings."""
 import unittest
 

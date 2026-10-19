@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importOpenapiDocument,exportOpenapiDocument,exportOpenapiBundle,lookupOpenapiResource,proposeOpenapiEdit,inspectOpenapi,getOpenapiNode,readDocument,writeDocument} from '../../src';
 const baseUri='https://example.test/petstore/spec/swagger.json';

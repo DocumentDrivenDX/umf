@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson, declareCoreRelationship, type CoreRelationshipDeclaration, type CoreRelationshipRequest, type Document, type RelationshipPostgresqlRequest} from '../../src';
 import {postgresqlLayoutCases} from '../relationship-postgresql-layout-cases';
 export function postgresqlRelationshipCases(){

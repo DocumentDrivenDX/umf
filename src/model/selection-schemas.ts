@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Structural schemas for current metadata results, not persistent receipt formats. */
 export {default as coreSchemaPropertiesSelectionSchema} from '../../spec/core/schema-properties-selection.schema.json';
 export {default as coreRelationshipSelectionSchema} from '../../spec/core/relationship-selection.schema.json';

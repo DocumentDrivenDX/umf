@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {unlink} from 'node:fs/promises';
 import {captureArrowIpc,inspectArrowIpcLayout,projectArrowToSpark,exportSparkSchema,writeDocument} from '../src';
 const base='fixtures/projections/arrow-spark-upstream/',native=await Bun.file(base+'native-results.json').json(),results=[];

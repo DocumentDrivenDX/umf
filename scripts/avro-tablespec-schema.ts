@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const s={type:'string'},name={type:'string',pattern:'^[A-Za-z][A-Za-z0-9_]{0,127}(?![\\s\\S])'},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
 const representation={enum:['string','integer32','float32','boolean','decimal','date','timestamp','local-timestamp','hex-text','json-text']};

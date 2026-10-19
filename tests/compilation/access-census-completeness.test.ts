@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import authored from '../../fixtures/access/commerce/census-completeness.expected.json';
 import {generateAccessPackage,type AccessResult} from '../../src/compilation/index';

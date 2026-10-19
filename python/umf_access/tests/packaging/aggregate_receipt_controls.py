@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fault-inject campaign receipt failures in child processes; no native execution."""
 import argparse
 import json

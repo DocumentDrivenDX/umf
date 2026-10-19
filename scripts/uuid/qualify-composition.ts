@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only fresh five-adapter composition qualification. Uses existing pinned environments. */
 import {mkdtemp} from 'node:fs/promises';
 import {tmpdir} from 'node:os';

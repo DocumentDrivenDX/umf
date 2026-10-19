@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import sys,json,copy,hashlib,importlib.metadata as metadata
 from pathlib import Path
 sys.path.insert(0,str(Path('native/linkml/sources').resolve()))

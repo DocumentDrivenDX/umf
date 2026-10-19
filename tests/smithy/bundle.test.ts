@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSmithyJson,exportSmithyJson,exportSmithyBundle,getSmithyNode,proposeSmithyNodeEdit,inspectSmithy,writeDocument,readDocument} from '../../src';
 async function bundle(){return importSmithyJson(await Bun.file('fixtures/smithy/upstream/use/use-shapes.json').text(),{id:'bundle',dependencies:[{id:'widget',schema:await Bun.file('fixtures/smithy/bundles/widget.json').text()}]});}

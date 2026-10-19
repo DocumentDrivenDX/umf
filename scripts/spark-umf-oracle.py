@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reparse UMF exports with both pinned runtimes; compare baseline outputs/outcomes."""
 import json,copy,os
 from pathlib import Path

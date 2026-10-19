@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Offline build from reviewed, pinned SEC inputs. Network collection is caller-owned. */
 import {join,resolve} from 'node:path';
 import {projectSecSubmissions,projectSecCompanyFacts,type PublicCompanyRow} from '../../src/domain-packs/public-company';

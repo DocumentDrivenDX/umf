@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Immutable declaration builders. Terminal values describe results, never execute."""
 
 from __future__ import annotations
@@ -21,7 +22,8 @@ from typing import (
     overload,
 )
 
-from pydantic import MISSING, BaseModel
+from pydantic import BaseModel
+from ..types import MISSING
 
 from ..types import ActionRef, SnapshotVersions, validate_snapshot_versions
 from ._context import CaptureError, require_capture

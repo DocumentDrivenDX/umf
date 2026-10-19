@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Replay retained check commands without fabricating or publishing successful results."""
 import argparse, hashlib, json, os, subprocess, shutil, concurrent.futures
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/types';
 export const sqlServerCarriers={bit:'boolean',tinyint:'integer',smallint:'integer',int:'integer',bigint:'integer','decimal(38,9)':'decimal',real:'float','float(53)':'float','nvarchar(max)':'string','varbinary(max)':'binary',date:'date','time(7)':'time','datetime2(7)':'timestamp','datetimeoffset(7)':'timestamp'} as const;
 function text(value:unknown):asserts value is string {if(typeof value!=='string'||value.includes('\0')||/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/u.test(value))throw new UmfError('SQLSERVER_TEXT','Expected valid Unicode without NUL');}

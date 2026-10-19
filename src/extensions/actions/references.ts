@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Action,ActionRule} from './types';
 export interface ActionReferencePosition {value:unknown;keys:string[];path:string}
 /** Only schema-defined reference slots have reference semantics; opaque content is inert. */

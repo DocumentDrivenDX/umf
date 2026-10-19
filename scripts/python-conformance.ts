@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Python/browser parity for the explicitly qualified structural/identity subset.
 import {chromium} from 'playwright';
 

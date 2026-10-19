@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import * as u from '../../src';
 import {cardinalityTableSpecProjectionCases} from './cardinality-tablespec-projection-cases';
 const rows=cardinalityTableSpecProjectionCases().map(row=>{

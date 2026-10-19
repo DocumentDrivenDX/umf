@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {storedWriteFixture} from './catalog-write-fixture';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {inspectCandidateStoredQueryProperties} from '../../src/extensions/security/stored-query-candidate';

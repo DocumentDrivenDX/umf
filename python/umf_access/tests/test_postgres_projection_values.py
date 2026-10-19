@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed native projection decoders; managed/native acceptance is separate."""
 import math
 import unittest

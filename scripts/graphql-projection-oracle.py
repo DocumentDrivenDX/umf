@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare GraphQL input coercion and independent JSON Schema validation."""
 import copy,json
 from importlib.metadata import version

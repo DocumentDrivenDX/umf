@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {buildAvroRelationshipCarrier, type AvroRelationshipCarrier} from '../../src/core-ideals/relationship-avro-carrier';
 const base:AvroRelationshipCarrier={recordName:'Order',namespace:'sales',fieldName:'customer',keyRecordName:'CustomerKey',shape:'one',components:[{name:'id',type:'long'}]};
 const rows:{id:string;request:AvroRelationshipCarrier;values:unknown[];expectedWrite:boolean;expectedValues:unknown[]}[]=[];

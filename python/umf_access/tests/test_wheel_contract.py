@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Packaging harness controls; these do not establish runtime behavior."""
 
 import sys

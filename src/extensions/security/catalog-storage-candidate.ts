@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private validation over already detached issued-program/owner sources. No authority. */
 const id=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
 const fail=(message:string):never=>{throw Error('SECURITY_CATALOG_STORAGE: '+message);};

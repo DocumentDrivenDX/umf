@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Synthetic current-core fixture for active operation/projection behavior.
 import {recordCase} from './record-tablespec-cases';
 import {projectRecordToTableSpec} from '../../src/core-ideals/record-tablespec-projection';

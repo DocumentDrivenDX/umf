@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Native oracles are development tools, never browser-library dependencies.
 export {};
 const python = process.env.UMF_PYTHON_PATH ?? '.venv/bin/python';

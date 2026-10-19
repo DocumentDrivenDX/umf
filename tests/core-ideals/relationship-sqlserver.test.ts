@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipSqlServerCases,relationshipSqlServerCase} from '../../scripts/core-ideals/relationship-sqlserver-cases';
 import {projectRelationshipToSqlServer, recoverRelationshipSqlServerIdeal, recoverRelationshipSqlServerBinding, recoverRelationshipSqlServerNative, verifyRelationshipSqlServerProjection} from '../../src/core-ideals/relationship-sqlserver-projection';

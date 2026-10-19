@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
 import {classifySqlServerKeys, verifySqlServerKeyClassification, recoverSqlServerKeySource, sqlserverKeysPackage} from '../../src/core-ideals/key-sqlserver';

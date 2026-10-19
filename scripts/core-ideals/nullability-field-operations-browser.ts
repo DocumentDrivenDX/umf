@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {nullabilityFieldOperationsCases} from './nullability-field-operations-cases';
 const rows=nullabilityFieldOperationsCases();

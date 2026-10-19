@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-078-AC5 Independent ZIP/source/row/relationship and DuckDB checks."""
 import argparse,csv,hashlib,io,json
 from decimal import Decimal

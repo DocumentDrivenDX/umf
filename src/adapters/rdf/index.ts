@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {Parser,Writer,DataFactory} from 'n3/browser/n3.esm.min.js';
 import type {Term,Quad as NativeQuad} from '@rdfjs/types';

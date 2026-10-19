@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Run both qualified TableSpec Cardinality browser matrices against the current build. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

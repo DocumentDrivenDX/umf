@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent two-record SEC15 fixtures; no production fixture or SDK imports."""
 import json,copy
 from pathlib import Path

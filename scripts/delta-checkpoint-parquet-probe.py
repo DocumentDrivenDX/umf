@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Typed native values for every pinned Parquet checkpoint/sidecar; no data reads."""
 import hashlib,json
 from pathlib import Path

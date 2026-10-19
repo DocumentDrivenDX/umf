@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {Registry} from '../src/registry/registry';
 import type {ExtensionPackage} from '../src/model/types';
 import {isDeepStrictEqual} from 'node:util';

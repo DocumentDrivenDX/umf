@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {postgresqlLayoutCases} from '../relationship-postgresql-layout-cases';
 import type {SqlServerPhysicalPolicy} from '../../src/projections/binding-sqlserver';
 import type {Document} from '../../src/model/types';

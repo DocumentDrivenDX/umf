@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {semanticTypesCases} from './core-semantic-types-cases';
 import {validateDocument} from '../src/validation/document';
 import {checkSemanticTypeReferences} from '../src/validation/semantic-types';

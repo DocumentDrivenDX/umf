@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native multi-field file recovery; no collection constraint equivalence."""
 import io,json,tempfile,uuid,warnings,sys,hashlib
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only generation probe; source files remain inert inputs to the facade. */
 import {createHash} from 'node:crypto';
 import {resolve,join} from 'node:path';

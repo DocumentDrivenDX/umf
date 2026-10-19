@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Local native tables demonstrate schema versus protocol/configuration context."""
 import json,tempfile
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Action,ActionProfileIdentity} from './types';
 /** Exact declaration meanings only. These constants never issue a store capability. */
 export const localActionProfiles=Object.freeze({actor:'umf.actions.local-owner',policy:'umf.actions.local-store-owner',invocation:'umf.actions.local-tx',bulk:'umf.actions.local-bulk'});

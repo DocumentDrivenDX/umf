@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/sqlserver/package.json';
 import captureSchema from '../../../spec/extensions/sqlserver/capture.schema.json';

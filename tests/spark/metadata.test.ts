@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSparkSchema,exportSparkSchema,inspectSpark} from '../../src';
 const source=(metadata:string)=>'{"type":"struct","fields":[{"name":"x","type":"string","nullable":true,"metadata":'+metadata+'}]}';

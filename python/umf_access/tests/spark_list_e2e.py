@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real generated public-CLI bounded Spark list predicates against an independent S8 oracle.
 
 Run with an owned generated fixture directory and the repository fixture source.

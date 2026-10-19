@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {nullabilityTableSpecCases} from './nullability-tablespec-cases';
 import {classifyTableSpecNullability, verifyTableSpecNullabilityClassification, recoverTableSpecNullabilitySource, writeJsonValue, readJsonValue, copyJson} from '../../src';
 const rows=[];

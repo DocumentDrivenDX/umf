@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readCheckpointParquetTrial,normalizeCheckpointTrial} from '../../scripts/experiments/checkpoint-parquet-decoder';
 test('US-018-AC14: Parquet decoder trial agrees with typed native values and exact decimal boundaries',async()=>{

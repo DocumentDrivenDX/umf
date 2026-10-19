@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import data from './write-fixtures.json';
 import {compileCandidateCatalogProgram as compile} from '../../../src/extensions/security//catalog-program-candidate';
 import {evaluateCandidateCatalogWrite as evaluate} from '../../../src/extensions/security//catalog-write-candidate';

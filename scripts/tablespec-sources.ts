@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Capture the actual local baseline; commit identity alone cannot describe dirty files.
 import {resolve,relative} from 'node:path';
 const sourceRoot=resolve(process.argv[2]??'/home/erik/Projects/tablespec');

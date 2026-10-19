@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Whole draft ontology consistency. Authenticated revisions and policy admission remain host obligations. */
 import {checkActionPurposeDeclarations} from './action-purpose-declarations';
 import {copyJson} from '../../model/json';

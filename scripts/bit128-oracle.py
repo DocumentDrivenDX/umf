@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent Python integer/struct/UUID golden corpus; no UMF imports."""
 import json,random,struct,uuid
 from pathlib import Path

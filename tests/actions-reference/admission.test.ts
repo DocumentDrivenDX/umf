@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {encodeReferenceJson,encodeReferenceIdentity,decodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {ReferenceActionIssuer} from '../../scripts/actions-reference/authentication';

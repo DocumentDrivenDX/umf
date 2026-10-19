@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Unmodified official OpenAPI schemas, independently evaluated by Python jsonschema."""
 import json,hashlib
 from pathlib import Path

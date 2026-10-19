@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 export {};
 const object=(properties:Record<string,any>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:true}),string={type:'string'},strings={type:'array',items:string},map={type:'object',additionalProperties:{type:['string','null']}};

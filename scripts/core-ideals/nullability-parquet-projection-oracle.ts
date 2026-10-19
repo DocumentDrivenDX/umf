@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {parquetNullabilityProjectionCases} from './nullability-parquet-projection-cases';
 import {projectNullabilityToParquet, recoverNullabilityFromParquet} from '../../src/core-ideals/nullability-parquet-projection';

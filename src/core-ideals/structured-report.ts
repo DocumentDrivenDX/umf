@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {classifyPostgresqlDdlRecord,type PostgresqlDdlKinds} from './postgresql-ddl-kinds';import ddlSchema from '../../spec/core/postgresql-ddl-kinds.schema.json';import type {PostgresqlBackend} from '../adapters/postgresql';
 import {classifyPostgresqlComposite,type PostgresqlCompositeClassification} from './postgresql-composite';import PostgresqlCompositeSchema from '../../spec/core/postgresql-composite-classification.schema.json';
 import {classifyParquetRecordType,type ParquetRecordTypeClassification} from './parquet-record-type';import ParquetRecordTypeSchema from '../../spec/core/parquet-record-type-classification.schema.json';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-tablespec-projection.schema.json';
 import classification from '../../spec/core/tablespec-facet-classification.schema.json';
 const schema:any=structuredClone(base);

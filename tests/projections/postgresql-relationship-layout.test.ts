@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {copyJson,validatePostgresqlRelationshipLayout} from '../../src';
 import {postgresqlLayoutCase,postgresqlLayoutCases} from '../../scripts/relationship-postgresql-layout-cases';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Successor-only actual ranked caller-context controls, not compiler metadata edits."""
 
 import asyncio

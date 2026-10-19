@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-tablespec-projection.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:cardinality-tablespec-projection:1.0.0';schema.title='Authored Cardinality to explicit TableSpec carrier';

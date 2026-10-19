@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/parquet/values-trial/',m=await Bun.file(base+'manifest.json').json(),cases=[];for(const c of m.cases)cases.push({...c,bytes:Array.from(new Uint8Array(await Bun.file(c.path).arrayBuffer())),expected:await Bun.file(base+c.id+'.expected.json').json()});
 const built=await Bun.build({entrypoints:['scripts/experiments/parquet-values.ts'],outdir:'.cache/parquet-values-browser',naming:'trial.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

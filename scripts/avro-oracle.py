@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent binary/schema-resolution checks; authored Avro 1.12 fixtures only."""
 import io, json, hashlib
 from pathlib import Path

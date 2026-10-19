@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {generateAccessPackage} from '../src/compilation/index';
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {createUmfRegistry,prepareActionPlanModel} from '../src/index';

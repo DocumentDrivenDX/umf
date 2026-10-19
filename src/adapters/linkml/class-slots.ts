@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getLinkmlDocumentNode,inspectLinkmlDocument} from './index';
 import {copyJson} from '../../model/json';
 import {pointer,UmfError,type Document,type Diagnostic} from '../../model/types';

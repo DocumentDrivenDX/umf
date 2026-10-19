@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent artifact correspondence/negative checks for graph candidates."""
 import csv
 import hashlib

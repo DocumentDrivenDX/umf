@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Proposed0.2 wire operations only. No interpreter or native authority. */
 import manifest from '../../../spec/extensions/security-v0.2/package.json';
 import originalSchema from '../../../spec/extensions/security/schema.json';

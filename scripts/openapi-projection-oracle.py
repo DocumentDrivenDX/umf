@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare source schema constraints and emitted/round-tripped target independently."""
 import json,copy
 from pathlib import Path

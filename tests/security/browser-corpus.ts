@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {encodeSecurityDisclosure,decodeSecurityDisclosure,type SecurityDisclosureBatch} from '../../src/extensions/security/disclosure';
 import {composeSecurityRules,type SecurityTruth,type SecurityDisposition} from '../../src/extensions/security/logic';
 import {inspectSecurityPolicy,readSecuritySource,writeSecuritySource} from '../../src/extensions/security/policy';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {CoreKeyDefinition} from '../../validation/keys';
 import {copyJson} from '../json';
 import type {Document,Element,Json,Validation} from '../types';

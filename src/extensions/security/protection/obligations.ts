@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Declared protection obligations; never a native binding receipt or permission. */
 import {UmfError,type Json,type Diagnostic} from '../../../model/types';
 import {inspectSecurityActionPurposes} from '../action-purposes';

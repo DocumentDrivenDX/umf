@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const s={type:'string'},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
 const policy=object({aliases:{enum:['reject','base-type']},physicalLayout:{const:'default-rowstore'},nativeExpressions:{const:'verbatim'},sourceState:{enum:['captured-only','allow-candidate']},lossPolicy:{enum:['strict','allow-reported-loss']}});

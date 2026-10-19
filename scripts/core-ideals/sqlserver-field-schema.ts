@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/postgresql-field-classification.schema.json').json();
 schema.$id='urn:umf:core:sqlserver-field-classification:1.0.0';schema.title='SQL Server 16.0.4295.3 captured column Field classification';schema.properties.operation.const='classify-sqlserver-field';

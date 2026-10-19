@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {SCALAR_TYPES,validateDocument,readDocument,writeDocument,type Document} from '../../src';
 test('CONTRACT-001 scalar families are interpreted core metadata and survive both formats',()=>{

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private operator-free read alternatives. No selected branch, permission or native admission. */
 import {copyJson} from '../../model/json';
 import type {Json} from '../../model/types';

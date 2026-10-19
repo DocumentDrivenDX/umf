@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Value-graph and inventory boundaries for generated codecs, without I/O."""
 
 from collections.abc import Sequence

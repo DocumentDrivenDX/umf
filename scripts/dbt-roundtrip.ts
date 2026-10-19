@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importDbtManifest,exportDbtManifest,inspectDbtManifest,proposeDbtManifestNodeEdit,writeDocument,readDocument} from '../src';
 import {createHash} from 'node:crypto';
 const base='fixtures/dbt/',raw=await Bun.file(base+'manifest.json').text(),d=importDbtManifest(raw,{id:'dbt-fixture'}),path='/nodes/model.umf_fixture.order_totals/description',edit=proposeDbtManifestNodeEdit(d,path,JSON.stringify('Reviewed synthetic customer totals.'));

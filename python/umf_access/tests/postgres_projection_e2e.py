@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real authored full-record projections, native source fences and stream bounds.
 
 Caller owns the isolated PG18 cluster and its original pgvector 0.8.7 install.

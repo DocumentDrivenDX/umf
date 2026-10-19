@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native schema conversion matrix. Evidence for a future browser projection, not that implementation."""
 import itertools,json,hashlib
 from pathlib import Path

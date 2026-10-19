@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Pure reference functions over pinned domains; never an authorization decision. */
 import {copyJson} from '../../../model/json';
 import {canonicalSchemaJson,type CoreLiteral} from '../../../model/schema-literals';

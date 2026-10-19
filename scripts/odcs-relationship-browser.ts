@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/odcs/relationships/',cases=[];for(const c of (await Bun.file(base+'results.json').json()).results)cases.push({...c,raw:await Bun.file(base+c.id+'.json').text(),expectedReport:await Bun.file(base+c.id+'.json.report.json').json()});
 const build=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/odcs-relationship-browser',naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));

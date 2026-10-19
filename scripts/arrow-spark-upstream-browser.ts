@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/projections/arrow-spark-upstream/',report=await Bun.file(base+'native-results.json').json();const cases=await Promise.all(report.results.map(async(r:any)=>({...r,id:r.path,text:await Bun.file(base+r.path+'.umf.json').text()})));
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/arrow-spark-upstream-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {LIMITS} from '../../model/json';
 import {pointer,type Json,type Diagnostic} from '../../model/types';
 export interface SmithySourcePayload{profile:'smithy-idl-sources';files:Record<string,string>;}

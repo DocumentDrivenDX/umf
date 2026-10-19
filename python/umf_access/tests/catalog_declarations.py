@@ -1,7 +1,8 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Trusted build-time declarations for real installed catalog E2E."""
 
 from commerce import Customer, Order, OrderCustomerProjection, OrderKey
-from pydantic import MISSING
+from umf_access.types import MISSING
 from umf_access import Param, if_present, query
 
 

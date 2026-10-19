@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only filesystem boundary. Paths in result.files include the package prefix;
  * destination is the fixed output parent containing that package. */
 import {createHash} from 'node:crypto';

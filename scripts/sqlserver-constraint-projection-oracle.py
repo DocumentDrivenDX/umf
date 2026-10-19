@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,io
 from pathlib import Path
 import avro,avro.schema,avro.io,fastavro

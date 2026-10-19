@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Reusable UMF tables, artifacts and ontology schema browser",
   "type": "module",
-  "license": "(MIT OR Apache-2.0)",
+  "license": "MIT OR Apache-2.0",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
@@ -28,7 +28,9 @@
     "provenance.json",
     "release-manifest.json",
     "SHA256SUMS",
-    "examples"
+    "examples",
+    "LICENSE.md",
+    "NOTICE"
   ],
   "repository": {
     "type": "git",

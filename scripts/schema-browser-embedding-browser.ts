@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {exampleHost} from '../docs/helix/05-deploy/schema-browser/example-host';
 const fixture=await exampleHost(process.argv[2]??'node_modules/@documentdrivendx/umf-schema-browser'),browser=await chromium.launch({headless:true});

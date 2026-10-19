@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Arrow-origin schema corpus with independently qualified Python/JVM recovery."""
 import json,os,hashlib,sys
 from pathlib import Path

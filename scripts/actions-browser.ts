@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-900-AC9
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';

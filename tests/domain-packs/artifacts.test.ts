@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectDomainPack} from '../../src/domain-packs/profile';
 import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-model';

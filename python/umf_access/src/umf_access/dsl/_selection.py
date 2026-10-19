@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed exact scalar selections; no execution or backend SQL authority."""
 from __future__ import annotations
 

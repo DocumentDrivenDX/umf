@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Detach only an owned fixture type's extension membership; retain native IO."""
 
 import json

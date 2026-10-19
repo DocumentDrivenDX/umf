@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {validateDocument} from '../../validation/document';
 import {UmfError,type Document,type Element} from '../../model/types';
 import type {ActionReference,ActionRelationshipReference} from './types';

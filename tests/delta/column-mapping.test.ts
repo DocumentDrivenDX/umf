@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importDeltaTable,exportDeltaTable,inspectDeltaTable} from '../../src';
 const field=(name:string,id:number,physical:string,type:any='string')=>({name,type,nullable:true,metadata:{'delta.columnMapping.id':id,'delta.columnMapping.physicalName':physical}});

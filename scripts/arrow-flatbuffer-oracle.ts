@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Independent native compiler inventory comparison; numeric wire semantics need codecs.
 import {mkdir} from 'node:fs/promises';
 const exe=process.env.UMF_FLATC_PATH??'.cache/flatc/root/usr/bin/flatc';const lib=process.env.UMF_FLATC_LIBRARY_PATH??process.cwd()+'/.cache/flatc/root/usr/lib/aarch64-linux-gnu';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {projectRelationshipToTableSpec, verifyRelationshipTableSpecProjection, recoverRelationshipTableSpecIdeal, recoverRelationshipTableSpecNativeSources} from '../../src/core-ideals/relationship-tablespec-projection';
 import {classifyTableSpecRelationships, recoverTableSpecRelationshipSource} from '../../src/core-ideals/relationship-tablespec';

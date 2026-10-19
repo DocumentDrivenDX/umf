@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 const text={type:'string',minLength:1},obj=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,properties,required}),arr=(items:unknown,minItems=0)=>({type:'array',items,minItems});
 const ref=obj({module:text,element:text}),identity=obj({module:text,id:text}),column=obj({field:ref,name:text,nativeType:{enum:['bit','tinyint','smallint','int','bigint']}}),key=obj({keyId:text,constraintName:text,columns:arr(column,1)});

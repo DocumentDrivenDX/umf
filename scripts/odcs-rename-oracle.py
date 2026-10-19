@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import copy,json,hashlib
 from pathlib import Path
 from jsonschema import Draft201909Validator

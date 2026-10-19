@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Include only the current generated UMF authority in the Python wheel."""
 
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,readDocument,writeDocument,getRdfQuads,exportShaclTurtle,exportRdfTurtle} from '../../src';
 test('US-028 string constraints preserve lexical values and Unicode semantics',async()=>{

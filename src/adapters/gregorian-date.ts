@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Explicit civil-date recipe; does not select semantics for a bare core date. */
 export const GREGORIAN_DATE_PROFILE='umf-gregorian-date/1.0.0' as const;
 export interface GregorianDate {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {readDocument,validateDocument,inspectBinding,validateCoreDatasetValues,validateCoreFieldValue} from '../src/index';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const str={type:'string'},obj=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
 const schema=obj({source:{$ref:'urn:umf:core:0.10.0'},from:{type:'string',minLength:1,maxLength:4096},to:{type:'string',minLength:1,maxLength:4096},status:{enum:['candidate','blocked']},complete:{const:false},changes:{type:'array',items:obj({path:str,before:str,after:str})},candidate:{$ref:'urn:umf:core:0.10.0'},diagnostics:{type:'array',items:obj({code:str,path:str,message:str,severity:{enum:['error','warning']}})}},['source','from','to','status','complete','changes','diagnostics']);

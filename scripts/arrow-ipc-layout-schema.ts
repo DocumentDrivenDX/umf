@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const integer={type:'integer',minimum:0,maximum:1000000},document={$ref:'urn:umf:core:0.10.0'};
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {validateDocument} from '../src/validation/document';

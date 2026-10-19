@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-001-AC1 US-001-AC2 US-001-AC3 US-001-AC4
 import { test, expect } from 'bun:test';
 import { Registry, copyJson, readJsonValue, writeJsonValue, validateDocument, readDocument, writeDocument, editExtension, type Document, type ExtensionPackage } from '../../src';

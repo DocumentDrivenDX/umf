@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Qualify a released SEC pack without editing its frozen corpus.
 
 Run with the released TableSpec 0.0.9 and umf-core 0.8.1 on PYTHONPATH.

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generic exact literal mechanics parameterized by generated domain policy."""
 
 from __future__ import annotations

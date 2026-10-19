@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import {createUmfRegistry,Registry,inspectActions,assessAction,readDocument,writeDocument} from '../../src/index';

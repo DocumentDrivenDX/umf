@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Suite mutation controls, not evidence of native Truss/Ashlar behavior.
 
 The catalogs are built by the actual installed Weft compiler from the retained

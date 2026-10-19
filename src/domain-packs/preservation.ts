@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Portable declarations; no file reads, network access or runtime execution. */
 export function generatePreservationProfileSchema() {
  return {type:'object',required:['version','handoff','fixity','events','provenance','originals','primary_runtime'],properties:{

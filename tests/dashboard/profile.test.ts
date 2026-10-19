@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readDashboardDocument,writeDashboardDocument,inspectDashboard,getDashboardDefinition,editDashboardDefinition,copyJson,type Document} from '../../src';
 const input=await Bun.file('fixtures/dashboard/marketing-campaign.json').text();

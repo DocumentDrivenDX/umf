@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Wire inspection only; domain/function/query closure and native authority remain separate. */
 import manifest from '../../../../spec/extensions/security-protection/package.json';
 import {copyJson} from '../../../model/json';

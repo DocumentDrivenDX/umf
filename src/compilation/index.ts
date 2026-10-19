@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {admitAccessRequest,AccessInputError} from './admission/index';
 import {packageAccessFiles,hashCanonical,sha256Text} from './bundle/index';
 import {emitPythonAccess} from './targets/python/index';

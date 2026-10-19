@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed original Spark HLL++ metadata admission; no statistical guarantee added."""
 
 from ..native_program import canonical_json

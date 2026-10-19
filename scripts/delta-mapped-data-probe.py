@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Construct local mapped data fixtures and test native logical renames without data rewrites."""
 import json,tempfile,shutil
 from pathlib import Path

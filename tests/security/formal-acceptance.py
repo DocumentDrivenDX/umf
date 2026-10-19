@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh conditional proof replay; never infers installed backend correctness."""
 # @covers US-079-AC4
 # @covers US-079-AC2

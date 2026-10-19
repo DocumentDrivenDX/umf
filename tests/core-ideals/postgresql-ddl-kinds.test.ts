@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../src/validation/schema';
 import declarationsSchema from '../../spec/extensions/postgresql/ddl-declarations.schema.json';
 import {test,expect} from 'bun:test';

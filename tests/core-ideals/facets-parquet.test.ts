@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {classifyParquetFacets as classify, recoverParquetFacetSource as recover, parquetFacetsPackage, PARQUET_FACETS_EXTENSION, type ParquetFacetRequest} from '../../src';

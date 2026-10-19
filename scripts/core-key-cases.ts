@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 // Synthetic current-core input for key semantic validation cases.
 export const keyCandidate = ():any => ({umf:CURRENT_CORE_VERSION,id:'keys',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{untouched:['9007199254740993',null]}},modules:[{id:'m',namespace:'sales',elements:[

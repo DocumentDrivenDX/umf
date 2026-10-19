@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {verifyRelationshipAuthoredCorpus,verifyRelationshipConformance} from '../../scripts/core-ideals/relationship-conformance';
 import {verifyRelationshipEvidence} from '../../scripts/core-ideals/relationship-evidence';

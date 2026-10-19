@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importSmithyJson,importSmithySources,assembleSmithyDocument,createSmithyJavaScriptBackend,exportSmithyJson,readDocument,writeDocument,smithyAssemblyResultSchema,coreSchema} from '../src';
 import {createValidator} from '../src/validation/schema';
 const modulePath='../native/smithy/browser/target/javascript/smithy.js';const module=await import(modulePath);const backend=createSmithyJavaScriptBackend(module);

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent named metadata from thriftpy2's generated Parquet IDL classes."""
 import json,struct,hashlib
 from pathlib import Path

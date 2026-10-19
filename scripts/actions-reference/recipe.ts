@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {referenceEntityAliases} from './aliases';
 import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../src/model/key-tuple';
 import {checkReferencePreconditions} from './preconditions';

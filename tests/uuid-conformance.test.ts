@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {evaluateUuidAdmission,verifyUuidFingerprints,verifyUuidConformance} from '../scripts/uuid/conformance';
 test('separate UUID ideal admission and five-target delivery require complete current native/source evidence',async()=>{

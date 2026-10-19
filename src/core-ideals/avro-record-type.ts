@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';import {UmfError,type Document,type Json} from '../model/types';import {getAvroFieldMetadata} from '../adapters/avro';import {avroRecords} from './avro-records';import {classifyAvroField} from './avro-field';import {classifyAvroRecord,type AvroRecordClassification,type AvroRecordRequest} from './avro-record';import {verifyCoreKindDeclaration} from '../model/field-kind';import {validateDocument} from '../validation/document';import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/avro-record-type-classification.schema.json';
 export {default as avroRecordTypeClassificationSchema} from '../../spec/core/avro-record-type-classification.schema.json';

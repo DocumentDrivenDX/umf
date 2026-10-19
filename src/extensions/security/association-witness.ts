@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private lexical witness custody for policy normalization, not runtime facts. */
 import {copyJson} from '../../model/json';
 import {requireIssuedCandidateAssociationChecks,type CandidateAssociationChecks} from './association-checks';

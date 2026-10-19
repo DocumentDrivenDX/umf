@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Prepare explicit source-pinned catalog inputs after the public Bun generator.
 
 No database, native provider, credential, native database registration or execution is used.

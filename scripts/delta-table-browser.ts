@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/delta-table-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));const cases=await Promise.all(['partitioned','timestamp-ntz'].map(async id=>({id,text:await Bun.file('fixtures/delta/table-context/'+id+'.json').text()})));
 const mappingCases=await Promise.all((await Bun.file('fixtures/delta/mapping/results.json').json()).results.map(async(c:any)=>({...c,text:await Bun.file('fixtures/delta/mapping/'+c.id+'.json').text()})));

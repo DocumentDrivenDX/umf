@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureParquet,decodeParquetLevels} from '../src';
 const base='fixtures/parquet/levels/',m=await Bun.file('fixtures/parquet/bodies/results.json').json(),results=[];
 for(const c of m.results){const r=decodeParquetLevels(captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id}));if(r.pages)await Bun.write(base+c.id+'.json',JSON.stringify(r.pages,null,2)+'\n');results.push({id:c.id,path:c.path,status:r.status,pages:r.pages?.length,diagnostics:r.diagnostics.filter(d=>d.severity==='error')});}

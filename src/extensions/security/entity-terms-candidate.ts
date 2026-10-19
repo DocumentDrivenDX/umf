@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Intrinsic subject/resource/context typing, independent of association incidence.
  * Private candidate source checks; no identity authentication or enforcement authority.
  */

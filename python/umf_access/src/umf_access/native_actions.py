@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Source-bound native statement execution. Weft owns all business SQL.
 
 The host admission port owns the original native deployment/authority fence and

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {parseEntry,type Entry} from '../../docs/helix/05-deploy/microsite/explorer-model';
 import {ontologyModel} from '../../docs/helix/05-deploy/microsite/ontology-view';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../src/model/types';
 import {evaluateActionRule,type ActionBusinessState} from '../../src/extensions/actions/evaluation';
 import type {PreparedReferenceAction} from './preparation';

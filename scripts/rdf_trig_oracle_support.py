@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 from unittest.mock import patch
 from pathlib import Path
 import rdflib

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit owner schema-binding modes never rewrite original source bytes."""
 import copy
 import tempfile

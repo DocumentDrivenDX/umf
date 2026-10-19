@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,avro,avro.schema
 from pathlib import Path
 assert avro.__version__=='1.12.0'

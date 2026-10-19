@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const build=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
 const bundle=await build.outputs[0]!.text();

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash,randomUUID} from 'node:crypto';
 import {importPostgresqlCatalogCapture, exportPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';

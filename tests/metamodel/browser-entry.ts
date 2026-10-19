@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {validateDocument} from '../../src/validation/document';
 import {Registry} from '../../src/registry/registry';
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';

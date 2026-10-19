@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const str={type:'string',minLength:1,maxLength:4096};
 const obj=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});

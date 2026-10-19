@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Publish authored collector tools and evidence; never redistribute acquired originals."""
 import argparse
 import hashlib

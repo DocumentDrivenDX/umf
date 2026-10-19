@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original entity-row hydration preserves joined projection and graph context."""
 import unittest
 

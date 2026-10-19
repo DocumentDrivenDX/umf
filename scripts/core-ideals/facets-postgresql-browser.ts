@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Browser facets use the current public bundle and optional pinned PostgreSQL WASM. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

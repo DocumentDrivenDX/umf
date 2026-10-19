@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent GraphQL-core 3.2.12 acceptance of the complete projection corpus."""
 import json
 from pathlib import Path

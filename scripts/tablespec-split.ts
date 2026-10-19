@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importTableSpecBundle,exportTableSpecBundle,editTableSpecColumn,readDocument,writeDocument} from '../src';
 const base='native/tablespec/sources/examples/synthea/umfs/providers';
 const files:Record<string,string>={};for await(const path of new Bun.Glob('**/*.yaml').scan(base))files[path]=await Bun.file(base+'/'+path).text();

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const schema=await Bun.file('spec/projections/sqlserver-avro.schema.json').json();schema.$id='urn:umf:projection:tablespec-avro:0.1.0';
 const p=schema.properties.policy;p.required=p.required.filter((k:string)=>k!=='table');delete p.properties.table;p.properties.context={type:'string',minLength:1};

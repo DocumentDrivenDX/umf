@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importIcebergTable,exportIcebergTable,proposeIcebergTableRename,writeDocument,readDocument} from '../src';
 const base='fixtures/iceberg/table-rename/',results=[];
 for(const [id,path] of Object.entries({v2:'fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2Valid.json',minimal:'fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json',v3:'fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV3ValidMinimal.json',nested:'fixtures/iceberg/table-binding/nested.source.json'})){

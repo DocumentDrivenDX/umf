@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertExactJsonNumber} from './json-number';
 import {UmfError} from '../errors';
 /** Original action-frame scanner, shared with explicitly scoped catalog reads. */

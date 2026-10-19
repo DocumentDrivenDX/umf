@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-081-AC2
 import {describe,expect,test} from 'bun:test';
 import {ACCESS_TEMPORAL_PROFILE,parseAccessTemporal} from '../src/adapters/access-temporal';

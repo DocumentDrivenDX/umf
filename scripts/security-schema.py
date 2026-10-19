@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generate security representation schemas; typed closure is a separate validator."""
 import json
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated source capture keeps S8 operands and exact numeric families."""
 import unittest
 from dataclasses import replace

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../src/validation/schema';
 import referenceSchema from '../../spec/extensions/openapi/reference-result.schema.json';
 import {test,expect} from 'bun:test';

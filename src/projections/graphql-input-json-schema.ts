@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {buildASTSchema,parseType,typeFromAST,isInputType,isNonNullType,isListType,isScalarType,isEnumType,isInputObjectType,type GraphQLInputType} from 'graphql';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type JsonObject} from '../model/types';

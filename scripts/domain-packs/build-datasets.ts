@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host orchestration of the existing TableSpec consumer; no UMF data runtime. */
 import {domains} from './catalog';
 import {resolve} from 'node:path';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent JSON Schema shape oracle; no publisher meaning is inferred."""
 import json,sys,hashlib,importlib.metadata
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,expect,test} from 'bun:test';
 import {checkConstraintProgram,executeConstraints} from '../../src/validation/constraint-kernel';
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';

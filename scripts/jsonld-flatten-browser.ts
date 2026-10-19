@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/jsonld/flatten/results.json').json()).cases,authored=(await Bun.file('fixtures/jsonld/flatten/authored/results.json').json()).results;
 for(const c of [...cases,...authored]){c.raw=c.source??await Bun.file(c.path).text();for(const e of [...c.exports,...(c.edits??[])])e.output=await Bun.file(e.path).text();}

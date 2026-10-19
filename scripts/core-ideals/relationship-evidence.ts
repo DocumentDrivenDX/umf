@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import corpus from '../../fixtures/relationship/authored/corpus.json';
 import {relationshipRefreshCommands,relationshipProofs,relationshipSourceHashes,digest,readEvidence,safePath} from './relationship-gate-inputs';

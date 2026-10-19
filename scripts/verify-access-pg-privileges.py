@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Disposable-cluster PG18 analyzed runtime inventory and selected SDK grant proof.
 
 Never point this at a shared cluster: PUBLIC ACLs are deliberately revoked.

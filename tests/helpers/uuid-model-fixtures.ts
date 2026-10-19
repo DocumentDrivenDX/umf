@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../../src/model/types';
 export const PARENT={module:'m',element:'parent'},CHILD={module:'m',element:'child'};
 export function uuidModel(kind='words64',system='postgresql',domain='uuid',signed=true):{logical:Document;binding:Document}{

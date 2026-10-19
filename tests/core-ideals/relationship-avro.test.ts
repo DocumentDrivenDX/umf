@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {classifyAvroRelationships, recoverAvroRelationshipSource, verifyAvroRelationshipClassification} from '../../src/core-ideals/relationship-avro';
 import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';

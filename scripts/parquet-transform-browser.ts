@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/parquet/transforms/',report=await Bun.file(base+'results.json').json(),cases=[];for(const c of report.results)cases.push({...c,bytes:Array.from(new Uint8Array(await Bun.file(c.path).arrayBuffer())),wire:Array.from(new Uint8Array(await Bun.file(base+'wire/'+c.id+'.compact').arrayBuffer()))});
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/parquet-transform-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

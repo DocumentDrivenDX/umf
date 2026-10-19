@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Finite streams distinguish bounds, natural exhaustion and cleanup."""
 
 import asyncio

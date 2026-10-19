@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Browser-safe, authored FR-41 demonstrator. This is not a generic model merger or encoder.
 import sales from '../../fixtures/ddd/sales.json';
 import {copyJson} from '../../src/model/json';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native-compiler metadata fixtures for exact IDs, duplicate keys, tensors and sparse indexes."""
 import json,subprocess,os,hashlib
 from pathlib import Path

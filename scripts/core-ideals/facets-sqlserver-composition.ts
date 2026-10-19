@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Compose emitted SQL with independently captured catalog tables, preserving
  * native inference separately from retained author intent. */
 import assert from 'node:assert/strict';

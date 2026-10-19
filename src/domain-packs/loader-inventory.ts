@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Finite explicit selection; no URL discovery or execution is implied. */
 export function generateLoaderInventorySchema(){
  const text={type:'string',minLength:1,maxLength:4096};

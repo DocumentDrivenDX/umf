@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact generated-Key identity at original PG related output boundary."""
 import copy
 import json

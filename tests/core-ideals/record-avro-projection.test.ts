@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';import {avroRecordCases} from '../../scripts/core-ideals/record-avro-projection-cases';import {projectRecordToAvro, recoverRecordFromAvro} from '../../src/core-ideals/record-avro-projection';import {exportAvroSchema} from '../../src/adapters/avro';import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 test('ordered and empty authored records emit complete Avro schemas with recoverable loss reports',()=>{
  for(const c of avroRecordCases()){const result=projectRecordToAvro(c.author,c.request),blocked=c.variant==='missing'||c.variant==='mismatch'&&c.request.mode==='strict';expect(result.status).toBe(blocked?'blocked':'projected');if(blocked){expect(result.target).toBeUndefined();continue;}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {generateAccessPackage} from '../../src/compilation/index';
 import {profile,request,mutateSource} from './access-fixtures';
@@ -229,4 +230,17 @@ test('nullable item view cannot narrow create null independently of row null',as
  expect(generateAccessPackage(q,profile()).outcome).toBe('candidate');
  mutateSource(q,d=>{d.modules[0]!.extensions['umf.access'].views[0]!.fields.find(f=>f.field.element==='labelItem')!.create.null=false;});
  const r=generateAccessPackage(q,profile());expect(r.outcome).toBe('refused');expect(r.files).toEqual([]);expect(r.diagnostics.some(d=>d.accessCode==='ACCESS_CONFLICT')).toBe(true);
+});
+
+// @covers US-080-AC1
+test('Pydantic 2.13 profiles admit the platform lock and retain major-version refusal',()=>{
+ for(const version of ['2.13.0','2.13.5','2.14.1']){
+  const p=profile();p.dependencies.find(d=>d.distribution==='pydantic')!.version=version;
+  expect(generateAccessPackage(request(),p).outcome).toBe('candidate');
+ }
+ for(const version of ['2.12.9','1.10.26','3.0.0']){
+  const p=profile();p.dependencies.find(d=>d.distribution==='pydantic')!.version=version;
+  const result=generateAccessPackage(request(),p);expect(result.outcome).toBe('refused');
+  expect(result.diagnostics.some(d=>d.code==='PROFILE')).toBe(true);
+ }
 });

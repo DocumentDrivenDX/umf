@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readFile} from 'node:fs/promises';
 import {parseModel,compileModel} from './metamodel/compile';
 import {validateDocument} from '../src/validation/document';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetAvailabilitySource} from './nullability-parquet-cases';
 import {classifyParquetNullability, recoverParquetNullabilityBytes} from '../../src/core-ideals/nullability-parquet';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';

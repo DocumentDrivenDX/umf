@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Manifest control views preserve issuer custody and never retry on failure."""
 
 import asyncio

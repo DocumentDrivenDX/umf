@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generate the proposed protection wire schema, not an interpreter."""
 import copy,json
 from pathlib import Path

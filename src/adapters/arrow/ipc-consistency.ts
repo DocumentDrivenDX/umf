@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectArrowIpcLayout,type ArrowIpcLayout} from './ipc-layout';
 import {declarations,shortName} from './flatbuffer-layout';
 import type {Document,Diagnostic} from '../../model/types';

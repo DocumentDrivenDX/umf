@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {SQL} from 'bun';
 /** Bun 1.4.2 retains native SQLSTATE in errno; code is its driver error category. */
 function sqlstate(error:SQL.PostgresError):string|undefined{for(const value of [error.errno,error.code])if(typeof value==='string'&&/^[0-9A-Z]{5}$/.test(value))return value;return undefined;}

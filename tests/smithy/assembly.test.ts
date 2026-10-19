@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {assembleSmithyDocument,importSmithySources,importSmithyJson,exportSmithySources,getSmithyNode,smithyAssemblyResultSchema,coreSchema,createSmithyJavaScriptBackend} from '../../src';
 import {createValidator} from '../../src/validation/schema';

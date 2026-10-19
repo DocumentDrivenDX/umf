@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {avroNullabilityCases} from './nullability-avro-cases';
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pin every JSON file under a delta-rs _delta_log directory, including error fixtures."""
 import concurrent.futures,hashlib,json,urllib.request
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../src/validation/schema';
 import {generateLoaderInventorySchema} from '../../src/domain-packs/loader-inventory';
 import {readJsonValue} from '../../src/model/serialization';

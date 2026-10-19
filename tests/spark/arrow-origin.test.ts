@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readDocument,projectArrowToSpark,exportSparkSchema} from '../../src';
 test('US-017-AC7: Arrow-origin layouts match native recovery or block native incompatibility',async()=>{

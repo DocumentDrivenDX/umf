@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parseGregorianDate} from './gregorian-date';
 import {parseRfc3339ExactInstant} from './rfc3339-exact-instant';
 

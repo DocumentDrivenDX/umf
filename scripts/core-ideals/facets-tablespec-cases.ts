@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import native from '../../fixtures/validation/facets-tablespec-profile-native.json';
 import {importTableSpec, classifyTableSpecField, type Document, type TableSpecFacetRequest} from '../../src';
 const providers=await Bun.file('native/tablespec/sources/examples/providers.yaml').text();

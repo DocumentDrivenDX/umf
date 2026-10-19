@@ -65,7 +65,7 @@ async def application(client: Client):
 Combine predicates with `&`, `|` and `~`. Record ownership is checked statically
 and at runtime. Equality is explicitly `.eq(value)`.
 
-Terminals are async: `get(key)`, `get_many(keys)`, `first()`, `one()`,
+Both scheduling modes expose the same terminals: `get(key)`, `get_many(keys)`, `first()`, `one()`,
 `page(size=100, after=None, at_least=None)` and `all(limit=100, at_least=None)`.
 `get_many` preserves input order, duplicates and missing slots. Limits are
 bounded at 100. `all` refuses truncation; `one` requires exactly one result.
@@ -80,8 +80,18 @@ Idempotency keys are forwarded; the authoritative host determines replay support
 
 ## Transport boundary
 
-The application constructs `Client(transport)`. `transport.execute(request)` is
-async and returns a mapping. Every request and response carries the exact source
+The application constructs `Client(transport)` or its explicit alias
+`AsyncClient(transport)` for the existing async API. `SyncClient(transport)`
+accepts a synchronous `SyncTransport.execute(request) -> Mapping`;
+`AsyncTransport` aliases the existing async `Transport`.
+`Model.objects.using(sync_client)` returns a typed SyncQuery with synchronous
+terminals; an async binding returns Query with awaitable terminals.
+`SyncActions(sync_client)` exposes synchronous action methods; AsyncActions
+aliases Actions. Cross-mode query rebinding is rejected rather than performing
+implicit event-loop work. Models, keys, predicates, codecs and wire envelopes
+are shared. Sync execution does not run or schedule a coroutine.
+
+Both transports return a mapping. Every request and response carries the exact source
 digest as `schema`; requests also carry `contract: "umf.access/1"`.
 
 - Read: `kind: "read"`, query, size, after, at_least. Query has record ID,

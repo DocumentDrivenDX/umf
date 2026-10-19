@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {recordedRepositoryPath} from '../helpers/recorded-repository-path';
 import {test,expect} from 'bun:test';
 import {parquetKeyProjectionCases,parquetKeyAuthors} from '../../scripts/core-ideals/key-parquet-projection-cases';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Check the umf_access import graph without importing SDK code or dependencies."""
 import argparse
 import ast

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,runpy,hashlib
 from pathlib import Path
 model_path=Path('native/tablespec/sources/src/tablespec/models/umf.py');UMF=runpy.run_path(str(model_path))['UMF']

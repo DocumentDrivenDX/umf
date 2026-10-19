@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroKeyAuthors,avroKeyProjectionCases} from '../../scripts/core-ideals/key-avro-projection-cases';
 import {projectKeysToAvro, verifyKeysAvroProjection, recoverKeysAvroIdeal} from '../../src/core-ideals/key-avro-projection';

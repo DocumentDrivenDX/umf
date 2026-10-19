@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importAvroSchema,exportAvroSchema,exportAvroBundle,inspectAvro,editAvroNode,getAvroNode,readDocument,writeDocument} from '../../src';
 const base='fixtures/avro/upstream/lang/java/avro/src/test/resources/multipleFile/';

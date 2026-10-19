@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {expect,test} from 'bun:test';
 import requestSchema from '../../spec/compilation/access-request.schema.json';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import declarationSchema from '../../spec/core/relationship-operation.schema.json';
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {snapshotSchema} from '../validation/internal-schema';

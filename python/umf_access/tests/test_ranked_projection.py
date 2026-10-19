@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated search projections retain their owner and terminal opt-in."""
 
 import unittest

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private shared immutable core source; semantic custody only, never authenticity. */
 import {copyJson} from '../../model/json';
 import {validateDocument} from '../../validation/document';

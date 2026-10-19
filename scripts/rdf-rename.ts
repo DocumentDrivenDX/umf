@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importRdfNQuads,getRdfQuads,proposeRdfIriRename,exportRdfNQuads,readDocument,writeDocument} from '../src';
 const baseline=await Bun.file('fixtures/rdf/nquads/results.json').json(),cases=[];
 const inputs=baseline.results.filter((c:any)=>c.positive&&c.quads>0).map((c:any)=>({id:c.id,path:c.path}));inputs.push({id:'all-positions',path:'native/rdf/examples/rename.nq'},{id:'datatype',path:'native/rdf/examples/schema.nq'});

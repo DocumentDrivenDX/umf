@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture explicit trusted Python modules and publish deterministic stage-two files.
 
 Only the build tool imports declarations and Weft. Runtime code contains inert
@@ -25,7 +26,8 @@ from threading import Lock
 from types import UnionType
 from typing import Annotated, Any, Union, cast, get_args, get_origin
 
-from pydantic import MISSING, create_model
+from pydantic import create_model
+from ..types import MISSING
 
 from ..capture import ProjectionRef, capture
 from ..codec_support import make_projection_model, make_scalar_projection_model
@@ -511,7 +513,7 @@ def _compile_catalog_owned(
         "from decimal import Decimal",
         "from typing import ClassVar, cast, overload, TypeVar",
         "from collections.abc import Awaitable, Generator, AsyncGenerator",
-        "from pydantic import MISSING",
+        "from umf_access.types import MISSING",
         "from umf_access.types import StrictModel",
         "from umf_access.reviewed import CatalogRead",
         "from umf_access.engine_catalog import EngineRead",

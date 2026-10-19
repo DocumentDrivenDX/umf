@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare explicit dynamic scope lookup to referencing; no instance evaluator claim."""
 import json
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent Python Decimal oracle for the declared literal subset."""
 import json, re, sys, hashlib
 from decimal import Decimal

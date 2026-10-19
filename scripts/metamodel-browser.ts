@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-089-AC20 @covers US-089-AC24 */
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';

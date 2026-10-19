@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 import corpus from '../../fixtures/relationship/authored/corpus.json';
 import {relationshipCurrentBase} from './relationship-current-base';

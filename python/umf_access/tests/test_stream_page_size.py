@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Only an original owner page-size slot permits stream-size overrides."""
 
 import copy

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Draft policy projection. Requires a separately chosen destination ontology revision. */
 import {copyJson} from '../../model/json';
 import {createValidator} from '../../validation/schema';

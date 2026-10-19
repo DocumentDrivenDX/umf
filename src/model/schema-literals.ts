@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {currentDomainPolicy as domainPolicy} from '../validation/current-policy';
 import {canonicalJson} from '../validation/json-equality';
 import {assertLiteral,assertLiteralTracked,assertIdentity,coefficient} from '../validation/literal-kernel';

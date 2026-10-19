@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/dbt/rich/',input={raw:await Bun.file(base+'manifest.json').text(),cases:(await Bun.file(base+'selection-results.json').json()).results};
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/dbt-selection-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

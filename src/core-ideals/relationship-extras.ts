@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {Kind,parse,print} from 'graphql';
 import {copyJson} from '../model/json';

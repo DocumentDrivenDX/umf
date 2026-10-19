@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/cardinality-avro-projection.schema.json';
 import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});

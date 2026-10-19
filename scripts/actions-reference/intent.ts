@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {admitReferenceInputs} from './inputs';
 import type {Document} from '../../src/model/types';
 import {inspectActions,registerActions,type Action} from '../../src/extensions/actions';

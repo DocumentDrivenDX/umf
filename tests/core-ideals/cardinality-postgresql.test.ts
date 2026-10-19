@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, readJsonValue, writeJsonValue, copyJson, declareCoreCardinality} from '../../src';
 import {classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource, verifyPostgresqlCardinalityClassification} from '../../src/core-ideals/cardinality-postgresql';

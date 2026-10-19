@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Snapshot declaration metadata; native version authority is separately qualified."""
 import json
 import unittest

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {cardinalitySelectionCases} from '../../scripts/core-ideals/cardinality-selection-cases';
 import {selectCoreElements, type CoreElementQuery} from '../../src/model/selection';

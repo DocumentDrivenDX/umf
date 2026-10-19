@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated query cohorts cannot silently rebind to different model bytes."""
 import unittest
 from dataclasses import replace

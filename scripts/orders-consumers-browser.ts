@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const built=await Bun.build({entrypoints:['scripts/examples/orders-consumers.ts'],target:'browser',format:'esm',outdir:'.cache/orders-consumers-browser',naming:'demo.js'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/demo.js'?new Response(Bun.file('.cache/orders-consumers-browser/demo.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Orders consumers</title><main></main>',{headers:{'content-type':'text/html'}});}});

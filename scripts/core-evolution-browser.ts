@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Tool-only real Chromium parity harness; library remains browser-compatible. */
 import {chromium} from 'playwright';
 import {inspectCoreEvolution,verifyCoreEvolution} from '../src/model/evolution';

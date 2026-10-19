@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/errors';
 import {copyJson} from '../model/json';
 /** A closed generic instruction grammar, shared by compiler and runtime. */

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {copyJson,withCatalogResourceProfile,LIMITS} from '../src/model/json';
 import {readJsonValue} from '../src/model/serialization';

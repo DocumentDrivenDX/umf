@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exercising refusal controls for TD-087/088 adoption evidence custody."""
 
 import copy

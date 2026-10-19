@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Extract upstream C string literals using a C compiler, not an SQL splitter."""
 import pathlib, tempfile, subprocess, json, hashlib
 base=pathlib.Path('fixtures/postgresql/upstream')

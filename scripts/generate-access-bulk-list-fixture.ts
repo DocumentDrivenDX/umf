@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {generateAccessPackage} from '../src/compilation/index';
 import {profile,request} from '../tests/compilation/access-fixtures';
 if(!process.argv[2])throw new Error('explicit output directory required');

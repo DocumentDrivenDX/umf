@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import hashlib,json,runpy,tempfile
 from pathlib import Path
 import tablespec.models.umf as model

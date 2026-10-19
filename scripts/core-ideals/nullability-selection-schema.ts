@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const schema=await Bun.file('spec/core/element-selection.schema.json').json(),core=await Bun.file('spec/core/schema.json').json();
 schema.$id='urn:umf:core:element-selection:0.3.0';

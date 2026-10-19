@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Standalone object-schema validation has no outer dynamic schema binding. Ajv
 // misbinds #meta in these official schemas; resolve that one anchor statically.
 // This deliberately cannot implement schema-base or dialect extension semantics.

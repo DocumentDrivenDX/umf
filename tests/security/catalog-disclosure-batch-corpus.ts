@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Actual canonical fold+recipe+V2 transport composition. @covers US-056-AC6 @covers US-056-AC10 */
 import {ref} from './fixture';
 import {catalogRuntimeFixture,graphRuntimeFixture,compileRuntimeFixture} from './catalog-runtime-fixture';

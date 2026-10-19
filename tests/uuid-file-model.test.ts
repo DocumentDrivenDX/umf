@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {uuidModel,CHILD} from './helpers/uuid-model-fixtures';
 import {projectBit128Model,encodeBit128FileRecord,decodeBit128FileRecord,recoverBit128ModelProjection} from '../src';

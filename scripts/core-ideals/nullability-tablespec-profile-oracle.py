@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Discover actual pinned metadata behavior; not an ideal binding or row validator."""
 import hashlib,json,runpy
 from pathlib import Path
