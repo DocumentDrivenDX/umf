@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {retainReferenceReceipt} from './versions';
 import {ReferenceCommitUncertain,referenceConnectionFailure} from './transaction-failures';
 import {SQL} from 'bun';

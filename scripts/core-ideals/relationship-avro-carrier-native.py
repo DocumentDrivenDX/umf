@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned codec probes distinguish named schema reuse from record associations."""
 import hashlib
 import io

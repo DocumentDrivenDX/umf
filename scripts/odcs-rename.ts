@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importOdcsDocument,exportOdcsDocument,proposeOdcsElementRename,readDocument,writeDocument} from '../src';
 import {createHash} from 'node:crypto';
 const base='fixtures/odcs/rename/',obj=await Bun.file('fixtures/odcs/relationships/paired.json').json();

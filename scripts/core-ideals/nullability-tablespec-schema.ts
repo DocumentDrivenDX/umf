@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 const string={type:'string',minLength:1};
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const binding={id:'umf.tablespec.nullability',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Declared nullable metadata in an explicitly selected profile/context; explicit null-value carrier; no omitted-member or native enforcement equivalence'};

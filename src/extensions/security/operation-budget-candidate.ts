@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private shared operation ledgers; not an authority or a native credential. */
 import {ProtectionLiteralBudget} from './protection/literals';
 export class CandidateSecurityOperationBudget {

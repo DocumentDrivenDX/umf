@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export const ddlKindCases=[
  {id:'qualified',sql:'-- retained comment\nCREATE TABLE sales.simple (id pg_catalog.int8, payload pg_catalog.text);\n',name:'simple',relation:'sales.simple',names:['id','payload'],namespace:'sales',expansion:false,nativeAccepted:true},
  {id:'domain-and-later-alter',sql:'CREATE DOMAIN sales.token AS integer;\nCREATE TABLE sales.changing (id sales.token, items integer[]);\nALTER TABLE sales.changing ADD COLUMN later text;\n',name:'changing',relation:'sales.changing',names:['id','items'],finalNames:['id','items','later'],namespace:'sales',expansion:false,nativeAccepted:true},

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportShaclTurtle,exportRdfTurtle,readDocument,writeDocument,getRdfQuads} from '../../src';
 test('US-028 exact numeric bounds, property comparisons and datatype boundaries',async()=>{

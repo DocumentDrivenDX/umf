@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {browserDocument} from '../../docs/helix/05-deploy/schema-browser';
 test('caller catalog stays inert and assets resolve independently of host routing',()=>{

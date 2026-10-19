@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Managed execution mechanics; native authority and commit metadata remain owner ports."""
 
 from __future__ import annotations

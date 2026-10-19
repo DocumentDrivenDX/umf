@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readDocument,projectArrowToSpark,exportSparkSchema} from '../src';
 const base='fixtures/projections/spark-arrow/',report=await Bun.file(base+'native-results.json').json(),results=[];
 for(const row of report.results){if(row.status!=='converted')continue;const source=readDocument(await Bun.file(base+row.id+'.umf.json').text(),'json');for(const recovery of row.recovery){const result=projectArrowToSpark(source,{id:row.id,preferTimestampNtz:recovery.prefer_timestamp_ntz,variant:'spark-tagged-struct',lossPolicy:'allow-reported-loss'});if(!result.target)throw Error('Unexpected block '+row.id+JSON.stringify(result.issues));const actual=JSON.parse(exportSparkSchema(result.target));if(JSON.stringify(actual)!==JSON.stringify(recovery.schema)){

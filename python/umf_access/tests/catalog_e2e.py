@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Installed CLI -> generated public call -> actual caller-role database execution."""
 
 import asyncio

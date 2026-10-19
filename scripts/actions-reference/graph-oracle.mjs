@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Retained Astra bounded degree/lifecycle probe. Mock SQL; no native transaction or field-admission claim.
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';

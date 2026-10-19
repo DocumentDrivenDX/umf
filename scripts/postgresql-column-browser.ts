@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/postgresql/column-metadata.json').json();
 const preservation=await Bun.file('fixtures/postgresql/edit-preservation.json').json();

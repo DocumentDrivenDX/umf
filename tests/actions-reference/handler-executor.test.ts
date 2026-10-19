@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {ReferenceHandlerCatalog} from '../../scripts/actions-reference/handler-catalog';
 import {ReferenceActionStore} from '../../scripts/actions-reference/store';
 import {test,expect} from 'bun:test';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/tablespec/roundtrip.json').json()).results;
 const splitCases=(await Bun.file('fixtures/tablespec/split.json').json()).results;

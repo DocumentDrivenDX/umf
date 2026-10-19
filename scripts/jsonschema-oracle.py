@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native oracle; no UMF model/adapter implementation imported."""
 import hashlib
 import importlib.metadata

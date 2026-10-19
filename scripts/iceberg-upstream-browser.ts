@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {importIcebergSchema,exportIcebergSchema,inspectIceberg} from '../src';
 const base='fixtures/iceberg/upstream/',cases=[];for(const c of (await Bun.file(base+'results.json').json()).results){const raw=await Bun.file(base+'extracted/'+c.id+'.json').text(),umfValid=c.status==='roundtripped';cases.push({...c,umfValid,raw,...(umfValid?{output:exportIcebergSchema(importIcebergSchema(raw,{id:c.id})),diagnostics:inspectIceberg(importIcebergSchema(raw,{id:c.id})).diagnostics}:{})});}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Source preservation only; no transform interpretation or native authority. */
 import {copyJson} from '../../../model/json';
 import {readJsonValue,writeJsonValue} from '../../../model/serialization';

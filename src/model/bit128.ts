@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from './types';
 
 export const BIT128_PROFILE='umf-128/1' as const;

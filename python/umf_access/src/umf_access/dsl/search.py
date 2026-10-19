@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Typed bounded ranked-search declarations. No native queries or embedders."""
 
 from __future__ import annotations

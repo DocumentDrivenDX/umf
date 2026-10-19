@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {classifySqlServerField, recoverSqlServerFieldCapture} from '../../src/core-ideals/sqlserver-field';
 import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {cardinalitySystems,cardinalityCurrentStatus,replayCurrentCardinalityAuthor,verifyCardinalityEvidence,verifyCardinalityRoundTrips} from '../../scripts/core-ideals/cardinality-conformance';
 import postgresqlEvidence from '../../fixtures/validation/cardinality-postgresql-projection-native.json';

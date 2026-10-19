@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed logical aggregate grammar; native qualification is a separate gate."""
 import unittest
 from decimal import Decimal

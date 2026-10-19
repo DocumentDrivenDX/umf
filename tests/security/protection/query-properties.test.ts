@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {domainFixture,domainRef} from './domain-fixture';
 import {validateProtectionParameters} from '../../../src/extensions/security/protection/parameters';

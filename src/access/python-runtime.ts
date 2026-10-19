@@ -1,4 +1,6 @@
-export const pythonRuntime = String.raw`"""Generated typed request builders. Standard library only; no SQL or host I/O."""
+// SPDX-License-Identifier: MIT OR Apache-2.0
+export const pythonRuntime = String.raw`# SPDX-License-Identifier: MIT OR Apache-2.0
+"""Generated typed request builders. Standard library only; no SQL or host I/O."""
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence

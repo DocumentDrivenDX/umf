@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {classifySqlServerFacets as classify, recoverSqlServerFacetSource as recover, sqlserverFacetsPackage, SQLSERVER_FACETS_EXTENSION} from '../../src/core-ideals/facets-sqlserver';

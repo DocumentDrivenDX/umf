@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Portable JSON admission matching UMF's interoperable numeric boundary."""
 
 import math

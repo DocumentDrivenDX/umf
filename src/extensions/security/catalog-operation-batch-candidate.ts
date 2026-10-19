@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private atomic logical evaluation. Supplied operation completeness and cut trust are premises. */
 import {copyJson} from '../../model/json';
 import {readCandidateCatalogProgram} from './catalog-program-candidate';

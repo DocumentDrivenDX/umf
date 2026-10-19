@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';import {UmfError,type Document,type Json} from '../model/types';import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';import {validateDocument} from '../validation/document';import {classifyParquetRecord,type ParquetRecordClassification,type ParquetRecordRequest} from './parquet-record';import {getParquetFieldMetadata} from '../adapters/parquet/field-metadata';import {exportParquetCapture} from '../adapters/parquet';import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/parquet-record-type-classification.schema.json';
 export {default as parquetRecordTypeClassificationSchema} from '../../spec/core/parquet-record-type-classification.schema.json';

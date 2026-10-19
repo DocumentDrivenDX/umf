@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 from shop import Customer, Order
 
 def negative() -> None:

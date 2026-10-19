@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Copy a generated schema fragment without changing its resource-relative references. */
 export function copySchemaFragment<T>(resourceId:string,fragment:T):T {
  const copy=structuredClone(fragment);

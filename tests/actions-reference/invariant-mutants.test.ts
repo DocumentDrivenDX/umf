@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test, expect} from 'bun:test';
 import {cp, mkdir, mkdtemp, rm, symlink} from 'node:fs/promises';
 import {tmpdir} from 'node:os';

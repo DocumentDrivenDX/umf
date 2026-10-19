@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/parquet/hybrid/',m=await Bun.file(base+'manifest.json').json(),built=await Bun.build({entrypoints:['src/adapters/parquet/hybrid.ts'],outdir:'.cache/parquet-hybrid-browser',naming:'hybrid.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/hybrid.js'?new Response(Bun.file('.cache/parquet-hybrid-browser/hybrid.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Parquet hybrid decoder</title>');}});let browser;

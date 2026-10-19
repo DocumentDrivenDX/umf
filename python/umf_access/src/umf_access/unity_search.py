@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Bounded separate-index search over original Unity Catalog owner programs.
 
 The host transport owns authenticated native operations and their closing

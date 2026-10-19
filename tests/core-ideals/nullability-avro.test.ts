@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroAvailabilitySource,avroNullabilityCases} from '../../scripts/core-ideals/nullability-avro-cases';
 import {classifyAvroNullability, verifyAvroNullabilityClassification, recoverAvroNullabilityBundle, avroNullabilityPackage, AVRO_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';

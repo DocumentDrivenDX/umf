@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {encodeCoreKeyTuple,verifyCoreKeyTuple,readCoreKeyTupleBytes,prepareCoreKeyTuples} from '../../src/model/key-tuple';
 import {tupleCases,tupleDocument,tupleIdentity} from '../../scripts/core-key-tuple-cases';

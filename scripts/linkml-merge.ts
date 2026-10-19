@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importLinkmlDocument,proposeLinkmlImportMerge,exportLinkmlDocument,readDocument,writeDocument} from '../src';
 const imported=await Bun.file('fixtures/linkml/imports/results.json').json(),cases=[];
 for(const c of imported.cases){const sources=c.sources.map((s:any)=>{const root=JSON.parse(s.text);root.description='Schema metadata '+s.key;root.default_range='string';root.prefixes={p:'https://example.org/'+s.key+'/'};for(const collection of ['classes','slots','enums','subsets','types']){const declaration:any={description:s.key,from_schema:'https://example.org/original-provenance'};if(collection==='classes')declaration.attributes={local:null};if(collection==='types')declaration.base='str';root[collection]={[s.key+'_own']:declaration,...(s.key!=='root'?{Collision:declaration}:{}),RootWins:declaration};}return {key:s.key,text:JSON.stringify(root)};});

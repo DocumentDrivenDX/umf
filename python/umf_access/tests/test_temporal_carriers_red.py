@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """CONTRACT-075 carrier corpus. Not a permissive token parser or target codec.
 
 Proposed temporal_token(kind, carrier) ABI requires generator-owner agreement.

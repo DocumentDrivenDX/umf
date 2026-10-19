@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {evaluateCompositionEvidence,verifyCompositionFingerprints,verifyCompositionQualification} from '../scripts/uuid/composition-gates';
 const base='fixtures/validation/uuid/';

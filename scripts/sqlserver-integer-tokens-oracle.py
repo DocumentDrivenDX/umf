@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent decimal-token check; does not claim live SQL Server validation."""
 from decimal import Decimal
 from pathlib import Path

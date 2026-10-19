@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Separate ideal-admission and qualified five-target delivery decision, following CONTRACT-040/076. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

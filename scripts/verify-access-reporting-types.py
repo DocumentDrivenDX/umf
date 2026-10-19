@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Check the full generated reporting package and query/action misuse cases."""
 from pathlib import Path
 import argparse

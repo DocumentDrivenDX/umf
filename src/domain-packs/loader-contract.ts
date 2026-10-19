@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Portable contract primitives used by the TableSpec acquisition runtime. */
 export {createValidator} from '../validation/schema';
 export {readJsonValue} from '../model/serialization';

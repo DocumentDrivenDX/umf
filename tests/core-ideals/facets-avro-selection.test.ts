@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectAvroFacetSelection} from '../../src/core-ideals/avro-facet-selection';
 import {inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';

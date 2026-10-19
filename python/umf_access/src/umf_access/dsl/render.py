@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Canonical *logical Weft* text at build time; never native SQL lowering.
 
 Weft owns backend acceptance and execution artifacts. Page continuation stays in

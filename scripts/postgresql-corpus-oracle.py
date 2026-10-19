@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Check every regenerated upstream query with a separate pinned native wrapper."""
 import json, hashlib
 from pathlib import Path

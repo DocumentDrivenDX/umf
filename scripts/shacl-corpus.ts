@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {importShaclTurtle,exportShaclTurtle,getShaclQuads,getShaclPropertyPath,writeDocument,readDocument} from '../src';
 const manifest=await Bun.file('native/shacl/sources/manifest.json').json(),cases=[];

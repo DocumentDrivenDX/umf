@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as api from '../src/index';
 import {localPlanFixture,localCapabilities,runLocalProfileCorpus} from './actions-local-profile-corpus';

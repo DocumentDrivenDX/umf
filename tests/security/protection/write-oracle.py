@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent finite contract expectations, authored without executing UMF.
 S24: each changed Field needs original-read OR its exact mapped blind grant,
 plus ordinary permissions in every required state. S25 additionally needs the

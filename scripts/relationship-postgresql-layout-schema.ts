@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const string={type:'string',minLength:1},ref=($ref:string)=>({$ref});
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',required,additionalProperties:false,properties});

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {mkdir,readdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,type MedicalTables,type MedicalRow} from '../src/domain-packs/medical';

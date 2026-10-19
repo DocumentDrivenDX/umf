@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {mkdir,rm,stat} from 'node:fs/promises';
 import {runReferenceHandler,referenceHandlerBuild,type ReferenceHandlerObservation} from '../../scripts/actions-reference/sandbox';

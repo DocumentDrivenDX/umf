@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import hashlib,json,shutil,subprocess
 from pathlib import Path
 pin='ffdb326121ea89b7b8280e76a5caea923834bcef';cache=Path('.cache/jsonld-api');out=Path('native/jsonld/sources')

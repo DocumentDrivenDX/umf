@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Source/authority-path observations only; not a new query compiler or native permit. */
 import source from './protection/current-query-source.json';
 import scenarios from './protection/current-query-read-scenarios.json';

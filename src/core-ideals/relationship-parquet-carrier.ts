@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {buildAvroRelationshipCarrier,type AvroRelationshipCarrier} from './relationship-avro-carrier';
 import {parquetCardinalityFile,type ParquetCardinalityCarrier} from './parquet-cardinality-carrier';
 /** Restricted common ASCII naming profile; namespace and keyRecordName are logical labels only. */

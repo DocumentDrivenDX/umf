@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {ensureSmithyRuntime} from './smithy-runtime';
 import {importSmithySources,exportSmithySources,readDocument,writeDocument,assembleSmithyDocument,createSmithyJavaScriptBackend} from '../src';
 const root='fixtures/smithy/invalid-upstream/';

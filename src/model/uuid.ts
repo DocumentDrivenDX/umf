@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from './types';
 import {parseBits128,bits128ToBytes,BIT128_PROFILE,type Bit128Value} from './bit128';
 export interface UuidValue extends Bit128Value {readonly canonicalText:string;readonly originalText:string}

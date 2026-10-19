@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {bindingMigrationCase} from './stable-ids-cases';
 import {migrateBindingRelationships} from '../../src';

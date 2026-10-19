@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import * as unicodeRuntime from 'ajv/dist/runtime/ucs2length';
 import Ajv from 'ajv/dist/2020';
 import standalone from 'ajv/dist/standalone';
@@ -16,5 +17,5 @@ export function structuralSource(schemas:any[]):string {
  ajv.addSchema({$id:'urn:umf:generated:literal',$defs:schemas[0].$defs,$ref:'#/$defs/literal'});
  ajv.addSchema({$id:'urn:umf:generated:semantic-references',type:'array',minItems:1,items:{$ref:schemas[1].$id}});
  const emitted=standalone(ajv,{checkCore:schemas[0].$id,checkSemanticTypeReference:schemas[1].$id,checkPackage:schemas[2].$id,checkCoreLiteral:'urn:umf:generated:literal',checkSemanticTypeReferences:'urn:umf:generated:semantic-references'}).replace(/const (\w+) = require\("ajv\/dist\/runtime\/ucs2length"\)\.default;/g,(_,name)=>'const '+name+' = '+(((unicodeRuntime.default as any).default??unicodeRuntime.default) as Function).toString()+';').replace(/export const (\w+) = /g,'export const $1: ValidateFunction = ');
- return '// Generated from the authored UMF metamodel. Do not edit.\n// @ts-nocheck\nimport type {ValidateFunction} from \"ajv\";\n'+emitted;
+ return '// SPDX-License-Identifier: MIT OR Apache-2.0\n// Generated from the authored UMF metamodel. Do not edit.\n// @ts-nocheck\nimport type {ValidateFunction} from \"ajv\";\n'+emitted;
 }

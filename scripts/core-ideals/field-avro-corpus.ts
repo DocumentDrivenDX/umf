@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {avroRecords} from '../../src/core-ideals/avro-records';
 import {classifyAvroRecord} from '../../src/core-ideals/avro-record';
 import {avroFieldCases} from './avro-field-cases';import {importAvroSchema, getAvroFieldMetadata} from '../../src/adapters/avro';import {classifyAvroField} from '../../src/core-ideals/avro-field';

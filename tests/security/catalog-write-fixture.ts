@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {catalogRuntimeFixture,graphRuntimeFixture} from './catalog-runtime-fixture';
 import {ref} from './fixture';
 export function catalogWriteFixture(graph=false,opaque=false){

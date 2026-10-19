@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Shared structural policy for authored projections and native classifications. */
 export function enforceProjectionPolicy(schema:any,success:'projected'|'classified'='projected'){
  const exact={type:'object',properties:{outcome:{const:'exact'}}};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/delta/upstream/',report=await Bun.file(base+'history-results.json').json(),texts:Record<string,string>={};for(const c of report.results)for(const v of c.versions)texts[v.path]??=await Bun.file(base+v.path).text();
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/delta-history-upstream-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

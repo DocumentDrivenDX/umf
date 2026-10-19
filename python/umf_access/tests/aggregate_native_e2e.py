@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual generated CLI/catalog/native aggregate campaign; requires an explicit PG18 DSN.
 
 The caller owns the database process. This script creates and removes only its

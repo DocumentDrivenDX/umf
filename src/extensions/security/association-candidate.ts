@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 /** Private selected-source correspondence; no policy/domain/runtime admission. */
 import {copyJson} from '../../model/json';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../src/model/types';
 /** Trusted, bounded diagnostics only; no retries or changes to cleanup admission. */
 export type CleanupInspectionPhase='initial'|'settlement';

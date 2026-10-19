@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Strict Python carriers and explicit, resolved constraint helpers.
 
 No native transport is guessed here. temporal_token implements only the selected

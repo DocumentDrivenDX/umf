@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {ensureSmithyRuntime} from './smithy-runtime';
 import {importSmithySources,writeDocument,readDocument,selectSmithyShapes,createSmithyJavaScriptSelectionBackend,smithySelectionResultSchema,smithyAssemblyResultSchema,coreSchema} from '../src';
 import {createValidator} from '../src/validation/schema';

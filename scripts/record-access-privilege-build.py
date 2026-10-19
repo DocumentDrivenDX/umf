@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Qualification-only pass-through recorder for original compile requests/results."""
 
 import hashlib

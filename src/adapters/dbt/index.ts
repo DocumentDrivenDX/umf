@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/dbt-manifest/package.json';
 import grammar from '../../../spec/extensions/dbt-manifest/native-schema.json';

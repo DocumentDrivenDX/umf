@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Malformed guide sources must refuse in an isolated copy; the real worktree stays untouched."""
 from pathlib import Path
 import hashlib,json,shutil,subprocess,tempfile

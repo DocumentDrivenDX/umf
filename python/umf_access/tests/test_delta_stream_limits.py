@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Iterator control tests only; synthetic pages grant no native qualification."""
 
 from __future__ import annotations

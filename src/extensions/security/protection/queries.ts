@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Conditional property comparison, never query/compiler admission. */
 import wire from '../../../../spec/extensions/security-protection/schema.json';
 import {copyJson} from '../../../model/json';

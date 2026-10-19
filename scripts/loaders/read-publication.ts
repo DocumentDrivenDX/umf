@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,join,dirname} from 'node:path';
 import {mkdir,lstat,rename,rm} from 'node:fs/promises';
 import {readLoaderPublication,type PublicationSelection} from './publication';

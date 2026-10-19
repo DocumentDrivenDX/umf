@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../../src';
 import {relationshipCandidate} from '../core-relationship-cases';
 export function bindingMigrationCase(){

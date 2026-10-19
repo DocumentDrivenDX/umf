@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {buildASTSchema,validateSchema,version as graphqlJsVersion} from 'graphql';
 import {exportGraphqlSchema,getGraphqlAst,projectDddEntitiesToGraphql,type Document} from '../../src';

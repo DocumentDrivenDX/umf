@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {LIMITS} from '../model/json';
 import {UmfError,type Json} from '../model/types';
 /** Count compact JSON text without allocating an oversized retained-source serialization. */

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixtures=await Bun.file('fixtures/avro/tablespec-projection.json').json(),simple=await Bun.file('fixtures/avro/tablespec-carrier-roundtrip.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/avro-tablespec-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));

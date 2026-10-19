@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Stage-two publication retains recovery custody and serializes cooperating calls."""
 
 import contextlib

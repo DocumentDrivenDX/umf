@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only Key binding discovery and emitted native declaration verification. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

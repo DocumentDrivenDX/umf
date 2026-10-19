@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {canonical,sha256Text} from '../../src/compilation/bundle/index';

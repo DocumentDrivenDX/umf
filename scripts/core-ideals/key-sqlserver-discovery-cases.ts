@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export function sqlServerKeyDiscoveryCases(){
  const rows:{id:string;statement:string;error:number;value:string|null}[]=[];
  const add=(id:string,statement:string,error=0,value:string|null='1')=>rows.push({id,statement,error,value});

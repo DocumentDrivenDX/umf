@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Check emitted artifacts against native TableSpec models and consumer generators."""
 import json,hashlib,runpy,importlib.metadata
 from pathlib import Path

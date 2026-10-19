@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureArrowIpc,renameArrowIpcField,exportArrowIpcCapture} from '../src';
 import {flatbufferBackend} from '../native/arrow/flatbuffer-runtime';
 const base='fixtures/arrow/ipc-inputs/',cases=(await Bun.file(base+'layout-oracle-results.json').json()).cases;

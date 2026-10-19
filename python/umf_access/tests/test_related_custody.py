@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Build-time original compiler packet custody, independent of native admission."""
 import copy
 import json

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original portable compiler controls, separate from native engine authority."""
 import hashlib
 import importlib.metadata

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Bounded four-pack real browser check of the public compact receipt API. */
 import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import sourceInput from '../spec/domain-packs/commerce/ontology.json';
 import {inspectCoreEvolution,verifyCoreEvolution,coreEvolutionPolicySchema} from '../src/model/evolution';

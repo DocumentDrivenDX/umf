@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {exportIcebergTable,importIcebergTable,inspectIcebergTableContext,projectBindingToIceberg,type Document} from '../../src';
 

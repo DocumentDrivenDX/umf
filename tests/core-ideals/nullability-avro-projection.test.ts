@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-avro-projection-cases';
 import {projectNullabilityToAvro, recoverNullabilityFromAvro} from '../../src/core-ideals/nullability-avro-projection';

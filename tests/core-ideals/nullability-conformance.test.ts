@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {verifyNullabilityEvidence,verifyNullabilityRoundTrips,requireCurrentCoreNullabilityQualification,nullabilitySystems} from '../../scripts/core-ideals/nullability-conformance';
 test('five Nullability bindings preserve ideals, native payloads and explicit loss policy',async()=>{

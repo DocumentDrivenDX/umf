@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Supplied-cut source semantics only; no SUM compiler, native permission or release. */
 import source from './protection/live-original-integer-sum-source.json';
 import oldSource from './protection/query-value-modes-source.json';

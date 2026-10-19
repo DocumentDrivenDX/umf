@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {probeRdfXml,type Profile} from '../native/rdfxml/probe';
 const start='<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ex="https://example.org/" xml:base="https://example.org/base/">',end='</rdf:RDF>';
 const cases=[

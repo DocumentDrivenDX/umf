@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {relationshipRefreshCommands,relationshipProofs,relationshipSourceHashes,digest,readEvidence} from './relationship-gate-inputs';
 export interface RelationshipIntegratedReplay {complete:boolean;commands:string[][];runs:{command:string[];exitCode:number;log:string;logSha256:string}[];sha256:Record<string,string>;relationshipSourceHashes:Record<string,string>}

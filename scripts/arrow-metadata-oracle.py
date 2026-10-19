@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent flatc decode comparison, preserving Python's exact JSON integers."""
 from pathlib import Path
 import json,subprocess,os,sys

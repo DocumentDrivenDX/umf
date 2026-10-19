@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Captured command -> original Weft native-bulk request, build only."""
 
 from __future__ import annotations

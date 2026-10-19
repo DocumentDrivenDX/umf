@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureParquet,repairParquetDictionaryOffsets,exportParquetCapture,reconcileDeltaParquetCheckpoint} from '../src';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/parquet/offset-repair/',results=[];for(const c of (await Bun.file('fixtures/delta/parquet-actions/results.json').json()).results.filter((c:any)=>['upstream-18','upstream-24'].includes(c.id))){const r=repairParquetDictionaryOffsets(captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id}));if(r.output)await Bun.write(base+c.id+'.parquet',exportParquetCapture(r.output));results.push({id:c.id,path:c.path,result:r});}await Bun.write(base+'results.json',JSON.stringify({results},null,2)+'\n');console.log(results.map(c=>({id:c.id,status:c.result.status,repairs:c.result.repairs,errors:c.result.diagnostics.filter(d=>d.severity==='error')})));

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipParquetCases} from '../../scripts/core-ideals/relationship-parquet-cases';
 import {projectRelationshipToParquet, recoverRelationshipParquetIdeal, recoverRelationshipParquetNative, verifyRelationshipParquetProjection} from '../../src/core-ideals/relationship-parquet-projection';

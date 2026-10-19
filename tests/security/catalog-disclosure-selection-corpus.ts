@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Actual original-kernel selection provenance, not native authority. @covers US-056-AC6 */
 import {ref} from './fixture';
 import {catalogRuntimeFixture,graphRuntimeFixture,compileRuntimeFixture} from './catalog-runtime-fixture';

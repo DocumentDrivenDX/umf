@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import type * as API from '../src/index';
 import type {Document} from '../src/model/types';

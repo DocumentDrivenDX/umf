@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Reimport actual generated native artifacts through the existing preservation adapters. */
 import assert from 'node:assert/strict';
 import {backend} from '../../native/postgresql/runtime';

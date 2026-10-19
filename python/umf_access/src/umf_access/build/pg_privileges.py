@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Review-only, source-gated PG18.6 fixed read-runtime privilege evidence.
 
 This module neither connects to PostgreSQL nor applies grant statements.

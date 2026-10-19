@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed original relationship-Key output transport; no SQL or native discovery."""
 from __future__ import annotations
 

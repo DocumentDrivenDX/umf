@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Typed, capture-only logical expressions."""
 
 from __future__ import annotations

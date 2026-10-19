@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/field-avro-projection.schema.json').json();schema.$id='urn:umf:core:field-parquet-projection:1.0.0';schema.title='Authored Field to explicit Parquet schema file';schema.properties.operation.const='project-field-parquet';
 const p=schema.properties.request.properties;delete p.namespace;p.recordName={type:'string',minLength:1};p.fieldName={type:'string',minLength:1};p.nativeType.enum=Object.keys(parquetCarriers);p.repetition={enum:['required','optional','repeated']};schema.properties.request.required=['id','recordName','fieldName','nativeType','repetition','mode'];

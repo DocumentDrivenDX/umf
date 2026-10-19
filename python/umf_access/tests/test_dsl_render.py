@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Proposed logical Weft renderer goldens; no compiler/native execution claims.
 
 Base syntax: Weft SQL 0.2 EBNF at 94b2de5e. Extended predicates/order:

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent pinned codec checks: accepted records do not establish uniqueness."""
 import io, json, hashlib
 from pathlib import Path

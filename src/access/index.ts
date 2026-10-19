@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readDocument} from '../model/document';
 import {CURRENT_CORE_VERSION,UmfError, type Document, type Element} from '../model/types';
 import {admitAction} from '../extensions/actions/structure';
@@ -130,7 +131,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  const metadata=Object.fromEntries(records.map(r=>[r.id,{fields:r.fields,key:r.key,key_id:r.keyId,selected:r.selected}]));
  const actionMetadata=Object.fromEntries(actions.map(a=>[a.id,{parameters:a.parameters,affected:a.affected,declaration:a.raw}]));
  const description={contract:'umf.access/1',umf:doc.umf,sourceDigest,records:metadata,relationships:rels,actions:actionMetadata,limits:{page:100,getManyKeys:100}};
- const lines=['# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, Query, Field, Relationship, Missing, MISSING, Transport, Receipt, ExactTimestamp, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
+ const lines=['# SPDX-License-Identifier: MIT OR Apache-2.0','# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, Query, Field, Relationship, Missing, MISSING, Transport, Receipt, ExactTimestamp, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
  for(const r of records){
   lines.push('@dataclass(frozen=True)',`class ${r.python}Key:`);
   for(const f of r.key)lines.push(`    ${f.python}: ${type(f,false)}`);
@@ -157,7 +158,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   lines.push(`    async def ${a.python}(self, *, ${[...params,'idempotency_key: str | None = None'].join(', ')}) -> Receipt[${affected}, None]:`,
    `        return cast(Receipt[${affected}, None], await self._client.apply(${py(a.id)}, {${a.parameters.map(p=>py(p.python)+': '+p.python).join(', ')}}, idempotency_key=idempotency_key))`,'');
  }
- const files=[{path:request.package+'/__init__.py',text:'from .models import *\nfrom ._runtime import AccessError, Unsupported, SchemaMismatch, PreconditionFailed, WriteOutcomeUnknown, Page, Receipt, ExactTimestamp, MISSING, Missing, Transport\n'},
+ const files=[{path:request.package+'/__init__.py',text:'# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import AccessError, Unsupported, SchemaMismatch, PreconditionFailed, WriteOutcomeUnknown, Page, Receipt, ExactTimestamp, MISSING, Missing, Transport\n'},
  {path:request.package+'/models.py',text:lines.join('\n')+'\n'},
  {path:request.package+'/_runtime.py',text:pythonRuntime},
  {path:request.package+'/source.json',text:request.text},

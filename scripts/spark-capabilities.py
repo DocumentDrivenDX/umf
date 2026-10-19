@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned native schema-only probe. No user UDT code or serializedClass is executed."""
 import copy,json,os,hashlib,inspect
 from pathlib import Path

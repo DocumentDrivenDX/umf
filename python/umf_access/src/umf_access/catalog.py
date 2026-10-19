@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inert precompiled read catalogs. No discovery, filesystem or compiler imports."""
 
 from __future__ import annotations

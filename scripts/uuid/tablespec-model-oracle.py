@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual installed TableSpec model/schema/generator and Spark CSV/Parquet recovery."""
 import csv,json,tempfile,hashlib,inspect,sys,subprocess,os,uuid
 os.environ['PYSPARK_PYTHON']=sys.executable

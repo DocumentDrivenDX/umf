@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {CoreRelationship} from '../../src/validation/relationships';
 import {knownActionRelationship} from '../../src/extensions/actions/known-model';
 import type {SQL} from 'bun';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """GraphQL-core comparison over pinned upstream schema and grammar fixtures."""
 import json,hashlib
 from pathlib import Path

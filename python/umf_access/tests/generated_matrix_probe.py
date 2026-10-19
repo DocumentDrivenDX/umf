@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Installed-wheel probe of actual generated golden models; never emits models."""
 
 import hashlib

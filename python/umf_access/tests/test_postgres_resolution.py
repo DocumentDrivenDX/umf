@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Source-neutral context binds native store, relation and principal identity."""
 import copy
 import unittest

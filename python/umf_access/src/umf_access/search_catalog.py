@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inert typed search catalog and bounded result assembly; no compiler imports."""
 
 from __future__ import annotations

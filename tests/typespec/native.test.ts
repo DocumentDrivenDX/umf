@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../src/validation/schema';
 import {typespecCompilerReportSchema,typespecSyntaxLocationsSchema} from '../../src';
 import {test,expect} from 'bun:test';

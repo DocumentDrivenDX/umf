@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Cache reuse never substitutes for fresh native identity and actor checks."""
 
 import unittest

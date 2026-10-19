@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Concept} from '../../docs/helix/05-deploy/reference/model';
 export const concepts:Concept[]=[
  {key:'document',title:'Document',pointer:'',description:'A complete UMF model: its identity, vocabulary versions and modules.'},

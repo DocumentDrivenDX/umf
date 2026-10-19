@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {cp,mkdir,rm,symlink} from 'node:fs/promises';
 import {createHash} from 'node:crypto';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Re-fetch the already pinned Apache Parquet specification; never advances its revision."""
 import hashlib,json,urllib.request
 from pathlib import Path

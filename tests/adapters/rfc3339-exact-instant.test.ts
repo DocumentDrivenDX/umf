@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, test} from 'bun:test';
 import {parseRfc3339ExactInstant as parse, sameRfc3339ExactInstant as same,
  RFC3339_EXACT_INSTANT_MAXIMUM_BYTES as maximum} from '../../src/adapters/rfc3339-exact-instant';

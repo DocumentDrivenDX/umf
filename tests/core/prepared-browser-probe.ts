@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import * as core from '../../src/index';
 import engine from '../../fixtures/access/commerce/engine-only.json';
 export function probePreparedInspection(){

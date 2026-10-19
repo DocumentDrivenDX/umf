@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact owner-declared Spark parameter transport before native dispatch."""
 import copy
 import unittest

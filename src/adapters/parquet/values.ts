@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {assembleParquetRows,type ParquetRowValue} from './rows';
 import {inspectParquetContainers} from './containers';
 import type {ParquetPhysicalValue} from './physical';

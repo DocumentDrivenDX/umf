@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native column originals must be retained under their exact source alias."""
 
 import copy

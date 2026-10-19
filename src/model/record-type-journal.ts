@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 /** Internal explicit transition reconciliation; consistency never authenticates issuer. */
 import sourceSchema from '../../spec/core/schema.json';

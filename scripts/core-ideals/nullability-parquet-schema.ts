@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 import base from '../../spec/core/avro-nullability-classification.schema.json';
 const schema:any=structuredClone(base),p=schema.properties;

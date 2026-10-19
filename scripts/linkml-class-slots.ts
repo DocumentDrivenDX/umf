@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importLinkmlDocument,inspectLinkmlClassSlots,getLinkmlDocumentNode,readDocument,writeDocument} from '../src';
 const manifest=await Bun.file('native/linkml/sources/manifest.json').json();
 const paths=[...manifest.files.filter((f:any)=>f.path.endsWith('.yaml')&&(f.upstreamPath.startsWith('tests/input/examples/')||f.upstreamPath.startsWith('linkml_model/model/schema/'))).map((f:any)=>f.path),'native/linkml/examples/people.yaml','native/linkml/examples/inheritance.json'];

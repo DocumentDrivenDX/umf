@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Portable module identities; host cache paths are used only to read licenses. */
 export interface LicenseModule {name:string;version:string;directory:string}
 export function licenseModules(inventory:string):LicenseModule[]{

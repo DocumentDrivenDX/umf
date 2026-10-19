@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """US-903-AC6 independent Python consumer of owner-authored manifest cases.
 No UMF JS, shared schema validator, or native executor is imported.
 """

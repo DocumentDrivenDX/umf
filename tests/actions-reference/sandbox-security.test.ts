@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {mkdir,rm} from 'node:fs/promises';
 import {createServer,createConnection} from 'node:net';

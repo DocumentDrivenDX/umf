@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {readFile} from 'node:fs/promises';
 import {readDocument} from '../src/model/document';

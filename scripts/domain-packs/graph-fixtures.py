@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Development-only portable graph candidate from exact pack/CSV source identities.
 
 No Truss/Ashlar native storage ID allocation, execution or ontology reasoning.

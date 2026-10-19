@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {GREGORIAN_DATE_PROFILE,parseGregorianDate,truncateGregorianDate} from '../../src/adapters/gregorian-date';
 

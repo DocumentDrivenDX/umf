@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlserverAvailabilitySource,sqlserverNullabilityCases} from '../../scripts/core-ideals/nullability-sqlserver-cases';
 import {classifySqlServerNullability, verifySqlServerNullabilityClassification, recoverSqlServerNullabilitySource, sqlserverNullabilityPackage, SQLSERVER_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';

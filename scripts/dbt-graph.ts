@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {importDbtManifest,inspectDbtManifestGraph,readDocument,writeDocument} from '../src';
 for(const base of ['fixtures/dbt/','fixtures/dbt/rich/']){

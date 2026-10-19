@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSparkSchema,exportSparkSchema,inspectSpark,getSparkNode,proposeSparkNodeEdit,readDocument,writeDocument} from '../../src';
 const cases=await Bun.file('fixtures/spark/schema-cases.json').json();

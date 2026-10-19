@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,copy,hashlib,struct
 from pathlib import Path
 import pyarrow.parquet as pq

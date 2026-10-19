@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, test} from 'bun:test';
 
 test('retained graph candidates preserve original provenance and explicit inventory coverage', async () => {

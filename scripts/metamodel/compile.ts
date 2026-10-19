@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readJsonValue} from '../../src/model/serialization';
 import {createHash} from 'node:crypto';
 import {checkProgram,checkAnnotation,emitShape,type Shape} from './grammar';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 for(const [entry,name] of [['src/index.ts','umf.js'],['native/arrow/runtime.ts','runtime.js']]){const built=await Bun.build({entrypoints:[entry!],outdir:'.cache/arrow-upstream-browser',naming:name!,target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));}
 const base='fixtures/arrow/upstream/',results=await Bun.file(base+'results.json').json(),schemas=await Bun.file(base+'schema-results.json').json();

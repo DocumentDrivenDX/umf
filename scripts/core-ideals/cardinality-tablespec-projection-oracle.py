@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independently validate emitted native schemas and their vector value boundaries."""
 import os,sys,json,hashlib,runpy
 from pathlib import Path

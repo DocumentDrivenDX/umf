@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Current source-owner correspondence, independent of compiler/native authority. */
 import fixture from './current-query-source.json';
 import {validateDocument} from '../../../src/validation/document';

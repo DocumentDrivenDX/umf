@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native construction and dual-runtime verification of field renames."""
 import copy,json,os,sys
 from pathlib import Path

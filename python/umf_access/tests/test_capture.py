@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture's in-memory boundary: no catalog writer or Weft substitute."""
 
 import unittest

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importTableSpec,importTableSpecBundle,editTableSpecColumn,editTableSpecTable,exportTableSpec,exportTableSpecBundle,readDocument,writeDocument} from '../../src';
 const string=(value:string)=>({kind:'string' as const,value});

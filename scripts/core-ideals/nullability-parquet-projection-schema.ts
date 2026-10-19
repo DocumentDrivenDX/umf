@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-parquet-projection.schema.json';
 const schema:any=structuredClone(base),p=schema.properties;
 schema.$id='urn:umf:core:nullability-parquet-projection:1.0.0';schema.title='Authored availability projection to Parquet leaf schema';p.operation.const='project-nullability-parquet';p.source.$ref='urn:umf:core:0.10.0';p.author.$ref='urn:umf:core:nullability-operation:5.0.0#/$defs/declaration';

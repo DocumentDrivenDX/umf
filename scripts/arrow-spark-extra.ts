@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureArrowIpc,inspectArrowIpcLayout,projectArrowToSpark,exportSparkSchema,exportArrowFlatbufferModel,readDocument,writeDocument} from '../src';
 const base='fixtures/projections/arrow-spark/',report=await Bun.file(base+'native-results.json').json(),results=[];
 const equal=(a:any,b:any):boolean=>a&&typeof a==='object'&&b&&typeof b==='object'?Object.keys(a).length===Object.keys(b).length&&Object.keys(a).every(k=>Object.hasOwn(b,k)&&equal(a[k],b[k])):a===b;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Parse and exercise every emitted record with both pinned native codecs."""
 import io, json, decimal, datetime, hashlib, warnings
 from pathlib import Path

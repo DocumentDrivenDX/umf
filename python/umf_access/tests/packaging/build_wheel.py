@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Build a local prerelease wheel with pinned tooling; never publishes."""
 
 import argparse

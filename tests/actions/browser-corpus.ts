@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {runActionCaseCorpus} from './case-corpus';
 import type * as Umf from '../../src/index';

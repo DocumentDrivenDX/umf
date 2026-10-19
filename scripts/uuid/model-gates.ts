@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {uuidModelQualificationTests} from './qualification-inventory';
 /** Source-bound gate aggregation. Does not turn a bounded model profile into universal adapter support. */
 import assert from 'node:assert/strict';

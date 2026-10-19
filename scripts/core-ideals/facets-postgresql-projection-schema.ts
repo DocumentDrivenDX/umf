@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-postgresql-projection.schema.json';
 import classification from '../../spec/core/postgresql-facet-classification.schema.json';
 const schema:any=structuredClone(base);

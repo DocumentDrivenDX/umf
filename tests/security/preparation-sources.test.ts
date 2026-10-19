@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {compilePreparationSourceObligations,derivePreparationSubjectKey,preparationSourceArtifact as artifact} from '../../tools/security/protection-preparation-sources';
 import {preparationSourcesFixture} from './preparation-sources-fixture';

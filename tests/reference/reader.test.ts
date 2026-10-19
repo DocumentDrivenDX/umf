@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {latestProfile,propertyPresence,shape,schemaNode,unknownKeyPolicy,schemaRules,identity,conditionText} from '../../docs/helix/05-deploy/reference/model';
 import {parseNativeJson,validateDocument,readDocument} from '../../src/index';

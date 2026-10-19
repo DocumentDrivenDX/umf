@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readFile,mkdir,writeFile,rename,realpath} from 'node:fs/promises';
 import {resolve,join,relative,isAbsolute} from 'node:path';
 import type {Rights,Profile} from './inventory';

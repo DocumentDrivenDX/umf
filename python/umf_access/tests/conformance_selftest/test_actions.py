@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Deliberately faulty action targets must fail the shared assertions.
 
 These are synthetic suite-detection tests, never Truss native qualification.

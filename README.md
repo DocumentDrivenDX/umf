@@ -277,3 +277,8 @@ const proposal = generateDeltaDDLBundle([table]);
 Bundle generation preserves caller order and refuses the entire proposal on an
 unsupported member or duplicate identity/name. It generates SQL without applying
 it; native acceptance, migrations and logical-to-physical mapping remain separate.
+
+## License
+
+First-party software is dual-licensed under MIT OR Apache-2.0, at your option.
+See [LICENSE.md](LICENSE.md). Third-party materials retain their original notices.

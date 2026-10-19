@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {SCALAR_TYPES,type JsonObject} from '../src/model/types';
 export interface FacetCase {id:string;element:JsonObject;valid:boolean;warnings:boolean;}
 export function facetCases():FacetCase[]{

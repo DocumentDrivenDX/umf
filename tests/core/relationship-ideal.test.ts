@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipCandidate,relationshipCases} from '../../scripts/core-relationship-cases';
 import {validateRelationshipCandidate} from '../../src/validation/relationships';

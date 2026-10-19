@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent TableSpec ingestion/archive and DICOM metadata verification.
 
 Run with TableSpec's Python environment for tabular checks, or pydicom's isolated

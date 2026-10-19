@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Emit Python admissions and both serialized forms for the browser replay."""
 
 import json

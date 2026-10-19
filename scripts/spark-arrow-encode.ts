@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readDocument,encodeArrowFlatbuffer} from '../src';
 import {flatbufferBackend} from '../native/arrow/flatbuffer-runtime';
 const base='fixtures/projections/spark-arrow/',report=await Bun.file(base+'native-results.json').json();let encoded=0;

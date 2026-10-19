@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 // Authored integration-schema grammar; native IPC/data semantics require separate checks.
 const object=(properties:Record<string,any>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:true});

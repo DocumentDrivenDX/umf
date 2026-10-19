@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {backend} from '../native/postgresql/runtime';
 import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlDdlDeclarations} from '../src';
 const name='umf-pg-declarations-'+crypto.randomUUID(),image=(await Bun.file('native/postgresql/catalog/image.json').json()).reference;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Bounded real-browser check of the rebuilt UMF renderer in an explicit consumer shell. */
 import {chromium,type Browser} from 'playwright';
 import {mkdir} from 'node:fs/promises';

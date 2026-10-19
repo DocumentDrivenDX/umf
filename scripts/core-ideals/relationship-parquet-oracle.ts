@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipParquetCases} from './relationship-parquet-cases';
 import {projectRelationshipToParquet} from '../../src/core-ideals/relationship-parquet-projection';
 import {exportParquetCapture} from '../../src/adapters/parquet';

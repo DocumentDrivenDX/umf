@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importShaclTurtle,importRdfTurtle,getShaclQuads,getShaclTargetNodes,writeDocument,readDocument} from '../src';
 const prefix='native/shacl/sources/',manifest=await Bun.file(prefix+'manifest.json').json(),cases=[];
 const inputs=[{shapes:'native/shacl/targets-shapes.ttl',data:'native/shacl/targets-data.ttl',baseIRI:'https://example.org/',origin:'authored'},...manifest.files.filter((f:any)=>f.path.includes('/tests/core/targets/')&&!f.path.endsWith('/manifest.ttl')).map((f:any)=>({shapes:prefix+f.path,data:prefix+f.path,baseIRI:f.url,origin:'official'}))];

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual installed target fence callbacks; owned-local fixture helper only."""
 
 import asyncio

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';import {sqlServerRecordCases} from '../../scripts/core-ideals/record-sqlserver-projection-cases';import {projectRecordToSqlServer, recoverRecordFromSqlServer} from '../../src/core-ideals/record-sqlserver-projection';import {declareCoreElementKind} from '../../src/model/field-kind';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';import {copyJson} from '../../src/model/json';
 test('record member order and strict/report policies produce atomic SQL with exact ideal recovery',()=>{
  for(const c of sqlServerRecordCases()){const result=projectRecordToSqlServer(c.author,c.request),blocked=c.variant==='missing'||(c.variant==='mismatch'||c.variant==='case-distinct')&&c.request.mode==='strict';expect(result.status).toBe(blocked?'blocked':'projected');if(blocked){expect(result.target).toBeUndefined();expect(result.nativeSql).toBeUndefined();continue;}

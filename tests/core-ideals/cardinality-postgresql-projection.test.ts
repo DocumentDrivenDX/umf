@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {declareCoreCardinality, type Document} from '../../src';
 import {projectCardinalityToPostgresql, recoverCardinalityFromPostgresql, type CardinalityPostgresqlRequest} from '../../src/core-ideals/cardinality-postgresql-projection';

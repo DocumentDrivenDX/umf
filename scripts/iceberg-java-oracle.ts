@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const root=process.cwd(),classPathFile=root+'/.cache/iceberg-java/classpath.txt';
 for(const args of [['mvn','-q','-f','native/iceberg/oracle/pom.xml','compile','dependency:build-classpath','-Dmdep.outputFile='+classPathFile]]){const p=Bun.spawn(args,{stdout:'inherit',stderr:'inherit'});if(await p.exited)throw Error('Iceberg Java oracle build failed');}

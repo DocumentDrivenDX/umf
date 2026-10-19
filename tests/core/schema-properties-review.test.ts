@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {Registry,editExtension,validateDocument,selectCoreElements,validateCoreFieldValue,declareCoreSchemaProperties,resolveCoreDefault} from '../../src/index';
 import {schemaPropertiesFixture} from '../../scripts/core-schema-properties-cases';

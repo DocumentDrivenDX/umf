@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {SecurityPublicationCustody} from '../../src/extensions/security/publication-custody';
 // @covers US-057-AC2
 // @covers US-057-AC7

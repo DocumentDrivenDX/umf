@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reproduce the original bounded SMT/TLC design probes without modifying certified inputs."""
 from pathlib import Path
 import subprocess,sys,shutil,hashlib,urllib.request,json

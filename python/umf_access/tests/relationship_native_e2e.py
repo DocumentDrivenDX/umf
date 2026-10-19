@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated source relationships, bounded Keys, S8 lists and related target sets.
 
 Caller owns PG. Only the dedicated fixture schema is created and removed.

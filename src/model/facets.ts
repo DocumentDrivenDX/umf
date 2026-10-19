@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {facetMeaning} from './internal/inspection-meanings';
 import {snapshotSchema} from '../validation/internal-schema';

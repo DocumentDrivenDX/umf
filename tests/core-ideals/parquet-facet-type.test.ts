@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectParquetFacetType as inspect} from '../../src/adapters/parquet/facet-type';
 import type {Json} from '../../src/model/types';

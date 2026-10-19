@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const native=await Bun.file('spec/core/native-json.schema.json').json(),str={type:'string'},object=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
 const diagnostic=object({code:str,path:str,severity:{enum:['warning','error']},message:str});

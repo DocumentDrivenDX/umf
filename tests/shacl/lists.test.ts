@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportShaclTurtle,readDocument,writeDocument} from '../../src';
 const prefix='@prefix sh: <http://www.w3.org/ns/shacl#> . @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const s={type:'string'},n={type:'integer',minimum:0},array=(items:unknown)=>({type:'array',items}),object=(properties:Record<string,unknown>)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false});
 const field=object({source:s,target:s,path:s,nativePath:s,description:s,scalarType:s,control:{enum:['text','number','checkbox']},requiredPresence:{const:true},nullable:{type:'boolean'}}),limits=array(s);

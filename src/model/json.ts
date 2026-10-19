@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,pointer} from './errors';
 import type {Json} from './types';
 export const LIMITS = { maxDepth: 128, maxValues: 100_000, maxTextLength: 4_000_000 } as const;

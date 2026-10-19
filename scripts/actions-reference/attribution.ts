@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {ReferenceHandlerDeployment} from './handlers';
 /** Telemetry only: unknown retained deployment metadata stays in retention, never in the journal. */
 export function referenceObservedDeployment(input:unknown):ReferenceHandlerDeployment|null{

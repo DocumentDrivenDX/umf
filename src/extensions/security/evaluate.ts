@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../model/json';
 import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../model/key-tuple';
 import {canonicalSchemaJson,checkSchemaLiteral,literalIdentity,type CoreLiteral} from '../../model/schema-literals';

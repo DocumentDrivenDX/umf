@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare UMF classifications and recoveries to pinned native declarations."""
 import json,hashlib,runpy
 from pathlib import Path

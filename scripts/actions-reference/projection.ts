@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {SQL} from 'bun';
 import {copyJson} from '../../src/model/json';
 import {UmfError,type Json} from '../../src/model/types';

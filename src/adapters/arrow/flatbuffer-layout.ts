@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import inventory from '../../../spec/extensions/arrow/flatbuffer-inventory.json';
 export type Field={name:string;type:string;required:boolean};
 export type Decl={name:string;kind:string;base?:string;fields?:Field[];members?:{name:string;value:number}[]};

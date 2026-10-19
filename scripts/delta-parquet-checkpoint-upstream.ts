@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureParquet,reconcileDeltaParquetCheckpoint} from '../src';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/parquet-checkpoint/',corpus=(await Bun.file('fixtures/delta/parquet-actions/results.json').json()).results,results=[];

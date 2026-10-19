@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {type Document,type Diagnostic,type Validation,type Element,pointer,UmfError} from '../types';
 import {knownSchemaMembers} from '../schema-literals';
 import type {CoreLiteral} from '../schema-literals';

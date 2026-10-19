@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {avroKeyProjectionCases} from './key-avro-projection-cases';

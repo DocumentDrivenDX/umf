@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned native Cardinality discovery; not a UMF binding acceptance test."""
 import hashlib
 import json

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {admitJavascriptNumber,exactDecimal,integerFromBigInt,integerToBigInt,numericToNumberLossless,writeDocument,readDocument,type Document} from '../../src/index';
 const context=()=>({document:{umf:'0.10.0',id:'numeric',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'n',kind:'field',scalarType:'integer',facets:{integerWidth:{bits:64,signed:true},range:{min:{integerToken:'0'},max:{integerToken:'9223372036854775807'}}},extensions:{}}]}]} as Document,field:{module:'m',element:'n'}});

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetMetadata,parquetSchema,parquetReadObjects} from 'hyparquet';
 import {captureParquet,inspectParquetContainers} from '../../src';
 /** Experimental schema-driven value view. Not a bounded public decoder. */

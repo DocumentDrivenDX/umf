@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Offline projection of hash-pinned judicial PDFs and authored fixtures.
 
 Requires pypdf 6.10.0. --check refuses stale outputs. No network, OCR, email,

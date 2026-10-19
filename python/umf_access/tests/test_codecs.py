@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual generated non-temporal codec checks; target carriers unqualified."""
 
 import ast

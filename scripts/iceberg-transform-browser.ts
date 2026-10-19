@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const matrix=await Bun.file('fixtures/iceberg/transforms/java-results.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/iceberg-transform-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

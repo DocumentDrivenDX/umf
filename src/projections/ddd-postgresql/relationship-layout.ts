@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import schema from '../../../spec/projections/postgresql-relationship-layout.schema.json';
 import {copyJson} from '../../model/json';

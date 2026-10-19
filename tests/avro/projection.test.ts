@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
 import {importAvroSchema,projectAvroToJsonSchema,exportAvroBundle,importJsonSchema,coreSchema,coreSemanticTypeReferenceSchema,avroJsonSchemaProjectionSchema} from '../../src';

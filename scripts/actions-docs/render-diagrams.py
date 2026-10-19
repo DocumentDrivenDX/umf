@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Deterministic storyboard-specific SVGs; figure titles/descriptions in source.json; topology and labels authored here."""
 from pathlib import Path
 import json,html,textwrap,sys

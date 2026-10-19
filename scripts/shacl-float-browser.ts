@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const matrix={results:[] as any[]};
 for(const c of (await Bun.file('fixtures/shacl/float-results.json').json()).cases)matrix.results.push({id:c.id,shapes:c.shapesPath,data:c.dataPath,shapesBase:'https://example.org/',dataBase:'https://example.org/',expectedConforms:c.expected,raw:await Bun.file(c.shapesPath).text(),dataRaw:await Bun.file(c.dataPath).text(),reportText:await Bun.file(c.reportPath).text()});

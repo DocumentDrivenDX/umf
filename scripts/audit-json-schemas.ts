@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator,installJsonEquality} from '../src/validation/schema';
 import Ajv2019 from 'ajv/dist/2019';
 import AjvDraft4 from 'ajv-draft-04';

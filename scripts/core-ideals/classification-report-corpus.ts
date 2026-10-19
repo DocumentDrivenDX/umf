@@ -1,1 +1,2 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {classificationReportCases} from './classification-report-cases';import {inspectFieldClassification} from '../../src/core-ideals/classification-report';const rows=(await classificationReportCases()).map(receipt=>({receipt,result:inspectFieldClassification(receipt)}));await Bun.write('fixtures/validation/classification-report-corpus.json',JSON.stringify({rows},null,2)+'\n');

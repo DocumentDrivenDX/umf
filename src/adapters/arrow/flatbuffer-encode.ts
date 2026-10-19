@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {exportArrowFlatbufferModel} from './flatbuffer-model';
 import {decodeArrowFlatbuffer} from './flatbuffer-decode';
 import {declarations,shortName} from './flatbuffer-layout';

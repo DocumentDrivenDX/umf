@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {SQL} from 'bun';
 import type {Action} from '../../src/extensions/actions/types';
 import {UmfError} from '../../src/model/types';

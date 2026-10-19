@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Compiler grammar is generic machinery; language decisions belong in umf.yaml. */
 export type Shape = Record<string, any>;
 export {assertConstraintProgram as checkProgram,expressionOperators,statementOperators} from '../../src/validation/constraint-language';

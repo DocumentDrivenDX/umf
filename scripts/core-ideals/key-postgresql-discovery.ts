@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Pinned native behavior evidence only; no portable Key binding or admission claim. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';

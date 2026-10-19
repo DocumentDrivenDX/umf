@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect,beforeAll} from 'bun:test';
 import {importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,proposeProtobufDescriptorEdit,readDocument,writeDocument,readDescriptorSet,writeDescriptorSet,type DescriptorNode} from '../../src';
 import {fromBinary,toBinary} from '@bufbuild/protobuf';

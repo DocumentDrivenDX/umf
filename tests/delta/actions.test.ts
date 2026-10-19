@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,coreSchema} from '../../src';
 import schema from '../../spec/extensions/delta-log/action-inspection.schema.json';

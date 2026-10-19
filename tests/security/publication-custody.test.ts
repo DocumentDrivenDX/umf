@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {publicationCustodyCorpus} from './publication-custody-corpus';
 // @covers US-057-AC2

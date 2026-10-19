@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {importDbtManifest,exportDbtManifest,inspectDbtManifest,proposeDbtManifestNodeEdit,writeDocument,readDocument} from '../src';
 const base='fixtures/dbt/rich/',raw=await Bun.file(base+'manifest.json').text(),d=importDbtManifest(raw,{id:'dbt-rich'}),view=JSON.parse(raw),edits=[];

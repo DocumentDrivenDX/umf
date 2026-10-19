@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import jsonld from 'jsonld';
 import {equalCompactJsonLdText} from './jsonld-compare';
 import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFraming,readDocument,writeDocument} from '../src';

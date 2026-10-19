@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type JsonObject} from '../model/types';
 import {inspectDdd,getDddDefinition,type DddReference,type DddDefinition,type DddField} from '../extensions/ddd';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {mkdir,open,readdir,unlink,rmdir,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {UmfError} from '../../src/model/types';

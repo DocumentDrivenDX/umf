@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real Weft compilation; native cases run only against an explicit test cluster."""
 
 from __future__ import annotations

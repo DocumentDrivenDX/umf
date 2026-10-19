@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../src';
 import {equalJsonLdText} from './jsonld-compare';
 const cases=await Bun.file('native/jsonld/examples/numeric-cases.json').json(),results=[];

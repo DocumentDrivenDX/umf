@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../../src/model/types';
 export const UUID='00112233-4455-6677-8899-aabbccddeeff';
 export const HEX=UUID.replaceAll('-','');

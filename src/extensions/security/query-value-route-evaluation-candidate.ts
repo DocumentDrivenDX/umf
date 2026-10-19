@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private actual logical branch activation. No compiler designation, operands or native permission. */
 import {copyJson} from '../../model/json';
 import type {Json} from '../../model/types';

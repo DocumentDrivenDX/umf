@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importRdfTriG,exportRdfTriG,exportRdfNQuads,getRdfQuads,getRdfNamedGraphs,proposeRdfIriRename,proposeRdfQuadEdit,readDocument,writeDocument} from '../src';
 const manifest=await Bun.file('native/rdf/trig-sources/manifest.json').json(),results=[];
 for(const c of [...manifest.cases,{id:'authored-empty',positive:true,path:'native/rdf/examples/empty-graphs.trig',baseIRI:'https://example.org/schema.trig',type:'authored'}]){const raw=await Bun.file(c.path).text();let d;try{d=importRdfTriG(raw,{id:c.id,baseIRI:c.baseIRI});}catch(e){if(c.positive)throw Error(c.id+': '+String(e));results.push({...c,status:'rejected'});continue;}if(!c.positive)throw Error('Negative accepted: '+c.id);

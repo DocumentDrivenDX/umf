@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Classification controls; native acceptance belongs to real Spark E2Es."""
 
 import builtins

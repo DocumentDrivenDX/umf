@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exercise SDK layout allowlisting against an isolated synthetic dist tree."""
 from pathlib import Path
 import subprocess

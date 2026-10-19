@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {bindingRegistry,copyJson,getBinding,inspectBinding,migrateBindingRelationships,readBindingDocument,rollbackBindingRelationships,writeBindingDocument,type Document} from '../../src';
 import {bindingMigrationCase} from '../../scripts/binding/stable-ids-cases';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectDomainPack} from '../../src/domain-packs/profile';
 const preservation={version:'1.0.0',handoff:'BagIt-1.0',fixity:'sha256',events:'PREMIS-3.0-semantic-mapping',provenance:'PROV-O-JSON-LD',originals:'authoritative-immutable-bytes',primary_runtime:'tablespec-python'};

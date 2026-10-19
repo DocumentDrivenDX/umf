@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reports must retain owner evidence and distinguish incomplete native scope."""
 import copy
 import json

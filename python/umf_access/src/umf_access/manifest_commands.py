@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inert original CONTRACT-902 programs and engine-owned manifest dispatch.
 
 Registry JSON contains original artifacts only. Native registration, actual-value

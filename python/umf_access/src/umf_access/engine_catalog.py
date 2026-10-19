@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inert engine catalogs; native admission and compilation equality stay owned.
 
 A valid wrapper conveys source/type custody only. It never grants read or action

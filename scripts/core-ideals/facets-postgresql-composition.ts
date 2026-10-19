@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Compose authored projection with an independently captured PostgreSQL catalog. */
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';

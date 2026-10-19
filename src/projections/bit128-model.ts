@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolveBit128ModelSources} from '../extensions/binding/model-source';
 import {compositeMappings,type CompositeMapping} from './model-shape-mappings';
 import modelSchema from '../../spec/projections/bit128-model.schema.json';

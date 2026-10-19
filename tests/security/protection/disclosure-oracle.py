@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independently authored S20 transport expectations; no UMF imports/execution.
 
 The JSON fixture describes source/context and mechanical mutations.  Accepted

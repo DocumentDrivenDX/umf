@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {requireSecurityInterpretation} from './policy';
 import {securityRefIdentity as id,type SecurityPolicy,type SecurityResolution,type SecurityRef,type SecurityExpr,type SecurityTerm,type SecurityEntity,type SecurityAssociation} from './types';
 

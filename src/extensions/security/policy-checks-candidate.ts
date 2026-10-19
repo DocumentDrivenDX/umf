@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Draft whole-policy consistency and per-target expression checks; no enforcement authority. */
 import {copyJson} from '../../model/json';
 import {createValidator} from '../../validation/schema';

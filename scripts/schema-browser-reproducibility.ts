@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Candidate reproducibility and immutable released-producer reproduction are separate checks. */
 import {mkdtemp,rm} from 'node:fs/promises';
 import {join,resolve} from 'node:path';

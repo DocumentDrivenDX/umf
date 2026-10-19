@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Bounded process cache for already validated native shape fingerprints.
 
 Callers must observe the complete native fingerprint afresh under the owned

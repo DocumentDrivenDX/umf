@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importSparkSchema,exportSparkSchema,renameSparkField} from '../src';
 import {parseNativeJson,renderTree} from '../src/model/native-json';
 const source=parseNativeJson(await Bun.file('fixtures/spark/rename-cases.json').text());if(source.kind!=='array')throw Error('Expected cases');

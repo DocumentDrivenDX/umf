@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Checks the portable generator and the shipped Python template, without importing it. */
 import ts from 'typescript-api';
 import {readFile,readdir} from 'node:fs/promises';

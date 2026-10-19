@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Real core oracle -> public CLI generator -> installed model/codec matrix.
  * @covers US-080-AC1 US-080-AC2 US-081-AC1 US-081-AC2 US-081-AC3
  */

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getDeltaTableSchema,getDeltaTableNode,exportDeltaTable,proposeDeltaTableNodeEdit,inspectDeltaTable} from './table';
 import {getDeltaNode,proposeDeltaNodeEdit,exportDeltaSchema} from './index';
 import {renderTree,nativePointer,type NativeJson} from '../../model/native-json';

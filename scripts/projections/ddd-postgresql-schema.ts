@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 export {};
 const text={type:'string',minLength:1},ref=($ref:string)=>({$ref}),array=(items:unknown)=>({type:'array',items});

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import classification from '../../spec/core/parquet-facet-classification.schema.json';
 import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
 const text={type:'string',minLength:1},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});

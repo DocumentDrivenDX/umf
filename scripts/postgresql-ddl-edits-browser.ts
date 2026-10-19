@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/postgresql/edits/',fixture=await Bun.file(base+'candidates.json').json(),oracle=await Bun.file(base+'oracle.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/postgresql-ddl-edits-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));

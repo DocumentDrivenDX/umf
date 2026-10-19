@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parseNativeJson,renderTree,type NativeJson} from '../src/model/native-json';
 import {importDeltaSchema,exportDeltaSchema,importDeltaTable,exportDeltaTable,readDocument,writeDocument} from '../src';
 const base='fixtures/delta/upstream/',manifest=await Bun.file(base+'manifest.json').json(),cases:any[]=[],parsing:any[]=[];

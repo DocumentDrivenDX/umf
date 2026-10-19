@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,test,expect} from 'bun:test';
 import {referenceHandlerBuild,runReferenceHandler,type ReferenceHandlerProgram} from '../../scripts/actions-reference/sandbox';
 const program=(source:string):ReferenceHandlerProgram=>({id:'qualification',version:'1',build:referenceHandlerBuild(source),source});

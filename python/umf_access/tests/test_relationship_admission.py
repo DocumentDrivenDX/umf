@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Alternate relationship Keys retain original native admission programs."""
 
 from __future__ import annotations

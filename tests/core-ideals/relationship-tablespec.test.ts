@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,test,expect} from 'bun:test';
 import {classifyTableSpecRelationships, verifyTableSpecRelationshipClassification, recoverTableSpecRelationshipSource, tableSpecRelationshipsPackage, TABLESPEC_RELATIONSHIPS_EXTENSION} from '../../src/core-ideals/relationship-tablespec';
 import {importTableSpec, importTableSpecBundle} from '../../src/adapters/tablespec';

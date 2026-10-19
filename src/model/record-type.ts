@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import coreSchema from '../../spec/core/schema.json';
 import kindSchema from '../../spec/core/kind-operation-v6.schema.json';
 import schemaV6 from '../../spec/core/record-type-operation-v6.schema.json';

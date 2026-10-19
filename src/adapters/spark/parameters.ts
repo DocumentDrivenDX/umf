@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Diagnostic} from '../../model/types';
 /** Diagnostics for pinned JSON spellings, not DDL or execution validity. */
 export function sparkParameterDiagnostics(value:string,path:string):Diagnostic[]{

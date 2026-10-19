@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Exact mixed-model scalar tokens. This module owns scalar lowering, not transport. */
 import {UmfError,type Document,type Element} from '../../model/types';
 import {validateCoreFieldValue} from '../../model/schema-properties';

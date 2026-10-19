@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated selected-Key navigation metadata, distinct from relationship Keys."""
 
 from __future__ import annotations

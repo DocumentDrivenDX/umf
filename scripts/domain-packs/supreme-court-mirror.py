@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit local Supreme Court discovery consumer; CONTRACT-060 1.0.0."""
 import argparse
 from collections import Counter

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const raw=await Bun.file('native/owl/special-axioms.ttl').text();
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/owl-special-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Named projection and generated field-source checks on full commerce output."""
 
 import ast

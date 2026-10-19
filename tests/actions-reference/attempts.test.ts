@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {SQL} from 'bun';
 import fixture from '../../fixtures/actions/approve.json';

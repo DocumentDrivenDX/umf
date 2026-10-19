@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Navigation metadata controls only; original engines own graph acceptance."""
 
 import unittest

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import http from 'node:http';
 import type {Socket} from 'node:net';
 export interface HeldDockerOperation {path:string;body:Buffer;method:string;headers:http.IncomingHttpHeaders}

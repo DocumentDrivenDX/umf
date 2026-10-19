@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private immutable runtime custody, separate from caller-visible generated data. */
 import {coreConstraints,domainPolicy} from '../generated/core-model';
 import {snapshotSchema} from './internal-schema';

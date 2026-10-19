@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Source identity/provenance data. Retrieval and credentials belong to consumers. */
 export function generateDatasetSourceSchema() {
  const text={type:'string',minLength:1};

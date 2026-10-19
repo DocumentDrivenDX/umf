@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generate browser-portable expected types from the pinned native registry."""
 import hashlib, importlib, json, runpy
 from pathlib import Path

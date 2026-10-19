@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {Type} from 'avsc/etc/browser/avsc-types';
 import {type NativeJson} from '../model/native-json';
 import {readJsonValue} from '../model/serialization';

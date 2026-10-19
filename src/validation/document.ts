@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {checkCore} from '../generated/core-validators';
 import {currentDomainPolicy as domainPolicy} from './current-policy';
 import {runCoreConstraints,type ConstraintMeter} from './constraint-kernel';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Public typed declaration ABI. No query execution or native SQL lowering."""
 
 from __future__ import annotations

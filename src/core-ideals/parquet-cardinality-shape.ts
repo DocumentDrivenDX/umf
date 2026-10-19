@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,SCALAR_TYPES,type Document,type Json,type Cardinality,type ScalarType} from '../model/types';
 import {inspectParquetContainers,type ParquetContainer} from '../adapters/parquet/containers';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Interpreter for the inert, model-generated UMF constraint program.
 
 The kernel contains generic data operations only. Core decisions, diagnostic

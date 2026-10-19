@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {LIMITS, copyJson} from '../model/json';
 import {schemaCoefficient} from '../model/schema-literals';
 import {validateCoreFieldValue} from '../model/schema-properties';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # Reproduce narrowly scoped compatibility patches from checksum-pinned upstream sources.
 import urllib.request
 from pathlib import Path

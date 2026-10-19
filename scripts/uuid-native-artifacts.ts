@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import oracle from '../fixtures/validation/uuid/bit128-oracle.json';
 import {encodeBit128CarrierValue} from '../src/extensions/binding/bit128';
 import {uuidBinding,uuidDocument,FIELD} from '../tests/helpers/uuid-fixtures';

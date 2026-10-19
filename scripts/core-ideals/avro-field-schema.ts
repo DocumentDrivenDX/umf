@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/sqlserver-field-classification.schema.json').json();
 schema.$id='urn:umf:core:avro-field-classification:1.0.0';schema.title='Avro declared record/error Field classification';schema.properties.operation.const='classify-avro-field';

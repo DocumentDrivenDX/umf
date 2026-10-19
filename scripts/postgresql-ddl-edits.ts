@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {backend} from '../native/postgresql/runtime';
 import {importPostgresqlSql,getPostgresqlNode,proposePostgresqlNodeEdit,exportPostgresqlSql,writeDocument,readDocument,getPostgresqlSource} from '../src';
 import {renderTree} from '../src/model/native-json';

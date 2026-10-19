@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,expect,test} from 'bun:test';
 import {inspectCoreAuthority,inspectCoreDistribution} from '../../scripts/check-core-authority';
 const inspect=(path:string,source:string)=>inspectCoreAuthority([{path,source}]);

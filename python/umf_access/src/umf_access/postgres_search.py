@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native same-table search: shared sync/async snapshot, admission and decoding."""
 
 from __future__ import annotations

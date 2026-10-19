@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcConsistency,renameArrowIpcField,readDocument,writeDocument} from '../src';
 import {flatbufferBackend} from '../native/arrow/flatbuffer-runtime';

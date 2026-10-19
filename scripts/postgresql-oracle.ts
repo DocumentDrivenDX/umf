@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {backend} from '../native/postgresql/runtime';
 import {importPostgresqlSql,exportPostgresqlSql,proposePostgresqlNodeEdit,readDocument,writeDocument} from '../src';
 const cases=[];

@@ -1,5 +1,11 @@
 # UMF project documentation
 
+[Praxis lifecycle roadmap](01-frame/praxis-lifecycle-roadmap.md) assesses the ten
+client integration gaps and proposes gated delivery for direct tables, native
+identity/policies and Truss/Ashlar graph hosts. Release numbers are proposed;
+dates are uncommitted. [Stack licensing evidence](04-build/evidence/stack-licensing.md)
+records the separately authorized MIT OR Apache-2.0 source/package changes.
+
 [Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
 turns a current UMF schema into one typed model/query/action API for tables and
 ontologies. Developers compose reads directly and change the binding to change

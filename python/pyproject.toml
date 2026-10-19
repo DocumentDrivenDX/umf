@@ -3,6 +3,8 @@ requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
 [project]
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"]
 name = "umf-core"
 version = "0.9.0"
 description = "Official Python document models and extension machinery for UMF"

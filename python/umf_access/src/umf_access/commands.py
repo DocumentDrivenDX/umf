@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Typed command catalog dispatch. Plans are supplied by the selected target."""
 
 from __future__ import annotations

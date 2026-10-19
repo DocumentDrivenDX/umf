@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,relative,isAbsolute} from 'node:path';
 import {realpath,readFile} from 'node:fs/promises';
 import {canonical,type Source} from '../../docs/helix/05-deploy/reference/model';

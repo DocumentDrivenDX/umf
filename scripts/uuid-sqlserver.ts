@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {encodeBit128CarrierValue} from '../src/extensions/binding/bit128';
 import {randomUUID,createHash} from 'node:crypto';
 import {uuidBinding,uuidDocument,FIELD} from '../tests/helpers/uuid-fixtures';

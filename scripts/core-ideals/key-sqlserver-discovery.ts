@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only Key discovery; no authored identity or complete binding claim. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** JSON equality never calls prototypes, getters, valueOf or toJSON. Admission
  * has already rejected accessors; hostile property names remain ordinary data. */
 export function canonicalJson(value:unknown):string {

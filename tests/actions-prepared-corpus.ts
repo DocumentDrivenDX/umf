@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {uuidDocument,UUID,KEY} from './helpers/uuid-fixtures';
 import fixture from '../fixtures/actions/approve.json';
 import {tupleCases,tupleIdentity} from '../scripts/core-key-tuple-cases';

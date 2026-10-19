@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh empty-table schema admission; run only with an explicitly owned PG lease."""
 
 import json

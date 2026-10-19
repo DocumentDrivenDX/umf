@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {Type} from 'avsc/etc/browser/avsc-types';
 import {deriveAvroFields} from './metadata';

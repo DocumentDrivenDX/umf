@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {sqlServerKeyCarriers as carriers, sqlServerKeySessionOptions} from '../../src/core-ideals/key-sqlserver-carriers';
 const text={type:'string',minLength:1},identity={type:'object',additionalProperties:false,required:['module','element'],properties:{module:text,element:text}};
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});

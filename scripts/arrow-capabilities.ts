@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {probe} from '../native/arrow/schema-probe';
 import {createHash} from 'node:crypto';
 const metadata=[{key:'ARROW:extension:name',value:'example.semantic'},{key:'ARROW:extension:metadata',value:'{"unit":"money"}'},{key:'unicode',value:'café'}];

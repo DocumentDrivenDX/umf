@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Parse-only native typed-Var probes for exact observed fixed SDK source SQL.
 
 This host tool never executes the observed SQL, supplies parameter values, or

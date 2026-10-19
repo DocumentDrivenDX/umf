@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only verification of a complete producer/package payload. */
 import {readdir} from 'node:fs/promises';
 import {join} from 'node:path';

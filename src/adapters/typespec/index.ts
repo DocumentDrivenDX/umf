@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {typeSpecLibraries} from './libraries';
 import {parse,visitChildren,SyntaxKind,type Node} from '@typespec/compiler/ast';

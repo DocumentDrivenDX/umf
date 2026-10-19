@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getDbtManifestNode,inspectDbtManifest} from './index';
 import {renderTree} from '../../model/native-json';
 import {pointer,type Document,type Diagnostic} from '../../model/types';

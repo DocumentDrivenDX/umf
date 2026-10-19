@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {describe, expect, test} from 'bun:test';
 import corpus from '../../fixtures/access/golden-vectors/core-carriers.json';

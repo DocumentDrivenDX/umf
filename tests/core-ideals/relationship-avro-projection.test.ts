@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipAvroCase,relationshipAvroProjectionCases} from '../../scripts/core-ideals/relationship-avro-projection-cases';
 import {projectRelationshipToAvro, verifyRelationshipAvroProjection, recoverRelationshipAvroIdeal, recoverRelationshipAvroNative} from '../../src/core-ideals/relationship-avro-projection';

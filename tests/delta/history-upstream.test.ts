@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {captureDeltaLog,reconcileDeltaCommits} from '../../src';
 test('US-018-AC12: all pinned ordinary-commit prefixes preserve sources and reproduce state or explicit blocks',async()=>{

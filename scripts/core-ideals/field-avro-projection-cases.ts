@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
 import {declareCoreElementKind} from '../../src/model/field-kind';import {type Document} from '../../src/model/types';import {type FieldAvroRequest} from '../../src/core-ideals/field-avro-projection';

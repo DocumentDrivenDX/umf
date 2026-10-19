@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Custody/type refusal controls. Native owner correspondence is tested in E2Es."""
 
 import hashlib

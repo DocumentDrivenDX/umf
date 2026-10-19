@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const typedDefs=(await Bun.file('spec/extensions/parquet/values.schema.json').json()).$defs;
 const node=(await Bun.file('spec/core/native-json.schema.json').json()).$defs.node;

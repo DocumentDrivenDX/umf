@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-079-AC14
 // @covers US-079-AC10
 /** Fresh original S19: independently generated Python outcomes and actual APIs. */

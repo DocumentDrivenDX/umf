@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual compiler/generated ActionRef transport controls; no native qualification."""
 
 from __future__ import annotations

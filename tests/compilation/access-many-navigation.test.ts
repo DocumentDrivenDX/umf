@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {generateAccessPackage} from '../../src/compilation/index';
 import authored from './fixtures/many-navigation.json';

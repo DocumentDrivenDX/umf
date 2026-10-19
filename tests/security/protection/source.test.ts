@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readProtectionSource,writeProtectionSource} from '../../../src/extensions/security/protection/source';
 import {protectionBoundary} from '../../../tools/security/protection-boundary';

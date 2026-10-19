@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {loadCurrent,hash,type Row} from './state';
 export interface PublicationSelection {id:string;revision?:string}
 /** Verified source bytes for trusted consumer projections; never parses source bodies. */

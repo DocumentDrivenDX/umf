@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const source=await Bun.file('fixtures/sqlserver/catalog.json').text(),view=await Bun.file('fixtures/sqlserver/column-metadata.json').json();
 const integers=await Bun.file('fixtures/sqlserver/integer-tokens.json').json();

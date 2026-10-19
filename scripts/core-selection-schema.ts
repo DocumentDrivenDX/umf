@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const core=await Bun.file('spec/core/schema.json').json(),s={type:'string'},id={type:'string',minLength:1};
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',required,additionalProperties:false,properties}),array=(items:unknown)=>({type:'array',items});

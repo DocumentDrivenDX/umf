@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Consumer-invoked archive builder; never fetch upstream sources or publish archives. */
 import {mkdtemp,mkdir,rm,readFile,cp} from 'node:fs/promises';
 import {join,resolve} from 'node:path';

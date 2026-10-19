@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/rdf/merge/results.json').json()).cases;
 for(const c of cases){c.raw=await Bun.file(c.inputPath).text();for(const e of c.exports)e.output=await Bun.file(e.path).text();}

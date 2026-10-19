@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pin Delta Parquet checkpoints, sidecars and last-checkpoint metadata for decoder conformance."""
 import concurrent.futures,hashlib,json,urllib.request
 from pathlib import Path

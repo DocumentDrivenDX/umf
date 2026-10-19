@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host-only native analysis of original owner-generated privilege probes.
 
 No business SQL is executed or parsed/rewritten here. Every probe runs inside a

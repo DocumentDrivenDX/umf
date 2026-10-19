@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureDeltaLog,reconcileDeltaCommits,exportDeltaLog} from '../src';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/upstream/',manifest=await Bun.file(base+'manifest.json').json(),groups=new Map<string,any[]>(),results:any[]=[];

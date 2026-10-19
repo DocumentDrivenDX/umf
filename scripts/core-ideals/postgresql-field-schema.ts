@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {enforceProjectionPolicy} from './projection-policy-schema';
 export {};
 const schema=await Bun.file('spec/core/tablespec-field-classification.schema.json').json();

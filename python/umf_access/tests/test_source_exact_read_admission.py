@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Incomplete native schema metadata never becomes a qualified PG read."""
 
 import copy

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import nativeAstSchema from '../../../spec/extensions/postgresql/native-ast.schema.json';
 import {createValidator} from '../../validation/schema';

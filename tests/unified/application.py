@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """The exact client code exercised by both independent storage bindings."""
 from decimal import Decimal
 

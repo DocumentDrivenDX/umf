@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host-owned PostgreSQL/Lakebase sync and async read targets.
 
 Every call uses the same checked catalog program and native admission boundary.

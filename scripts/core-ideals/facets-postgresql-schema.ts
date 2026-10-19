@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copySchemaFragment} from '../schema-resource';
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 import core from '../../spec/core/schema.json';

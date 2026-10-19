@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Source-qualified pure owner identity transport spike; no backend admission. */
 import {chromium} from 'playwright';
 import {securityFixture} from '../tests/security/fixture';

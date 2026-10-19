@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native read/write checks for generated nested schema carriers."""
 import datetime
 import hashlib

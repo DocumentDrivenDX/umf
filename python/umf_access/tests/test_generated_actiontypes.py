@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual selected-action emitted types, without clients or target execution."""
 
 import unittest

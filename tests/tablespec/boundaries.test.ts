@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importTableSpec,importTableSpecBundle,exportTableSpecBundle,editTableSpecColumn,editTableSpecTable,writeDocument,readDocument} from '../../src';
 test('CONTRACT-030 edit mappings reject non-JSON inputs without evaluating accessors or mutating source',()=>{

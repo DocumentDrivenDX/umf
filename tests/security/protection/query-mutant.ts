@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Fresh actual source mutation against the unchanged independent S17 oracle. */
 import {mkdtemp,cp,symlink,rm,mkdir} from 'node:fs/promises';
 import {tmpdir} from 'node:os';

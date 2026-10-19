@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Extract native IPC metadata with PyArrow; retain source provenance and raw buffers."""
 from pathlib import Path
 import json,hashlib,struct

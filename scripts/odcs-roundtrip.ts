@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {importOdcsDocument,exportOdcsDocument,inspectOdcsDocument,proposeOdcsDocumentNodeEdit,readDocument,writeDocument} from '../src';
 const source=await Bun.file('native/odcs/sources/manifest.json').json(),base='fixtures/odcs/',results=[];

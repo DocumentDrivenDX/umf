@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify portable facet classifications against pinned native generators, not their TS implementation."""
 import json,hashlib,runpy
 from pathlib import Path

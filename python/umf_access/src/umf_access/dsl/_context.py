@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture-only evaluation, isolated from host I/O and execution."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Exhaustive finite original-kernel composition, not native permission. */
 import source from './protection/query-value-route-guards.json';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';

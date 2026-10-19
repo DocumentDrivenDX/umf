@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Bounded syntax-only JSON validation. Keeps duplicate keys and exact text uninterpreted. */
 export function checkParquetJsonText(text:string):void {
  if(text.length>4000000)throw Error('JSON text budget exceeded');let at=0,values=0;

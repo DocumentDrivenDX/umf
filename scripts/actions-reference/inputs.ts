@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../../src/model/types';
 import type {Action} from '../../src/extensions/actions/types';
 import {admitActionInputs,type ActionInputs} from '../../src/extensions/actions/selector';

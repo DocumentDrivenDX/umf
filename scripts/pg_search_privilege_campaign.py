@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Selected real-search grant/revoke campaign; owned cluster only, not admission."""
 
 import ast

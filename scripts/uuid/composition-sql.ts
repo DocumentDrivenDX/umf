@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {randomUUID,createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {resolveBit128ModelSources} from '../../src/projections/bit128-model';

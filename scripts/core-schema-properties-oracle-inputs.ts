@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {schemaPropertiesFixture} from './core-schema-properties-cases';
 import {validateCoreFieldValue} from '../src/index';
 const tokens=['-9223372036854775809','-9223372036854775808','-2','-1','-0','0','0.0','0e99999999','1','1.0','1e0','1.20','1.001','1.5','2','2e0','1e-1','0.01','0.009','999999999999999999.99','1000000000000000000','9223372036854775807','9223372036854775808','1e30','1e-30','1e99999999','01','NaN','1\n'];

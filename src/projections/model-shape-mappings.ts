@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {ModelShape} from '../extensions/binding/model-shape';
 import type {Bit128Ref,Resolved128Layout} from '../extensions/binding/bit128-layout';
 export type ShapePathSegment={kind:'member';name:string}|{kind:'array-item'}|{kind:'map-value'};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertJsonDataEqual} from '../core-ideals/json-data-assert';
 // @covers US-048-AC1 @covers US-048-AC4 @covers US-048-AC5 @covers US-048-AC6 @covers US-048-AC7
 import assert from 'node:assert/strict';import {createHash,randomUUID} from 'node:crypto';

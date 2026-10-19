@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {lstat,realpath} from 'node:fs/promises';
 import {relative,resolve,sep} from 'node:path';
 import {createHash} from 'node:crypto';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Canonical proposed0.2 wire grammar: preserve prototype + add protection refs."""
 import copy,json
 from pathlib import Path

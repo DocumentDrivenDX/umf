@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {AccessRequest,AccessProfile,AccessResult,GeneratedFile,AccessSymbol,Disposition,Obligation,AccessDiagnostic} from '../ir/index';
 import {canonical,sha256Text,hashCanonical} from './hash';
 export {canonical,sha256Text,hashCanonical} from './hash';

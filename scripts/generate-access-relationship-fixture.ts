@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Authored non-temporal R12 source; native schema is independently created by the E2E. */
 import {generateAccessPackage} from '../src/compilation/index';
 import {profile,request} from '../tests/compilation/access-fixtures';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {encodeShape,decodeStoredShape,type ModelLiteral} from './model-shape-values';
 import {canonicalSchemaJson} from '../../model/schema-literals';
 import {encodeModelScalar,decodeModelScalar} from './model-scalar';

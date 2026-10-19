@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Finite reachable typed-factory graph controls; native oracle is separate."""
 import importlib.util
 import json

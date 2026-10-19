@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private stored-carrier source selection; no read permission, query compiler or native authority. */
 import wire from '../../../spec/extensions/security-protection/schema.json';
 import {copyJson} from '../../model/json';

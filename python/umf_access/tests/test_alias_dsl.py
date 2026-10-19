@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real generated aliases; compiler/native qualification remains separate."""
 import unittest
 from dataclasses import replace

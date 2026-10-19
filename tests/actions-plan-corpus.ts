@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import modelFixture from '../docs/helix/03-test/fixtures/bulk-update/model.json';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';

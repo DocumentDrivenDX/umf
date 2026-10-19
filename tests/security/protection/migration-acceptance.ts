@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-079-AC12
 // @covers US-079-AC10
 /** Governed S15 replay of an independently authored finite semantic oracle. */

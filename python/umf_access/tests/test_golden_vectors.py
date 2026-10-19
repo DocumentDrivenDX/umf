@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Runtime helper oracle agreement, separate from pending generated-model replay."""
 
 import json

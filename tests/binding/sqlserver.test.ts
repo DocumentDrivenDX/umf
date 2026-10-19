@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlServerPhysicalCases} from '../../scripts/binding/sqlserver-cases';
 import {projectBindingToSqlServer,recoverBindingSqlServerSources,recoverBindingSqlServerNative,verifyBindingSqlServerProjection} from '../../src/projections/binding-sqlserver';

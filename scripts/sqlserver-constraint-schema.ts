@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const capture=await Bun.file('spec/extensions/sqlserver/capture.schema.json').json(),core=await Bun.file('spec/core/schema.json').json(),tree=await Bun.file('spec/core/native-json.schema.json').json();
 const s={type:'string'},b={type:'boolean'},nullable={type:['string','null']},positive={type:'integer',minimum:1};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type JsonObject} from '../model/types';
 import {emitTypeSpecJsonSchema} from '../adapters/typespec/emission';

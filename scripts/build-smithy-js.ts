@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 // Experimental optional runtime; does not alter the default TypeScript browser build.
 for(const command of [['python3','scripts/prepare-smithy-js.py'],['mvn','-q','-f','native/smithy/browser/pom.xml','clean','process-classes']]){

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {resolve,join} from 'node:path';
 import {mkdir} from 'node:fs/promises';

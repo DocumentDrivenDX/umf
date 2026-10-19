@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Retain both emitted freshness JSON and native runner outcomes, including omitted errors."""
 import os,json,hashlib,io,contextlib
 from pathlib import Path

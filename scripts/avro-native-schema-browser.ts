@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/avro/native-schema.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts','src/validation/schema.ts'],target:'browser',format:'esm',outdir:'.cache/avro-native-schema-browser',naming:'[name].js'});if(!built.success)throw Error(String(built.logs));

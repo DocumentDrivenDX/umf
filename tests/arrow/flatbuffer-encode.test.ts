@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {decodeArrowFlatbuffer,encodeArrowFlatbuffer,importArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit,type ArrowFlatbufferRoot} from '../../src';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';

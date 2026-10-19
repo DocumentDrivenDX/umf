@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 test('native projected schemas recover authored facets or explicit residuals without inventing authorship',async()=>{

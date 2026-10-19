@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Catalog transport data checks only; pins and dispositions never confer authority. */
 import {copyJson} from '../../../model/json';
 import {canonicalSchemaJson,type CoreLiteral} from '../../../model/schema-literals';

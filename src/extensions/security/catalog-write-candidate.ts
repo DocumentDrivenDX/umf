@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private logical transaction guard. Never a native permit or an effects receipt. */
 import {copyJson} from '../../model/json';
 import {encodeCoreKeyTupleBody,type CoreKeyTupleValue} from '../../model/key-tuple';

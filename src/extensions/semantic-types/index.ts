@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import manifest from '../../../spec/extensions/semantic-types/package.json';
 import {Registry} from '../../registry/registry';
 import {copyJson} from '../../model/json';

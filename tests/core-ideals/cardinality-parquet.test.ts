@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importParquetSchema, exportParquetCapture, writeJsonValue, readJsonValue, validateDocument} from '../../src';
 import {classifyParquetCardinality, recoverParquetCardinalityBytes, type ParquetCardinalityRequest} from '../../src/core-ideals/cardinality-parquet';

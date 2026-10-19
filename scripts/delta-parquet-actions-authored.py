@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Parquet fixtures for the bounded Delta JSON action projection."""
 import json
 from pathlib import Path

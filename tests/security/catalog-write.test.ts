@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-079-AC7 @covers US-079-AC10 @covers US-079-AC16 */
 import {test,expect} from 'bun:test';
 import {catalogWriteFixture,deleteOwnedResource,storedWriteFixture} from './catalog-write-fixture';

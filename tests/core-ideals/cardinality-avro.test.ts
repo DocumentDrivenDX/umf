@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {classifyAvroCardinality, recoverAvroCardinalityBundle, type AvroCardinalityRequest} from '../../src/core-ideals/cardinality-avro';
 import {avroAvailabilitySource} from '../../scripts/core-ideals/nullability-avro-cases';

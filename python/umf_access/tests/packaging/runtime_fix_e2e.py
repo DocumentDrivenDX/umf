@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real installed seeded/fixed wheels against one unchanged generated package."""
 
 import argparse

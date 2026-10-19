@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Search capture -> original Weft owner programs. No execution or embedder calls."""
 
 from __future__ import annotations

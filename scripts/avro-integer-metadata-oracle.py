@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native parsing observations; integer classification remains an exact-token decision."""
 import json,hashlib,warnings
 from decimal import Decimal

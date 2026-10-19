@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned installed-SDK proof that actual AshlarTarget has no SDK write ports."""
 from __future__ import annotations
 

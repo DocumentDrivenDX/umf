@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {scanJsonFrame} from './internal/scan-json-frame';
 import { parseDocument, isMap, isSeq, isScalar, isAlias, stringify } from 'yaml';
 import { copyJson, LIMITS, jsonValueLimit } from './json';

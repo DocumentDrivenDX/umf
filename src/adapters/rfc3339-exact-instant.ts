@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Explicit instant comparison profile; no implicit core timestamp semantics. */
 export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0' as const;
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1048576;

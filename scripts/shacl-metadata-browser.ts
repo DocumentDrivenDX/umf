@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {getShaclShapeMetadata,importShaclTurtle} from '../src';
 const raw=await Bun.file('native/shacl/metadata.ttl').text();

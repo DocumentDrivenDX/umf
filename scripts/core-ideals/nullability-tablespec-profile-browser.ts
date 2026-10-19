@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const input=await Bun.file('fixtures/validation/nullability-tablespec-profile.json').json();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(input.rows);return new Response('<!doctype html><html><body>TableSpec availability boundaries</body></html>',{headers:{'content-type':'text/html'}});}});

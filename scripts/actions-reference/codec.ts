@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {copyJson} from '../../src/model/json';
 import {canonicalSchemaJson} from '../../src/model/schema-literals';

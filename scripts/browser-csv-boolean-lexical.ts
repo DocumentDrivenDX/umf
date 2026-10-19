@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Explicit finite lexical profile browser proof; no archive or native conversion. */
 import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';

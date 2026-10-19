@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {ReferenceHandlerRegistry} from './handlers';
 import type {CoreRelationship} from '../../src/validation/relationships';
 import {checkActionLiteral} from '../../src/extensions/actions/structure';

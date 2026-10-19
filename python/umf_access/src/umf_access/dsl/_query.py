@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Immutable declaration builders. Terminal values describe results, never execute."""
 
 from __future__ import annotations

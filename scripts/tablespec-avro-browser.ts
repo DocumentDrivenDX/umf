@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/tablespec/avro-projection.json').json();
 const tableLosses=await Bun.file('fixtures/tablespec/avro-table-losses.json').json();

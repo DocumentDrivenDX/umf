@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Extract selected upstream schema constructors/literals without executing test modules."""
 import ast,copy,hashlib,json,os,sys
 from pathlib import Path

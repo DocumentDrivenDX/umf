@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Review-only target privilege inventory, never SQL parsing or grant execution."""
 
 from __future__ import annotations

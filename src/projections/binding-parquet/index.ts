@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../model/json';
 import {getBinding,inspectBinding,type BindingPayload} from '../../extensions/binding';
 import {exportParquetCapture} from '../../adapters/parquet';

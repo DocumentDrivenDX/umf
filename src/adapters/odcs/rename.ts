@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getOdcsDocumentNode,inspectOdcsDocument,proposeOdcsDocumentNodeEdit} from './index';
 import {resolveOdcsReference} from './references';
 import {inspectOdcsRelationships} from './relationships';

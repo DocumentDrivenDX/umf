@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,struct,importlib.util
 from pathlib import Path
 spec=importlib.util.spec_from_file_location('level_reference','scripts/parquet-levels-oracle.py');ref=importlib.util.module_from_spec(spec);spec.loader.exec_module(ref)

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {encodeShape,decodeShape} from '../extensions/binding/model-shape-values';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json} from '../model/types';

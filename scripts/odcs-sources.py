@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture official ODCS schemas/examples from an immutable release checkout."""
 import subprocess,json,hashlib
 from pathlib import Path

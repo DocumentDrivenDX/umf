@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
 const artifacts=await Bun.file('fixtures/validation/uuid/composition-artifacts.json').json(),bundle=await Bun.file('dist/umf.js').text();

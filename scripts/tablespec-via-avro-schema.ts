@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const s={type:'string'},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false}),ref=(id:string,path='')=>({$ref:'urn:umf:projection:'+id+':0.1.0'+path});
 const source={$ref:'urn:umf:core:0.10.0'},first={anyOf:['postgresql-avro','sqlserver-avro','parquet-avro'].map(id=>ref(id))};

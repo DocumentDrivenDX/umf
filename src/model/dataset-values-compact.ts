@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {type Document,type Json,UmfError} from './types';
 import {copyJson} from './json';
 import type {CoreRecordValueCheck} from './record-values';

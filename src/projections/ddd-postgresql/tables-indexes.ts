@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../model/json';
 import {type Document} from '../../model/types';
 import {exportPostgresqlSql,importPostgresqlSql,type PostgresqlBackend} from '../../adapters/postgresql';

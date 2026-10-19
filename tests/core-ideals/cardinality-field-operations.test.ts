@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {cardinalityFieldOperationsCases} from '../../scripts/core-ideals/cardinality-field-operations-cases';
 import {declareCoreElementKind, inspectCoreElementKind, verifyCoreKindDeclaration} from '../../src/model/field-kind';

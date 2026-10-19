@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {loadSelfModel,expectedSelfModel} from '../../scripts/reference/self-model';
 import {selfModelGraph,canonical,type SelfModelCatalog} from '../../docs/helix/05-deploy/reference/model';

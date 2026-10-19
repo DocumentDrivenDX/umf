@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importTableSpec,importTableSpecBundle,getTableSpecTable,editTableSpecTable,readDocument,writeDocument,exportTableSpecBundle} from '../../src';
 import {parseNativeJson,type NativeJson} from '../../src/model/native-json';

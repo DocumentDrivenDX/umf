@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,expect,test} from 'bun:test';
 import {checkAccessPresence} from '../../src/compilation/admission/access/index';
 

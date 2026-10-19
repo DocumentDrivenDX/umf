@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute compiled reads on the host's existing PostgreSQL connection.
 
 No pools, credentials, compiler imports, role switches or runtime query lowering.

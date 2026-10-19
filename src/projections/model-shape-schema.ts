@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Json} from '../model/types';
 import type {ModelShape} from '../extensions/binding/model-shape';
 /** Recursive exact-token schemas; portable codecs own logical refinements. */

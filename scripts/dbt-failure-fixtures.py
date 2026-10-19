@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture an intentionally failing, isolated native dbt build; assert all six outcomes."""
 import os, json, subprocess, hashlib
 from pathlib import Path

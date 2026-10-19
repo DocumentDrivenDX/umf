@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Owned actual Spark4/Delta4: CLI catalog -> public typed snapshot reads."""
 
 import hashlib

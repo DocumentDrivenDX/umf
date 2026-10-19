@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual compiler/generated-action host fault controls, not native qualification."""
 
 from __future__ import annotations

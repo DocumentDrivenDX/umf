@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 const string={type:'string',minLength:1};
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const binding={id:'umf.sqlserver.nullability',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Captured SQL Server 16.0.4295.3 stored-column declarations under SQL-NULL absence policy; no query, omission or native equivalence'};

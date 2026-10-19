@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {securityIdentityTransportDependencies} from '../../src/extensions/security/dependencies';
 import {securityFixture,ref} from './fixture';

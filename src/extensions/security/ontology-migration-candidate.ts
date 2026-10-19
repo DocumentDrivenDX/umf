@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Draft migration archive; neither ontology admission nor a published version. */
 import {copyJson} from '../../model/json';
 import {createValidator} from '../../validation/schema';

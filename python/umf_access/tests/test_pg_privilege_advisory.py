@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Scoped native evidence cannot become a target-wide grant or qualification."""
 
 from __future__ import annotations

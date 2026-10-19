@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expandAssociations,type AssociationLayout} from './model-associations';
 import {modelShapes,type JsonCarrier} from './model-shape';
 import {checkModelScalar,type ScalarCarrier} from './model-scalar';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {captureParquet,exportParquetCapture,getParquetArrowSchema,exportArrowFlatbufferModel,appendParquetKeyValueMetadata,decodeParquetFooter,coreSchema,readDocument,writeDocument} from '../../src';
 import {rewriteParquetFooter} from '../../src/adapters/parquet/rewrite';

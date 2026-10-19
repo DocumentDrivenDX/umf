@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {sqlServerRecordCases} from './record-sqlserver-projection-cases';
 import {projectRecordToSqlServer, recoverRecordFromSqlServer} from '../../src';
 import {sqlServerFieldCases} from './field-sqlserver-projection-cases';

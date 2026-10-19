@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {displayLabel} from '../docs/helix/05-deploy/microsite/presentation';
 import {chromium} from 'playwright';
 import {join} from 'node:path';

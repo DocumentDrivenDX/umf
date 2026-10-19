@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """PG18 native analyzed-SQL inventory; fixed source only, no runtime SQL rewriting."""
 
 from __future__ import annotations

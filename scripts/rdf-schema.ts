@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 export {};
 const string={type:'string'},iri={type:'object',properties:{kind:{const:'iri'},value:string},required:['kind','value'],additionalProperties:true},blank={type:'object',properties:{kind:{const:'blank'},value:{type:'string',minLength:1}},required:['kind','value'],additionalProperties:true},literal={type:'object',properties:{kind:{const:'literal'},value:string,datatype:string,language:{type:'string',pattern:'^[a-z]+(?:-[a-z0-9]+)*$'}},required:['kind','value','datatype'],additionalProperties:true},defaultGraph={type:'object',properties:{kind:{const:'default'}},required:['kind'],additionalProperties:true};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlKeyAuthors,postgresqlKeyProjectionCases} from '../../scripts/core-ideals/key-postgresql-projection-cases';
 import {projectKeysToPostgresql, verifyKeysPostgresqlProjection, recoverKeysPostgresqlIdeal} from '../../src/core-ideals/key-postgresql-projection';

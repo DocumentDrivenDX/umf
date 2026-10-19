@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Shared generated-model ABI. Imports perform no host operations."""
 
 import re

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {readFacetNodeTree, decodeFacetConstant, type PgFacetNode} from '../../src/adapters/postgresql/facet-node-tree';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private composition of core validity and selected association checks.
  * No public ontology migration, policy typing or runtime permission is issued. */
 import {copyJson} from '../../model/json';

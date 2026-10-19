@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,copy,hashlib
 from pathlib import Path
 from dbt_semantic_interfaces.implementations.semantic_manifest import PydanticSemanticManifest as M

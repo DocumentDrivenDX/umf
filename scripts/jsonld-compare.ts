@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parseNativeJson,type NativeJson} from '../src/model/native-json';
 function decimal(s:string){const [mantissa,e='0']=s.toLowerCase().split('e'),negative=mantissa!.startsWith('-'),[whole,fraction='']=mantissa!.replace('-','').split('.');let digits=(whole!+fraction).replace(/^0+/,''),exponent=BigInt(e)-BigInt(fraction.length);while(digits.endsWith('0')){digits=digits.slice(0,-1);exponent++;}return digits?[negative,digits,exponent.toString()]:[negative,'0','0'];}
 function canonical(n:NativeJson,key='',literal=false):unknown {

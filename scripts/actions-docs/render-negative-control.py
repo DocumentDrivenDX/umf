@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """A corrupted render must fail --check without being rewritten; untouched control passes."""
 from pathlib import Path
 import tempfile,shutil,subprocess,hashlib

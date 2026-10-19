@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertJsonDataEqual} from './json-data-assert';
 /** Host-only SQL Server 2022 generated relationship enforcement oracle. */
 import assert from 'node:assert/strict';

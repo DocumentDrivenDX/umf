@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/iceberg/table-promotion/',cases=[];for(const c of (await Bun.file(base+'results.json').json()).results)cases.push({...c,raw:await Bun.file(c.path).text(),expected:await Bun.file(base+c.id+'.json.json').text()});
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/iceberg-promotion-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

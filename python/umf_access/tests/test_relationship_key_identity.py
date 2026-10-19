@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated relationship Keys retain nominal identity through untyped capture."""
 import unittest
 

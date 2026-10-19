@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import { readdir } from 'node:fs/promises';
 import { relative, sep } from 'node:path';
 import { parse } from 'yaml';

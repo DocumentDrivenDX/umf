@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/tablespec-field-classification.schema.json').json();schema.$id='urn:umf:core:parquet-field-classification:1.0.0';schema.title='Checked Parquet primitive Field classification';schema.properties.operation.const='classify-parquet-field';
 schema.properties.request.properties.index=schema.properties.request.properties.column;delete schema.properties.request.properties.column;schema.properties.request.required=schema.properties.request.required.map((p:string)=>p==='column'?'index':p);

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Official Python UMF support; consumer extensions remain consumer-owned."""
 
 from .models import (

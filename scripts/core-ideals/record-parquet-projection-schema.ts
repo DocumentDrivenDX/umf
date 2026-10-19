@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/record-avro-projection.schema.json').json(),field=await Bun.file('spec/core/field-parquet-projection.schema.json').json();
 schema.$id='urn:umf:core:record-parquet-projection:1.0.0';schema.title='Authored record to explicit Parquet schema fields';schema.properties.operation.const='project-record-parquet';

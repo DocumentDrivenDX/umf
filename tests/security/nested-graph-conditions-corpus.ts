@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-056-AC2 @covers US-056-AC6 @covers US-056-AC10
  * Supplied complete graph semantics only; no native authority or backend promotion. */
 import vectors from './nested-graph-condition-vectors.json';

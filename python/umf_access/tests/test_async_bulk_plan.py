@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Async command dispatch returns an awaitable inert plan, never sync execution."""
 import asyncio
 import inspect

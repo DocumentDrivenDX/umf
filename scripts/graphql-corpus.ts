@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Extract static literal inputs without executing upstream test code.
 import ts from 'typescript-api';
 const path='fixtures/graphql/upstream/src/language/__tests__/schema-parser-test.ts';

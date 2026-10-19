@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {buildSelfModel} from './self-model';
 import {join} from 'node:path';
 import {identity,latestProfile,schemaNode,treeValue,type Entry,type ReaderCatalog} from '../../docs/helix/05-deploy/reference/model';

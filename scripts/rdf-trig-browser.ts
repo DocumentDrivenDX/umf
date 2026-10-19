@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/rdf/trig/results.json').json()).results;for(const c of cases){c.raw=await Bun.file(c.path).text();if(c.nquadsPath)c.nquads=await Bun.file(c.nquadsPath).text();for(const e of [...(c.exports??[]),...(c.renames??[])])e.output=await Bun.file(e.path).text();}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/rdf-trig-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

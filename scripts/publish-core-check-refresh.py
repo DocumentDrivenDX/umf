@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Publish new qualification fingerprints only after logged native and live execution.
 Previous records remain recoverable at the immutable baseline revision.
 """

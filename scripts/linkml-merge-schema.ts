@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const context=await Bun.file('spec/extensions/linkml/import-context-schema.json').json();delete context.$id;delete context.$schema;
 const str={type:'string'},obj=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});

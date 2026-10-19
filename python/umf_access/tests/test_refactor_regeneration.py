@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generator-backed US-082-AC4 proof. Host tooling, never shipped runtime code.
 
 Uses an exact installed runtime wheel; generated modules come only from the

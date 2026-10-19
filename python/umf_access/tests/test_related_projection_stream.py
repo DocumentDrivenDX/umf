@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated projection streams preserve WithKeys and the original cleanup."""
 
 import unittest

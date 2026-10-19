@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit local Spark4/Delta4 snapshot reads of original Weft programs.
 
 The host owns the Spark session and its single-tenant administrative deployment.

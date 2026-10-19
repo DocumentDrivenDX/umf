@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 const text={type:'string',minLength:1},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const location=object({path:{type:'string'},dependencyId:text},['path']);
 const bundle=object({schema:text,dependencies:{type:'array',items:object({id:text,schema:text})}});

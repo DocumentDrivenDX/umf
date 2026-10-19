@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Search consumes the same original PG native projection decoder as reads."""
 
 import struct

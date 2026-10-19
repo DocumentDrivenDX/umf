@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {decodeParquetValues,type ParquetTypedValue} from '../parquet/values';
 import {deltaStatScalar} from './stat-scalar';
 import {captureDeltaLog} from './log';

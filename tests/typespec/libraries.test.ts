@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {dirname,basename} from 'node:path';
 import corpus from '../../fixtures/typespec/corpus-results.json';

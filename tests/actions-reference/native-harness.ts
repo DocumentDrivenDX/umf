@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {ReferenceActionStore} from '../../scripts/actions-reference/store';
 async function docker(args:string[]):Promise<string>{const child=Bun.spawn(['docker',...args],{stdout:'pipe',stderr:'pipe'}),[stdout,stderr,exit]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);if(exit)throw Error('Native container command failed: '+stderr);return stdout.trim();}
 /** Each qualification test owns an isolated real server and destroys only its own container. */

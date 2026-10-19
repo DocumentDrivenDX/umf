@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read-only access to compiler-owned UMF resources in source and wheel builds."""
 
 from __future__ import annotations

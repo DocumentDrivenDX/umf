@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Freeze one installed runtime wheel; generated replay has a separate identity."""
 
 from __future__ import annotations

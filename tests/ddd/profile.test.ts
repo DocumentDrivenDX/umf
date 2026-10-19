@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readDddDocument,writeDddDocument,inspectDdd,getDddDefinition,editDddDefinition,copyJson,type Document} from '../../src';
 const input=await Bun.file('fixtures/ddd/sales.json').text();

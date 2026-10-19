@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,join,relative} from 'node:path';
 import {tmpdir} from 'node:os';
 import {mkdtemp,mkdir,rename,rm,readdir} from 'node:fs/promises';

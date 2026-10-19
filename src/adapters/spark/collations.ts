@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {pointer,type Diagnostic} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 /** Field-local annotation checks. Provider catalogs and engine validity remain unverified. */

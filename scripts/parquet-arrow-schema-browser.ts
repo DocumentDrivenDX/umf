@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/parquet/arrow-schema/',fixtures=await Bun.file(base+'results.json').json(),boundaries=await Bun.file(base+'boundaries.json').json(),encodings=await Bun.file(base+'reencoded.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts','native/arrow/flatbuffer-runtime.ts'],outdir:'.cache/parquet-arrow-schema-browser',naming:'[name].js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));

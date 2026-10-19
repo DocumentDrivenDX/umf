@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private conditional source plan. No branch activation, designation, permission or native admission. */
 import wire from '../../../spec/extensions/security-protection/schema.json';
 import {copyJson} from '../../model/json';

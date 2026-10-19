@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
 import {declareCoreElementKind} from '../../src/model/field-kind';import type {Document} from '../../src/model/types';import {backend} from '../../native/postgresql/runtime';import {projectFieldToTableSpec} from '../../src/core-ideals/field-tablespec-projection';import {projectFieldToPostgresql} from '../../src/core-ideals/field-postgresql-projection';import {projectFieldToSqlServer} from '../../src/core-ideals/field-sqlserver-projection';import {projectFieldToAvro} from '../../src/core-ideals/field-avro-projection';import {projectFieldToParquet} from '../../src/core-ideals/field-parquet-projection';import type {AuthoredFieldProjection} from '../../src/core-ideals/field-report';

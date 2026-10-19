@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test, expect} from 'bun:test';
 import {verifyKeyEvidence,requireCurrentCoreKeyQualification} from '../../scripts/core-ideals/key-evidence';
 const read = async (p: string) => new Uint8Array(await Bun.file(p).arrayBuffer());

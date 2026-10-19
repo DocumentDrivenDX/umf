@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {open} from 'node:fs/promises';
 import {constants} from 'node:fs';
 export interface ByteBudget {used:number;limit:number}

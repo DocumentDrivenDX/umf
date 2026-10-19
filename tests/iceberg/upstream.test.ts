@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importIcebergSchema,exportIcebergSchema,proposeIcebergNodeEdit,readDocument,writeDocument,getIcebergNode} from '../../src';
 const base='fixtures/iceberg/upstream/',m=await Bun.file(base+'manifest.json').json(),results=(await Bun.file(base+'results.json').json()).results;

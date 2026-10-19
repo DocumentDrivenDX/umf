@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/rdf/turtle/results.json').json()).results;for(const c of cases){c.raw=await Bun.file(c.path).text();if(c.outputPath)c.nquads=await Bun.file(c.outputPath).text();for(const e of c.exports??[])e.output=await Bun.file(e.path).text();}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/rdf-turtle-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

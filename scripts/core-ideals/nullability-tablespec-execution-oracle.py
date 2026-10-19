@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Run native TableSpec-generated availability expectations on local Spark rows."""
 import os,sys,json,hashlib,runpy
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed observed timeout-utility provenance, separate from parse-tree analysis.
 
 A returned utility establishes only the selected native authorization outcome.

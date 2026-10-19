@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Build only the local synthetic project, then capture native artifacts and provenance."""
 import hashlib,json,os,subprocess,sys
 from pathlib import Path

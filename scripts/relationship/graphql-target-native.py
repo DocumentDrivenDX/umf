@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned GraphQL-core schema check for expected relationship SDL; no operations execute."""
 import json
 from importlib.metadata import version

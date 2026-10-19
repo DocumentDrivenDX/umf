@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {encodeCoreKeyTuple} from '../../src/model/key-tuple';
 import composite from '../../fixtures/actions/composite-key.json';

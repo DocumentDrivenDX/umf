@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {coreVocabulary,CURRENT_CORE_VERSION} from '../generated/core-model';
 export {CURRENT_CORE_VERSION} from '../generated/core-model';
 export type {Json,Document,Module,Element,CoreItemTypeReference,CoreSemanticTypeReference,ExtensionPackage} from '../generated/core-model';

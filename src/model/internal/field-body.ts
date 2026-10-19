@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../json';
 import {type Document,type Element,UmfError,type Validation} from '../types';
 import {type CoreLiteral,knownSchemaMembers,schemaError,checkSchemaLiteral} from '../schema-literals';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertJsonDataEqual} from './json-data-assert';
 /** Independent SQL Server execution of projector-generated DDL. Host-only. */
 import assert from 'node:assert/strict';

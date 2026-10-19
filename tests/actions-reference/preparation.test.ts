@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {CoreRelationship} from '../../src/validation/relationships';
 import {test,expect} from 'bun:test';
 import createFixture from '../../fixtures/actions/create-link.json';

@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /**
  * Archival runner for the two independently authored bun -e probes actually run.
  * The source bodies below are preserved verbatim. This wrapper, expected-output

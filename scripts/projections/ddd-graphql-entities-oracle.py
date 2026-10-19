@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent GraphQL-core schema check; no GraphQL operations are executed."""
 import hashlib
 import json

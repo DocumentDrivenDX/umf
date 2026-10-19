@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import vectors from '../../fixtures/actions/cases.json';
 import approve from '../../fixtures/actions/approve.json';
 import create from '../../fixtures/actions/create-link.json';

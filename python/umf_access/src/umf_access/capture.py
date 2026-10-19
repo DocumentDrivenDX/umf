@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pure in-memory capture of explicitly supplied declarations, never module scanning."""
 
 from __future__ import annotations

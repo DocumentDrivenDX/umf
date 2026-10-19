@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Public schema load -> CLI generation -> installed Python creation -> codec round trip.
  * @covers US-080-AC1 US-080-AC2 US-080-AC5 US-081-AC1 US-081-AC2 US-081-AC3 US-081-AC5
  */

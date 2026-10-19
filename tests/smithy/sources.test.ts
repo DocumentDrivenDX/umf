@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSmithySources,exportSmithySources,exportSmithyJson,proposeSmithySourceEdit,inspectSmithy,readDocument,writeDocument} from '../../src';
 test('US-014-AC7: IDL/JSON source bundles preserve exact text and candidate edits',async()=>{

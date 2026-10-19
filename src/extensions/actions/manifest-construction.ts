@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyFramedJson} from './framed-json';
 import {boundedJsonBytes} from '../../model/internal/json-byte-budget';
 import {verifyCoreKeyTuple,encodeCoreKeyTupleBody,type CoreKeyTupleReceipt,type CoreKeyTupleValue} from '../../model/key-tuple';

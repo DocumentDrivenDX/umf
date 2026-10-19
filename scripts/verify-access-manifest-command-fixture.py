@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exercise real generated commands with recording protocol targets only.
 
 This does not qualify a Truss native provider, registry, attempt or execution.

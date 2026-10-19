@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute generated schemas in both pinned codecs; never treat encoding as uniqueness."""
 import io,json,decimal,hashlib
 from pathlib import Path

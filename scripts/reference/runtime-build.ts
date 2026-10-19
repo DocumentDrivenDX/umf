@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,join} from 'node:path';
 import {mkdir,unlink} from 'node:fs/promises';
 import Ajv from 'ajv/dist/2020';

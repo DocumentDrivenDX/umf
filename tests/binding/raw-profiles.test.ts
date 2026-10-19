@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import logicalSource from '../../fixtures/binding/raw-profiles/logical.json';
 import lakebase from '../../fixtures/binding/raw-profiles/lakebase.json';

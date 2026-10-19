@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureParquet,captureDeltaLog,reconcileDeltaMultipartCheckpoint} from '../src';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/multipart/',m=await Bun.file(base+'manifest.json').json(),parts=[],sources=[],results=[];

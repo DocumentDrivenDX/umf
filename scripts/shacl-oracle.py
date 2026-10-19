@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent RDFLib paths, authored expressions; never translates UMF path AST."""
 import json
 from pathlib import Path

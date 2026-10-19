@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Bounded real-Chromium check using the same public browser ESM build path. */
 import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';

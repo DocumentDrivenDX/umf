@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 export {};
 const object=(properties:Record<string,unknown>)=>({type:'object',required:Object.keys(properties),additionalProperties:false,properties});

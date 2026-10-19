@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Immutable logical identity and expression data; no backend names or handles."""
 
 from __future__ import annotations

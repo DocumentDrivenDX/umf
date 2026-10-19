@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Native container discovery and source preservation, not Cardinality acceptance. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

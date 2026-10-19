@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {classifyPostgresqlComposite, recoverPostgresqlCompositeCapture} from '../../src/core-ideals/postgresql-composite';
 import {classifyPostgresqlRecord, recoverPostgresqlRecordCapture} from '../../src/core-ideals/postgresql-record';
 import {randomUUID,createHash} from 'node:crypto';

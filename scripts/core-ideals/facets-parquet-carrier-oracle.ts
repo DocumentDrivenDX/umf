@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Native carrier construction evidence, not complete authored facet projection. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSparkSchema,exportSparkSchema,readDocument,writeDocument} from '../../src';
 import {parseNativeJson,renderTree} from '../../src/model/native-json';

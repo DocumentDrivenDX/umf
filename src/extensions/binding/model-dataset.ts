@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {literalIdentity} from '../../model/schema-literals';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document} from '../../model/types';

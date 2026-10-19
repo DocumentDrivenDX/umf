@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned scalar facet counterexamples; no UMF ideal/binding acceptance claim."""
 import hashlib
 import json

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit successor-only native search filter qualification campaign.
 
 Requires freshly generated filter-parameters fixture and a source-owned fence

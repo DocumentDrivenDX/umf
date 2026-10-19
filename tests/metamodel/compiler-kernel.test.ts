@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-089-AC19 @covers US-089-AC20 @covers US-089-AC24 */
 import {describe,test,expect} from 'bun:test';
 import {readFile,mkdtemp,mkdir,writeFile,copyFile,symlink,readdir,stat} from 'node:fs/promises';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Internal interpretation helpers and public classification/projection composition. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

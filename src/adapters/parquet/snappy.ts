@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Raw Snappy block decoder. Output size is validated before allocation and every copy. */
 export function decodeSnappyBounded(input:Uint8Array,expected:number):Uint8Array {
  if(!(input instanceof Uint8Array)||input.length>8388608||!Number.isInteger(expected)||expected<0||expected>8388608)throw Error('Snappy resource bound exceeded');

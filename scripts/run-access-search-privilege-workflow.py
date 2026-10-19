@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Run unchanged original native search harness with scoped grant qualification."""
 
 import json

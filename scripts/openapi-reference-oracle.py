@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent supplied-URI traversal and unmodified official target-object checks."""
 import json
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importDeltaSchema,exportDeltaSchema,proposeDeltaNodeEdit,readDocument,writeDocument} from '../src';
 const base='fixtures/delta/',cases=await Bun.file(base+'cases.json').json();let roundTripped=0,rejected=0;
 for(const c of cases){const text=await Bun.file(base+c.id+'.json').text();if(['missing-field-defaults','array-missing-nullability'].includes(c.id)){let failed=false;try{importDeltaSchema(text,{id:c.id});}catch{failed=true;}if(!failed)throw Error('Expected shape failure');rejected++;continue;}const doc=importDeltaSchema(text,{id:c.id});for(const format of ['json','yaml'] as const)if(exportDeltaSchema(readDocument(writeDocument(doc,format),format))!==text)throw Error('Source changed '+c.id);await Bun.write(base+'umf/'+c.id+'.json',exportDeltaSchema(doc));roundTripped++;}

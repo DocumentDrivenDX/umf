@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Authored synthetic scenarios; source-standard conformance is not asserted. */
 export type Row=(string|number|boolean|null)[];
 export interface Table {name:string;fields:string[];rows:Row[]}

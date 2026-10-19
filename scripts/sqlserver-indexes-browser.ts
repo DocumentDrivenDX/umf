@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const source=await Bun.file('fixtures/sqlserver/indexes-catalog.json').text(),view=await Bun.file('fixtures/sqlserver/index-metadata.json').json(),projection=await Bun.file('fixtures/sqlserver/index-projection.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/sqlserver-indexes-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));

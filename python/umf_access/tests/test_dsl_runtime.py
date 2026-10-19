@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """B-TP-005 unit contract; generated commerce acceptance is a separate gate."""
 
 import unittest

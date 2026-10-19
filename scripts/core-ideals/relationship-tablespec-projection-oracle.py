@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native structural checks for emitted metadata, not join execution."""
 import hashlib, importlib.metadata, json, runpy
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/dbt/semantic-fields/',evidence=await Bun.file(base+'results.json').json();
 await Bun.write('.cache/dbt-semantic-fields-entry.ts',`export {createValidator} from '../src/validation/schema'; export {default as schema} from '../spec/extensions/dbt-semantic/native-schema.json';`);

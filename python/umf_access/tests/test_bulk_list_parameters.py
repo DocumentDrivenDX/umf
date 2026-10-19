@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Bulk metadata/value controls; these do not grant native execution authority."""
 
 import copy

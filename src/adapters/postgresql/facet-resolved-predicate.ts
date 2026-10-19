@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../model/json';
 import type {Json} from '../../model/types';
 import {readFacetNodeTree,decodeFacetConstant,type PgFacetNode,type PgFacetValue} from './facet-node-tree';

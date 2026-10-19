@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture explicit trusted Python modules and publish deterministic stage-two files.
 
 Only the build tool imports declarations and Weft. Runtime code contains inert

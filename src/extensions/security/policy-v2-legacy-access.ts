@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Explicit semantic embedding of the legacy body subset; never a native admission. */
 import {copyJson} from '../../model/json';
 import type {Json,Diagnostic} from '../../model/types';

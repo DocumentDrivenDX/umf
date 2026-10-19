@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {expect,test} from 'bun:test';
 import {copyJson} from '../../src/model/json';

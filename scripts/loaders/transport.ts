@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Entry,Inventory} from './inventory';
 export interface TransportDeps {fetch?:(input:string,init?:RequestInit)=>Promise<Response>;sleep?:(ms:number)=>Promise<void>}
 export interface Download {bytes:Uint8Array;attempts:number}

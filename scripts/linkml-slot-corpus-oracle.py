@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native local induction audit: explicitly detach imports on a private normalized model."""
 import copy
 import json

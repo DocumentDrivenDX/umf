@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import engine from '../../fixtures/access/commerce/engine-only.json';
 import type {AccessProfile,AccessRequest} from '../../src/compilation/ir/index';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {boundedJsonBytes} from '../src/model/internal/json-byte-budget';
 import {readDocument} from '../src/model/document';

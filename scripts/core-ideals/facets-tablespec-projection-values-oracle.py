@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Qualify explicit TableSpec expectation suites for zero lengths and integer domains."""
 import os,sys,json,runpy,hashlib,importlib.metadata
 from pathlib import Path

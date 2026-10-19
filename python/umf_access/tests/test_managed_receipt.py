@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Receipt ABI and cleanup controls, deliberately no native capability claim."""
 
 import unittest

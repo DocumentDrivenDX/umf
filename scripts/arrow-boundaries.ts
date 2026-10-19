@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {Schema,RecordBatchJSONWriter} from 'apache-arrow';
 import '../native/arrow/schema-probe';
 const cases=await Bun.file('fixtures/arrow/schema-cases.json').json();

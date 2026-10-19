@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureDeltaLog,reconcileDeltaCheckpoint,readDocument,writeDocument,exportDeltaLog,type DeltaCommit} from '../src';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/checkpoint/',checkpoint={version:'10',source:captureDeltaLog(await Bun.file(base+'checkpoint.jsonl').text(),{id:'checkpoint-10'})},commits:DeltaCommit[]=[],results=[];

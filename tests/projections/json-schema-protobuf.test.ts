@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 // @covers US-004-AC1 US-004-AC2 US-004-AC3 US-004-AC4
 import {test,expect} from 'bun:test';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 import ts from 'typescript-api';
 if((await Bun.file('node_modules/graphql/package.json').json()).version!=='17.0.2')throw new Error('Schema generation requires pinned GraphQL.js 17.0.2');

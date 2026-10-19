@@ -3,6 +3,8 @@ requires = ["hatchling==1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"]
 name = "umf_access"
 version = "0.1.0.dev2"
 description = "Local prerelease typed access runtime; target qualification pending"
@@ -16,4 +18,4 @@ umf-access = "umf_access.build.catalog:main"
 packages = ["src/umf_access"]
 
 [tool.hatch.build.targets.sdist]
-include = ["/src/umf_access", "/pyproject.toml"]
+include = ["/src/umf_access", "/pyproject.toml", "/LICENSE.md", "/LICENSE-MIT", "/LICENSE-APACHE"]

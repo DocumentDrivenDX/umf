@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import ts from 'typescript-api';
 import {resolve,relative} from 'node:path';
 const root=resolve(import.meta.dir,'../..');

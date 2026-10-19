@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const bindings=await Bun.file('spec/extensions/iceberg-table/transform-binding-schema.json').json();delete bindings.$id;delete bindings.$schema;
 const integer={type:'integer',minimum:0,maximum:2147483647},str={type:'string'};

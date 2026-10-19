@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {decodeParquetPhysical,type ParquetPhysicalValue} from './physical';
 import {inspectParquetSchema,type ParquetSchemaNode} from './schema';
 import type {Document,Diagnostic} from '../../model/types';

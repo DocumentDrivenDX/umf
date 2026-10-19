@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Mixed logical composition controls; supplied duties are not compiler-issued authority. */
 import {catalogRuntimeFixture,graphRuntimeFixture} from './catalog-runtime-fixture';
 import source from './protection/query-value-modes-source.json';

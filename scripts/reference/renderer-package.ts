@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {join,relative,resolve} from 'node:path';
 import {verifyPackage} from '../schema-browser-integrity';
 import {verifySiteAssets} from '../../docs/helix/05-deploy/schema-browser/site-assets';

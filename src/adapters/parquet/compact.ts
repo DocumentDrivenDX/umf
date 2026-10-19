@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {ParquetWireKind,ParquetWireValue} from './footer';
 /** Reads one bounded Compact struct prefix; caller controls its byte region. */
 export function decodeCompactStruct(bytes:Uint8Array){

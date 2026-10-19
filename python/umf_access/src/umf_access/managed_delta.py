@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Caller-owned managed Delta mutation target. No native capability is implied.
 
 The initial managed profile is synchronous. A qualified native owner supplies

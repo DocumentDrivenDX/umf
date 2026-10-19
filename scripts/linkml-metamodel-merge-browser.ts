@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/linkml/metamodel-merge/results.json').json();for(const s of fixture.sources)s.raw=await Bun.file(s.path).text();const oracle=await Bun.file('fixtures/linkml/metamodel-merge/oracle-results.json').json();for(const c of fixture.cases){c.output=await Bun.file(c.outputPath).text();c.rawSchemaErrors=oracle.results.find((r:any)=>r.entry===c.entry&&r.mode===c.mode).rawSchemaErrors;}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/linkml-metamodel-merge-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

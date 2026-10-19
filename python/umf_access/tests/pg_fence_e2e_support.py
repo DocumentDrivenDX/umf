@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Owned-local test deployment of exact original compiler fence programs.
 
 This is fixture setup, never SDK admission or production deployment machinery.

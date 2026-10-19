@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import subprocess,json,hashlib
 from pathlib import Path
 commit='051e945bb8d64ffd60639c666615ace88d561e2f';cache=Path('.cache/linkml-model');base=Path('native/linkml/sources')

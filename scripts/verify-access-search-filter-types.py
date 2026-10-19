@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Record separately scoped pinned checker outputs for the six filter misuse sites."""
 import argparse
 import json

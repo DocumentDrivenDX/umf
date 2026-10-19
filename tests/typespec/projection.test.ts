@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importTypeSpecSources,projectTypeSpecToJsonSchema,exportJsonSchema,exportJsonSchemaResources,readDocument,writeDocument,coreSchema,typespecJsonSchemaProjectionSchema} from '../../src';
 import {createValidator} from '../../src/validation/schema';

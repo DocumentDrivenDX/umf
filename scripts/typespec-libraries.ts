@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 const bundles:Record<string,{version:string;files:Record<string,string>}>=Object.create(null);
 const evidence=[];

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Composition custody controls; these test transports confer no native authority."""
 
 import copy

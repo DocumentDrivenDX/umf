@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {generateDomainPackSchema} from '../../src/domain-packs/schema';
 import schema from '../../spec/extensions/domain-pack/schema.json';

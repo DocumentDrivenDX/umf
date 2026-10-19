@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import Ajv2020 from 'ajv/dist/2020';
 import manifest from '../../../spec/extensions/generalized-rdf/package.json';

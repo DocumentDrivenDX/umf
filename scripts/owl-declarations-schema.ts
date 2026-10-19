@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const rdf=await Bun.file('spec/extensions/rdf/schema.json').json();
 const obj=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false});

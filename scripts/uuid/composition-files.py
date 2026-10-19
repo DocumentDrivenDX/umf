@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native nested schemas/values; JSON-safe tokens are driver inputs."""
 import io,json,uuid,tempfile,hashlib,sys,copy
 from pathlib import Path

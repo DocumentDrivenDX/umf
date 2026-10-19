@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../errors';
 // Compare decimal values without rounding, without expanding an exponent.
 export function decimal(text: string): string {

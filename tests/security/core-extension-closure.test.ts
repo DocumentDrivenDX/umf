@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createCandidateCoreExtensionClosure,requireCandidateCoreExtensionRegistry} from '../../src/extensions/security/core-extension-closure-candidate';
 import {captureCandidateCoreSource,readCandidateCoreSource} from '../../src/extensions/security/core-source-candidate';

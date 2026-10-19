@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent JSON Schema static scope checks; not an OpenAPI runtime oracle."""
 import json
 from pathlib import Path

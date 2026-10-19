@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importJsonLdDocument,proposeJsonLdToRdf,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,getRdfQuads} from '../../src';
 const ordered=(quads:unknown[])=>quads.map(q=>JSON.stringify(q)).sort();

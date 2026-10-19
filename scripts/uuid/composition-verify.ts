@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {decodeBit128Record} from '../../src/extensions/binding/bit128-record';
 import assert from 'node:assert/strict';
 import {decodeBit128FileRecord} from '../../src/projections/bit128-file-values';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private canonical action/disposition kernel. Host attestations are not native credentials. */
 import {copyJson} from '../../model/json';
 import {encodeCoreKeyTupleBody,type CoreKeyTupleValue} from '../../model/key-tuple';

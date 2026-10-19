@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 const text={type:'string',minLength:1},index={type:'integer',minimum:1},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const identity=object({module:text,element:text}),cardinality={enum:['one','array','map','unspecified']};

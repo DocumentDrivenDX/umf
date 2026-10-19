@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare native observations from original upstream actions and UMF exports."""
 import json,tempfile
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {type Json,UmfError} from '../types';
 /** Exact JSON.stringify UTF-8 byte length for safely copied JSON, with early refusal.
  * String accounting matches the reviewed compact-dataset preflight, including

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only owned-fixture qualification of public model projection/row codecs. */
 import {randomUUID,createHash} from 'node:crypto';
 import assert from 'node:assert/strict';

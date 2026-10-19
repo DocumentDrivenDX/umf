@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 /** Public data boundary shared by admission, bundle and Python target. */
 export interface Ref {module:string;element:string}

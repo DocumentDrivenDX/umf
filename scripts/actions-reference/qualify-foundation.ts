@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {referenceHandlerImage} from './sandbox';
 import {createHash} from 'node:crypto';
 async function run(args:string[]):Promise<{stdout:string;stderr:string}>{const child=Bun.spawn(args,{stdout:'pipe',stderr:'pipe'}),[stdout,stderr,exit]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);if(exit)throw Error(stdout+'\n'+stderr);return {stdout,stderr};}

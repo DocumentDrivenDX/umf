@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent in-memory ontology host for the generated transport contract.
 
 The graph is stored as nodes and labeled edges. It intentionally does not use

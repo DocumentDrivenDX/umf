@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual emitter replay against a generated commerce package on the import path.
 
 Package generation and runtime wheel provenance must be recorded by the runner.

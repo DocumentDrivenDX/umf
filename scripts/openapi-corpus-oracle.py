@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Evaluate complete official example corpus against unmodified native schemas."""
 import json,hashlib
 from pathlib import Path

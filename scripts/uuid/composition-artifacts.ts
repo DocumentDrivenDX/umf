@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {mixedModel,compositeModel,associationModel,associationData,polymorphicModel,polymorphicData,values,compositeValues} from '../../tests/helpers/uuid-composition-fixtures';
 import {projectBit128Model,recoverBit128ModelProjection} from '../../src/projections/bit128-model';
 import {encodeBit128Record,decodeBit128Record} from '../../src/extensions/binding/bit128-record';

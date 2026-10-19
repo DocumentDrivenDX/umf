@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {projectFacetsToSqlServer as project, recoverFacetsFromSqlServer as recover} from '../../src/core-ideals/facets-sqlserver-projection';

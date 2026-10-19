@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-079-AC7 @covers US-079-AC10 */
 import {test,expect} from 'bun:test';
 import {CandidateSecurityOperationBudget} from '../../src/extensions/security/operation-budget-candidate';

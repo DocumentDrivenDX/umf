@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,struct,hashlib
 from pathlib import Path
 import thriftpy2

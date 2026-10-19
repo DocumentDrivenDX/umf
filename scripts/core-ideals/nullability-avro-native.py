@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native availability observations; no UMF classification is inferred here."""
 import hashlib,io,json,re,warnings
 from pathlib import Path

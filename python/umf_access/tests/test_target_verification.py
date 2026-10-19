@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Public eager verification distinguishes shape mismatch from native denial."""
 
 import unittest

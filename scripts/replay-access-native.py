@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Replay installed source-verified wheels against owned native runtimes.
 
 No test is counted as passing merely because its native environment was skipped.

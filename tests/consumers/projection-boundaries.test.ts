@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {projectTableSpecToAvro,projectPostgresqlToAvro,projectSqlServerToAvro,projectParquetToAvro,projectAvroToTableSpec,projectToTableSpecViaAvro,importAvroSchema,exportAvroSchema,type Document} from '../../src';
 import {createValidator} from '../../src/validation/schema';

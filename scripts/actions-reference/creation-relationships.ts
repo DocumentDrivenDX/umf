@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {CoreRelationship} from '../../src/validation/relationships';
 import type {Document} from '../../src/model/types';
 import {UmfError} from '../../src/model/types';

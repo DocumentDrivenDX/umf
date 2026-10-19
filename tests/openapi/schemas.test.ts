@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importOpenapiDocument,inspectOpenapi} from '../../src';
 function native(schema:any,extra:any={}){return {openapi:'3.1.2',info:{title:'Schemas',version:'1'},components:{schemas:{Value:schema}},...extra};}

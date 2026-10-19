@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent pinned native shape checks; native schema meaning is not authored intent."""
 import json
 import sys

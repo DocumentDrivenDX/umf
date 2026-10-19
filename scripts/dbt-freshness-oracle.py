@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,hashlib
 from pathlib import Path
 from dbt.artifacts.schemas.freshness.v3.freshness import FreshnessExecutionResultArtifact

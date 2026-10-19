@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {equalJsonLdText} from './jsonld-compare';
 import {importRdfNQuads,exportRdfNQuads,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../src';
 const manifest=await Bun.file('native/jsonld/sources/fromRdf-manifest.jsonld').json(),cases=[];
