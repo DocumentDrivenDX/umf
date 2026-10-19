@@ -104,3 +104,94 @@ sites, worker/loop calls and Pydantic2.13.5/2.14.1 runtime/model checks. P1-04/0
 remain follow-on gates. This is the authorized implementation start, not full P1
 completion. Execution results are recorded in
 [evidence](evidence/praxis-p1.md) when available.
+
+
+## Release goal and P1-04 continuation — 2026-10-19
+
+The owner requested an active goal to release UMF and Weft with the complete
+Praxis table-method lifecycle, including the roadmap's P2/P3 requirements. The
+scope now includes immutable release artifacts and exact compatibility evidence;
+proposed version numbers remain proposals until the cohort is qualified.
+P1-04 is the active implementation slice. Its current work introduces a shared
+pure Weft binding core, explicit synchronous scheduling, trusted person/batch
+registries, per-call Psycopg 3 lease composition, explicit adapter/caller
+transaction ownership and cancellation-shielded cleanup. CONTRACT-079 records
+the proposed native surface. No native driver support or release is claimed yet.
+
+Module ownership stays in the existing `unified` target boundary: `_binding`
+owns pure compilation/wire/cursor phases; `__init__` owns sync/async callback
+scheduling; `session_policy` owns trusted authority selection and cursor scope;
+`session_sync` / `session_async` own lease/transaction lifetimes; `session_binding`
+composes these with host executors. Generated code remains stdlib-only and
+contains neither driver I/O nor a SQL compiler. Existing boundary negative
+controls must continue to pass without broadening approved imports.
+
+Next native gate: isolated PostgreSQL 18 through actual Psycopg 3 direct and
+pool connections, generated clients and real Weft artifacts; compare person
+roles and explicit batch grants, caller savepoints and outer transaction state,
+read-only enforcement, role/settings restoration, closed-connection discard and
+cancellation completion before pool reuse. Then implement/qualify Psycopg2 and
+SQLAlchemy, full compiler-obligation execution and the shared mutation profile.
+The host callback composition is not a substitute for those implementations.
+
+The sandbox blocked PostgreSQL shared memory. Five attempts over three goal turns to obtain approval
+for the isolated test cluster failed because the approval service reported its
+selected model at capacity; neither attempt executed. Native verification,
+commit/push and immutable release are pending. This is an external verification
+block, not permission to weaken a release gate. Evidence records the passing
+installed-wheel doubles separately from the unavailable native gate.
+
+## P1-05 generator execution decision — 2026-10-19
+
+Proceed independently of unavailable native PostgreSQL approval with a separate
+`umf-codegen` Python distribution. Its `umf_codegen` API/CLI executes the existing
+portable `generatePythonClient` TypeScript implementation inside embedded V8
+using `mini-racer==0.14.1`, following Truss's existing deployment approach.
+Do not port schema semantics or Python templates into a second generator.
+Bun remains the development/bundle builder; installed authors require Python
+and the pinned embedded runtime wheel, with no external Bun/Node executable,
+SDK tarball, subprocess or network lookup. Generated clients remain stdlib-only.
+
+The package is a proposed `0.1.0a1` local candidate until qualification/release.
+The bundle is deterministic, compressed and integrity-pinned together with its
+source inventory and exact third-party notices. Wheel and sdist include the
+same payload and licenses. A Python-only wheel build from sdist must not call
+Bun. New builds refuse stale source inventories rather than silently packaging
+an earlier generator. Installed `generate` and read-only `check` must compare
+complete bytes, manifests, selections, exact-number carriers and refusal details
+with the TypeScript generator. Test JavaScript process launch prohibition,
+payload tampering, deterministic rebuild, original-output protection, symlink
+refusal and atomic write/rollback failures. Target-runtime platform wheels and
+native loading must be observed; do not infer Linux qualification from macOS.
+
+Module boundaries: `scripts/codegen/entry.ts` is the inert JSON bridge;
+`scripts/build-codegen.ts` owns deterministic bundling and notice inventory;
+`python/umf_codegen/src/umf_codegen/_embedded.py` alone owns V8 and packaged-asset
+loading; `__init__.py` owns the typed programmatic surface; `_writer.py` owns
+filesystem publication; `__main__.py` owns CLI arguments. No module may spawn
+processes or fetch dependencies. Add a scoped source-boundary check and negative
+controls; do not expand the existing generated-client or host-runtime imports.
+
+
+P1-05 local execution now passes complete installed parity, refusal, writer and
+packaging controls; see the exact [codegen receipt](evidence/praxis-p1/python-codegen.json).
+The selected distribution is a separate wheel with a self-contained sdist and
+preserved third-party notices. Linux CI and publication are pending. The native
+P1-04 gate remains unavailable after five approval-service failures across three
+consecutive goal turns; the final retry was after independent generation work.
+Release readiness remains false. Resume native acceptance when approval service
+or task permissions allow the isolated cluster, then qualify the remaining
+physical-policy/deployment and mutation profile against actual PostgreSQL before
+publishing support claims. No smaller subset replaces the complete release goal.
+
+
+## Resumed native gate — 2026-10-19
+
+Approval service now permits the isolated PostgreSQL18 cluster. The installed
+Psycopg3 session foundation passes40 live assertions; source-bound evidence is
+[recorded](evidence/praxis-p1/session-native-postgresql.json). The prior external
+block is resolved. Continue the full goal through production artifact execution,
+Psycopg2/SQLAlchemy, successor Weft qualification and the remaining table,
+security, deployment, command and release gates. Source publication of this
+bounded P1 slice enables hosted codegen platform checks; it is not a prerelease
+support claim or completion of the broader lifecycle objective.

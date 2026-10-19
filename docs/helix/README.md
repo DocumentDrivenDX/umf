@@ -6,9 +6,12 @@ identity/policies and Truss/Ashlar graph hosts. Release numbers are proposed;
 dates are uncommitted. [Stack licensing evidence](04-build/evidence/stack-licensing.md)
 records the separately authorized MIT OR Apache-2.0 source/package changes.
 [P1 implementation](04-build/evidence/praxis-p1.md) adds portable generated sync
-clients and installed Pydantic 2.13.5/2.14.1 compatibility. Native per-call
-connections, driver qualification, Bun-free generation and index delivery remain
-open.
+clients and installed Pydantic 2.13.5/2.14.1 compatibility. [Native per-call session evidence](04-build/evidence/praxis-p1/session-native-postgresql.json)
+now covers the scoped Psycopg3/PostgreSQL18 foundation. Remaining drivers,
+production artifact execution and release/index delivery remain open. The
+[local Python generator candidate](04-build/evidence/praxis-p1/python-codegen.json)
+runs the original portable generator without external Bun/Node; Linux and
+publication gates remain open.
 
 [Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
 turns a current UMF schema into one typed model/query/action API for tables and

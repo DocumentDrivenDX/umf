@@ -116,3 +116,138 @@ Bun-free generator artifact, a verified index, immutable release cohorts and
 offline vendoring. Native PostgreSQL/managed Lakebase execution was not rerun in
 this portable/compatibility change; the native regression case remains explicitly
 skipped. Truss/Ashlar/Hohfeld production lifecycle acceptance remains separate.
+
+
+## P1-04 session foundation — 2026-10-19 working candidate
+
+This is uncommitted work after `a7ce41803`, not a published release or native
+qualification. [The plan](../praxis-p1-plan.md#release-goal-and-p1-04-continuation--2026-10-19)
+and CONTRACT-079 preserve the remaining gates. The installed candidate's
+[receipt](praxis-p1/session-foundation.json) identifies all six host module
+hashes and the local wheel. No Weft source or release artifact changed in this
+slice. License headers and wheel license metadata retain MIT OR Apache-2.0.
+
+Observed passing checks:
+
+- 22 new session/transport fault-injection tests pass from source and the actual
+  wheel installed in Python3.11.17 with Pydantic2.13.5 and2.14.1 using isolated
+  `-I` execution.
+  All six installed modules match the wheel byte-for-byte. These doubles cover
+  scheduling and failure paths; they do not establish PostgreSQL/RLS behavior.
+- Both source boundary checks pass (59 Python modules); the 21 boundary negative
+  control tests pass with130 assertions. TypeScript project/tool checks pass.
+- The scoped portable generated-client tests are recorded separately in the
+  receipt (six pass, one native skip,47 assertions). Native cases skipped without a configured database remain unqualified.
+- A broader runtime discovery attempt reported37 errors, one failure and37
+  skips. A363-test baseline/candidate comparison has exactly the same failing
+  identities/counts: missing generated fixture packages/optional Weft, existing
+  Pydantic direct-sentinel fixture paths, legacy core-version expectation and
+  Unity native-program integrity cases. This is not a clean full-suite result.
+
+The real-browser attempt could not bind its loopback test server in this
+sandbox. No browser source changed; no new browser pass is claimed. PostgreSQL
+18 initdb failed at shared-memory creation. Five escalated attempts across three goal turns were not
+executed because automatic approval review was at capacity. Native person/batch,
+actual pool lifecycle, driver transaction and cancellation assertions remain
+open. The candidate is neither committed/pushed nor released while that required
+verification is missing. The owner has a pending request to restore approval
+service availability or task permissions.
+
+
+Continuation: the real generated `shop.SyncClient` and Weft0.4.44 compiler-only
+path in `tests/unified/session_native_e2e.py` passes. It emits a genuine original-
+source compiled read artifact without SQL placeholder rewriting. The harness's
+native path creates only uniquely named synthetic roles/schema/data and asserts
+person/batch RLS, direct/pooled sync and async reads, caller savepoint restoration
+and cancellation of an observed active PostgreSQL query before pool reuse. That
+path is implemented but remains unexecuted. Its executor is explicitly a bounded
+fixture, not a production catalog/privilege admission implementation. Session
+cleanup now rejects effective session-user or settings changes and22 installed
+fault-injection tests pass on both pinned Pydantic versions. The local wheel
+was rebuilt and source bytes compared against its payload; the receipt captures
+the updated working candidate, not a published immutable package.
+
+
+## P1-05 installed Python generation — local qualification
+
+The separate `umf-codegen`0.1.0a1 working candidate executes the original
+portable TypeScript generator in embedded V8. [The exact receipt](praxis-p1/python-codegen.json)
+records Python3.11.17, macOS arm64, mini-racer0.14.1 / V8 14.4.258.23,
+Bun1.4.3 bundle provenance and current wheel/sdist hashes. It is not published.
+
+Observed evidence:
+
+- All15 real TypeScript/V8 cases match complete results or exact refusal details:
+  JSON, YAML, CRLF source custody, record/action selections, Unicode, optional
+  values, valid arrays and seven invalid/unsupported cases. The installed probe
+  forbids subprocess launch, executable lookup and external network connections.
+- Installed CLI generate/check passes with exact CRLF source bytes. Check leaves
+  output bytes and timestamps unchanged, including when the destination is
+  absent. Duplicate options refuse. Writer controls verify hand-edit/untracked-
+  file protection, separately owned catalog retention, symlink/path refusal,
+  installation rollback and recoverable original backup after failed restore.
+- Manifest/bundle corruption refuses. A tiny shared deadline refuses. The actual
+  packaging hook accepts current inputs and rejects changed source or damaged
+  assets. No independent schema/template port was introduced.
+- Repository and sdist builds produce byte-identical wheels. The Python-only
+  sdist rebuild also passes with all subprocesses forbidden and PATH empty.
+  All18 installed package payload files match the wheel. Source/bundle freshness
+  checks, strict mypy across five modules and three boundary test methods with
+  eight negative import/execution controls pass.
+- [Licensing audit](praxis-p1/python-codegen-licenses.json) verifies first-party
+  headers, all pyproject licenses and the candidate wheel's MIT OR Apache-2.0
+  metadata and license texts. Five bundled JavaScript dependencies retain their
+  own exact license/package notices. The pinned native engine retains its ISC
+  license; the test dependency was reconstructed offline from its cached official
+  payload after every RECORD content digest was verified.
+
+The Linux/macOS CI job is configured, not observed running. Source remains
+uncommitted/unpushed; index/release publication and Linux qualification remain
+open. This closes the local no-Bun execution experiment, not the complete P1
+release or Praxis lifecycle goal. Native PostgreSQL adapter acceptance is still
+blocked: five approval-service attempts across three consecutive goal turns
+were rejected because the selected review model was at capacity. None ran the
+cluster setup. The final attempt revalidated this after generator qualification.
+
+No live approval/test handle remains. Further native driver, physical-policy,
+deployment and mutation qualification depends on that unavailable native gate;
+publishing the requested complete cohort is not justified by these local checks.
+The full release goal must retain all original lifecycle requirements while this
+external block is resolved.
+
+
+## Resumed native session qualification — 2026-10-19
+
+The owner resumed the full goal and authorized native setup and prerelease
+publication after completing the remaining lifecycle work. Approval service
+recovered: PostgreSQL18.6 initialized and started on an isolated private Unix
+socket. The earlier approval-service block is historical, not current status.
+
+A freshly built host wheel installed in a new Python3.11.17 / Pydantic2.13.5
+environment passes [40 live native assertions](praxis-p1/session-native-postgresql.json)
+with Psycopg3.2.13, psycopg_pool3.3.3 and Weft0.4.44. Generated sync/async client
+reads go through real Weft artifacts under distinct person/batch roles. Native
+RLS separates people and explicit batch reads; caller savepoints retain outer
+ownership and restore role/settings. A separate connection observes committed
+writes and retained state after rollback. Nested async cancellation leaves the
+outer transaction healthy. Cancellation of an observed PostgreSQL pg_sleep
+returns an idle, reset, usable pool connection. Terminating a borrowed backend
+causes its discard and replacement before a different identity runs.
+
+This qualifies the session/lease foundation, not the final runtime: its bounded
+read executor is test support, and direct write assertions test session ownership
+rather than Weft action compilation. Production catalog/privilege admission,
+Psycopg2/SQLAlchemy, complete table/policy/migration/CRUD/count/named/replay paths,
+managed acceptance and immutable releases remain open. Weft main has meanwhile
+advanced to0.4.46; the existing native cohort remains explicitly0.4.44 until the
+successor is rebuilt and replayed. The full release goal stays active.
+
+
+The resumed source also rejects non-JSON integer/decimal token forms (duplicate
+minus signs, Unicode digits, leading zero/plus, whitespace and underscores)
+without leaking Python conversion failures. Seven binding identity tests,
+including the token regression, and22 installed session controls pass. The
+40-assertion native run was repeated against the rebuilt wheel; its updated
+receipt includes both exact host/compiler wheel hashes. Hosted native CI now
+uses the immutable published Linux Weft0.4.44 wheel with its observed SHA-256,
+separate from the locally rebuilt macOS compiler cohort.

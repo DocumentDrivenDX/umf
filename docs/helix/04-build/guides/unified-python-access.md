@@ -67,11 +67,39 @@ running event loop. No generated code creates/runs an event loop or retries an
 uncertain write. Bind an unbound query to the desired mode; changing a query
 already bound to the other mode refuses. Keys, fields, relationship builders,
 wire documents and error codes are shared. Hosts still own resources and
-execution. The async WeftTableBinding retains its existing contract; native
-synchronous Weft/driver adapters and request-scoped session lifecycle are the
-next P1 slice, with separate native acceptance gates.
+execution. The async WeftTableBinding retains its existing contract. Native sync/async
+session adapters are working candidates; live driver, transaction and pool
+qualification remains an open P1 gate.
 
 The host runtime's Pydantic requirement is >=2.13,<3. Its MISSING compatibility
 import uses the actual Pydantic sentinel, preserving absence/null across 2.13.5
 and 2.14.1. Generated stdlib-only clients do not require Pydantic. See
 [P1 evidence](../evidence/praxis-p1.md) for commands, tested subset and limits.
+
+
+## Python build entry point (local P1-05 candidate)
+
+The separate `umf-codegen`0.1.0a1 candidate embeds the same portable generator
+inside `mini-racer==0.14.1` / V8 14.4.258.23. After installing the candidate
+wheel and its pinned runtime dependency, generation needs no Bun, Node, external
+JavaScript process or SDK tarball:
+
+```sh
+python -m umf_codegen generate --schema plugin.json --package plugin_client --output generated
+python -m umf_codegen check --schema plugin.json --package plugin_client --output generated
+```
+
+`check` returns nonzero for drift without mutating output. Generation protects
+original inventory and refuses hand edits, extra files and symlinks. Use physical
+paths with ordinary directory ancestors. Generation uses a cooperating output
+lock; a lock retained after process death requires host recovery before retry.
+Installation failures restore the old directory; failed restoration retains a
+backup and reports its path. Neither command runs schema-selected code.
+
+Programmatic authoring exposes `generate_python_client` with record/action
+selections and complete file bytes/hashes. Generated runtime clients keep their
+stdlib-only imports. The embedded engine is a build-tool dependency; it is not
+required by generated application clients. The wheel and self-contained source
+distribution have local macOS arm64 Python3.11 evidence; Linux CI is configured
+but not executed, and no new package/index release has been published. See
+[P1 evidence](../evidence/praxis-p1.md) for the exact candidate and remaining gates.

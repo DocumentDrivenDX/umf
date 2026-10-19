@@ -1,0 +1,136 @@
+{
+  "python": "3.11.17",
+  "generator": "0.1.0a1",
+  "engine": "0.14.1",
+  "cases": [
+    {
+      "name": "original-json",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "crlf-source",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "yaml",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "customer-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "action-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unicode",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "optional-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "array-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "foreign-field-extension-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "nullable-key-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "reserved-name-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unknown-facet-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "source-core-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-package-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-json-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    }
+  ],
+  "writerAndIntegrityControls": "passed",
+  "externalJavascriptProcesses": "forbidden",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "status": "local-candidate-not-published",
+  "baseCommit": "a7ce41803",
+  "nativeDatabaseQualification": false,
+  "wheel": {
+    "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
+    "sha256": "b791b4d03b92d8e53841327e394718e6cb905b2d7cb3dc7c4a3c6d483b93c5e5"
+  },
+  "sdist": {
+    "name": "umf_codegen-0.1.0a1.tar.gz",
+    "sha256": "62010014343d5f8a3ecbc45b3ab3dfaf8a0afa2be511e808cf27ce66c1b0d924"
+  },
+  "reproducibility": {
+    "sourceAndSdistWheelIdentical": true,
+    "sdistBuildExternalProcesses": "forbidden",
+    "installedPayloadFilesVerified": 18
+  },
+  "typing": {
+    "tool": "mypy 2.4.0",
+    "mode": "strict",
+    "sourceFiles": 5,
+    "result": "pass"
+  },
+  "boundaries": {
+    "sourceCheck": "pass",
+    "testMethods": 3,
+    "negativeImportAndExecutionControls": 8
+  },
+  "packagingControls": [
+    "current-source-passes",
+    "stale-source-refuses",
+    "damaged-payload-refuses"
+  ],
+  "sourceHashes": {
+    "python/umf_codegen/src/umf_codegen/__init__.py": "5b8ded9a13b9aa88ec00e52b98627914f58960fe132b7dbf9218bd3c6b13fe3b",
+    "python/umf_codegen/src/umf_codegen/__main__.py": "d93bde8cf3e8390781f53d70459c3449ea1dcaa731ebc467b0cd18f42d7feaa4",
+    "python/umf_codegen/src/umf_codegen/_embedded.py": "cf1e9dc4f7b382a8e1e769f9e6537e2bdc618cf4d523a1c9a3637db2a26804a5",
+    "python/umf_codegen/src/umf_codegen/_release.py": "ae3882f5c3b9ce20af4dacbb1cf1e4fe2b24282b2b6eb48d6c454fab2da64575",
+    "python/umf_codegen/src/umf_codegen/_writer.py": "00f6ec133d690f396f03dfdf61a4b31ee289657665129bfbe805296a8f65f45f"
+  },
+  "corpusSha256": "47ba0ccf22e1befac2c8c735f12ab747d559c8b49e82e11ae324f4f058cef57f",
+  "limits": [
+    "macOS arm64 only; Linux CI configured but not executed",
+    "index/release publication pending",
+    "native PostgreSQL setup unavailable: five approval service failures across three consecutive goal turns"
+  ],
+  "references": {
+    "embeddedRuntimeApi": "https://bpcreech.com/PyMiniRacer/api/",
+    "sharedGenerator": "src/access/index.ts",
+    "corpus": "scripts/codegen-corpus.ts",
+    "probe": "tests/codegen/installed_probe.py"
+  }
+}

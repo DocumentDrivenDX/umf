@@ -126,3 +126,98 @@ The graph fixture implements the transport independently with nodes and edges.
 Native qualification currently covers PostgreSQL 18 and the isolated Weft build
 with UMF 0.10 admission, UUID and bits128. See the [execution evidence](../../04-build/evidence/unified-python-access.md)
 for commands, coverage and feature requirements that remain open.
+
+## Proposed native per-call session surface (P1-04)
+
+The native session adapter qualifies Psycopg 3 connections independently of the
+portable generated API. `SyncWeftTableBinding` shares the async binding's pure
+compilation, wire checks and cursor rules; synchronous callbacks MUST NOT be
+coroutine functions. Neither scheduling surface runs an implicit event loop.
+
+`SessionIdentity(kind, subject)` requires explicit `person` or `batch` and a
+nonempty host-authenticated subject. `SessionPolicy(people, batches, schema,
+statement_timeout_ms=30000, lock_timeout_ms=5000)` copies both registries;
+subjects map to native roles. Person and batch role sets MUST be disjoint.
+Timeouts are integers from 1 through 300000 ms. Schema and role identifiers
+must be nonempty, NUL-free and fit PostgreSQL's 63-byte bound; plugin schemas
+cannot use the system `pg_` prefix. These inputs are trusted host configuration,
+never generated wire parameters. Registry membership grants role selection;
+the host remains responsible for authenticating the subject.
+
+`SyncSession(factory, policy, transaction_owner="adapter")` and its async
+counterpart accept explicit ownership `adapter` or `caller`. They call the
+factory with the identity once per `open(identity, read_only=True)` operation.
+The factory returns a lease context manager for a caller connection or host
+pool. The adapter MUST NOT own a global pool, change autocommit, reuse a
+connection concurrently within one adapter or use an inherited post-fork pool.
+Construct sessions and pools in each child process. Separate adapters MUST NOT
+lease the same connection concurrently; that is the factory's responsibility.
+
+Adapter ownership requires an idle connection and opens a transaction, committed
+on success and rolled back on any failure. Caller ownership requires an already
+healthy transaction and opens a savepoint;
+the adapter MUST NOT commit or roll back its outer transaction. A read lease
+sets a new transaction read-only or requires an existing outer transaction to
+already be read-only. Failed transactions and unsupported states MUST refuse.
+Session role, row_security=on, pg_catalog-first plugin search path and both
+timeouts are transaction-local. The adapter verifies effective role and rejects
+superuser/BYPASSRLS authority before dispatch and before successful release.
+The effective session user and normalized configured setting values MUST remain
+unchanged during execution; any change MUST refuse and roll back the lease.
+Successful savepoint release explicitly restores the caller's previous values;
+rollback restores them after failure. Native ownership/privilege containment and
+compiler catalog obligations remain separate executor checks.
+
+`session_binding.SyncSessionTransport` / `AsyncSessionTransport` compose the
+native lease with a Weft binding. Read executors receive `(connection, artifact,
+original_request)`; action executors receive `(connection, action, inputs,
+idempotency_key)`. Executors MUST enforce all Weft obligations, MUST NOT change
+transaction ownership or session identity, and MUST NOT retry writes. Missing
+action executors refuse. This composition does not qualify an arbitrary callback
+as a Weft action implementation. Every error response rolls back the lease
+before returning. Session refusal maps to DENIED; native read failure maps to
+BUSY; uncertain action completion maps to WRITE_OUTCOME_UNKNOWN. Async task
+cancellation propagates after shielded transaction and pool cleanup. Failed
+transaction cleanup closes the connection before pool release. A factory MUST
+discard closed/broken connections. Cancellation does not prove a dispatched
+write did not commit, and MUST NOT cause automatic retry.
+
+`SessionPolicy.cursor_secret(identity, root_secret)` derives a stable authority-
+and policy-bound cursor secret from a host root of at least 32 bytes. Person,
+batch and differently configured policy sessions MUST NOT accept one another's
+page tokens. The generated wire protocol is unchanged. Psycopg2, SQLAlchemy,
+full artifact execution and managed Lakebase qualification remain release gates;
+this proposed surface is not evidence of their completion.
+
+Native semantics references: [Psycopg transaction contexts](https://www.psycopg.org/psycopg3/docs/basic/transactions.html),
+[async cancellation](https://www.psycopg.org/psycopg3/docs/advanced/async.html),
+and [PostgreSQL 18 SET ROLE](https://www.postgresql.org/docs/18/sql-set-role.html).
+
+## Proposed installed Python generator (P1-05)
+
+`umf_codegen.generate_python_client(text, *, package, format="json", records=None,
+actions=None, timeout_seconds=30)` MUST return the same sourceDigest, description,
+file paths, complete UTF-8 bytes and hashes as `generatePythonClient` for the same
+request. Records/actions use the same module/element and module/action selectors.
+Format is `json` or `yaml`. A fresh bounded embedded V8 isolate runs the pinned
+portable generator for each invocation; schema content MUST NOT become source
+code, select executable imports or access the host. Engine version and packaged
+payload hashes MUST match. Deadline is greater than zero and at most60 seconds;
+source input is bounded at16 MiB. Refusals preserve portable code/message/path.
+Unavailable engines, damaged payloads and deadline/resource failures refuse;
+no fallback to an executable or network fetch is permitted.
+
+`python -m umf_codegen generate|check --schema PATH --package NAME --output DIR`
+is the authoring entry point; `umf-codegen` is its console alias. JSON is inferred
+unless the schema filename ends in `.yaml` or `.yml`. Generation publishes the
+complete single-package output, with original-inventory verification before
+replacing existing files. Hand edits, untracked output files, unsafe paths or
+symlinks MUST refuse; previously compiled catalog files remain separately owned.
+Stage then replace, restore the original on failed installation, and retain a
+recoverable backup if restoration also fails. Check MUST NOT create, edit or
+delete output or lock files; it returns0 for exact bytes and1 for drift/refusal.
+Generate returns0 on successful publication and1 on refusal/failure. Argparse
+usage failures return2. Concurrent cooperating generators MUST serialize or
+refuse; host filesystem races and untrusted concurrent filesystem writers are
+outside the authoring boundary. No published release is inferred from this
+proposed surface; wheel, sdist and installed parity evidence remain required.
