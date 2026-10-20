@@ -58,6 +58,7 @@ The executable example below uses the public entry point. The relative paths are
 
 <!-- generated:portable-example:start -->
 ```ts
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createUmfRegistry,readDocument,inspectActions} from '../../src/index';
 import fixture from '../../fixtures/actions/approve.json';
 
