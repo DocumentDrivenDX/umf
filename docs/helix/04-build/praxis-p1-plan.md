@@ -1093,3 +1093,21 @@ restore before savepoint release. Eight native probe/session cases pass.
 This is a qualified component, not full Praxis integration or a published release.
 Seeds, forward column/policy evolution, actual fixed-method acceptance, related
 delete predicates and mixed-direction paging remain required.
+
+### Mixed-direction keysets and related deletes, 2026-10-19
+
+[Related operation evidence](evidence/praxis-p2/related-operations/receipt.json)
+qualifies generated sync/async mixed-direction keyset pages (17 native assertions)
+and correlated related-table deletes (19), with24/24 pooled leases returned.
+Pages carry every required ordering Field and end with the complete original
+unique Key as a tie-breaker. Timestamp ties and a one-microsecond difference
+retain exact order; principal/size/tampered cursor reuse refuses. Native related
+EXISTS preserves both source and target row policies; over-bound deletes roll
+back without receipts and matching replay returns the durable outcome.
+Five portable tests/27 assertions,63 browser assertions,23 complete embedded
+cases and56 CLI/Python/Chromium-WASM source cases pass. Required ordered fields
+and same-module native-capacity equality are the qualified subset. This does not
+claim a held paging snapshot, private application routing, seeds or completed
+forward column/policy migration support. Mixed-order continuation SQL has O(k²)
+comparisons for k sort fields; each scalar binds once. Uniform directions keep
+PostgreSQL tuple comparison. Related scope indexes reuse admitted Field objects.

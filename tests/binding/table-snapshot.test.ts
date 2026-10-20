@@ -36,3 +36,26 @@ test('source copy proves target refinements and rejects native rounding or narro
  const a=snapshotSource();a.modules[0].elements.find((e:any)=>e.id==='savedOwner').facets={length:{min:1,unit:'unicode-scalar'}};
  expect(inspectTableLifecycle(a).valid).toBe(false);
 });
+
+test('keyset ordering supports required mixed directions with a complete original Key suffix',()=>{
+ const page=(s:any)=>s.modules[0].extensions['umf.tables'].commands.find((c:any)=>c.id==='recent_snapshots');
+ expect(inspectTableLifecycle(snapshotSource()).diagnostics).toEqual([]);
+ for(const change of [
+  (s:any)=>page(s).body.orderBy.reverse(),
+  (s:any)=>page(s).body.fields=page(s).body.fields.filter((f:any)=>f.element!=='observedAt'),
+  (s:any)=>s.modules[0].elements.find((e:any)=>e.id==='observedAt').nullability='absent-allowed',
+  (s:any)=>page(s).body.orderBy[0].field={module:'demo',element:'savedAmount'},
+ ]){const s=snapshotSource();change(s);expect(compileTableDeployment({text:JSON.stringify(s),configuration:config}).status).toBe('blocked');}
+});
+
+test('related predicates retain original same-module matches and nested input domains',()=>{
+ const related=(s:any)=>s.modules[0].extensions['umf.tables'].commands.find((c:any)=>c.id==='remove_related');
+ expect(inspectTableLifecycle(snapshotSource()).diagnostics).toEqual([]);
+ for(const change of [
+  (s:any)=>related(s).body.where.table='external',
+  (s:any)=>related(s).body.where.matches[0].target={module:'demo',element:'actor'},
+  (s:any)=>related(s).body.where.matches[0].source={module:'demo',element:'observedAt'},
+  (s:any)=>related(s).body.where.where.field={module:'demo',element:'actor'},
+  (s:any)=>related(s).body.where.matches[0].future=true,
+ ]){const s=snapshotSource();change(s);expect(compileTableDeployment({text:JSON.stringify(s),configuration:config}).status).toBe('blocked');}
+});

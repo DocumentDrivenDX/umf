@@ -27,6 +27,11 @@ export function snapshotSource(){
  const all=structuredClone(payload.commands.at(-1));all.id='capture_all';
  all.parameters=all.parameters.filter((p:any)=>p.id==='comment');all.body.source.where={op:'all'};
  all.body.values[0].value={kind:'sourceField',field:ref('id')};payload.commands.push(all);
+ payload.commands.push({version:'umf.table-operation/0.1',id:'recent_snapshots',parameters:[],consistency:'statement',replay:'none',body:{kind:'read',table:'snapshots',fields:extra.map(([id])=>ref(id)),where:{op:'all'},orderBy:[{field:ref('observedAt'),direction:'desc'},{field:ref('snapshotId'),direction:'asc'}],result:'page',maxRows:100,cursorKey:'primary'}});
+ payload.tables.at(-1).policy.person.delete={kind:'owner',field:ref('actor')};
+ payload.tables.at(-1).policy.batch.delete={kind:'allow'};
+ const cleanup={version:'umf.table-operation/0.1',id:'remove_related',parameters:[{id:'owner',field:ref('owner')}],consistency:'transaction',replay:'caller-key-required',body:{kind:'delete',table:'snapshots',where:{op:'related',table:'notes',matches:[{source:ref('sourceId'),target:ref('id')}],where:{op:'eq',field:ref('owner'),value:{kind:'parameter',parameter:'owner'}}},returning:[ref('snapshotId')],maxRows:10}};
+ payload.commands.push(cleanup);const bounded=structuredClone(cleanup);bounded.id='remove_related_bounded';bounded.body.maxRows=1;payload.commands.push(bounded);
  return source;
 }
 if(import.meta.main)await Bun.write(process.argv[2]!,JSON.stringify(snapshotSource()));

@@ -23,7 +23,7 @@ export interface TableLifecyclePayload {profile:'postgresql18/0.1';tables:TableD
 
 /** Named operation declarations; interpretation never grants native authority. */
 export type TableOperationValue={kind:'parameter';parameter:string}|{kind:'literal';value:CoreLiteral}|{kind:'currentTimestamp'}|{kind:'currentPrincipal'}|{kind:'sourceField';field:TableRef};
-export type TableOperationPredicate={op:'all'}|{op:'and';args:TableOperationPredicate[]}|{op:'or';args:TableOperationPredicate[]}|{op:'not';arg:TableOperationPredicate}|{op:'isNull';field:TableRef}|{op:'in';field:TableRef;values:TableOperationValue[]}|{op:'eq'|'ne'|'lt'|'le'|'gt'|'ge'|'startsWith';field:TableRef;value:TableOperationValue};
+export type TableOperationPredicate={op:'all'}|{op:'related';table:string;matches:{source:TableRef;target:TableRef}[];where:TableOperationPredicate}|{op:'and';args:TableOperationPredicate[]}|{op:'or';args:TableOperationPredicate[]}|{op:'not';arg:TableOperationPredicate}|{op:'isNull';field:TableRef}|{op:'in';field:TableRef;values:TableOperationValue[]}|{op:'eq'|'ne'|'lt'|'le'|'gt'|'ge'|'startsWith';field:TableRef;value:TableOperationValue};
 export interface TableOperationAssignment {field:TableRef;value:TableOperationValue}
 export type TableOperationBody=
  |{kind:'read';table:string;fields:TableRef[];where:TableOperationPredicate;orderBy:{field:TableRef;direction:'asc'|'desc'}[];result:'many'|'one'|'optional'|'page'|'count';maxRows:number;cursorKey?:string}

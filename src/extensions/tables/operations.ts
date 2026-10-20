@@ -70,6 +70,17 @@ function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,c
  const predicate=(node:TableOperationPredicate,p:string,depth=0,scope=table):void=>{
   if(!ctx.charge(p,depth))return;
   if(node.op==='all')return;
+  if(node.op==='related'){
+   const target=payload.tables.find(t=>t.id===node.table);
+   if(!target){ctx.add('TABLES_OPERATION_TABLE',p+'/table','Related predicates require an original table in the owning module');return;}
+   ctx.unique(node.matches,m=>refKey(m.source)+'/'+refKey(m.target),p+'/matches','related match');
+   for(const[i,pair]of node.matches.entries()){
+    const source=field(pair.source,p+'/matches/'+i+'/source',scope),destination=field(pair.target,p+'/matches/'+i+'/target',target);
+    if(source&&destination&&(source.element.scalarType!==destination.element.scalarType||nativeDomain(source.column.nativeType)!==nativeDomain(destination.column.nativeType)))ctx.add('TABLES_OPERATION_DOMAIN',p+'/matches/'+i,'Related equality requires the same native scalar capacity');
+   }
+   predicate(node.where,p+'/where',depth+1,target);return;
+  }
+
   if(node.op==='and'||node.op==='or'){for(const[i,child]of node.args.entries())predicate(child,p+'/args/'+i,depth+1,scope);return;}
   if(node.op==='not'){predicate(node.arg,p+'/arg',depth+1,scope);return;}
   const selected=field(node.field,p+'/field',scope);if(!selected)return;
@@ -92,8 +103,13 @@ function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,c
   if(body.result==='page'){
    const record=ctx.element(table.record),keys=record?.keys??[];
    const key=keys.find(k=>k.id===body.cursorKey);
-   if(!key||body.orderBy.length!==key.fields.length||body.orderBy.some((o,i)=>o.direction!=='asc'||refKey(o.field)!==refKey(key.fields[i]!)))ctx.add('TABLES_OPERATION_PAGE',path+'/body','Page requires the complete ordered original Key, ascending');
-   if(key?.fields.some(f=>!body.fields.some(r=>refKey(r)===refKey(f))))ctx.add('TABLES_OPERATION_PAGE',path+'/body/fields','Page must project every cursor Key component');
+   const suffix=key?body.orderBy.slice(-key.fields.length):[];
+   if(!key||body.orderBy.length<key.fields.length||suffix.some((o,i)=>refKey(o.field)!==refKey(key.fields[i]!)))ctx.add('TABLES_OPERATION_PAGE',path+'/body','Page ordering must end with the complete ordered original Key');
+   for(const[i,order]of body.orderBy.entries()){
+    const selected=field(order.field,path+'/body/orderBy/'+i+'/field');
+    if(selected&&(selected.element.nullability!=='required'||!['integer','decimal','string','date','timestamp','uuid'].includes(selected.element.scalarType??'')))ctx.add('TABLES_OPERATION_PAGE',path+'/body/orderBy/'+i,'Cursor ordering requires required ordered scalar Fields');
+    if(!body.fields.some(r=>refKey(r)===refKey(order.field)))ctx.add('TABLES_OPERATION_PAGE',path+'/body/fields','Page must project every ordering Field');
+   }
   }else if(body.cursorKey!==undefined)ctx.add('TABLES_OPERATION_PAGE',path+'/body/cursorKey','Cursor Key is only meaningful for page results');
  }else{
   if(command.consistency!=='transaction'||command.replay==='none')ctx.add('TABLES_OPERATION_WRITE',path,'Writes require transaction consistency and explicit caller-key replay');

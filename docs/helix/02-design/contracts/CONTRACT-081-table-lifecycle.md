@@ -754,6 +754,13 @@ source approval or live installed-generation/identity checks.
 
 ### Commands and consistency
 
+A `related` operation predicate selects an original table in the owning module,
+explicit source/target equality pairs and a nested typed predicate. It lowers to
+correlated native EXISTS; NULL equality does not match. Both tables retain native
+SELECT privileges/RLS and appear in command obligations. Exact native scalar
+capacity is required for equality pairs; no FK or cross-module authority is
+invented. Nesting shares the bounded predicate budget.
+
 Named reads and writes MUST use the same typed operation model and Weft compiler
 as directly composed methods. Commands declare stable ID, exact input/output
 identities, bounds, required capability and consistency. No raw SQL string is a
@@ -774,6 +781,12 @@ a different input/principal cannot consume the receipt. Concurrent attempts
 have one declared native outcome. Lost response after commit is uncertain until
 that durable outcome is observed; no driver or generated client retries writes.
 Counts use the caller's RLS and declare their statement/snapshot consistency.
+Keyset ordering MAY mix ascending and descending required ordered scalar Fields.
+Its suffix MUST contain the complete original unique Key in declared Key field
+order; every ordering Field MUST be projected and carried in the cursor. Nullable
+sort Fields are not admitted in this profile. Continuation compares the complete
+lexicographic tuple using each declared direction, with exact scalar values.
+
 Live keyset paging is explicitly distinct from a held snapshot; cursors bind
 query, source, deployment, principal and policy generation. Incompatible changes
 refuse continuation. Exact command wire shapes extend CONTRACT-079 before their

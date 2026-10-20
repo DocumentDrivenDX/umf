@@ -35,6 +35,8 @@ parser=argparse.ArgumentParser()
 parser.add_argument('--dsn',required=True)
 parser.add_argument('--source',type=Path,required=True)
 parser.add_argument('--report',type=Path,required=True)
+parser.add_argument('--paging-only',action='store_true')
+parser.add_argument('--related-only',action='store_true')
 args=parser.parse_args()
 source=json.loads(args.source.read_text());module=source['modules'][0];payload=module['extensions']['umf.tables']
 prefix='pr_'+uuid4().hex[:12]+'_'
@@ -70,6 +72,68 @@ def seed(admin):
 
 def source_rows(admin):
     return admin.execute(sql.SQL('SELECT "snapshotId","actor","savedAmount","savedMemo" FROM {} ORDER BY "snapshotId"').format(sql.Identifier(cfg['schema'],'snapshots'))).fetchall()
+
+
+def seed_pages(admin):
+    with admin.transaction():
+        admin.execute(sql.SQL("INSERT INTO {}(\"snapshotId\",\"sourceId\",\"savedOwner\",actor,\"observedAt\") VALUES (%s,%s,%s,%s,%s)").format(sql.Identifier(cfg['schema'],'snapshots')), ('p1','a',alice,alice,'2026-10-19T10:00:00.123456Z'))
+        for key,owner,at in [('p2',alice,'2026-10-19T10:00:00.123456Z'),('p3',alice,'2026-10-19T10:00:00.123455Z'),('p4',alice,'2000-01-01T00:00:00Z'),('hidden',bob,'2027-01-01T00:00:00Z')]:
+            admin.execute(sql.SQL("INSERT INTO {}(\"snapshotId\",\"sourceId\",\"savedOwner\",actor,\"observedAt\") VALUES (%s,%s,%s,%s,%s)").format(sql.Identifier(cfg['schema'],'snapshots')), (key,'a',owner,owner,at))
+
+
+def sync_pages(client,foreign,batch):
+    seen=[];cursor=None
+    first=client.recent_snapshots(size=1)
+    check('sync-mixed-first',first.items[0].snapshot_id=='p1' and first.next_cursor is not None)
+    check('sync-mixed-exact-time',first.items[0].observed_at.text=='2026-10-19T10:00:00.123456Z')
+    for label,kwargs,target in [('principal',{'size':1,'cursor':first.next_cursor},foreign),('size',{'size':2,'cursor':first.next_cursor},client),('tamper',{'size':1,'cursor':first.next_cursor[:-1]+'!'},client)]:
+        try:target.recent_snapshots(**kwargs)
+        except generated.AccessError:check('sync-mixed-cursor-refuses-'+label,True)
+        else:raise AssertionError('incompatible cursor admitted')
+    while True:
+        page=client.recent_snapshots(size=1,cursor=cursor);seen.extend(row.snapshot_id for row in page.items)
+        cursor=page.next_cursor
+        if cursor is None:break
+        assert len(seen)<=5
+    check('sync-mixed-no-gaps-or-duplicates',seen==['p1','p2','p3','p4'])
+    check('sync-mixed-batch-scope',batch.recent_snapshots(size=1).items[0].snapshot_id=='hidden')
+
+
+async def async_pages(client,foreign,batch):
+    seen=[];cursor=None
+    while True:
+        page=await client.recent_snapshots(size=1,cursor=cursor);seen.extend(row.snapshot_id for row in page.items)
+        cursor=page.next_cursor
+        if cursor is None:break
+        assert len(seen)<=5
+    check('async-mixed-no-gaps-or-duplicates',seen==['p1','p2','p3','p4'])
+    page=await foreign.recent_snapshots(size=1)
+    check('async-mixed-foreign-rls',page.items[0].snapshot_id=='hidden' and page.next_cursor is None)
+    check('async-mixed-batch-scope',(await batch.recent_snapshots(size=1)).items[0].snapshot_id=='hidden')
+
+
+def sync_related(client,foreign,batch):
+    check('sync-related-source-rls',(foreign.remove_related(owner=alice,idempotency_key='s-hidden')).receipt.effects==(0,))
+    check('sync-related-target-rls',(client.remove_related(owner=bob,idempotency_key='s-other')).receipt.effects==(0,))
+    try:client.remove_related_bounded(owner=alice,idempotency_key='s-bound')
+    except generated.AccessError as error:check('sync-related-bound-rollback',error.code=='LIMIT_EXCEEDED')
+    else:raise AssertionError('related delete clipped')
+    check('sync-related-bound-no-receipt',client.remove_related_bounded_observe(owner=alice,idempotency_key='s-bound').status=='not-observed')
+    applied=client.remove_related(owner=alice,idempotency_key='s-delete')
+    check('sync-related-visible-exact-effects',applied.receipt.effects==(4,) and sorted(row.snapshot_id for row in applied.items[0].rows)==['p1','p2','p3','p4'])
+    check('sync-related-replay',client.remove_related(owner=alice,idempotency_key='s-delete').status=='recovered')
+    check('sync-related-batch-separate',(batch.remove_related(owner=alice,idempotency_key='s-batch')).receipt.effects==(1,))
+
+
+async def async_related(client,foreign,batch):
+    check('async-related-source-rls',(await foreign.remove_related(owner=alice,idempotency_key='a-hidden')).receipt.effects==(0,))
+    try:await client.remove_related_bounded(owner=alice,idempotency_key='a-bound')
+    except generated.AccessError as error:check('async-related-bound-rollback',error.code=='LIMIT_EXCEEDED')
+    else:raise AssertionError('related delete clipped')
+    applied=await client.remove_related(owner=alice,idempotency_key='a-delete')
+    check('async-related-visible-exact-effects',applied.receipt.effects==(4,) and sorted(row.snapshot_id for row in applied.items[0].rows)==['p1','p2','p3','p4'])
+    check('async-related-replay',(await client.remove_related(owner=alice,idempotency_key='a-delete')).status=='recovered')
+    check('async-related-batch-separate',(await batch.remove_related(owner=alice,idempotency_key='a-batch')).receipt.effects==(1,))
 
 
 def sync_cases(client,foreign,batch):
@@ -127,7 +191,7 @@ async def run_async(reference):
                 finally:leases['async']['released']+=1
         host=NativeTableBinding(AsyncSession(factory,policy),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
         clients=[generated.Client(host.for_identity(identity)).modules.demo for identity in (a,b,job)]
-        await async_cases(*clients)
+        await (async_related if args.related_only else async_pages if args.paging_only else async_cases)(*clients)
         async with pool.connection() as connection:
             check('async-pool-role-cleanup',(await (await connection.execute('SELECT current_user')).fetchone())[0] not in roles)
 
@@ -146,7 +210,8 @@ with tempfile.TemporaryDirectory(prefix='umf-snapshot-generated-') as directory:
                 admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(cfg['ownerRole'])));admin.execute('SET LOCAL search_path=pg_catalog')
                 reference=apply_table_migration(admin,plan,approved_digest=plan['digest'],expected_head=None,person_roles=(alice,bob))['installationReference']
             check('snapshot-install-has-no-foreign-keys',bundle['expectedCatalog']['foreignKeys']==[])
-            seed(admin)
+            (seed_pages if args.paging_only or args.related_only else seed)(admin)
+            if args.related_only:seed(admin)
             with ConnectionPool(args.dsn,min_size=1,max_size=1,kwargs={'autocommit':True}) as pool:
                 pool.wait(timeout=10)
                 @contextmanager
@@ -156,13 +221,14 @@ with tempfile.TemporaryDirectory(prefix='umf-snapshot-generated-') as directory:
                         try:yield connection
                         finally:leases['sync']['released']+=1
                 host=SyncNativeTableBinding(SyncSession(factory,policy),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
-                sync_cases(*(generated.SyncClient(host.for_identity(identity)).modules.demo for identity in (a,b,job)))
+                (sync_related if args.related_only else sync_pages if args.paging_only else sync_cases)(*(generated.SyncClient(host.for_identity(identity)).modules.demo for identity in (a,b,job)))
                 with pool.connection() as connection:check('sync-pool-role-cleanup',connection.execute('SELECT current_user').fetchone()[0] not in roles)
+            if args.related_only:seed_pages(admin)
             asyncio.run(run_async(reference))
             for label,counts in leases.items():check(label+'-balanced-leases',counts['acquired']==counts['released'])
             check('native-constraint-inventory-unchanged',admin.execute('SELECT count(*) FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t ON t.oid=c.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=t.relnamespace WHERE n.nspname=%s AND c.contype=%s',(cfg['schema'],'f')).fetchone()==(0,))
-            check('overflow-and-hidden-inserts-have-no-native-effects',len(source_rows(admin))==6 and not any(row[0] in ('a','a2') for row in source_rows(admin)))
-            report={'scope':'generated atomic source snapshots; local PostgreSQL18 only','postgresql':admin.info.server_version,'atomicInsertSelect':True,'sourceDigest':bundle['sourceDigest'],'observations':observations,'leases':leases,'fullPraxisAcceptance':False}
+            check('overflow-and-hidden-inserts-have-no-native-effects',len(source_rows(admin))==(0 if args.related_only else 5 if args.paging_only else 6) and not any(row[0] in ('a','a2') for row in source_rows(admin)))
+            report={'scope':'generated related delete predicates' if args.related_only else 'generated mixed-direction keyset paging' if args.paging_only else 'generated atomic source snapshots; local PostgreSQL18 only','postgresql':admin.info.server_version,'atomicInsertSelect':True,'sourceDigest':bundle['sourceDigest'],'observations':observations,'leases':leases,'fullPraxisAcceptance':False}
         finally:
             if schema_created:admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(cfg['schema'])))
             for role in reversed(created):admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))

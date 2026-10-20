@@ -35,7 +35,7 @@ def _obligations(context, source, declaration, batch=False):
     body=declaration['body'];kind=body['kind'];read=kind=='read'
     commands=['select'] if read else ['insert'] if kind=='insertFrom' else ['insert','update','select'] if kind=='upsert' and body['onConflict']=='update' else ['insert','select'] if kind=='upsert' else [kind]
     def reads_column(predicate):
-        return ('field' in predicate or any(reads_column(p) for p in predicate.get('args',[]))
+        return ('field' in predicate or 'matches' in predicate or any(reads_column(p) for p in predicate.get('args',[]))
                 or 'arg' in predicate and reads_column(predicate['arg']))
     if (body.get('returning') or reads_column(body.get('where',{}))) and 'select' not in commands:
         commands.append('select')
@@ -46,6 +46,17 @@ def _obligations(context, source, declaration, batch=False):
         if source_table['id']==table['id']:
             if 'select' not in commands:commands.append('select')
         else:touched[source_table['id']]=(source_index,source_table,['select'])
+    def related_tables(node):
+        if node.get('op')=='related':
+            index,current=next((i,t) for i,t in enumerate(module['extensions']['umf.tables']['tables']) if t['id']==node['table'])
+            if current['id'] in touched:
+                if 'select' not in touched[current['id']][2]:touched[current['id']][2].append('select')
+            else:touched[current['id']]=(index,current,['select'])
+            related_tables(node['where'])
+        for child in node.get('args',[]):related_tables(child)
+        if 'arg' in node:related_tables(node['arg'])
+    related_tables(body.get('where',{}))
+    if kind=='insertFrom':related_tables(body['source']['where'])
     ordered=list(touched.values())
     if len(ordered)>1:
         records={e['id']:e for e in module['elements'] if e['kind']=='record'}
