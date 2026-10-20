@@ -1,0 +1,44 @@
+{
+  "review": "https://github.com/DocumentDrivenDX/umf/pull/40#issuecomment-6300376302",
+  "baseCommit": "d33cc9f005f92db98e01882eeb075c6e2cbbe471",
+  "platform": "macOS27.0.1 arm64",
+  "python": "3.11.17",
+  "sourceSha256": {
+    "src/access/constants.ts": "948f07c20c03bb889b71ffd631f756b135a190ffdf16c66bb1088df54f3cc2ff",
+    "src/access/index.ts": "77256da4a67a6437607dabc78109080e75018dbef5df40d052ad966d761b4d0c",
+    "src/access/python-runtime.ts": "e7634778fabcfd95752638f7ba874b133fc4857b38aa7d38fe614ce2dd57feeb",
+    "scripts/check-unified-client-boundaries.ts": "c86caeb103301fdbb75300950cc9585a8fd8b34d4a3a0c549cb7438c6c76ece4",
+    "tests/access-adoption.test.ts": "9625cd5d2d2010302cd03a55e40df8493e444e9860b0ed944663fce840700021",
+    "tests/unified/adoption_probe.py": "55fd0cfc3faa237c1fad76936d3e343c0cc51b0238f8c0a83a26deafd59b20e0",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "eb181a4dbc3dc1fc6afb1c2e006a839769ccb273a3f7c328fda61cfe8478ddd3",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "cd7394ee0072abc1e8636d9c62d4cc003fcd246e22ef6ad9ecaa2a298fb63118",
+    "python/umf_codegen/src/umf_codegen/_release.py": "35b346286229cfe14a9c2aa1e7d777968672a4f85199928b4dc1eacfad6c208f"
+  },
+  "bundleSha256": "b499a3138e31f0fc9d00296bfc1b0c9991d2e3686b747343c2f213d740c61e69",
+  "manifestInputs": 230,
+  "results": {
+    "adoptionAndGenerationTests": 14,
+    "chromiumTests": 1,
+    "chromiumSources": 4,
+    "pythonCodegenTests": 3,
+    "typecheck": true,
+    "unifiedBoundaryChecker": true,
+    "compilationBoundaryChecker": true,
+    "pythonAccessBoundaryChecker": true,
+    "constantsBoundaryControls": [
+      "allowed module",
+      "forbidden node:fs import rejected",
+      "forbidden process hook rejected"
+    ],
+    "embeddedBuildCheck": "current",
+    "decompressedBundleMatchesManifest": true,
+    "releaseManifestPinMatches": true,
+    "solReview": "no remaining actionable findings"
+  },
+  "qualifications": {
+    "nativeTruss": false,
+    "fullPlatformByteParityMatrix": false,
+    "fullRepositorySuite": false,
+    "releasePublished": false
+  }
+}

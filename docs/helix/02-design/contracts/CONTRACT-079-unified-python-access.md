@@ -487,8 +487,14 @@ Entity inputs and affected keys use exact generated-key component maps. Each
 created/changed wire item is `{record: qualifiedRecordId, key: fieldIdMap}`.
 Counts map exact host counter names to nonnegative integers. Tokens are opaque
 nonempty strings scoped by the host to issuer/module/source and authority.
-The description publishes `errorCodes`, `limits.batchItems:100`, named action
-preconditions and supported client operations. Unknown host capabilities refuse;
+The description publishes wire `errorCodes`, separate `localErrorCodes`,
+`limits.batchItems:100`, named action preconditions and supported client operations.
+`LOCAL_ERROR_CODES` exposes the same local inventory in the generated package.
+Local categories include `LIMIT`, `TYPE`, `KEY_TYPE` and `REQUIRED`; they report
+client admission/codec/response failures and do not add permitted wire refusal
+codes. In particular, local `LIMIT` and host `LIMIT_EXCEEDED` retain their existing
+separate meanings. The generator's shared `MAX_BATCH_ITEMS` supplies both the
+runtime snapshot check and published batch limit. Unknown host capabilities refuse;
 client method availability is not native execution qualification.
 
 ### Typed actions and conditions
@@ -496,7 +502,12 @@ client method availability is not native execution qualification.
 Each action emits `<ActionName>Input`, a frozen keyword-only dataclass suitable
 for a batch, and `<ActionName>Precondition`, a string Enum of condition IDs
 (uppercase normalized member names; collisions refuse). Error.precondition carries
-the stable string ID and compares with these enum values. Declared failure codes
+the stable string ID and compares with these enum values. A supplied wire
+precondition ID MUST belong to the invoked action's declaration, for apply,
+advisory validation and batch refusal items. Unknown IDs are malformed responses:
+write admission preserves uncertainty and key; validation raises INVALID_RESPONSE.
+The exception field remains `str | None`, preserving its existing shared error
+ABI rather than introducing action-specific exception types. Declared failure codes
 remain in description.actions[action].declaration; PRECONDITION_FAILED is the
 wire category, not a replacement for the condition identity. Conditions use
 rules/1 `exists` over a declared key-selected read frame; absence is `not(exists)`.
@@ -543,6 +554,10 @@ stop_on_error enabled. Leading unattempted items, gaps and resumed attempted wor
 are invalid. This deliberately tightens previously underspecified atomic preflight
 ordering; hosts must return explicit refusals/rolled_back outcomes instead of
 unattempted outcomes when stop_on_error is disabled.
+An uncertain atomic commit MUST be returned as the whole-response
+`{schema,error:{code:"WRITE_OUTCOME_UNKNOWN"}}` envelope, never per-item unknown
+statuses. The client rejects an all-unknown atomic item list even without an
+idempotency key; `.key=None` honestly preserves the caller's omitted key.
 Atomic rolled_back items represent work undone with the complete batch; atomic
 failures require at least one refusal. An unknown/unreadable whole response raises
 WriteOutcomeUnknown rather than fabricating per-item conclusions.
@@ -607,6 +622,26 @@ conversion while preserving ordinary transport error semantics and wire shapes.
 objects without the original annotations. Capture and inspect the original inside
 each child when using combinators that suppress or replace child cancellation;
 inspection cannot reconstruct metadata from a replacement exception.
+
+For TaskGroup callers, retain uncertainty inside each cancelled child before its
+cancellation is suppressed. The application owns this recovery collection and
+its lifetime; the generated client keeps no outstanding-writes registry:
+
+```python
+retained_unknown_writes = []
+
+async def tracked_write():
+    try:
+        return await Actions(client).open_project(**inputs, idempotency_key=key)
+    except asyncio.CancelledError as error:
+        retained_unknown_writes.extend(write_outcomes_unknown(error))
+        raise
+```
+
+After the TaskGroup exits, inspect `retained_unknown_writes` as well as its
+ExceptionGroup. The sibling's exception alone cannot recover a cancelled child's
+key. Retaining keys before dispatch is also an application recovery option;
+neither approach establishes whether a write committed.
 
 ### Platform and integration qualification
 

@@ -13158,3 +13158,20 @@ runtime corrections and local verification in the
 dependency and fixture corrections pass the local six-adapter suites (607
 assertions) and Ruff. S7's final hosted checks remain a merge gate; local passes
 do not establish those hosted results.
+
+### Praxis consumer review successor — 2026-10-20
+
+The [eight-finding reconciliation](evidence/praxis-adoption.md#praxis-consumer-review-reconciliation--2026-10-20)
+adds action-declared condition-ID admission, a separate local diagnostic inventory,
+and one shared published batch cap. It preserves ordinary cancellation with
+application-owned child capture and explicit wire refusals; atomic unknown
+settlement remains a whole-response error. The exact keyless atomic regression,
+sync/async condition controls, metadata inventory, narrow dependency gates,
+Chromium parity, typecheck and canonical embedded rebuild are complete for the
+scoped successor. Latest Sol review has no remaining actionable finding;
+[the source-pinned receipt](evidence/praxis-consumer-review/verification.json)
+records local macOS evidence. Luna implements and Sol plans/reviews this
+successor. Commit and push to PR40 are authorized; hosted checks and independent
+consumer review remain merge gates. OA-F1–3 remain open, and CI stays native Linux
+while local tests use the development host. Truss native host qualification is a
+separate repository change and cannot be inferred from these portable checks.

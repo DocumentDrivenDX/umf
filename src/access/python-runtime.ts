@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {LOCAL_ERROR_CODES, MAX_BATCH_ITEMS} from './constants';
 const asyncRuntime = String.raw`# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated typed request builders. Standard library only; no SQL or host I/O."""
 from __future__ import annotations
@@ -32,7 +33,8 @@ class AccessError(ValueError):
         super().__init__(code)
 class Unsupported(AccessError): pass
 class SchemaMismatch(AccessError): pass
-class PreconditionFailed(AccessError): pass
+class PreconditionFailed(AccessError):
+    """Declared action condition ID as str; compare with the generated enum value."""
 class WriteOutcomeUnknown(AccessError):
     def __init__(self, code: str = 'WRITE_OUTCOME_UNKNOWN', field: str | None = None, *, precondition: str | None = None, key: str | None = None) -> None:
         super().__init__(code, field, precondition=precondition)
@@ -66,6 +68,8 @@ def _record_write_outcome_unknown(error: BaseException, key: str | None) -> None
 WIRE_ERROR_CODES = ('INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS',
                     'LIMIT_EXCEEDED', 'BUSY', 'UNSUPPORTED', 'SCHEMA_MISMATCH',
                     'WRITE_OUTCOME_UNKNOWN', 'NOT_YET_CURRENT', 'INVALID_CURSOR')
+LOCAL_ERROR_CODES = ${JSON.stringify(LOCAL_ERROR_CODES)}
+MAX_BATCH_ITEMS = ${MAX_BATCH_ITEMS}
 
 def wire_error(error: Any) -> AccessError:
     if not isinstance(error, Mapping) or set(error) - {'code', 'field', 'precondition', 'message'}:
@@ -293,6 +297,12 @@ class Client:
     def __init__(self, transport: Transport, schema: str, records: Mapping[str, Any], actions: Mapping[str, Any]) -> None:
         self.transport, self.schema = transport, schema
         self.records, self.actions = records, actions
+    def _action_refusal(self, action: str, raw: Any) -> AccessError:
+        refusal = wire_error(raw)
+        conditions = {item['id'] for item in self.actions[action].get('preconditions', ())}
+        if refusal.precondition is not None and refusal.precondition not in conditions:
+            raise AccessError('INVALID_RESPONSE')
+        return refusal
     async def request(self, body: dict[str, Any]) -> dict[str, Any]:
         request = {**body, 'contract': 'umf.access/1', 'schema': self.schema}
         writing = body['kind'] in ('apply', 'apply_batch')
@@ -313,7 +323,10 @@ class Client:
             if response.get('schema') != self.schema: raise SchemaMismatch('SCHEMA_MISMATCH')
             if 'error' in response:
                 if set(response) - {'schema', 'error'}: raise AccessError('INVALID_RESPONSE')
-                refusal = wire_error(response['error'])
+                action = body.get('action')
+                refusal = (self._action_refusal(action, response['error'])
+                           if isinstance(action, str) and action in self.actions
+                           else wire_error(response['error']))
             else:
                 refusal = None
                 if writing and response.get('status', 'committed') != 'committed': raise AccessError('INVALID_RESPONSE')
@@ -387,10 +400,10 @@ class Client:
     async def apply_batch(self, action: str, items: Sequence[Any], input_type: type[Any], *, atomic: bool = False, stop_on_error: bool = False, idempotency_key: str | None = None) -> BatchReceipt[Any, Any]:
         if type(atomic) is not bool or type(stop_on_error) is not bool: raise AccessError('INVALID')
         if idempotency_key is not None and (not isinstance(idempotency_key, str) or not idempotency_key): raise AccessError('INVALID')
-        if not isinstance(items, Sequence) or not 1 <= len(items) <= 100: raise AccessError('LIMIT')
+        if not isinstance(items, Sequence) or not 1 <= len(items) <= MAX_BATCH_ITEMS: raise AccessError('LIMIT')
         snapshot: list[Any] = []
         for item in items:
-            if len(snapshot) == 100: raise AccessError('LIMIT')
+            if len(snapshot) == MAX_BATCH_ITEMS: raise AccessError('LIMIT')
             snapshot.append(item)
         if not snapshot: raise AccessError('LIMIT')
         if any(type(item) is not input_type for item in snapshot): raise AccessError('TYPE')
@@ -413,7 +426,7 @@ class Client:
                     receipt = self.action_receipt(action, {**item['receipt'], 'consistency_token': token})
                 elif status == 'refused':
                     if set(item) != {'status', 'error'}: raise AccessError('INVALID_RESPONSE')
-                    error = wire_error(item['error'])
+                    error = self._action_refusal(action, item['error'])
                     if isinstance(error, WriteOutcomeUnknown): raise AccessError('INVALID_RESPONSE')
                 elif status in ('rolled_back', 'unknown', 'unattempted'):
                     if set(item) != {'status'}: raise AccessError('INVALID_RESPONSE')

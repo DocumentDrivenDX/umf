@@ -5,7 +5,8 @@ import {readFile,readdir} from 'node:fs/promises';
 import {pythonRuntime} from '../src/access/python-runtime';
 const allowed=new Set(['../model/document','../model/types','../extensions/actions/structure','../extensions/actions/analysis','../extensions/actions/types','../compilation/bundle/index','./python-runtime']);
 const nativeImports:Record<string,readonly string[]>={
- 'index.ts':['./table-runtime','./table-client','./types'],
+ 'index.ts':['./table-runtime','./table-client','./types','./constants'],
+ 'python-runtime.ts':['./constants'],
  'table-client.ts':['../extensions/tables','./types'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket']);

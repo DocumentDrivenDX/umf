@@ -10,7 +10,7 @@
     "verifyTableMigration"
   ],
   "v8": "14.4.258.23",
-  "bundleSha256": "daed4423fec2dac06650430f46532cd32632719b90682ce0a87c6d6a4b2def97",
+  "bundleSha256": "b499a3138e31f0fc9d00296bfc1b0c9991d2e3686b747343c2f213d740c61e69",
   "builder": "bun@1.4.3",
   "license": "MIT OR Apache-2.0",
   "inputs": {
@@ -188,8 +188,9 @@
     "spec/extensions/tables/schema.json": "e91eba6b807287b07a69d5d0cd4e2003696bb997852c07c8fb3d3416d8ba5ce1",
     "spec/metamodel/generated/core-constraints.json": "ac88b54ace87baffd25751e8d8ab566a469f5613f42dd51ba03a791f1722990e",
     "spec/metamodel/generated/domain-policy.json": "3896bc6e108f42b1687f9c966bd97d1f5666590c015b1712bd767dc68501d6bb",
-    "src/access/index.ts": "fd5d6e134077c03c94b22a7168fcb1835e5686426fb1ce2c648a772a7bcec0ed",
-    "src/access/python-runtime.ts": "0ed17d378e927b3347a76b8df22a20bc6a94bb9091431672949a1d449a37c16e",
+    "src/access/constants.ts": "948f07c20c03bb889b71ffd631f756b135a190ffdf16c66bb1088df54f3cc2ff",
+    "src/access/index.ts": "77256da4a67a6437607dabc78109080e75018dbef5df40d052ad966d761b4d0c",
+    "src/access/python-runtime.ts": "e7634778fabcfd95752638f7ba874b133fc4857b38aa7d38fe614ce2dd57feeb",
     "src/access/table-client.ts": "2447040fe948cb9f3a5374c94e4fdde66bb0600c4f2b03dfc7d96a0ff3ba81fd",
     "src/access/table-runtime.ts": "83b70f541875fd0394f60534a146d5e3682ca5b22191c8cb5cef6e0d6dd54662",
     "src/compilation/bundle/hash.ts": "b0e4ee708c5f24af83d426eaede3e531dc381b45fb53dc82e80902274c1d32fa",
@@ -287,7 +288,7 @@
     }
   ],
   "files": {
-    "generator.js.gz": "cf05f74780e2afb89fdb8899c6330efbb563c2d26e26dc93fb16c03972d6c436",
+    "generator.js.gz": "eb181a4dbc3dc1fc6afb1c2e006a839769ccb273a3f7c328fda61cfe8478ddd3",
     "notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
     "notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
     "notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",

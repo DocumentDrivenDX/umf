@@ -133,3 +133,41 @@ earlier clean-review conclusion for cancellation, atomic stopping and unused-nam
 admission. It retains the original scoped results above and adds fresh tests and
 an explicit compatibility amendment. Read the successor for current qualification;
 the original83 passes did not cover those newly identified cases.
+
+## Praxis consumer review reconciliation — 2026-10-20
+
+[The consumer review](https://github.com/DocumentDrivenDX/umf/pull/40#issuecomment-6300376302)
+ran the installed PR generator against original Praxis ontologies and reviewed
+head `d33cc9f005f92db98e01882eeb075c6e2cbbe471`. Its passing observations support
+the bounded experimental client profile, not native Truss execution. Latest Sol
+review reconciled each finding against the current source:
+
+| Finding | Disposition and validation |
+| --- | --- |
+| 1. TaskGroup suppresses cancelled child keys | Preserve normal cancellation and exception-based custody. CONTRACT-079 already states the combinator limitation; add an application-owned child-capture example. No global outstanding-writes registry: its lifetime/clearing semantics would introduce a new client state API. Existing TaskGroup controls remain required. |
+| 2. Transport-raised refusal becomes unknown | Retain conservative behavior. CONTRACT-079 already requires a matching-schema wire refusal envelope and explicitly includes transport-raised AccessError among uncertain writes. Truss's new transport follows the same boundary. |
+| 3. Unknown condition IDs accepted | Remediate: validate supplied condition IDs against the selected action's declarations, including validation and batch refusal items. Keep the documented string exception field and generated string Enum comparison; unknown host IDs fail response admission. |
+| 4. Local codes absent from metadata | Remediate: publish the finite local error categories separately from wire codes. Preserve local compatibility rather than relabeling existing errors as host refusals. |
+| 5. Batch cap duplicated | Centralize the fixed100-item limit used by metadata and runtime. No host-specific cap override or changed advertised capability. |
+| 6. Atomic all-unknown outcome | Current source already rejects every atomic unknown item, with or without a key. Add the exact keyless regression. Clarify that uncertain atomic settlement uses the whole-response WRITE_OUTCOME_UNKNOWN error envelope. |
+| 7. Link projection, wire schemas and byte-parity matrix | Retain as open qualification work, without promoting read traversal into projection or schema availability. Continue native Linux CI and local host testing; no duplicate platform matrix is added. |
+| 8. Embedded generator correspondence | Rebuild using the canonical generator asset builder and verify payload, manifest and source correspondence together before push. Binary size alone is not a rejection criterion. |
+
+The [execution receipt](praxis-consumer-review/verification.json) pins the corrected
+source, embedded asset and manifest. Focused adoption/generation tests passed14;
+actual Chromium passed exact byte parity across four sources; Python codegen's
+three tests passed on CPython3.11.17. Typecheck, unified/compilation/Python access
+boundary gates and the canonical embedded builder check passed. Disposable-copy
+controls allowed the constants leaf and rejected both a node:fs import and a
+process hook. Independent decompression SHA-256 matches manifest.bundleSha256;
+_release.py pins the exact manifest digest. Latest Sol review found no remaining
+actionable issue in this successor. These results are local macOS ARM64 evidence;
+the explicitly open qualifications above remain open.
+
+Commands: `bun test tests/access-adoption.test.ts tests/access-unified-generation.test.ts`,
+`bun test tests/access-unified-browser.test.ts`, `bun run typecheck`,
+`bun run check:unified-client-boundaries`, `bun run check:access-boundaries`,
+`bun scripts/build-codegen.ts` followed by `--check`, and
+`PYTHONPATH=python/umf_codegen/src python -m unittest discover -s python/umf_codegen/tests`.
+The scoped Python command used the local CPython3.11.17 environment with
+mini-racer0.14.1. No source asset was published or version relabeled.

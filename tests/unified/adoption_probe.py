@@ -7,9 +7,12 @@ import json
 import sys
 
 sys.path.insert(0, sys.argv[1])
-from adoption._runtime import WIRE_ERROR_CODES
+from adoption._runtime import LOCAL_ERROR_CODES, MAX_BATCH_ITEMS, WIRE_ERROR_CODES
 from pathlib import Path
-assert tuple(json.loads((Path(sys.argv[1])/'adoption/description.json').read_text())['errorCodes']) == WIRE_ERROR_CODES
+description=json.loads((Path(sys.argv[1])/'adoption/description.json').read_text())
+assert tuple(description['errorCodes']) == WIRE_ERROR_CODES
+assert tuple(description['localErrorCodes']) == tuple(LOCAL_ERROR_CODES)
+assert description['limits']['batchItems'] == MAX_BATCH_ITEMS == 100
 from adoption import (Actions, Client, SyncActions, SyncClient, CustomerKey,
                       Project, ProjectKey, OpenProjectInput, OpenProjectPrecondition, MISSING,
                       AccessError, PreconditionFailed, WriteOutcomeUnknown,
@@ -91,6 +94,21 @@ async def run(mode):
         try: await call(method,code=code,title='Title',client=client)
         except PreconditionFailed as e: assert e.precondition==expected and str(e)=='PRECONDITION_FAILED'
         else: raise AssertionError('precondition was not enforced')
+    # The exception's machine-readable precondition is checked against this
+    # selected action's declaration inventory in both client modes.
+    invalid_precondition = {'schema':host.calls[-1]['schema'],
+                            'error':{'code':'PRECONDITION_FAILED','precondition':'zzz'}}
+    class RefusalHost:
+        def __init__(self, response): self.response,self.calls=response,0
+        def execute(self, request): self.calls+=1; return self.response
+    bad = RefusalHost(invalid_precondition)
+    bad_actions = SyncActions(SyncClient(bad)) if mode=='sync' else Actions(Client(AsyncHost(bad)))
+    try: await call(bad_actions.open_project,code='BAD',title='T',client=CustomerKey(code='C1'),idempotency_key='bad-precondition')
+    except WriteOutcomeUnknown as error: assert error.key=='bad-precondition' and bad.calls==1
+    else: raise AssertionError('unknown precondition id was accepted on a write')
+    try: await call(bad_actions.open_project_validate,code='BAD',title='T',client=CustomerKey(code='C1'))
+    except AccessError as error: assert error.code=='INVALID_RESPONSE' and not isinstance(error,WriteOutcomeUnknown)
+    else: raise AssertionError('unknown precondition id was accepted on validation')
     def item(code, **kwargs): return OpenProjectInput(code=code,**args,**kwargs)
     before=len(host.calls)
     for items,flags in [([],{}),([item('x')]*101,{}),([{'code':'x'}],{}),([item('x')],{'atomic':1}),([OpenProjectInput(code=12,**args)],{}),([item('x')],{'idempotency_key':''})]:
@@ -180,6 +198,14 @@ async def run(mode):
         try: await call(bind(response).open_project_batch,[item('X'),item('Y')],idempotency_key='batch-key',**flags)
         except WriteOutcomeUnknown as e: assert e.key=='batch-key' and response.calls==1
         else: raise AssertionError('malformed batch accepted')
+    response=Response(lambda q:{'schema':q['schema'],'items':[{'status':'refused','error':{'code':'PRECONDITION_FAILED','precondition':'zzz'}}], 'consistency_token':'cut'})
+    try: await call(bind(response).open_project_batch,[item('BAD')],idempotency_key='bad-precondition-batch')
+    except WriteOutcomeUnknown as error: assert error.key=='bad-precondition-batch' and response.calls==1
+    else: raise AssertionError('unknown batch precondition id was accepted')
+    response=Response(lambda q:{'schema':q['schema'],'items':[{'status':'unknown'}], 'consistency_token':'cut'})
+    try: await call(bind(response).open_project_batch,[item('UNKNOWN')],atomic=True)
+    except WriteOutcomeUnknown as error: assert error.key is None and response.calls==1
+    else: raise AssertionError('all-unknown atomic batch with no key was accepted')
 
     def settlement(q,statuses):
         outcomes=[]
