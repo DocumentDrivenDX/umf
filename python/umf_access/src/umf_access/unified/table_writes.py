@@ -46,7 +46,11 @@ class _TableWriter(_TableReader):
         super().__init__(session,bundle,reference,binding,cursor_secret=outcome_secret,target=target)
 
     def _write_prepare(self, identity, operation, inputs, key, items):
-        prepared=self._prepare(identity,operation,inputs,None,None,key=key,items=items)
+        owned_inputs, owned_items = copy.deepcopy((inputs, items))
+        return self._write_prepare_owned(identity, operation, owned_inputs, key, owned_items)
+
+    def _write_prepare_owned(self, identity, operation, inputs, key, items):
+        prepared=self._prepare_owned(identity,operation,inputs,None,None,key=key,items=items)
         # Refuse old read-only installations before acquiring a lease.
         prepared[0].outcome_steps('read',1,'0'*64)
         return prepared
@@ -111,7 +115,8 @@ class SyncTableWriter(_TableWriter):
     def _invoke(self, identity, operation, inputs, key, items, observe):
         response=None
         try:
-            prepared=self._write_prepare(identity,operation,inputs,key,items)
+            owned_inputs, owned_items = copy.deepcopy((inputs, items))
+            prepared=self._write_prepare_owned(identity,operation,owned_inputs,key,owned_items)
             key=loads(prepared[1]['requestJson'])['idempotencyKey']
             with self._session.open(identity,read_only=observe and self._session.transaction_owner=='adapter') as native:
                 response=_drive(self._session,native,self._steps(identity,prepared,observe))
@@ -139,7 +144,10 @@ class AsyncTableWriter(_TableWriter):
     async def _invoke(self, identity, operation, inputs, key, items, observe):
         response=None
         try:
-            prepared=await asyncio.to_thread(self._write_prepare,identity,operation,copy.deepcopy(inputs),key,copy.deepcopy(items))
+            owned_inputs, owned_items = copy.deepcopy((inputs, items))
+            prepared=await asyncio.to_thread(
+                self._write_prepare_owned, identity, operation, owned_inputs, key, owned_items
+            )
             key=loads(prepared[1]['requestJson'])['idempotencyKey']
             async with self._session.open(identity,read_only=observe and self._session.transaction_owner=='adapter') as native:
                 response=await _drive_async(self._session,native,self._steps(identity,prepared,observe))

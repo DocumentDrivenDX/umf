@@ -999,3 +999,18 @@ through this Weft cohort. Private source remains outside public repositories.
 Existing fixed application methods, native private/managed acceptance, seeds,
 broader evolution/adoption, resource consolidation and publication stay open.
 Qualification runs locally on macOS only; no multi-platform campaign is claimed.
+
+### Owned input snapshot cleanup, 2026-10-19
+
+The reviewed cleanup removes repeated caller-tree deepcopies from native read,
+write and observe preparation. Public sync/async entry points own one snapshot
+before preparation/thread offload; hashing and canonical compiler serialization
+use that same tree. Direct private preparation helpers retain their one-copy
+wrapper behavior. No tree is exposed to a native callback or compiler (which
+receives canonical JSON). Four mutation-isolation tests pass both with installed
+optional dependencies and in the minimal environment;12 existing value/outcome
+and4 binding tests pass. Package Ruff and80-module ownership checks pass.
+[Source receipt](evidence/praxis-p2/input-snapshot.json) qualifies this copy-only
+change; the prior native policy packet keeps its exact cohort. No duplicate
+native campaign or performance-readiness claim is added. Repeated immutable
+source preparation, redundant live checks and per-item batch dispatch remain.

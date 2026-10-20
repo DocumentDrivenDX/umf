@@ -75,10 +75,14 @@ class _TableReader:
         self._secret, self._target = cursor_secret, target
 
     def _prepare(self, identity, operation, inputs, size, cursor, *, items=None, key=None):
+        """Prepare from one private copy for internal callers that pass shared data."""
+        owned_inputs, owned_items = copy.deepcopy((inputs, items))
+        return self._prepare_owned(
+            identity, operation, owned_inputs, size, cursor, items=owned_items, key=key
+        )
+
+    def _prepare_owned(self, identity, operation, inputs, size, cursor, *, items=None, key=None):
         probe = _prepare(self._session, identity, self._bundle, self._reference, True)
-        # Hash and compile the same owned snapshot, including for sync callers
-        # sharing their input containers with another thread.
-        inputs,items=copy.deepcopy((inputs,items))
         context = probe.binding_context
         binding = self._binding
         expected = {'version':'umf.table-lifecycle/0.1', 'module':context['module'],
@@ -106,9 +110,9 @@ class _TableReader:
         token = token_decode(secret, cursor) if cursor is not None else None
         if token is not None and any(token['scope'].get(k) != v for k,v in scope.items()):
             raise SessionError('cursor differs from this operation scope')
-        call = {'kind':'single', 'inputs':copy.deepcopy(inputs)}
+        call = {'kind':'single', 'inputs':inputs}
         if items is not None:
-            call={'kind':'batch','items':copy.deepcopy(items)}
+            call={'kind':'batch','items':items}
         if size is not None:
             call['size'] = size
         if token is not None:
@@ -163,7 +167,8 @@ class SyncTableReader(_TableReader):
     def read(self, identity: SessionIdentity, operation: str, inputs: dict[str, object], *,
              size: int | None = None, cursor: str | None = None) -> dict[str, object]:
         try:
-            prepared = self._prepare(identity, operation, inputs, size, cursor)
+            owned_inputs = copy.deepcopy(inputs)
+            prepared = self._prepare_owned(identity, operation, owned_inputs, size, cursor)
             probe, program, scope, secret, _ = prepared
             with self._session.open(identity, read_only=True) as native:
                 before = _drive(self._session, native, probe.steps())
@@ -188,7 +193,10 @@ class AsyncTableReader(_TableReader):
     async def read(self, identity: SessionIdentity, operation: str, inputs: dict[str, object], *,
                    size: int | None = None, cursor: str | None = None) -> dict[str, object]:
         try:
-            prepared = await asyncio.to_thread(self._prepare, identity, operation, copy.deepcopy(inputs), size, cursor)
+            owned_inputs = copy.deepcopy(inputs)
+            prepared = await asyncio.to_thread(
+                self._prepare_owned, identity, operation, owned_inputs, size, cursor
+            )
             probe, program, scope, secret, _ = prepared
             async with self._session.open(identity, read_only=True) as native:
                 before = await _drive_async(self._session, native, probe.steps())
