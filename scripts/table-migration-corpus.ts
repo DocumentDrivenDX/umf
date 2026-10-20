@@ -3,7 +3,8 @@ import {compileTableDeployment,type TableDeploymentBundle} from '../src/table-de
 import {compileTableMigration,type TableMigrationRequest} from '../src/table-migration';
 import {writeDocument} from '../src/model/document';
 import {hashCanonical} from '../src/compilation/bundle/hash';
-import {appendedTableSource} from '../tests/unified/table-migration-fixture';
+import {appendedTableSource,indexedTableSource} from '../tests/unified/table-migration-fixture';
+import {tableOperationSource} from '../tests/unified/table-operation-fixture';
 import fixture from '../tests/binding/fixtures/table-lifecycle-note.json';
 const configuration={module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{readers:'plugin_readers'}};
 function deployment(document:any=structuredClone(fixture),format:'json'|'yaml'='json',config=configuration):TableDeploymentBundle{
@@ -14,6 +15,13 @@ const forward=():TableMigrationRequest=>({id:'002',predecessor:{id:'001',digest:
 const cases:{name:string;request:TableMigrationRequest}[]=[];
 const add=(name:string,request:TableMigrationRequest)=>cases.push({name,request});
 add('initial-json',initial());add('initial-yaml',initial(deployment(structuredClone(fixture),'yaml')));add('append-table',forward());
+const indexes=forward();indexes.next=deployment(indexedTableSource());add('append-index',indexes);
+const together=forward();together.next=deployment(indexedTableSource(appendedTableSource()));add('append-index-and-table',together);
+const declared:any=tableOperationSource(),revised=structuredClone(declared);revised.modules[0]!.extensions['umf.tables'].commands[0]!.body.maxRows=2;
+const commands={...forward(),previous:deployment(declared),next:deployment(revised)};add('command-only-revision',commands);
+revised.modules[0]!.extensions['umf.tables'].commands=[];add('command-retirement',{...commands,next:deployment(revised)});
+const rewritten=indexedTableSource();rewritten.modules[0].extensions['umf.tables'].tables[0].indexes[0].unique=true;
+add('existing-index-replacement-refuses',{...indexes,previous:deployment(indexedTableSource()),next:deployment(rewritten)});
 const unicode=forward();unicode.id='révision-😀-"002"';unicode.next=deployment(appendedTableSource(),'yaml');add('unicode-id-and-yaml-next',unicode);
 const absent=forward();absent.predecessor=null;add('missing-predecessor-refuses',absent);
 const repeat=forward();repeat.predecessor!.id=repeat.id;add('self-predecessor-refuses',repeat);

@@ -35,8 +35,12 @@ with patch.object(subprocess,'Popen',side_effect=AssertionError('external proces
             assert verify_table_migration(result['plan'])==result['plan']
             for mutation in ('sql','order','source','from','to','approval','precondition','outcome','verification','recovery','unknown'):
                 changed=copy.deepcopy(result['plan'])
-                if mutation=='sql':changed['steps'][0]['sql']='DROP SCHEMA public CASCADE'
-                elif mutation=='order':changed['steps'].reverse()
+                if not changed['steps'] and mutation in ('sql','order','precondition','outcome','verification','recovery'):
+                    changed['steps']=[{'sql':'unapproved','mutation':mutation}]
+                elif mutation=='sql':changed['steps'][0]['sql']='DROP SCHEMA public CASCADE'
+                elif mutation=='order':
+                    if len(changed['steps'])>1:changed['steps'].reverse()
+                    else:changed['steps'].append(copy.deepcopy(changed['steps'][0]))
                 elif mutation=='source':changed['next']['source']['utf8']+=' '
                 elif mutation=='from':changed['fromBundleDigest']='0'*64
                 elif mutation=='to':changed['toBundleDigest']='0'*64

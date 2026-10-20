@@ -30,11 +30,12 @@ if result["status"] == "compiled":
     plan = verify_table_migration(result["plan"])
 ```
 
-Initial and append-table plans retain both complete source bundles, require
+Initial, append-table/index and declared-command revision plans retain both complete source bundles, require
 digest-bound host approval and report `nativeQualified:false`. Verification
 checks consistency; it cannot authenticate a supplied predecessor, apply DDL or
-establish installed ledger authority. Seed execution and changes to existing
-logical/native declarations remain explicit refusals in this plan subset.
+establish installed ledger authority. Command-only revisions have no DDL steps and still require a new approved ledger
+generation. Seed execution and changes to existing columns, constraints, policies
+or indexes remain explicit refusals in this plan subset.
 
 First-party files use MIT OR Apache-2.0. Bundled dependencies retain the notices
 in `_assets/notices/`; mini-racer retains its own ISC license and V8 notices.

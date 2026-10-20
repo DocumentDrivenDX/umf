@@ -24,6 +24,17 @@ export interface TableMigrationPlan extends TableMigrationRequest {
 export type TableMigrationResult={status:'compiled';plan:TableMigrationPlan;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
 const fail=(message:string,path=''):never=>{throw new UmfError('TABLE_MIGRATION_UNSUPPORTED',message,path);};
 const same=(a:unknown,b:unknown):boolean=>canonical(a)===canonical(b);
+function without(value:object,keys:string[]):Record<string,unknown>{
+ return Object.fromEntries(Object.entries(value).filter(([key])=>!keys.includes(key)));
+}
+function commandOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle):boolean{
+ const documents=[previous,next].map(bundle=>readDocument(bundle.source.utf8,bundle.source.format));
+ for(const document of documents){
+  const module=document.modules.find(m=>m.id===previous.module)!;
+  (module.extensions!['umf.tables'] as {commands:unknown[]}).commands=[];
+ }
+ return same(documents[0],documents[1]);
+}
 function identity(value:unknown,path:string):asserts value is string{
  if(typeof value!=='string'||!value.length||value.includes('\0')||new TextEncoder().encode(value).length>256)fail('Expected a nonempty migration identity of at most256 UTF-8 bytes',path);
 }
@@ -35,18 +46,25 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle):v
  for(let i=0;i<a.modules.length;i++){
   const old=a.modules[i]!,fresh=b.modules[i]!;
   if(old.id!==previous.module){if(!same(old,fresh))fail('Unselected module changes require separate qualification','/next/source');continue;}
-  if(!same({...old,elements:[],relationships:[],extensions:{}},{...fresh,elements:[],relationships:[],extensions:{}}))fail('Selected module metadata changes require separate qualification','/next/source');
+  if(!same({...old,elements:[],relationships:[],extensions:without(old.extensions??{},['umf.tables'])},{...fresh,elements:[],relationships:[],extensions:without(fresh.extensions??{},['umf.tables'])}))fail('Selected module metadata changes require separate qualification','/next/source');
   if(!same(old.elements,fresh.elements.slice(0,old.elements.length))||!same(old.relationships??[],(fresh.relationships??[]).slice(0,(old.relationships??[]).length)))fail('Existing native/logical elements and relationships must remain exact; only append is qualified','/next/source');
  }
  const old=previous.expectedCatalog.tables,fresh=next.expectedCatalog.tables;
- if(!same(old,fresh.slice(0,old.length)))fail('Existing tables, columns, constraints and policies must remain exact; removal/change requires separate qualification','/next/expectedCatalog/tables');
- for(const key of ['columns','keys','checks','foreignKeys','indexes'] as const){
+ if(fresh.length<old.length)fail('Removing native tables requires separate qualification','/next/expectedCatalog/tables');
+ for(const[tableIndex,table]of old.entries()){
+  const target=fresh[tableIndex]!;
+  if(!same(without(table,['indexes']),without(target,['indexes']))||!same(table.indexes,target.indexes.slice(0,table.indexes.length)))fail('Existing table definitions must remain exact; only indexes may be appended','/next/expectedCatalog/tables/'+tableIndex);
+  const before=previous.expectedCatalog.indexes.filter(index=>index.table===table.id);
+  const after=next.expectedCatalog.indexes.filter(index=>index.table===table.id);
+  if(!same(before,after.slice(0,before.length)))fail('Existing native indexes changed','/next/expectedCatalog/indexes');
+ }
+ for(const key of ['columns','keys','checks','foreignKeys'] as const){
   const retained=next.expectedCatalog[key].filter(item=>old.some(t=>t.id===item.table));
   if(!same(previous.expectedCatalog[key],retained))fail('Existing native definitions changed','/next/expectedCatalog/'+key);
  }
 }
 
-/** Inert forward plans: initial deployment or append-only tables; no execution. */
+/** Inert forward plans: initial deployment, appended tables/indexes or command revisions. */
 export function compileTableMigration(input:TableMigrationRequest):TableMigrationResult{
  try{
   const request=copyJson(input) as unknown as TableMigrationRequest;
@@ -67,9 +85,12 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
   const firstNew=previous?.expectedCatalog.tables.length??0;
   const steps=previous?next.steps.filter(s=>{
    const parts=s.sourcePath.split('/');
-   return parts[5]==='tables'&&/^\d+$/.test(parts[6]??'')&&Number(parts[6])>=firstNew;
+   if(parts[5]!=='tables'||!/^\d+$/.test(parts[6]??''))return false;
+   const tableIndex=Number(parts[6]);
+   if(tableIndex>=firstNew)return true;
+   return s.kind==='index'&&parts[7]==='indexes'&&/^\d+$/.test(parts[8]??'')&&Number(parts[8])>=previous.expectedCatalog.tables[tableIndex]!.indexes.length;
   }):next.steps;
-  if(previous&&!steps.length)fail('This subset requires at least one appended native table','/next');
+  if(previous&&!steps.length&&!commandOnly(previous,next))fail('A plan without DDL may change only declared commands or source serialization','/next/source');
   if(previous?.seedSets.length||next.seedSets.length)fail('Migration seed execution requires the qualified typed command profile','/next/seedSets');
   const migrationSteps:TableMigrationStep[]=steps.map(step=>({...step,
    preconditions:{phase:'before-plan',kind:previous?'installed-source-cohort':'empty-private-schema',bundleDigest:previous?.bundleDigest??null},

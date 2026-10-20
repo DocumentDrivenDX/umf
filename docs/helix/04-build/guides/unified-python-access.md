@@ -282,3 +282,11 @@ against explicit `timestamptz` storage. The generated method has no parameter fo
 that assignment. PostgreSQL supplies transaction time; replay recovery returns
 the existing receipt rather than running the update again. Use a distinct
 operation input when the caller should supply a timestamp instead.
+
+Forward migration candidates can append ordinary transactional btree indexes or
+revise/retire declared commands. Command-only plans have no DDL steps but still
+require the exact approved digest, expected head, caller commit and a new ledger
+generation. Persist the new installation reference after commit and regenerate
+clients from the new source; old references refuse. Unique-index failure rolls
+back the plan. Existing column, constraint, policy and index replacement/removal
+remain outside this qualified subset; seed execution is still pending.

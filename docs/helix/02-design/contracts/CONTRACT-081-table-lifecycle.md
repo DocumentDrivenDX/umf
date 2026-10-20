@@ -429,6 +429,22 @@ source bundles and the entire plan, including self-consistently rehashed edits.
 Consistency verification does not authenticate a supplied predecessor; the
 trusted native ledger and selected source authority remain required.
 
+Forward plans may append ordinary transactional btree indexes on existing tables,
+including source-declared uniqueness and included columns. Existing index
+inventory/order, table policy, columns, keys, checks and foreign keys remain exact.
+Only the new indexes' source-recompiled deployment steps are selected; concurrent
+index builds and index replacement/removal are outside this subset. Native errors
+(including duplicates for a new unique index) roll back the approved plan.
+
+A declared-command revision may also advance the ledger without DDL. A plan with
+zero steps requires the parsed documents to differ only in the selected module's
+`umf.tables.commands` (or original serialization). Adding, replacing and retiring
+commands requires the same approval, expected head, source recomputation,
+transaction, witness and durable history as schema changes. The new source digest
+invalidates old client installation references and cursor/outcome scopes; no
+source revision silently adopts the prior identity. No data command is executed
+while installing its declaration. Unchanged bundle digests still refuse.
+
 The native administrative ledger uses reserved `umf_lifecycle_` relation/index
 names inside the plugin's private schema. Authored native tables/indexes cannot
 occupy that prefix. A fixed metadata table is owned solely by the configured

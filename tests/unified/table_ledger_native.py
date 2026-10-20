@@ -341,7 +341,56 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                     try:admin.execute(sql.SQL('SELECT payload FROM {}').format(sql.Identifier(schema,'umf_lifecycle_history')))
                     except psycopg.errors.InsufficientPrivilege:denied=True
                     check('ordinary-identity-cannot-read-ledger-'+identity,denied)
-        report={'scope':'approved initial/append native administrative ledger; no complete lifecycle data admission',
+        if 'index' in plans:
+            index_plan,command_plan,retired_plan=(plans[key] for key in ('index','commands','retired'))
+            with admin.transaction():
+                admin.execute(sql.SQL('INSERT INTO {}(id,owner) VALUES (%s,%s)').format(sql.Identifier(schema,'notes')),('preserved',alice))
+                admin.execute(sql.SQL('INSERT INTO {}(id,owner) VALUES (%s,%s)').format(sql.Identifier(schema,'notes')),('preserved-other',alice))
+            with admin.transaction():
+                context(admin)
+                refuses('duplicate-data-rejects-unique-index-atomically',lambda:apply(admin,plans['unique'],second['entryDigest']),{'catalog-verification-failed'})
+                check('failed-unique-index-preserves-head',inspect(admin,forward['next'])['headDigest']==second['entryDigest'])
+                check('failed-unique-index-preserves-caller',admin.execute('SELECT 1').fetchone()==(1,))
+            with admin.transaction(force_rollback=True):
+                context(admin)
+                third=apply(admin,index_plan,second['entryDigest'])
+                check('index-application-pending-caller',third['generation']==3 and third['commitResponsibility']=='caller')
+                check('appended-index-visible-before-commit',admin.execute('SELECT pg_catalog.to_regclass(%s)',(schema+'.notes_owner_lookup',)).fetchone()!=(None,))
+            with admin.transaction():
+                context(admin)
+                check('index-rollback-preserves-prior-head',inspect(admin,forward['next'])['headDigest']==second['entryDigest'])
+                check('index-rollback-removes-index',admin.execute('SELECT pg_catalog.to_regclass(%s)',(schema+'.notes_owner_lookup',)).fetchone()==(None,))
+                third=apply(admin,index_plan,second['entryDigest'])
+            with admin.transaction():
+                context(admin)
+                check('committed-index-replay-is-durable',apply(admin,index_plan,second['entryDigest'])['status']=='already-applied')
+                check('committed-index-current-source-proof',inspect(admin,index_plan['next'])['generation']==3)
+                check('command-change-has-no-DDL',command_plan['steps']==[] and retired_plan['steps']==[])
+                relations_before=admin.execute('SELECT oid,relname FROM pg_catalog.pg_class WHERE relnamespace=%s::pg_catalog.regnamespace ORDER BY oid',(schema,)).fetchall()
+                fourth=apply(admin,command_plan,third['entryDigest'])
+                check('command-revision-advances-ledger',fourth['generation']==4 and fourth['entryDigest']!=third['entryDigest'])
+                check('command-revision-keeps-native-relations',admin.execute('SELECT oid,relname FROM pg_catalog.pg_class WHERE relnamespace=%s::pg_catalog.regnamespace ORDER BY oid',(schema,)).fetchall()==relations_before)
+            for identity in (alice,batch):
+                with admin.transaction():
+                    admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(identity)))
+                    admin.execute('SET LOCAL search_path=pg_catalog')
+                    head=read_table_head(admin,command_plan['next'],fourth['installationReference'])
+                    check('command-current-head-'+identity,head['generation']==4 and head['observedPrincipal']==identity)
+                    refuses('command-revision-invalidates-old-head-'+identity,lambda:read_table_head(admin,index_plan['next'],third['installationReference']),{'installed-generation-mismatch'})
+            with admin.transaction(force_rollback=True):
+                context(admin)
+                fifth=apply(admin,retired_plan,fourth['entryDigest'])
+                check('command-retirement-recorded',fifth['generation']==5)
+            with admin.transaction():
+                context(admin)
+                check('command-retirement-rollback-keeps-live-generation',inspect(admin,command_plan['next'])['generation']==4)
+                fifth=apply(admin,retired_plan,fourth['entryDigest'])
+            with admin.transaction():
+                context(admin)
+                check('command-retirement-replay-is-durable',apply(admin,retired_plan,fourth['entryDigest'])['status']=='already-applied')
+                check('complete-evolution-history-source-verified',inspect(admin,retired_plan['next'])['generation']==5)
+            check('evolution-preserves-existing-data',admin.execute(sql.SQL('SELECT id,owner FROM {} ORDER BY id').format(sql.Identifier(schema,'notes'))).fetchall()==[('preserved',alice),('preserved-other',alice)])
+        report={'scope':'approved initial/append/index/command native administrative ledger; no complete lifecycle data admission',
                 'serverVersion':admin.info.server_version,'psycopg':psycopg.__version__,
                 'plansSha256':hashlib.sha256(args.plans.read_bytes()).hexdigest(),
                 'initialPlanDigest':initial['digest'],'forwardPlanDigest':forward['digest'],

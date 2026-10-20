@@ -2,13 +2,14 @@
 import {expect,test} from 'bun:test';
 import {compileTableDeployment,type TableDeploymentBundle} from '../../src/table-deployment';
 import {compileTableMigration,verifyTableMigration,type TableMigrationRequest} from '../../src/table-migration';
+import {tableOperationSource} from '../unified/table-operation-fixture';
 import {hashCanonical} from '../../src/compilation/bundle/hash';
 import {createValidator} from '../../src/validation/schema';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
 import tableSchema from '../../spec/extensions/tables/schema.json';
 import migrationSchema from '../../spec/extensions/tables/migration.schema.json';
 import fixture from './fixtures/table-lifecycle-note.json';
-import {appendedTableSource as appended} from '../unified/table-migration-fixture';
+import {appendedTableSource as appended,indexedTableSource as indexed} from '../unified/table-migration-fixture';
 const configuration={module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{readers:'plugin_readers'}};
 const source=()=>structuredClone(fixture) as any;
 function bundle(doc=source()):TableDeploymentBundle{const r=compileTableDeployment({text:JSON.stringify(doc),configuration});if(r.status!=='compiled')throw Error(JSON.stringify(r));return r.bundle;}
@@ -49,4 +50,34 @@ test('migration schema is closed and seed/namespace transitions are explicit ref
 test('source-rehashed deployment mutations and removing existing tables never produce SQL plans',()=>{
  for(const which of ['previous','next'] as const){const r=forward(),b=r[which]!;b.steps[0]!.sql='DROP SCHEMA public CASCADE';const {bundleDigest,...body}=b;b.bundleDigest=hashCanonical(body);expect(compileTableMigration(r).status).toBe('blocked');}
  const r=forward();[r.previous,r.next]=[r.next,r.previous!];expect(compileTableMigration(r).status).toBe('blocked');
+});
+
+test('forward indexes reuse only original new-index compiler steps and preserve existing definitions',()=>{
+ const input=forward();input.next=bundle(indexed());
+ const result=compileTableMigration(input);if(result.status!=='compiled')throw Error(JSON.stringify(result));
+ expect(result.plan.steps.map(({preconditions,expectedOutcome,verification,recovery,...step})=>step)).toEqual(input.next.steps.filter(step=>step.kind==='index'));
+ expect(result.plan.steps).toHaveLength(1);expect(result.plan.steps[0]!.sql).toContain('CREATE INDEX "notes_owner_lookup"');
+ expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ const v=createValidator();v.addSchema(tableSchema);v.addSchema(deploymentSchema);expect(v.compile(migrationSchema)(result.plan)).toBe(true);
+ const old=indexed(),changed=indexed();changed.modules[0].extensions['umf.tables'].tables[0].indexes[0].unique=true;
+ expect(compileTableMigration({...input,previous:bundle(old),next:bundle(changed)}).status).toBe('blocked');
+ expect(compileTableMigration({...input,previous:bundle(old),next:bundle()}).status).toBe('blocked');
+ const both=compileTableMigration({...input,next:bundle(indexed(appended()))});if(both.status!=='compiled')throw Error(JSON.stringify(both));
+ expect(both.plan.steps.filter(step=>step.sourcePath.includes('/tables/0'))).toHaveLength(1);
+ expect(both.plan.steps.filter(step=>step.sourcePath.includes('/tables/1')).length).toBeGreaterThan(10);
+});
+test('declared command revisions advance a source-bound generation without DDL or inferred data access',()=>{
+ const doc:any=tableOperationSource(),previous=bundle(doc),changed=structuredClone(doc);
+ changed.modules[0]!.extensions['umf.tables'].commands[0]!.body.maxRows=2;
+ const input={id:'commands-002',predecessor:{id:'commands-001',digest:'b'.repeat(64)},previous,next:bundle(changed)};
+ const result=compileTableMigration(input);if(result.status!=='compiled')throw Error(JSON.stringify(result));
+ expect(result.plan.steps).toEqual([]);expect(result.plan.next.source.utf8).toBe(JSON.stringify(changed));
+ expect(result.plan.requiresApproval).toBe(true);expect(result.plan.seedExecution).toBe('none');expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ const v=createValidator();v.addSchema(tableSchema);v.addSchema(deploymentSchema);expect(v.compile(migrationSchema)(result.plan)).toBe(true);
+ const forged=structuredClone(result.plan);forged.steps=[{sql:'unapproved'} as any];
+ const {digest,...body}=forged;forged.digest=hashCanonical(body);expect(()=>verifyTableMigration(forged)).toThrow();
+ Object.assign(changed.modules[0]!.elements[0]!,{name:'new meaning'});
+ expect(compileTableMigration({...input,next:bundle(changed)}).status).toBe('blocked');
+ const removed=structuredClone(doc);removed.modules[0]!.extensions['umf.tables'].commands=[];
+ expect(compileTableMigration({...input,next:bundle(removed)}).status).toBe('compiled');
 });

@@ -8,3 +8,10 @@ export function appendedTableSource(){
  for(const command of ['select','insert','update','delete'])table.policy.person[command]={kind:'deny'};
  p.tables.push(table);return d;
 }
+
+/** An ordinary transactional btree index; existing native rows are retained. */
+export function indexedTableSource(source:any=structuredClone(fixture)){
+ const d=structuredClone(source);
+ d.modules[0].extensions['umf.tables'].tables[0].indexes.push({id:'owner_lookup',name:'notes_owner_lookup',fields:[{module:'demo',element:'owner'}],include:[{module:'demo',element:'id'}],unique:false});
+ return d;
+}

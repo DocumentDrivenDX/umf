@@ -922,3 +922,25 @@ hosted runs39345236278 (Weft) and39345398156 (UMF) remain pending at capture.
 These are local component candidates; published predecessor assets are unchanged.
 Seeds, broader evolution/upgrade, private acceptance and full publication remain
 open.
+
+### Forward index and declared-operation evolution, 2026-10-19
+
+The [forward-evolution packet](evidence/praxis-p2/forward-evolution/receipt.json)
+records source-recompiled appended btree indexes and approved source-only command
+revisions/retirement. Zero-DDL revisions still advance the immutable ledger and
+invalidate old installation references; no declared command runs on install.
+Original initial/append-table plan bytes are unchanged. Existing index replacement,
+column/key/check/FK/policy changes and seeds remain refused by this subset.
+
+PostgreSQL18.6 passes122 administrative assertions, including duplicate-data
+unique-index failure, savepoint rollback, caller commit, retained rows and durable
+replay. Both person and batch reject stale references after command revision.
+Embedded Python matches17 complete cases with88 tamper and4 deadline controls;
+actual Chromium passes54 assertions.12 portable tests/75 assertions, TypeScript,
+package Ruff and compiler/host ownership checks pass. The previously paired
+Weft6e907632 hosted run39345236278 is now green.
+
+The concrete resource audit also identifies repeated immutable source preparation,
+redundant per-call catalog scans and per-item batch database round trips. These
+need consolidation within the trusted-host boundary before performance readiness.
+The remaining full-goal gates in the prior entry stay open; no release is published.
