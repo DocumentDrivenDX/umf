@@ -1,12 +1,16 @@
 # UMF
 
-The published [SDK 0.5.1 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.1)
-includes the UMF 0.10.0 Python core and experimental `umf_access` 0.1.0.dev3 host.
-Its [qualification record](docs/helix/04-build/evidence/unified-sdk-051-release-qualification.md)
-identifies the tested artifacts and limits. The qualified dependency releases are
-[Weft 0.4.47](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.47) and
-[Truss 0.0.40](https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.40).
-The broader Praxis lifecycle and table integration work remains unreleased.
+The published [SDK 0.5.2 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.2)
+includes the immutable UMF 0.10.0 Python core, `umf_access` 0.1.0.dev4 host
+and `umf_codegen` 0.1.0a1. Its [release notes](docs/helix/05-deploy/sdk-release-notes-0.5.2.md)
+and [stack cohort](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.2/stack-cohort.json)
+identify exact packages and local macOS qualification. Paired releases are
+[Weft 0.4.48](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.48),
+[Truss 0.0.41](https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.41)
+and the [Ashlar developer preview](https://github.com/DocumentDrivenDX/ashlar/releases/tag/v0.1.0.dev1).
+Declared tables, seeds, forward migration, bounded batches and typed queries are
+published in their qualified subset. Complete application/UI and host-owned
+external-reference integration remain outside that evidence.
 
 Start with the [action guide](docs/helix/04-build/guides/actions/index.md) for runnable examples, diagrams, CQRS and formal-analysis explanations. [Recorded action qualification](docs/helix/04-build/evidence/actions-certification.md) has exact versions and limits; [current documentation delivery](docs/helix/04-build/evidence/actions-documentation-execution.md) is separate.
 

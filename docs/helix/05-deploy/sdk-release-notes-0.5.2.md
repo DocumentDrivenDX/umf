@@ -19,7 +19,9 @@ ddx:
 
 SDK 0.5.2, `umf_access` 0.1.0.dev4 and `umf_codegen` 0.1.0a1 pair with
 Weft 0.4.48. Core Python 0.10.0 retains its previously published immutable
-wheel. Publication is pending final stack packaging checks.
+wheel. The [release is published](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.2);
+all public asset hashes and the 1,733-entry SDK manifest were verified. A fresh
+seven-package co-install passed imports and dependency checks for all 59 packages.
 
 ## Audience and Channels
 
