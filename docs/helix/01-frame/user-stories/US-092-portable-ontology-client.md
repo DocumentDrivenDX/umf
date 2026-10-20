@@ -128,3 +128,21 @@ arrangements. Tests cite their exercised acceptance criteria.
 
 Production transport/backend implementation, credentials, grants, storage,
 execution engines, audit, migrations and changes to the existing table SDK.
+
+
+## Adoption acceptance additions
+
+- [x] **US-092-AC13** — Sync/async typed action inputs preserve MISSING versus null;
+  batches enforce 1–100 items before dispatch and retain ordered per-item results.
+- [x] **US-092-AC14** — Advisory validation sends typed inputs without write/replay
+  authority; apply reevaluates current conditions and authorization.
+- [x] **US-092-AC15** — Pending, lost, cancelled and malformed post-dispatch write
+  responses raise WriteOutcomeUnknown with the invocation key and zero retries;
+  a confirmed refusal remains a typed business error. Valid receipts acknowledge
+  commit and never reinterpret native caller-owned pending results.
+- [ ] **US-092-AC16** — Installed wheel-only Linux/Python matrix and cross-platform
+  byte parity are separately recorded; isolated generated imports need no umf_access.
+
+The checked adoption criteria have local portable/client and synthetic-host
+evidence in [the adoption record](../../04-build/evidence/praxis-adoption.md).
+They establish no production executor or platform-matrix qualification.

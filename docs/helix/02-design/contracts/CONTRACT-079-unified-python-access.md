@@ -100,7 +100,7 @@ digest as `schema`; requests also carry `contract: "umf.access/1"`.
 - Action: `kind: "apply"`, action ID, inputs, idempotency_key. Response has
   created/changed arrays of `{record, key}`, counts and consistency_token.
 - Error: `{schema, error: {code, field?, precondition?}}`. Known codes are
-  INVALID, DENIED, CONFLICT, PRECONDITION_FAILED, TOO_MANY_ROWS, BUSY,
+  INVALID, DENIED, CONFLICT, PRECONDITION_FAILED, TOO_MANY_ROWS, LIMIT_EXCEEDED, BUSY,
   UNSUPPORTED, SCHEMA_MISMATCH, WRITE_OUTCOME_UNKNOWN, NOT_YET_CURRENT and
   INVALID_CURSOR. Unknown/malformed responses fail closed.
 
@@ -462,3 +462,112 @@ same deterministic package. The native packet in the implementation plan records
 the scoped six-driver PG18 evidence; generation alone keeps
 `nativeExecutionQualified=false`. Remaining native codecs, constraints,
 seed/evolution and full consumer/cohort publication gates remain independent.
+
+
+## Graph client adoption contract — 2026-10-20
+
+### Source and naming
+
+Only current UMF declarations are generated. Nonempty `module.actions` or
+`module.extensions["umf.ddd"].actions` are unsupported legacy action content and
+MUST refuse with ACCESS_UNSUPPORTED and the original path, even beside standard
+actions. Hohfeld/Praxis owns conversion; changing `umf` alone is insufficient.
+Malformed standard action inventories, unknown action-payload qualifiers and
+unsupported action vocabulary versions also refuse before output. Malformed
+action entries, ambiguous qualified action identities and Python-normalized
+parameter name collisions refuse with their original source paths.
+The example `tests/unified/adoption.json` is a canonical current-format source.
+
+Record identity is `module.id + "." + record.id`; action identity is
+`module.id + "." + action.id`. Field and parameter map keys are exact authored
+IDs, never inferred name casing or prefixes. A field ID may itself contain dots.
+Entity inputs and affected keys use exact generated-key component maps. Each
+created/changed wire item is `{record: qualifiedRecordId, key: fieldIdMap}`.
+Counts map exact host counter names to nonnegative integers. Tokens are opaque
+nonempty strings scoped by the host to issuer/module/source and authority.
+The description publishes `errorCodes`, `limits.batchItems:100`, named action
+preconditions and supported client operations. Unknown host capabilities refuse;
+client method availability is not native execution qualification.
+
+### Typed actions and conditions
+
+Each action emits `<ActionName>Input`, a frozen keyword-only dataclass suitable
+for a batch, and `<ActionName>Precondition`, a string Enum of condition IDs
+(uppercase normalized member names; collisions refuse). Error.precondition carries
+the stable string ID and compares with these enum values. Declared failure codes
+remain in description.actions[action].declaration; PRECONDITION_FAILED is the
+wire category, not a replacement for the condition identity. Conditions use
+rules/1 `exists` over a declared key-selected read frame; absence is `not(exists)`.
+The generator does not evaluate business conditions. Optional graph-write/2
+assignment semantics are defined by CONTRACT-900.
+
+### Advisory validation
+
+`Actions.<name>_validate(**inputs)` and SyncActions counterpart send
+`{kind:"validate", action, inputs}`. They return `ValidationResult(valid=True)`
+only for `{schema, valid:true}`. A recognized error is raised as the same typed
+refusal as apply; invalid or pending-shaped validation successes refuse. Validation
+performs no mutation, reserves no key/token and provides no future guarantee.
+Apply must recheck authorization and conditions at execution. No idempotency key
+or commit token is issued by validate.
+
+### Batch invocation and settlement
+
+`Actions.<name>_batch(items: Sequence[<ActionName>Input], *, atomic=False,
+stop_on_error=False, idempotency_key=None)` returns `BatchReceipt[Key, None]`.
+The wire request is `{kind:"apply_batch",action,items:[inputMap,...],atomic,
+stop_on_error,idempotency_key}`. Validate every item and flag before dispatch;
+1–100 items, all of the exact generated input class, are required. Snapshot
+iteration is bounded and the actual snapshot must satisfy this limit even when
+a caller-supplied sequence reports an inconsistent length. The host
+must reject unsupported modes before effects. The key covers the entire ordered
+batch and flags; no automatic retries, chunking or client-side single-call loops.
+
+Success is `{schema,status?:"committed",items:[outcome,...],consistency_token}`.
+There is exactly one ordered outcome per input, with status:
+`applied` plus `receipt:{created,changed,counts}`; `refused` plus `error`;
+`rolled_back`; `unknown`; or `unattempted`. Refusals use the shared wire errors;
+unknown uses no invented rollback. A batch token identifies the settled committed
+cut, including the no-effect cut for a fully refused batch. All applied item
+receipts use that same token. The token covers confirmed applied items; it
+proves neither commit nor rollback for an unknown item. Atomic settlement is either all applied or contains
+no applied/unknown items. A lost or malformed atomic outcome raises uncertainty.
+Partial settlement may explicitly carry unknown items. With stop_on_error, the
+first refused/unknown item ends attempted work; all later items are unattempted.
+Without stop_on_error, unattempted items are invalid in partial settlement.
+Atomic rolled_back items represent work undone with the complete batch; atomic
+failures require at least one refusal. An unknown/unreadable whole response raises
+WriteOutcomeUnknown rather than fabricating per-item conclusions.
+
+### Commit acknowledgement and uncertainty
+
+A successful graph apply envelope is a host acknowledgement that its transaction
+committed. Optional `status:"committed"` makes that acknowledgement explicit;
+omitting status retains the original umf.access/1 success meaning. Any other
+status (including pending) is not a successful Receipt. Receipt.status is always
+`"committed"`. Hosts with caller-owned uncommitted transactions must withhold a
+graph success response until commit or report WRITE_OUTCOME_UNKNOWN. The separate
+native table `Applied`/`Recovered` protocol retains its explicit durability model.
+A consistency token issued before commit must never be encoded as graph success.
+
+After dispatch, transport exceptions (including arbitrary AccessError exceptions),
+cancellation, wrong-schema responses, malformed error envelopes, missing/invalid
+receipt fields or pending statuses raise WriteOutcomeUnknown carrying `.key`.
+Only a well-formed matching-schema known-code error envelope acknowledges a refusal
+without effects; WRITE_OUTCOME_UNKNOWN explicitly acknowledges uncertainty.
+Local pre-dispatch type/bound errors retain their local error category. Reads and
+validation retain ordinary transport/response errors. No client retries writes.
+
+### Platform and integration qualification
+
+Build-time requirements are Python 3.11–3.14 and mini-racer 0.14.1. Declared Python
+support is distinct from wheel availability and executed platform qualification.
+Before claiming Linux x86_64/aarch64 support across these interpreters, execute
+wheel-only installs and compare complete generated bytes for identical exact
+source/package/selection and pinned generator payload. Current Bun/Chromium
+parity does not prove that platform matrix. Generated packages need only stdlib;
+a custom Praxis ontology transport does not require umf_access or a Weft backend.
+Link-key projection (100 keys per requested link plus explicit truncation) remains
+required separately; current relationship traversal does not satisfy projection.
+The wire is versioned experimental integration surface; pin generator/source and
+use binding conformance tests. No frozen external stability promise is inferred.

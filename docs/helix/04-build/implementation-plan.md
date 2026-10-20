@@ -13084,3 +13084,54 @@ is stdlib-only. Existing Weft raw/related compilers remain the SQL authority.
 [Execution evidence](evidence/unified-python-access.md) records the independent
 graph fixture, native PostgreSQL 18 run and current feature limits. This does
 not change qualification of earlier SDK/backend work.
+
+
+## Praxis ontology adoption — 2026-10-20
+
+Scope: FR-56, FEAT-033 OA-22–28, US-091 AC11–13, US-092 AC13–16,
+SD-033, CONTRACT-079 and CONTRACT-900. The retained consumer asks identify
+blockers 1–4; receipt uncertainty is part of this authorized implementation.
+
+| Slice | Depends on | Change | Gate |
+| --- | --- | --- | --- |
+| OA-B1 | Requirements/contracts | Legacy action diagnostics; versioned optional recipe admission | Source-path, mixed-action and old/new-profile negative controls |
+| OA-B2 | OA-B1 | Canonical absence/existence example; typed inputs and precondition enums | Generate sample, wrong-input typing and host refusal round trips |
+| OA-B3 | OA-B2 | Sync/async batch and advisory validation | Bounds before dispatch, modes/order/rollback/unknown/refusal and unchanged requests |
+| OA-B4 | OA-B2 | Committed receipts and post-dispatch uncertainty | Malformed/pending/schema/error/transport/cancellation controls, key retention, no retry |
+| OA-B5 | OA-B3/4 | Rebuild embedded generator; browser and isolated Python parity; update evidence | Focused regressions, typecheck/build, boundary checks, Chromium and installed generator |
+| OA-F1 | OA-B5 | Link-key projections with bounds/truncation | Deferred; genuine host projection tests |
+| OA-F2 | OA-B5 | Complete machine-readable description/wire schemas and conformance distribution | Deferred; schema and independent host tests |
+| OA-F3 | OA-B5 | Linux x86_64/aarch64 × Python3.11–3.14 wheel-only/parity matrix | Deferred; each exact platform/interpreter receipt |
+
+Execution is authorized by the user's 2026-10-20 request. Preserve unknown source,
+metadata identities/frontmatter and old recipe semantics. The generated client
+owns no executor, principal or transaction. No production/native graph-write/2,
+batch or Hohfeld qualification follows from fake-transport tests. Existing
+boundary checks precede feature verification. No additional spending limit was
+specified; runtime monetary metering is unavailable. Work is single-agent.
+On interruption retain completed slices, checks/failures, unresolved requirements
+and the next command here. Completion requires OA-B1–5 checks and a scoped review;
+OA-F1–3 remain explicitly deferred. Rollback restores source and matching embedded
+payload together; do not republish the same release/version as new qualification.
+
+
+### Adoption continuation and completion evidence
+
+OA-B1–OA-B5 are complete for the portable/client boundary. The
+[execution record](evidence/praxis-adoption.md) retains source pins, test logs,
+installed-generator parity and exact limitations. The focused suites pass82 tests
+with one unconfigured native test skipped; Chromium adds one passing parity test.
+Three typing tools accept the positive corpus and reject four intended errors.
+Typecheck, build, boundaries,71-package audit and27 installed parity cases pass.
+Scoped source review checked preserved version1 assignment rules, commit/refusal
+versus uncertainty, batch ordering/rollback and generated-name collisions.
+OA-F1–3 remain deferred and production host qualification is not established.
+No release assets were published. Next work is host batch/validation/profile2
+conformance or a separately selected OA-F slice; neither is implied complete.
+
+
+The authorized fresh review fixes normalized parameter and qualified action
+identity collisions, malformed inventory diagnostics and inconsistent sequence
+length bounds. Regression, Chromium, typing, boundary, package audit and installed
+parity evidence is refreshed in the adoption record. Commit/push is authorized
+on the codex topic branch; this does not publish a release or close OA-F1–3.

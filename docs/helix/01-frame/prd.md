@@ -908,3 +908,16 @@ parameters, authorization and explicit unsupported-capability failures remain.
 ADR-004 and FEAT-033 record the common API direction. FR-56 now covers generated
 table and ontology access together; changing storage changes the binding, not
 application query or action code.
+
+
+### FR-56 adoption requirements — 2026-10-20
+
+Generated ontology clients must diagnose unsupported legacy action declarations,
+preserve optional action-input omission through optional-field creation, expose
+stable precondition identities, and provide bounded same-action batches and
+advisory validation. A successful graph receipt acknowledges committed execution;
+pending, lost or malformed write outcomes must preserve uncertainty without
+retry. Consumers may build generated code into their package digest without
+checking it into source control. The shared wire contract and effective limits
+must be inspectable by transport implementers. Platform availability and byte
+reproducibility require separately identified installation/parity evidence.

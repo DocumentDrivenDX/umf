@@ -12,12 +12,16 @@ const document=JSON.parse(original);
 const native=JSON.stringify(tableOperationSource());
 const cases:{name:string;request:PythonClientRequest}[]=[
  {name:'original-json',request:{text:original,package:'shop'}},
+ {name:'praxis-adoption',request:{text:await Bun.file(new URL('../tests/unified/adoption.json',import.meta.url)).text(),package:'adoption'}},
  {name:'crlf-source',request:{text:original.replaceAll('\n','\r\n'),package:'shop'}},
  {name:'yaml',request:{text:stringify(document),format:'yaml',package:'shop'}},
  {name:'customer-selection',request:{text:original,package:'shop',records:[{module:'commerce',element:'Customer'}],actions:[]}},
  {name:'action-selection',request:{text:original,package:'shop',actions:[{module:'commerce',action:'shipOrder'}]}},
 ];
 function changed(name:string,change:(doc:any)=>void){const doc=structuredClone(document);change(doc);cases.push({name,request:{text:JSON.stringify(doc),package:'shop'}});}
+changed('legacy-actions-refuse',doc=>{doc.modules[0].actions=[{id:'legacy'}];});
+changed('malformed-action-entry-refuses',doc=>{doc.modules[0].extensions['umf.actions'].actions=[null];});
+changed('action-parameter-name-collision-refuses',doc=>{const a=doc.modules[0].extensions['umf.actions'].actions[0];a.parameters.push({...a.parameters[0],id:'duplicate',name:a.parameters[0].name});});
 changed('unicode',doc=>{doc.title='Praxis café 東京 😀 \u2028';doc.modules[0].elements.find((e:any)=>e.id==='customerName').allowedValues=[{string:'\"; $1 \\ 😀 \u2028'}];});
 changed('optional-value',doc=>{doc.modules[0].elements.find((e:any)=>e.id==='amount').nullability='absent-allowed';});
 changed('array-value',doc=>{doc.modules[0].elements.push({id:'tags',name:'tags',kind:'field',cardinality:'array',nullability:'absent-allowed',itemType:{module:'commerce',element:'customerName'},extensions:{}});doc.modules[0].elements.find((e:any)=>e.id==='Customer').members.push({module:'commerce',element:'tags'});});

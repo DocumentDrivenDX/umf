@@ -298,3 +298,73 @@ own native SELECT policy; NULL does not equal NULL and duplicate matches do not
 duplicate results. This does not add an integrity constraint. The paired local
 qualification covers direct/nested associations through generated sync/async
 clients. Existing FK-backed `via` paths retain their explicit FK mapping.
+
+## Optional inputs, conditions, batches and validation
+
+Use a generator build containing this adoption amendment; the published 0.5.2
+assets retain their earlier bytes. Generate the canonical current-format example:
+
+```sh
+python -m umf_codegen generate --schema tests/unified/adoption.json --package adoption --output generated
+```
+
+A custom ontology host supplies the transport; the worker imports only the
+stdlib generated package. `umf_access` is unnecessary for that arrangement.
+Generated output may be build-time-only and included in the plugin digest.
+Legacy Hohfeld actions in `module.actions` must first be converted by their
+owner to `module.extensions["umf.actions"].actions`; merely changing the core
+version does not convert action semantics. Generation refuses legacy actions
+instead of silently emitting an incomplete client.
+
+```python
+from adoption import (
+    Actions, CustomerKey, OpenProjectInput, OpenProjectPrecondition,
+    PreconditionFailed, WriteOutcomeUnknown,
+)
+
+async def open_projects(client):
+    actions = Actions(client)
+    customer = CustomerKey(code="C1")
+    await actions.open_project_validate(code="P1", title="Project", client=customer)
+    try:
+        batch = await actions.open_project_batch(
+            (OpenProjectInput(code="P1", title="Project", client=customer),),
+            atomic=True,
+            idempotency_key="open-projects-1",
+        )
+    except WriteOutcomeUnknown as error:
+        # Ask the authoritative host to reconcile error.key; never retry blindly.
+        raise
+    for item in batch.items:
+        if item.status == "refused" and isinstance(item.error, PreconditionFailed):
+            if item.error.precondition == OpenProjectPrecondition.FRESH:
+                return "Project code already exists"
+        if item.status == "unknown":
+            return "Host reconciliation required"
+    return batch
+```
+
+The same methods are available on SyncActions with direct return values.
+Batches accept 1–100 input objects of one action; the generated description
+records the cap. Atomic and stop-on-error flags are explicit host obligations.
+Per-item statuses distinguish applied, refused, rolled_back, unknown and
+unattempted. Every applied receipt uses the batch's one consistency token.
+The client does not split, retry or execute batches as a series of single calls.
+Hosts without a supported mode must refuse before effects.
+
+For graph-write/2, omitting `note` (or passing MISSING) omits its assignment;
+`note=None` explicitly supplies null. A create leaves an omitted optional Field
+absent; a set leaves it unchanged. Graph-write/1 still requires required value
+parameters for assignments. Executor support for the new profile is separate
+from generation. The example's `fresh` rule checks key absence and `exists`
+checks a referenced entity using declared read frames. Validation runs through
+the host without committing or reserving anything; apply can subsequently refuse.
+
+Graph Receipt.status is `committed`. A successful graph envelope acknowledges
+commit, with optional explicit wire `status:"committed"` for original protocol
+compatibility. A pending token is insufficient. Pending, lost, cancelled or
+malformed write responses raise WriteOutcomeUnknown retaining the invocation
+key. Native table caller-owned results retain their separate durability states.
+See [CONTRACT-079](../../02-design/contracts/CONTRACT-079-unified-python-access.md#graph-client-adoption-contract--2026-10-20)
+for complete settlement and error shapes. Production host execution and the full
+Linux/interpreter matrix require separate qualification.

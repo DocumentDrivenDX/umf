@@ -214,3 +214,16 @@ Preserve exact/unknown content and relevant dependency meaning; bound processing
 and keep metadata inert. Test reproducibility and real-browser behavior. The
 host owns authorization, execution and diagnostic capture. These existing UMF
 constraints apply without additional setup steps for the developer.
+
+
+## Adoption boundary
+
+Use explicit graph-write/2 metadata for optional assignments; retain graph-write/1
+interpretation. Only omission changes assignment participation. UMF generates
+inert invocations; qualified hosts own execution of the new profile, batch modes
+and validation. Emit frozen action input dataclasses, precondition string enums
+and sync/async terminals from the same metadata. Decode committed receipts and
+batch settlement defensively, converting unreadable write acknowledgements to
+uncertainty. See CONTRACT-079 and CONTRACT-900 for exact wire/profile rules.
+Legacy Hohfeld conversion is consumer-owned; unsupported action declarations
+must refuse. No architecture or ADR direction changes.
