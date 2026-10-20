@@ -1,0 +1,49 @@
+{
+  "capturedAt": "2026-10-20T01:34:13.053641+00:00",
+  "scope": "unpublished local macOS ARM64 PG18.6 generated atomic source snapshots, independent plain INSERT batches, per-call head/session consolidation",
+  "sourceProducer": "e2579c79fc5518088de1b9ac18da917a0385006f",
+  "snapshotAssertions": 29,
+  "batchAssertions": 64,
+  "frameRollbackAssertions": 6,
+  "nativeOperationProbeCases": 8,
+  "balancedNativeLeases": 39,
+  "focusedRustTests": 17,
+  "cliPythonParityCases": 48,
+  "chromiumWasmParityCases": 48,
+  "chromiumVersion": "153.0.8010.12",
+  "sdkUnitTests": 57,
+  "sdkUnitSkips": 1,
+  "snapshotPortableAssertions": 16,
+  "sourceExactWheelModules": 75,
+  "sourceFiles": {
+    "python/umf_access/src/umf_access/lifecycle/head.py": "708fb060ba720c4b04b8fc677d81d035f2aef30967257533fc91c1e44db4b458",
+    "python/umf_access/src/umf_access/lifecycle/correspondence.py": "5154826a8a73122175d797e3017a27da2ce9036ffb3fdacd46a93cb2dd323ae8",
+    "python/umf_access/src/umf_access/unified/operation_values.py": "feaf3080f0184385a973919f4f3500e8022ee74cfaf6e82496e3a05a5ad62629",
+    "python/umf_access/src/umf_access/unified/table_reads.py": "c7547fde258f94b668e648adf6a679d96b13c4996715ae788da866c4a50693dd",
+    "python/umf_access/src/umf_access/unified/table_writes.py": "db97719e6ac654528220b1901242f8f7c3581cc3201595edbd9bd86210d3ec3c",
+    "python/umf_access/src/umf_access/unified/session_sync.py": "2ebc160b442ea0fce6aa00d0b035bc096b24a6fc8755ddb5e3295706b6062b28",
+    "python/umf_access/src/umf_access/unified/session_async.py": "ae6aeaa3269e6a3275fb554c583bd9616c119fee014ac36eef3825751e8d3abe",
+    "python/umf_access/src/umf_access/unified/session_policy.py": "c267a73ae12c942e94675282351d7a15aa46780f7e9707eea1e9287c2f45f254",
+    "tests/unified/table_batch_native.py": "d6c6e3362010ef3d577d5a8d56abeeae27b5e8733a86b111b9c6a82e569662e9",
+    "tests/unified/table_snapshot_native.py": "9d3c639ef6a2ab087f2e0570d29a68092de9c0b7d661da256ca4546955aec4fb",
+    "tests/unified/operation_probe_native.py": "f4cb5a5bd5aa8370861d8599cf2748976c20b882cad13529e1e76509205e8834",
+    "tests/unified/table-snapshot-fixture.ts": "0a5dfd733c3951d7089fb0a59aaf71088010e98fd224ca23724acfa7ffc1ef8f"
+  },
+  "localWheels": {
+    "umf_access-0.1.0.dev4-py3-none-any.whl": "f2c27d82f47e24c7c2f2627e30b9e35479304c6305edd976a7963283d3a8559e",
+    "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl": "3e97eddfc9349125c15d81a3795e3064f73bedba4a4a933bd68c7b0f8629fa13",
+    "umf_codegen-0.1.0a1-py3-none-any.whl": "57c38201fc4e9e8b51f20b3b0b8ead0403377ec5304c6db0bf3e3dbf1ca4b458"
+  },
+  "published": false,
+  "privateApplicationFixedMethodsPorted": false,
+  "fullPraxisAcceptance": false,
+  "remaining": [
+    "typed seeds",
+    "forward column/policy evolution",
+    "actual private fixed-method port and acceptance",
+    "related-delete predicates",
+    "mixed-direction keyset ordering",
+    "host-owned reference module",
+    "release cohort publication"
+  ]
+}

@@ -1067,3 +1067,29 @@ snapshot fixture including nullable text and exact numeric source refinements.
 The source/target native command obligations are represented separately in the
 SDK. Native Weft lowering/execution for this new source form remains pending
 at this schema producer commit. No released support is claimed.
+
+### Atomic snapshots, ordered batches and per-call cost, 2026-10-19
+
+[Combined component evidence](evidence/praxis-p2/snapshot-batch/receipt.json)
+qualifies the installed dev4/Weft0.4.48 candidate on local macOS ARM64 and
+PostgreSQL18.6. Generated sync/async snapshots pass29 assertions with16 balanced
+pool leases, including hidden/missing sources, exact nullable numeric copies,
+effective person/batch roles, replay and whole-statement overflow rollback.
+Independent plain INSERT batches use one insert-only MERGE with source ordinals;
+ordered results and receipts do not require returning or correlating primary keys.
+Same-key upserts retain sequential semantics. Four batch cases pass64 assertions;
+a9MB returning frame aborts all effects and leaves no receipt (6 assertions).
+All39 observed leases across those tests return. CLI/Python and Chromium/WASM
+agree on48 original-source compiler cases;17 focused Rust tests pass.
+
+Owned reader/writer source preparation stays cached. Ordinary calls now use a
+shared lifecycle lock, fixed current head/location observation and selected
+principal/audience/group facts in three control statements. Full catalog audit
+remains available through explicit diagnostic steps; operator DDL/ACL/role changes
+require quiescence as CONTRACT-079/081 describe. A versioned scope digest rejects
+old incompatible cursors/receipts without missing an occupied recovery slot.
+Five session settings use vector snapshot/set operations; caller-owned settings
+restore before savepoint release. Eight native probe/session cases pass.
+This is a qualified component, not full Praxis integration or a published release.
+Seeds, forward column/policy evolution, actual fixed-method acceptance, related
+delete predicates and mixed-direction paging remain required.

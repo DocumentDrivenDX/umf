@@ -19,6 +19,13 @@ from umf_access.unified import (
     observe_table_head,
     observe_table_head_async,
 )
+from umf_access.unified.session_policy import (
+    GET_SETTING,
+    GET_SETTINGS,
+    ROLE_SETTINGS_CHECK,
+    SET_SETTINGS,
+    SETTING_NAMES,
+)
 
 ALICE = SessionIdentity("person", "alice")
 BATCH = SessionIdentity("batch", "run")
@@ -35,13 +42,17 @@ class Cursor:
 
     def execute(self, sql, parameters=()):
         c = self.connection
-        if "current_setting" in sql:
+        if sql == GET_SETTINGS:
+            self.row = tuple(c.settings[name] for name in SETTING_NAMES)
+        elif sql == GET_SETTING:
             self.row = (c.settings[parameters[0]],)
-        elif "set_config" in sql:
-            c.settings[parameters[0]] = parameters[1]
-            self.row = (parameters[1],)
-        elif "pg_roles" in sql:
-            self.row = (c.settings["role"], "login", c.superuser, c.bypass)
+        elif sql == SET_SETTINGS:
+            for name, value in zip(SETTING_NAMES, parameters, strict=True):
+                c.settings[name] = value
+            self.row = tuple(c.settings[name] for name in SETTING_NAMES)
+        elif sql == ROLE_SETTINGS_CHECK:
+            self.row = (c.settings["role"], "login", c.superuser, c.bypass,
+                        *(c.settings[name] for name in SETTING_NAMES))
         elif sql == "SET TRANSACTION READ ONLY":
             c.settings["transaction_read_only"] = "on"
         else:

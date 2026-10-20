@@ -5,7 +5,7 @@ import {compileTableDeployment} from '../../src/table-deployment';
 import {generatePythonClient} from '../../src/access';
 import {snapshotSource} from '../unified/table-snapshot-fixture';
 const config={module:'demo',schema:'snapshot_schema',ownerRole:'snapshot_owner',personRole:'snapshot_person',batchRole:'snapshot_batch',groupRoles:{}};
-const op=(source:any)=>source.modules[0].extensions['umf.tables'].commands.at(-1);
+const op=(source:any)=>source.modules[0].extensions['umf.tables'].commands.find((c:any)=>c.id==='capture');
 test('atomic source snapshots and current principal have typed module-only authoring',()=>{
  const source=snapshotSource();expect(inspectTableLifecycle(source).diagnostics).toEqual([]);
  expect(compileTableDeployment({text:JSON.stringify(source),configuration:config}).status).toBe('compiled');

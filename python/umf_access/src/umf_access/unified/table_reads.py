@@ -204,15 +204,12 @@ class SyncTableReader(_TableReader):
             prepared = self._prepare_owned(identity, operation, owned_inputs, size, cursor)
             probe, program, scope, secret, _ = prepared
             with self._session.open(identity, read_only=True) as native:
-                before = _drive(self._session, native, probe.steps())
+                before = _drive(self._session, native, probe.operation_steps())
                 self._before(identity, prepared, before)
                 with self._session.control_cursor(native) as result:
                     result.execute(program['dbapiSql'], native_arguments(program))
                     self._columns(result, program)
                     rows = result.fetchall()
-                after = _drive(self._session, native, probe.steps())
-                if before != after:
-                    raise SessionError('native read authority changed during execution')
                 response = result_frame(program, rows, scope, secret)
             return response
         except SessionError:
@@ -232,15 +229,12 @@ class AsyncTableReader(_TableReader):
             )
             probe, program, scope, secret, _ = prepared
             async with self._session.open(identity, read_only=True) as native:
-                before = await _drive_async(self._session, native, probe.steps())
+                before = await _drive_async(self._session, native, probe.operation_steps())
                 self._before(identity, prepared, before)
                 async with self._session.control_cursor(native) as result:
                     await result.execute(program['dbapiSql'], native_arguments(program))
                     self._columns(result, program)
                     rows = await result.fetchall()
-                after = await _drive_async(self._session, native, probe.steps())
-                if before != after:
-                    raise SessionError('native read authority changed during execution')
                 response = result_frame(program, rows, scope, secret)
             return response
         except SessionError:

@@ -287,10 +287,13 @@ not assertions that the complete proposed lifecycle profile is delivered.
 
 Client description, Weft bindings/programs and deployment name the same source
 and configuration digests. A compiled status alone is not deployment authority.
-Runtime admission MUST verify the installed bundle, module capability, native
-catalog/privilege correspondence, role and policy generation, transaction state
-and every emitted compiler obligation before effects or disclosure. Unknown
-obligations or incomplete privilege closure refuse. Derived SQL MUST NOT grant
+Installation MUST establish original-source native catalog/privilege
+correspondence. Ordinary operation admission MUST verify approved bundle/module
+pins, current installed generation and location, selected principal and declared
+policy scope, transaction state and supported compiler obligations before effects
+or disclosure. It MUST NOT repeat the installation's full native catalog proof
+on each data call. Native privileges and forced row policies enforce the actual
+business statement. Unknown obligations refuse. Derived SQL MUST NOT grant
 privileged executor authority by substituting another identity.
 
 Every table has ENABLE and FORCE ROW LEVEL SECURITY and explicit command grants,
@@ -316,8 +319,10 @@ retirement acquire it exclusively. Trusted administrators must use this lifecycl
 path or quiesce the plugin before privileged native changes. Runtime principals
 cannot obtain install authority. Catalog evidence records exact engine build,
 source/configuration/bundle identity and verified native shape/privileges;
-subsequent calls recheck that authority and native drift before effects or
-disclosure. This is a proposed host protocol until executable qualification;
+subsequent operations check current generation/location and selected policy
+scope before effects or disclosure. Full native shape/ACL proof belongs at
+installation or an explicit diagnostic boundary. This is a proposed host protocol
+until executable qualification;
 native policy replay alone does not verify columns, grants or role containment.
 
 The initial host implementation is
@@ -669,10 +674,21 @@ Metadata verification does not demand SELECT on every declared table: denied
 tables remain denied. The shared module advisory lock excludes compliant
 migrations; selected native business statements acquire their own table locks.
 Privileged role/ACL/DDL changes outside the protocol require operator quiescence;
-observations do not freeze PostgreSQL authorization catalogs. Complete operation
-admission must use this correspondence inside the operation's own lifetime,
-check compiler obligations and recheck relevant current scope before releasing
-results/committing. Generated native methods remain guarded pending that gate.
+observations do not freeze PostgreSQL authorization catalogs. Full correspondence
+remains available through the explicit diagnostic API. Ordinary operation
+admission uses a smaller path: acquire the shared lifecycle transaction lock,
+check installed head/location and selected principal/audience/declared-group
+scope, then execute the trusted compiler's statement with native privileges and
+forced row policies. The session lease already checks the effective role and
+restores settings. The lock excludes compliant migrations until the transaction
+ends; external privileged changes require the stated quiescence. Repeating
+full correspondence before an outcome lock, after waiting and after effects
+adds no required protection under this boundary and MUST be omitted. No
+`nativeTableCorrespondenceVerified:true` claim follows from the smaller path.
+Its versioned policy-scope digest includes principal/audience/group native OIDs
+and declared group MEMBER facts; it does not inventory unrelated role or table
+metadata. This scope change deliberately invalidates prior continuation and
+receipt scope hashes without changing the durable outcome slot identity.
 
 This plan-generation subset supports initial deployment and appended tables.
 Root/module metadata, existing elements/relationships and native tables,

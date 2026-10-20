@@ -7,10 +7,11 @@ Current catalog/ACL/role observations never bless a new observed shape.
 from __future__ import annotations
 
 import hashlib
+import json
 from typing import Any, Literal
 
 from .catalog import CatalogError
-from .head import _head_steps, _normalized, prepare_table_head
+from .head import _head_steps, _normalized, _operation_head_steps, prepare_table_head
 from .head_view import HEAD
 from .ledger_schema import HISTORY
 from .outcome_schema import OUTCOMES, _outcome_steps
@@ -45,6 +46,17 @@ class TableCorrespondenceProbe:
         head = self._head
         return _correspondence_steps(head._source,head._expected,self._principal,self._audience,
                                      head._statement_timeout_ms,head._lock_timeout_ms)
+
+    def operation_steps(self):
+        """Observe only the selected operation's live head and role scope.
+
+        The shared lifecycle lock remains held by the caller's transaction.
+        Native table privileges and RLS govern the business statement itself;
+        this short observation deliberately does not re-audit catalog shapes.
+        Out-of-band DDL, ACL, or role changes require operator quiescence.
+        """
+        head = self._head
+        return _operation_steps(head._source,head._expected,self._principal,self._audience)
 
     def outcome_steps(self, action, principal_oid, key_digest, row=None):
         """Fixed receipt IO; callers keep verified principal/admission in one lease."""
@@ -127,4 +139,57 @@ def _correspondence_steps(source, expected, principal, audience, statement_timeo
     observed.update({'principalOid':roles['identities'][principal],'audience':audience,
         'roleScopeDigest':hashlib.sha256(_json_bytes(_normalized({'roles':roles['facts']}))).hexdigest(),
         'nativeTableCorrespondenceVerified':True,'operationAdmission':False})
+    return observed
+
+
+def _operation_steps(source, expected, principal, audience):
+    observed = yield from _operation_head_steps(source,expected,principal)
+    cfg = source['configuration']
+    owner, person, batch = (cfg[key] for key in ('ownerRole','personRole','batchRole'))
+    groups = sorted(cfg['groupRoles'].items())
+    configured = {owner,person,batch,*cfg['groupRoles'].values()}
+    if audience == 'person' and principal in configured:
+        raise CatalogError('person-identity-required')
+    if audience == 'batch' and principal in configured-{batch}:
+        raise CatalogError('batch-identity-required')
+    audience_role = person if audience == 'person' else batch
+    if groups:
+        group_values = 'VALUES ' + ','.join('(%s::pg_catalog.text,%s::pg_catalog.text)' for _ in groups)
+    else:
+        group_values = 'SELECT NULL::pg_catalog.text,NULL::pg_catalog.text WHERE FALSE'
+    group_params = tuple(value for pair in groups for value in pair)
+    row = yield _Query('one', """SELECT p.oid,a.oid,pg_catalog.pg_has_role(p.oid,a.oid,'USAGE'),
+COALESCE((SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(g.alias,g.native_role,r.oid::pg_catalog.int8,
+pg_catalog.pg_has_role(p.oid,r.oid,'MEMBER')) ORDER BY g.alias COLLATE pg_catalog."C",
+g.native_role COLLATE pg_catalog."C",r.oid)::pg_catalog.text
+FROM (""" + group_values + """) AS g(alias,native_role)
+LEFT JOIN pg_catalog.pg_roles r ON r.rolname=g.native_role),'[]')
+FROM pg_catalog.pg_roles p
+JOIN pg_catalog.pg_roles a ON a.rolname=%s
+WHERE p.rolname=%s""", (*group_params,audience_role,principal))
+    if row is None:
+        raise CatalogError('role-scope-mismatch')
+    try:
+        principal_oid, audience_oid = row[0], row[1]
+        audience_member = row[2]
+        groups_facts = json.loads(row[3])
+    except (TypeError,ValueError,IndexError):
+        raise CatalogError('role-scope-mismatch') from None
+    if (type(principal_oid) is not int or type(audience_oid) is not int
+            or audience_member is not True
+            or type(groups_facts) is not list or len(groups_facts) != len(groups)):
+        raise CatalogError('role-scope-mismatch')
+    facts = []
+    for fact, (alias,native_role) in zip(groups_facts,groups):
+        if (type(fact) is not list or len(fact) != 4 or fact[0] != alias or fact[1] != native_role
+                or type(fact[2]) is not int or type(fact[3]) is not bool):
+            raise CatalogError('role-scope-mismatch')
+        facts.append([alias,native_role,fact[2],fact[3]])
+    role_scope = {'version':'umf.operation-role-scope/0.1',
+                  'principal':[principal,principal_oid],
+                  'audience':[audience,audience_role,audience_oid],
+                  'groups':facts}
+    observed.update({'principalOid':principal_oid,'audience':audience,
+        'roleScopeDigest':hashlib.sha256(_json_bytes(role_scope)).hexdigest(),
+        'operationAdmission':False})
     return observed

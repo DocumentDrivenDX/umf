@@ -1,0 +1,112 @@
+{
+  "cases": [
+    {
+      "numericKey": false,
+      "batchSize": 1000,
+      "postgresql": 180006,
+      "sourceDigest": "c3f31643f80e14c9ac100fa479318e3f23e7fcf7497610fe023faf12f277258f",
+      "leases": {
+        "acquired": 9,
+        "released": 9
+      },
+      "mutationCommands": 8
+    },
+    {
+      "numericKey": true,
+      "batchSize": 3,
+      "postgresql": 180006,
+      "sourceDigest": "f82ecb3a170d34e13547fa4b71cdae6b583fc82a70a84ae6d8a34f66e56d9293",
+      "leases": {
+        "acquired": 9,
+        "released": 9
+      },
+      "mutationCommands": 8
+    },
+    {
+      "noSelectGrant": true,
+      "emptyProjection": true,
+      "rows": 2,
+      "postgresql": 180006,
+      "leases": {
+        "acquired": 1,
+        "released": 1
+      }
+    },
+    {
+      "generatedUuidKeys": true,
+      "rows": 3,
+      "postgresql": 180006,
+      "leases": {
+        "acquired": 2,
+        "released": 2
+      }
+    }
+  ],
+  "assertions": [
+    "native-variant-selection",
+    "one-native-command",
+    "ordered-effects",
+    "ordered-returned-keys",
+    "durable-replay",
+    "replay-has-no-mutation-command",
+    "native-variant-selection",
+    "duplicate-rollback",
+    "duplicate-no-receipt",
+    "native-variant-selection",
+    "policy-rollback",
+    "native-variant-selection",
+    "fixed-literal-one-command",
+    "fixed-literal-results",
+    "native-variant-selection",
+    "principal-one-command",
+    "principal-from-active-role",
+    "native-variant-selection",
+    "upsert-keeps-sequential-commands",
+    "upsert-keeps-sequential-results",
+    "native-variant-selection",
+    "async-one-command",
+    "async-effects",
+    "leases-returned",
+    "native-variant-selection",
+    "one-native-command",
+    "ordered-effects",
+    "ordered-returned-keys",
+    "durable-replay",
+    "replay-has-no-mutation-command",
+    "native-variant-selection",
+    "duplicate-rollback",
+    "duplicate-no-receipt",
+    "native-variant-selection",
+    "policy-rollback",
+    "native-variant-selection",
+    "fixed-literal-one-command",
+    "fixed-literal-results",
+    "native-variant-selection",
+    "principal-one-command",
+    "principal-from-active-role",
+    "native-variant-selection",
+    "upsert-keeps-sequential-commands",
+    "upsert-keeps-sequential-results",
+    "native-variant-selection",
+    "async-one-command",
+    "async-effects",
+    "leases-returned",
+    "native-variant-selection",
+    "silent-one-command",
+    "silent-effect-counts",
+    "silent-no-business-row-invention",
+    "silent-no-select-grant",
+    "silent-leases-returned",
+    "native-variant-selection",
+    "generated-keys-one-command",
+    "generated-keys-ordered-owners",
+    "generated-keys-unique-uuid",
+    "native-variant-selection",
+    "clock-has-zero-native-slots",
+    "zero-slot-clock-one-command",
+    "zero-slot-default-owner",
+    "zero-slot-transaction-clock",
+    "generated-keys-leases-returned"
+  ],
+  "scope": "local macOS PG18 set INSERT component"
+}

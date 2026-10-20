@@ -325,7 +325,11 @@ authenticated `SessionIdentity` and declared module operation with exact
 CoreLiteral inputs. The entry point accepts neither SQL nor compiled programs;
 write declarations require a separate durable outcome executor. Selected source,
 mapping, configuration and deployment pins MUST match before a lease is acquired.
-The installed Weft compiler MUST compile and source-recheck its own program.
+The installed trusted Weft compiler MUST compile the original source. The host
+checks the supported ABI, result and transport profile; it MUST NOT immediately
+recompile that same in-process compiler output to prove the compiler's work.
+Externally received or persisted programs require checking at their ingress;
+this entry point accepts no such programs.
 
 Execution requires the fixed `pg18-read-frame/0.1` Weft guard. The materialized
 bounded native read MUST measure uncompressed visible value octets, including
@@ -339,11 +343,16 @@ octets. Either failure returns no partial frame. SQL NULL is represented as
 text wrapped as `integerToken`; integer/decimal/UUID/bits128 results retain their
 existing wire wrappers without a floating-point intermediary.
 
-One authenticated, catalog-only, read-only native lease contains current head,
-principal/role-scope, source-proved live table/privilege correspondence, the
-checked business read and repeated correspondence. A changed observation MUST
-refuse the response. The shared module advisory lock remains held through the
-native transaction lifetime. Adapter-owned transactions complete before return;
+One authenticated, catalog-only, read-only native lease contains a shared module
+lifecycle lock, a current installation-head/location check, the selected principal
+and declared audience/group scope, and the compiled business read. Full native
+catalog/privilege correspondence is an installation or explicit diagnostic check,
+not a repeated data-operation prerequisite. The operation does not copy the full
+native witness or rescan every table, role and ACL. The shared module advisory
+lock remains held through the native transaction lifetime. Native privileges and
+forced row policies enforce the business statement. A second full probe after
+the statement or an outcome-lock wait is unnecessary under this lifecycle and
+operator-quiescence boundary. Adapter-owned transactions complete before return;
 caller-owned transactions must already be read-only and retain ownership after
 savepoint success or failure. Native PostgreSQL catalogs are trusted server
 infrastructure; privileged external DDL/role changes require operator quiescence
@@ -353,7 +362,13 @@ Opaque `umf.table-cursor/0.1` tokens are bounded to16384 characters and use
 HMAC-SHA256 with the host's identity-and-session-policy-derived secret. Their
 closed payload binds module/operation, target, exact input digest, requested
 size, source/configuration/bundle/head/reference digests, schema, verified
-principal OID and live role/MEMBER scope digest to the complete typed key tuple.
+principal OID and live declared policy-scope digest to the complete typed key
+tuple. The operation scope uses an explicitly versioned digest of the selected
+principal, audience role and declared group MEMBER facts, including native OIDs;
+it excludes unrelated configured-role and catalog inventories. Older broader
+scope hashes safely refuse continuation or receipt metadata matching; an existing
+durable outcome slot must not be missed and reexecuted because its scope digest
+changed.
 The internal digest encoding is explicitly `python-sorted-json/0.1`, not an
 RFC8785 or cross-language cursor minting promise. Caller-supplied raw key tuples
 are not a continuation interface. A valid cursor grants no snapshot across
@@ -387,8 +402,11 @@ operation and caller key. It excludes inputs and deployment generation so an
 existing slot with changed inputs/source/head/scope refuses instead of silently
 executing a second write. A separate invocation digest binds the ordered exact
 inputs, original source, configuration, bundle, installed head, target, command
-and live role/MEMBER scope. A matching receipt requires current source/head,
-principal, command privileges and native correspondence again before observation.
+and live declared policy scope. A matching receipt requires current approved
+source, installed head/location and selected principal/audience/declared-group
+scope under the shared lifecycle lock and operator-quiescence boundary. Receipt
+observation uses the outcome table's own current-role RLS and authenticated
+payload; it does not rerun full correspondence or probe target-command privileges.
 The outcome table's own current-role RLS governs its bounded effect metadata.
 
 The shared generation lock precedes a transaction-scoped exclusive outcome-slot

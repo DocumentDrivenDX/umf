@@ -142,6 +142,18 @@ UMF must not hide pathological processing requirements. Global resolution,
 graph traversal, inference, and expensive semantic analysis must be distinguishable
 from simple local validation.
 
+For generated database-backed access, the owner requires resource-efficient
+operation design (2026-10-19). Immutable approved schema and property indexes
+should be prepared once in application memory for their owning reader/writer.
+Database checks should provide clear value at low cost. Native constraints,
+privileges, row policies and transaction coordination may enforce their own
+semantics; ordinary calls must not repeatedly reconstruct full catalog proofs or
+recheck a trusted compiler's own work. Deployment audits belong at installation
+or an explicit diagnostic boundary. Each operation's documented cost must identify
+round trips, input/result copies, schema work and scaling with items, fields and
+relationships. Qualification must examine these costs and remove avoidable
+quadratic paths; timing observations alone do not establish an efficient design.
+
 ### NFR-19 — No mandatory global inference
 
 Basic processing must not require a universal reasoning engine. Extensions may

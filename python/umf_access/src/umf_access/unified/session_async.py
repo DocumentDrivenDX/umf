@@ -11,13 +11,16 @@ from typing import Any, Literal
 
 from .session_policy import (
     GET_SETTING,
-    ROLE_CHECK,
-    SET_LOCAL,
+    GET_SETTINGS,
+    ROLE_SETTINGS_CHECK,
+    SET_SETTINGS,
+    SETTING_NAMES,
     SessionError,
     SessionIdentity,
     SessionPolicy,
+    _effective_settings,
+    _setting_values,
     _tuple_row,
-    verify_role,
 )
 
 
@@ -106,17 +109,12 @@ class AsyncSession:
                     await cursor.execute(GET_SETTING, ("transaction_read_only",))
                     if await cursor.fetchone() != ("on",):
                         raise SessionError("caller transaction must already be read-only")
-                for name in settings:
-                    await cursor.execute(GET_SETTING, (name,))
-                    previous[name] = (await cursor.fetchone())[0]
-                for name, value in settings.items():
-                    await cursor.execute(SET_LOCAL, (name, value))
-                await cursor.execute(ROLE_CHECK)
-                session_user = verify_role(await cursor.fetchone(), settings["role"])
-                effective = {}
-                for name in settings:
-                    await cursor.execute(GET_SETTING, (name,))
-                    effective[name] = (await cursor.fetchone())[0]
+                if not owned:
+                    await cursor.execute(GET_SETTINGS)
+                    previous = dict(zip(SETTING_NAMES,await cursor.fetchone(),strict=True))
+                await cursor.execute(SET_SETTINGS, _setting_values(settings))
+                await cursor.execute(ROLE_SETTINGS_CHECK)
+                session_user,effective = _effective_settings(await cursor.fetchone(),settings["role"])
             yield native
         except BaseException:
             failure = sys.exc_info()
@@ -131,15 +129,12 @@ class AsyncSession:
                         if failure[0] is None:
                             try:
                                 async with self._control_cursor(connection) as cursor:
-                                    await cursor.execute(ROLE_CHECK)
-                                    verify_role(await cursor.fetchone(), settings["role"], session_user)
-                                    for name, value in effective.items():
-                                        await cursor.execute(GET_SETTING, (name,))
-                                        if (await cursor.fetchone())[0] != value:
-                                            raise SessionError("session settings changed during execution")
+                                    await cursor.execute(ROLE_SETTINGS_CHECK)
+                                    _,observed = _effective_settings(await cursor.fetchone(),settings["role"],session_user)
+                                    if observed != effective:
+                                        raise SessionError("session settings changed during execution")
                                     if not owned:
-                                        for name, value in previous.items():
-                                            await cursor.execute(SET_LOCAL, (name, value))
+                                        await cursor.execute(SET_SETTINGS, _setting_values(previous))
                             except BaseException:  # noqa: BLE001 -- cleanup must roll back even cancellation
                                 failure = sys.exc_info()
                         try:

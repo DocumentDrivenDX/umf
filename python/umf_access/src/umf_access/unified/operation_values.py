@@ -82,6 +82,21 @@ def native_arguments(program, item=0):
     return tuple(result)
 
 
+def native_batch_arguments(program):
+    """Serialize admitted input slots per item and fixed literal slots once."""
+    sources = {slot['id']: slot['source'] for slot in program['parameterSources']}
+    ordered = [sources[name] for name in program['parameterOrder']]
+    inputs = [source['parameter'] for source in ordered if source['kind'] == 'input']
+    literals = [source['nativeValue'] for source in ordered if source['kind'] == 'literal']
+    if any(source['kind'] not in ('input', 'literal') for source in ordered):
+        raise SessionError('unsupported batch parameter source')
+    values = {
+        'nativeRows': canonical([[row[name] for name in inputs] for row in program['nativeInputs']]),
+        'nativeLiterals': canonical(literals),
+    }
+    return tuple(values[name] for name in program['nativeBatch']['dbapiParameterOrder'])
+
+
 def value_from_native(value,output):
     if value is None:
         if output['nullable']:return None

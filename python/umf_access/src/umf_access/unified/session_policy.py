@@ -98,6 +98,30 @@ ROLE_CHECK = """SELECT current_user, session_user, r.rolsuper, r.rolbypassrls
 FROM pg_catalog.pg_roles AS r WHERE r.rolname = current_user"""
 SET_LOCAL = "SELECT pg_catalog.set_config(%s, %s, true)"
 GET_SETTING = "SELECT pg_catalog.current_setting(%s)"
+SETTING_NAMES = ('role','search_path','row_security','statement_timeout','lock_timeout')
+GET_SETTINGS = """SELECT pg_catalog.current_setting('role'),pg_catalog.current_setting('search_path'),
+pg_catalog.current_setting('row_security'),pg_catalog.current_setting('statement_timeout'),
+pg_catalog.current_setting('lock_timeout')"""
+ROLE_SETTINGS_CHECK = """SELECT current_user,session_user,r.rolsuper,r.rolbypassrls,
+pg_catalog.current_setting('role'),pg_catalog.current_setting('search_path'),
+pg_catalog.current_setting('row_security'),pg_catalog.current_setting('statement_timeout'),
+pg_catalog.current_setting('lock_timeout')
+FROM pg_catalog.pg_roles AS r WHERE r.rolname=current_user"""
+SET_SETTINGS = """SELECT pg_catalog.set_config('role',%s,true),
+pg_catalog.set_config('search_path',%s,true),pg_catalog.set_config('row_security',%s,true),
+pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)"""
+
+
+def _setting_values(settings):
+    return tuple(settings[name] for name in SETTING_NAMES)
+
+
+def _effective_settings(row, expected, session_user=None):
+    if not isinstance(row,(tuple,list)) or len(row) != 4 + len(SETTING_NAMES):
+        raise SessionError("effective role differs or bypasses native row security")
+    verified_user = verify_role(row[:4],expected,session_user)
+    effective = dict(zip(SETTING_NAMES,row[4:],strict=True))
+    return verified_user,effective
 
 
 def verify_role(row: object, expected: str, session_user: str | None = None) -> str:

@@ -11,13 +11,16 @@ from typing import Any, Literal
 
 from .session_policy import (
     GET_SETTING,
-    ROLE_CHECK,
-    SET_LOCAL,
+    GET_SETTINGS,
+    ROLE_SETTINGS_CHECK,
+    SET_SETTINGS,
+    SETTING_NAMES,
     SessionError,
     SessionIdentity,
     SessionPolicy,
+    _effective_settings,
+    _setting_values,
     _tuple_row,
-    verify_role,
 )
 
 
@@ -110,30 +113,22 @@ class SyncSession:
                         if cursor.fetchone() != ("on",):
                             raise SessionError("caller transaction must already be read-only")
                     previous = {}
-                    for name in settings:
-                        cursor.execute(GET_SETTING, (name,))
-                        previous[name] = cursor.fetchone()[0]
-                    for name, value in settings.items():
-                        cursor.execute(SET_LOCAL, (name, value))
-                    cursor.execute(ROLE_CHECK)
-                    session_user = verify_role(cursor.fetchone(), settings["role"])
-                    effective = {}
-                    for name in settings:
-                        cursor.execute(GET_SETTING, (name,))
-                        effective[name] = cursor.fetchone()[0]
+                    if not owned:
+                        cursor.execute(GET_SETTINGS)
+                        previous = dict(zip(SETTING_NAMES,cursor.fetchone(),strict=True))
+                    cursor.execute(SET_SETTINGS, _setting_values(settings))
+                    cursor.execute(ROLE_SETTINGS_CHECK)
+                    session_user,effective = _effective_settings(cursor.fetchone(),settings["role"])
                 yield native
                 with self._control_cursor(connection) as cursor:
-                    cursor.execute(ROLE_CHECK)
-                    verify_role(cursor.fetchone(), settings["role"], session_user)
-                    for name, value in effective.items():
-                        cursor.execute(GET_SETTING, (name,))
-                        if cursor.fetchone()[0] != value:
-                            raise SessionError("session settings changed during execution")
+                    cursor.execute(ROLE_SETTINGS_CHECK)
+                    _,observed = _effective_settings(cursor.fetchone(),settings["role"],session_user)
+                    if observed != effective:
+                        raise SessionError("session settings changed during execution")
                     # RELEASE SAVEPOINT preserves SET LOCAL. Restore the caller's
                     # values explicitly before releasing a successful nested lease.
                     if not owned:
-                        for name, value in previous.items():
-                            cursor.execute(SET_LOCAL, (name, value))
+                        cursor.execute(SET_SETTINGS, _setting_values(previous))
                 entered = False
                 try:
                     transaction.__exit__(None, None, None)

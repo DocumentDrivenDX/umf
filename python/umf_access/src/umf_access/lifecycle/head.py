@@ -13,7 +13,7 @@ import re
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any, cast
 
-from .catalog import CatalogError, _q
+from .catalog import CatalogError, _q, _q_bound
 from .head_view import HEAD, _head_oid, _head_oid_steps, _head_shape, _head_shape_steps
 from .ledger_schema import _history_shape, _history_shape_steps
 from .outcome_schema import _outcome_shape, _outcome_shape_steps
@@ -177,3 +177,41 @@ def _head_steps(source, expected, statement_timeout_ms, lock_timeout_ms):
         raise CatalogError('installed-generation-mismatch')
     yield _Query('one', "SELECT pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)", tuple(previous))
     return {'bundleDigest': source['bundleDigest'], 'headDigest': expected['headDigest'], 'generation': expected['generation'], 'referenceDigest': expected['referenceDigest'], 'observedPrincipal': state[0], 'lifecycleAdmission': False}
+
+
+def _operation_head_steps(source, expected, principal):
+    """Take the short operation observation under the shared lifecycle lock.
+
+    The install reference is already verified and owned by this prepared probe.
+    This deliberately checks only immutable head/location pins and session
+    context; diagnostic ``steps()`` remains the full catalog auditor.
+    """
+    schema = source['configuration']['schema']
+    lock = int.from_bytes(hashlib.sha256(('umf.table-lifecycle/0.1\x00' + schema).encode()).digest()[:8], 'big', signed=True)
+    yield _Query('one', 'SELECT pg_catalog.pg_advisory_xact_lock_shared(%s)', (lock,))
+    relation = _q_bound(schema) + '.' + _q_bound(HEAD)
+    row = yield _Query('one', """SELECT current_user,pg_catalog.current_schemas(false),
+pg_catalog.current_setting('server_version_num')::pg_catalog.int4,
+pg_catalog.current_setting('row_security'),pg_catalog.current_setting('session_replication_role'),
+pg_catalog.current_setting('server_encoding'),pg_catalog.current_setting('transaction_isolation'),
+d.oid,d.datname,n.oid,n.nspowner,c.oid,
+h.generation,h.head_digest,h.plan_digest
+FROM pg_catalog.pg_database d
+JOIN pg_catalog.pg_namespace n ON n.nspname=%s
+JOIN pg_catalog.pg_class c ON c.relnamespace=n.oid AND c.relname=%s
+JOIN """ + relation + """ h ON TRUE
+WHERE d.datname=pg_catalog.current_database()""", (schema, HEAD))
+    if row is None:
+        raise CatalogError('installed-generation-mismatch')
+    if (row[0] != principal or row[1] != ['pg_catalog'] or row[2] // 10000 != 18
+            or tuple(row[3:7]) != ('on', 'origin', 'UTF8', 'read committed')):
+        raise CatalogError('head-context-mismatch' if row[0] == principal else 'principal-mismatch')
+    witness = expected['nativeWitness']
+    if (list(row[7:9]) != witness.get('database') or list(row[9:11]) != witness.get('schema')
+            or row[11] != expected['headRelationOid'] or row[2] != witness.get('serverVersion')):
+        raise CatalogError('installation-location-mismatch')
+    if tuple(row[12:15]) != tuple(expected[k] for k in ('generation', 'headDigest', 'planDigest')):
+        raise CatalogError('installed-generation-mismatch')
+    return {'bundleDigest': source['bundleDigest'], 'headDigest': expected['headDigest'],
+            'generation': expected['generation'], 'referenceDigest': expected['referenceDigest'],
+            'observedPrincipal': row[0], 'lifecycleAdmission': False}

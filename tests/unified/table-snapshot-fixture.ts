@@ -3,7 +3,7 @@ import {tableOperationSource} from './table-operation-fixture';
 export function snapshotSource(){
  const source=tableOperationSource() as any,module=source.modules[0],payload=module.extensions['umf.tables'];
  const ref=(element:string)=>({module:'demo',element});
- for(const[id,scalarType]of [['sourceAmount','decimal'],['sourceMemo','string']]){
+ for(const[id,scalarType]of [['sourceAmount','decimal'],['sourceMemo','string']] as const){
   module.elements.push({id,kind:'field',scalarType,cardinality:'one',nullability:'absent-allowed',extensions:{},...(scalarType==='decimal'?{facets:{precision:4,scale:3,range:{min:{decimalToken:'0'},max:{decimalToken:'1'}}}}:{})});
   module.elements.find((e:any)=>e.id==='Note').members.push(ref(id));
   payload.tables[0].columns.push({field:ref(id),name:id,nativeType:scalarType==='decimal'?{kind:'numeric',precision:4,scale:3}:{kind:'text'}});
@@ -24,6 +24,9 @@ export function snapshotSource(){
   {field:ref('savedAmount'),value:{kind:'sourceField',field:ref('sourceAmount')}},
   {field:ref('savedMemo'),value:{kind:'sourceField',field:ref('sourceMemo')}},
  ],returning:extra.map(([id])=>ref(id)),maxRows:1}});
+ const all=structuredClone(payload.commands.at(-1));all.id='capture_all';
+ all.parameters=all.parameters.filter((p:any)=>p.id==='comment');all.body.source.where={op:'all'};
+ all.body.values[0].value={kind:'sourceField',field:ref('id')};payload.commands.push(all);
  return source;
 }
 if(import.meta.main)await Bun.write(process.argv[2]!,JSON.stringify(snapshotSource()));
