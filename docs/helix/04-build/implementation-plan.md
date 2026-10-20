@@ -13044,6 +13044,29 @@ and Chromium checks. Record exact source fingerprints and failed attempts under
 04-build/evidence/core-semantic-types-010/. Native delivery and other authoring
 profile expansion remain outside this source integration.
 
+### Current-core security computation subset — 2026-10-19
+
+The selected catalog-program/private-query/private-native-disclosure source
+boundary now requires actual core0.10.0. The original validator diagnostics are
+retained: only its unconditional document-level experimental-envelope warning
+is advisory to this subset. External semantic references, unknown qualifiers,
+unresolved extensions and older envelopes still refuse. The original source is
+never rewritten to0.8 or0.9 for policy/extension callbacks. Static action rule
+and selector inspection used by the security extension closure receives0.10.
+The separate action executor and public key-tuple receipt APIs are not expanded.
+
+Focused Bun1.4.3 validation passes15 tests/711 assertions across
+`tests/security/current-query-child.test.ts` and
+`tests/security/current-native-disclosure-child.test.ts`, including all72
+existing native-disclosure outcome vectors, original fold/protocol behavior,
+exact transformed/null/absent output checks, older-envelope refusal and
+unresolved-semantic-reference refusal. Test-local copies of original source
+fixtures select0.10; their behavior expectations are unchanged. Chromium,
+complete UMF conformance, rebuilt consumer assets and installed Truss native
+adoption remain separate pending qualification. CONTRACT-062 and CONTRACT-078
+record the bounded source scope; this result grants no native enforcement
+or caller authority.
+
 ## Current metamodel authority cutover — 2026-10-18
 
 The [scoped completion plan](metamodel-authority-plan.md) owns ADR-005 /

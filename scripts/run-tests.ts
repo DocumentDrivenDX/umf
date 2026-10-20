@@ -20,7 +20,7 @@ for(const selection of selections.length?selections:['tests']){
 }
 files.sort();
 if(!files.length||new Set(files).size!==files.length)throw Error('Empty or overlapping test inventory');
-let passed=0,failed=0,assertions=0,completed=0;
+let passed=0,failed=0,skipped=0,assertions=0,completed=0;
 const started=performance.now();
 for(const file of files){
  const command=[process.execPath,'test','--timeout','30000','./'+file];
@@ -35,15 +35,16 @@ for(const file of files){
  const text=stdout+'\n'+stderr,summary=text.match(/Ran (\d+) tests? across (\d+) files?\./);
  const pass=Number(text.match(/(?:^|\n)\s*(\d+) pass(?:\r?\n|$)/)?.[1]??0);
  const fail=Number(text.match(/(?:^|\n)\s*(\d+) fail(?:\r?\n|$)/)?.[1]??0);
+ const skip=Number(text.match(/(?:^|\n)\s*(\d+) skip(?:\r?\n|$)/)?.[1]??0);
  const checks=Number(text.match(/(?:^|\n)\s*(\d+) expect\(\) calls(?:\r?\n|$)/)?.[1]??0);
- const valid=!!summary&&Number(summary[1])===pass+fail&&Number(summary[2])===1;
- console.log(JSON.stringify({testProcess:file,exitCode,pass,fail,assertions:checks,completeSummary:valid,logSha256:createHash('sha256').update(text).digest('hex')}));
- passed+=pass;failed+=fail;assertions+=checks;completed++;
+ const valid=!!summary&&Number(summary[1])===pass+fail+skip&&Number(summary[2])===1;
+ console.log(JSON.stringify({testProcess:file,exitCode,pass,fail,skip,assertions:checks,completeSummary:valid,logSha256:createHash('sha256').update(text).digest('hex')}));
+ passed+=pass;failed+=fail;skipped+=skip;assertions+=checks;completed++;
  if(exitCode!==0||!valid||fail){
   console.error('Complete test file failed or terminated: '+file);
   process.exitCode=exitCode===0?1:Math.abs(exitCode);
   break;
  }
 }
-console.error(`\n ${passed} pass\n ${failed} fail\n ${assertions} expect() calls\nRan ${passed+failed} tests across ${completed} files. [${((performance.now()-started)/1000).toFixed(2)}s]`);
+console.error(`\n ${passed} pass\n ${skipped} skip\n ${failed} fail\n ${assertions} expect() calls\nRan ${passed+skipped+failed} tests across ${completed} files. [${((performance.now()-started)/1000).toFixed(2)}s]`);
 if(completed!==files.length)process.exitCode=1;

@@ -6,7 +6,8 @@ import {CurrentNativeDisclosureChildSession,NATIVE_DISCLOSURE_CHILD_VERSION as v
 import {CurrentDisclosureChildSession,DISCLOSURE_CHILD_VERSION,encodeDisclosureChildFrame as encode} from '../../tools/security/current-disclosure-child';
 import {inspectSecurityDisclosureV2} from '../../src/extensions/security/protection/disclosure';
 import vectors from './protection/native-disclosure-child-vectors.json';
-const packets:any[]=vectors.packets,sources:any[]=vectors.sources;
+const packets:any[]=vectors.packets,sources:any[]=structuredClone(vectors.sources);
+for(const source of sources)for(const entry of source.closure.documents)entry.document.umf='0.10.0';
 const sha=(frame:Uint8Array)=>createHash('sha256').update(frame).digest('hex');
 const decode=(frame:Uint8Array)=>JSON.parse(new TextDecoder().decode(frame.subarray(4)));
 function rawFrame(body:string):Uint8Array {const b=Buffer.from(body),f=Buffer.alloc(b.length+4);f.writeUInt32BE(b.length);b.copy(f,4);return f;}

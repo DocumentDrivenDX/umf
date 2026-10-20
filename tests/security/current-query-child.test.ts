@@ -2,7 +2,9 @@
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {CurrentQueryChildSession,encodeCurrentQueryFrame} from '../../tools/security/current-query-child';
-import source from './protection/query-value-modes-source.json';
+import originalSource from './protection/query-value-modes-source.json';
+const source=structuredClone(originalSource);
+for(const entry of source.closure.documents)entry.document.umf='0.10.0';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {evaluateCandidateCatalogOperationBatch} from '../../src/extensions/security/catalog-operation-batch-candidate';
 import {evaluateCandidateQueryValueRoutes} from '../../src/extensions/security/query-value-route-evaluation-candidate';
@@ -34,4 +36,10 @@ test('real child accepts fragmented frames and emits no partial frame on invalid
 test('extension selection is issued locally and a denied separate action remains explicit',()=>{
  const session=new CurrentQueryChildSession(),initial:any=initialize();initial.sources.extensionSelection=[{id:'umf.actions',version:'0.1.0'}];initial.sources.policy.rules=initial.sources.policy.rules.filter((r:any)=>r.id!=='query-original-salary-predicate-permit');
  const frame=encodeCurrentQueryFrame(initial),receipt=decode(session.process(frame)).sourceReceipt;session.process(encodeCurrentQueryFrame(inspect(receipt)));const out=decode(session.process(encodeCurrentQueryFrame(evaluate(receipt))));expect(out.batch.status).toBe('completed');expect(out.batch.operations[2].outcome.rows[0].decision).toBe('deny');expect(out.batch.authority).toBe(false);
+});
+
+test('current security source accepts only actual0.10 and refuses unresolved semantic references',()=>{
+ for(const version of ['0.8.0','0.9.0']){const request:any=initialize();request.sources.closure.documents[0].document.umf=version;expect(decode(new CurrentQueryChildSession().process(encodeCurrentQueryFrame(request))).kind).toBe('refused');}
+ const request:any=initialize();request.sources.closure.documents[0].document.modules[0].elements[0].semanticTypes=[{vocabulary:'example',version:'1',term:'unresolved'}];
+ expect(decode(new CurrentQueryChildSession().process(encodeCurrentQueryFrame(request))).kind).toBe('refused');
 });

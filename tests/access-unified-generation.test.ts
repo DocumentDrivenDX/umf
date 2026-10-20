@@ -7,6 +7,7 @@ import {generatePythonClient} from '../src/access';
 import {checkAccessPackage,writeAccessPackage} from '../scripts/umf-access-generate';
 
 const original=await Bun.file(new URL('./unified/commerce.json',import.meta.url)).text();
+const praxis=await Bun.file(new URL('./unified/praxis/catalog.json',import.meta.url)).text();
 function changed(fn:(model:any)=>void){const model=JSON.parse(original);fn(model);return JSON.stringify(model);}
 
 // @covers US-091-AC1 US-091-AC3 US-091-AC4 US-091-AC7 US-092-AC8
@@ -61,9 +62,45 @@ function changed(fn:(model:any)=>void){const model=JSON.parse(original);fn(model
  expect(await checkAccessPackage(output,candidate)).toEqual([]);
 });
 
+test('known hohfeld.view field annotations are retained as opaque presentation metadata',()=>{
+ const model=JSON.parse(praxis),delivery=model.modules[0].elements.find((e:any)=>e.id==='Solution.deliveryMode');
+ const expected=structuredClone(delivery.extensions['hohfeld.view']);
+ const result=generatePythonClient({text:JSON.stringify(model),package:'praxis'});
+ const field=(result.description.records as any)['catalog.Solution'].fields.find((item:any)=>item.id==='Solution.deliveryMode');
+ expect(field.extensions).toEqual({'hohfeld.view':expected});
+ expect(field.extensionInterpretation).toBe('opaque-presentation-metadata-only');
+ expect(()=>generatePythonClient({text:JSON.stringify({...model,modules:model.modules.map((m:any)=>({...m,elements:m.elements.map((e:any)=>e.id==='Solution.deliveryMode'?{...e,extensions:{...e.extensions,'alien.presentation':{tone:'red'}}}:e)}))}),package:'praxis'})).toThrow();
+});
+
+test('current Praxis handler declarations generate typed methods and omit MISSING optional values',async()=>{
+ const model=JSON.parse(praxis),ids=['AddUseCase','AddSolution','AddProduct','SetSolutionProvider','AssertCoverage','CorrectUseCase','RenameUseCase','CorrectSolution','RenameSolution','ChangeSolutionDelivery','RetireSolution','CorrectProduct','RenameProduct','ChangeCoverageLevel','RetireCoverage','AddProductVersion','AddFinding','SetFindingVersion','ApplyFindingTo','RelateFindingTo'];
+ const result=generatePythonClient({text:praxis,package:'praxis'}),metadata=result.description.actions as Record<string,any>;
+ expect(Object.keys(metadata).sort()).toEqual(ids.map(id=>'catalog.'+id).sort());
+ const models=result.files.find(file=>file.path==='praxis/models.py')!.text;
+ for(const id of ids){
+  expect(metadata['catalog.'+id].declaration.binding.kind).toBe('handler');
+  expect(metadata['catalog.'+id].declaration.outputs).toEqual([]);
+  const method=id.replace(/([a-z0-9])([A-Z])/g,'$1_$2').toLowerCase();
+  expect(models).toContain(`async def ${method}(`);
+  expect(models).toContain(`await self._client.apply("catalog.${id}"`);
+ }
+ expect(models).toContain('summary: str | None | Missing = MISSING');
+ expect(models).toContain('use_case: UseCaseKey');
+ const root=await mkdtemp(join(await realpath(tmpdir()),'umf-praxis-access-'));
+ for(const file of result.files){const path=join(root,file.path);await Bun.write(path,file.text);}
+ const program=`import asyncio, sys\nsys.path.insert(0, ${JSON.stringify(root)})\nfrom praxis import Actions, Client\nclass Transport:\n def __init__(self): self.request_value = None\n async def execute(self, value):\n  self.request_value = value\n  return {'schema':value['schema'],'consistency_token':'test-token','created':[],'changed':[],'counts':{}}\nasync def main():\n t=Transport(); actions=Actions(Client(t))\n await actions.add_use_case(code='UC-1', name='Test case')\n assert t.request_value['action']=='catalog.AddUseCase'\n assert t.request_value['inputs']=={'code':'UC-1','name':'Test case'}\nasyncio.run(main())\n`;
+ const proc=Bun.spawn([process.env.UMF_UNIFIED_PYTHON??'python3.11','-S','-c',program],{cwd:root,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'},stdout:'pipe',stderr:'pipe'});
+ const [stdout,stderr,exitCode]=await Promise.all([new Response(proc.stdout).text(),new Response(proc.stderr).text(),proc.exited]);
+ expect({exitCode,stdout,stderr}).toEqual({exitCode:0,stdout:'',stderr:''});
+});
+
 // @covers US-091-AC7
-test('sync and async public client names remain reserved',()=>{
- for(const symbol of ['SyncClient','AsyncClient','SyncActions','AsyncActions','SyncTransport','AsyncTransport','SyncQuery']){
+test('all runtime reexports and sync/async client names remain reserved',()=>{
+ const generated=generatePythonClient({text:original,package:'shop'});
+ const init=generated.files.find(file=>file.path==='shop/__init__.py')!.text;
+ const runtimeNames=init.match(/from \._runtime import ([^\n]+)/)![1]!.split(', ').map(binding=>binding.split(' as ')[1]!);
+ expect(runtimeNames).toEqual(expect.arrayContaining(['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown']));
+ for(const symbol of new Set([...runtimeNames,'SyncClient','AsyncClient','SyncActions','AsyncActions','SyncQuery'])){
   const text=changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='record').name=symbol;});
   expect(()=>generatePythonClient({text,package:'shop'})).toThrow();
  }

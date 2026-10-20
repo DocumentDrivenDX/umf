@@ -9,7 +9,7 @@ policies remain in consumer repositories.
 Install the qualified release wheel:
 
 ```sh
-pip install https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.0/umf_core-0.9.0-py3-none-any.whl
+pip install https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.1/umf_core-0.10.0-py3-none-any.whl
 ```
 
 For development, use `pip install ./python` from a checkout. PyPI publication

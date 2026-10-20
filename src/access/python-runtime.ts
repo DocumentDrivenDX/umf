@@ -12,6 +12,7 @@ from typing import Any, Generic, Protocol, TypeVar, cast, overload
 from inspect import iscoroutinefunction
 from uuid import UUID
 import base64
+import asyncio
 import re
 
 R = TypeVar('R')
@@ -25,8 +26,8 @@ class Missing(Enum):
 MISSING = Missing.VALUE
 
 class AccessError(ValueError):
-    def __init__(self, code: str, field: str | None = None) -> None:
-        self.code, self.field = code, field
+    def __init__(self, code: str, field: str | None = None, *, precondition: str | None = None) -> None:
+        self.code, self.field, self.precondition = code, field, precondition
         super().__init__(code)
 class Unsupported(AccessError): pass
 class SchemaMismatch(AccessError): pass
@@ -230,6 +231,9 @@ class Client:
         request = {**body, 'contract': 'umf.access/1', 'schema': self.schema}
         try:
             response = await self.transport.execute(request)
+        except asyncio.CancelledError:
+            if body['kind'] in ('apply', 'apply_batch'): raise WriteOutcomeUnknown('WRITE_OUTCOME_UNKNOWN') from None
+            raise
         except AccessError: raise
         except Exception:
             if body['kind'] in ('apply', 'apply_batch'): raise WriteOutcomeUnknown('WRITE_OUTCOME_UNKNOWN') from None
@@ -247,7 +251,7 @@ class Client:
             if code not in {'INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS', 'LIMIT_EXCEEDED', 'BUSY',
                             'UNSUPPORTED', 'SCHEMA_MISMATCH', 'WRITE_OUTCOME_UNKNOWN', 'NOT_YET_CURRENT', 'INVALID_CURSOR'}:
                 raise AccessError('INVALID_RESPONSE')
-            raise exception(code, error.get('field') or error.get('precondition'))
+            raise exception(code, error.get('field'), precondition=error.get('precondition'))
         return dict(response)
     def key(self, record: str, value: Any) -> dict[str, Any]:
         spec = self.records[record]

@@ -5,9 +5,8 @@ import {generatePythonClient} from '../src/access';
 import {tableOperationSource} from './unified/table-operation-fixture';
 
 // @covers US-091-AC9 US-092-AC8
- test('current UMF client generation has exact Chromium parity without host globals',async()=>{
- const source=await Bun.file(new URL('./unified/commerce.json',import.meta.url)).text();
- const cases=[source,JSON.stringify(tableOperationSource())];
+test('current UMF client generation has exact Chromium parity without host globals',async()=>{
+ const cases=[await Bun.file(new URL('./unified/commerce.json',import.meta.url)).text(),await Bun.file(new URL('./unified/praxis/catalog.json',import.meta.url)).text(),JSON.stringify(tableOperationSource())];
  const built=await Bun.build({entrypoints:[new URL('../src/access/index.ts',import.meta.url).pathname],target:'browser',format:'esm'});
  expect(built.success).toBe(true);
  const script=await built.outputs[0]!.text();

@@ -89,6 +89,8 @@ class UnifiedBindingIdentityTests(unittest.TestCase):
             ({"nullability": "unknown"}, ()),
             ({"scalarType": "unknown-carrier"}, ()),
             ({"extensions": {"foreign": {"meaning": "uninterpreted"}}}, ()),
+            ({"extensions": {"hohfeld.view": "not-an-object"}}, ()),
+            ({"extensions": {"hohfeld.view": {}, "foreign": {}}}, ()),
             ({"extensions": None}, ()),
         ]
         for changes, remove in invalid_shapes:
@@ -121,6 +123,8 @@ class UnifiedBindingIdentityTests(unittest.TestCase):
             ({"nullability": "unknown"}, ()),
             ({"scalarType": "unknown-carrier"}, ()),
             ({"extensions": {"foreign": {"meaning": "uninterpreted"}}}, ()),
+            ({"extensions": {"hohfeld.view": None}}, ()),
+            ({"extensions": {"hohfeld.view": {}, "foreign": {}}}, ()),
             ({"extensions": None}, ()),
         ]
         for changes, remove in invalid_shapes:
@@ -151,6 +155,30 @@ class UnifiedBindingIdentityTests(unittest.TestCase):
         binding = WeftTableBinding(binding_json, object(), self._execute, target="postgresql18")
         record, _decl, _fields, _info = binding._record("sales.region.Order")
         self.assertEqual([field.field for field in record.key], ["code"])
+
+    def test_known_presentation_metadata_is_retained_for_reads_and_action_values(self) -> None:
+        view = {"label": "Code", "format": "badge", "tones": {"next": "teal"},
+                "unknownPresentation": {"original": [1, None]}}
+        binding_json, schema = self._binding_with_field({"extensions": {"hohfeld.view": view}})
+        received: list[dict[str, object]] = []
+
+        async def action_executor(_action: str, inputs: Mapping[str, object], _key: str | None) -> Mapping[str, object]:
+            received.append(dict(inputs))
+            return {"schema": schema}
+
+        binding = WeftTableBinding(
+            binding_json, object(), self._execute, target="postgresql18", action_executor=action_executor
+        )
+        _record, _decl, _fields, info = binding._record("sales.region.Order")
+        self.assertEqual(info["fields"]["code"]["extensions"]["hohfeld.view"], view)
+        response = asyncio.run(binding.execute({
+            "contract": "umf.access/1", "schema": schema, "kind": "apply",
+            "action": "sales.region.set.code", "inputs": {"replacement": "next"},
+            "idempotency_key": None,
+        }))
+        self.assertEqual(response, {"schema": schema})
+        self.assertEqual(received, [{"replacement": "next"}])
+        self.assertEqual(binding.model["modules"][0]["elements"][0]["extensions"]["hohfeld.view"], view)
 
     def test_dotted_module_and_action_ids_resolve_exactly(self) -> None:
         calls: list[str] = []

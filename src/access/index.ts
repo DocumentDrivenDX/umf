@@ -24,7 +24,8 @@ const fail=(path:string,message:string):never=>{throw new UmfError('ACCESS_UNSUP
 const object=(v:unknown):Record<string,any>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,any>:{};
 const refId=(r:Ref)=>r.module+'.'+r.element;
 const keywords=new Set('False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case'.split(' '));
-const reserved=new Set(['Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
+const runtimeExports=['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','Page','Receipt','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'] as const;
+const reserved=new Set<string>([...runtimeExports,'Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
 function name(raw:string,kind:'class'|'field',path:string):string {
  const words=raw.replace(/([a-z0-9])([A-Z])/g,'$1_$2').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').split(/[_. -]+/);
  const value=kind==='class'?words.map(w=>w[0]?.toUpperCase()+w.slice(1)).join(''):words.map(w=>w.toLowerCase()).join('_');
@@ -63,10 +64,13 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   const id=refId(ref),e=elements.get(id);if(!e||e.kind!=='field')fail(id,'Field reference does not identify a Field');
   if(stack.includes(id)||stack.length>16)fail(id,'Unbounded recursive field');
   if(e!.nullability!=='required'&&e!.nullability!=='absent-allowed')fail(id,'Availability must have a supported explicit meaning');
-  if(Object.keys(e!.extensions??{}).length)fail(id+'/extensions','Unknown selected Field extension meaning');
+  const extensions=object(e!.extensions),extensionKeys=Object.keys(extensions);
+  if(extensionKeys.some(key=>key!=='hohfeld.view'))fail(id+'/extensions','Unknown selected Field extension meaning');
+  if(extensionKeys.length&&(!extensions['hohfeld.view']||typeof extensions['hohfeld.view']!=='object'||Array.isArray(extensions['hohfeld.view'])))fail(id+'/extensions/hohfeld.view','Presentation annotation must be a JSON object');
   const scalar=String(e!.scalarType??''),cardinality=String(e!.cardinality??'');
   const result:FieldInfo={id:ref.element,python:name(String(e!.name??ref.element).split('.').at(-1)!,'field',id),scalar,cardinality,
    missing:e!.nullability==='absent-allowed',nullable:e!.nullability==='absent-allowed',facets:object(e!.facets),semanticTypes:e!.semanticTypes??[],semanticTypeInterpretation:'reference-only'};
+  if(extensionKeys.length){result.extensions={'hohfeld.view':extensions['hohfeld.view']};result.extensionInterpretation='opaque-presentation-metadata-only';}
   if(Array.isArray(e!.semanticTypes))for(const semantic of e!.semanticTypes)if(Object.keys(object(semantic)).some(k=>!['vocabulary','version','term'].includes(k)))fail(id+'/semanticTypes','Unknown semantic type qualifier');
   if(cardinality==='array'){
    const item=object(e!.itemType) as Ref;result.item=field(item,[...stack,id]);result.scalar=result.item.scalar;
@@ -129,7 +133,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
    if(nativeDependency)fail('/modules/'+doc.modules.indexOf(nativeDependency)+'/extensions/umf.tables','Native table lifecycle action interpretation is not qualified');
    const analysis=analyzeAction(doc,action,'/modules/'+m.id+'/actions/'+raw.id);
    if(analysis.diagnostics.some(d=>d.severity==='error'))fail(id,'Invalid action declarations: '+analysis.diagnostics.filter(d=>d.severity==='error').map(d=>d.code).join(','));
-   if(action.binding.kind!=='recipe'||action.outputs.length)fail(id,'Action requires a declared recipe with no unsupported business outputs');
+   if(action.outputs.length)fail(id,'Action declares unsupported business outputs');
    const parameters=action.parameters.map(p=>{
     const python=name(String(p.name??p.id),'field',id+'/'+p.id);
     if(['self','idempotency_key'].includes(python))fail(id+'/'+p.id,'Parameter conflicts with generated method signature');
@@ -185,7 +189,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   }
  }
  lines.push('AsyncClient = Client','AsyncActions = Actions','');
- const files=[{path:request.package+'/__init__.py',text:'# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import '+['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','Page','Receipt','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'].map(symbol=>symbol+' as '+symbol).join(', ')+'\n'},
+ const files=[{path:request.package+'/__init__.py',text:'# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import '+runtimeExports.map(symbol=>symbol+' as '+symbol).join(', ')+'\n'},
  {path:request.package+'/models.py',text:lines.join('\n')+'\n'},
  {path:request.package+'/_runtime.py',text:pythonRuntime},
  ...(native.modules.length?[{path:request.package+'/_table_runtime.py',text:tableRuntime}]:[]),

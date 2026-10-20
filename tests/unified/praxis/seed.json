@@ -1,0 +1,1220 @@
+[
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "assess-litigation-risk",
+      "name": "Assess litigation risk and settlement position",
+      "practiceArea": "Litigation",
+      "description": "Model outcomes and settlement ranges to support a recommendation to a client."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "benchmark-deal-terms",
+      "name": "Benchmark deal terms against market",
+      "practiceArea": "M&A / Transactional",
+      "description": "Check whether a negotiated position is market, using comparable deals."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "bulk-document-processing",
+      "name": "Process a large document set in bulk",
+      "practiceArea": "Cross-practice",
+      "description": "Apply the same change or extraction across hundreds of files rather than opening each one."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "buyside-due-diligence",
+      "name": "Run buy-side due diligence across a data room",
+      "practiceArea": "M&A / Transactional",
+      "description": "Review thousands of target documents for change-of-control, assignment and consent provisions, and report findings by risk."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "client-data-collection",
+      "name": "Collect structured information from clients",
+      "practiceArea": "Business Services",
+      "description": "Gather confidential client information through controlled forms into a queryable store."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "client-reporting-budgets",
+      "name": "Report matter budget and progress to clients",
+      "practiceArea": "Pricing",
+      "description": "Show clients where a matter stands against its budget."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "covenant-compliance",
+      "name": "Track covenant compliance across facilities",
+      "practiceArea": "Banking & Finance",
+      "description": "Monitor financial and information covenants and their testing dates."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "credit-agreement-review",
+      "name": "Review credit agreements against precedent",
+      "practiceArea": "Banking & Finance",
+      "description": "Compare facility documentation against precedent and market positions on covenants, baskets and definitions."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "creditor-claims-analysis",
+      "name": "Analyse creditor positions and claims",
+      "practiceArea": "Restructuring",
+      "description": "Build the claims picture across classes and reconcile against proofs."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "data-flow-mapping",
+      "name": "Map personal data flows for compliance",
+      "practiceArea": "Data Privacy",
+      "description": "Record what personal data a client holds, where it moves and why."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "data-room-qa",
+      "name": "Manage data room questions and answers",
+      "practiceArea": "M&A / Transactional",
+      "description": "Route, answer and track diligence questions across workstreams."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "deposition-preparation",
+      "name": "Prepare deposition and examination materials",
+      "practiceArea": "Litigation",
+      "description": "Assemble outlines and exhibit sets from the record."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "detect-ai-content",
+      "name": "Detect AI-generated content and verify signatures",
+      "practiceArea": "Litigation",
+      "description": "Establish whether material was machine-generated, or whether a signature is genuine."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "disclosure-schedules",
+      "name": "Prepare and maintain disclosure schedules",
+      "practiceArea": "M&A / Transactional",
+      "description": "Build and keep schedules aligned to the representations they qualify as the agreement changes through negotiation."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "discovery-review",
+      "name": "Review documents for discovery and production",
+      "practiceArea": "Litigation",
+      "description": "Review and code large document populations for responsiveness, privilege and issue, at defensible cost."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "draft-first-pass-contract",
+      "name": "Draft a first-pass contract from precedent",
+      "practiceArea": "M&A / Transactional",
+      "description": "Produce a first draft from a precedent you are permitted to use on this matter, following your drafting instructions. This is a generic example of a drafting task, not one recorded as a firm priority.",
+      "problem": "I need a first draft of an agreement that starts from a precedent."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "employment-agreement-review",
+      "name": "Review employment and restrictive covenant agreements",
+      "practiceArea": "Employment",
+      "description": "Check agreements against enforceability by jurisdiction, at the volume a corporate client generates."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "employment-law-monitoring",
+      "name": "Monitor multi-jurisdiction employment law change",
+      "practiceArea": "Employment",
+      "description": "Track legislative change affecting clients across states and countries."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "freedom-to-operate",
+      "name": "Run freedom-to-operate analysis",
+      "practiceArea": "Intellectual Property",
+      "description": "Assess whether a product can launch without infringing."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "fund-formation-review",
+      "name": "Review fund formation and side letter terms",
+      "practiceArea": "Private Equity / Funds",
+      "description": "Compare LPAs and side letters against market and against the fund's own prior terms, tracking most-favoured-nation exposure."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "general-legal-ai",
+      "name": "General-purpose legal AI assistance",
+      "practiceArea": "Cross-practice",
+      "description": "Summarise, extract and draft across mixed legal material."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "improve-legal-writing",
+      "name": "Improve the quality of legal writing",
+      "practiceArea": "Cross-practice",
+      "description": "Edit for clarity, consistency and house style across a document."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "internal-knowhow-search",
+      "name": "Find internal precedent and know-how",
+      "practiceArea": "Cross-practice",
+      "description": "Find what the firm has already done on a comparable matter, without depending on who remembers it.",
+      "problem": "Have we drafted a clause or made an argument like this before?"
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "investigation-review",
+      "name": "Review communications for an investigation",
+      "practiceArea": "Investigations",
+      "description": "Search and review communications under privilege and data protection constraints, often across borders."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "judge-counsel-analytics",
+      "name": "Analyse judge, court and opposing counsel history",
+      "practiceArea": "Litigation",
+      "description": "Understand how a judge or opponent has handled comparable matters."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "lease-abstraction",
+      "name": "Abstract leases at portfolio scale",
+      "practiceArea": "Real Estate",
+      "description": "Pull key terms from hundreds of leases into a comparable structure."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "manage-case-materials",
+      "name": "Manage case materials and chronology",
+      "practiceArea": "Litigation",
+      "description": "Keep exhibits, transcripts and a case chronology in one organised place."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "matter-intake-conflicts",
+      "name": "Open a matter and clear conflicts",
+      "practiceArea": "Cross-practice",
+      "description": "Run conflicts, engagement terms and matter setup as one flow."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "matter-pricing",
+      "name": "Price a matter and model alternative fee arrangements",
+      "practiceArea": "Pricing",
+      "description": "Build a budget from comparable historic matters rather than instinct."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "merger-control-filings",
+      "name": "Prepare merger control filings across jurisdictions",
+      "practiceArea": "Antitrust / Regulatory",
+      "description": "Assemble and reconcile filings for multiple competition regulators from one set of deal facts."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "nda-at-volume",
+      "name": "Draft and negotiate NDAs at volume",
+      "practiceArea": "M&A / Transactional",
+      "description": "Review an incoming confidentiality agreement against agreed positions and turn it around.",
+      "problem": "I need to check this counterparty NDA against our positions."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "offering-document-prep",
+      "name": "Prepare and verify offering documents",
+      "practiceArea": "Capital Markets",
+      "description": "Draft prospectus and offering material, and check every figure and cross-reference before it goes out."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "ongoing-disclosure",
+      "name": "Monitor ongoing disclosure obligations",
+      "practiceArea": "Capital Markets",
+      "description": "Track periodic and event-driven reporting deadlines for issuer clients."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "portfolio-compliance",
+      "name": "Track portfolio company compliance obligations",
+      "practiceArea": "Private Equity / Funds",
+      "description": "Monitor obligations across a portfolio rather than per company."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "post-closing-obligations",
+      "name": "Track post-closing and integration obligations",
+      "practiceArea": "M&A / Transactional",
+      "description": "Keep earn-outs, escrows, transition services and covenants visible after the deal team has moved on."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "prior-art-search",
+      "name": "Search prior art and manage patent lifecycle",
+      "practiceArea": "Intellectual Property",
+      "description": "Find prior art and track patent families through their lifecycle."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "real-estate-diligence",
+      "name": "Run real estate due diligence",
+      "practiceArea": "Real Estate",
+      "description": "Review title, survey and lease material across a property portfolio."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "regulatory-screening",
+      "name": "Screen transactions for regulatory clearance",
+      "practiceArea": "Antitrust / Regulatory",
+      "description": "Identify foreign investment, competition and sector approvals a deal will need, early enough to matter."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "research-filings",
+      "name": "Research SEC filings and regulatory precedent",
+      "practiceArea": "Capital Markets",
+      "description": "Find and compare public filings and regulatory positions."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "respond-to-questionnaires",
+      "name": "Respond to RFPs and due diligence questionnaires",
+      "practiceArea": "Business Development",
+      "description": "Answer repetitive questions about the firm from an approved answer library."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "review-incoming-contract",
+      "name": "Review and mark up an incoming contract",
+      "practiceArea": "M&A / Transactional",
+      "description": "Redline a counterparty draft against house style and fallback positions."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "signing-to-closing",
+      "name": "Track signing-to-closing conditions and deliverables",
+      "practiceArea": "M&A / Transactional",
+      "description": "Run the closing checklist: conditions precedent, deliverables, signature pages and who owes what."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "tax-law-monitoring",
+      "name": "Track tax law change affecting client structures",
+      "practiceArea": "Tax",
+      "description": "Monitor legislative and regulatory change against existing structures."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "track-matter-work",
+      "name": "Track matter work, tasks and time",
+      "practiceArea": "Business Services",
+      "description": "See who is doing what on a matter, and capture time against it."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "trademark-portfolio",
+      "name": "Manage a trademark portfolio",
+      "practiceArea": "Intellectual Property",
+      "description": "Track filings, renewals and oppositions across jurisdictions."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "transaction-tax-modelling",
+      "name": "Model transaction tax structures",
+      "practiceArea": "Tax",
+      "description": "Compare structuring alternatives and their tax consequences."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "translate-documents",
+      "name": "Translate documents across languages",
+      "practiceArea": "Cross-practice",
+      "description": "Translate material without sending it outside approved systems."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "vendor-risk-assessment",
+      "name": "Assess third-party and vendor data risk",
+      "practiceArea": "Data Privacy",
+      "description": "Evaluate processors and their contractual and security posture."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "verify-citations",
+      "name": "Verify citations and factual assertions in a brief",
+      "practiceArea": "Litigation",
+      "description": "Check every citation and record assertion in a draft before filing."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "visualise-deal-structure",
+      "name": "Visualise deal structures and entity relationships",
+      "practiceArea": "M&A / Transactional",
+      "description": "Draw and share structure charts that stay correct as a deal changes."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "witness-interview-records",
+      "name": "Manage witness interview records",
+      "practiceArea": "Investigations",
+      "description": "Keep interview notes and memoranda organised and privilege-protected."
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "matter-document-questions",
+      "name": "Answer questions from a matter's documents",
+      "practiceArea": "General",
+      "problem": "What do the documents on this matter say about this point?"
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "prebill-time-entry-review",
+      "name": "Review time entries before a bill goes out",
+      "practiceArea": "Billing",
+      "problem": "Which draft time entries may conflict with the client's outside counsel guidelines, and what needs review before the bill goes out?"
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "public-guidance-lookup",
+      "name": "Look up public guidance and commentary",
+      "practiceArea": "Knowledge Management",
+      "problem": "What has been published on this, and where?"
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "model-trace-search",
+      "name": "Find what was sent to a model and what came back",
+      "practiceArea": "Knowledge Management",
+      "problem": "Which sessions and workflows carried this word, and what did the model reply?"
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "aderant",
+      "name": "Aderant Expert Time",
+      "vendor": "Aderant Expert Time",
+      "category": "Timekeeping",
+      "summary": "Time entry and timekeeping inside the firm's practice-management and billing system — desktop, web and mobile capture with an AI layer that captures activity passively, writes narratives and predicts client/matter assignment."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "boostdraft",
+      "name": "BoostDraft",
+      "vendor": "BoostDraft",
+      "category": "Document editing (on-device)",
+      "summary": "Word add-in that turns Word into a legal-aware editor — defined-term detection and pop-ups, cross-reference automation, structure navigation, legal formatting — running entirely on the user's device."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "briefcatch",
+      "name": "BriefCatch",
+      "vendor": "BriefCatch",
+      "category": "Legal writing & editing",
+      "summary": "Legal writing and editing add-in for Word and Outlook giving real-time feedback on sentence length, readability, transitions and word choice, plus CiteCheck for citation correction and BriefChat."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "clearbrief",
+      "name": "Clearbrief",
+      "vendor": "Clearbrief",
+      "category": "Citation verification",
+      "summary": "Word add-in that checks every citation and factual assertion in a draft against the case record and legal databases, and builds tables of authorities and hyperlinked timelines."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "dashboardlegal",
+      "name": "Dashboard Legal",
+      "vendor": "Dashboard Legal",
+      "category": "Legal project management",
+      "summary": "Matter-centric project management from Bloomberg Law: client and matter dashboards consolidating email, documents, chat, tasks and closing checklists, with Bloomberg Law analysis surfaced in workflow."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "deepl",
+      "name": "DeepL",
+      "vendor": "DeepL",
+      "category": "Translation",
+      "summary": "Neural machine translation with a document pipeline that preserves formatting across Word, PowerPoint, Excel, PDF and HTML, controlled-terminology glossaries and a developer API."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "draftwise",
+      "name": "DraftWise",
+      "vendor": "DraftWise",
+      "category": "Contract drafting & negotiation",
+      "summary": "Word-native drafting and negotiation assistant built on the firm's own precedent — prior deals, playbooks and negotiated positions — plus comparable clauses from EDGAR filings."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "dragongc",
+      "name": "DragonGC",
+      "vendor": "DragonGC",
+      "category": "Securities compliance",
+      "summary": "Securities-disclosure compliance AI answering across 700+ topics from verified SEC sources only, with a 10-K compliance check that flags non-compliance against the governing rule."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "eperoto",
+      "name": "Eperoto",
+      "vendor": "Eperoto",
+      "category": "Litigation risk & settlement",
+      "summary": "Decision-analysis platform for disputes: decision-tree models of a case with probabilities, costs, interest, timing, insurance and enforcement risk, producing a probability-weighted valuation and client-ready PDF."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "everchron",
+      "name": "Everchron",
+      "vendor": "Everchron",
+      "category": "Litigation case management",
+      "summary": "Cloud litigation case management built around the case chronology — a shared filterable timeline linking facts, events, documents, issues, witnesses and testimony, with auto-generated witness files and EC:AI querying."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "finaleyes",
+      "name": "FinalEyes",
+      "vendor": "FinalEyes",
+      "category": "Drafting & proofing (internal)",
+      "summary": "A drafting and document proofing tool. No public product of this name exists, and what it does is not recorded here."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "harvey",
+      "name": "Harvey",
+      "vendor": "Harvey",
+      "category": "Legal AI platform",
+      "summary": "A legal AI platform: Assistant for chat, drafting and document analysis, Vault for bulk cross-document review, Knowledge for cited legal and regulatory research, and no-code Workflow Agents."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "intelligize",
+      "name": "Intelligize",
+      "vendor": "Intelligize",
+      "category": "SEC filings research",
+      "summary": "LexisNexis SEC-filings research and disclosure analytics — filings with their exhibits, comment letters and responses, deal summaries, underlying agreements, automated redlining across filings, and the Protégé AI assistant."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "legora",
+      "name": "Legora",
+      "vendor": "Legora",
+      "category": "Legal AI workspace",
+      "summary": "Collaborative AI workspace: Tabular Review turning document sets into interactive extraction grids, a Word add-in, agentic web and database research, and multi-step Workflows authored in natural language."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "loopio",
+      "name": "Loopio",
+      "vendor": "Loopio",
+      "category": "RFP & questionnaire response",
+      "summary": "Response-management platform for RFPs, RFIs and security questionnaires: a library of approved answers, automatic question import and categorisation, and SME review routing."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "noetica",
+      "name": "Noetica",
+      "vendor": "Noetica",
+      "category": "Deal-term benchmarking",
+      "summary": "Deal-term benchmarking over 100M+ analysed terms from 3M public deals — qualitative and quantitative market checks, term-trend analysis, and private collections of the firm's own deals alongside market data."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "officedragons",
+      "name": "Office & Dragons",
+      "vendor": "Office & Dragons",
+      "category": "Bulk document automation",
+      "summary": "Bulk document automation across a whole deal suite at once — change a party name, date, defined term or clause once and it propagates across every file, with redlining applied simultaneously."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "patlytics",
+      "name": "Patlytics",
+      "vendor": "Patlytics",
+      "category": "Patent lifecycle AI",
+      "summary": "AI-native patent platform across the lifecycle: drafting copilot with figure labelling, office-action responses, claim charting, infringement monitoring, whitespace detection and portfolio inventory."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "structureflow",
+      "name": "StructureFlow",
+      "vendor": "StructureFlow",
+      "category": "Deal & entity diagramming",
+      "summary": "Visual modelling for transactions and corporate structures — entities, ownership chains and deal steps as live, data-backed models, importable from Excel, registries, PDFs, images and sketches."
+    }
+  },
+  {
+    "action": "catalog.AddProduct",
+    "inputs": {
+      "code": "prebill",
+      "name": "Prebill",
+      "category": "Custom app",
+      "summary": "The application behind the Prebill custom app. Who owns it, where it stands and what data it reads are not recorded here."
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "aderant.client-reporting-budgets",
+      "level": "partial",
+      "product": "aderant",
+      "useCase": "client-reporting-budgets"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "aderant.matter-pricing",
+      "level": "partial",
+      "product": "aderant",
+      "useCase": "matter-pricing"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "aderant.track-matter-work",
+      "level": "partial",
+      "product": "aderant",
+      "useCase": "track-matter-work"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "boostdraft.improve-legal-writing",
+      "level": "partial",
+      "product": "boostdraft",
+      "useCase": "improve-legal-writing"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "boostdraft.review-incoming-contract",
+      "level": "full",
+      "product": "boostdraft",
+      "useCase": "review-incoming-contract"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "briefcatch.improve-legal-writing",
+      "level": "full",
+      "product": "briefcatch",
+      "useCase": "improve-legal-writing"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "clearbrief.manage-case-materials",
+      "level": "adjacent",
+      "product": "clearbrief",
+      "useCase": "manage-case-materials"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "clearbrief.verify-citations",
+      "level": "full",
+      "product": "clearbrief",
+      "useCase": "verify-citations"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "dashboardlegal.client-reporting-budgets",
+      "level": "partial",
+      "product": "dashboardlegal",
+      "useCase": "client-reporting-budgets"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "dashboardlegal.signing-to-closing",
+      "level": "partial",
+      "product": "dashboardlegal",
+      "useCase": "signing-to-closing"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "dashboardlegal.track-matter-work",
+      "level": "full",
+      "product": "dashboardlegal",
+      "useCase": "track-matter-work"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "deepl.translate-documents",
+      "level": "full",
+      "product": "deepl",
+      "useCase": "translate-documents"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "draftwise.benchmark-deal-terms",
+      "level": "partial",
+      "product": "draftwise",
+      "useCase": "benchmark-deal-terms"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "draftwise.credit-agreement-review",
+      "level": "partial",
+      "product": "draftwise",
+      "useCase": "credit-agreement-review"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "draftwise.employment-agreement-review",
+      "level": "partial",
+      "product": "draftwise",
+      "useCase": "employment-agreement-review"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "draftwise.review-incoming-contract",
+      "level": "full",
+      "product": "draftwise",
+      "useCase": "review-incoming-contract"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "dragongc.covenant-compliance",
+      "level": "partial",
+      "product": "dragongc",
+      "useCase": "covenant-compliance"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "dragongc.ongoing-disclosure",
+      "level": "full",
+      "product": "dragongc",
+      "useCase": "ongoing-disclosure"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "dragongc.research-filings",
+      "level": "partial",
+      "product": "dragongc",
+      "useCase": "research-filings"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "eperoto.assess-litigation-risk",
+      "level": "full",
+      "product": "eperoto",
+      "useCase": "assess-litigation-risk"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "everchron.deposition-preparation",
+      "level": "partial",
+      "product": "everchron",
+      "useCase": "deposition-preparation"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "everchron.manage-case-materials",
+      "level": "full",
+      "product": "everchron",
+      "useCase": "manage-case-materials"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "everchron.witness-interview-records",
+      "level": "partial",
+      "product": "everchron",
+      "useCase": "witness-interview-records"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "finaleyes.improve-legal-writing",
+      "level": "partial",
+      "product": "finaleyes",
+      "useCase": "improve-legal-writing"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "intelligize.benchmark-deal-terms",
+      "level": "partial",
+      "product": "intelligize",
+      "useCase": "benchmark-deal-terms"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "intelligize.offering-document-prep",
+      "level": "partial",
+      "product": "intelligize",
+      "useCase": "offering-document-prep"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "intelligize.ongoing-disclosure",
+      "level": "partial",
+      "product": "intelligize",
+      "useCase": "ongoing-disclosure"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "intelligize.research-filings",
+      "level": "full",
+      "product": "intelligize",
+      "useCase": "research-filings"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "legora.buyside-due-diligence",
+      "level": "partial",
+      "product": "legora",
+      "useCase": "buyside-due-diligence"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "legora.general-legal-ai",
+      "level": "full",
+      "product": "legora",
+      "useCase": "general-legal-ai"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "legora.internal-knowhow-search",
+      "level": "partial",
+      "product": "legora",
+      "useCase": "internal-knowhow-search"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "legora.review-incoming-contract",
+      "level": "partial",
+      "product": "legora",
+      "useCase": "review-incoming-contract"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "loopio.respond-to-questionnaires",
+      "level": "full",
+      "product": "loopio",
+      "useCase": "respond-to-questionnaires"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "noetica.benchmark-deal-terms",
+      "level": "full",
+      "product": "noetica",
+      "useCase": "benchmark-deal-terms"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "officedragons.bulk-document-processing",
+      "level": "full",
+      "product": "officedragons",
+      "useCase": "bulk-document-processing"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "officedragons.investigation-review",
+      "level": "adjacent",
+      "product": "officedragons",
+      "useCase": "investigation-review"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "officedragons.lease-abstraction",
+      "level": "partial",
+      "product": "officedragons",
+      "useCase": "lease-abstraction"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "patlytics.freedom-to-operate",
+      "level": "partial",
+      "product": "patlytics",
+      "useCase": "freedom-to-operate"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "patlytics.prior-art-search",
+      "level": "full",
+      "product": "patlytics",
+      "useCase": "prior-art-search"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "patlytics.trademark-portfolio",
+      "level": "partial",
+      "product": "patlytics",
+      "useCase": "trademark-portfolio"
+    }
+  },
+  {
+    "action": "catalog.AssertCoverage",
+    "inputs": {
+      "code": "structureflow.visualise-deal-structure",
+      "level": "full",
+      "product": "structureflow",
+      "useCase": "visualise-deal-structure"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "matter-query",
+      "name": "Matter query",
+      "summary": "Ask a question about the documents filed under one matter and get an answer grounded in them.",
+      "useCase": "matter-document-questions",
+      "deliveryMode": "chat",
+      "workflow": "matter-query"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "nda-review-playbook",
+      "name": "NDA review against playbook",
+      "summary": "Compare a counterparty NDA with a negotiation playbook and flag clauses that depart from the preferred position. Runs on a fabricated sample NDA and a sample playbook.",
+      "useCase": "nda-at-volume",
+      "deliveryMode": "chat",
+      "workflow": "nda-review-playbook"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "prebill-review",
+      "name": "Pre-bill review",
+      "summary": "Work the Prebill review queue: time entries that need attention before a bill goes out, shown in Prebill's own view. Online it reads the deployed Prebill app; offline it runs on fabricated sample entries.",
+      "useCase": "prebill-time-entry-review",
+      "deliveryMode": "chat",
+      "workflow": "prebill-review"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "precedent-search",
+      "name": "Precedent search",
+      "summary": "Find prior work product similar to a described clause or argument.",
+      "useCase": "internal-knowhow-search",
+      "deliveryMode": "chat",
+      "workflow": "precedent-search"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "public-research",
+      "name": "Public research",
+      "summary": "Look up public information on the web and read the pages: published guidance, commentary, and general legal background.",
+      "useCase": "public-guidance-lookup",
+      "deliveryMode": "chat",
+      "workflow": "public-research"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "trace-search",
+      "name": "Trace search",
+      "summary": "Search the model gateway's traces and inference tables by keyword with read-only SQL: find calls by the words in a prompt or reply, then see whose session and which workflow.",
+      "useCase": "model-trace-search",
+      "audience": "fdle",
+      "deliveryMode": "chat",
+      "workflow": "trace-search"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "harvey-nda-prompt",
+      "name": "NDA review prompt for Harvey",
+      "deliveryMode": "handoff",
+      "summary": "An example prompt to run in Harvey with the NDA and your playbook or reference positions attached. It is an example, not a firm standard, and needs your own access to Harvey. Nothing is sent to Harvey from here: you copy the prompt and run it there.",
+      "prompt": "Compare the attached NDA with the attached playbook or reference positions. If either is missing, ask for it before assessing anything, and do not assume positions that are not in the reference. For each proposed change, give the NDA clause, the reference position it departs from, and a suggested redline.",
+      "useCase": "nda-at-volume"
+    }
+  },
+  {
+    "action": "catalog.SetSolutionProvider",
+    "inputs": {
+      "solution": "harvey-nda-prompt",
+      "product": "harvey"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "harvey-contract-draft-prompt",
+      "name": "Contract drafting prompt for Harvey",
+      "deliveryMode": "handoff",
+      "summary": "An example prompt to run in Harvey with the precedent and your drafting instructions attached. It is an example, not a firm standard, and needs your own access to Harvey. Having a precedent is not permission to reuse it on another client's matter: attach only one you may use here. Nothing is sent to Harvey from here: you copy the prompt and run it there.",
+      "prompt": "Draft a first-pass agreement from the attached precedent, following the attached drafting instructions. If either is missing, ask for it before drafting, and do not assume terms or positions that are not in them. Keep the precedent's wording unless an instruction requires a change, and list each clause you changed with the instruction that required it.",
+      "useCase": "draft-first-pass-contract"
+    }
+  },
+  {
+    "action": "catalog.SetSolutionProvider",
+    "inputs": {
+      "solution": "harvey-contract-draft-prompt",
+      "product": "harvey"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "prebill-app",
+      "name": "Prebill",
+      "deliveryMode": "app",
+      "summary": "A separate app for reviewing draft time entries before a bill goes out. It opens in its own tab and asks you to sign in. Whether it opens for you depends on your access to that app.",
+      "useCase": "prebill-time-entry-review",
+      "launchUrl": "https://prebill-7405607548213398.18.azure.databricksapps.com/"
+    }
+  },
+  {
+    "action": "catalog.SetSolutionProvider",
+    "inputs": {
+      "solution": "prebill-app",
+      "product": "prebill"
+    }
+  },
+  {
+    "action": "catalog.AddUseCase",
+    "inputs": {
+      "code": "business-data-questions",
+      "name": "Answer business questions from the firm's data",
+      "practiceArea": "Knowledge Management",
+      "description": "Ask a question of the firm's own data in plain language and get a grounded answer, with the query that produced it."
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "genie-ask",
+      "name": "Ask the data",
+      "summary": "Ask a business question of the firm's data in plain language and get Genie's grounded answer, the SQL it ran and a link to the full result in Genie One.",
+      "useCase": "business-data-questions",
+      "deliveryMode": "chat",
+      "workflow": "genie-ask"
+    }
+  },
+  {
+    "action": "catalog.AddSolution",
+    "inputs": {
+      "code": "opposing-party-bio",
+      "name": "Opposing counsel profiles",
+      "summary": "Attach a matter's documents, confirm the other side's lawyers, then research each one on the public web into a sourced profile document.",
+      "useCase": "judge-counsel-analytics",
+      "deliveryMode": "chat",
+      "workflow": "opposing-party-bio"
+    }
+  }
+]

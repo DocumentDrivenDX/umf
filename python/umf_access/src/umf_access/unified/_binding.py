@@ -53,10 +53,14 @@ def _weft_scalar_availability(field: Mapping[str, object], *, purpose: str) -> t
     cardinality = field.get("cardinality")
     nullability = field.get("nullability")
     extensions = field.get("extensions", {})
+    presentation_only = (type(extensions) is dict
+                         and set(extensions) <= {"hohfeld.view"}
+                         and ("hohfeld.view" not in extensions
+                              or type(extensions["hohfeld.view"]) is dict))
     if (type(scalar) is not str or scalar not in _WEFT_SCALAR_CARRIERS
             or cardinality != "one" or nullability not in ("required", "absent-allowed")
-            or type(extensions) is not dict or extensions):
-        raise UnifiedAccessError("UNSUPPORTED", f"{purpose} requires an admitted scalar carrier, cardinality one, explicit nullability, and no field extensions")
+            or not presentation_only):
+        raise UnifiedAccessError("UNSUPPORTED", f"{purpose} requires an admitted scalar carrier, cardinality one, explicit nullability, and only retained presentation annotations")
     return scalar, nullability == "absent-allowed"
 
 

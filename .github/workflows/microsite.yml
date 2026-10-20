@@ -144,6 +144,10 @@ jobs:
           bun-version: '1.4.2'
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Remove retired pre-0.10 local-mutation demo artifacts
+        run: |
+          rm -rf docs/helix/05-deploy/microsite/dist/action-compiler docs/helix/05-deploy/microsite/dist/truss-browser
+          rm -f docs/helix/05-deploy/microsite/dist/action-compiler.html docs/helix/05-deploy/microsite/dist/action-compiler.js docs/helix/05-deploy/microsite/dist/truss-catalog-worker.js
       - name: Reject orphan public page claims before building
         run: bun scripts/generated-page-seals.ts --inventory
       - name: Verify generated metamodel authority and retirement boundaries
@@ -187,12 +191,6 @@ jobs:
         run: python3 scripts/build-document-research-release.py
       - name: Build browser playground
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
-      - name: Check browser action integration types
-        run: bun x tsc -p docs/helix/05-deploy/microsite/tsconfig.actions.json
-      - name: Build pinned Truss browser catalog assets
-        run: bun docs/helix/05-deploy/microsite/build-truss-browser.ts
-      - name: Build original browser SQL-to-actions compiler
-        run: bun docs/helix/05-deploy/microsite/build-action-compiler.ts
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
       - name: Install pinned released schema browser assets
@@ -214,8 +212,6 @@ jobs:
         run: bun scripts/metamodel-browser.ts
       - name: Qualify reference completeness and desktop/mobile presentation
         run: bun run test:reference:browser
-      - name: Qualify browser SQL-to-actions compiler
-        run: bun docs/helix/05-deploy/microsite/verify-action-compiler.ts
       - name: Qualify reusable browser package
         run: bun scripts/schema-browser-package-browser.ts
       - name: Qualify strict-CSP schema browser embedding

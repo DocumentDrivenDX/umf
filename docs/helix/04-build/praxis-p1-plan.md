@@ -902,3 +902,23 @@ The schema producer638f104d4 is now pinned in Weft6e907632267a7140d07865d295da6c
 which is pushed and pinned in UMF CI. The complete native domain fixture is enabled
 in that paired source cohort. New hosted checks remain pending; no release or
 tag is published.
+
+### Published-main integration, 2026-10-19
+
+Merged main ba49977a1 into the lifecycle branch without rewriting the638f104d4
+schema producer pinned by Weft. Retained the released0.5.1/dev3 metadata, runtime
+export collision protection, opaque presentation annotations and retired-demo
+cleanup. The modular native binding carries the same presentation rule as main.
+The new generator boundary check permits native declarations/templates only in
+their owning files; it still prohibits SQL compilation, drivers and host I/O.
+
+Fresh installed SDK/dev3 and embedded-generator wheels pass150 PostgreSQL18.6
+assertions across six driver/pool variants with74/74 balanced leases. The merged
+generator passes15 focused tests/205 assertions and actual Chromium byte parity
+for ordinary, Praxis and native-operation models (10 assertions). TypeScript,
+Ruff, Python/compiler and unified-client boundaries pass. One initial browser run
+was denied local socket access by the sandbox; its escalated run passed. Paired
+hosted runs39345236278 (Weft) and39345398156 (UMF) remain pending at capture.
+These are local component candidates; published predecessor assets are unchanged.
+Seeds, broader evolution/upgrade, private acceptance and full publication remain
+open.
