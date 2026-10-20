@@ -1,0 +1,145 @@
+{
+  "python": "3.11.17",
+  "generator": "0.1.0a1",
+  "engine": "0.14.1",
+  "cases": [
+    {
+      "name": "original-json",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "praxis-adoption",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "crlf-source",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "yaml",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "customer-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "action-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "legacy-actions-refuse",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "malformed-action-entry-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "action-parameter-name-collision-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unicode",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "optional-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "array-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "foreign-field-extension-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "nullable-key-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "reserved-name-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unknown-facet-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "table-lifecycle-refuses-unqualified-client",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "source-core-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-package-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-json-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "declared-native-module",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "native-yaml-profile-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "declared-native-temporal-module",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "declared-native-domain-clock-module",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "native-related-policy",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "native-nested-related-policy",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "native-source-snapshot",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    }
+  ],
+  "writerAndIntegrityControls": "passed",
+  "externalJavascriptProcesses": "forbidden",
+  "platform": "macOS-27.0.1-arm64-arm-64bit"
+}

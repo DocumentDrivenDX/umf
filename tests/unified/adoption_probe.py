@@ -11,8 +11,9 @@ from adoption._runtime import WIRE_ERROR_CODES
 from pathlib import Path
 assert tuple(json.loads((Path(sys.argv[1])/'adoption/description.json').read_text())['errorCodes']) == WIRE_ERROR_CODES
 from adoption import (Actions, Client, SyncActions, SyncClient, CustomerKey,
-                      OpenProjectInput, OpenProjectPrecondition, MISSING,
-                      AccessError, PreconditionFailed, WriteOutcomeUnknown)
+                      Project, ProjectKey, OpenProjectInput, OpenProjectPrecondition, MISSING,
+                      AccessError, PreconditionFailed, WriteOutcomeUnknown,
+                      write_outcomes_unknown)
 
 class Host:
     def __init__(self):
@@ -133,10 +134,14 @@ async def run(mode):
     def bind(response):
         return SyncActions(SyncClient(response)) if mode=='sync' else Actions(Client(AsyncHost(response)))
     good=lambda q: {'schema':q['schema'],'status':'committed','created':[],'changed':[],'counts':{},'consistency_token':'cut'}
+    empty_receipt=await call(bind(Response(lambda q:{k:v for k,v in good(q).items() if k!='status'})).open_project,code='EMPTY',idempotency_key='empty-key',**args)
+    assert empty_receipt.status=='committed' and empty_receipt.created==() and empty_receipt.changed==() and dict(empty_receipt.counts)=={}
     malformed=[lambda q:None,lambda q:{},lambda q:{**good(q),'schema':'wrong'},lambda q:{**good(q),'status':'pending'},
                lambda q:{**good(q),'consistency_token':None},lambda q:{**good(q),'counts':{'created':True}},
                lambda q:{**good(q),'created':[{'record':'example.Project','key':{'Project.code':12}}]},
-               lambda q:{**good(q),'changed':None},lambda q:{k:v for k,v in good(q).items() if k!='counts'},
+               lambda q:{**good(q),'changed':None},lambda q:{k:v for k,v in good(q).items() if k!='created'},
+               lambda q:{k:v for k,v in good(q).items() if k!='changed'},lambda q:{k:v for k,v in good(q).items() if k!='counts'},
+               lambda q:{k:v for k,v in good(q).items() if k!='consistency_token'},
                lambda q:{**good(q),'counts':{'created':-1}},lambda q:{**good(q),'counts':{'created':1.5}},lambda q:{'schema':q['schema'],'error':None},
                lambda q:{'schema':q['schema'],'error':{'code':'NEW_UNKNOWN'}},
                lambda q:{'schema':q['schema'],'error':{'code':'DENIED','precondition':[]}},
@@ -146,7 +151,7 @@ async def run(mode):
         try: await call(bind(response).open_project,code='U',idempotency_key='lost-key',**args)
         except WriteOutcomeUnknown as e: assert e.key=='lost-key' and response.calls==1
         else: raise AssertionError('malformed write response accepted')
-    for exc in (RuntimeError('private'),AccessError('DENIED'),asyncio.CancelledError()):
+    for exc in (RuntimeError('private'),AccessError('DENIED')):
         def raising(q): raise exc
         response=Response(raising)
         try: await call(bind(response).open_project,code='U',idempotency_key='lost-key',**args)
@@ -169,21 +174,71 @@ async def run(mode):
                             (lambda q:batch_response(q,['unknown','unattempted']),{'atomic':True}),
                             (lambda q:batch_response(q,['unattempted','unattempted']),{'stop_on_error':True}),
                             (lambda q:batch_response(q,['rolled_back','rolled_back']),{}),
+                            (lambda q:batch_response(q,['unknown','unattempted']),{'atomic':True,'stop_on_error':True}),
                             (lambda q:{'schema':q['schema'],'status':'pending','items':[],'consistency_token':'cut'},{})]:
         response=Response(transform)
         try: await call(bind(response).open_project_batch,[item('X'),item('Y')],idempotency_key='batch-key',**flags)
         except WriteOutcomeUnknown as e: assert e.key=='batch-key' and response.calls==1
         else: raise AssertionError('malformed batch accepted')
 
+    def settlement(q,statuses):
+        outcomes=[]
+        for status in statuses:
+            if status=='applied': outcomes.append({'status':status,'receipt':{'created':[],'changed':[],'counts':{}}})
+            elif status=='refused': outcomes.append({'status':status,'error':{'code':'DENIED'}})
+            else: outcomes.append({'status':status})
+        return {'schema':q['schema'],'items':outcomes,'consistency_token':'cut'}
+    valid_settlements=[
+        (['applied','applied'],{}),
+        (['refused'],{}),
+        (['rolled_back','refused','rolled_back'],{'atomic':True}),
+        (['refused','unattempted'],{'atomic':True,'stop_on_error':True}),
+        (['applied','refused','unattempted'],{'stop_on_error':True}),
+        (['unknown','unattempted'],{'stop_on_error':True}),
+    ]
+    for statuses,flags in valid_settlements:
+        response=Response(lambda q,s=statuses:settlement(q,s))
+        result=await call(bind(response).open_project_batch,[item('X'),item('Y'),item('Z')][:len(statuses)],idempotency_key='batch-matrix-key',**flags)
+        assert [x.status for x in result.items]==statuses and response.calls==1
+    matrix=[
+        ['applied','applied'],
+        ['refused'],
+        ['refused','unattempted'],
+        ['unknown','unattempted'],
+        ['unattempted','refused'],
+        ['refused','unattempted','refused'],
+        ['refused','unattempted','applied'],
+        ['refused','rolled_back','unattempted'],
+    ]
+    for atomic in (False,True):
+        for stop in (False,True):
+            for statuses in matrix:
+                expected=(
+                    statuses == ['applied','applied']
+                    or statuses == ['refused']
+                    or statuses == ['refused','unattempted'] and stop
+                    or statuses == ['unknown','unattempted'] and stop and not atomic
+                )
+                response=Response(lambda q,s=statuses:settlement(q,s))
+                try:
+                    result=await call(bind(response).open_project_batch,[item('M'+str(i)) for i in range(len(statuses))],atomic=atomic,stop_on_error=stop,idempotency_key='flag-matrix-key')
+                except WriteOutcomeUnknown as error:
+                    assert not expected and error.key=='flag-matrix-key' and response.calls==1
+                else:
+                    assert expected and [item.status for item in result.items]==statuses and response.calls==1
+
 async def main():
     for mode in ('sync','async'): await run(mode)
     for batch in (False, True):
         class Waiting:
-            def __init__(self): self.started=asyncio.Event(); self.calls=0
+            def __init__(self): self.started=asyncio.Event(); self.calls=0; self.cancellation=None
             async def execute(self, request):
                 self.calls+=1
                 self.started.set()
-                await asyncio.Future()
+                try: await asyncio.Future()
+                except asyncio.CancelledError as error:
+                    self.cancellation=error
+                    raise
         transport=Waiting()
         actions=Actions(Client(transport))
         args={'code':'X','title':'Project','client':CustomerKey(code='C1')}
@@ -192,7 +247,131 @@ async def main():
         await transport.started.wait()
         task.cancel()
         try: await task
-        except WriteOutcomeUnknown as e: assert e.key=='cancel-key' and transport.calls==1
+        except asyncio.CancelledError as error:
+            assert error is transport.cancellation and type(error) is asyncio.CancelledError and task.cancelled() and task.cancelling()==1 and transport.calls==1
+            outcomes=write_outcomes_unknown(error)
+            assert len(outcomes)==1 and outcomes[0].key=='cancel-key'
         else: raise AssertionError('task cancellation proved rollback')
+
+    class TimeoutHost:
+        def __init__(self): self.started=asyncio.Event(); self.calls=0
+        async def execute(self, request):
+            self.calls+=1; self.started.set()
+            await asyncio.Future()
+    for batch in (False,True):
+        timeout_host=TimeoutHost(); timeout_actions=Actions(Client(timeout_host)); key='timeout-batch' if batch else 'timeout-key'
+        operation=(timeout_actions.open_project_batch([OpenProjectInput(code='TIMEOUT',title='T',client=CustomerKey(code='C1'))],idempotency_key=key)
+                   if batch else timeout_actions.open_project(code='TIMEOUT',title='T',client=CustomerKey(code='C1'),idempotency_key=key))
+        try:
+            async with asyncio.timeout(0.01): await operation
+        except TimeoutError as error:
+            outcomes=write_outcomes_unknown(error)
+            assert len(outcomes)==1 and outcomes[0].key==key and timeout_host.calls==1
+        else: raise AssertionError('timeout context did not preserve timeout semantics')
+
+    class GroupHost:
+        def __init__(self): self.started=asyncio.Event(); self.cancellation=None
+        async def execute(self, request):
+            self.started.set()
+            try: await asyncio.Future()
+            except asyncio.CancelledError as error:
+                self.cancellation=error
+                raise
+    group_host=GroupHost()
+    async def fail_group_sibling():
+        await group_host.started.wait()
+        raise ValueError('sibling failed')
+    try:
+        async with asyncio.TaskGroup() as group:
+            group.create_task(Actions(Client(group_host)).open_project(code='GROUP',title='T',client=CustomerKey(code='C1'),idempotency_key='group-key'))
+            group.create_task(fail_group_sibling())
+    except* ValueError as errors:
+        assert len(errors.exceptions)==1 and not any(isinstance(x, asyncio.CancelledError) for x in errors.exceptions)
+        outcomes=write_outcomes_unknown(group_host.cancellation)
+        assert len(outcomes)==1 and outcomes[0].key=='group-key'
+
+    # Explicitly raised cancellation is preserved by both transport bindings.
+    for mode in ('sync','async'):
+        original_cancel=asyncio.CancelledError('transport cancellation')
+        class SyncCancelTransport:
+            def execute(self, request): raise original_cancel
+        class AsyncCancelTransport:
+            async def execute(self, request): raise original_cancel
+        transport=SyncCancelTransport() if mode=='sync' else AsyncCancelTransport()
+        actions=SyncActions(SyncClient(transport)) if mode=='sync' else Actions(Client(transport))
+        try:
+            await call(actions.open_project,code='SPONTANEOUS',title='T',client=CustomerKey(code='C1'),idempotency_key='spontaneous-'+mode)
+        except asyncio.CancelledError as error:
+            assert error is original_cancel
+            outcomes=write_outcomes_unknown(error)
+            assert len(outcomes)==1 and outcomes[0].key=='spontaneous-'+mode
+        else: raise AssertionError('spontaneous cancellation was replaced')
+
+    reused=asyncio.CancelledError('reused cancellation')
+    class ReusedCancelTransport:
+        async def execute(self, request): raise reused
+    reused_actions=Actions(Client(ReusedCancelTransport()))
+    for key in ('reuse-key','reuse-key'):
+        try: await reused_actions.open_project(code='REUSE',title='T',client=CustomerKey(code='C1'),idempotency_key=key)
+        except asyncio.CancelledError as error: assert error is reused
+        else: raise AssertionError('reused cancellation was replaced')
+    reused_outcomes=write_outcomes_unknown(reused)
+    assert [outcome.key for outcome in reused_outcomes]==['reuse-key','reuse-key'] and reused_outcomes[0] is not reused_outcomes[1]
+
+    class ConcurrentCancelTransport:
+        def __init__(self): self.started={key:asyncio.Event() for key in ('concurrent-a','concurrent-b')}; self.errors={}
+        async def execute(self, request):
+            key=request['idempotency_key']
+            self.started[key].set()
+            try: await asyncio.Future()
+            except asyncio.CancelledError as error:
+                self.errors[key]=error
+                raise
+    concurrent=ConcurrentCancelTransport(); concurrent_actions=Actions(Client(concurrent))
+    predispatch=asyncio.create_task(concurrent_actions.open_project(code='PREDISPATCH',title='T',client=CustomerKey(code='C1'),idempotency_key='never-dispatched'))
+    predispatch.cancel()
+    try: await predispatch
+    except asyncio.CancelledError as error:
+        assert not any(event.is_set() for event in concurrent.started.values()) and write_outcomes_unknown(error)==()
+    else: raise AssertionError('pre-dispatch cancellation was not preserved')
+    tasks={key:asyncio.create_task(concurrent_actions.open_project(code=key,title='T',client=CustomerKey(code='C1'),idempotency_key=key)) for key in ('concurrent-a','concurrent-b')}
+    await asyncio.gather(*(concurrent.started[key].wait() for key in tasks))
+    for task in tasks.values(): task.cancel()
+    results=await asyncio.gather(*tasks.values(),return_exceptions=True)
+    assert all(type(error) is asyncio.CancelledError for error in results)
+    # Inspect each transport-caught original: gather may normalize task exceptions across supported Python versions.
+    for key,error in concurrent.errors.items():
+        outcomes=write_outcomes_unknown(error)
+        assert len(outcomes)==1 and outcomes[0].key==key
+
+    class ReadCancelTransport:
+        async def execute(self, request): raise asyncio.CancelledError('read canceled')
+    read_client=Client(ReadCancelTransport())
+    for operation in (Actions(read_client).open_project_validate(code='READ',title='T',client=CustomerKey(code='C1')),
+                      Project.objects.using(read_client).get(ProjectKey(code='READ'))):
+        try: await operation
+        except asyncio.CancelledError as error: assert write_outcomes_unknown(error)==()
+        else: raise AssertionError('read/validate cancellation was swallowed')
+
+    direct=WriteOutcomeUnknown(key='direct-key')
+    wrapped=RuntimeError('wrapped')
+    wrapped.__cause__=direct
+    wrapped.__context__=WriteOutcomeUnknown(key='unrelated-context')
+    wrapped.__suppress_context__=False
+    assert write_outcomes_unknown(wrapped)==(direct,)
+    first,second=WriteOutcomeUnknown(key='first'),WriteOutcomeUnknown(key='second')
+    annotated=RuntimeError('annotated'); annotated._umf_write_outcomes_unknown=(first,first,second)
+    contextual=RuntimeError('contextual'); contextual.__context__=annotated
+    assert write_outcomes_unknown(contextual)==(first,second)
+    cycle=RuntimeError('cycle'); cycle.__cause__=cycle
+    assert write_outcomes_unknown(cycle)==()
+    hidden_context=asyncio.CancelledError('hidden')
+    hidden_context._umf_write_outcomes_unknown=(WriteOutcomeUnknown(key='hidden-key'),)
+    try:
+        try: raise hidden_context
+        except asyncio.CancelledError:
+            raise RuntimeError('from-none') from None
+    except RuntimeError as error:
+        assert write_outcomes_unknown(error)==()
     print(json.dumps(dict(modes=2,preconditions=True,optional=True,batches=True,validation=True,uncertainty=True,noRetries=True)))
 asyncio.run(main())

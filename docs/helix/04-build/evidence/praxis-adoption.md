@@ -125,3 +125,11 @@ violations. [Passing log](praxis-adoption/boundaries.log). This does not change
 the prior83 local adoption/browser passes or27 installed parity cases. Hosted CI
 must rerun against the follow-up commit; the independent Claude review remains
 pending before merge.
+
+## Integrated review successor
+
+The [remediation packet](typed-api-remediation/README.md) supersedes this record's
+earlier clean-review conclusion for cancellation, atomic stopping and unused-name
+admission. It retains the original scoped results above and adds fresh tests and
+an explicit compatibility amendment. Read the successor for current qualification;
+the original83 passes did not cover those newly identified cases.

@@ -107,6 +107,17 @@ Hohfeld's binding maps these calls to its authoritative resolver and receipts.
 Client-supplied effects never authorize mutation. Validation uses the same path
 without applying changes and remains advisory.
 
+Cancellation preserves both Python scheduling semantics and write uncertainty.
+The client annotates the original post-dispatch cancellation with a fresh
+per-invocation uncertainty object and re-raises that same cancellation. A typed
+inspection helper follows the displayed exception chain, including timeout
+translation, without client-global or task-global mutable state. Reused/nested
+cancellations retain every invocation annotation. Replacing cancellation with a
+business exception breaks structured concurrency; clearing task cancellation or
+retrying cannot establish the write outcome. CONTRACT-079 owns the exact helper,
+ordering and compatibility rules. Atomic and partial batches share one stopping
+rule so malformed settlements never imply effects that the host did not prove.
+
 ### Keep one plugin calling convention
 
 Generate explicit synchronous and asynchronous clients from the same operation

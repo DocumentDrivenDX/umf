@@ -1,0 +1,7 @@
+Building wheel...
+error: Failed to build `/Users/erik/.codex/worktrees/430b/umf/python/umf_codegen`
+  cause: Failed to resolve requirements from `build-system.requires`
+  cause: No solution found when resolving: `hatchling==1.27.0`
+  cause: Because hatchling was not found in the cache and you require hatchling==1.27.0, we can conclude that your requirements are unsatisfiable.
+
+hint: Packages were unavailable because the network was disabled. When the network is disabled, registry packages may only be read from the cache.

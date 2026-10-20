@@ -352,6 +352,12 @@ unattempted. Every applied receipt uses the batch's one consistency token.
 The client does not split, retry or execute batches as a series of single calls.
 Hosts without a supported mode must refuse before effects.
 
+With stop_on_error enabled, the first refusal (or unknown in a partial batch)
+must be followed only by unattempted outcomes. Unattempted outcomes are never
+valid before that point or when stop_on_error is disabled, including atomic
+batches. An atomic failure contains at least one refusal and no applied/unknown
+outcomes; rolled_back identifies work actually undone.
+
 For graph-write/2, omitting `note` (or passing MISSING) omits its assignment;
 `note=None` explicitly supplies null. A create leaves an omitted optional Field
 absent; a set leaves it unchanged. Graph-write/1 still requires required value
@@ -362,9 +368,59 @@ the host without committing or reserving anything; apply can subsequently refuse
 
 Graph Receipt.status is `committed`. A successful graph envelope acknowledges
 commit, with optional explicit wire `status:"committed"` for original protocol
-compatibility. A pending token is insufficient. Pending, lost, cancelled or
+compatibility. A pending token is insufficient. Pending, lost or
 malformed write responses raise WriteOutcomeUnknown retaining the invocation
 key. Native table caller-owned results retain their separate durability states.
+
+Host success envelopes must contain `created`, `changed`, `counts` and a nonempty
+`consistency_token`, even if the collections are empty. For example:
+
+```python
+return {"schema": request["schema"], "created": [], "changed": [],
+        "counts": {}, "consistency_token": "committed-cut"}
+```
+
+Omitting `created`, `changed` or `counts` creates uncertainty; the decoder does
+not invent empty results. A transport-raised AccessError also creates uncertainty
+after dispatch. To acknowledge a definite refusal before effects, the host must
+return a matching-schema known-code error envelope instead:
+
+```python
+return {"schema": request["schema"], "error": {"code": "DENIED"}}
+```
+
+Cancellation preserves the original CancelledError. Inspect the exception with
+the generated typed helper to recover the attempted write keys, then propagate
+cancellation. The helper also handles TimeoutError created by asyncio.timeout:
+
+```python
+import asyncio
+from adoption import write_outcomes_unknown
+
+try:
+    async with asyncio.timeout(5):
+        await actions.open_project(
+            code="P1", title="Project", client=customer,
+            idempotency_key="open-project-1",
+        )
+except (asyncio.CancelledError, TimeoutError) as error:
+    for uncertain in write_outcomes_unknown(error):
+        # Retain uncertain.key for authoritative reconciliation; never retry blindly.
+        pass
+    raise
+```
+
+The helper returns its generated package's uncertainty objects represented by the
+displayed exception chain, including distinct invocations sharing a key. Foreign
+package annotations remain intact; call each involved package's helper when
+inspecting a chain shared across generated packages. It respects explicit causes
+and hidden context and terminates cycles. It does not infer that a wrapper's own
+operation wrote anything. Capture the exception inside a TaskGroup child if its
+keys are needed: TaskGroup normally suppresses cancelled child exceptions.
+Likewise, gather with return_exceptions=True can replace the original cancellation
+object and discard its annotations; inspect or retain the original inside the
+child before re-raising.
+Pre-dispatch cancellation, reads and validation add no write annotation.
 See [CONTRACT-079](../../02-design/contracts/CONTRACT-079-unified-python-access.md#graph-client-adoption-contract--2026-10-20)
 for complete settlement and error shapes. Production host execution and the full
 Linux/interpreter matrix require separate qualification.

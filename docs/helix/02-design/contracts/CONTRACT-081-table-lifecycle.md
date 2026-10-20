@@ -551,8 +551,12 @@ relation is installed atomically with new history/head metadata. Its ordinary
 heap shape, exact constraints/indexes, owner, forced RLS, two source-audience
 policies, table/column ACLs and absence of triggers/incoming FKs are proved
 against a protected fixed-schema scratch relation. The trusted reference pins
-that verified native shape. Head observations compare it before accessing
-outcomes; ordinary correspondence includes it in the exact schema inventory.
+that verified native shape. Explicit full head/correspondence observations compare
+it; full correspondence includes it in the exact schema inventory. Ordinary
+write/recovery calls use the bounded operation-admission path below, retaining
+receipt authentication and current-principal RLS without repeating catalog-shape
+proof. Privileged external catalog changes require operator quiescence and
+explicit diagnostic reverification before normal service resumes.
 Receipt payloads never become expected catalog shape by observation alone.
 
 Existing outcome-free installations keep version0.1 references and read-only

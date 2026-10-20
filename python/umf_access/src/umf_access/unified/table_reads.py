@@ -135,7 +135,7 @@ class _TableReader:
             return prepared
 
     def _prepare_owned(self, identity, operation, inputs, size, cursor, *, items=None, key=None):
-        probe, context, source, declarations = self._source_for(identity)
+        probe, context, _source, declarations = self._source_for(identity)
         declaration = declarations.get(operation) if type(operation) is str else None
         if declaration is None:
             raise SessionError('operation is not declared in this module')

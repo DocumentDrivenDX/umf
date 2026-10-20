@@ -43,11 +43,27 @@ test('action inventory and normalized parameter identities refuse with source lo
  const collision=model(),action=collision.modules[0].extensions['umf.actions'].actions[0];
  action.parameters.find((p:any)=>p.id==='title').name='code';
  expect(()=>generate(collision)).toThrow(expect.objectContaining({path:path+'/parameters/1'}));
+ const importedName=model();importedName.modules[0].extensions['umf.actions'].actions[0].parameters.find((p:any)=>p.id==='note').name='write_outcomes_unknown';
+ expect(()=>generate(importedName)).toThrow(expect.objectContaining({path:'example.open-project/note'}));
  const d=model(),originalAction=d.modules[0].extensions['umf.actions'].actions[0];
  originalAction.id='branch.open-project';
  const secondAction=structuredClone(originalAction);secondAction.id='open-project';
  d.modules.push({id:'example.branch',namespace:'example.branch',elements:[],extensions:{'umf.actions':{actions:[secondAction]}}});
  expect(()=>generate(d)).toThrow(expect.objectContaining({path:'/modules/1/extensions/umf.actions/actions/0/id'}));
+});
+
+test('check is usable as an action parameter and as an independent precondition ID',async()=>{
+ const d=model(),action=d.modules[0].extensions['umf.actions'].actions[0];
+ action.parameters.find((p:any)=>p.id==='note').name='check';
+ action.preconditions[0].id='check';
+ const generated=generate(d),directory=await mkdtemp(join(tmpdir(),'umf-adoption-check-'));
+ try{
+  for(const file of generated.files)await Bun.write(join(directory,file.path),file.text);
+  const script=`import asyncio\nfrom adoption import Actions, Client, SyncActions, SyncClient, CustomerKey, OpenProjectPrecondition\nassert OpenProjectPrecondition.CHECK == 'check'\nclass AsyncHost:\n async def execute(self, request):\n  assert request['inputs']['note'] == 'value'\n  return {'schema':request['schema'],'status':'committed','created':[],'changed':[],'counts':{},'consistency_token':'cut'}\nclass SyncHost:\n def execute(self, request):\n  assert request['inputs']['note'] == 'value'\n  return {'schema':request['schema'],'status':'committed','created':[],'changed':[],'counts':{},'consistency_token':'cut'}\nasync def main():\n await Actions(Client(AsyncHost())).open_project(code='P',title='T',client=CustomerKey(code='C1'),check='value')\n SyncActions(SyncClient(SyncHost())).open_project(code='P',title='T',client=CustomerKey(code='C1'),check='value')\nasyncio.run(main())\n`;
+  const proc=Bun.spawn([process.env.UMF_UNIFIED_PYTHON??'python3.11','-S','-c',script],{cwd:directory,stdout:'pipe',stderr:'pipe',env:{...process.env,PYTHONPATH:directory,PYTHONDONTWRITEBYTECODE:'1'}});
+  const [exit,stdout,stderr]=await Promise.all([proc.exited,new Response(proc.stdout).text(),new Response(proc.stderr).text()]);
+  expect({exit,stdout,stderr}).toEqual({exit:0,stdout:'',stderr:''});
+ }finally{await rm(directory,{recursive:true,force:true});}
 });
 
 // @covers US-091-AC12 US-091-AC13

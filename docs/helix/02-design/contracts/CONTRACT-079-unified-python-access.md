@@ -111,8 +111,10 @@ Python carriers are int, Decimal, UUID, bytes, date and ExactTimestamp respectiv
 Missing is an explicit sentinel distinct from None. No numeric carrier uses float.
 
 Read transport failures are sanitized. A lost action response raises
-WriteOutcomeUnknown; cancellation while awaiting a dispatched write does too.
-Read cancellation propagates normally. The client never retries writes automatically.
+WriteOutcomeUnknown. Cancellation propagates as the original cancellation, with
+per-invocation write uncertainty available through `write_outcomes_unknown` as
+specified below. Read cancellation adds no write uncertainty. The client never
+retries writes automatically.
 `PreconditionFailed.precondition` preserves the refusal identity separately from
 `field`; exception messages contain only the fixed error code. Authorization,
 atomic commit, idempotency storage and freshness are host responsibilities.
@@ -534,7 +536,13 @@ proves neither commit nor rollback for an unknown item. Atomic settlement is eit
 no applied/unknown items. A lost or malformed atomic outcome raises uncertainty.
 Partial settlement may explicitly carry unknown items. With stop_on_error, the
 first refused/unknown item ends attempted work; all later items are unattempted.
-Without stop_on_error, unattempted items are invalid in partial settlement.
+Without stop_on_error, unattempted items are invalid in both atomic and partial
+settlement. In either mode, unattempted is permitted only as the complete suffix
+immediately after the first refusal (or first unknown in partial mode), with
+stop_on_error enabled. Leading unattempted items, gaps and resumed attempted work
+are invalid. This deliberately tightens previously underspecified atomic preflight
+ordering; hosts must return explicit refusals/rolled_back outcomes instead of
+unattempted outcomes when stop_on_error is disabled.
 Atomic rolled_back items represent work undone with the complete batch; atomic
 failures require at least one refusal. An unknown/unreadable whole response raises
 WriteOutcomeUnknown rather than fabricating per-item conclusions.
@@ -551,12 +559,54 @@ native table `Applied`/`Recovered` protocol retains its explicit durability mode
 A consistency token issued before commit must never be encoded as graph success.
 
 After dispatch, transport exceptions (including arbitrary AccessError exceptions),
-cancellation, wrong-schema responses, malformed error envelopes, missing/invalid
+wrong-schema responses, malformed error envelopes, missing/invalid
 receipt fields or pending statuses raise WriteOutcomeUnknown carrying `.key`.
 Only a well-formed matching-schema known-code error envelope acknowledges a refusal
 without effects; WRITE_OUTCOME_UNKNOWN explicitly acknowledges uncertainty.
 Local pre-dispatch type/bound errors retain their local error category. Reads and
 validation retain ordinary transport/response errors. No client retries writes.
+
+Graph success requires `created`, `changed`, `counts` and `consistency_token`,
+including explicit empty `[]`, `[]` and `{}` collections when appropriate. Missing
+collections must not default to empty. Only wire `status` is optional for legacy
+committed acknowledgement; omission of a receipt field still means uncertainty.
+
+Post-dispatch `asyncio.CancelledError` is a separate control-flow case: both
+async and sync transports MUST propagate the original cancellation object and
+class. The client MUST append a fresh WriteOutcomeUnknown with the invocation
+key to private per-exception metadata before re-raising. This applies even when
+the transport raises cancellation spontaneously and no task was cancelled.
+The client MUST NOT clear cancellation state, replace cancellation with another
+exception, retry, or claim commit/rollback. Before dispatch, cancellation creates
+no new uncertainty annotation. Reads and validation likewise add none.
+
+Every generated package exports:
+`write_outcomes_unknown(error: BaseException) -> tuple[WriteOutcomeUnknown, ...]`.
+The helper inspects the exception itself (including a direct WriteOutcomeUnknown)
+and its invocation annotations, then follows `__cause__` when present, otherwise
+unsuppressed `__context__`. It terminates cycles by exception identity and
+deduplicates uncertainty objects by identity, preserving chain traversal and
+annotation insertion order. Equal keys do not merge distinct invocations.
+Reused/nested cancellation objects retain every annotation. Inspection is
+read-only and uses no task-global or client-global last-error slot.
+Each helper returns uncertainty objects from its own generated package's runtime
+class. Foreign annotations remain intact; when independently generated packages
+share a cancellation chain, invoke each involved package's helper to inspect its
+invocations. No cross-package nominal exception-type compatibility is implied.
+
+Timeout translation retains the original cancellation as its cause, so inspecting
+the resulting TimeoutError recovers its invocation uncertainty. The helper reports
+historical uncertainty represented by the displayed chain; it does not declare a
+wrapper's own operation uncertain. Explicit `raise ... from None` hides unrelated
+context, which the helper does not inspect. Callers must retain a caught exception
+or task cancellation exception to inspect it; TaskGroup intentionally suppresses
+cancelled children, so callers needing those keys must capture them inside the
+child before re-raising. This replaces the earlier cancellation-to-WriteOutcomeUnknown
+conversion while preserving ordinary transport error semantics and wire shapes.
+`asyncio.gather(..., return_exceptions=True)` may return replacement cancellation
+objects without the original annotations. Capture and inspect the original inside
+each child when using combinators that suppress or replace child cancellation;
+inspection cannot reconstruct metadata from a replacement exception.
 
 ### Platform and integration qualification
 

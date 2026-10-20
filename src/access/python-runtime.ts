@@ -38,6 +38,31 @@ class WriteOutcomeUnknown(AccessError):
         super().__init__(code, field, precondition=precondition)
         self.key = key
 
+def write_outcomes_unknown(error: BaseException) -> tuple[WriteOutcomeUnknown, ...]:
+    """Return uncertainty annotations visible on an exception and its displayed chain."""
+    if not isinstance(error, BaseException): raise TypeError('error must be an exception')
+    result: list[WriteOutcomeUnknown] = []
+    included: set[int] = set()
+    visited: set[int] = set()
+    current: BaseException | None = error
+    while current is not None and id(current) not in visited:
+        visited.add(id(current))
+        candidates = [current] if isinstance(current, WriteOutcomeUnknown) else []
+        annotated = getattr(current, '_umf_write_outcomes_unknown', ())
+        if isinstance(annotated, tuple): candidates.extend(x for x in annotated if isinstance(x, WriteOutcomeUnknown))
+        for candidate in candidates:
+            if id(candidate) not in included:
+                included.add(id(candidate)); result.append(candidate)
+        if current.__cause__ is not None: current = current.__cause__
+        elif not current.__suppress_context__: current = current.__context__
+        else: current = None
+    return tuple(result)
+
+def _record_write_outcome_unknown(error: BaseException, key: str | None) -> None:
+    previous = getattr(error, '_umf_write_outcomes_unknown', ())
+    if not isinstance(previous, tuple): previous = ()
+    setattr(error, '_umf_write_outcomes_unknown', previous + (WriteOutcomeUnknown(key=key),))
+
 WIRE_ERROR_CODES = ('INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS',
                     'LIMIT_EXCEEDED', 'BUSY', 'UNSUPPORTED', 'SCHEMA_MISMATCH',
                     'WRITE_OUTCOME_UNKNOWN', 'NOT_YET_CURRENT', 'INVALID_CURSOR')
@@ -274,8 +299,8 @@ class Client:
         key = body.get('idempotency_key')
         try:
             response = await self.transport.execute(request)
-        except asyncio.CancelledError:
-            if writing: raise WriteOutcomeUnknown(key=key) from None
+        except asyncio.CancelledError as error:
+            if writing: _record_write_outcome_unknown(error, key)
             raise
         except AccessError:
             if writing: raise WriteOutcomeUnknown(key=key) from None
@@ -398,11 +423,13 @@ class Client:
             statuses = [item.status for item in results]
             if atomic:
                 if not all(status == 'applied' for status in statuses) and ('applied' in statuses or 'unknown' in statuses or 'refused' not in statuses): raise AccessError('INVALID_RESPONSE')
-            elif 'rolled_back' in statuses or 'unattempted' in statuses and not stop_on_error:
+            elif 'rolled_back' in statuses:
                 raise AccessError('INVALID_RESPONSE')
-            if not atomic and 'unattempted' in statuses:
+            if 'unattempted' in statuses:
+                if not stop_on_error: raise AccessError('INVALID_RESPONSE')
                 first = statuses.index('unattempted')
-                if not first or statuses[first-1] not in ('refused', 'unknown'): raise AccessError('INVALID_RESPONSE')
+                predecessors = ('refused',) if atomic else ('refused', 'unknown')
+                if first == 0 or statuses[first-1] not in predecessors or any(status != 'unattempted' for status in statuses[first:]): raise AccessError('INVALID_RESPONSE')
             return BatchReceipt(tuple(results), token)
         except Exception:
             raise WriteOutcomeUnknown(key=idempotency_key) from None

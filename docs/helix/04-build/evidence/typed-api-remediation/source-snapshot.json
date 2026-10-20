@@ -1,0 +1,31 @@
+{
+  "startingCommit": "7466c5a9c456e7c200737b82ebc664d6576fc27d",
+  "branch": "codex/typed-api-adoption",
+  "sourceSha256": {
+    ".github/workflows/access-boundaries.yml": "7c55e03733c99dd94cdf5bf137565bef729b7b121c5d2adb65f3779fadccf5d0",
+    "python/umf_access/src/umf_access/unified/table_reads.py": "2a1295d60bbcedd9425fd4881e0bd35e487a7abeba7caed5effc43b250ecde66",
+    "python/umf_access/tests/test_fixed_query_description.py": "7432a4a44f397b10d8467cebe3167d833d9e9be5df4848cc858207b4799423c7",
+    "python/umf_access/tests/test_fixed_query_preparation.py": "8b421ca8326418c6ba7c3b3f1bedbffa374837e197668fabc01f66501fb7e32d",
+    "python/umf_access/tests/test_refactor_regeneration.py": "c07879486ce6e30ba07c9266adddde20d017cea2d45a559dfa09d8bb74f8a840",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "cf05f74780e2afb89fdb8899c6330efbb563c2d26e26dc93fb16c03972d6c436",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "02fc64b36a859e0076fe588eb61763e8836663a24bfa6a9d982f8518b38a9d0c",
+    "python/umf_codegen/src/umf_codegen/_release.py": "491fda3e29fd05f2587f647e65bebfb2953f8c66f6f3f41376219f51ee18588d",
+    "src/access/index.ts": "fd5d6e134077c03c94b22a7168fcb1835e5686426fb1ce2c648a772a7bcec0ed",
+    "src/access/python-runtime.ts": "0ed17d378e927b3347a76b8df22a20bc6a94bb9091431672949a1d449a37c16e",
+    "src/extensions/actions/plan-identity.ts": "16c1b4aaf0abba7adf385c7ad067a4fd6df5cd2851a1599f93e36573e99f3e5c",
+    "tests/access-adoption.test.ts": "b509006161814b81913853004f19de2e57e1490de3493ddef00e66878a744f1f",
+    "tests/access-unified-generation.test.ts": "d9421a8d013b93dea73365f87b18c50a5d56410e30c103d4b0158e5bf38d6324",
+    "tests/access-unified.test.ts": "0fffc43bf56409137b404e142e94b5050fae3f33bc8ee80b5dffc00146099713",
+    "tests/unified/adoption_probe.py": "449d05792fb0ee38838cf6cd5248c63d2cc895b011c0705f82c28e18a926ee1e",
+    "tests/unified/adoption_typecheck_positive.py": "46fff52b78d51c60c140eab0d550a7fd2b79318477a1f7b005b537ffb613cac0",
+    "tests/unified/table_reads_native.py": "d77bc9c245697f67a962771e5a3e2c49bd61612be68f771604a7a2c5930d370e"
+  },
+  "wheelSha256": {
+    "/private/tmp/umf-remediation-wheels/umf_core-0.10.0-py3-none-any.whl": "18eca6a9770691da8d22eda03af502b53521f472b9a10c0de920f6a31ca529e5",
+    "/private/tmp/umf-remediation-wheels/umf_codegen-0.1.0a1-py3-none-any.whl": "145e2f543e186b37f11d4a916560ba06dcfaf77e8730e01a4cbc0819d141f37d"
+  },
+  "sourceQualification": "working tree before remediation commit; docs-only edits do not change these runtime inputs",
+  "review": "latest Sol final source and native CI review: no actionable findings",
+  "nativeResults": "ci-diagnosis.json",
+  "hostedStatus": "pending final pushed-head checks"
+}

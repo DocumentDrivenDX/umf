@@ -13143,3 +13143,18 @@ explicit negative controls for the old compiler imports and other consumers.
 All24 local boundary tests and the actual source checker pass. The adoption
 evidence retains the baseline comparison and hosted failure; no runtime/compiler
 boundary was widened. Hosted CI and independent review remain merge prerequisites.
+
+### Integrated PR40 review remediation — 2026-10-20
+
+The [review reconciliation and remediation plan](typed-api-review-remediation-plan.md)
+disposes every Claude comment alongside the earlier Codex fixes at head
+`7466c5a`. It records reproduced naming, atomic-ordering and cancellation cases,
+qualifies intentional receipt/error behavior, and adds the current native CI
+failure to the merge gates. This supersedes the earlier clean-review conclusion
+without changing historical test evidence. The owner authorized implementation
+and push for another independent review. S1–S5 now have governing amendments,
+runtime corrections and local verification in the
+[remediation packet](evidence/typed-api-remediation/README.md). S6's pinned native
+dependency and fixture corrections pass the local six-adapter suites (607
+assertions) and Ruff. S7's final hosted checks remain a merge gate; local passes
+do not establish those hosted results.

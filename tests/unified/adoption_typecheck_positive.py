@@ -1,7 +1,15 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 from adoption import (Actions, Client, SyncActions, SyncClient, CustomerKey,
                       ProjectKey, OpenProjectInput, OpenProjectPrecondition,
-                      BatchReceipt, ValidationResult, PreconditionFailed)
+                      BatchReceipt, ValidationResult, PreconditionFailed,
+                      WriteOutcomeUnknown, write_outcomes_unknown)
+
+def inspect_write_uncertainty(error: BaseException) -> tuple[WriteOutcomeUnknown, ...]:
+    outcomes = write_outcomes_unknown(error)
+    if outcomes:
+        key: str | None = outcomes[0].key
+        assert key is None or isinstance(key, str)
+    return outcomes
 
 async def asynchronous(client: Client) -> BatchReceipt[ProjectKey, None]:
     actions = Actions(client)

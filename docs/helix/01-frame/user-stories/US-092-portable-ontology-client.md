@@ -134,15 +134,20 @@ execution engines, audit, migrations and changes to the existing table SDK.
 
 - [x] **US-092-AC13** — Sync/async typed action inputs preserve MISSING versus null;
   batches enforce 1–100 items before dispatch and retain ordered per-item results.
+  Atomic and partial settlements obey the same explicit stopping-order rules in
+  CONTRACT-079; invalid host conclusions preserve uncertainty.
 - [x] **US-092-AC14** — Advisory validation sends typed inputs without write/replay
   authority; apply reevaluates current conditions and authorization.
-- [x] **US-092-AC15** — Pending, lost, cancelled and malformed post-dispatch write
-  responses raise WriteOutcomeUnknown with the invocation key and zero retries;
+- [x] **US-092-AC15** — Pending, lost and malformed post-dispatch write
+  responses preserve uncertainty with the invocation key and zero retries;
+  cancellation propagates normally while every affected invocation remains
+  inspectable under CONTRACT-079, including through timeout translation;
   a confirmed refusal remains a typed business error. Valid receipts acknowledge
   commit and never reinterpret native caller-owned pending results.
 - [ ] **US-092-AC16** — Installed wheel-only Linux/Python matrix and cross-platform
   byte parity are separately recorded; isolated generated imports need no umf_access.
 
 The checked adoption criteria have local portable/client and synthetic-host
-evidence in [the adoption record](../../04-build/evidence/praxis-adoption.md).
+evidence in [the adoption record](../../04-build/evidence/praxis-adoption.md) and
+the [cancellation and settlement remediation packet](../../04-build/evidence/typed-api-remediation/README.md).
 They establish no production executor or platform-matrix qualification.
