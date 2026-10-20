@@ -897,3 +897,8 @@ Those source-provenance follow-ups do not publish a release. Remaining gates are
 seed execution, broader forward evolution/runtime upgrades, selected private
 full-method/source/data conversion, available managed acceptance and immutable
 versioned publication. The full goal remains active.
+
+The schema producer638f104d4 is now pinned in Weft6e907632267a7140d07865d295da6ca2d23a6b3f,
+which is pushed and pinned in UMF CI. The complete native domain fixture is enabled
+in that paired source cohort. New hosted checks remain pending; no release or
+tag is published.

@@ -209,7 +209,7 @@ jobs:
         if: matrix.weft-cohort == 'source-dbapi'
         with:
           repository: DocumentDrivenDX/weft
-          ref: f910d9c6137861e15f93fe9b316703fb5412cf8d
+          ref: 6e907632267a7140d07865d295da6ca2d23a6b3f
           path: .ci-weft
       - uses: dtolnay/rust-toolchain@stable
         if: matrix.weft-cohort == 'source-dbapi'
@@ -254,6 +254,8 @@ jobs:
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --report /tmp/umf-head-adapter-native.json
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --correspondence --report /tmp/umf-correspondence-adapter-native.json
           python -I tests/unified/table_reads_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-reads-native.json
+          bun tests/unified/table-domain-fixture.ts /tmp/umf-domain-model.json
+          python -I tests/unified/table_reads_native.py --domains --source /tmp/umf-domain-model.json --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-domain-native.json
           bun tests/unified/table-temporal-fixture.ts /tmp/umf-temporal-model.json
           python -I tests/unified/table_reads_native.py --temporal --source /tmp/umf-temporal-model.json --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-temporal-native.json
           python -I tests/unified/table_reads_native.py --mutations --generated --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-generated-native.json
@@ -276,3 +278,4 @@ jobs:
             /tmp/umf-table-writes-native.json
             /tmp/umf-table-generated-native.json
             /tmp/umf-table-temporal-native.json
+            /tmp/umf-table-domain-native.json

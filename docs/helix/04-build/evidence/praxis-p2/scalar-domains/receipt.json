@@ -12,10 +12,10 @@
     "spec/upstream/umf-table-operation-0.1.schema.json": "f747faf5f674c0e3b0f9e905ad91344df554eed420abd2637eb685b151b8171f"
   },
   "sourceFiles": {
-    ".github/workflows/access-boundaries.yml": "0bc50f5bcd244ac74ac90d52904f16c06313b49616f028cf29a6459d7af829d8",
+    ".github/workflows/access-boundaries.yml": "dc1295035fdd604b991ac32145f77ebd843cdfb9e8ec315b0351dd1009b35246",
     "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md": "327b412d59dde13e5556a031c453054cfb12d04034300bf0cf5bace9d0f53c98",
     "docs/helix/04-build/guides/unified-python-access.md": "46cc5e5c7ef51b4630d35e774f39eaa17aef2dec30613092c99795ef6b7b2659",
-    "docs/helix/04-build/praxis-p1-plan.md": "155ce7a154a15054dea5237a5c7c8b78f32f6b7c0ffa90afa1fb49013cacb1d4",
+    "docs/helix/04-build/praxis-p1-plan.md": "837c3b7a509d849be6497a952fbc2bc9ebb61483cbe00e449dd6c7375f4beee3",
     "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "dc0e50138b9305d10c999875a024b1541b45b0dd2476be91d45647ddf17367f7",
     "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "9811294535a53d8d4050df9dcfc4a853f9fa7b48ffb79e77cda3629a96f663ba",
     "python/umf_codegen/src/umf_codegen/_release.py": "e16148de994e0435983b9d7a298e849a6464bbea5f085f19b74489c2f7bb21b4",
@@ -83,9 +83,11 @@
     "generic raw-domain and unsupported selected qualifier refusals"
   ],
   "remaining": [
-    "paired exact schema producer/compiler provenance and successor CI source pin",
     "seeds, broader schema/policy/operation evolution and runtime upgrades",
     "selected private full-method/source/data conversion and available managed acceptance",
     "version bumps and immutable full cohort publication"
-  ]
+  ],
+  "weftCommit": "6e907632267a7140d07865d295da6ca2d23a6b3f",
+  "schemaProducerCommit": "638f104d4d1ff05c932849f96a7029dbac1a5808",
+  "pairedCi": "Exact compiler pinned; native domain fixture enabled. Successor hosted checks pending."
 }

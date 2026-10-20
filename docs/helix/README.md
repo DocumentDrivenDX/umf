@@ -43,6 +43,11 @@ with88 PG18 assertions across all six driver/pool variants. Source-declared
 current timestamps and ambient timezone/date-format independence are qualified;
 blocking enum/range and remaining lifecycle/consumer/release work stay open.
 
+The [scalar domain/clock evidence](04-build/evidence/praxis-p2/scalar-domains/receipt.json)
+adds native and generated membership/range/width/length validation plus typed
+server transaction-time assignments. Six driver/pool variants pass150 PG18
+assertions; seeds/evolution, final consumer acceptance and publication remain open.
+
 [Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
 turns a current UMF schema into one typed model/query/action API for tables and
 ontologies. Developers compose reads directly and change the binding to change
