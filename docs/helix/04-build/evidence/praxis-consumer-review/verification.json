@@ -40,5 +40,23 @@
     "fullPlatformByteParityMatrix": false,
     "fullRepositorySuite": false,
     "releasePublished": false
+  },
+  "hostedFixtureFollowup": {
+    "baseCommit": "4f39dd82181252741ad1c5eb0f1365081f404752",
+    "job": "https://github.com/DocumentDrivenDX/umf/actions/runs/39491012407/job/118863889793",
+    "testSha256": "1dc4b05d69136ba067218ba11869d48b6a8ff5c45d49e6febacbb2f0ddaf57ab",
+    "selectors": [
+      "tests/access-native-table.test.ts",
+      "tests/access-native-domains.test.ts",
+      "tests/access-unified.test.ts",
+      "tests/access-unified-sync.test.ts",
+      "tests/access-unified-generation.test.ts",
+      "tests/compilation/access-generator.test.ts"
+    ],
+    "passed": 38,
+    "skipped": 1,
+    "failed": 0,
+    "runtimeChanged": false,
+    "embeddedAssetsCurrent": true
   }
 }

@@ -171,3 +171,17 @@ Commands: `bun test tests/access-adoption.test.ts tests/access-unified-generatio
 `PYTHONPATH=python/umf_codegen/src python -m unittest discover -s python/umf_codegen/tests`.
 The scoped Python command used the local CPython3.11.17 environment with
 mini-racer0.14.1. No source asset was published or version relabeled.
+
+### Hosted compatibility fixture follow-up
+
+On head `4f39dd821`, the [hosted compatibility job](https://github.com/DocumentDrivenDX/umf/actions/runs/39491012407/job/118863889793)
+exposed an older fake host returning `precondition:"order-open"` for an action
+whose source declares no preconditions. The new declaration check correctly
+classified it as malformed. Correct the fixture to assert keyed uncertainty and
+one dispatch; retain valid declared-condition tests in the adoption probe.
+Runtime, accepted source fixture and embedded assets are unchanged.
+
+The exact hosted six-file Bun selection passes locally:38 passed,1 intentionally
+unconfigured native test skipped,0 failed. The canonical asset check remains
+current. This local correction requires a fresh hosted run; it does not establish
+that all PR checks have completed.

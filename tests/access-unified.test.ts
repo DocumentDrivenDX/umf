@@ -87,17 +87,22 @@ async def main():
     else:
         raise AssertionError('schema-mismatched response accepted')
 
-    class PreconditionHost:
+    class UndeclaredConditionHost:
+        calls = 0
         async def execute(self, request):
+            self.calls += 1
             return {'schema': request['schema'], 'error': {'code': 'PRECONDITION_FAILED',
                     'field': 'status', 'precondition': 'order-open', 'message': 'private instance data'}}
+    undeclared_condition = UndeclaredConditionHost()
     try:
-        await Actions(Client(PreconditionHost())).ship_order(order=OrderKey(order_id='o-100'))
-    except PreconditionFailed as error:
-        assert error.field == 'status' and error.precondition == 'order-open'
-        assert str(error) == 'PRECONDITION_FAILED'
+        await Actions(Client(undeclared_condition)).ship_order(
+            order=OrderKey(order_id='o-100'), idempotency_key='undeclared-condition-key')
+    except WriteOutcomeUnknown as error:
+        outcomes = write_outcomes_unknown(error)
+        assert len(outcomes) == 1 and outcomes[0].key == 'undeclared-condition-key'
     else:
-        raise AssertionError('precondition refusal accepted')
+        raise AssertionError('undeclared precondition refusal treated as a known outcome')
+    assert undeclared_condition.calls == 1
 
     class CancelledHost:
         calls = 0
