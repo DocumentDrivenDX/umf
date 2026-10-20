@@ -34,7 +34,7 @@ jobs:
       - run: bun scripts/check-table-lifecycle-boundaries.ts
       - run: bun scripts/check-table-deployment-boundaries.ts
       - run: >-
-          bun test tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-temporal.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
+          bun test tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-temporal.test.ts tests/binding/table-domains.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
           tests/compilation/table-lifecycle-boundaries.test.ts tests/compilation/table-deployment-boundaries.test.ts
       - run: bunx playwright install --with-deps chromium
       - name: Actual browser metadata parity and preservation
@@ -85,7 +85,7 @@ jobs:
           python -I -m unittest discover -s python/umf_access/tests -p 'test_native_binding.py' -v
       - name: Check portable sync and async clients
         run: >-
-          bun test tests/access-native-table.test.ts tests/access-unified.test.ts tests/access-unified-sync.test.ts
+          bun test tests/access-native-table.test.ts tests/access-native-domains.test.ts tests/access-unified.test.ts tests/access-unified-sync.test.ts
           tests/access-unified-generation.test.ts tests/compilation/access-generator.test.ts
       - uses: actions/upload-artifact@v4
         if: always()

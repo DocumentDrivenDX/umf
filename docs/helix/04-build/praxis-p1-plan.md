@@ -860,3 +860,40 @@ broader forward evolution/runtime upgrade, private full-method/data conversion,
 available managed runtime acceptance and immutable publication as the next
 required work. Private source, SQL, names and values remain outside public code
 and evidence. The full release goal stays active.
+
+## Blocking domains and declared transaction-clock operands — 2026-10-19
+
+The selected private branch's32 blocking quality checks are26 VARCHAR membership
+sets and six DECIMAL ranges; no private names, SQL, strings or data were copied.
+This increment implements those meanings as logical scalar domains, generated
+Python validation and source-derived native CHECK inventory. It also adds the
+typed `currentTimestamp` operation value needed for fixed server-time statements.
+It emits only the backend's fixed transaction-time keyword and cannot be used as
+a caller-supplied SQL/function surface.
+
+The [domain/clock packet](evidence/praxis-p2/scalar-domains/receipt.json) records150
+PG18 assertions across six driver/pool variants and both transaction owners,
+with74 balanced leases. Invalid enums, ranges, boolean memberships and text lengths
+refuse before leasing; native direct writes also fail their CHECKs. Generated
+server-time updates return exact UTC instants and repeated keys recover without
+executing again. Source/role/current-generation and existing frame/outcome checks
+remain active. Unknown qualifiers, invalid clock targets and generic raw-domain
+admission retain their refusals.
+
+Three pinned static checkers accept ordinary and domain-specific generated clients
+and reject exactly ten reviewed misuse sites each, including caller time on a
+server-time method. The shared core passes339 tests and the focused PostgreSQL
+compiler passes15. Native CLI/Python and actual Chromium WASM match37 cases,
+with10 self-rehash controls. UMF's full table browser now has46 assertions and
+its embedded Python compiler matches20 complete corpus cases without external
+JavaScript processes, network or subprocesses. Constructor controls additionally
+cover Unicode scalar length, exact int64 enumeration and extreme-exponent decimal
+zero without context rounding. Existing container refinement refusal stays explicit.
+
+Predecessor UMF054bf4194's complete hosted typed-access workflow39342106052 and
+Weft f910d9c6's39341867909 are green. The new schema must be pinned by its exact
+producer commit in Weft and the paired compiler must then be pinned by UMF CI.
+Those source-provenance follow-ups do not publish a release. Remaining gates are
+seed execution, broader forward evolution/runtime upgrades, selected private
+full-method/source/data conversion, available managed acceptance and immutable
+versioned publication. The full goal remains active.

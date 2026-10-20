@@ -268,3 +268,17 @@ ambient timezone or date-format change cannot masquerade as schema drift. The
 six-driver fixture exercises non-default ambient settings and verifies that
 those caller settings remain unchanged. This support does not qualify arbitrary
 temporal refinements, seeds, legacy adoption or broader schema evolution.
+
+Logical scalar `allowedValues`, numeric `range`, `integerWidth` and typed `length`
+facets now produce native CHECKs and generated validation in the local candidate.
+String/boolean/small-integer enums become Python Literal types. Decimal and large
+integer memberships retain exact runtime comparisons, with no float conversion.
+Range endpoints retain authored inclusivity. Unsupported temporal/container
+qualifiers still refuse.
+
+To update a timestamp on the server, author an operation assignment such as
+`{"field":{"module":"demo","element":"updatedAt"},"value":{"kind":"currentTimestamp"}}`
+against explicit `timestamptz` storage. The generated method has no parameter for
+that assignment. PostgreSQL supplies transaction time; replay recovery returns
+the existing receipt rather than running the update again. Use a distinct
+operation input when the caller should supply a timestamp instead.

@@ -812,3 +812,29 @@ still apply. Existing sources without these generated checks retain their
 witness0.1 representation. No installed witness is silently upgraded or blessed
 from newly observed state. Earlier cohorts and broader runtime upgrades require
 explicit qualification/migration.
+
+## Blocking scalar domains and transaction-time values
+
+The unpublished native profile derives CHECK constraints from logical singleton
+string/boolean/integer/decimal enumerations, exact numeric ranges, integer widths
+and Unicode-scalar/byte length bounds. Native capacities remain independent.
+Nullability is enforced separately; a null member cannot turn a false SQL IN
+result into an unknown CHECK success. Unknown facet qualifiers refuse rather
+than disappear. Temporal and container refinements retain their separate gates.
+
+Integer/decimal deployment literals normalize mathematically without floats;
+zero with an extreme exponent emits finite zero. Native numeric resource limits
+refuse before SQL emission. Complete original source tokens remain preserved.
+Generated Python retains exact literal metadata for large integers and decimals;
+representable primitive enumerations also generate Literal annotations. Constructor
+and pre-dispatch checks retain membership, range inclusivity, width and length.
+Decimal source candidates normalize trailing zeroes without Decimal-context
+rounding. Invalid Unicode refuses before transport.
+
+`TableOperationValue` additionally admits `{kind:"currentTimestamp"}` only for
+an explicit instant mapped to `timestamptz`. It may supply an assignment or typed
+comparison operand; it declares PostgreSQL transaction-time semantics and emits
+fixed `CURRENT_TIMESTAMP`. It adds no caller parameter, function name or SQL
+escape. Fresh writes and replay observations retain the same durable-key contract;
+a recovered invocation does not evaluate the write again. Source checking and
+actual person/batch native authority remain mandatory.

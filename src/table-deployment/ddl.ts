@@ -5,6 +5,7 @@ import type {DeploymentContext,TableDeploymentBundle} from './types';
 import {deploymentError} from './configuration';
 import {expressionSql,literalSql,nativeType,nativeTypeExpectation,quoteIdentifier as q} from './sql';
 import {policySql} from './policies';
+import {domainPredicates} from './domains';
 const keyName=(table:string,id:string):string=>'umf_k_'+hashCanonical([table,id]).slice(0,32);
 export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['expectedCatalog']{
  const keys:TableDeploymentBundle['expectedCatalog']['keys']=[];
@@ -18,8 +19,7 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
    const field=ctx.field(c.field),p=path+'/columns/'+j;
    // Unknown logical qualifiers must not acquire an executable interpretation.
    if(Object.keys(field.extensions).length||field.semanticTypes?.length)deploymentError('Selected Field extension/semantic type requires a qualified native interpretation',p);
-   if(field.facets&&Object.keys(field.facets).some(k=>!['precision','scale'].includes(k)))deploymentError('Logical facet requires a qualified native constraint',p);
-   if(field.allowedValues?.length)deploymentError('Logical allowedValues requires an explicit qualified native constraint',p);
+   domainPredicates(c,field);
    if(c.nativeType.kind==='numeric'&&(field.facets?.precision!==c.nativeType.precision||field.facets?.scale!==c.nativeType.scale))deploymentError('Native numeric capacity must equal the declared logical precision/scale',p);
    if(['char','float4','float8','timestamp'].includes(c.nativeType.kind))deploymentError('Native padding/float/time codec is not yet qualified',p);
    if(c.nativeType.kind==='bytea'&&field.scalarType!=='binary')deploymentError('bits128 bytea requires a separately qualified width constraint',p);
@@ -47,10 +47,7 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
   }
   for(const c of table.columns){
    const name='umf_d_'+hashCanonical([table.id,c.field,'finite-domain']).slice(0,32),column=q(c.name);
-   const kind=c.nativeType.kind;
-   const predicate=kind==='numeric'?`${column} NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric)`:
-    kind==='date'?`${column} >= '0001-01-01'::pg_catalog.date AND ${column} <= '9999-12-31'::pg_catalog.date`:
-    kind==='timestamptz'?`${column} >= '0001-01-01T00:00:00Z'::pg_catalog.timestamptz AND ${column} <= '9999-12-31T23:59:59.999999Z'::pg_catalog.timestamptz`:null;
+   const predicate=domainPredicates(c,ctx.field(c.field)).join(' AND ');
    if(predicate){
     if(constraintNames.has(name))deploymentError('Generated domain constraint name collision',path);
     constraintNames.add(name);

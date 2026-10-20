@@ -43,8 +43,10 @@ parser.add_argument('--report', required=True, type=Path)
 parser.add_argument('--mutations',action='store_true')
 parser.add_argument('--generated',action='store_true')
 parser.add_argument('--temporal',action='store_true')
+parser.add_argument('--domains',action='store_true')
 parser.add_argument('--source',type=Path)
 args = parser.parse_args()
+if args.domains:args.temporal=True
 if args.temporal:args.generated=True;args.mutations=True
 source = json.loads((args.source or Path(__file__).with_name('table-operation-model.json')).read_text())
 module = source['modules'][0]; content = {'module':'demo','element':'content'}
@@ -93,7 +95,7 @@ binding = {'version':'umf.raw-read-binding/0.1','schema':cfg['schema'],
     'modelJson':bundle['source']['utf8'],'modelSha256':bundle['sourceDigest'],
     'tables':[{'logical':['demo','Note'],'native':'notes','key':['id'],
                'columns':[{'logical':name,'native':name,'carrier':next(e['scalarType'] for e in module['elements'] if e['id']==name),'nullable':name=='content'}
-                          for name in (('id','owner','content','day','at','amount') if args.temporal else ('id','owner','content'))]}], 'relationships':[],
+                          for name in [column['field']['element'] for column in payload['tables'][0]['columns']]]}], 'relationships':[],
     'nativeLifecycle':{'version':'umf.table-lifecycle/0.1','module':'demo',
         'configurationDigest':bundle['configurationDigest'],'deploymentDigest':bundle['bundleDigest']}}
 observations = []; leases = {}; secret = b'independent synthetic test secret 000000'
@@ -674,7 +676,8 @@ async def generated_async_cases(label,factory,adapter):
 
 def temporal_params(key,role):
     return {'id':key,'owner':role,'day':date(1,1,1),
-            'at':client_module.ExactTimestamp('2026-01-01T00:30:00.123456000+01:00'),'amount':Decimal('12.30')}
+            'at':client_module.ExactTimestamp('2026-01-01T00:30:00.123456000+01:00'),'amount':Decimal('12.30'),
+            **({'status':'draft','rank':2,'active':True,'tag':'é😀'} if args.domains else {})}
 
 
 def temporal_sync_cases(label,factory,adapter):
@@ -727,6 +730,7 @@ def temporal_sync_cases(label,factory,adapter):
             c.commit()
         else:settings=tuple(c.exec_driver_sql(query).one());c.commit()
         check(label+'-temporal-ambient-settings-preserved',settings==('SQL, DMY','Pacific/Kiritimati'))
+    if args.domains:domain_sync_controls(label,client,params)
     check(label+'-temporal-leases-balanced',leases[label]['acquired']==leases[label]['released'])
 
 
@@ -771,7 +775,37 @@ async def temporal_async_cases(label,factory,adapter):
         else:settings=tuple((await c.exec_driver_sql(query)).one())
         await c.commit()
         check(label+'-temporal-async-settings-preserved',settings==('SQL, DMY','Pacific/Kiritimati'))
+    if args.domains:await domain_async_controls(label,client,params)
     check(label+'-temporal-async-cleanup',leases[label]['acquired']==leases[label]['released'])
+
+def domain_sync_controls(label,client,params):
+    before=leases[label]['acquired']
+    for field,value in [('status','other'),('rank',10),('active',False),('tag','four'),('amount',Decimal('100.00'))]:
+        try:client.create(**{**params,'id':params['id']+'-bad',field:value},idempotency_key='bad-'+field)
+        except client_module.AccessError:check(label+'-domain-client-'+field,leases[label]['acquired']==before)
+        else:raise AssertionError('invalid domain accepted '+field)
+    values={k:v for k,v in params.items() if k!='at'}
+    touched=client.touch(**values,idempotency_key='touch-'+params['id'])
+    check(label+'-domain-server-clock-assignment',touched.items[0].rows[0].at.text!='2025-12-31T23:30:00.123456Z')
+    check(label+'-domain-clock-recovery',isinstance(client.touch(**values,idempotency_key='touch-'+params['id']),client_module.Recovered))
+    for column,value in [('status','other'),('rank',10),('active',False),('tag','four'),('amount','100.00')]:
+        try:
+            with admin.transaction():admin.execute(sql.SQL('UPDATE {} SET {}=%s WHERE id=%s').format(bound_table,sql.Identifier(column)),(value,params['id']))
+        except psycopg.errors.CheckViolation:check(label+'-domain-native-'+column,True)
+        else:raise AssertionError('native domain accepted '+column)
+
+
+async def domain_async_controls(label,client,params):
+    before=leases[label]['acquired']
+    for field,value in [('status','other'),('rank',10),('active',False),('tag','four'),('amount',Decimal('100.00'))]:
+        try:await client.create(**{**params,'id':params['id']+'-bad',field:value},idempotency_key='bad-'+field)
+        except client_module.AccessError:check(label+'-domain-async-client-'+field,leases[label]['acquired']==before)
+        else:raise AssertionError('invalid domain accepted '+field)
+    values={k:v for k,v in params.items() if k!='at'}
+    touched=await client.touch(**values,idempotency_key='touch-'+params['id'])
+    check(label+'-domain-async-server-clock',touched.items[0].rows[0].at.text!='2025-12-31T23:30:00.123456Z')
+    check(label+'-domain-async-clock-recovery',isinstance(await client.touch(**values,idempotency_key='touch-'+params['id']),client_module.Recovered))
+
 
 if args.mutations:
     sync_cases,async_cases=write_sync_cases,write_async_cases
@@ -796,7 +830,9 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
         reference=installed['installationReference']
         bound_table=sql.SQL(sql.Identifier(cfg['schema'],'notes').as_string(admin).replace('%','%%'))
         for key,role in [('a2',alice),('a1',alice),('b1',bob)]:
-            if args.temporal:
+            if args.domains:
+                admin.execute(sql.SQL('INSERT INTO {} (id,owner,content,day,at,amount,status,rank,active,tag) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)').format(bound_table),(key,role,key,'2000-02-29','2026-01-01T00:00:00Z','12.30','draft',2,True,'é😀'))
+            elif args.temporal:
                 admin.execute(sql.SQL('INSERT INTO {} (id,owner,content,day,at,amount) VALUES (%s,%s,%s,%s,%s,%s)').format(bound_table),(key,role,key,'2000-02-29','2026-01-01T00:00:00Z','12.30'))
             else:
                 admin.execute(sql.SQL('INSERT INTO {} (id,owner,content) VALUES (%s,%s,%s)').format(bound_table),(key,role,key))

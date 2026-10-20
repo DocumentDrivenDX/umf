@@ -22,7 +22,7 @@ export interface TableSeedSet {id:string;rows:TableSeedRow[];conflict:'error'|'i
 export interface TableLifecyclePayload {profile:'postgresql18/0.1';tables:TableDeclaration[];seedSets:TableSeedSet[];commands:unknown[]}
 
 /** Named operation declarations; interpretation never grants native authority. */
-export type TableOperationValue={kind:'parameter';parameter:string}|{kind:'literal';value:CoreLiteral};
+export type TableOperationValue={kind:'parameter';parameter:string}|{kind:'literal';value:CoreLiteral}|{kind:'currentTimestamp'};
 export type TableOperationPredicate={op:'all'}|{op:'and';args:TableOperationPredicate[]}|{op:'or';args:TableOperationPredicate[]}|{op:'not';arg:TableOperationPredicate}|{op:'isNull';field:TableRef}|{op:'in';field:TableRef;values:TableOperationValue[]}|{op:'eq'|'ne'|'lt'|'le'|'gt'|'ge'|'startsWith';field:TableRef;value:TableOperationValue};
 export interface TableOperationAssignment {field:TableRef;value:TableOperationValue}
 export type TableOperationBody=

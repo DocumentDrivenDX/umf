@@ -50,7 +50,6 @@ test('native quoting has no string or identifier injection and no implicit seed 
 test('unqualified native codecs, logical facets and semantic policy combinations refuse',()=>{
  for(const mutate of [
   (d:any)=>{d.modules[0].elements[0].facets={maxLength:5};},
-  (d:any)=>{d.modules[0].elements[0].allowedValues=[{string:'only'}];},
   (d:any)=>{payload(d).tables[0].columns[0].nativeType={kind:'char',length:4};},
   (d:any)=>{payload(d).tables[0].policy.person.select={kind:'memberOfRole',role:'unbound'};},
   (d:any)=>{d.modules[0].extensions['umf.security']={unknown:'retained'};d.vocabularies['umf.security']={version:'0.2.0'};},

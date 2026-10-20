@@ -8,7 +8,8 @@ const owners:Record<string,readonly string[]>={
  'sql.ts':['../model/schema-literals','../extensions/tables','./types','./configuration','./temporal'],
  'temporal.ts':['../extensions/tables/temporal'],
  'policies.ts':['../extensions/tables','./types','./configuration','./sql'],
- 'ddl.ts':['../compilation/bundle/hash','../extensions/tables','./types','./configuration','./sql','./policies'],
+ 'ddl.ts':['../compilation/bundle/hash','../extensions/tables','./types','./configuration','./sql','./policies','./domains'],
+ 'domains.ts':['../model/types','../extensions/tables','./configuration','./sql'],
  'index.ts':['../model/json','../model/document','../model/types','../compilation/bundle/hash','../extensions/tables','./configuration','./ddl','./sql','./types'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','window','postMessage']);

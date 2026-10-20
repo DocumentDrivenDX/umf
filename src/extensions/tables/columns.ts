@@ -10,6 +10,7 @@ export function inspectColumn(column:TableColumn,field:Element|undefined,ctx:Tab
  if(!nativeFamilies[column.nativeType.kind]?.includes(field.scalarType??''))ctx.add('TABLES_NATIVE_TYPE',path+'/nativeType','Native type and logical scalar family differ');
  if(column.nativeType.kind==='numeric'&&column.nativeType.scale>column.nativeType.precision)ctx.add('TABLES_NUMERIC',path+'/nativeType/scale','Numeric scale exceeds precision');
  if(column.generated&&(!['int2','int4','int8'].includes(column.nativeType.kind)||column.default!==undefined||field.nullability!=='required'))ctx.add('TABLES_IDENTITY',path+'/generated','Identity requires a required integer column without another default');
+ for(const [i,value] of (field.allowedValues??[]).entries())inspectStoredLiteral(column,field,value,ctx,path+'/allowedValues/'+i);
  if(column.default?.kind==='literal')inspectStoredLiteral(column,field,column.default.value,ctx,path+'/default/value');
  if(field.default){
   let matches=false;try{matches=field.default.on==='missing'&&column.default?.kind==='literal'&&literalIdentity(field,field.default.value)===literalIdentity(field,column.default.value);}catch(error){if(!(error instanceof UmfError))throw error;}

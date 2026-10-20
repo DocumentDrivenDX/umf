@@ -42,6 +42,7 @@ function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,c
  };
  const value=(v:TableOperationValue,target:TableRef,p:string):void=>{
   const selected=field(target,p);if(!selected)return;
+  if(v.kind==='currentTimestamp'){if(selected.column.nativeType.kind!=='timestamptz'||selected.element.scalarType!=='timestamp')ctx.add('TABLES_OPERATION_DOMAIN',p,'Transaction timestamp requires explicit instant storage');return;}
   if(v.kind==='literal'){inspectStoredLiteral(selected.column,selected.element,v.value,ctx,p+'/value');return;}
   used.add(v.parameter);const parameter=parameters.get(v.parameter);
   if(!parameter){ctx.add('TABLES_OPERATION_PARAMETER',p+'/parameter','Unknown operation parameter');return;}

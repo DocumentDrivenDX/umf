@@ -71,9 +71,14 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   if(cardinality==='array'){
    const item=object(e!.itemType) as Ref;result.item=field(item,[...stack,id]);result.scalar=result.item.scalar;
   }else if(cardinality!=='one')fail(id,'Collection shape is not yet representable');
-  const supportedFacets=new Set(['precision','scale','integerWidth']);
+  if(cardinality!=='one'&&(e!.allowedValues||result.facets.range||result.facets.length))fail(id,'Container refinements require a qualified generated interpreter');
+  if(result.facets.range&&!['integer','decimal'].includes(scalar))fail(id,'Range requires an exact numeric carrier');
+  if(result.facets.length&&(!['string','binary'].includes(scalar)||object(result.facets.length).unit!==(scalar==='string'?'unicode-scalar':'byte')))fail(id,'Length requires its exact scalar unit');
+  for(const [group,keys]of [['range',['min','max','minInclusive','maxInclusive']],['length',['min','max','unit']]] as const)if(result.facets[group]&&Object.keys(object(result.facets[group])).some(k=>!(keys as readonly string[]).includes(k)))fail(id,'Unknown generated domain qualifier');
+  const supportedFacets=new Set(['precision','scale','integerWidth','range','length']);
   for(const key of Object.keys(result.facets))if(!supportedFacets.has(key))fail(id+'/facets/'+key,'Facet requires an exact generated validator');
-  if(e!.allowedValues){result.allowed=(e!.allowedValues as unknown[]).map(v=>{const x=object(v);if('string'in x)return x.string;if('boolean'in x)return x.boolean;if('integerToken'in x)return Number.isSafeInteger(Number(x.integerToken))?Number(x.integerToken):fail(id,'Large integer enumeration requires exact enum lowering');return fail(id,'Allowed value cannot be represented exactly');});}
+  if(e!.allowedValues){if(!['string','boolean','integer','decimal'].includes(scalar))fail(id,'Enumeration carrier requires an exact generated interpreter');result.allowedLiterals=e!.allowedValues;result.allowed=(e!.allowedValues as unknown[]).map(v=>{const x=object(v);if('string'in x)return x.string;if('boolean'in x)return x.boolean;if('integerToken'in x)return Number.isSafeInteger(Number(x.integerToken))?Number(x.integerToken):undefined;return undefined;});}
+  if(result.allowed?.some(v=>v===undefined))delete result.allowed;
   type(result);return result;
  };
  const wanted=request.records&&new Set(request.records.map(refId));
