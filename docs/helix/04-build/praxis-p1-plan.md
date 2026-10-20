@@ -1014,3 +1014,31 @@ and4 binding tests pass. Package Ruff and80-module ownership checks pass.
 change; the prior native policy packet keeps its exact cohort. No duplicate
 native campaign or performance-readiness claim is added. Repeated immutable
 source preparation, redundant live checks and per-item batch dispatch remain.
+
+### Owned source preparation reuse, 2026-10-19
+
+The [prepared-source packet](evidence/praxis-p2/prepared-source/receipt.json)
+removes source recompilation and JSON/declaration lookup from repeated calls on
+the same native reader/writer. Lazy preparation is protected for concurrent
+first use; current subject registration and fresh principal/audience rebinding
+remain per call. Policy replacement invalidates preparation. A process guard
+precedes the new lock. No native observation, lease or result is cached, and
+all existing live correspondence/generation steps remain active.
+
+The new dev4 candidate avoids colliding with published hostdev3. All80 wheel
+modules match source; dual-license metadata is present. Installed PostgreSQL18.6
+passes180 assertions across six driver/pool variants plus nested association
+methods, with98/98 leases returned. Ten cache/snapshot unit checks pass in both
+full and minimal environments; Ruff and ownership checks pass. This qualifies
+source preparation reuse, not complete request performance. Live probe query
+consolidation and ordered batch transport remain.
+
+A fresh AST/source inspection also refines the fixed-method port scope: the
+review decisions are six generated INSERT-SELECT statements that atomically
+copy visible findings and the native current principal. They cannot be replaced
+by a separate read followed by insert. Sample cleanup needs a related-table
+delete predicate; mixed timestamp-descending/key ordering is also used. These
+are real remaining typed-operation capabilities, separate from the119 generic
+prospective declarations already compiled. The sample's host-owned reference
+read must retain its separate module ownership/authority. Private source and
+SQL remain in temporary files only.

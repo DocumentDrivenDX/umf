@@ -6,7 +6,9 @@ import hashlib
 import json
 import sys
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack, contextmanager
+from threading import Event
 from types import ModuleType
 from unittest.mock import patch
 
@@ -61,8 +63,21 @@ def _fixture(kind="read"):
 
     class Probe:
         binding_context = context
+        def __init__(self):
+            self.principals = []
+
+        def for_principal(self, *, principal_role, audience):
+            self.principals.append((principal_role,audience))
+            return self
 
     class Policy:
+        @staticmethod
+        def role(identity):
+            registry = {"alice":"alice", "bob":"bob"} if identity.kind=="person" else {"job":"job"}
+            if identity.subject not in registry:
+                raise SessionError("subject has no grant for this session kind")
+            return registry[identity.subject]
+
         @staticmethod
         def cursor_secret(_identity, secret):
             return secret
@@ -198,3 +213,71 @@ class InputSnapshotTests(unittest.IsolatedAsyncioTestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SourcePreparationCacheTests(unittest.TestCase):
+    def reader(self):
+        session,binding,probe,identity=_fixture()
+        reader=table_reads.SyncTableReader(session,{}, {},binding,cursor_secret=b"s"*32)
+        return reader,session,probe,identity
+
+    def test_source_is_prepared_once_but_each_principal_is_bound_fresh(self):
+        reader,_,probe,alice=self.reader()
+        bob=SessionIdentity("person","bob");job=SessionIdentity("batch","job")
+        with patch.object(table_reads,"_prepare",return_value=probe) as prepare:
+            first=reader._source_for(alice)
+            second=reader._source_for(bob)
+            reader._source_for(job)
+        self.assertEqual(prepare.call_count,1)
+        self.assertIs(first[2],second[2])
+        self.assertIs(first[3],second[3])
+        self.assertEqual(probe.principals,[("alice","person"),("bob","person"),("job","batch")])
+
+    def test_current_registry_is_checked_before_cached_preparation(self):
+        reader,_,probe,alice=self.reader()
+        with patch.object(table_reads,"_prepare",return_value=probe) as prepare:
+            reader._source_for(alice)
+            with self.assertRaisesRegex(SessionError,"subject has no grant"):
+                reader._source_for(SessionIdentity("person","unknown"))
+        self.assertEqual(prepare.call_count,1)
+        self.assertEqual(probe.principals,[("alice","person")])
+
+    def test_new_policy_object_invalidates_source_preparation(self):
+        reader,session,probe,alice=self.reader()
+        with patch.object(table_reads,"_prepare",return_value=probe) as prepare:
+            reader._source_for(alice)
+            session.policy=type(session.policy)()
+            reader._source_for(alice)
+        self.assertEqual(prepare.call_count,2)
+
+    def test_failed_binding_does_not_populate_source_cache(self):
+        reader,_,probe,alice=self.reader()
+        reader._binding['modelSha256']='wrong'
+        with patch.object(table_reads,"_prepare",return_value=probe) as prepare:
+            for _ in range(2):
+                with self.assertRaisesRegex(SessionError,"binding differs"):
+                    reader._source_for(alice)
+        self.assertEqual(prepare.call_count,2)
+        self.assertIsNone(reader._source_state)
+
+    def test_concurrent_first_calls_share_only_source_preparation(self):
+        reader,_,probe,alice=self.reader();started=Event();release=Event()
+        def prepare(*_args,**_kwargs):
+            started.set()
+            self.assertTrue(release.wait(timeout=5))
+            return probe
+        with patch.object(table_reads,"_prepare",side_effect=prepare) as prepared, ThreadPoolExecutor(max_workers=2) as workers:
+            first=workers.submit(reader._source_for,alice)
+            self.assertTrue(started.wait(timeout=5))
+            second=workers.submit(reader._source_for,SessionIdentity("batch","job"))
+            release.set();first.result(timeout=5);second.result(timeout=5)
+        self.assertEqual(prepared.call_count,1)
+        self.assertCountEqual(probe.principals,[("alice","person"),("job","batch")])
+
+    def test_inherited_process_rejects_before_touching_a_lock(self):
+        reader,_,_,alice=self.reader()
+        with (patch.object(table_reads.os,"getpid",return_value=reader._source_pid+1),
+              patch.object(reader,"_source_lock") as lock,
+              self.assertRaisesRegex(SessionError,"after process creation")):
+            reader._source_for(alice)
+        lock.__enter__.assert_not_called()

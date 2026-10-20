@@ -21,10 +21,21 @@ from .table_boundary import TABLE_BOUNDARY
 from .witness import _json_bytes, _witness_steps
 
 
+def _principal(principal_role: str, audience: str) -> None:
+    if (audience not in ('person','batch') or type(principal_role) is not str or not principal_role
+            or '\0' in principal_role or len(principal_role.encode('utf-8'))>63):
+        raise ValueError('an explicit native principal and person/batch audience are required')
+
+
 class TableCorrespondenceProbe:
     """Prepared checks over a trusted source/reference and selected principal."""
     def __init__(self, head, principal_role: str, audience: str):
+        _principal(principal_role,audience)
         self._head,self._principal,self._audience = head,principal_role,audience
+
+    def for_principal(self, *, principal_role: str, audience: Literal['person','batch']) -> TableCorrespondenceProbe:
+        """Reuse owned source metadata; every steps() observes live authority."""
+        return TableCorrespondenceProbe(self._head,principal_role,audience)
 
     @property
     def schema(self) -> str:
@@ -54,9 +65,7 @@ class TableCorrespondenceProbe:
 def prepare_table_correspondence(bundle: dict[str, object], reference: dict[str, object], *,
                                  principal_role: str, audience: Literal['person','batch'],
                                  statement_timeout_ms: int = 30_000, lock_timeout_ms: int = 5_000) -> TableCorrespondenceProbe:
-    if (audience not in ('person','batch') or type(principal_role) is not str or not principal_role
-            or '\0' in principal_role or len(principal_role.encode('utf-8'))>63):
-        raise ValueError('an explicit native principal and person/batch audience are required')
+    _principal(principal_role,audience)
     head = prepare_table_head(bundle,reference,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
     return TableCorrespondenceProbe(head,principal_role,audience)
 

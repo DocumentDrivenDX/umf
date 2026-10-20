@@ -1,0 +1,49 @@
+{
+  "scope": "generated typed direct/nested related policies; local PostgreSQL18 only",
+  "postgresql": 180006,
+  "nested": true,
+  "sourceDigest": "0e73a731a43fa2830084d5d732ba3e63234f29d0265cab1f6cf03c0f96b961e6",
+  "observations": [
+    "association-install-has-no-foreign-keys",
+    "sync-person-visible-association",
+    "sync-other-person-isolated",
+    "sync-batch-explicit-grant",
+    "sync-related-update",
+    "sync-related-replay",
+    "sync-changing-unrelated-owner-does-not-grant-access",
+    "sync-hidden-update-affects-zero",
+    "sync-person-insert-policy-denies",
+    "sync-denied-write-no-outcome",
+    "sync-batch-insert",
+    "sync-hidden-delete-affects-zero",
+    "sync-related-delete",
+    "sync-pool-role-cleanup",
+    "async-person-visible-association",
+    "async-other-person-isolated",
+    "async-batch-explicit-grant",
+    "async-related-update",
+    "async-related-replay",
+    "async-changing-unrelated-owner-does-not-grant-access",
+    "async-hidden-update-affects-zero",
+    "async-person-insert-policy-denies",
+    "async-denied-write-no-outcome",
+    "async-batch-insert",
+    "async-hidden-delete-affects-zero",
+    "async-related-delete",
+    "async-pool-role-cleanup",
+    "sync-balanced-leases",
+    "async-balanced-leases",
+    "native-constraint-inventory-unchanged"
+  ],
+  "leases": {
+    "sync": {
+      "acquired": 12,
+      "released": 12
+    },
+    "async": {
+      "acquired": 12,
+      "released": 12
+    }
+  },
+  "fullPraxisAcceptance": false
+}

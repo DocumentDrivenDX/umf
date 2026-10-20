@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import asyncio
 import copy
+import os
+import threading
 from uuid import uuid4
 
 from .head_session import _check_principal, _drive, _drive_async, _prepare
@@ -73,6 +75,9 @@ class _TableReader:
         self._session = session
         self._bundle, self._reference, self._binding = copy.deepcopy((bundle, reference, binding))
         self._secret, self._target = cursor_secret, target
+        self._source_pid = os.getpid()
+        self._source_lock = threading.Lock()
+        self._source_state = self._source_policy = None
 
     def _prepare(self, identity, operation, inputs, size, cursor, *, items=None, key=None):
         """Prepare from one private copy for internal callers that pass shared data."""
@@ -81,20 +86,37 @@ class _TableReader:
             identity, operation, owned_inputs, size, cursor, items=owned_items, key=key
         )
 
+    def _source_for(self, identity):
+        if os.getpid() != self._source_pid:
+            raise SessionError("create session factories and pools after process creation")
+        policy = self._session.policy
+        role = policy.role(identity)
+        # The constructor owns these source/reference/binding snapshots. Cache
+        # only source meaning, never a lease, principal or native observation.
+        with self._source_lock:
+            if self._source_state is None or self._source_policy is not policy:
+                probe = _prepare(self._session, identity, self._bundle, self._reference, True)
+                context = probe.binding_context
+                binding = self._binding
+                expected = {'version':'umf.table-lifecycle/0.1', 'module':context['module'],
+                            'configurationDigest':context['configurationDigest'], 'deploymentDigest':context['bundleDigest']}
+                if (binding.get('modelJson') != context['sourceUtf8']
+                        or binding.get('modelSha256') != context['sourceDigest']
+                        or binding.get('schema') != context['schema'] or binding.get('nativeLifecycle') != expected):
+                    raise SessionError('operation binding differs from the approved source')
+                source = loads(context['sourceUtf8'])
+                module = next(m for m in source['modules'] if m['id'] == context['module'])
+                declarations = {c['id']:c for c in module['extensions']['umf.tables'].get('commands', [])}
+                self._source_state = (probe,context,source,declarations)
+                self._source_policy = policy
+            template,context,source,declarations = self._source_state
+            probe = template.for_principal(principal_role=role,audience=identity.kind)
+        return probe,context,source,declarations
+
     def _prepare_owned(self, identity, operation, inputs, size, cursor, *, items=None, key=None):
-        probe = _prepare(self._session, identity, self._bundle, self._reference, True)
-        context = probe.binding_context
+        probe, context, source, declarations = self._source_for(identity)
         binding = self._binding
-        expected = {'version':'umf.table-lifecycle/0.1', 'module':context['module'],
-                    'configurationDigest':context['configurationDigest'], 'deploymentDigest':context['bundleDigest']}
-        if (binding.get('modelJson') != context['sourceUtf8']
-                or binding.get('modelSha256') != context['sourceDigest']
-                or binding.get('schema') != context['schema'] or binding.get('nativeLifecycle') != expected):
-            raise SessionError('operation binding differs from the approved source')
-        source = loads(context['sourceUtf8'])
-        module = next(m for m in source['modules'] if m['id'] == context['module'])
-        declarations = module['extensions']['umf.tables'].get('commands', [])
-        declaration = next((c for c in declarations if c['id'] == operation), None)
+        declaration = declarations.get(operation) if type(operation) is str else None
         if declaration is None:
             raise SessionError('operation is not declared in this module')
         read=declaration['body']['kind']=='read'
