@@ -13175,3 +13175,17 @@ successor. Commit and push to PR40 are authorized; hosted checks and independent
 consumer review remain merge gates. OA-F1–3 remain open, and CI stays native Linux
 while local tests use the development host. Truss native host qualification is a
 separate repository change and cannot be inferred from these portable checks.
+
+### Astra release review — 2026-10-20
+
+Astra independently reviewed PR40 and the final SDK0.5.3/access0.1.0.dev5/
+codegen0.1.0a2 package delta with no remaining actionable findings. SDK building
+regenerates metamodel provenance; the embedded generator was rebuilt afterward
+and its 230-input/13-output drift check passes. Core semantics and ABI are
+unchanged. The SDK install probe passes139 conformance cases; all1,736 runtime
+manifest hashes and1,742 archive members verify. Candidate Python wheel RECORDs
+and packaged source match the reviewed checkout; the fresh four-package cohort
+passes dependency admission and31 installed Truss component controls. Historical
+core0.10.0 assets are reused byte-for-byte. The [release notes](../05-deploy/sdk-release-notes-0.5.3.md)
+retain outstanding support limits; final release assets carry exact qualification
+and checksums. Hosted Linux checks remain a gate for the release commit.

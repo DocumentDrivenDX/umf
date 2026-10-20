@@ -1,6 +1,6 @@
 # UMF Python client generator
 
-Local `0.1.0a1` candidate; publication and platform qualification are pending.
+Local `0.1.0a2` candidate; publication and platform qualification are pending.
 The installed wheel runs the original portable TypeScript generator inside
 embedded V8. Authors need Python and `mini-racer==0.14.1`, without Bun, Node,
 a JavaScript subprocess, an SDK tarball or a network connection during generation.

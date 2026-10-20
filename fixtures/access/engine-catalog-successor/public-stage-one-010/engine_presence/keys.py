@@ -17,7 +17,7 @@ from .models import validate_field__modules_0_extensions_umf_access_views_0_fiel
 from .models import validate_field__modules_0_extensions_umf_access_views_1_fields_0
 from .models import validate_field__modules_0_extensions_umf_access_views_1_fields_1
 from umf_access.types import MISSING, StrictModel, Vector
-BUNDLE_INPUT_DIGEST = "bc2c8a8b68e4452c6d4e6fe28694b6a4a2e2071b6de51d340980d4217516bcf0"
+BUNDLE_INPUT_DIGEST = "c99ffb371d0680922d8d753bb5d639b9f1a131a883e1c7bcb9734c563c7564b9"
 
 @final
 class OrderKey(StrictModel):
@@ -27,8 +27,8 @@ class OrderKey(StrictModel):
     tenant: Annotated[str, BeforeValidator(validate_field__modules_0_extensions_umf_access_views_0_fields_2)]
     id: Annotated[str, BeforeValidator(validate_field__modules_0_extensions_umf_access_views_0_fields_0)]
     UMF_FIELDS: ClassVar[tuple[tuple[str, str, str], ...]] = (("sales", "tenant", "tenant"), ("sales", "id", "id"),)
-    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = "bc2c8a8b68e4452c6d4e6fe28694b6a4a2e2071b6de51d340980d4217516bcf0"
-    UMF_RUNTIME_ABI: ClassVar[tuple[str, str, str]] = ("umf_access", "0.1.0.dev4", "umf-access-runtime/0.1")
+    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = "c99ffb371d0680922d8d753bb5d639b9f1a131a883e1c7bcb9734c563c7564b9"
+    UMF_RUNTIME_ABI: ClassVar[tuple[str, str, str]] = ("umf_access", "0.1.0.dev5", "umf-access-runtime/0.1")
     UMF_FINAL: ClassVar[bool] = True
 
 @final
@@ -38,8 +38,8 @@ class OrderPrimaryCodeKey(StrictModel):
     KEY_IDENTITY: ClassVar[Mapping[str, str]] = MappingProxyType({"documentId": "typed-native-actions-e2e", "coreVersion": "0.10.0", "module": "sales", "element": "order", "key": "primary-code"})
     code: Annotated[str, BeforeValidator(validate_field__modules_0_extensions_umf_access_views_0_fields_3)]
     UMF_FIELDS: ClassVar[tuple[tuple[str, str, str], ...]] = (("sales", "code", "code"),)
-    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = "bc2c8a8b68e4452c6d4e6fe28694b6a4a2e2071b6de51d340980d4217516bcf0"
-    UMF_RUNTIME_ABI: ClassVar[tuple[str, str, str]] = ("umf_access", "0.1.0.dev4", "umf-access-runtime/0.1")
+    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = "c99ffb371d0680922d8d753bb5d639b9f1a131a883e1c7bcb9734c563c7564b9"
+    UMF_RUNTIME_ABI: ClassVar[tuple[str, str, str]] = ("umf_access", "0.1.0.dev5", "umf-access-runtime/0.1")
     UMF_FINAL: ClassVar[bool] = True
 
 @final
@@ -49,8 +49,8 @@ class CustomerKey(StrictModel):
     KEY_IDENTITY: ClassVar[Mapping[str, str]] = MappingProxyType({"documentId": "typed-native-actions-e2e", "coreVersion": "0.10.0", "module": "sales", "element": "customer", "key": "pk"})
     customer_id: Annotated[str, BeforeValidator(validate_field__modules_0_extensions_umf_access_views_1_fields_0)]
     UMF_FIELDS: ClassVar[tuple[tuple[str, str, str], ...]] = (("sales", "customerId", "customer_id"),)
-    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = "bc2c8a8b68e4452c6d4e6fe28694b6a4a2e2071b6de51d340980d4217516bcf0"
-    UMF_RUNTIME_ABI: ClassVar[tuple[str, str, str]] = ("umf_access", "0.1.0.dev4", "umf-access-runtime/0.1")
+    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = "c99ffb371d0680922d8d753bb5d639b9f1a131a883e1c7bcb9734c563c7564b9"
+    UMF_RUNTIME_ABI: ClassVar[tuple[str, str, str]] = ("umf_access", "0.1.0.dev5", "umf-access-runtime/0.1")
     UMF_FINAL: ClassVar[bool] = True
 
 __all__ = ["OrderKey", "OrderPrimaryCodeKey", "CustomerKey", "BUNDLE_INPUT_DIGEST"]

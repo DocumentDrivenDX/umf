@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-20",
+  "reviewModel": "gpt-6-astra",
+  "review": "no remaining actionable findings",
+  "localPlatform": "macOS27.0.1 arm64",
+  "python": "3.11.17",
+  "cohort": {
+    "sdk": "0.5.3",
+    "umf_access": "0.1.0.dev5",
+    "umf_codegen": "0.1.0a2",
+    "umf_core": "0.10.0",
+    "truss_toolkit": "0.0.42",
+    "weft": "0.4.48 (unchanged)"
+  },
+  "sourceSha256": {
+    "package.json": "dfecd97c88d66b1e5cfbbc1e8f996fafdf221624a7066c787434fd078ac71080",
+    "src/access/python-runtime.ts": "e7634778fabcfd95752638f7ba874b133fc4857b38aa7d38fe614ce2dd57feeb",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "dbfa630dec39561fe0123896855dad0c88ced9445d6443b9c3ad9d6b1dab0a18",
+    "python/umf_codegen/src/umf_codegen/_release.py": "a35985cfaff601cf2679b901d8895465ff12f2daf425e97b5b1d665d9056f233"
+  },
+  "assetSha256": {
+    ".gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+    "umf_access-0.1.0.dev5-py3-none-any.whl": "e4c77075281f82c2d1b67eba432a718f847b186d1e0293b034dceb068d1a9a9d",
+    "umf_access-0.1.0.dev5.tar.gz": "341b24143cb6ead1f479ffd845eab0234c11085c51512d087201f43334f14f71",
+    "umf_codegen-0.1.0a2-py3-none-any.whl": "11da338987de1accd1eff626eed6d8395cb51c9e647e5c833fadae85f66d41c2",
+    "umf_codegen-0.1.0a2.tar.gz": "ad367701116cd28c4fcde94597f949c218d8978e10334548d8078baeee97de73",
+    "umf_core-0.10.0-py3-none-any.whl": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9",
+    "umf_core-0.10.0.tar.gz": "6b3ad653f95ed5321d5cec69fcaa08037ce1546386b76cbc4e52d1abf19cb19d"
+  },
+  "verification": {
+    "freshWheelDependencyCheck": true,
+    "wheelRECORDAndSourceMatch": true,
+    "installedTrussComponents": 31,
+    "installedGeneratorCorpusCases": 27,
+    "installedGeneratorWriterAndIntegrityControls": true,
+    "externalJavascriptProcesses": "forbidden during installed generator probe",
+    "codegenBoundaryControls": 3,
+    "sdkInstalledConformanceCases": 139,
+    "sdkRuntimeManifestFiles": 1736,
+    "sdkTotalArchiveFiles": 1742
+  },
+  "limits": [
+    "Focused local qualification, not full repository suite",
+    "Native generated registration covers create fixture only",
+    "Replay fixture covers unchanged rows, not later edits/deletion",
+    "No new full graph-write/2 executor or general action interpreter",
+    "Final hosted checks and publication are recorded in release qualification assets"
+  ]
+}

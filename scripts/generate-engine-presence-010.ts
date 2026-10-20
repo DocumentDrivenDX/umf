@@ -32,7 +32,7 @@ pinned.coreVersions = ['0.10.0'];
 pinned.python.version = process.env.UMF_ACCESS_PYTHON_VERSION ?? '3.11.17';
 pinned.dependencies = pinned.dependencies.map((dependency) =>
   dependency.distribution === 'umf_access'
-    ? { ...dependency, version: process.env.UMF_ACCESS_RUNTIME_VERSION ?? '0.1.0.dev4' }
+    ? { ...dependency, version: process.env.UMF_ACCESS_RUNTIME_VERSION ?? '0.1.0.dev5' }
     : dependency.distribution === 'pydantic'
       ? { ...dependency, version: process.env.UMF_ACCESS_PYDANTIC_VERSION ?? '2.13.5' }
       : dependency,
