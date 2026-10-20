@@ -944,3 +944,24 @@ The concrete resource audit also identifies repeated immutable source preparatio
 redundant per-call catalog scans and per-item batch database round trips. These
 need consolidation within the trusted-host boundary before performance readiness.
 The remaining full-goal gates in the prior entry stay open; no release is published.
+
+### Private declaration conversion, 2026-10-19
+
+The [aggregate private conversion](evidence/praxis-p2/private-conversion/aggregate.json)
+uses the owner's selected read-only prebill-plugin-port commit. Original sources,
+converted models, generated packages and diagnostics stay in temporary private
+files. The smaller module's2 tables/13 columns compile to14 declared typed CRUD
+and read operations. All14 compile/check through Weft; installed embedded
+generation matches Bun byte for byte, with Python syntax passing. These are
+prospective declarations; existing fixed application methods are not yet ported.
+
+The larger15-table/185-column module refuses because an association row scope
+has no authored foreign relationship. Native via lowering currently demands a
+foreign-key mapping. Do not invent a constraint or erase the scope. The next
+policy slice must add same-module, explicitly typed association field matching
+with existential visible-row semantics, native audience SELECT checks and cycle
+refusal. It must preserve existing FK-based via behavior. Original decimal
+bounds use YAML lexemes, avoiding conversion through binary float. The legacy
+unscoped default grant function was inspected; prospective conversion records
+explicit person/batch CRUD allow rules rather than inferring unknown audience
+authority. This source work does not validate native data/roles or adoption.
