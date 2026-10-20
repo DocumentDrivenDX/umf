@@ -104,3 +104,24 @@ pass. No remaining actionable finding was identified within the adoption scope.
 The previously listed production/platform and strict-pyright qualifications remain
 open and are not promoted by this review. The user explicitly authorized commit
 and push; the detached checkout is carried onto a new codex topic branch.
+
+
+## Hosted boundary gate correction
+
+The first hosted boundary job failed on an unchanged main-branch test fixture:
+it expected `compile_table_operation_json` and `check_table_operation_json`, while
+the current native reader and boundary checker permit only
+`prepare_table_operation_module_json`. The original fixture and checker were
+byte-identical to main; [baseline hashes](praxis-adoption/boundary-baseline.json)
+retain that comparison. The failed job is
+[118765790758](https://github.com/DocumentDrivenDX/umf/actions/runs/39462645808/job/118765790758).
+The same failure reproduced locally before correction.
+
+The test-only correction admits the prepared-module entry point, explicitly
+rejects both superseded compiler functions and keeps the non-owner and unrelated
+Weft/driver imports forbidden. The checker and library are unchanged. All24 local
+boundary tests pass with174 assertions, and the real source checker reports no
+violations. [Passing log](praxis-adoption/boundaries.log). This does not change
+the prior83 local adoption/browser passes or27 installed parity cases. Hosted CI
+must rerun against the follow-up commit; the independent Claude review remains
+pending before merge.

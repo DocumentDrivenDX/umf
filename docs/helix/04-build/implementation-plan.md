@@ -13135,3 +13135,11 @@ identity collisions, malformed inventory diagnostics and inconsistent sequence
 length bounds. Regression, Chromium, typing, boundary, package audit and installed
 parity evidence is refreshed in the adoption record. Commit/push is authorized
 on the codex topic branch; this does not publish a release or close OA-F1–3.
+
+
+The hosted merge gate exposed a stale native-read boundary fixture already on
+main. Correct only the fixture to the existing prepared-module API; preserve
+explicit negative controls for the old compiler imports and other consumers.
+All24 local boundary tests and the actual source checker pass. The adoption
+evidence retains the baseline comparison and hosted failure; no runtime/compiler
+boundary was widened. Hosted CI and independent review remain merge prerequisites.

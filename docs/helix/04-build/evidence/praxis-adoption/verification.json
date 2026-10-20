@@ -21,7 +21,9 @@
     "tests/unified/adoption_typecheck_negative.py": "4d0192f2f73d9ee716fa245847e45f0143b489ec00a3c6b59cecf3e22186ed31",
     "tests/unified/application.py": "15ab6e70b4377dbdc570aec1b73d47e273970aa503f08bc026eda9137296c465",
     "scripts/check-unified-client-boundaries.ts": "efb3813719056f93f6ce2b09905125442ecde6b6aa7d207fd29b1e73527dbb8d",
-    "scripts/codegen-corpus.ts": "ffcf6e8c26897e74f2c917def498bf5cce80999d91936889bc4d8cc237cce3d6"
+    "scripts/codegen-corpus.ts": "ffcf6e8c26897e74f2c917def498bf5cce80999d91936889bc4d8cc237cce3d6",
+    "tests/compilation/boundaries.test.ts": "7b530fad171484c1bb75de45a2ce66d24738132f39f8a80ccc9ae4810ae6d00c",
+    "scripts/check-access-python-boundaries.py": "ddf5b781274106a2324e08ba320f7bcc0dc8bf73df9fa7a04012a49dae35f6f3"
   },
   "localWheel": {
     "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
@@ -54,7 +56,12 @@
     "build": true,
     "boundaries": true,
     "extensionPackages": 71,
-    "exploratoryPyrightStrictSourcePassed": false
+    "exploratoryPyrightStrictSourcePassed": false,
+    "boundaryTestSuite": {
+      "passed": 24,
+      "failed": 0,
+      "checkerChanged": false
+    }
   },
   "nativeGraphExecutorQualified": false,
   "linuxPythonMatrixQualified": false,
