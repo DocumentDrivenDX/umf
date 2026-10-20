@@ -875,7 +875,17 @@ native methods always select the prepared path automatically.
 
 Index storage is linear in admitted elements, columns, relationship references
 and command identities; it stores coordinates or shared references rather than
-another full object image. Independent-insert eligibility builds the module's
+another full object image. Scalar Field preparation retains canonical allowed-value
+membership once; checking a supplied value does not clone or rescan the authored
+allowed-value list. Query parameter occurrence order, referenced identifiers,
+selected table coordinates and DISTINCT projection membership use indexes rather
+than repeatedly scanning parameter lists, schema inventories or rendered SQL.
+Seed compilation indexes selected sets, field positions, required fields and
+generated columns once. A sparse row visits its supplied cells and required-field
+inventory; it does not scan every column to find each cell. Native conversion
+uses values already validated by admission; seed/default ingress validates once
+before conversion rather than repeating the same scalar checks.
+Independent-insert eligibility builds the module's
 policy dependency graph once and computes strongly connected components with
 O(V + E) graph visits and O(log V) ordered-index lookups; it does not traverse
 the whole graph for each table. Invocation

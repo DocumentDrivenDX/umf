@@ -19,12 +19,14 @@ ddx:
 
 ## Release Scope
 
-Candidate release: SDK 0.5.1, official core Python 0.10.0 and experimental
+Published release: SDK 0.5.1, official core Python 0.10.0 and experimental
 `umf_access` 0.1.0.dev3. Current source admission is UMF 0.10.0. The SDK archive,
 core wheel and host wheel have separate identities and delivery checksums.
 The frozen candidate passes its recorded installed and local native checks with
 Weft 0.4.46. Scoped qualification is recorded in the [candidate evidence](../04-build/evidence/unified-sdk-051-release-qualification.md). Publication
-and final release-asset delivery verification are pending.
+and final release-asset delivery verification are complete; the final public
+cohort uses Weft 0.4.47. See the [published release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.1)
+and the delivery section of that qualification record.
 
 ## Audience and Channels
 
