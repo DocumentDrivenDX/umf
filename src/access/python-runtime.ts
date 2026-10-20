@@ -32,7 +32,8 @@ class AccessError(ValueError):
 class Unsupported(AccessError): pass
 class SchemaMismatch(AccessError): pass
 class PreconditionFailed(AccessError): pass
-class WriteOutcomeUnknown(AccessError): pass
+class WriteOutcomeUnknown(AccessError):
+    key: str | None = None
 
 @dataclass(frozen=True)
 class ExactTimestamp:
@@ -102,8 +103,27 @@ def check(value: Any, spec: Mapping[str, Any]) -> None:
     types: dict[str, type[Any]] = {'string': str, 'integer': int, 'decimal': Decimal,
         'boolean': bool, 'binary': bytes, 'bits128': bytes, 'uuid': UUID, 'date': date, 'timestamp': ExactTimestamp}
     if kind not in types or type(value) is not types[kind]: raise AccessError('TYPE', spec['id'])
+    if kind == 'string':
+        try: value.encode('utf-8')
+        except UnicodeError: raise AccessError('INVALID_VALUE', spec['id']) from None
     if kind == 'bits128' and len(value) != 16: raise AccessError('BITS128', spec['id'])
+    if kind == 'decimal': encode(value)
     if 'allowed' in spec and value not in spec['allowed']: raise AccessError('ALLOWED_VALUE', spec['id'])
+    if 'allowedLiterals' in spec:
+        plain = {k:v for k,v in spec.items() if k not in ('allowed','allowedLiterals')}
+        def candidate(item: Any) -> Any:
+            if type(item) is dict and ('integerToken' in item or 'decimalToken' in item):
+                number = Decimal(item['integerToken'] if 'integerToken' in item else item['decimalToken'])
+                sign, digits, exponent = number.as_tuple()
+                if type(exponent) is not int: raise AccessError('INVALID_VALUE', spec['id'])
+                end = len(digits)
+                while end and digits[end-1] == 0: end -= 1
+                number = Decimal((sign, digits[:end], exponent+len(digits)-end)) if end else Decimal(0)
+                result = int(number) if 'integerToken' in item else number
+                check(result, plain); return result
+            return decode(item.get('string', item.get('boolean', item)) if type(item) is dict else item, plain)
+        candidates = [candidate(item) for item in spec['allowedLiterals']]
+        if value not in candidates: raise AccessError('ALLOWED_VALUE', spec['id'])
     facets = spec.get('facets', {})
     if kind == 'decimal':
         encode(value)
@@ -115,6 +135,19 @@ def check(value: Any, spec: Mapping[str, Any]) -> None:
         precision = facets.get('precision')
         if precision is not None and max(len(digits) + exponent, 0) > precision - (scale or 0):
             raise AccessError('PRECISION', spec['id'])
+    length = facets.get('length')
+    if length is not None:
+        if kind not in ('string','binary') or length.get('unit') != ('unicode-scalar' if kind == 'string' else 'byte'): raise AccessError('TYPE', spec['id'])
+        count = len(value)
+        if 'min' in length and count < length['min'] or 'max' in length and count > length['max']: raise AccessError('CAPACITY', spec['id'])
+    interval = facets.get('range')
+    if interval is not None:
+        if kind not in ('integer','decimal'): raise AccessError('TYPE', spec['id'])
+        for end in ('min','max'):
+            if end not in interval: continue
+            literal = interval[end]
+            bound = int(Decimal(literal['integerToken'])) if kind == 'integer' else Decimal(literal['decimalToken'])
+            if (value < bound if end == 'min' else value > bound) or value == bound and interval.get(end+'Inclusive',True) is False: raise AccessError('RANGE', spec['id'])
     width = facets.get('integerWidth')
     if kind == 'integer' and width:
         bits, signed = width['bits'], width.get('signed', True)
@@ -215,7 +248,7 @@ class Client:
             code = error['code']
             exception = {'UNSUPPORTED': Unsupported, 'SCHEMA_MISMATCH': SchemaMismatch,
                          'PRECONDITION_FAILED': PreconditionFailed, 'WRITE_OUTCOME_UNKNOWN': WriteOutcomeUnknown}.get(code, AccessError)
-            if code not in {'INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS', 'BUSY',
+            if code not in {'INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS', 'LIMIT_EXCEEDED', 'BUSY',
                             'UNSUPPORTED', 'SCHEMA_MISMATCH', 'WRITE_OUTCOME_UNKNOWN', 'NOT_YET_CURRENT', 'INVALID_CURSOR'}:
                 raise AccessError('INVALID_RESPONSE')
             raise exception(code, error.get('field'), precondition=error.get('precondition'))

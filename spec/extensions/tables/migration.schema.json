@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-migration:0.1",
+  "title": "Inert source-bound forward table migration candidate",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "umf.table-migration/0.1"
+    },
+    "canonicalization": {
+      "const": "RFC8785"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "predecessor": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "digest": {
+              "$ref": "#/$defs/digest"
+            }
+          },
+          "required": [
+            "id",
+            "digest"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "previous": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "urn:umf:table-deployment:0.1"
+        }
+      ]
+    },
+    "next": {
+      "$ref": "urn:umf:table-deployment:0.1"
+    },
+    "fromBundleDigest": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/digest"
+        }
+      ]
+    },
+    "toBundleDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 8192,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^step-[0-9]{5}$"
+          },
+          "kind": {
+            "enum": [
+              "table",
+              "foreignKey",
+              "index",
+              "policy",
+              "grant"
+            ]
+          },
+          "sourcePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000000
+          },
+          "preconditions": {
+            "type": "object",
+            "properties": {
+              "phase": {
+                "const": "before-plan"
+              },
+              "kind": {
+                "enum": [
+                  "empty-private-schema",
+                  "installed-source-cohort"
+                ]
+              },
+              "bundleDigest": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/$defs/digest"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "phase",
+              "kind",
+              "bundleDigest"
+            ],
+            "additionalProperties": false
+          },
+          "expectedOutcome": {
+            "type": "object",
+            "properties": {
+              "phase": {
+                "const": "before-commit"
+              },
+              "kind": {
+                "const": "complete-next-source-catalog"
+              },
+              "bundleDigest": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "required": [
+              "phase",
+              "kind",
+              "bundleDigest"
+            ],
+            "additionalProperties": false
+          },
+          "verification": {
+            "const": "native-catalog-privileges-and-role-scope"
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "sourcePath",
+          "transaction",
+          "sql",
+          "preconditions",
+          "expectedOutcome",
+          "verification",
+          "recovery"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "seedExecution": {
+      "oneOf": [
+        {
+          "const": "none"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": "umf.table-seed-execution/0.1"
+            },
+            "sets": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 128,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          },
+          "required": [
+            "version",
+            "sets"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "requiresApproval": {
+      "const": true
+    },
+    "nativeQualified": {
+      "const": false
+    },
+    "digest": {
+      "$ref": "#/$defs/digest"
+    }
+  },
+  "required": [
+    "version",
+    "canonicalization",
+    "id",
+    "predecessor",
+    "previous",
+    "next",
+    "fromBundleDigest",
+    "toBundleDigest",
+    "steps",
+    "seedExecution",
+    "requiresApproval",
+    "nativeQualified",
+    "digest"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

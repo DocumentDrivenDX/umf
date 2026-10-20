@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "umf-codegen"
+version = "0.1.0a1"
+description = "Pinned UMF typed Python client generation with an embedded portable generator"
+requires-python = ">=3.11,<3.15"
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"]
+dependencies = ["mini-racer==0.14.1"]
+readme = "README.md"
+
+[project.scripts]
+umf-codegen = "umf_codegen.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/umf_codegen"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/pyproject.toml", "/README.md", "/LICENSE.md", "/LICENSE-MIT", "/LICENSE-APACHE", "/hatch_build.py"]
+
+[tool.hatch.build.hooks.custom]

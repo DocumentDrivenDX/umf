@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 70,
-  "passed": 70,
+  "packages": 71,
+  "passed": 71,
   "results": [
     {
       "path": "spec/extensions/access/package.json",
@@ -787,6 +787,15 @@
         "subset": "Table/column, key/foreign-key/check and index observations; exact recovery and metadata views. Permission-limited, not complete catalog or DDL reconstruction."
       },
       "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tables/package.json",
+      "id": "umf.tables",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 1,
       "passed": true,
       "failures": []
     },

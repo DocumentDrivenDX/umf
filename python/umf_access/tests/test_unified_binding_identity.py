@@ -224,6 +224,20 @@ class UnifiedBindingIdentityTests(unittest.TestCase):
         self.assertEqual(response, {"schema": self.schema})
         self.assertEqual(received, [{"replacement": "next"}])
 
+    def test_exact_wire_numeric_tokens_refuse_non_json_forms(self) -> None:
+        from umf_access.unified import UnifiedAccessError
+        from umf_access.unified._binding import _wire_value
+        for scalar, tag, invalid in (
+            ("integer", "integerToken", ["--1", "¹", "01", "+1", " 1", "1_0"]),
+            ("decimal", "decimalToken", ["1_0", "+1", "01", " 1", "1.", "NaN"]),
+        ):
+            for token in invalid:
+                with self.subTest(scalar=scalar, token=token), self.assertRaises(UnifiedAccessError):
+                    _wire_value({tag: token}, scalar)
+        self.assertEqual(_wire_value({"integerToken": "-123"}, "integer"), -123)
+        self.assertEqual(str(_wire_value({"decimalToken": "-0.00"}, "decimal")), "-0.00")
+        self.assertEqual(str(_wire_value({"decimalToken": "1E+2"}, "decimal")), "1E+2")
+
     async def _execute(self, _artifact: Mapping[str, object], _request: Mapping[str, object]) -> Mapping[str, object]:
         return {"schema": self.schema, "rows": []}
 

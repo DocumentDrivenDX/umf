@@ -1,0 +1,472 @@
+{
+  "scope": "shared Weft declared-operation compiler and synthetic installed native sync/async session composition; no generated production table admission",
+  "umfSourceCommit": "6d623fc528c725de305bfe07531ef156dc8f45f4",
+  "weftSourceCommit": "4e0abd77ae5d030c4b4ff0038396fb37036c4717",
+  "weftBranch": "codex/praxis-lifecycle-048",
+  "weftEvidence": "https://github.com/DocumentDrivenDX/weft/tree/4e0abd77ae5d030c4b4ff0038396fb37036c4717/docs/helix/04-build/evidence/praxis-table-operations",
+  "consumerDecision": "declared typed operations; no SQL escape",
+  "consumerSource": {
+    "selection": "local prebill-plugin-port",
+    "revision": "e195822083fae6993b253af7fb3ac0b4bfdc3546",
+    "custody": "read-only private source; independent public synthetic fixtures only"
+  },
+  "compilerEvidence": {
+    "candidate": "weft-sql0.4.48 unpublished dev wheel",
+    "base": "713186b604e602549607b4a1e63052cc236199ac",
+    "upstreamUmf": "6d623fc528c725de305bfe07531ef156dc8f45f4",
+    "scope": "declared single-table operation compilation and synthetic native SQL/session composition; no production data admission",
+    "nativeExecutionQualified": false,
+    "browserExecutionQualified": false,
+    "verification": {
+      "focusedOperationTests": 10,
+      "lifecycleCustodyTests": 10,
+      "installedPythonCliParity": 27,
+      "selfRehashedProgramControls": 10,
+      "nativePostgresqlAssertions": 50,
+      "nativeReceipt": "native.json",
+      "legacyPostgresqlLibraryTests": {
+        "passed": 184,
+        "failed": 0,
+        "scope": "current feature precursor before operation-only canonical driver-value and per-call read-size additions; final additions covered by focused and installed/native reruns"
+      },
+      "workspaceAllTargets": "passed",
+      "pythonNoDefaultFeatures": "passed",
+      "wasm32RawReadFeature": "passed; compilation only",
+      "moduleBoundaries": {
+        "passed": true,
+        "workspacePackages": 11
+      },
+      "specs": {
+        "passed": true,
+        "artifacts": 89,
+        "schemas": 101,
+        "fixtures": 636
+      },
+      "licenseAudit": [
+        {
+          "root": "/private/tmp/umf-praxis-weft",
+          "headers": 717,
+          "packages": [
+            "crates/weft-python/pyproject.toml",
+            "package.json",
+            "packages/weft-browser/package.json"
+          ]
+        },
+        {
+          "wheel": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+          "license": "MIT OR Apache-2.0",
+          "licenseFiles": [
+            "LICENSE.md",
+            "LICENSE-MIT",
+            "LICENSE-APACHE",
+            "THIRD-PARTY-LICENSES.txt"
+          ]
+        }
+      ],
+      "hostedCandidate": "pending push/run",
+      "currentCoreCapacitySmoke": {
+        "status": "passed",
+        "compiler": "0.4.48",
+        "records": 1000,
+        "fieldsPerRecord": 12,
+        "compileSeconds": 3.5677875420078635,
+        "controls": 5
+      },
+      "realChromium": {
+        "passed": true,
+        "cases": 27,
+        "tamperControls": 1,
+        "invalidUnicodeControls": 2,
+        "receipt": "browser.json",
+        "browser": "153.0.8010.12",
+        "scope": "actual shared WASM compiler and program checking only; no database authorization/execution"
+      }
+    },
+    "toolchain": {
+      "rust": "1.90.0",
+      "python": "3.11.17",
+      "maturin": "1.9.6",
+      "platform": "macOS arm64",
+      "postgresql": "18.6",
+      "psycopg": "3.2.13",
+      "pydantic": "2.13.5",
+      "umfAccess": "0.1.0.dev2 local e48c0ba source wheel",
+      "umfCodegen": "0.1.0a1 local 6d623fc source wheel",
+      "wasmBindgen": "0.2.105"
+    },
+    "localWheel": {
+      "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "1afe1000520b0f86d1c9224d82bdfd567feccd09f62bec27d133741039c5cc23",
+      "published": false,
+      "profile": "dev",
+      "license": "MIT OR Apache-2.0"
+    },
+    "sourceFiles": {
+      ".github/workflows/table-operations.yml": "5364d317806afb4984fce30c599454dffb971af376e3541f8febc3f3e1197e85",
+      "crates/weft-core/src/table_operation.rs": "2920c173c7eb9a807b5dba89cf6e95c18c058d3ca4a5a305e3ff523dbc454168",
+      "crates/weft-core/src/table_operation/schema.rs": "adef1f2ae816fb2ce7a2f4f0023e931c9d5500e73c15132f0af18be5a9659f76",
+      "crates/weft-core/src/table_operation/validation.rs": "d84a5941e19fe61244d2b827ef4ff18155fd1769967624cf074a446711df3bb6",
+      "crates/weft-core/src/table_operation/values.rs": "0214f0ded49e7db84b0eede1f1f49b89c961c3c59cba34e2613ff0de5197e41c",
+      "crates/weft-postgresql/src/table_operation.rs": "b77423e009d15af6ac8a13fc8edba70602575c31c6304b8df661abce4874bc03",
+      "crates/weft-postgresql/tests/table_operation.rs": "cfd19335d2418585af69c2b0a2d3114bf170f839edca484ce2b860a2808dfe23",
+      "spec/upstream/umf-table-operation-0.1.schema.json": "e37f5f00f44a5252e56f74a8c12aeb4fccf5ef827811584f3a5d2e2b1e30a2e0",
+      "tests/raw-postgresql/table-operation-bindings.py": "3417d2201998c7135dc2a3543240ac01ae0cd48b7efa206d6a14a35a0454ec85",
+      "tests/raw-postgresql/table-operation-model.json": "8c515220a071fd5797d4e711ebb3a9b4c24a4804c86c31378b06bf4b293d0a2e",
+      "tests/raw-postgresql/table-operation-native.py": "f1b2c7df5acbcdf1986c61dea53064bc765e53d0da2f5a92429a1fa18b3effa0",
+      "tests/raw-postgresql/table-operation-browser.mjs": "743ff751adbf306ad02eaa26b9310170d4fcc9e12a9f30135910772a882be7ff"
+    },
+    "unqualified": [
+      "production host executor",
+      "durable data replay",
+      "authenticated opaque cursors",
+      "generated table methods",
+      "Psycopg2/SQLAlchemy operation composition and real-pool/fork parity",
+      "managed Lakebase",
+      "release",
+      "date/time/binary codecs",
+      "required schema evolution and seeds",
+      "private Praxis typed client conversion"
+    ],
+    "integration": {
+      "upstreamRelease": "0.4.47",
+      "upstreamRevision": "12051af87cd9f910f880f21fe6b95a507e2fcb94",
+      "preRebaseFeatureRevision": "36b1e7fc",
+      "postRebaseFeatureRevision": "00636091ad30261169422b59985ca0c5a036bd94",
+      "runtimeDiff": "none between pre/post rebase; five release/capacity fixture files only",
+      "requalification": "focused tests and rebuilt installed wheel/native parity; current-core capacity smoke"
+    },
+    "browserCompilerQualified": true
+  },
+  "nativeEvidence": {
+    "scope": "candidate SQL native behavior under source-installed PG18 RLS; not generated/runtime operation admission",
+    "postgresql": 180006,
+    "weft": "0.4.48",
+    "weftModule": "__init__.py",
+    "sourceDigest": "1c9b4e836965b5af521c6ab3e181b9331618c161499f15629276d567711e1bbf",
+    "bundleDigest": "94a75cf82a01100156d091d4d012db4bf43dc6c0484c9a48fe551cb62f3bc7ad",
+    "observations": [
+      "source-installed-without-data-admission",
+      "person-insert-a1",
+      "person-insert-a2",
+      "person-insert-a3",
+      "other-person-own-insert",
+      "batch-insert-unowned-row",
+      "person-count-under-rls",
+      "other-person-cannot-read-first-owner",
+      "batch-count-has-separate-policy",
+      "null-safe-equality-matches-unowned",
+      "membership-null-is-sql-unknown",
+      "not-membership-null-retains-unknown",
+      "keyset-first-lookahead",
+      "keyset-continuation-original-order",
+      "bounded-many-refuses-truncation",
+      "native-update-counts-matched-unchanged-row",
+      "other-person-update-is-filtered",
+      "update-with-check-blocks-owner-transfer",
+      "insert-with-check-blocks-other-owner",
+      "upsert-ignore-conflict-has-zero-effects",
+      "upsert-update-conflict-has-one-effect",
+      "upsert-cannot-take-other-person-row",
+      "batch-delete-is-not-person-delete-grant",
+      "native-count-guard-rolls-back-all-delete-effects",
+      "failed-batch-rolls-back-earlier-items",
+      "person-bulk-shape-cannot-select-batch-identity",
+      "mixed-owner-person-bulk-rolls-back-earlier-items",
+      "batch-preserves-ordered-item-results",
+      "batch-created-person-row-obeys-rls",
+      "person-delete-returning-empty-still-proves-count",
+      "caller-savepoint-does-not-commit-outer-transaction",
+      "caller-success-restores-prior-role",
+      "bound-failure-keeps-caller-transaction-healthy",
+      "caller-rollback-discards-pending-data",
+      "async-person-read-through-session-and-compiler",
+      "async-person-write-through-session-and-compiler",
+      "async-delete-count-marker",
+      "async-caller-savepoint-retains-outer-transaction",
+      "async-caller-success-restores-role",
+      "async-bound-failure-preserves-healthy-caller",
+      "async-caller-rollback-discards-pending-data",
+      "async-cancellation-observes-real-native-lock-wait",
+      "repeated-async-cancellation-propagates-after-cleanup",
+      "async-cancelled-lease-is-restored-or-discarded",
+      "cancelled-batch-role-write-cannot-transfer-owner",
+      "all-async-lease-exits-complete",
+      "quoted-unicode-input-remains-data",
+      "prefix-percent-underscore-are-literal",
+      "data-effects-do-not-rewrite-source-generation",
+      "every-per-call-lease-released-including-refusals"
+    ],
+    "perCallLeases": {
+      "acquired": 37,
+      "released": 37
+    },
+    "asyncLeases": {
+      "acquired": 8,
+      "released": 8,
+      "cancelledConnectionDisposition": "restored-and-reused"
+    },
+    "sessionAdapter": "installed public SyncSession/AsyncSession and Psycopg3; adapter-owned/caller-savepoint transactions plus repeated cancellation",
+    "programDigests": {
+      "create": "fb2e6ede8da821663dd375b810190b5b839452a3fb06c7d648099468800ba53d",
+      "read_count": "503281a30ca7e1354acc503fd139c5e77d5f2f2e64f8080d7aaf5006c398026e",
+      "null_safe": "762a1c47ab4f48474927a4701ef67a8eafe266b8d55342b8c90f90c47c4b0268",
+      "null_in": "3339b15a848e83ca9e5ee2243102a2b9cc527df073ef67bdb68a1b133ca3be83",
+      "not_null_in": "0b1dd856425eb4310612149a400b6a36bd47c7666ff637d8168b909a03e6b939",
+      "read_page": "a1fa384b3b44ddd9d7c000b8368735e96badc8cd6956f800287aca1264a5ba76",
+      "read_many": "1708ee9a1b96ddd4c0d0244dc568800d8ebf47ab2db3ee855c198c22ff8f11ef",
+      "rename": "f51b96a3e9fe882b28d0f15f15049df185dc8825ea5690811d1b604ee4d6233b",
+      "put_ignore": "5d03b7babe6221bbd6717406069f10f0ab84a86378f647a73f425e9bb93fd2ff",
+      "put_update": "e9afe5e45bcfeb4919c5b81868e25e5d475afb0d2db38ae7465dced54e88e2a7",
+      "remove": "880f9ff8f103637e31a5d591cdf3af11fb8e3f40bd9f4d619c80751c074c8c0b",
+      "remove_all_bounded": "dea9cdcb99790751a4ba9a8e929e0be233ec2c8ede3003bff449fcaab43b04aa",
+      "create_batch": "005c3fb4be4edb7c93344e912a45cab42b0f1940c68473f26b6171deaf8f664c",
+      "literal_prefix": "0f1b10294b1b7d5b00202fd56c6967dfe847c49eaa309d136208784cd54f77de"
+    },
+    "nativeExecutionQualified": false,
+    "unqualified": [
+      "production host executor",
+      "durable data replay",
+      "authenticated opaque cursors",
+      "generated table methods",
+      "Psycopg2/SQLAlchemy operation composition and real-pool/fork parity",
+      "managed Lakebase",
+      "release"
+    ]
+  },
+  "evidenceSha256": {
+    "receipt.json": "13d10426f2b255b1b38e7d64f94fa443e0186a9cf7a677c9456cadc024f8d4bf",
+    "bindings.json": "443e71975bb58ea27837ec64811d44c2b4bfaf455c278c2989476d6ed26a5896",
+    "native.json": "5393b82aa3ad3b798480dcf3140c90eab71a0b1cce9d7916e7bbe843f5efdb18",
+    "capacity.json": "ca158e0bfee4bda56c7148a0333f747a85072f5e57f9ef1ed8fbf132d2d4e7e9",
+    "browser.json": "bd920611975baca30a3f591087fe3b5dfb43c0bf322316aa403d8baf2aa0e220"
+  },
+  "umfHostedVerification": {
+    "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/39301326934",
+    "headSha": "6d623fc528c725de305bfe07531ef156dc8f45f4",
+    "status": "completed",
+    "conclusion": "success",
+    "jobCount": 8
+  },
+  "weftHostedVerification": {
+    "headSha": "4e0abd77ae5d030c4b4ff0038396fb37036c4717",
+    "url": "https://github.com/DocumentDrivenDX/weft/actions/runs/39315199160",
+    "status": "completed",
+    "conclusion": "success",
+    "scope": "declared native operations and actual Chromium shared compiler; pinned UMF6d623fc52 dependency cohort"
+  },
+  "releaseStatus": "0.4.48 candidate unpublished; full goal remains active",
+  "nextRequired": "native current-ledger and privilege admission, generated typed module methods, required codecs, authenticated cursors and durable replay, migrations/seeds and pinned consumer acceptance",
+  "priorWeftSourceCommit": "106ae55444371d6b0d60b9ce5d3767cda7740430",
+  "browserEvidence": {
+    "scope": "real Chromium shared compiler parity; no native database authority",
+    "browser": "153.0.8010.12",
+    "cases": [
+      {
+        "name": "read_many",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "15730e589921e0e461a688017a7e1cab1acb4b611370735897aedd4cdcf10af6"
+      },
+      {
+        "name": "read_one",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "e82bb2a3639aa400792f4019c8a340afc014022598ae381935a4a4a89fe3fc0b"
+      },
+      {
+        "name": "read_optional",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "d02c87a5352e9da7125875f770c0802f7028603471f64f9c39b20974d1accc29"
+      },
+      {
+        "name": "read_page",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "bffd46f409d8df946af325230f3fff8481a195b4f74919eeac86773f3a05b614"
+      },
+      {
+        "name": "read_count",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "ef4a5736e2e2aeda7b0573521d4a546016b0e8678b59fec1ec8626650fb3f565"
+      },
+      {
+        "name": "create",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "9953b052ef55e38f233e4bf6f430f2b921a0a999df5e17c8463aace715d7b2bc"
+      },
+      {
+        "name": "rename",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "4b7a698a8ac4e81b549b406e7d07dccff4c30e78f3d7af3eb7d4b76573800b4b"
+      },
+      {
+        "name": "remove",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "dffd49609c9419c70e10866aecb62d2cba39332fef6338b599bc13d8acab14eb"
+      },
+      {
+        "name": "put_ignore",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "8a1b41d8f857a708c9d5a3e981802fdf50813d3730da89fa7633c2555932679f"
+      },
+      {
+        "name": "put_update",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "841c6bcb7fdbabacec238c3ab0ebf5c2ee73e42c8f4f8986cf618c8b2dea53f4"
+      },
+      {
+        "name": "create_batch",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "7b8351a3f18727fb67ac1e1bbb02a5eaed8b8243557d844e2aba1ebdd48977e9"
+      },
+      {
+        "name": "page-after",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "c025f3a0fc27b605e6f16861fdb3fce930db917f3ce6bc7c715eef0754e0f0f5"
+      },
+      {
+        "name": "quoted-data",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "c78234f15b558a2a78dcebe817379c40c77dc11217412108a41e7a96a910953c"
+      },
+      {
+        "name": "lakebase-compilation-only",
+        "status": "compiled",
+        "nativeWasmEqual": true,
+        "requestSha256": "b233daac96ba2e34f9f24240e49dfee7fc62d6f34fc2e6c06050d98d83a7cb27"
+      },
+      {
+        "name": "forged-module",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "7badf8b81182ba1294b97c5b0cd9cfc071a109a579816be48db3d339f7765e54"
+      },
+      {
+        "name": "forged-operation",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "90e293f54685b05d4eac2cc53d70cbfe950ce94a83d75aee5ec16cb0136004a4"
+      },
+      {
+        "name": "forged-version",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "005726933042172f37b685917f01f467c14f1f77d666b956b4ce0c89d200e948"
+      },
+      {
+        "name": "forged-target",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "c99f7631c516c8be8ae6ba5deefebea7ab0b6c5a4620128991ebe6fc005406f0"
+      },
+      {
+        "name": "missing-input",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "18adf5ec23b7db5f2eff19671516170564f0a6f7631f632003c8f81f77164b07"
+      },
+      {
+        "name": "surplus-input",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "8249ba32ff5329afe0dcb4016391042e552971e67164b2188337822dc2704e1f"
+      },
+      {
+        "name": "missing-replay",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "80a90d2f70e1af78d76b82b22c117a0ba135039aaeb3e6a797c36c86d7f591eb"
+      },
+      {
+        "name": "untyped-sql",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "a7d9662daadd1cb9513bcc4c2112668103132c1df8b9640f6dd2265dbfad2901"
+      },
+      {
+        "name": "wrong-input-carrier",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "2c87a2d28a821423a8828b5676ac636ff91ec165cd4fe8a12891df4cae5b8327"
+      },
+      {
+        "name": "unknown-member-[]",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "39b933221aa557722525a554f47abd958167923f070b42b216ab123d1e45476c"
+      },
+      {
+        "name": "unknown-member-['body']",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "85d8097a987dd06289c4758df6043e781117506e7135b9685f743a2986107fae"
+      },
+      {
+        "name": "unknown-member-['body', 'values', 0]",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "57a753706aa75ca07ab1c18668568d4317047bb7e3379829d42f42329a19e0d5"
+      },
+      {
+        "name": "unknown-member-['parameters', 0]",
+        "status": "blocked",
+        "nativeWasmEqual": true,
+        "requestSha256": "84767b40e9b5adf50dc6343d5e9875ced6dbfe07b48543a26b154bb73a7e6bda"
+      }
+    ],
+    "tamperControls": 1,
+    "invalidUnicodeTransportControls": 2,
+    "wasmSha256": "c9e57aa8fee35a33988d9bebedc9c4deffb3051f70b28da396cd9a360cd7dbd6",
+    "javascriptSha256": "b7b4d52bf23f5d6563d9ae65cc82f00403762ff8ef3bb2c98b554a0679c701a5",
+    "imports": [
+      {
+        "module": "wbg",
+        "name": "__wbg_length_a95b69f903b746c4",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg_charCodeAt_291b921e27833f8e",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_init_externref_table",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_cast_2241b6af4c4b2941",
+        "kind": "function"
+      }
+    ],
+    "nodeProcess": false,
+    "require": false,
+    "nativeExecutionQualified": false
+  }
+}

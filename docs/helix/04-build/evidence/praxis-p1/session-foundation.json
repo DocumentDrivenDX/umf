@@ -1,0 +1,65 @@
+{
+  "status": "working-candidate-native-gate-blocked",
+  "baseCommit": "a7ce41803",
+  "released": false,
+  "wheel": {
+    "filename": "umf_access-0.1.0.dev2-py3-none-any.whl",
+    "sha256": "ad965171c994cb69d664caef11692597144d501517a3be57d0cfb6211f290f9b",
+    "version": "0.1.0.dev2",
+    "scope": "local candidate only; not an immutable release",
+    "licenseExpression": "MIT OR Apache-2.0"
+  },
+  "source": {
+    "python/umf_access/src/umf_access/unified/__init__.py": "a5738bc2ebf7c755260d03860f1ba6d0b7342c9a0385272ac0af9c9bcf6f43a2",
+    "python/umf_access/src/umf_access/unified/_binding.py": "e7c6a5cefab7d049ce246657b4d8a2ab8451d2d90aa48dc216b3c3b9117ebbe1",
+    "python/umf_access/src/umf_access/unified/session_async.py": "efc3393e5aca20203d0e04087bca14e4459558c44b95f30a67a55c1e747858fc",
+    "python/umf_access/src/umf_access/unified/session_binding.py": "5cd89348c29768f4d3db700a6974b2bd36d8322ca1b7c412e1050c10ef94b9dd",
+    "python/umf_access/src/umf_access/unified/session_policy.py": "2b971f6d16532aff5121b6a609460cce64881a1014494efb8853d438ed7c2e7c",
+    "python/umf_access/src/umf_access/unified/session_sync.py": "5d1d6de096e907dfebd99eb186c98fe8e94d65af4113dde7b845323eb8bb300f"
+  },
+  "installedTests": {
+    "python": "3.11.17",
+    "pydantic": "2.13.5",
+    "tests": 22,
+    "passed": 22,
+    "native": false,
+    "command": "python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v",
+    "verifiedInstalledModules": 6,
+    "pydanticVersions": [
+      "2.13.5",
+      "2.14.1"
+    ]
+  },
+  "baselineComparison": {
+    "tests": 363,
+    "errors": 37,
+    "failures": 1,
+    "skipped": 37,
+    "identicalFailingIdentities": true
+  },
+  "boundaries": {
+    "pythonModules": 59,
+    "negativeTests": 21,
+    "assertions": 130,
+    "passed": true
+  },
+  "typeScriptChecks": "passed",
+  "nativePostgresql": "not executed: shared-memory sandbox denial; five escalation reviews failed at capacity across three consecutive goal turns",
+  "browser": "not executed: loopback listener unavailable",
+  "commitPush": "pending required native verification",
+  "portableGeneratedClients": {
+    "tests": 6,
+    "passed": 6,
+    "skippedNative": 1,
+    "assertions": 47
+  },
+  "compilerOnly": {
+    "weft": "0.4.44",
+    "generatedClient": "shop.SyncClient",
+    "status": "compiled",
+    "nativeExecuted": false,
+    "artifactSha256": "b4b30eeaffbbe6fb467648f6d2543e8ac19ecc921682d29e92b7ed3dbf9c36e7",
+    "artifactFile": "session-weft-compile.json",
+    "wheelSha256": "5beb429164d0b4d5384b54f0569a6006b222210c4181f31ea23aca4dc73f8e45"
+  }
+}

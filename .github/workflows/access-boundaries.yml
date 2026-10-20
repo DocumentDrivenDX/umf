@@ -23,6 +23,30 @@ jobs:
       - run: bun run test:access-boundaries
       - run: bun run check:access-boundaries
 
+  table-declarations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile
+      - run: bun scripts/check-table-lifecycle-boundaries.ts
+      - run: bun scripts/check-table-deployment-boundaries.ts
+      - run: >-
+          bun test tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-temporal.test.ts tests/binding/table-domains.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
+          tests/compilation/table-lifecycle-boundaries.test.ts tests/compilation/table-deployment-boundaries.test.ts
+      - run: bunx playwright install --with-deps chromium
+      - name: Actual browser metadata parity and preservation
+        env:
+          UMF_TABLE_BROWSER_EVIDENCE: /tmp/umf-table-browser.json
+        run: bun scripts/table-lifecycle-browser.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: table-declaration-browser
+          path: /tmp/umf-table-browser.json
+
   p1-compatibility:
     runs-on: ubuntu-latest
     strategy:
@@ -53,12 +77,205 @@ jobs:
           --pydantic "$PYDANTIC_VERSION"
           --wheel /tmp/umf-p1-wheels/*.whl
           --report /tmp/umf-p1-compatibility.json
+      - name: Check installed session scheduling and lease fault handling
+        run: |
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_outcomes.py' -v
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_native_binding.py' -v
       - name: Check portable sync and async clients
         run: >-
-          bun test tests/access-unified.test.ts tests/access-unified-sync.test.ts
+          bun test tests/access-native-table.test.ts tests/access-native-domains.test.ts tests/access-unified.test.ts tests/access-unified-sync.test.ts
           tests/access-unified-generation.test.ts tests/compilation/access-generator.test.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: p1-compatibility-pydantic-${{ matrix.pydantic }}
           path: /tmp/umf-p1-compatibility.json
+
+
+  native-client-types:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: bun install --frozen-lockfile
+      - run: python -m venv /tmp/native-client-checkers
+      - run: /tmp/native-client-checkers/bin/pip install mypy==2.4.0 pyright==1.1.414 ty==0.0.88
+      - run: python scripts/verify-native-client-types.py --environment /tmp/native-client-checkers --work-dir /tmp/native-client-types
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-client-types
+          path: /tmp/native-client-types/*-*.log
+
+
+  python-codegen:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: bun install --frozen-lockfile
+      - run: bun test tests/compilation/codegen-gzip.test.ts
+      - run: bun scripts/build-codegen.ts --check
+      - run: python scripts/check-codegen-boundaries.py
+      - run: python -m unittest discover -s python/umf_codegen/tests -v
+      - run: python -m pip install build==1.3.0 hatchling==1.27.0
+      - run: python tests/codegen/build_probe.py
+      - name: Build wheel through the self-contained source distribution
+        run: python -m build python/umf_codegen --outdir /tmp/umf-codegen-wheels
+      - run: python -m pip install /tmp/umf-codegen-wheels/*.whl
+      - run: bun scripts/codegen-corpus.ts /tmp/umf-codegen-corpus.json
+      - name: Installed generator parity without external JavaScript processes
+        run: >-
+          python -I tests/codegen/installed_probe.py
+          --corpus /tmp/umf-codegen-corpus.json --report /tmp/umf-codegen-report.json
+      - run: bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
+      - name: Installed original deployment compiler and tamper controls
+        run: >-
+          python -I tests/codegen/deployment_probe.py
+          --corpus /tmp/umf-deployment-corpus.json --report /tmp/umf-deployment-python.json
+      - run: bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
+      - name: Installed original migration compiler and rehashed tamper controls
+        run: >-
+          python -I tests/codegen/migration_probe.py
+          --corpus /tmp/umf-migration-corpus.json --report /tmp/umf-migration-python.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegen-${{ matrix.os }}
+          path: /tmp/umf-codegen-report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deployment-python-${{ matrix.os }}
+          path: |
+            /tmp/umf-deployment-python.json
+            /tmp/umf-migration-python.json
+
+
+  native-sessions:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        weft-cohort: [published044, source-dbapi]
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432/tcp
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: bun install --frozen-lockfile
+      - run: python -m pip install build==1.3.0
+      - run: python -m build --wheel --outdir /tmp/umf-session-wheels python/umf_access
+      - name: Install the host and pinned native drivers
+        run: >-
+          python -m pip install /tmp/umf-session-wheels/*.whl
+          pydantic==2.13.5 'psycopg[binary]==3.2.13' psycopg-pool==3.3.3
+          psycopg2-binary==2.9.11 sqlalchemy==2.0.44 greenlet==3.2.4
+      - name: Install immutable Weft compiler cohort
+        if: matrix.weft-cohort == 'published044'
+        run: >-
+          python -m pip install --no-deps
+          'https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.44/weft_sql-0.4.44-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl#sha256=eeb8fd0a89a9aa15dbe3fb1e71fa8613baa879d4c7193e084926aaf243dcdcbb'
+      - uses: actions/checkout@v4
+        if: matrix.weft-cohort == 'source-dbapi'
+        with:
+          repository: DocumentDrivenDX/weft
+          ref: c4018a9814c25fd18ffab9d8c682e7c55483d40f
+          path: .ci-weft
+      - uses: dtolnay/rust-toolchain@stable
+        if: matrix.weft-cohort == 'source-dbapi'
+        with:
+          toolchain: 1.90.0
+      - name: Build and install exact DBAPI compiler source
+        if: matrix.weft-cohort == 'source-dbapi'
+        run: |
+          python -m pip install maturin==1.9.6
+          maturin build --manifest-path .ci-weft/crates/weft-python/Cargo.toml --locked --out /tmp/weft-native-wheels
+          sha256sum /tmp/weft-native-wheels/*.whl > /tmp/umf-weft-wheel-sha256.txt
+          python -m pip install --no-deps /tmp/weft-native-wheels/*.whl
+      - run: >-
+          bun scripts/umf-client-generate.ts generate --schema tests/unified/commerce.json
+          --package shop --output /tmp/umf-session-client
+      - name: Verify generated reads and native session ownership
+        env:
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          DBAPI_FLAG: ${{ matrix.weft-cohort == 'source-dbapi' && '--dbapi' || '' }}
+        run: >-
+          python -I tests/unified/session_native_e2e.py
+          --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres"
+          --generated /tmp/umf-session-client --report /tmp/umf-session-native.json
+          --psycopg2 --sqlalchemy
+          $DBAPI_FLAG
+      - name: Source-derived deployment catalog and role scope fixtures
+        if: matrix.weft-cohort == 'source-dbapi'
+        env:
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+        run: |
+          python -m build --wheel --outdir /tmp/umf-deployment-wheels python/umf_codegen
+          python -m pip install /tmp/umf-deployment-wheels/*.whl
+          bun tests/unified/table-deployment-fixture.ts /tmp/umf-table-deployment.json
+          python -I tests/unified/table_deployment_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-deployment-native.json
+          python -I tests/unified/table_role_scope_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-role-native.json
+          python -I tests/unified/table_privileges_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-privileges-native.json
+          bun tests/unified/table-ledger-fixture.ts /tmp/umf-table-ledger-plans.json
+          python -I tests/unified/table_ledger_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-table-ledger-plans.json --report /tmp/umf-table-ledger-native.json
+          bun tests/unified/table-ledger-fixture.ts /tmp/umf-operation-ledger-plans.json --typed-operations
+          python -I tests/unified/table_ledger_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-operation-ledger-plans.json --report /tmp/umf-operation-ledger-native.json
+          bun tests/unified/table-ledger-fixture.ts /tmp/umf-head-adapter-plans.json --typed-operations --quoted-schema
+          python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --report /tmp/umf-head-adapter-native.json
+          python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --correspondence --report /tmp/umf-correspondence-adapter-native.json
+          python -I tests/unified/table_reads_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-reads-native.json
+          bun tests/unified/table-domain-fixture.ts /tmp/umf-domain-model.json
+          python -I tests/unified/table_reads_native.py --domains --source /tmp/umf-domain-model.json --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-domain-native.json
+          bun tests/unified/table-temporal-fixture.ts /tmp/umf-temporal-model.json
+          python -I tests/unified/table_reads_native.py --temporal --source /tmp/umf-temporal-model.json --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-temporal-native.json
+          python -I tests/unified/table_reads_native.py --mutations --generated --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-generated-native.json
+          python -I tests/unified/table_reads_native.py --mutations --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-writes-native.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-session-postgresql18-${{ matrix.weft-cohort }}
+          path: |
+            /tmp/umf-session-native.json
+            /tmp/umf-weft-wheel-sha256.txt
+            /tmp/umf-table-deployment-native.json
+            /tmp/umf-table-role-native.json
+            /tmp/umf-table-privileges-native.json
+            /tmp/umf-table-ledger-native.json
+            /tmp/umf-operation-ledger-native.json
+            /tmp/umf-head-adapter-native.json
+            /tmp/umf-correspondence-adapter-native.json
+            /tmp/umf-table-reads-native.json
+            /tmp/umf-table-writes-native.json
+            /tmp/umf-table-generated-native.json
+            /tmp/umf-table-temporal-native.json
+            /tmp/umf-table-domain-native.json

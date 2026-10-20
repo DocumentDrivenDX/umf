@@ -1,0 +1,38 @@
+{
+  "scope": "current-core table inspection, deployment and inert initial/append-table migration compilation; no native migration or production admission qualification",
+  "browser": "153.0.8010.12",
+  "result": {
+    "assertions": 28,
+    "metadataParity": true,
+    "deploymentParity": true,
+    "migrationParity": true,
+    "nativeQualificationClaimed": false,
+    "nodeGlobalsAbsent": true
+  },
+  "externalRequests": [],
+  "bundleSha256": "ecdeabec6e3f5e9223782e2a10da29d6a7231898c2364a7cc267fb5d8a098eb4",
+  "sourceHashes": {
+    "src/index.ts": "0769311f5fcb2037b30e06cbd6813ef86297697a8000ac223ccfcbad8fdb2b2d",
+    "src/table-migration/index.ts": "31df6e1fdea3b43bc03b5d7e7dbb77bb8c3696b80e74691df9a02536081cfe35",
+    "spec/extensions/tables/migration.schema.json": "12119f1d1674994967f0a41a1c23d6db4165e76bea7be774a81c1e48f5667f43",
+    "scripts/table-lifecycle-browser.ts": "b537847d7e479d21f7785da9431f166839dd661a8e4cfa7b95d4ffe170bb6d57",
+    "tests/unified/table-migration-fixture.ts": "f387793edd23c227e93bfd540081d9f88fc8c567f420cfc23cd61a1c6584dd8e",
+    "tests/binding/fixtures/table-lifecycle-note.json": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+    "spec/extensions/tables/schema.json": "5d9b04c587153ddfaaf709f5598d3974315e7efe158b20008ff8d9007836427c",
+    "spec/extensions/tables/package.json": "15092ecdaf56263b9682657363eda4b2a733b6ac0d896e84cc3e0d7c6ff0f3d3",
+    "spec/extensions/tables/deployment.schema.json": "053cb1d0d8013584d2f729ab6a8198bd6aff720b4ab192634c1cdaff6cd19538",
+    "src/extensions/tables/types.ts": "1cfeae445edf516ed0f7a59438fd5c5a9274456a927498f954ec2dcf131a3bd5",
+    "src/extensions/tables/context.ts": "2ed73e9a196819b709d81c6883315ee862959b82a3f6cf184122cf20663d7f62",
+    "src/extensions/tables/expressions.ts": "aaeac099934a1ecc116493c5bbade878484465f5bea2c0c74a629428750a0f5e",
+    "src/extensions/tables/columns.ts": "fcc9ba32f1dea910f0cbe4b079df6e98e550c7de1c5c82640b513c4c43068e35",
+    "src/extensions/tables/policies.ts": "802e067a568dc3cd6e03c210ae0f8c577bcfa7f9f85af0f995084b33bd15e059",
+    "src/extensions/tables/seeds.ts": "4aa5941ec205930592435b2e1799a587e4d28f75a30fa549c758d25f0eed3a43",
+    "src/extensions/tables/index.ts": "b7a74c0faeb45c382a67f3ca927ef2bb31c667502bf07ce8e14c7d799e329428",
+    "src/table-deployment/types.ts": "c6b35dae1af82b701397b729512430db21c7813ef36013e41b043fc92f19d7c6",
+    "src/table-deployment/configuration.ts": "adc510b21141db111aa57cb2ca4e1d2d98424a93c37e4ade946a5a74e1ca5482",
+    "src/table-deployment/sql.ts": "b5334197990d1fce5bff7ff6cfcce9b342532303624ffb63c948a960633a61cd",
+    "src/table-deployment/policies.ts": "78126643873bf614048a90cef61acefe6e7e9713cb4b88815b7e73ff6247a9ad",
+    "src/table-deployment/ddl.ts": "22cc25498eec36cde32363d7f5ea1f0f0cded4e93cf53c903c8a778d06ebd3b2",
+    "src/table-deployment/index.ts": "bb27689c98fe0293ecad1a1eb88a19c24ca3de0db52687900c4481759911fc05"
+  }
+}

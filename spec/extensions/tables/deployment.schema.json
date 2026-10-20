@@ -1,0 +1,441 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-deployment:0.1",
+  "title": "Inert initial PostgreSQL table deployment candidate",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "umf.table-deployment/0.1"
+    },
+    "canonicalization": {
+      "const": "RFC8785"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "enum": [
+            "json",
+            "yaml"
+          ]
+        },
+        "utf8": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000000
+        }
+      },
+      "required": [
+        "format",
+        "utf8"
+      ],
+      "additionalProperties": false
+    },
+    "sourceDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63
+        },
+        "ownerRole": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63
+        },
+        "personRole": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63
+        },
+        "batchRole": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63
+        },
+        "groupRoles": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 63
+          },
+          "maxProperties": 256
+        }
+      },
+      "required": [
+        "module",
+        "schema",
+        "ownerRole",
+        "personRole",
+        "batchRole",
+        "groupRoles"
+      ],
+      "additionalProperties": false
+    },
+    "configurationDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "module": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile": {
+      "const": "postgresql18/0.1"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^step-[0-9]{5}$"
+          },
+          "kind": {
+            "enum": [
+              "table",
+              "foreignKey",
+              "index",
+              "policy",
+              "grant"
+            ]
+          },
+          "sourcePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000000
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "sourcePath",
+          "transaction",
+          "sql"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 8192
+    },
+    "expectedCatalog": {
+      "type": "object",
+      "properties": {
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:umf:tables:0.1.0#/$defs/table"
+          },
+          "maxItems": 256
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "primary": {
+                "type": "boolean"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 63
+                },
+                "minItems": 1,
+                "maxItems": 32
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              }
+            },
+            "required": [
+              "table",
+              "id",
+              "name",
+              "primary",
+              "columns",
+              "definitionSql"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 8192
+        },
+        "columns": {
+          "type": "array",
+          "maxItems": 4096,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "field": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "sourcePath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "typeSchema": {
+                "const": "pg_catalog"
+              },
+              "typeName": {
+                "enum": [
+                  "bool",
+                  "text",
+                  "varchar",
+                  "bpchar",
+                  "int2",
+                  "int4",
+                  "int8",
+                  "float4",
+                  "float8",
+                  "numeric",
+                  "date",
+                  "timestamp",
+                  "timestamptz",
+                  "uuid",
+                  "bytea"
+                ]
+              },
+              "typeMod": {
+                "type": "integer",
+                "minimum": -1,
+                "maximum": 2147483647
+              },
+              "nullable": {
+                "type": "boolean"
+              },
+              "collation": {
+                "enum": [
+                  "C",
+                  null
+                ]
+              },
+              "identity": {
+                "enum": [
+                  "",
+                  "a",
+                  "d"
+                ]
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              }
+            },
+            "required": [
+              "table",
+              "name",
+              "field",
+              "sourcePath",
+              "typeSchema",
+              "typeName",
+              "typeMod",
+              "nullable",
+              "collation",
+              "identity",
+              "definitionSql"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "checks": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              }
+            },
+            "required": [
+              "table",
+              "id",
+              "name",
+              "definitionSql"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "foreignKeys": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              },
+              "targetKey": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              }
+            },
+            "required": [
+              "table",
+              "id",
+              "name",
+              "definitionSql",
+              "targetKey"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "indexes": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              },
+              "unique": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "table",
+              "id",
+              "name",
+              "definitionSql",
+              "unique"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "tables",
+        "keys",
+        "columns",
+        "checks",
+        "foreignKeys",
+        "indexes"
+      ],
+      "additionalProperties": false
+    },
+    "seedSets": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:umf:tables:0.1.0#/$defs/seedSet"
+      },
+      "maxItems": 256
+    },
+    "bundleDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nativeQualified": {
+      "const": false
+    }
+  },
+  "required": [
+    "version",
+    "canonicalization",
+    "source",
+    "sourceDigest",
+    "configuration",
+    "configurationDigest",
+    "module",
+    "profile",
+    "steps",
+    "expectedCatalog",
+    "seedSets",
+    "bundleDigest",
+    "nativeQualified"
+  ],
+  "additionalProperties": false
+}

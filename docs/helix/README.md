@@ -6,9 +6,47 @@ identity/policies and Truss/Ashlar graph hosts. Release numbers are proposed;
 dates are uncommitted. [Stack licensing evidence](04-build/evidence/stack-licensing.md)
 records the separately authorized MIT OR Apache-2.0 source/package changes.
 [P1 implementation](04-build/evidence/praxis-p1.md) adds portable generated sync
-clients and installed Pydantic 2.13.5/2.14.1 compatibility. Native per-call
-connections, driver qualification, Bun-free generation and index delivery remain
-open.
+clients and installed Pydantic 2.13.5/2.14.1 compatibility. [Native per-call session evidence](04-build/evidence/praxis-p1/session-native-postgresql.json)
+now covers scoped Psycopg3, Psycopg2 and SQLAlchemy Core/PostgreSQL18 sessions.
+Production artifact execution and release/index delivery remain open. The
+[source-proved native head observer](04-build/evidence/praxis-p2/native-head.json)
+adds a private-history metadata projection, trusted installation references and
+read-only person/batch current-generation checks. The
+[per-call adapter evidence](04-build/evidence/praxis-p2/native-head-adapter-execution.json)
+qualifies sync/async native drivers, real pools and cancellation for this metadata
+observer. Full data admission remains
+open. The
+[local Python generator candidate](04-build/evidence/praxis-p1/python-codegen.json)
+runs the original portable generator without external Bun/Node; Linux/macOS
+hosted checks pass. Publication gates remain open.
+
+The [declared native reader evidence](04-build/evidence/praxis-p2/declared-reads/receipt.json)
+records checked Weft reads with pre/post live correspondence, identity-scoped
+cursors, bounded frames and126 PG18 assertions across six driver/pool variants.
+Generated lifecycle methods and the remaining full Praxis
+lifecycle/consumer/release gates remain open.
+
+The [native mutation/outcome packet](04-build/evidence/praxis-p2/durable-outcomes/receipt.json)
+adds declared CRUD/upsert/batch execution, authenticated effect-only recovery,
+version0.2 metadata references and commit/cancellation handling across the native
+driver configurations. Generated typed module integration, remaining codecs,
+seeds/evolution, private consumer acceptance and publication remain required.
+
+The [generated module evidence](04-build/evidence/praxis-p2/generated-modules/receipt.json)
+connects declared typed module methods to those native executors, with80 PG18
+assertions, three static checkers and Bun/Chromium/embedded-Python parity.
+Remaining lifecycle/codec, private acceptance and release gates stay open.
+
+The [finite temporal evidence](04-build/evidence/praxis-p2/finite-temporal/receipt.json)
+adds explicit date/UTC-instant/decimal native execution and finite-domain checks,
+with88 PG18 assertions across all six driver/pool variants. Source-declared
+current timestamps and ambient timezone/date-format independence are qualified;
+blocking enum/range and remaining lifecycle/consumer/release work stay open.
+
+The [scalar domain/clock evidence](04-build/evidence/praxis-p2/scalar-domains/receipt.json)
+adds native and generated membership/range/width/length validation plus typed
+server transaction-time assignments. Six driver/pool variants pass150 PG18
+assertions; seeds/evolution, final consumer acceptance and publication remain open.
 
 [Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
 turns a current UMF schema into one typed model/query/action API for tables and

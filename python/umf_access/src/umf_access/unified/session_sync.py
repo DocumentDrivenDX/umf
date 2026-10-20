@@ -1,0 +1,148 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+"""Psycopg 3 synchronous per-call leases; the host owns connections and pools."""
+from __future__ import annotations
+
+import os
+import sys
+import threading
+from collections.abc import Callable, Iterator
+from contextlib import AbstractContextManager, contextmanager
+from typing import Any, Literal
+
+from .session_policy import (
+    GET_SETTING,
+    GET_SETTINGS,
+    ROLE_SETTINGS_CHECK,
+    SET_SETTINGS,
+    SETTING_NAMES,
+    SessionError,
+    SessionIdentity,
+    SessionPolicy,
+    _effective_settings,
+    _setting_values,
+    _tuple_row,
+)
+
+
+@contextmanager
+def _lease(factory, identity):
+    lease = factory(identity)
+    connection = lease.__enter__()
+    try:
+        yield connection
+    except BaseException:
+        try:
+            lease.__exit__(*sys.exc_info())
+        except BaseException:
+            connection.close()
+            raise
+        raise
+    else:
+        try:
+            lease.__exit__(None, None, None)
+        except BaseException:
+            connection.close()
+            raise
+
+
+class SyncSession:
+    """Use a factory returning a direct-connection or pool lease context manager.
+
+    The factory runs once per call, after authentication. It must release the
+    connection on exit and discard closed/broken connections. This adapter never
+    creates a pool, changes autocommit, or closes a healthy caller connection.
+    Create this object and its host pool after spawning a child process.
+    """
+    def __init__(self, factory: Callable[[SessionIdentity], AbstractContextManager[Any]], policy: SessionPolicy,
+                 *, transaction_owner: Literal["adapter", "caller"] = "adapter"):
+        if transaction_owner not in ("adapter", "caller"):
+            raise ValueError("transaction_owner must be adapter or caller")
+        self.transaction_owner = transaction_owner
+        self.factory = factory
+        self.policy = policy
+        self._pid = os.getpid()
+        self._active: set[int] = set()
+        self._lock = threading.Lock()
+
+    def _prepare_connection(self, connection):
+        return connection
+
+    def _control_cursor(self, connection):
+        return connection.cursor(row_factory=_tuple_row)
+
+    def control_cursor(self, native):
+        """Private control work on an already leased connection; never acquire."""
+        return self._control_cursor(self._prepare_connection(native))
+
+    @contextmanager
+    def open(self, identity: SessionIdentity, *, read_only: bool = True) -> Iterator[Any]:
+        if os.getpid() != self._pid:
+            raise SessionError("create session factories and pools after process creation")
+        if type(read_only) is not bool:
+            raise ValueError("read_only must be bool")
+        settings = self.policy.settings(identity)  # reject before acquiring a lease
+        with _lease(self.factory, identity) as connection:
+            key = id(connection)
+            with self._lock:
+                if key in self._active:
+                    raise SessionError("connection already leased by this adapter")
+                self._active.add(key)
+            entered = False
+            try:
+                native = connection
+                connection = self._prepare_connection(native)
+                status = int(connection.info.transaction_status)
+                if status not in (0, 2):
+                    raise SessionError("connection is not idle or in a healthy caller transaction")
+                owned = self.transaction_owner == "adapter"
+                if status != (0 if owned else 2):
+                    raise SessionError("connection state differs from explicit transaction ownership")
+                transaction = connection.transaction()
+                try:
+                    transaction.__enter__()
+                    entered = True
+                except BaseException:
+                    connection.close()
+                    raise
+                with self._control_cursor(connection) as cursor:
+                    if owned:
+                        if read_only:
+                            cursor.execute("SET TRANSACTION READ ONLY")
+                    elif read_only:
+                        cursor.execute(GET_SETTING, ("transaction_read_only",))
+                        if cursor.fetchone() != ("on",):
+                            raise SessionError("caller transaction must already be read-only")
+                    previous = {}
+                    if not owned:
+                        cursor.execute(GET_SETTINGS)
+                        previous = dict(zip(SETTING_NAMES,cursor.fetchone(),strict=True))
+                    cursor.execute(SET_SETTINGS, _setting_values(settings))
+                    cursor.execute(ROLE_SETTINGS_CHECK)
+                    session_user,effective = _effective_settings(cursor.fetchone(),settings["role"])
+                yield native
+                with self._control_cursor(connection) as cursor:
+                    cursor.execute(ROLE_SETTINGS_CHECK)
+                    _,observed = _effective_settings(cursor.fetchone(),settings["role"],session_user)
+                    if observed != effective:
+                        raise SessionError("session settings changed during execution")
+                    # RELEASE SAVEPOINT preserves SET LOCAL. Restore the caller's
+                    # values explicitly before releasing a successful nested lease.
+                    if not owned:
+                        cursor.execute(SET_SETTINGS, _setting_values(previous))
+                entered = False
+                try:
+                    transaction.__exit__(None, None, None)
+                except BaseException:
+                    connection.close()  # uncertain commit/cleanup must not recycle
+                    raise
+            except BaseException:
+                if entered:
+                    try:
+                        transaction.__exit__(*sys.exc_info())
+                    except BaseException:
+                        connection.close()
+                        raise
+                raise
+            finally:
+                with self._lock:
+                    self._active.remove(key)

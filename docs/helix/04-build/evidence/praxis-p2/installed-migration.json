@@ -1,0 +1,71 @@
+{
+  "scope": "installed original migration-plan compiler and source verifier; no native ledger/application admission",
+  "baseCommit": "b4265d10a",
+  "sourceHashes": {
+    "scripts/codegen/entry.ts": "7d1d992001e24c880ebf798ac0db53a070c26291f745cc5dade4d9a0fbc8e9c0",
+    "scripts/table-migration-corpus.ts": "2b6ae04307b9b053565b83366ec601f3d8786155c630f939e502972fb8721991",
+    "tests/codegen/migration_probe.py": "8e29faa1d123e73d106fa3a36f583b31007dd80528cbb8cef87b70b8b226a06f",
+    "python/umf_codegen/src/umf_codegen/__init__.py": "1ee3ccce0c86aa53c15181ea31ecf9c495be8a0374c7ea22d9bdd7b5fa1124b3",
+    "python/umf_codegen/src/umf_codegen/_embedded.py": "d24722ae87839a6f729399b59400d0cfbdcba45b654f22ee0ecac23b37aaccd5",
+    "python/umf_codegen/src/umf_codegen/_release.py": "f9a694e88934d31d61400f42437a7c6d4dcdc2e48ecc234e3753ddae9b054edd",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "747f28c4e1fc72bd4139b80251bed631cf70a453c60b767af4dcab90a9bc2281",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "e8aa51fca58033e7a26057a2ff8db7f8e47384134941bd68a965af3cae335385",
+    "python/umf_codegen/README.md": "1ecac5572a76810911831edff0e63d421a49d0d9a623cda96cfa99d7c88b0b1b",
+    ".github/workflows/access-boundaries.yml": "e67ce35a2e7de93d0a0c7033759f6d90c9561e810d4d3b8fea5c275f4bb9db65"
+  },
+  "wheel": {
+    "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
+    "sha256": "c5e00b22b8cc4792408a8b06577912911ce146342b93b8e8cfeed848426e5ffa"
+  },
+  "sdist": {
+    "name": "umf_codegen-0.1.0a1.tar.gz",
+    "sha256": "a2849ee6689615315533a4ecb4a44cc7ae198516c1f84c854291ee9c537712c0"
+  },
+  "sourceAndSdistWheelsIdentical": true,
+  "python": "3.11.17",
+  "engine": "mini-racer0.14.1",
+  "parity": {
+    "migration": {
+      "cases": 12,
+      "compiled": 4,
+      "blocked": 8,
+      "tamperControls": 44,
+      "deadlineControls": 4
+    },
+    "clientCases": 16,
+    "deploymentCases": 12,
+    "deploymentTamperControls": 20,
+    "externalProcessesNetworkAndExecutableLookup": "forbidden"
+  },
+  "checks": {
+    "mypy": "5 codegen files strict pass",
+    "ruff": "Python pass",
+    "typescriptTools": "pass",
+    "boundaries": "3 unit tests including8 negative controls; pass",
+    "packagingControls": [
+      "current-source-passes",
+      "stale-source-refuses",
+      "damaged-payload-refuses"
+    ],
+    "manifest": {
+      "inputs": 221,
+      "files": 13,
+      "status": "current"
+    },
+    "license": {
+      "headers": 2697,
+      "expression": "MIT OR Apache-2.0",
+      "wheelLicenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ]
+    }
+  },
+  "limits": [
+    "source consistency does not authenticate native history or grant approval",
+    "native migration executor and durable ledger remain next",
+    "hosted platform and immutable publication gates remain open"
+  ],
+  "nativeLifecycleReleaseQualified": false
+}

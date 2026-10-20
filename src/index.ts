@@ -502,3 +502,10 @@ export * from './model/semantic-types';
 export {default as coreSemanticTypeReferenceSchema} from '../spec/core/semantic-type-reference.schema.json';
 export {default as coreSemanticTypesOperationSchema} from '../spec/core/semantic-types-operation.schema.json';
 export {generatePythonClient,type PythonClientRequest,type PythonClientResult} from './access';
+
+// Explicit native table declaration inspection; no native deployment authority.
+export * from './extensions/tables';
+// Inert initial deployment compilation; hosts retain native admission authority.
+export * from './table-deployment';
+// Inert source-bound forward plans; no ledger or execution authority.
+export * from './table-migration';

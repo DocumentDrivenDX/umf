@@ -1,0 +1,138 @@
+{
+  "scope": "current source/principal/audience/role/schema/ACL/table correspondence across six real native adapters; not operation admission or a held permit",
+  "baseUmfRevision": "aee257f1f329401f7c32e06c87d653843b4c6928",
+  "weftRevision": "4e0abd77ae5d030c4b4ff0038396fb37036c4717",
+  "verification": {
+    "nativeCorrespondenceAssertions": 141,
+    "nativeCatalogAssertions": 116,
+    "nativeRoleAssertions": 64,
+    "nativePrivilegeAssertions": 133,
+    "nativeLedgerAssertions": 101,
+    "sessionUnitTests": 25,
+    "minimalEnvironmentSessionUnitTests": 25,
+    "boundaryControls": {
+      "tests": 23,
+      "assertions": 161,
+      "failures": 0
+    },
+    "imports": {
+      "modules": 74,
+      "violations": 0
+    },
+    "sourceWheelByteComparison": {
+      "modules": 8,
+      "status": "equal"
+    },
+    "licenses": [
+      {
+        "root": "/Users/erik/.codex/worktrees/a0fd/umf",
+        "headers": 2712,
+        "packages": [
+          "docs/helix/05-deploy/schema-browser/package.json",
+          "package.json",
+          "python/pyproject.toml",
+          "python/umf_access/pyproject.toml",
+          "python/umf_codegen/pyproject.toml"
+        ]
+      },
+      {
+        "wheel": "umf_access-0.1.0.dev2-py3-none-any.whl",
+        "license": "MIT OR Apache-2.0",
+        "licenseFiles": [
+          "LICENSE-APACHE",
+          "LICENSE-MIT",
+          "LICENSE.md"
+        ]
+      }
+    ],
+    "nativeWeftSyncAsyncAssertions": 50
+  },
+  "toolchain": {
+    "umf_access": "0.1.0.dev2",
+    "umf_codegen": "0.1.0a1",
+    "psycopg": "3.2.13",
+    "psycopg2-binary": "2.9.11",
+    "SQLAlchemy": "2.0.44",
+    "greenlet": "3.2.4",
+    "psycopg-pool": "3.3.3",
+    "pydantic": "2.13.5"
+  },
+  "postgresql": 180006,
+  "localWheel": {
+    "filename": "umf_access-0.1.0.dev2-py3-none-any.whl",
+    "sha256": "eb17e98e796cd6baa6181d2ad4d236fb1a13430c01a2bc2b604b468a908b7fd7",
+    "published": false,
+    "license": "MIT OR Apache-2.0"
+  },
+  "sourceFiles": {
+    "python/umf_access/src/umf_access/lifecycle/__init__.py": "edabcf4ac187ebc16a03df1cedf77a26b1cd7ece7ddd51bea42b6d6952b1bc73",
+    "python/umf_access/src/umf_access/lifecycle/catalog.py": "a77178de0706afcf37a29baf513166aa5d109803c48b1fd4be7a94203e04222f",
+    "python/umf_access/src/umf_access/lifecycle/correspondence.py": "037c161473ceb650ebd3aa7453b7a4533723c4255099cb7e38d43e163811968f",
+    "python/umf_access/src/umf_access/lifecycle/roles.py": "ff2f6c26be589bb362331b3c4dbd9bcdbf1a5e198e3485b49995d8d5b0e3a94a",
+    "python/umf_access/src/umf_access/lifecycle/table_boundary.py": "e7031de620fa2b0608c3b0d4475ebef8e053ce1d42fd831aa3bdd56fda7928fa",
+    "python/umf_access/src/umf_access/lifecycle/witness.py": "5ac7275201c8a17c30d11a57d378dfee65ee16d9e36d1023267e9587b1529670",
+    "python/umf_access/src/umf_access/unified/__init__.py": "06729230cab9f0bced2c06f5416e3211324a2f1fa25db8aef602b7516a033014",
+    "python/umf_access/src/umf_access/unified/head_session.py": "cd6b70a48f2cba0a382ce78e86bd221bb79177c0533617ca49de8508adcf9cdc"
+  },
+  "testFiles": {
+    "tests/unified/head_session_native.py": "2e1334994486749ccad8bcd602ccb3c1e6c9a0cedebaefd8d02d5a995cf75731",
+    "tests/unified/table_deployment_native.py": "8423713aa57523f1e3a9f1f2da5eed74a51a2a32d4f69079acef20613512790d",
+    "tests/compilation/boundaries.test.ts": "36a5e208d5bcef898c44b89c6d96ec95327546fe4462e9065b9f7760bab82137",
+    "scripts/check-access-python-boundaries.py": "bef0f9897cd4988f617431836d57812463c8a9cc1c931ac859b906e9b4c21b38",
+    ".github/workflows/access-boundaries.yml": "fb901918402b9d228188799581859681646d6360311e65a972f6010f56afa3c8"
+  },
+  "evidence": {
+    "live-correspondence-adapters.json": "84a549d2c6dfcdcd618407f3c1728f4de1e0d6485bfeef2dbf9e64741a86586e",
+    "live-correspondence-catalog.json": "d093f1778750dca70809b3bb0a73da541fe2b07003e1849ce1a796a162345810",
+    "live-correspondence-roles.json": "937e187daca30347c4e0b4ab0bdfb8dc219aaf01eb4535cf81a3521de497c1a4",
+    "live-correspondence-privileges.json": "7fbe9acb7b58535648c3439e31cebf691a64b9ceafdbc119be0d6e05468c6f0d",
+    "live-correspondence-ledger.json": "fcd7d07d028bb8fc5805cb2a25513c43b95d09e3a601084b63e9404762109a3a",
+    "live-correspondence-weft.json": "eb4c8603b9350f42a8b35b1fc9940ca07b578fc4e3c1e75ae2a8da847e85eef3"
+  },
+  "predecessorHostedVerification": {
+    "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/39322791079",
+    "headSha": "aee257f1f329401f7c32e06c87d653843b4c6928",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "currentHostedVerification": "pending commit/push; source-dbapi native CI includes correspondence and committed-drift fixture",
+  "controls": [
+    "matching head remains readable while changed defaults/column grants/extra policy/forced-RLS/owner privilege/cross-audience drift refuses",
+    "all six adapters agree on stable live role scope",
+    "MEMBER-only group change alters scope despite disabled INHERIT/SET",
+    "batch login alias inherits source batch grant but cannot be relabelled as person",
+    "user triggers and outside incoming FKs refuse in both original-source reproof and ordinary correspondence",
+    "disabled/always-enabled native constraint triggers refuse source proof",
+    "plugin audience roots cannot acquire outside data authority; actual person may retain another plugin grant",
+    "denied tables remain denied; verification takes no undeclared SELECT grants",
+    "real pools, caller transactions, running-loop sync calls and repeated async cancellation retain their existing contracts"
+  ],
+  "fixedPrecursor": {
+    "control": "extra module table has no SELECT grant for selected principal",
+    "observed": "explicit ACCESS SHARE table lock failed",
+    "resolution": "metadata checks use only granted head access and public catalogs under shared module advisory lock; native business statements will acquire selected table locks"
+  },
+  "boundaryAttempt": {
+    "firstRun": "one5s test infrastructure timeout during concurrent native work; exitCode null",
+    "repeat": "same configured command passed all23 tests after native work; no timeout limit or assertion weakened"
+  },
+  "reproduction": [
+    "Build/install exact current SDK wheel with pinned codegen and native dependencies in adapter report",
+    "bun tests/unified/table-ledger-fixture.ts /tmp/correspondence-plans.json --typed-operations --quoted-schema",
+    "python -I tests/unified/head_session_native.py --dsn OWNED_PG18_DSN --plans /tmp/correspondence-plans.json --correspondence --report /tmp/correspondence.json",
+    "Generate table-deployment-fixture.ts bundle and run table_deployment_native.py, table_role_scope_native.py and table_privileges_native.py",
+    "Run table_ledger_native.py against the original typed operation ledger fixture",
+    "bun run test:access-boundaries && bun run check:access-boundaries"
+  ],
+  "lifecycleAdmission": false,
+  "operationAdmission": false,
+  "remaining": [
+    "single operation lifetime with current correspondence before/after checked Weft execution",
+    "compiler obligation, row codec and native execution qualification",
+    "generated module methods",
+    "authenticated cursors and durable replay",
+    "native required codecs, migrations/seeds/retirement and legacy-data adoption",
+    "private Praxis and available Lakebase acceptance",
+    "immutable complete-Praxis release"
+  ]
+}

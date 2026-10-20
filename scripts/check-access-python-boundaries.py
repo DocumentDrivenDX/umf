@@ -39,7 +39,11 @@ def check(root: Path) -> int:
                "facade": {"dsl", "runtime", "foundation"}}
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
-    extras = {"build": {"weft"}, "targets": {"psycopg", "databricks", "pyspark"}}
+    # Administration is a separate explicit owner; generator/driver imports do
+    # not become available to the portable DSL, regular runtime or other targets.
+    allowed["lifecycle"] = set()
+    extras = {"build": {"weft"}, "targets": {"psycopg", "databricks", "pyspark"},
+              "lifecycle": {"psycopg", "umf_codegen"}}
 
     def fail(path: Path, code: str, message: str) -> None:
         errors.append(f"{path.relative_to(root)}: {code} {message}")
@@ -80,12 +84,21 @@ def check(root: Path) -> int:
             graph[name].add(target)
             target_owner = owner(target)
             if source_owner != target_owner:
-                if target_owner not in allowed.get(source_owner, set()):
+                head_probe = (name == 'umf_access.unified.head_session' and target == 'umf_access.lifecycle'
+                              and member in {'CatalogError','prepare_table_head','prepare_table_correspondence'})
+                if target_owner not in allowed.get(source_owner, set()) and not head_probe:
                     fail(path, "DEPENDENCY", f"{source_owner} -> {target_owner}")
                 if target.count(".") != 1 or member.startswith("_"):
                     fail(path, "PRIVATE", f"use public boundary of {target_owner}")
             return
         package = target.split(".")[0]
+        if source_owner == "lifecycle" and package in {"psycopg", "umf_codegen"}:
+            public = (target == "psycopg" and member == "Error" or target == "psycopg.rows" and member == "tuple_row"
+                      or target == "psycopg.types.json" and member == "Jsonb"
+                      or target == "umf_codegen" and member in {"verify_table_deployment", "verify_table_migration"})
+            if not public:
+                fail(path, "PRIVATE", "administration uses only the original public verifier and native exception boundary")
+                return
         permitted = stdlib | {"pydantic"} | extras.get(source_owner, set())
         if name == "umf_access.runtime.bulk":
             permitted.add("weft")
@@ -95,7 +108,12 @@ def check(root: Path) -> int:
         # Defaulted navigation phantoms preserve the old five-argument ABI on
         # Python3.11; this exact pinned typing backport performs no host I/O.
         typing_backport = name == "umf_access.dsl.navigation" and target == "typing_extensions" and member == "TypeVar"
-        if package not in permitted and not spark_error and not typing_backport:
+        psycopg2_cursor = (name == 'umf_access.unified.session_psycopg2'
+                          and target == 'psycopg2.extensions' and member == 'cursor')
+        table_read_compiler = (name == 'umf_access.unified.table_reads' and target == 'weft'
+                               and member in {'compile_table_operation_json', 'check_table_operation_json'})
+        seed_compiler = name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):
             fail(path, "DYNAMIC", "dynamic loading module")

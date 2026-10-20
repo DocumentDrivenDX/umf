@@ -1,0 +1,131 @@
+{
+  "scope": "declared native table operation metadata/type admission and source installation; no generated or native operation execution",
+  "baseCommit": "cabe30d0e",
+  "declarationVersion": "umf.table-operation/0.1",
+  "declaredShapes": [
+    "read-many",
+    "read-one",
+    "read-optional",
+    "read-page",
+    "read-count",
+    "insert",
+    "update",
+    "delete",
+    "upsert-ignore",
+    "upsert-update",
+    "atomic-single-operation-write-batch"
+  ],
+  "sourceHashes": {
+    "src/extensions/tables/types.ts": "46fc13f882cdb947cdb428507ec497b41823cdf6ff1071c5c4e41e800805398e",
+    "src/extensions/tables/operations.ts": "9c961ba4344ccdc72b64b0ee41b9fd508c7088852aa7b8863f597ebcbff9feb9",
+    "src/extensions/tables/index.ts": "c6e0ce267d8dd4a77bedc7322556357a2a2293cbf395c14cdf85fc1843f3a4be",
+    "spec/extensions/tables/operation.schema.json": "e37f5f00f44a5252e56f74a8c12aeb4fccf5ef827811584f3a5d2e2b1e30a2e0",
+    "scripts/check-table-lifecycle-boundaries.ts": "005066e9478fb1c8bd163f3cdd55716aab3584d57de90dbe8b2ae3e556431e71",
+    "scripts/table-lifecycle-browser.ts": "8e7b9950518a05e1d7445d6f193a66121b9f0500172891f17f7f79ee58b37282",
+    "scripts/table-deployment-corpus.ts": "602b8857efb8184ce2480149b3563b07e6043bc419cdf4c3a2f3dff17346c12d",
+    "scripts/build-codegen.ts": "294737ccac19d0b840fa54c874d0ceea90b7eccd330e7ecd6340b37334a8e527",
+    "tests/binding/table-operations.test.ts": "48ba69a093b53a1bb1bfd14b820af3cabd07449a0f01f763e5103d8a036b3812",
+    "tests/unified/table-operation-fixture.ts": "81cfab25e02f16d99fd653b76b5fdd359b175071b9be74936e92c1fa4991aab4",
+    "tests/unified/table-ledger-fixture.ts": "fdce38dc1a012aa910644d75f16d969d7b47f7c081ebe00ff2eb67949f247242",
+    "tests/codegen/build_probe.py": "2e75a77cf52f967e5b85930d16f8ee7f3f663f339df282cb2be7086e17cb7439",
+    ".github/workflows/access-boundaries.yml": "3cdadb7b14ecbb526e3db651b9a3cfdf9f6a2e8af8198573d28826895380802a",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "50e10e02cffd0f2c23bec95d4a1a1ca8a008a3405202a4ed7d32c7869ba54ebf",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "ae79290e67846a805e00c321f0de94ae236bafb30beef9ee25f5cc9f8a3c4e12",
+    "python/umf_codegen/src/umf_codegen/_release.py": "df167bba420f71ab1d36e6ddd18c83b5fe152a4cc63ad724bf08c558a438a2df"
+  },
+  "packets": {
+    "typed-operations-browser.json": "4f979806431fcc8a10916f1f0a393b62e6f75ddfe4424e871c638c5a2f4c9a0e",
+    "typed-operations-python-deployment.json": "6f7dc6fda1be64a937792096423ee85a623f3073020734e851f0cfaf64e98573",
+    "typed-operations-python-client.json": "35fe2ff647744aabfc7840b473f15edfb070f63fe04b744dda777cd1b246e366",
+    "typed-operations-python-migration.json": "db22b4faa5ad3773922af79a6124b780f671e6888804e1ae99b79559e6dbabba",
+    "typed-operations-native.json": "ea10b019686484b9c6258e70c89dd158e76a42ab13cf42371824d5812b7251d4"
+  },
+  "verification": {
+    "declarationDeploymentMigrationTests": {
+      "passed": 42,
+      "failed": 0,
+      "assertions": 291
+    },
+    "existingGeneratedAccessRegression": {
+      "passed": 35,
+      "skipped": 1,
+      "failed": 0,
+      "assertions": 225,
+      "skip": "native generated-access test not selected; separately verified native source ledger is not data-operation evidence"
+    },
+    "strictTypeScript": "passed",
+    "browser": {
+      "version": "153.0.8010.12",
+      "assertions": 36,
+      "externalRequests": 0
+    },
+    "installedCompiler": {
+      "clientCases": 16,
+      "deploymentCases": 15,
+      "compiledDeploymentCases": 6,
+      "blockedDeploymentCases": 9,
+      "deploymentTamperControls": 30,
+      "migrationCases": 12,
+      "migrationTamperControls": 44,
+      "migrationDeadlineControls": 4,
+      "externalProcessesLookupNetwork": "forbidden during parity probes"
+    },
+    "nativeSourceInstallation": {
+      "postgresql": 180006,
+      "assertions": 49,
+      "typedCommandsInSource": 11,
+      "scope": "approved initial/append ledger, caller transactions, concurrent replay, drift and source preservation only"
+    },
+    "moduleBoundaries": {
+      "tableLifecycleModules": 8,
+      "tableDeploymentModules": 7,
+      "codegen": "passed",
+      "negativeControls": "passed"
+    },
+    "packagingHooks": [
+      "current-source-passes",
+      "stale-source-refuses",
+      "damaged-payload-refuses"
+    ],
+    "codegenBoundaryTests": 3,
+    "manifestOperations": [
+      "generatePythonClient",
+      "compileTableDeployment",
+      "verifyTableDeployment",
+      "compileTableMigration",
+      "verifyTableMigration"
+    ]
+  },
+  "reproducibility": {
+    "sourceWheelSha256": "f2db3f3c4502293618ad175f92ee8a2c2beceb34b5c083a1ce88f0ea93aecb0e",
+    "sdistBuiltWheelSha256": "f2db3f3c4502293618ad175f92ee8a2c2beceb34b5c083a1ce88f0ea93aecb0e",
+    "sourceSdistSha256": "77e016a2e582167a3c072d2a669a1e174ddecdca5ab4badef915386b3709650b",
+    "byteIdentical": true
+  },
+  "licensing": {
+    "sourceHeaders": 2705,
+    "wheel": "umf_codegen-0.1.0a1-py3-none-any.whl",
+    "expression": "MIT OR Apache-2.0",
+    "licenseFiles": [
+      "LICENSE.md",
+      "LICENSE-MIT",
+      "LICENSE-APACHE"
+    ]
+  },
+  "correctedPrecursors": [
+    "Synthetic declarations initially shared fixture object references; independent JSON trees now isolate mutation controls.",
+    "Packaging gate was rerun in the build environment containing Hatchling after the compiler-only environment lacked it.",
+    "Local browser required sandbox permission for its localhost server; final Chromium run passed."
+  ],
+  "limits": [
+    "Single-table scalar declaration subset; joins, business aggregates, optional-input omission and parameter lists require explicit extension.",
+    "Unknown versions/members are retained and block complete interpretation.",
+    "Weft713186b6 still refuses nonempty command inventories; no guard was weakened.",
+    "Generated lifecycle clients, native data admission, mutations/replay and module-capability invocation remain separate implementation gates.",
+    "Actual consumer acceptance, required codecs/facets/seeds/evolution and immutable full Praxis prereleases remain open."
+  ],
+  "published": false,
+  "nativeOperationExecutionQualified": false,
+  "fullPraxisSupport": false,
+  "hostedVerification": "new checks configured; awaiting pushed-run results"
+}

@@ -73,7 +73,7 @@ describe("actual compilation boundary checker", () => {
       'export {privateValue as publicValue} from "../../model/document";',
       'export type Module = typeof import("../../model/document");',
     ]) rejects("ts", { ...api, "src/compilation/admission/index.ts": source }, "HOST");
-  });
+  }, 30_000);
   test("IR admits erased public type queries but refuses runtime use", () => {
     const api = {
       "src/index.ts": 'export { CURRENT_CORE_VERSION } from "./generated/core-model";',
@@ -169,6 +169,34 @@ describe("actual Python boundary checker", () => {
     }).exitCode).toBe(0);
     rejects("py", { [prefix + "surprise.py"]: "" }, "MODULE");
     rejects("py", { [prefix + "types.py"]: "from .dsl import Query", [prefix + "dsl/__init__.py"]: "class Query: pass" }, "DEPENDENCY");
+  });
+  test("lifecycle administration owns only its public compiler verifier and native exception imports",()=>{
+    const prefix="python/umf_access/src/umf_access/";
+    expect(check("py",{[prefix+"lifecycle/catalog.py"]:"from umf_codegen import verify_table_deployment, verify_table_migration\nfrom psycopg import Error\nfrom psycopg.rows import tuple_row\nfrom psycopg.types.json import Jsonb"}).exitCode).toBe(0);
+    for(const source of ["import umf_codegen._embedded","from umf_codegen import generate_python_client","import psycopg","from psycopg import Connection","from psycopg.types.json import set_json_loads"])
+      rejects("py",{[prefix+"lifecycle/catalog.py"]:source},"PRIVATE");
+    rejects("py",{[prefix+"runtime/read.py"]:"from umf_codegen import verify_table_deployment"},"DEPENDENCY");
+    rejects("py",{[prefix+"dsl/__init__.py"]:"from umf_access.lifecycle import verify_native_catalog",[prefix+"lifecycle/__init__.py"]:"def verify_native_catalog(): pass"},"DEPENDENCY");
+  });
+  test("ordinary head observations cannot import migration authority or general Psycopg2 APIs",()=>{
+    const prefix="python/umf_access/src/umf_access/";
+    const lifecycle="class CatalogError(Exception): pass\ndef prepare_table_head(): pass\ndef prepare_table_correspondence(): pass\ndef apply_table_migration(): pass";
+    expect(check("py",{[prefix+"unified/head_session.py"]:"from umf_access.lifecycle import CatalogError, prepare_table_head, prepare_table_correspondence",[prefix+"lifecycle/__init__.py"]:lifecycle}).exitCode).toBe(0);
+    rejects("py",{[prefix+"unified/head_session.py"]:"from umf_access.lifecycle import apply_table_migration",[prefix+"lifecycle/__init__.py"]:lifecycle},"DEPENDENCY");
+    for(const consumer of ['dsl/__init__.py','unified/other.py'])
+      rejects("py",{[prefix+consumer]:"from umf_access.lifecycle import prepare_table_head",[prefix+"lifecycle/__init__.py"]:lifecycle},"DEPENDENCY");
+    for(const consumer of ['dsl/__init__.py','unified/other.py'])
+      rejects("py",{[prefix+consumer]:"from umf_access.lifecycle import prepare_table_correspondence",[prefix+"lifecycle/__init__.py"]:lifecycle},"DEPENDENCY");
+    expect(check("py",{[prefix+"unified/session_psycopg2.py"]:"from psycopg2.extensions import cursor"}).exitCode).toBe(0);
+    rejects("py",{[prefix+"unified/session_psycopg2.py"]:"from psycopg2 import connect"},"DEPENDENCY");
+    rejects("py",{[prefix+"runtime/read.py"]:"from psycopg2.extensions import cursor"},"DEPENDENCY");
+  });
+  test("declared native reads own only the two closed Weft compiler entry points",()=>{
+    const prefix="python/umf_access/src/umf_access/";
+    expect(check("py",{[prefix+"unified/table_reads.py"]:"from weft import compile_table_operation_json, check_table_operation_json"}).exitCode).toBe(0);
+    for(const source of ['import weft','from weft import compile_engine_page_json','from weft import connect'])
+      rejects("py",{[prefix+"unified/table_reads.py"]:source},"DEPENDENCY");
+    rejects("py",{[prefix+"unified/other.py"]:"from weft import compile_table_operation_json"},"DEPENDENCY");
   });
 });
 
