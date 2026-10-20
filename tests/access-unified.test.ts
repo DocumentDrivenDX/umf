@@ -30,7 +30,7 @@ describe('latest UMF unified Python access',()=>{
   const run=`import asyncio, json, sys
 sys.path.insert(0, ${JSON.stringify(work)})
 sys.path.insert(0, ${JSON.stringify(join(root,'tests/unified'))})
-from shop import Client, Order, OrderKey, Customer, CustomerKey, Actions, AccessError, PreconditionFailed, WriteOutcomeUnknown, MISSING
+from shop import Client, Order, OrderKey, Customer, CustomerKey, Actions, AccessError, PreconditionFailed, WriteOutcomeUnknown, write_outcomes_unknown, MISSING
 from application import application, assert_shared_edge_cases
 from ontology_transport import OntologyTransport
 from decimal import Decimal
@@ -87,28 +87,36 @@ async def main():
     else:
         raise AssertionError('schema-mismatched response accepted')
 
-    class PreconditionHost:
+    class UndeclaredConditionHost:
+        calls = 0
         async def execute(self, request):
+            self.calls += 1
             return {'schema': request['schema'], 'error': {'code': 'PRECONDITION_FAILED',
                     'field': 'status', 'precondition': 'order-open', 'message': 'private instance data'}}
+    undeclared_condition = UndeclaredConditionHost()
     try:
-        await Actions(Client(PreconditionHost())).ship_order(order=OrderKey(order_id='o-100'))
-    except PreconditionFailed as error:
-        assert error.field == 'status' and error.precondition == 'order-open'
-        assert str(error) == 'PRECONDITION_FAILED'
+        await Actions(Client(undeclared_condition)).ship_order(
+            order=OrderKey(order_id='o-100'), idempotency_key='undeclared-condition-key')
+    except WriteOutcomeUnknown as error:
+        outcomes = write_outcomes_unknown(error)
+        assert len(outcomes) == 1 and outcomes[0].key == 'undeclared-condition-key'
     else:
-        raise AssertionError('precondition refusal accepted')
+        raise AssertionError('undeclared precondition refusal treated as a known outcome')
+    assert undeclared_condition.calls == 1
 
     class CancelledHost:
         calls = 0
         async def execute(self, request):
             self.calls += 1
-            raise asyncio.CancelledError('private cancellation detail')
+            self.error = asyncio.CancelledError('private cancellation detail')
+            raise self.error
     cancelled = CancelledHost()
     try:
-        await Actions(Client(cancelled)).ship_order(order=OrderKey(order_id='o-100'))
-    except WriteOutcomeUnknown as error:
-        assert str(error) == 'WRITE_OUTCOME_UNKNOWN'
+        await Actions(Client(cancelled)).ship_order(order=OrderKey(order_id='o-100'), idempotency_key='cancelled-key')
+    except asyncio.CancelledError as error:
+        assert error is cancelled.error and type(error) is asyncio.CancelledError
+        outcomes = write_outcomes_unknown(error)
+        assert len(outcomes) == 1 and outcomes[0].key == 'cancelled-key'
     else:
         raise AssertionError('cancelled write outcome treated as settled')
     assert cancelled.calls == 1

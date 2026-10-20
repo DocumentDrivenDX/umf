@@ -2,9 +2,11 @@
 """Native types are described once, without inventing expression nullability."""
 import unittest
 from types import SimpleNamespace
+
+from test_operation_input_snapshot import _fixture
 from umf_access.unified import SessionError
 from umf_access.unified.table_reads import SyncTableReader
-from test_operation_input_snapshot import _fixture
+
 
 class NativeDescription(unittest.TestCase):
     def reader(self):

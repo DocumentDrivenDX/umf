@@ -191,12 +191,12 @@ describe("actual Python boundary checker", () => {
     rejects("py",{[prefix+"unified/session_psycopg2.py"]:"from psycopg2 import connect"},"DEPENDENCY");
     rejects("py",{[prefix+"runtime/read.py"]:"from psycopg2.extensions import cursor"},"DEPENDENCY");
   });
-  test("declared native reads own only the two closed Weft compiler entry points",()=>{
+  test("declared native reads own only the prepared Weft module entry point",()=>{
     const prefix="python/umf_access/src/umf_access/";
-    expect(check("py",{[prefix+"unified/table_reads.py"]:"from weft import compile_table_operation_json, check_table_operation_json"}).exitCode).toBe(0);
-    for(const source of ['import weft','from weft import compile_engine_page_json','from weft import connect'])
+    expect(check("py",{[prefix+"unified/table_reads.py"]:"from weft import prepare_table_operation_module_json"}).exitCode).toBe(0);
+    for(const source of ['import weft','from weft import compile_engine_page_json','from weft import connect','from weft import compile_table_operation_json','from weft import check_table_operation_json'])
       rejects("py",{[prefix+"unified/table_reads.py"]:source},"DEPENDENCY");
-    rejects("py",{[prefix+"unified/other.py"]:"from weft import compile_table_operation_json"},"DEPENDENCY");
+    rejects("py",{[prefix+"unified/other.py"]:"from weft import prepare_table_operation_module_json"},"DEPENDENCY");
   });
 });
 

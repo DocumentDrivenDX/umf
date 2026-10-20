@@ -29,11 +29,12 @@ from psycopg2.extensions import parse_dsn
 from sqlalchemy import create_engine, URL
 from sqlalchemy.ext.asyncio import create_async_engine
 from umf_codegen import compile_table_deployment, compile_table_migration, generate_python_client
-from umf_access.lifecycle import apply_table_migration
+from umf_access.lifecycle import apply_table_migration, CatalogError
 from umf_access.lifecycle import prepare_table_correspondence, inspect_table_history, read_table_head
 from umf_access.unified import (SyncTableReader, AsyncTableReader, SyncSession, AsyncSession,
     Psycopg2Session, SQLAlchemySession, AsyncSQLAlchemySession, SessionIdentity, SessionPolicy, SessionError,
-    SyncTableWriter, AsyncTableWriter, WriteOutcomeUnknown, SyncNativeTableBinding, NativeTableBinding)
+    SyncTableWriter, AsyncTableWriter, WriteOutcomeUnknown, SyncNativeTableBinding, NativeTableBinding,
+    verify_table_correspondence)
 from umf_access.unified.outcome_values import outcome_slot
 from umf_access.unified.operation_values import native_arguments
 
@@ -80,9 +81,10 @@ if args.mutations:
     commands.append(returning)
 prefix = 'p5_'+uuid.uuid4().hex[:12]+'_'
 cfg = {'module':'demo','schema':prefix+'schema%','ownerRole':prefix+'owner',
-       'personRole':prefix+'person','batchRole':prefix+'batch','groupRoles':{}}
+       'personRole':prefix+'person','batchRole':prefix+'batch',
+       'groupRoles':{'declared':prefix+'declared_group'}}
 alice, bob = prefix+'alice', prefix+'bob'
-roles = [cfg['ownerRole'],cfg['personRole'],cfg['batchRole'],alice,bob]
+roles = [cfg['ownerRole'],cfg['personRole'],cfg['batchRole'],*cfg['groupRoles'].values(),alice,bob]
 policy = SessionPolicy({'alice':alice,'bob':bob},{'job':cfg['batchRole']},cfg['schema'],catalog_only=True)
 a, b, job = SessionIdentity('person','alice'), SessionIdentity('person','bob'), SessionIdentity('batch','job')
 compiled = compile_table_deployment(text=json.dumps(source,separators=(',',':')),configuration=cfg)
@@ -112,9 +114,9 @@ def inputs(role): return {'owner':{'string':role}}
 def reader(kind, session): return kind(session,bundle,reference,binding,cursor_secret=secret)
 
 
-def refused(name, call, message=None):
+def refused(name, call, message=None, *, error_type=SessionError):
     try: call()
-    except SessionError as error:
+    except error_type as error:
         check(name, message is None or str(error) == message)
     else: raise AssertionError(name)
 
@@ -466,7 +468,8 @@ def write_fault_cases():
     @contextmanager
     def fresh(_):
         with psycopg.connect(args.dsn,autocommit=True) as c:yield c
-    w=SyncTableWriter(SyncSession(fresh,policy),bundle,reference,binding,outcome_secret=secret)
+    session=SyncSession(fresh,policy)
+    w=SyncTableWriter(session,bundle,reference,binding,outcome_secret=secret)
     pending=write_inputs('caller-pending',alice)
     with admin.transaction(force_rollback=True):
         @contextmanager
@@ -562,7 +565,10 @@ def write_fault_cases():
         alter=sql.SQL(alter.as_string(admin).replace('%%','%'))
         restore=sql.SQL(restore.as_string(admin).replace('%%','%'))
         admin.execute(alter)
-        try:refused('changed-outcome-'+label+'-refuses-before-recovery',lambda:w.observe(a,'create',data,key='lost-response'))
+        try:refused('changed-outcome-'+label+'-refuses-before-recovery',
+                    lambda:verify_table_correspondence(session,a,bundle,reference),
+                    'outcome-catalog-mismatch',
+                    error_type=CatalogError)
         finally:admin.execute(restore)
     check('restored-outcome-shape-recovers-again',w.observe(a,'create',data,key='lost-response')['status']=='recovered')
     with admin.transaction(force_rollback=True):
@@ -876,7 +882,10 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 r=reader(SyncTableReader,SyncSession(direct,policy))
                 first=r.read(a,'read_page',inputs(alice))
                 admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT FALSE,SET FALSE').format(sql.Identifier(bob),sql.Identifier(alice)))
-                refused('member-closure-change-refuses-cursor',lambda:r.read(a,'read_page',inputs(alice),cursor=first['cursor']),'cursor authority changed')
+                check('unrelated-membership-keeps-cursor-valid',r.read(a,'read_page',inputs(alice),cursor=first['cursor'])['rows']==[{'id':'a2','owner':alice}])
+                group_role=cfg['groupRoles']['declared']
+                admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT FALSE,SET FALSE').format(sql.Identifier(group_role),sql.Identifier(alice)))
+                refused('declared-group-membership-change-refuses-cursor',lambda:r.read(a,'read_page',inputs(alice),cursor=first['cursor']),'cursor authority changed')
                 admin.execute(sql.SQL('REVOKE {} FROM {}').format(sql.Identifier(bob),sql.Identifier(alice)))
                 admin.execute(sql.SQL('UPDATE {} SET content=repeat(%s,9437184) WHERE id=%s').format(bound_table),('x','a1'))
                 size=admin.execute(sql.SQL('SELECT pg_column_size(content),octet_length(content) FROM {} WHERE id=%s').format(bound_table),('a1',)).fetchone()

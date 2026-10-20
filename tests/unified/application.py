@@ -92,7 +92,7 @@ async def assert_shared_edge_cases(client: Client, host: object) -> dict[str, ob
         try:
             await Actions(injected_client).ship_order(order=OrderKey(order_id="o-100"))
         except WriteOutcomeUnknown as error:
-            assert outcome == "lost" and error.code == "WRITE_OUTCOME_UNKNOWN"
+            assert outcome in ("lost", "malformed") and error.code == "WRITE_OUTCOME_UNKNOWN"
         except AccessError as error:
             expected = "DENIED" if outcome == "denied" else "INVALID_RESPONSE"
             assert error.code == expected, (outcome, error.code)

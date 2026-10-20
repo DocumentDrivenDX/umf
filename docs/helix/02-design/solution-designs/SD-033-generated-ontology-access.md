@@ -107,6 +107,17 @@ Hohfeld's binding maps these calls to its authoritative resolver and receipts.
 Client-supplied effects never authorize mutation. Validation uses the same path
 without applying changes and remains advisory.
 
+Cancellation preserves both Python scheduling semantics and write uncertainty.
+The client annotates the original post-dispatch cancellation with a fresh
+per-invocation uncertainty object and re-raises that same cancellation. A typed
+inspection helper follows the displayed exception chain, including timeout
+translation, without client-global or task-global mutable state. Reused/nested
+cancellations retain every invocation annotation. Replacing cancellation with a
+business exception breaks structured concurrency; clearing task cancellation or
+retrying cannot establish the write outcome. CONTRACT-079 owns the exact helper,
+ordering and compatibility rules. Atomic and partial batches share one stopping
+rule so malformed settlements never imply effects that the host did not prove.
+
 ### Keep one plugin calling convention
 
 Generate explicit synchronous and asynchronous clients from the same operation
@@ -214,3 +225,16 @@ Preserve exact/unknown content and relevant dependency meaning; bound processing
 and keep metadata inert. Test reproducibility and real-browser behavior. The
 host owns authorization, execution and diagnostic capture. These existing UMF
 constraints apply without additional setup steps for the developer.
+
+
+## Adoption boundary
+
+Use explicit graph-write/2 metadata for optional assignments; retain graph-write/1
+interpretation. Only omission changes assignment participation. UMF generates
+inert invocations; qualified hosts own execution of the new profile, batch modes
+and validation. Emit frozen action input dataclasses, precondition string enums
+and sync/async terminals from the same metadata. Decode committed receipts and
+batch settlement defensively, converting unreadable write acknowledgements to
+uncertainty. See CONTRACT-079 and CONTRACT-900 for exact wire/profile rules.
+Legacy Hohfeld conversion is consumer-owned; unsupported action declarations
+must refuse. No architecture or ADR direction changes.

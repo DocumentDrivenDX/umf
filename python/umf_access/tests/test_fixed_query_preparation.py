@@ -5,10 +5,12 @@ import sys
 import unittest
 from types import ModuleType
 from unittest.mock import patch
+
 from test_operation_input_snapshot import _fixture
 from umf_access.unified import SessionError, SessionIdentity
 from umf_access.unified.table_reads import SyncTableReader
 from umf_access.unified.table_writes import SyncTableWriter
+
 
 class FixedQueryPreparation(unittest.TestCase):
     def test_resolve_once_bind_values_for_each_call_without_native_lease(self):
@@ -42,7 +44,7 @@ class FixedQueryPreparation(unittest.TestCase):
         self.assertEqual([value['inputs']['filter']['string'] for value in bindings],['first','second','third'])
 
     def test_reads_and_writes_share_source_preparation_and_send_only_calls(self):
-        session,binding,probe,identity=_fixture('read')
+        session,binding,probe,_identity=_fixture('read')
         modules=[];selected=[];calls=[]
         class Operation:
             def bind_json(self,raw):

@@ -1,0 +1,122 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/access-unified-generation.test.ts:
+(pass) current model generation preserves UUID/128/semantic metadata and closes selection [41.77ms]
+(pass) unsupported selected meanings and naming collisions refuse before producing code [30.72ms]
+(pass) existing output writer checks drift, refuses hand edits and restores failed swaps [1474.23ms]
+(pass) known hohfeld.view field annotations are retained as opaque presentation metadata [148.69ms]
+(pass) current Praxis handler declarations generate typed methods and omit MISSING optional values [845.84ms]
+(pass) runtime reexports reserve their actual generated namespace [41.92ms]
+
+tests/access-native-domains.test.ts:
+(pass) generated domain constructors validate exact enums, ranges, widths and Unicode lengths [2765.89ms]
+
+tests/access-unified.test.ts:
+(pass) latest UMF unified Python access > generates an isolated stdlib client usable by the independent ontology host [364.27ms]
+(skip) latest UMF unified Python access > runs the same application through compiled Weft SQL on PostgreSQL 18 when configured
+
+tests/access-unified-sync.test.ts:
+(pass) sync clients preserve the async wire and outcomes without event-loop adaptation [877.72ms]
+
+tests/access-native-table.test.ts:
+(pass) declared tables generate module-only typed APIs and closed result/outcome codecs [1447.06ms]
+
+tests/actions-manifest-construction.test.ts:
+(pass) @covers US-903-AC7 pure construction preserves original plan, Key receipts and exact original invocation semantics [94.58ms]
+(pass) @covers US-903-AC7 empty work has no fabricated items, batches or receipts [46.53ms]
+(pass) @covers US-903-AC7 original numeric Key equality preserves distinct receipt and row spellings [61.92ms]
+(pass) @covers US-903-AC7 original source, tuple, identity, guard and complete intent substitutions refuse atomically [709.46ms]
+(pass) @covers US-903-AC7 finite item/byte bounds and accessors refuse without exposing partial work [85.46ms]
+(pass) @covers US-903-AC7 malformed guard versions return source-qualified errors [136.62ms]
+(pass) @covers US-903-AC7 repeated plan constants are charged before output serialization [37.26ms]
+
+tests/access-adoption.test.ts:
+(pass) legacy action content refuses at its original path even beside standard actions or an empty selection [25.54ms]
+(pass) malformed and future standard action inventories cannot silently generate an empty client [7.05ms]
+(pass) action inventory and normalized parameter identities refuse with source locations [16.32ms]
+(pass) check is usable as an action parameter and as an independent precondition ID [1201.19ms]
+(pass) canonical preconditions evaluate absent/present key frames; optional assignments require version 2 [69.20ms]
+(pass) description publishes action conditions, operation coverage, exact error inventory and batch cap [18.51ms]
+(pass) isolated sync and async clients preserve optional inputs, batch settlement, validation and write uncertainty [1053.71ms]
+
+tests/actions/preservation.test.ts:
+(pass) @covers US-900-AC6: JSON/YAML recover exact future meaning and rule text with isolated results [133.50ms]
+(pass) @covers US-900-AC6: an unrelated unknown extension survives a safe known-profile action edit [27.59ms]
+(pass) @covers US-900-AC8: structural/version/identity failures are atomic and getters stay inert [23.40ms]
+(pass) @covers US-900-AC8: every array/expression boundary accepts its bound and refuses bound plus one [15.50ms]
+
+tests/actions/structure.test.ts:
+(pass) action structural admission (partial STP-900 evidence) > actual registry compiler accepts the complete core 0.8.0 fixture [26.09ms]
+(pass) action structural admission (partial STP-900 evidence) > required policy, malformed known effects and ambiguous bindings refuse [0.60ms]
+(pass) action structural admission (partial STP-900 evidence) > future effects and unrelated unknown members retain their exact data [0.10ms]
+(pass) action structural admission (partial STP-900 evidence) > copy isolation and hostile getters [0.07ms]
+(pass) action structural admission (partial STP-900 evidence) > non-BMP expression bounds count UTF-16 units even for opaque languages [1.31ms]
+(pass) action structural admission (partial STP-900 evidence) > array and expression bounds fail before producing a typed action [0.54ms]
+
+tests/actions/assessment.test.ts:
+(pass) @covers US-900-AC5: complete exact snapshot comparison never proves execution [181.83ms]
+(pass) @covers US-900-AC5: missing, unsupported, unknown and malformed claims cannot waive obligations [494.75ms]
+(pass) @covers US-900-AC5: unsupported future lifecycle and transitive qualifiers stay unoverrideable [429.79ms]
+(pass) @covers US-900-AC5: unknown effects and referenced native extensions are never claimed away [113.78ms]
+
+tests/actions/interpreter.test.ts:
+(pass) EX-01: exact integer equality/arithmetic never use floating-point coercion [15.95ms]
+(pass) EX-01: optional absence differs from null and can be guarded left-to-right [16.63ms]
+(pass) EX-01: every skipped branch is checked for syntax/type/phase/dependency/access [3.24ms]
+(pass) EX-01: state existence guards absent identities; writes confer no reads [3.73ms]
+(pass) EX-01: outputs and post-state are explicitly postcondition-only [3.88ms]
+(pass) EX-01: depth, syntax node, text, numeric expansion and wrapper limits refuse [10.07ms]
+(pass) EX-01: entity selection preserves original tuples and uses core equality bytes [2.62ms]
+(pass) EX-01: ordered explicit key components require exact Fields and declared dependencies [3.05ms]
+(pass) EX-01: typed admission rejects missing required, wrong wrappers and undeclared values [3.90ms]
+(pass) EX-01: present does not fabricate a field value from an absent entity [1.66ms]
+(pass) EX-01: relationship absence requires an explicit snapshot and exact directed read access [34.00ms]
+(pass) strict consumers refuse external references and uninterpreted selected Field meaning [3.89ms]
+(pass) strict reference admission covers exists frames and selected component inputs [0.28ms]
+(pass) strict exists and input selection refuse transitive unknown Record and Key meaning [4.48ms]
+(pass) rule literal compilation and native snapshot reads refuse coercible malformed wrappers [3.91ms]
+
+tests/actions/prepared-identities.test.ts:
+(pass) prepared keys agree with every existing exact key vector and refusal [54.86ms]
+(pass) prepared receipts retain forged, stale, invalid-source and unknown-member refusals [1.49ms]
+(pass) prepared source, returned receipts, identities and values have isolated lifetimes [0.43ms]
+(pass) prepared action inputs and both selector forms agree with stateless APIs [26.53ms]
+(pass) prepared action cannot observe later declaration/input/output mutation or invoke accessors [6.00ms]
+(pass) reused declaration checks preserve optional absence, output checks and per-call facets [19.43ms]
+(pass) prepared current scopes preserve foreign-source refusals and exact codec-profile verification [2.98ms]
+
+tests/actions/contracts.test.ts:
+(pass) @covers US-900-AC1: exact targets and stable identity [92.54ms]
+(pass) @covers US-900-AC2: rules and handlers are inert [18.53ms]
+(pass) @covers US-900-AC3: ordered create link and property effects [268.83ms]
+(pass) @covers US-900-AC4: mandatory execution obligations and handler output metadata [42.15ms]
+(pass) @covers US-900-AC7: DDD bindings are explicit and remain independent [91.74ms]
+(pass) @covers US-900-AC4: opaque policy resources preserve distinct obligations without enforcement evidence [55.20ms]
+(pass) @covers US-900-AC4 @covers US-900-AC5 @covers US-900-AC6: actor profile remains preserved and cannot be claimed as enforced [35.08ms]
+(pass) @covers US-900-AC5: unsupported float and temporal parameter meanings remain unclaimable [55.42ms]
+
+tests/actions/api.test.ts:
+(pass) inspection reports inert profiles and every primitive/dependency obligation [24.42ms]
+(pass) duplicate registration refuses; unrelated registry semantic errors propagate [49.94ms]
+(pass) semantic violations remain inspectable and prevent assessment/authoring [62.26ms]
+(pass) authoring retains unknown rule/profile meaning without treating it as execution [31.21ms]
+(pass) exact declaration assessment is separate from runtime verification [87.38ms]
+(pass) supported claims cannot erase future effect or model meaning [65.27ms]
+(pass) known roles/1 declaration permits safe editing while unrelated unknown vocabulary survives [74.58ms]
+(pass) unknown package-use metadata and core availability cannot be erased by claims or edits [159.93ms]
+(pass) known profile envelopes/dependencies and model qualifiers preserve unknown meaning [191.46ms]
+(pass) registry callbacks cannot suppress recognized action errors [73.04ms]
+(pass) warnings at existing model obligations and transitive package qualifiers block compatibility [174.98ms]
+(pass) relationship dependency indexes do not import unrelated element vocabulary qualifiers [51.64ms]
+(pass) unknown nested action references remain inspectable and unchecked [142.83ms]
+(pass) opaque future effect objects never acquire model-reference semantics [74.11ms]
+(pass) later known effect reference qualifiers are inventoried before selector compilation [67.89ms]
+
+1 tests skipped:
+(skip) latest UMF unified Python access > runs the same application through compiled Weft SQL on PostgreSQL 18 when configured
+
+ 83 pass
+ 1 skip
+ 0 fail
+ 747 expect() calls
+Ran 84 tests across 14 files. [32.94s]

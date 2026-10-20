@@ -1,0 +1,15 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/access-adoption.test.ts:
+(pass) legacy action content refuses at its original path even beside standard actions or an empty selection [57.56ms]
+(pass) malformed and future standard action inventories cannot silently generate an empty client [10.95ms]
+(pass) action inventory and normalized parameter identities refuse with source locations [23.46ms]
+(pass) check is usable as an action parameter and as an independent precondition ID [929.21ms]
+(pass) canonical preconditions evaluate absent/present key frames; optional assignments require version 2 [89.16ms]
+(pass) description publishes action conditions, operation coverage, exact error inventory and batch cap [26.83ms]
+(pass) isolated sync and async clients preserve optional inputs, batch settlement, validation and write uncertainty [1072.90ms]
+
+ 7 pass
+ 0 fail
+ 51 expect() calls
+Ran 7 tests across 1 file. [5.92s]

@@ -154,7 +154,7 @@ export function analyzeAction(document:Document,action:Action,path:string,dddInt
     if(!action.writes.some(frame=>identity(frame.record)===identity(record)&&frame.fields.some(field=>identity(field)===id)))add('ACTION_EFFECT',at+'/field','Assignment has no declared Record/Field write permission');
     if(set&&e&&recordKeys(e).some(k=>k.fields.some(r=>identity(r)===id)))add('ACTION_EFFECT',at+'/field','All Key components are immutable');
     unknown(a.value,'parameter'in a.value?['parameter']:['literal'],at+'/value');
-    if('parameter'in a.value){const parameter=parameters.get(a.value.parameter as string);if(parameter?.kind!=='value'||identity(parameter.field)!==id||!parameter.required)add('ACTION_EFFECT',at+'/value','Assignment needs a required value parameter of the exact destination Field');}
+    if('parameter'in a.value){const parameter=parameters.get(a.value.parameter as string);if(parameter?.kind!=='value'||identity(parameter.field)!==id||!parameter.required&&!(action.binding.profile.id==='graph-write'&&action.binding.profile.version==='2'&&f?.nullability==='absent-allowed'))add('ACTION_EFFECT',at+'/value','Assignment needs an exact destination Field parameter; optional assignment requires graph-write/2 and an absent-allowed Field');}
     else if(f){
      const mi=document.modules.findIndex(m=>m.id===a.field.module),ei=document.modules[mi]?.elements.findIndex(e=>e.id===a.field.element)??-1,definition=`/modules/${mi}/elements/${ei}`;
      const uninterpreted=[...inventory.values()].some(o=>o.status==='unchecked'&&(o.path===definition||o.path.startsWith(definition+'/')));

@@ -1,0 +1,14 @@
+/private/tmp/umf-adoption-typing/negative.py
+  /private/tmp/umf-adoption-typing/negative.py:5:57 - error: Argument of type "ProjectKey" cannot be assigned to parameter "client" of type "CustomerKey" in function "__init__"
+    "ProjectKey" is not assignable to "CustomerKey" (reportArgumentType)
+  /private/tmp/umf-adoption-typing/negative.py:6:113 - error: Argument of type "Literal[12]" cannot be assigned to parameter "note" of type "str | Missing | None" in function "open_project_validate"
+    Type "Literal[12]" is not assignable to type "str | Missing | None"
+      "Literal[12]" is not assignable to "str"
+      "Literal[12]" is not assignable to "None"
+      "Literal[12]" is not assignable to "Missing" (reportArgumentType)
+  /private/tmp/umf-adoption-typing/negative.py:7:47 - error: Argument of type "tuple[CustomerKey]" cannot be assigned to parameter "items" of type "Sequence[OpenProjectInput]" in function "open_project_batch"
+    "CustomerKey" is not assignable to "OpenProjectInput" (reportArgumentType)
+  /private/tmp/umf-adoption-typing/negative.py:8:11 - error: "BatchReceipt[ProjectKey, None]" is not awaitable
+    "BatchReceipt[ProjectKey, None]" is incompatible with protocol "Awaitable[_T_co@Awaitable]"
+      "__await__" is not present (reportGeneralTypeIssues)
+4 errors, 0 warnings, 0 informations

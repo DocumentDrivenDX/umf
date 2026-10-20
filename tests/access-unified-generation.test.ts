@@ -95,13 +95,19 @@ test('current Praxis handler declarations generate typed methods and omit MISSIN
 });
 
 // @covers US-091-AC7
-test('all runtime reexports and sync/async client names remain reserved',()=>{
+test('runtime reexports reserve their actual generated namespace',()=>{
  const generated=generatePythonClient({text:original,package:'shop'});
  const init=generated.files.find(file=>file.path==='shop/__init__.py')!.text;
  const runtimeNames=init.match(/from \._runtime import ([^\n]+)/)![1]!.split(', ').map(binding=>binding.split(' as ')[1]!);
  expect(runtimeNames).toEqual(expect.arrayContaining(['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown']));
- for(const symbol of new Set([...runtimeNames,'SyncClient','AsyncClient','SyncActions','AsyncActions','SyncQuery'])){
+ for(const symbol of new Set([...runtimeNames.filter(symbol=>symbol[0]===symbol[0]!.toUpperCase()),'SyncClient','AsyncClient','SyncActions','AsyncActions','SyncQuery'])){
   const text=changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='record').name=symbol;});
   expect(()=>generatePythonClient({text,package:'shop'})).toThrow();
  }
+ const normalized=generatePythonClient({text:changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='record').name='write_outcomes_unknown';}),package:'shop'});
+ expect(normalized.files.find(file=>file.path==='shop/models.py')!.text).toContain('class WriteOutcomesUnknown:');
+ for(const text of [
+  changed(d=>{d.modules[0].extensions['umf.actions'].actions[0].parameters[0].name='write_outcomes_unknown';}),
+  changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='field').name='write_outcomes_unknown';}),
+ ])expect(()=>generatePythonClient({text,package:'shop'})).toThrow();
 });

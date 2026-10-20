@@ -110,3 +110,17 @@ The retained older Hohfeld source is integration research, not an acceptance inp
 
 Package generation/use (US-092), host authorization, production transport,
 Hohfeld parser changes, execution and table-SDK migration.
+
+
+## Adoption acceptance additions
+
+- [x] **US-091-AC11** — Legacy module/DDD action declarations refuse at the source
+  path; deliberate standard action selection cannot hide a legacy action loss.
+- [x] **US-091-AC12** — Description includes named preconditions, all wire error
+  codes and effective batch limits; canonical absence/existence recipes generate.
+- [x] **US-091-AC13** — Optional recipe assignments require the explicit newer
+  profile; old profile and required-field optional assignments refuse unchanged.
+
+The checked adoption criteria have local portable/client and synthetic-host
+evidence in [the adoption record](../../04-build/evidence/praxis-adoption.md).
+They establish no production executor or platform-matrix qualification.

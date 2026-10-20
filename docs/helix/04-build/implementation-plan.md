@@ -13084,3 +13084,108 @@ is stdlib-only. Existing Weft raw/related compilers remain the SQL authority.
 [Execution evidence](evidence/unified-python-access.md) records the independent
 graph fixture, native PostgreSQL 18 run and current feature limits. This does
 not change qualification of earlier SDK/backend work.
+
+
+## Praxis ontology adoption — 2026-10-20
+
+Scope: FR-56, FEAT-033 OA-22–28, US-091 AC11–13, US-092 AC13–16,
+SD-033, CONTRACT-079 and CONTRACT-900. The retained consumer asks identify
+blockers 1–4; receipt uncertainty is part of this authorized implementation.
+
+| Slice | Depends on | Change | Gate |
+| --- | --- | --- | --- |
+| OA-B1 | Requirements/contracts | Legacy action diagnostics; versioned optional recipe admission | Source-path, mixed-action and old/new-profile negative controls |
+| OA-B2 | OA-B1 | Canonical absence/existence example; typed inputs and precondition enums | Generate sample, wrong-input typing and host refusal round trips |
+| OA-B3 | OA-B2 | Sync/async batch and advisory validation | Bounds before dispatch, modes/order/rollback/unknown/refusal and unchanged requests |
+| OA-B4 | OA-B2 | Committed receipts and post-dispatch uncertainty | Malformed/pending/schema/error/transport/cancellation controls, key retention, no retry |
+| OA-B5 | OA-B3/4 | Rebuild embedded generator; browser and isolated Python parity; update evidence | Focused regressions, typecheck/build, boundary checks, Chromium and installed generator |
+| OA-F1 | OA-B5 | Link-key projections with bounds/truncation | Deferred; genuine host projection tests |
+| OA-F2 | OA-B5 | Complete machine-readable description/wire schemas and conformance distribution | Deferred; schema and independent host tests |
+| OA-F3 | OA-B5 | Linux x86_64/aarch64 × Python3.11–3.14 wheel-only/parity matrix | Deferred; each exact platform/interpreter receipt |
+
+Execution is authorized by the user's 2026-10-20 request. Preserve unknown source,
+metadata identities/frontmatter and old recipe semantics. The generated client
+owns no executor, principal or transaction. No production/native graph-write/2,
+batch or Hohfeld qualification follows from fake-transport tests. Existing
+boundary checks precede feature verification. No additional spending limit was
+specified; runtime monetary metering is unavailable. Work is single-agent.
+On interruption retain completed slices, checks/failures, unresolved requirements
+and the next command here. Completion requires OA-B1–5 checks and a scoped review;
+OA-F1–3 remain explicitly deferred. Rollback restores source and matching embedded
+payload together; do not republish the same release/version as new qualification.
+
+
+### Adoption continuation and completion evidence
+
+OA-B1–OA-B5 are complete for the portable/client boundary. The
+[execution record](evidence/praxis-adoption.md) retains source pins, test logs,
+installed-generator parity and exact limitations. The focused suites pass82 tests
+with one unconfigured native test skipped; Chromium adds one passing parity test.
+Three typing tools accept the positive corpus and reject four intended errors.
+Typecheck, build, boundaries,71-package audit and27 installed parity cases pass.
+Scoped source review checked preserved version1 assignment rules, commit/refusal
+versus uncertainty, batch ordering/rollback and generated-name collisions.
+OA-F1–3 remain deferred and production host qualification is not established.
+No release assets were published. Next work is host batch/validation/profile2
+conformance or a separately selected OA-F slice; neither is implied complete.
+
+
+The authorized fresh review fixes normalized parameter and qualified action
+identity collisions, malformed inventory diagnostics and inconsistent sequence
+length bounds. Regression, Chromium, typing, boundary, package audit and installed
+parity evidence is refreshed in the adoption record. Commit/push is authorized
+on the codex topic branch; this does not publish a release or close OA-F1–3.
+
+
+The hosted merge gate exposed a stale native-read boundary fixture already on
+main. Correct only the fixture to the existing prepared-module API; preserve
+explicit negative controls for the old compiler imports and other consumers.
+All24 local boundary tests and the actual source checker pass. The adoption
+evidence retains the baseline comparison and hosted failure; no runtime/compiler
+boundary was widened. Hosted CI and independent review remain merge prerequisites.
+
+### Integrated PR40 review remediation — 2026-10-20
+
+The [review reconciliation and remediation plan](typed-api-review-remediation-plan.md)
+disposes every Claude comment alongside the earlier Codex fixes at head
+`7466c5a`. It records reproduced naming, atomic-ordering and cancellation cases,
+qualifies intentional receipt/error behavior, and adds the current native CI
+failure to the merge gates. This supersedes the earlier clean-review conclusion
+without changing historical test evidence. The owner authorized implementation
+and push for another independent review. S1–S5 now have governing amendments,
+runtime corrections and local verification in the
+[remediation packet](evidence/typed-api-remediation/README.md). S6's pinned native
+dependency and fixture corrections pass the local six-adapter suites (607
+assertions) and Ruff. S7's final hosted checks remain a merge gate; local passes
+do not establish those hosted results.
+
+### Praxis consumer review successor — 2026-10-20
+
+The [eight-finding reconciliation](evidence/praxis-adoption.md#praxis-consumer-review-reconciliation--2026-10-20)
+adds action-declared condition-ID admission, a separate local diagnostic inventory,
+and one shared published batch cap. It preserves ordinary cancellation with
+application-owned child capture and explicit wire refusals; atomic unknown
+settlement remains a whole-response error. The exact keyless atomic regression,
+sync/async condition controls, metadata inventory, narrow dependency gates,
+Chromium parity, typecheck and canonical embedded rebuild are complete for the
+scoped successor. Latest Sol review has no remaining actionable finding;
+[the source-pinned receipt](evidence/praxis-consumer-review/verification.json)
+records local macOS evidence. Luna implements and Sol plans/reviews this
+successor. Commit and push to PR40 are authorized; hosted checks and independent
+consumer review remain merge gates. OA-F1–3 remain open, and CI stays native Linux
+while local tests use the development host. Truss native host qualification is a
+separate repository change and cannot be inferred from these portable checks.
+
+### Astra release review — 2026-10-20
+
+Astra independently reviewed PR40 and the final SDK0.5.3/access0.1.0.dev5/
+codegen0.1.0a2 package delta with no remaining actionable findings. SDK building
+regenerates metamodel provenance; the embedded generator was rebuilt afterward
+and its 230-input/13-output drift check passes. Core semantics and ABI are
+unchanged. The SDK install probe passes139 conformance cases; all1,736 runtime
+manifest hashes and1,742 archive members verify. Candidate Python wheel RECORDs
+and packaged source match the reviewed checkout; the fresh four-package cohort
+passes dependency admission and31 installed Truss component controls. Historical
+core0.10.0 assets are reused byte-for-byte. The [release notes](../05-deploy/sdk-release-notes-0.5.3.md)
+retain outstanding support limits; final release assets carry exact qualification
+and checksums. Hosted Linux checks remain a gate for the release commit.

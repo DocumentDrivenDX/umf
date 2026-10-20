@@ -15,3 +15,10 @@ including UUID, bits128 and semantic references.
 requirements, retaining OA-01–OA-21 traceability to the original request.
 [SD-033](../02-design/solution-designs/SD-033-generated-ontology-access.md) records
 the design. Table and ontology access remain part of UMF's schema-to-code goal.
+
+
+The [2026-10-20 adoption asks](inputs/praxis-ontology-access-asks-2026-10-20.md)
+retain the consumer's release-cohort observations and eight requests. This is
+fake-transport/generator evidence, with no Truss, Weft or PostgreSQL execution.
+Current UMF remains the authoring target. Hohfeld/Praxis owns legacy-action
+conversion; UMF must diagnose action-shaped content it cannot generate.

@@ -3264,3 +3264,45 @@ bundle run. Scope includes exact reference identity, copied callbacks, unknown
 qualifiers, explicit migration, forged/stale receipt refusal and edited rollback.
 Unchanged core0.9 behavior and published schema hashes are separate regression
 checks. No test here establishes external term correctness or native admission.
+
+
+## Typed ontology adoption verification
+
+FR-56 / FEAT-033 OA-22–28 use the existing Bun, Python subprocess and real
+Chromium layers. Contract/admission tests own legacy-action diagnostics and
+old/new recipe-profile distinctions (US-091 AC11–13). Isolated Python synthetic
+host tests own sync/async inputs, precondition refusals, batch settlement,
+validation and post-dispatch uncertainty (US-092 AC13–15). Chromium owns portable
+byte parity; installed embedded V8 owns Python-generator parity. These are local
+component gates; fake execution does not qualify a production graph executor.
+
+US-092 AC13/15 add a blocking settlement matrix over both atomic/stopping flags,
+including invalid leading/gapped/no-stop unattempted outcomes and actual rollback.
+The isolated Python layer owns original-cancellation identity, task cancellation
+state, timeout translation, TaskGroup sibling failure, spontaneous transport
+cancellation, pre-dispatch cancellation and concurrent invocation-key isolation.
+It also verifies visible cause/context traversal, hidden context, cycles and
+reused cancellation objects for the typed uncertainty helper. Read/validation
+controls must not gain write annotations. Receipt omissions are checked per field
+and explicit empty receipts remain valid. These reuse the current process harness;
+run on the supported CI interpreter matrix and qualify only versions with evidence.
+
+The source-Weft native CI cohort must provide the prepared-module compiler API
+used by the installed SDK. Its PostgreSQL cursor controls distinguish unrelated
+membership from declared-group MEMBER scope. Privileged outcome-table RLS,
+column and grant drift is tested at the explicit full-correspondence diagnostic
+boundary under operator quiescence; restoring the catalog must restore ordinary
+authenticated receipt recovery. Ordinary calls retain forged-receipt refusal,
+principal isolation and slot-serialization controls without full catalog scans,
+as required by CONTRACT-079/081.
+
+The blocking commands are `bun test tests/access-adoption.test.ts`, the existing
+unified/native-client and action-admission regressions, `bun run typecheck`,
+`bun run build`, `bun run check:unified-client-boundaries`,
+`bun test tests/access-unified-browser.test.ts`, `bun scripts/build-codegen.ts --check`
+and installed codegen corpus replay. Existing mypy/pyright/ty checkers validate
+positive and deliberately wrong batch/key inputs. No new test framework is needed;
+the new local tests add a small Python process, while Chromium reuses its current
+single browser session. Exact timings belong in execution evidence.
+Linux wheel/interpreter qualification (US-092 AC16), link projections and real-host
+conformance are separately required before those support claims are published.

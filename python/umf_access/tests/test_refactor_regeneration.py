@@ -17,9 +17,8 @@ import sys
 import tempfile
 import unittest
 import zipfile
-from pathlib import Path
 from email import message_from_bytes
-
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 EVIDENCE = ROOT / "docs/helix/04-build/evidence/typed-persistence"
