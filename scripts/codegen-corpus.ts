@@ -4,6 +4,7 @@ import {generatePythonClient,type PythonClientRequest} from '../src/access';
 import {stringify} from 'yaml';
 import {tableOperationSource} from '../tests/unified/table-operation-fixture';
 import {temporalSource} from '../tests/unified/table-temporal-fixture';
+import {relatedSource} from '../tests/unified/table-related-fixture';
 import {domainSource} from '../tests/unified/table-domain-fixture';
 const original=await Bun.file(new URL('../tests/unified/commerce.json',import.meta.url)).text();
 const document=JSON.parse(original);
@@ -31,6 +32,8 @@ cases.push({name:'declared-native-module',request:{text:native,package:'native_d
 cases.push({name:'native-yaml-profile-refuses',request:{text:native,format:'yaml',package:'native_demo'}});
 cases.push({name:'declared-native-temporal-module',request:{text:JSON.stringify(temporalSource()),package:'temporal_demo'}});
 cases.push({name:'declared-native-domain-clock-module',request:{text:JSON.stringify(domainSource()),package:'domain_demo'}});
+cases.push({name:'native-related-policy',request:{text:JSON.stringify(relatedSource()),package:'related_demo'}});
+cases.push({name:'native-nested-related-policy',request:{text:JSON.stringify(relatedSource(true)),package:'related_demo'}});
 const corpus=cases.map(item=>{try{return {...item,expected:{ok:true,result:generatePythonClient(item.request)}};}catch(error){const e=error as {code?:string;message?:string;path?:string};return {...item,expected:{ok:false,error:{code:e.code??'GENERATION_FAILED',message:e.message??'Generation refused',...(e.path===undefined?{}:{path:e.path})}}};}});
 await Bun.write(process.argv[2]??'/private/tmp/umf-codegen-corpus.json',JSON.stringify(corpus,null,2)+'\n');
 console.log(JSON.stringify(corpus.map(x=>({name:x.name,accepted:x.expected.ok}))));

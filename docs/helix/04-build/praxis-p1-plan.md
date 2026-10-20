@@ -965,3 +965,24 @@ bounds use YAML lexemes, avoiding conversion through binary float. The legacy
 unscoped default grant function was inspected; prospective conversion records
 explicit person/batch CRUD allow rules rather than inferring unknown audience
 authority. This source work does not validate native data/roles or adoption.
+
+### Explicit association policy producer, 2026-10-19
+
+The candidate `related` row rule binds an original same-module Record, explicit
+source/target field pairs and a nested rule. It lowers to correlated EXISTS over
+natively visible related rows without adding a foreign key. Matching requires
+the same singleton carrier; each field's own refinements remain enforced.
+Duplicate pairs, cross-module/missing mappings, incompatible carriers, missing
+audience SELECT and dependency cycles refuse. Unknown pair content is retained
+and blocks execution. FK-backed via semantics are unchanged.
+
+The private prospective conversion now compiles all17 tables/198 columns with
+119 generated named CRUD/read declarations,18 indexes,15 foreign keys and32
+blocking domains. This remains prospective source conversion, not the existing
+application's fixed-method port or native data adoption. Private source stays
+in temporary files. New public direct/nested association fixtures include
+nullable match columns, duplicate matching rows and an orphan membership.
+
+The portable source producer is being pinned for Weft's exact structural schema;
+Weft and native qualification for the new rule are pending at this commit.
+Do not treat the private compile result or this schema commit as released support.

@@ -165,6 +165,21 @@ unlisted command. Batch rules are separately admitted and cannot inherit person
 policy because person identity is absent. `allow` is explicit per audience and
 command, never a fallback from an invalid owner/via rule.
 
+An explicit association uses
+`{kind:"related",record:Ref,matches:[{source:Ref,target:Ref}],rule:RowRule}`.
+The target Record and every matched source/target Field must have an exact
+native table/column mapping in this plugin. One through32 distinct field pairs
+are conjunctive equality matches. Both Fields use the same singleton scalar
+carrier; their independent refinements remain enforced on their own tables.
+No string/numeric coercion, NULL-equals-NULL rule or guessed relationship mapping
+is introduced. The nested rule applies to the target row. Related rows remain
+subject to their native SELECT policy and privileges for the selected audience;
+no SELECT grant is inferred. The rule emits correlated EXISTS and does not
+create a foreign key, uniqueness constraint or extra result rows. Nested scopes
+preserve aliases and cycle refusal. Unknown content stays preserved and blocks
+selected execution. This source form is needed for an authored association
+scope that deliberately has no integrity relationship.
+
 A ForeignKey may bind `relationship:{module,id}` to an original core relationship.
 Its source/target Record, target Key and direction MUST agree; multiple native
 bindings of the same selected relationship refuse. Logical endpoints alone do

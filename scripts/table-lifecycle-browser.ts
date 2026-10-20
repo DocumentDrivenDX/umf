@@ -8,6 +8,7 @@ import {compileTableMigration} from '../src/table-migration';
 import {appendedTableSource,indexedTableSource} from '../tests/unified/table-migration-fixture';
 import {tableOperationSource} from '../tests/unified/table-operation-fixture';
 import {temporalSource} from '../tests/unified/table-temporal-fixture';
+import {relatedSource} from '../tests/unified/table-related-fixture';
 import {domainSource} from '../tests/unified/table-domain-fixture';
 import fixture from '../tests/binding/fixtures/table-lifecycle-note.json';
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',minify:true});
@@ -33,13 +34,14 @@ const evolutions=[
  {id:'index-002',predecessor:{id:'001',digest:JSON.parse(migration).plan.digest},previous:JSON.parse(deployment).bundle,next:deployed(indexedTableSource())},
  {id:'commands-002',predecessor:{id:'commands-001',digest:'a'.repeat(64)},previous:deployed(operationSource),next:deployed(retiredSource)},
 ].map(request=>({request,expected:compileTableMigration(request)}));
+const related:any[]=[false,true].map(nested=>{const source=relatedSource(nested);return {source,inspection:inspectTableLifecycle(source),deployment:deployed(source),client:generatePythonClient({text:JSON.stringify(source),package:'related_demo'})};});
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(bundle,{headers:{'Content-Type':'text/javascript'}}):new Response('<!doctype html><title>UMF table declaration verification</title>',{headers:{'Content-Type':'text/html'}});}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
  const page=await browser.newPage(),origin='http://127.0.0.1:'+server.port,externalRequests:string[]=[];
  page.on('request',r=>{if(!r.url().startsWith(origin+'/'))externalRequests.push(r.url());});await page.goto(origin);
- const result=await page.evaluate(async ({fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions})=>{
+ const result=await page.evaluate(async ({fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related})=>{
   const path='/umf.js',u=await import(path);let assertions=0;
   const check=(value:boolean)=>{assertions++;if(!value)throw new Error('Browser table declaration assertion '+assertions);};
   const clone=()=>structuredClone(fixture) as any;
@@ -74,6 +76,11 @@ try{
    check(result.plan.steps.length===(index===0?1:0));
    check(JSON.stringify(u.verifyTableMigration(result.plan))===JSON.stringify(result.plan));
   }
+  for(const item of related){
+   check(JSON.stringify(u.inspectTableLifecycle(item.source))===JSON.stringify(item.inspection));
+   check(JSON.stringify(u.compileTableDeployment({text:JSON.stringify(item.source),configuration}).bundle)===JSON.stringify(item.deployment));
+   check(JSON.stringify(u.generatePythonClient({text:JSON.stringify(item.source),package:'related_demo'}))===JSON.stringify(item.client));
+  }
   const inspected=u.inspectTableLifecycle(fixture);check(JSON.stringify(inspected)===expected);check(inspected.complete&&!inspected.nativeQualified);
   for(const format of ['json','yaml'])check(JSON.stringify(u.readDocument(u.writeDocument(fixture,format),format))===JSON.stringify(fixture));
   const future=clone();payload(future).tables[0].policy.person.select.future={source:'kept'};
@@ -98,7 +105,7 @@ try{
   try{u.verifyTableDeployment(compiled.bundle);}catch{refused=true;}check(refused);
   check(u.compileTableDeployment({text:JSON.stringify(fixture),configuration:{...configuration,schema:'public'}}).status==='blocked');
   return {assertions,metadataParity:true,deploymentParity:true,migrationParity:true,nativeQualificationClaimed:false,nodeGlobalsAbsent:true};
- },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions});
+ },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related});
  if(externalRequests.length)throw new Error('Table inspection caused an external request');
  const sources=['src/table-deployment/domains.ts','tests/unified/table-domain-fixture.ts','src/extensions/tables/temporal.ts','src/table-deployment/temporal.ts','tests/unified/table-temporal-fixture.ts','src/access/index.ts','src/access/table-client.ts','src/access/table-runtime.ts','src/access/types.ts','src/access/python-runtime.ts','src/index.ts','src/table-migration/index.ts','spec/extensions/tables/migration.schema.json','scripts/table-lifecycle-browser.ts','tests/unified/table-migration-fixture.ts','tests/binding/fixtures/table-lifecycle-note.json','spec/extensions/tables/schema.json','spec/extensions/tables/operation.schema.json','tests/unified/table-operation-fixture.ts','spec/extensions/tables/package.json','spec/extensions/tables/deployment.schema.json',...['types','context','expressions','columns','policies','seeds','operations','index'].map(n=>'src/extensions/tables/'+n+'.ts'),...['types','configuration','sql','policies','ddl','index'].map(n=>'src/table-deployment/'+n+'.ts')];
  const sourceHashes=Object.fromEntries(await Promise.all(sources.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));

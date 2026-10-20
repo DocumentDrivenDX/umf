@@ -8,7 +8,7 @@ export interface TableColumn {field:TableRef;name:string;nativeType:TableNativeT
 export type TableExpression={op:'field';field:TableRef}|{op:'literal';value:CoreLiteral}|{op:'eq'|'ne'|'lt'|'le'|'gt'|'ge';left:TableExpression;right:TableExpression}|{op:'and'|'or';args:TableExpression[]}|{op:'not'|'isNull';arg:TableExpression}|{op:'in';arg:TableExpression;values:CoreLiteral[]};
 export interface TableRelationshipRef {module:string;id:string}
 export interface TableRelationshipStep extends TableRelationshipRef {direction:'forward'|'inverse'}
-export type TableRowRule={kind:'deny'|'allow'}|{kind:'owner'|'memberOf';field:TableRef}|{kind:'memberOfRole';role:string}|{kind:'any'|'all';rules:TableRowRule[]}|{kind:'via';path:TableRelationshipStep[];rule:TableRowRule};
+export type TableRowRule={kind:'deny'|'allow'}|{kind:'owner'|'memberOf';field:TableRef}|{kind:'memberOfRole';role:string}|{kind:'any'|'all';rules:TableRowRule[]}|{kind:'via';path:TableRelationshipStep[];rule:TableRowRule}|{kind:'related';record:TableRef;matches:{source:TableRef;target:TableRef}[];rule:TableRowRule};
 export type TableCommand='select'|'insert'|'update'|'delete';
 export type TableCommandRules=Record<TableCommand,TableRowRule>;
 export interface TablePolicy {mode:'native-rls';person:TableCommandRules;batch:TableCommandRules}

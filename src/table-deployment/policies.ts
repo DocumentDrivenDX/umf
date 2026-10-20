@@ -18,6 +18,13 @@ export function policySql(rule:TableRowRule,table:TableDeclaration,ctx:Deploymen
   return '(EXISTS (SELECT 1 FROM pg_catalog.pg_roles AS '+q('umf_group')+' WHERE '+q('umf_group')+'.rolname::pg_catalog.text COLLATE pg_catalog."C" = '+column(rule.field)+' COLLATE pg_catalog."C" AND '+q('umf_group')+'.rolname::pg_catalog.text IN ('+groups.map(s).join(', ')+') AND pg_catalog.pg_has_role(CURRENT_USER, '+q('umf_group')+".oid, 'MEMBER')))";
  }
  if(rule.kind==='any'||rule.kind==='all')return '('+rule.rules.map((r,i)=>policySql(r,table,ctx,audience,path+'/rules/'+i,alias,depth+1)).join(rule.kind==='any'?' OR ':' AND ')+')';
+ if(rule.kind==='related'){
+  const target=ctx.table(rule.record),nextAlias='umf_j_'+depth;
+  if(target.policy[audience].select.kind==='deny')deploymentError('Related rule requires an explicit related-table SELECT policy/grant for this audience',path+'/record');
+  const pairs=rule.matches.map(pair=>(alias?q(alias):ctx.relation(table))+'.'+q(ctx.column(table,pair.source))+' = '+q(nextAlias)+'.'+q(ctx.column(target,pair.target)));
+  const terminal=policySql(rule.rule,target,ctx,audience,path+'/rule',nextAlias,depth+1);
+  return '(EXISTS (SELECT 1 FROM '+ctx.relation(target)+' AS '+q(nextAlias)+' WHERE '+pairs.join(' AND ')+' AND '+terminal+'))';
+ }
  if(rule.kind!=='via')return deploymentError('Unknown native policy rule',path);
  const walk=(index:number,current:TableDeclaration,currentAlias:string|undefined):string=>{
   if(index===rule.path.length)return policySql(rule.rule,current,ctx,audience,path+'/rule',currentAlias,depth+1);

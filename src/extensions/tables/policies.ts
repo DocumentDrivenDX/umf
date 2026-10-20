@@ -12,6 +12,19 @@ export function inspectPolicies(payload:TableLifecyclePayload,ctx:TableContext):
     const field=ctx.field(rule.field,path+'/field'),target=ctx.element(record);
     if(!target?.members?.some(m=>refKey(m)===refKey(rule.field))||field?.scalarType!=='string')ctx.add('TABLES_POLICY_FIELD',path+'/field','Owner/group rule requires a text Field of the current policy Record');
    }else if(rule.kind==='any'||rule.kind==='all')for(const[j,child]of rule.rules.entries())inspect(child,record,path+'/rules/'+j,depth+1);
+   else if(rule.kind==='related'){
+    const origin=payload.tables.find(t=>refKey(t.record)===refKey(record));
+    const destination=payload.tables.find(t=>refKey(t.record)===refKey(rule.record));
+    if(rule.record.module!==ctx.module.id||!origin||!destination){ctx.add('TABLES_POLICY_TABLE',path+'/record','Related rule requires original tables in this plugin module');return;}
+    ctx.unique(rule.matches,pair=>refKey(pair.source)+'='+refKey(pair.target),path+'/matches','association field pair');
+    for(const[j,pair]of rule.matches.entries()){
+     const location=path+'/matches/'+j,a=ctx.field(pair.source,location+'/source'),b=ctx.field(pair.target,location+'/target');
+     if(!origin.columns.some(c=>refKey(c.field)===refKey(pair.source))||!destination.columns.some(c=>refKey(c.field)===refKey(pair.target)))ctx.add('TABLES_POLICY_FIELD',location,'Association fields must be mapped by their respective source and target tables');
+     if(a&&b&&(a.cardinality!=='one'||b.cardinality!=='one'||a.scalarType!==b.scalarType))ctx.add('TABLES_POLICY_DOMAIN',location,'Association equality requires the same singleton scalar carrier without coercion');
+    }
+    edges.get(id)!.add(refKey(destination.record));
+    inspect(rule.rule,destination.record,path+'/rule',depth+1);
+   }
    else if(rule.kind==='via'){
     let current=record;let valid=true;
     for(const[j,step]of rule.path.entries()){
