@@ -1111,3 +1111,29 @@ claim a held paging snapshot, private application routing, seeds or completed
 forward column/policy migration support. Mixed-order continuation SQL has O(k²)
 comparisons for k sort fields; each scalar binds once. Uniform directions keep
 PostgreSQL tuple comparison. Related scope indexes reuse admitted Field objects.
+
+### Typed seeds and bounded forward evolution, 2026-10-19
+
+[Seed/migration evidence](evidence/praxis-p2/seed-migrations/receipt.json)
+qualifies source-selected administrative seed compilation/application on local
+macOS PostgreSQL18.6. Newly appended immutable seed sets run once in the approved
+migration transaction. Initial1005 rows require two mutation statements; primary
+ignore preserves authored first values, replay does no seed DML, and failure in
+a second chunk rolls back the first chunk, ledger and RLS changes. Exact large
+integer/decimal, date/instant, UUID, boolean/null and omitted native transaction
+clock values pass. Same-shape self-FK forward references fail in authored order;
+parent-first order succeeds as two row statements. The harness passes26 checks,
+with9 observed seed mutations across successful and deliberately failed cases.
+Two Rust tests and10 CLI/Python/Chromium-WASM source cases pass. Stored Field
+metadata is indexed once per touched table, not copied for each seed row.
+
+The separately reviewed additive migration producer also passes nine native
+checks over four generations for nullable column additions, generated numeric/date
+checks, UPDATE grant expansion, deny/allow policy transitions, replay and stale or
+tampered source refusal. Its original isolated source hashes remain in the packet;
+the integrated producer adds versioned immutable seed selection. Fourteen portable
+migration tests/83 assertions,68 browser assertions and23 complete embedded
+cases pass. All76 SDK wheel modules match source and dual-license metadata is
+present. Required-column/type/key/FK evolution, unsupported native codecs and full
+private analytics/method acceptance are not implied. The release goal remains
+active; this is an unpublished component.

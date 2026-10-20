@@ -24,6 +24,7 @@ from .head_view import _create_head_view
 from .ledger_schema import HISTORY, _create_history, _verify_history_schema
 from .outcome_schema import _create_outcomes
 from .privileges import verify_native_privileges
+from .seeds import _apply_seeds
 from .witness import _capture_witness, _entry_digest
 
 _MAX_ENTRIES = 128
@@ -140,6 +141,7 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
         verify_native_catalog(connection,source,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
         verify_native_privileges(connection,source,person_roles=person_roles,
                                  statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
+        _apply_seeds(connection,source_plan,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
         witness = _capture_witness(connection,source)
         position = len(history)+1
         entry_digest = _entry_digest(position,expected_head,source_plan['digest'],witness)

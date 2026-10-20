@@ -1,0 +1,47 @@
+{
+  "capturedAt": "2026-10-20T02:17:43.993151+00:00",
+  "scope": "unpublished local macOS ARM64 PG18.6 typed source-selected administrative seeds and bounded additive current-core migration component",
+  "umfParent": "7c3a81e5469a31e17de09aac7c48e247b904e6b7",
+  "weftParent": "8fa54c76",
+  "seedHarnessAssertions": 26,
+  "observedSeedMutationStatements": 9,
+  "bulkInitialSeedRows": 1005,
+  "bulkInitialSeedStatements": 2,
+  "seedCliPythonParityCases": 10,
+  "seedChromiumWasmParityCases": 10,
+  "focusedRustSeedTests": 2,
+  "migrationPortableTests": 14,
+  "migrationPortableAssertions": 83,
+  "browserAssertions": 68,
+  "embeddedCompleteGeneratorCases": 23,
+  "separateMigrationNativeChecks": 9,
+  "separateMigrationNativeGenerations": 4,
+  "separateMigrationSourceHash": "e6ca2bf811899056df93b1be6f22223ab12a4c0ab0c49af3d4f832642e329d1e",
+  "sourceExactSdkWheelModules": 76,
+  "sourceFiles": {
+    "src/table-migration/index.ts": "c5fd092bcdbac3de8501dc7fd5a850505875074086cdb3b4b2cac8da4c455d06",
+    "spec/extensions/tables/migration.schema.json": "637a8d0db09af00ca14962fc7bb9ae90faf9d4c6f6f89cf0a577c4d125d9f88a",
+    "python/umf_access/src/umf_access/lifecycle/ledger.py": "23e69118d0f9256c6d7f9a2a4b5c8d427312e29debce58a9c0bc96ce85265c2c",
+    "python/umf_access/src/umf_access/lifecycle/seeds.py": "5908aac50eb5b21406f14f80b35253ac6bff595d8f5d2c2f26eb31e341f434c2",
+    "scripts/check-access-python-boundaries.py": "09d562eb92b78fcdd826a51081742c6e288ba0135669a821ab24e77f07175978",
+    "scripts/table-lifecycle-browser.ts": "cb2d387b78f2e82eb266aae3ad13b90019a892b697e14a38a5f4c68e3fa1afb4",
+    "tests/binding/table-migration.test.ts": "170c347d41477c0eaa481fac96b4365833c09096bcc6a62b194a856a7b474cd8",
+    "tests/unified/table_seed_native.py": "bf34d81cb8f534a323a96ff36e96090388ee853dd7be605d6f62d2f37e4778aa",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "56b6650744a02a7d6f5c9f6a7c82cc3f7d4a418a306848ec121b72ac03901a46"
+  },
+  "localWheels": {
+    "umf_access-0.1.0.dev4-py3-none-any.whl": "aebfd7c31afc065854faedfe66efa7d05b6cd79cd353a36236ff21e89aad9676",
+    "umf_codegen-0.1.0a1-py3-none-any.whl": "95dd7e221dac65a7dc3671a0ead79696847d87faea46a2b166383338c8bbd700",
+    "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl": "fc93c9117c5a91cd25fb365e52a5f4dca9cb6d592fb12084ced707f83f3cd424"
+  },
+  "published": false,
+  "fullPraxisAcceptance": false,
+  "limits": [
+    "JSON seed sources; immutable prior set prefix",
+    "10000 source module seed rows;128 selected sets;256-byte selected IDs",
+    "8MiB native seed values;1000 adjacent equal-shape non-self-FK rows per statement",
+    "no new char,float,bits128-bytea storage admission",
+    "required-column backfill/type/key/FK changes still refuse",
+    "analytics/private full-method routing and final publication remain"
+  ]
+}

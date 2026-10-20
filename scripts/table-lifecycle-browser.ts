@@ -31,9 +31,11 @@ const forwardRequest={id:'002',predecessor:{id:'001',digest:JSON.parse(migration
 const forward=JSON.stringify(compileTableMigration(forwardRequest));
 function deployed(source:any){const result=compileTableDeployment({text:JSON.stringify(source),configuration});if(result.status!=='compiled')throw Error(JSON.stringify(result));return result.bundle;}
 const retiredSource=structuredClone(operationSource);retiredSource.modules[0]!.extensions['umf.tables'].commands=[];
+const seedSource:any=structuredClone(fixture);seedSource.modules[0].extensions['umf.tables'].seedSets=[{id:'bootstrap',conflict:'ignore',rows:[{table:'notes',values:[{field:{module:'demo',element:'id'},value:{string:'seed'}},{field:{module:'demo',element:'owner'},value:{string:'seed-person'}}]}]}];
 const evolutions=[
  {id:'index-002',predecessor:{id:'001',digest:JSON.parse(migration).plan.digest},previous:JSON.parse(deployment).bundle,next:deployed(indexedTableSource())},
  {id:'commands-002',predecessor:{id:'commands-001',digest:'a'.repeat(64)},previous:deployed(operationSource),next:deployed(retiredSource)},
+ {id:'seeds-002',predecessor:{id:'001',digest:JSON.parse(migration).plan.digest},previous:JSON.parse(deployment).bundle,next:deployed(seedSource)},
 ].map(request=>({request,expected:compileTableMigration(request)}));
 const related:any[]=[relatedSource(false),relatedSource(true),snapshotSource()].map(source=>{return {source,inspection:inspectTableLifecycle(source),deployment:deployed(source),client:generatePythonClient({text:JSON.stringify(source),package:'related_demo'})};});
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(bundle,{headers:{'Content-Type':'text/javascript'}}):new Response('<!doctype html><title>UMF table declaration verification</title>',{headers:{'Content-Type':'text/html'}});}});
@@ -75,6 +77,7 @@ try{
    const result=u.compileTableMigration(item.request);
    check(JSON.stringify(result)===JSON.stringify(item.expected));check(result.status==='compiled');
    check(result.plan.steps.length===(index===0?1:0));
+   if(index===2)check(JSON.stringify(result.plan.seedExecution)===JSON.stringify({version:'umf.table-seed-execution/0.1',sets:['bootstrap']}));
    check(JSON.stringify(u.verifyTableMigration(result.plan))===JSON.stringify(result.plan));
   }
   for(const item of related){

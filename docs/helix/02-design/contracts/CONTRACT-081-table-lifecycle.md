@@ -282,7 +282,8 @@ The initial executable compiler subset refuses unqualified char padding,
 float/time codecs, identity sequence privileges, semantic-type/extension
 composition, unsupported logical facets and implicit logical allowedValues.
 Numeric native precision/scale must equal the original logical declaration.
-Seed inventories remain inert and explicit. These refusals are remaining work,
+Seeds outside the separately versioned administrative execution profile remain
+inert. These refusals are remaining work,
 not assertions that the complete proposed lifecycle profile is delivered.
 
 Client description, Weft bindings/programs and deployment name the same source
@@ -442,7 +443,7 @@ bundle. A predecessor is exact `{id,digest}` or initial null. Both bundles retai
 their original source/configuration. IDs are nonempty, NUL-free and at most256
 UTF-8 bytes; predecessor SHA-256 values are lower-case64-character hex. Initial
 and predecessor-null states must agree. The result adds version, RFC8785
-canonicalization, from/to bundle digests, phased steps, `seedExecution:"none"`,
+canonicalization, from/to bundle digests, phased steps, `seedExecution`,
 `requiresApproval:true`, `nativeQualified:false` and a digest over every other
 member. A plan exceeding24MB refuses. `verifyTableMigration` recompiles both
 source bundles and the entire plan, including self-consistently rehashed edits.
@@ -451,14 +452,16 @@ trusted native ledger and selected source authority remain required.
 
 Forward plans may append ordinary transactional btree indexes on existing tables,
 including source-declared uniqueness and included columns. Existing index
-inventory/order, table policy, columns, keys, checks and foreign keys remain exact.
-Only the new indexes' source-recompiled deployment steps are selected; concurrent
+inventory/order remains exact. An index-only revision keeps policy, columns,
+keys, checks and foreign keys exact; separately admitted additive/policy/seed
+changes may share the approved plan. Only new indexes' source-recompiled steps
+are selected; concurrent
 index builds and index replacement/removal are outside this subset. Native errors
 (including duplicates for a new unique index) roll back the approved plan.
 
 A declared-command revision may also advance the ledger without DDL. A plan with
-zero steps requires the parsed documents to differ only in the selected module's
-`umf.tables.commands` (or original serialization). Adding, replacing and retiring
+zero DDL steps allows changes only to the selected module's declared commands,
+new immutable-prefix seed sets, or original serialization. Adding, replacing and retiring
 commands requires the same approval, expected head, source recomputation,
 transaction, witness and durable history as schema changes. The new source digest
 invalidates old client installation references and cursor/outcome scopes; no
@@ -690,14 +693,41 @@ and declared group MEMBER facts; it does not inventory unrelated role or table
 metadata. This scope change deliberately invalidates prior continuation and
 receipt scope hashes without changing the durable outcome slot identity.
 
-This plan-generation subset supports initial deployment and appended tables.
-Root/module metadata, existing elements/relationships and native tables,
-columns/Keys/checks/FKs/indexes/policies must remain exact. New tables retain the
-target deployment compiler's original step ordering; existing steps are never
-re-executed. Namespace/role changes, table removal, edits to existing logical or
-native definitions, metadata-only/no-op revisions and seed execution refuse with
-diagnostics. Refusal is not a partial migration or a generated destructive plan.
-Every compiled candidate requires approval; compilation cannot grant it.
+This plan-generation subset supports initial deployment, appended tables/indexes,
+nullable appended stored Fields/columns without defaults, corresponding generated
+domain CHECKs and column UPDATE grants, and command-specific policy/grant changes.
+Existing columns/Keys/FKs/indexes and source meaning remain exact. Policy changes
+use original compiled ALTER POLICY clauses plus exact GRANT/REVOKE deltas; role,
+schema and audience identities remain fixed. Source command-only revisions may
+advance a generation without DDL. Removal, native type changes, required-column
+backfills and other unqualified evolution refuse explicitly. No destructive or
+partial plan is inferred. Every candidate requires trusted approval.
+
+Seed plans carry either `seedExecution:"none"` or
+`{version:"umf.table-seed-execution/0.1",sets:[original IDs]}`. Prior seed sets
+are an immutable prefix; only newly appended sets execute, once per successful
+migration. The selected source must be JSON, with at most128 selected sets and
+256 UTF-8 bytes per selected ID. The existing total module bound is10000 rows.
+Weft compiles the original source/binding and selected IDs directly through
+`weft.table-seed/0.1`; no generated command is inserted into rewritten source.
+Existing exact scalar/domain codecs validate values, omissions and primary-Key
+conflict `error`/`ignore`. Authored set/row order is preserved. Adjacent rows with
+the same table/omission shape may form chunks of at most1000; self-FKs or empty
+assignment shapes retain row statements. Prepared table/Field definitions are
+indexed once per compilation, and results are compact counts, not per-row durable
+outcome objects. Native value expansion is at most8MiB.
+
+Seeds execute only as the approved installer inside the migration transaction,
+after catalog/privilege verification and the exclusive lifecycle lock. Touched
+tables acquire exclusive native locks while RLS is temporarily disabled for this
+administrative step. Constraints stay active. RLS is enabled/forced and the
+catalog reverified before witness/history publication. Error or cancellation
+rolls back seed data, DDL, RLS changes and the ledger together through the enclosing
+savepoint; native sequence allocation retains PostgreSQL's normal semantics.
+Normal person/batch grants are never broadened for seeds. Replaying an already
+applied migration performs no seed DML. [Candidate execution evidence](../../04-build/evidence/praxis-p2/seed-migrations/receipt.json)
+qualifies the local PG18 subset; publication and full Praxis acceptance remain
+separate gates.
 
 Each phased step retains its original deployment identity/kind/source path/SQL
 and required transaction. Its before-plan precondition is either an empty private
