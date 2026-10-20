@@ -33,12 +33,23 @@ def _obligations(context, source, declaration, batch=False):
     table_index, table = next((i,t) for i,t in enumerate(module['extensions']['umf.tables']['tables'])
                              if t['id']==declaration['body']['table'])
     body=declaration['body'];kind=body['kind'];read=kind=='read'
-    commands=['select'] if read else ['insert','update','select'] if kind=='upsert' and body['onConflict']=='update' else ['insert','select'] if kind=='upsert' else [kind]
+    commands=['select'] if read else ['insert'] if kind=='insertFrom' else ['insert','update','select'] if kind=='upsert' and body['onConflict']=='update' else ['insert','select'] if kind=='upsert' else [kind]
     def reads_column(predicate):
         return ('field' in predicate or any(reads_column(p) for p in predicate.get('args',[]))
                 or 'arg' in predicate and reads_column(predicate['arg']))
     if (body.get('returning') or reads_column(body.get('where',{}))) and 'select' not in commands:
         commands.append('select')
+    touched={table['id']:(table_index,table,commands)}
+    if kind=='insertFrom':
+        source_index,source_table=next((i,t) for i,t in enumerate(module['extensions']['umf.tables']['tables'])
+                                     if t['id']==body['source']['table'])
+        if source_table['id']==table['id']:
+            if 'select' not in commands:commands.append('select')
+        else:touched[source_table['id']]=(source_index,source_table,['select'])
+    ordered=list(touched.values())
+    if len(ordered)>1:
+        records={e['id']:e for e in module['elements'] if e['kind']=='record'}
+        ordered.sort(key=lambda item:(module['namespace'],records[item[1]['record']['element']].get('name',item[1]['record']['element'])))
     return {
         'consistency':declaration['consistency'],
         'cursorScope':['operation','exact-inputs','source','deployment','ledger-head','principal','role-policy-scope'],
@@ -57,8 +68,9 @@ def _obligations(context, source, declaration, batch=False):
             'nativeExecutionQualified':False,'policy':'source-command-policy-and-native-forced-rls',
             'principal':'verified-person-or-batch','privileges':'source-grants-and-native-effective-closure',
             'roleScope':'native-transitive-current','sourceInterpretation':'original-umf-deployment-compiler',
-            'tables':[{'commands':commands,'id':table['id'],'native':table['name'],'record':table['record'],
-                       'policySourcePath':f'/modules/{module_index}/extensions/umf.tables/tables/{table_index}/policy'}],
+            'tables':[{'commands':table_commands,'id':current['id'],'native':current['name'],'record':current['record'],
+                       'policySourcePath':f'/modules/{module_index}/extensions/umf.tables/tables/{index}/policy'}
+                      for index,current,table_commands in ordered],
         },
     }
 

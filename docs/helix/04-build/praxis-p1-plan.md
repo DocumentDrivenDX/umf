@@ -1052,3 +1052,18 @@ This source-only cleanup does not repeat the preceding native campaign or extend
 its exact wheel hashes. Rust still parses the binding model per compilation, and
 redundant live catalog probes remain; those costs are not claimed eliminated.
 The wheel-module prose is corrected to75 (the ownership checker scans80 modules).
+
+### Atomic snapshot authoring producer, 2026-10-19
+
+The `insertFrom` operation declares one same-module source table/predicate and
+explicit target assignments. `sourceField` copies only source-table fields with
+proved target compatibility and exact native capacity; currentPrincipal binds
+PostgreSQL's effective role outside caller input. Atomic INSERT-SELECT lowering
+is required; a separate read followed by insert is not equivalent. Missing or
+hidden source rows produce zero effects; excess effects must roll back.
+
+Portable authoring/generation tests and browser/embedded parity pass for a public
+snapshot fixture including nullable text and exact numeric source refinements.
+The source/target native command obligations are represented separately in the
+SDK. Native Weft lowering/execution for this new source form remains pending
+at this schema producer commit. No released support is claimed.

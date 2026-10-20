@@ -10,7 +10,7 @@
     "verifyTableMigration"
   ],
   "v8": "14.4.258.23",
-  "bundleSha256": "083f68cc1c535e66b3a65073ecf3bc1931b958ec84a1242847129d8ef0795366",
+  "bundleSha256": "54a01920fd44f9ffe3f676ed9df4387f0a8898a02fa92be107b3849ff4ebeafb",
   "builder": "bun@1.4.3",
   "license": "MIT OR Apache-2.0",
   "inputs": {
@@ -183,7 +183,7 @@
     "spec/core/semantic-type-reference.schema.json": "dab9fb6d91ee1293874782f041916628e6d902ce203c247d462248bb393e1a5c",
     "spec/extensions/actions/package.json": "77006f8c094af31c4c1f5c95424ff15eb97da6de6e969f8b3a91150960f200b8",
     "spec/extensions/actions/schema.json": "0263c21ddd91347bf3afc2b7ab14b2c0943f1da5f5c493658cd105277f6d8d09",
-    "spec/extensions/tables/operation.schema.json": "f747faf5f674c0e3b0f9e905ad91344df554eed420abd2637eb685b151b8171f",
+    "spec/extensions/tables/operation.schema.json": "127b524b7921adc24602110c0ef086ab5698228f58a00d44168848a5f41e3d79",
     "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
     "spec/extensions/tables/schema.json": "e91eba6b807287b07a69d5d0cd4e2003696bb997852c07c8fb3d3416d8ba5ce1",
     "spec/metamodel/generated/core-constraints.json": "d6d115a9eee3f0bb5e111f66a74f902c6c106bc22566e15a8635ee93858aa5b1",
@@ -205,11 +205,11 @@
     "src/extensions/tables/context.ts": "d77bd8152b531365511da549951eca6dca5117f0ad4ead1a2b5e746be63705fe",
     "src/extensions/tables/expressions.ts": "aaeac099934a1ecc116493c5bbade878484465f5bea2c0c74a629428750a0f5e",
     "src/extensions/tables/index.ts": "c6e0ce267d8dd4a77bedc7322556357a2a2293cbf395c14cdf85fc1843f3a4be",
-    "src/extensions/tables/operations.ts": "854c62308ed03892a294b47d41b8cc88080ce1f22abc0a71715927fd6361958f",
+    "src/extensions/tables/operations.ts": "071361b0dd399a6bb105660654daa3242ea4436a0199c19cd3a3f6b82deb911d",
     "src/extensions/tables/policies.ts": "cce80059d33b63c22a528e8dd796296e646495e833a65ba49dfce041225f2c8e",
     "src/extensions/tables/seeds.ts": "4aa5941ec205930592435b2e1799a587e4d28f75a30fa549c758d25f0eed3a43",
     "src/extensions/tables/temporal.ts": "9186bdaa56cd1f640af4f99de0ba9b36f2f0268d25c1b3ce1bcbf7c825e7f767",
-    "src/extensions/tables/types.ts": "e9918fe57088d1b755791fb3767571118f43a3f41df4e43b283f2b2f28428be5",
+    "src/extensions/tables/types.ts": "8ec62da48db6189cd42bb0448711113461ac536e0c275116415b3b1dcdc39ac2",
     "src/generated/core-model.ts": "872bed38ed205f11d5afe4bd8e5ea2d6625cd2054a23b1c2483b0f386750a3a9",
     "src/generated/core-validators.ts": "e698e22884288eb1bb6a0a568cefc757fdcee5888e7fb5b3dd6586a8700b0073",
     "src/model/bit128.ts": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
@@ -287,7 +287,7 @@
     }
   ],
   "files": {
-    "generator.js.gz": "3921741bbe1143b15a14441f492e00abfc79e05bfb150624d3e90074258953f3",
+    "generator.js.gz": "512b0060b20c2934cbfcf7f94f9a47cff2d7c947ea1eda5d782a34f1fdc557aa",
     "notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
     "notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
     "notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",

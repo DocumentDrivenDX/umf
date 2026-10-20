@@ -887,3 +887,27 @@ fixed `CURRENT_TIMESTAMP`. It adds no caller parameter, function name or SQL
 escape. Fresh writes and replay observations retain the same durable-key contract;
 a recovered invocation does not evaluate the write again. Source checking and
 actual person/batch native authority remain mandatory.
+
+## Atomic source snapshots
+
+The candidate `insertFrom` body declares a target table, a same-module source
+`{table,where}`, explicit target assignments, returning fields and an effect
+bound. It is one INSERT-SELECT statement over natively visible source rows;
+separate read/insert execution is not equivalent. Missing/hidden source rows
+produce zero effects. Excess matches abort the entire mutation rather than clip.
+Replay recovers the original effect receipt without reading/copying source again.
+
+`{kind:"sourceField",field:Ref}` is available only in these assignments and
+references a mapped field of the declared source table. Native capacity must
+match exactly, nullability must be compatible, and source refinements must prove
+the target restrictions. Finite enumerations can prove compatibility value by
+value; otherwise every target facet must be present unchanged on the source.
+Source-only refinements may be dropped on the wider destination. No numeric
+rounding, string truncation or availability assumption is introduced.
+
+`{kind:"currentPrincipal"}` evaluates the effective PostgreSQL current_user as
+text, using the authenticated native session. It supplies no caller parameter
+and requires native text/varchar storage. Native target constraints continue to
+apply. Snapshot capture requires target INSERT (and SELECT for returned fields)
+and source SELECT, with each table's own RLS. Targets, source rows, identity and
+transaction time remain inside the same native statement/transaction boundary.

@@ -2,6 +2,7 @@
 import operationSchema from '../../../spec/extensions/tables/operation.schema.json';
 import tableSchema from '../../../spec/extensions/tables/schema.json';
 import {createValidator} from '../../validation/schema';
+import {canonicalSchemaJson} from '../../model/schema-literals';
 import {domain,inspectUnknown,refKey,TableContext} from './context';
 import {inspectStoredLiteral} from './columns';
 import type {TableDeclaration,TableLifecyclePayload,TableOperation,TableOperationPredicate,TableOperationValue,TableRef,TableNativeType} from './types';
@@ -27,6 +28,9 @@ export function inspectOperations(payload:TableLifecyclePayload,ctx:TableContext
 function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,ctx:TableContext,path:string):void {
  const table=payload.tables.find(t=>t.id===command.body.table);
  if(!table){ctx.add('TABLES_OPERATION_TABLE',path+'/body/table','Operation requires a table in its owning module');return;}
+ const sourceId=command.body.kind==='insertFrom'?command.body.source.table:undefined;
+ const sourceTable=payload.tables.find(t=>t.id===sourceId);
+ if(command.body.kind==='insertFrom'&&!sourceTable){ctx.add('TABLES_OPERATION_TABLE',path+'/body/source/table','Insert source requires an original table in this module');return;}
  const parameters=new Map(command.parameters.map(p=>[p.id,p]));
  ctx.unique(command.parameters,p=>p.id,path+'/parameters','operation parameter');
  for(const[i,p]of command.parameters.entries()){
@@ -35,14 +39,27 @@ function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,c
   if(field&&(Object.keys(field.extensions).length||field.semanticTypes?.length))ctx.add('TABLES_OPERATION_MEANING',path+'/parameters/'+i+'/field','Parameter meaning needs a separately qualified interpreter',true);
  }
  const used=new Set<string>();
- const field=(ref:TableRef,p:string)=>{
-  const column=table.columns.find(c=>refKey(c.field)===refKey(ref));
+ const field=(ref:TableRef,p:string,scope=table)=>{
+  const column=scope.columns.find(c=>refKey(c.field)===refKey(ref));
   if(!column){ctx.add('TABLES_OPERATION_FIELD',p,'Field must belong to the operation table');return;}
   const element=ctx.field(ref,p);return element?{column,element}:undefined;
  };
- const value=(v:TableOperationValue,target:TableRef,p:string):void=>{
-  const selected=field(target,p);if(!selected)return;
+ const value=(v:TableOperationValue,target:TableRef,p:string,scope=table,assignment=false):void=>{
+  const selected=field(target,p,scope);if(!selected)return;
   if(v.kind==='currentTimestamp'){if(selected.column.nativeType.kind!=='timestamptz'||selected.element.scalarType!=='timestamp')ctx.add('TABLES_OPERATION_DOMAIN',p,'Transaction timestamp requires explicit instant storage');return;}
+  if(v.kind==='currentPrincipal'){if(selected.element.scalarType!=='string'||!['text','varchar'].includes(selected.column.nativeType.kind))ctx.add('TABLES_OPERATION_DOMAIN',p,'Current principal requires native text storage');return;}
+  if(v.kind==='sourceField'){
+   const origin=assignment&&sourceTable?field(v.field,p+'/field',sourceTable):undefined;
+   if(!origin){ctx.add('TABLES_OPERATION_SOURCE',p,'Source fields are available only in insert-from assignments');return;}
+   if(origin.element.scalarType!==selected.element.scalarType||origin.element.cardinality!==selected.element.cardinality||nativeDomain(origin.column.nativeType)!==nativeDomain(selected.column.nativeType)||(origin.element.nullability!=='required'&&selected.element.nullability==='required')){ctx.add('TABLES_OPERATION_DOMAIN',p,'Source copy requires compatible availability and exact native capacity');return;}
+   if(origin.element.allowedValues?.length){
+    for(const literal of origin.element.allowedValues)if(literal!==null||origin.element.nullability!=='required')inspectStoredLiteral(selected.column,selected.element,literal,ctx,p+'/field');
+   }else{
+    if(selected.element.allowedValues!==undefined)ctx.add('TABLES_OPERATION_DOMAIN',p,'Source domain does not prove target membership');
+    for(const[key,facet]of Object.entries(selected.element.facets??{}))if(canonicalSchemaJson(facet)!==canonicalSchemaJson(origin.element.facets?.[key]??null))ctx.add('TABLES_OPERATION_DOMAIN',p,'Source domain does not prove the target refinement');
+   }
+   return;
+  }
   if(v.kind==='literal'){inspectStoredLiteral(selected.column,selected.element,v.value,ctx,p+'/value');return;}
   used.add(v.parameter);const parameter=parameters.get(v.parameter);
   if(!parameter){ctx.add('TABLES_OPERATION_PARAMETER',p+'/parameter','Unknown operation parameter');return;}
@@ -50,15 +67,15 @@ function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,c
   const sourceColumn=parameter&&payload.tables.flatMap(t=>t.columns).find(c=>refKey(c.field)===refKey(parameter.field));
   if(source&&(domain(source)!==domain(selected.element)||source.nullability!==selected.element.nullability||!sourceColumn||nativeDomain(sourceColumn.nativeType)!==nativeDomain(selected.column.nativeType)))ctx.add('TABLES_OPERATION_DOMAIN',p,'Parameter and selected Field domains must match exactly');
  };
- const predicate=(node:TableOperationPredicate,p:string,depth=0):void=>{
+ const predicate=(node:TableOperationPredicate,p:string,depth=0,scope=table):void=>{
   if(!ctx.charge(p,depth))return;
   if(node.op==='all')return;
-  if(node.op==='and'||node.op==='or'){for(const[i,child]of node.args.entries())predicate(child,p+'/args/'+i,depth+1);return;}
-  if(node.op==='not'){predicate(node.arg,p+'/arg',depth+1);return;}
-  const selected=field(node.field,p+'/field');if(!selected)return;
+  if(node.op==='and'||node.op==='or'){for(const[i,child]of node.args.entries())predicate(child,p+'/args/'+i,depth+1,scope);return;}
+  if(node.op==='not'){predicate(node.arg,p+'/arg',depth+1,scope);return;}
+  const selected=field(node.field,p+'/field',scope);if(!selected)return;
   if(node.op==='isNull')return;
-  if(node.op==='in'){for(const[i,item]of node.values.entries())value(item,node.field,p+'/values/'+i);return;}
-  value(node.value,node.field,p+'/value');
+  if(node.op==='in'){for(const[i,item]of node.values.entries())value(item,node.field,p+'/values/'+i,scope);return;}
+  value(node.value,node.field,p+'/value',scope);
   if(node.op==='startsWith'&&selected.element.scalarType!=='string')ctx.add('TABLES_OPERATION_DOMAIN',p,'Prefix predicate requires a string Field');
   if(['lt','le','gt','ge'].includes(node.op)&&!['integer','decimal','string','date','timestamp'].includes(selected.element.scalarType??''))ctx.add('TABLES_OPERATION_DOMAIN',p,'Ordered predicate requires a supported ordered scalar');
  };
@@ -81,6 +98,7 @@ function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,c
  }else{
   if(command.consistency!=='transaction'||command.replay==='none')ctx.add('TABLES_OPERATION_WRITE',path,'Writes require transaction consistency and explicit caller-key replay');
   refs(body.returning,path+'/body/returning');
+  if(body.kind==='insertFrom')predicate(body.source.where,path+'/body/source/where',0,sourceTable!);
   if(body.kind==='update'||body.kind==='delete')predicate(body.where,path+'/body/where');
   if(body.kind!=='delete'){
    ctx.unique(body.values,a=>refKey(a.field),path+'/body/values','assigned Field');
@@ -88,9 +106,9 @@ function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,c
     const p=path+'/body/values/'+i,selected=field(assignment.field,p+'/field');
     if(selected?.column.generated)ctx.add('TABLES_OPERATION_GENERATED',p,'Ordinary operations cannot assign generated identity columns');
     if(body.kind==='update'&&selected&&!mutable(table,assignment.field,ctx))ctx.add('TABLES_OPERATION_IMMUTABLE',p,'Ordinary updates cannot change Keys, immutable or generated columns');
-    value(assignment.value,assignment.field,p+'/value');
+    value(assignment.value,assignment.field,p+'/value',table,true);
    }
-   if(body.kind==='insert'||body.kind==='upsert')for(const column of table.columns){
+   if(body.kind==='insert'||body.kind==='insertFrom'||body.kind==='upsert')for(const column of table.columns){
     const element=ctx.element(column.field);
     if(element?.nullability==='required'&&!column.default&&!column.generated&&!body.values.some(a=>refKey(a.field)===refKey(column.field)))ctx.add('TABLES_OPERATION_REQUIRED',path+'/body/values','Create input omits a required column without a declared default');
    }

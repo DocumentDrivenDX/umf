@@ -8,6 +8,7 @@ import {compileTableMigration} from '../src/table-migration';
 import {appendedTableSource,indexedTableSource} from '../tests/unified/table-migration-fixture';
 import {tableOperationSource} from '../tests/unified/table-operation-fixture';
 import {temporalSource} from '../tests/unified/table-temporal-fixture';
+import {snapshotSource} from '../tests/unified/table-snapshot-fixture';
 import {relatedSource} from '../tests/unified/table-related-fixture';
 import {domainSource} from '../tests/unified/table-domain-fixture';
 import fixture from '../tests/binding/fixtures/table-lifecycle-note.json';
@@ -34,7 +35,7 @@ const evolutions=[
  {id:'index-002',predecessor:{id:'001',digest:JSON.parse(migration).plan.digest},previous:JSON.parse(deployment).bundle,next:deployed(indexedTableSource())},
  {id:'commands-002',predecessor:{id:'commands-001',digest:'a'.repeat(64)},previous:deployed(operationSource),next:deployed(retiredSource)},
 ].map(request=>({request,expected:compileTableMigration(request)}));
-const related:any[]=[false,true].map(nested=>{const source=relatedSource(nested);return {source,inspection:inspectTableLifecycle(source),deployment:deployed(source),client:generatePythonClient({text:JSON.stringify(source),package:'related_demo'})};});
+const related:any[]=[relatedSource(false),relatedSource(true),snapshotSource()].map(source=>{return {source,inspection:inspectTableLifecycle(source),deployment:deployed(source),client:generatePythonClient({text:JSON.stringify(source),package:'related_demo'})};});
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(bundle,{headers:{'Content-Type':'text/javascript'}}):new Response('<!doctype html><title>UMF table declaration verification</title>',{headers:{'Content-Type':'text/html'}});}});
 let browser;
 try{
