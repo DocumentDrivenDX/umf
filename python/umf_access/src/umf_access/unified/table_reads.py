@@ -148,13 +148,12 @@ class _TableReader:
                 request['idempotencyKey']=key
         # This exact optional public compiler boundary owns all statement text,
         # parameter order, native scalar coercions and server-side frame guards.
-        from weft import check_table_operation_json, compile_table_operation_json
+        # This is trusted in-process compiler output. External stored programs
+        # need Weft checking at their ingress; this API accepts no such program.
+        from weft import compile_table_operation_json
         program = loads(compile_table_operation_json(canonical(request)))
         if program.get('status') != 'compiled':
             raise SessionError('declared read compilation refused')
-        checked = loads(check_table_operation_json(canonical(program)))
-        if checked.get('status') != 'checked':
-            raise SessionError('declared read source check refused')
         guard = {'profile':'pg18-read-frame/0.1', 'maxNativeBytes':8388608, 'sqlstate':'22012',
                  'includesLookahead':True, 'partialFrames':False}
         valid_read=(program['result']['kind'] in ('many','one','optional','page','count')

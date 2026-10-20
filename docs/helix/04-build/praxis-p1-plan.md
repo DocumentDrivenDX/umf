@@ -1025,7 +1025,7 @@ remain per call. Policy replacement invalidates preparation. A process guard
 precedes the new lock. No native observation, lease or result is cached, and
 all existing live correspondence/generation steps remain active.
 
-The new dev4 candidate avoids colliding with published hostdev3. All80 wheel
+The new dev4 candidate avoids colliding with published hostdev3. All75 wheel
 modules match source; dual-license metadata is present. Installed PostgreSQL18.6
 passes180 assertions across six driver/pool variants plus nested association
 methods, with98/98 leases returned. Ten cache/snapshot unit checks pass in both
@@ -1042,3 +1042,13 @@ are real remaining typed-operation capabilities, separate from the119 generic
 prospective declarations already compiled. The sample's host-owned reference
 read must retain its separate module ownership/authority. Private source and
 SQL remain in temporary files only.
+
+The immediate Weft self-check is also removed from the native call path: it
+recompiled the trusted in-process compiler's own output. The SDK still checks
+ABI/result/transport/obligation compatibility and accepts no externally supplied
+compiled program. External artifact verification remains a Weft ingress concern.
+Ten source/snapshot and4 binding tests, package Ruff and ownership checks pass.
+This source-only cleanup does not repeat the preceding native campaign or extend
+its exact wheel hashes. Rust still parses the binding model per compilation, and
+redundant live catalog probes remain; those costs are not claimed eliminated.
+The wheel-module prose is corrected to75 (the ownership checker scans80 modules).

@@ -718,6 +718,24 @@ revokes runtime entry points/grants before archival or removal; retained
 migration/source history cannot be rewritten as a rollback. Production effects
 require host authorization separate from generating or inspecting a plan.
 
+### Prepared source and trusted compiler boundary
+
+Native readers/writers may reuse their library-owned verified source, reference,
+binding and parsed command index while retaining the same immutable session
+policy. Current subject registration and a fresh principal/audience-bound probe
+remain per call. Policy replacement invalidates preparation. No native authority
+observation, lease, generation result or business row is cached. New generations
+require a new committed reference and binding. Process guarding must precede
+cache locks inherited from a parent process.
+
+The installed in-process Weft compiler is part of the trusted host toolchain.
+Its immediate output need not be recompiled by the same engine. Runtime ABI,
+result, transport and obligation compatibility checks remain mandatory before
+execution. Persisted or externally received artifacts require verification at
+their ingress; the declared native reader/writer API accepts source declarations
+and values, not caller-supplied compiled programs. This does not remove original
+source approval or live installed-generation/identity checks.
+
 ### Commands and consistency
 
 Named reads and writes MUST use the same typed operation model and Weft compiler

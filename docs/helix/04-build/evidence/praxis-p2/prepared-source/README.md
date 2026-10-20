@@ -11,7 +11,7 @@ before entering its source lock. Failed preparation is not cached.
 Ten unit checks pass with installed optional dependencies and in the minimal
 environment: snapshot consistency, fresh person/batch rebinding, unknown
 subjects, policy invalidation, failed preparation, concurrent cold calls and
-process guarding. The local dev4 wheel contains exactly80 current source modules
+process guarding. The local dev4 wheel contains exactly75 current source modules
 and MIT OR Apache-2.0 metadata. Installed PostgreSQL18.6 execution passes180
 assertions across six driver/pool variants and nested generated association
 methods; all98 leases return. Existing live correspondence steps are retained.
