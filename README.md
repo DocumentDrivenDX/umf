@@ -1,5 +1,13 @@
 # UMF
 
+The published [SDK 0.5.1 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.1)
+includes the UMF 0.10.0 Python core and experimental `umf_access` 0.1.0.dev3 host.
+Its [qualification record](docs/helix/04-build/evidence/unified-sdk-051-release-qualification.md)
+identifies the tested artifacts and limits. The qualified dependency releases are
+[Weft 0.4.47](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.47) and
+[Truss 0.0.40](https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.40).
+The broader Praxis lifecycle and table integration work remains unreleased.
+
 Start with the [action guide](docs/helix/04-build/guides/actions/index.md) for runnable examples, diagrams, CQRS and formal-analysis explanations. [Recorded action qualification](docs/helix/04-build/evidence/actions-certification.md) has exact versions and limits; [current documentation delivery](docs/helix/04-build/evidence/actions-documentation-execution.md) is separate.
 
 UMF is a machine-readable metamodel and schema interchange fabric for complex

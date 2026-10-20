@@ -138,3 +138,48 @@ installed compatibility passes 58 tests with each Pydantic version, all four
 actual published-Weft 0.4.47 transport tests pass, and isolated catalog import
 passes. The earlier native results retain their parent-wheel identity. No
 unrelated native or stress campaign is repeated for this bounded lint delta.
+
+## Publication verification — 2026-10-19
+
+[UMF SDK 0.5.1](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.1)
+is published at source `927cc1265df068e8b6c51cf00fb0a20d0c4fdb39`.
+All ten downloaded release assets matched their local publication inputs and
+checksums. The published SDK, core wheel and host wheel have the final hashes
+recorded above: `4ade5b0a…`, `49633924…` and `972f5751…`, respectively.
+The release supplies [exact pins](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.1/release-pins.json),
+[qualification](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.1/qualification.json)
+and [checksums](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.1/SHA256SUMS).
+Published assets preserve their original qualification scope; this later
+verification does not replace or broaden them.
+
+The qualified compiler and ontology runtime are published as
+[Weft 0.4.47](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.47)
+and [Truss 0.0.40](https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.40).
+Truss's installed runtime subsequently passed the three real schemas and all
+eleven unchanged stress cases locally on macOS ARM64 with PostgreSQL 18.6.
+Its [qualification summary](https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.40/qualification.json)
+retains query bounds and the failed/incomplete broad-discovery receipt; this
+does not establish a whole-suite pass or complete Praxis integration.
+
+The [UMF microsite](https://documentdrivendx.github.io/umf/) was deployed by
+workflow `39345291248` from `ba49977a1d359938aa111a7a79c4ff387fdcb659`.
+Forty-seven public files matched the verified build artifact, including all
+21 policy pages and their model-primary/build-role claims. All 313 current
+catalog entries select UMF 0.10.0. The retired action compiler and Truss catalog
+worker routes returned HTTP 404. This is publication evidence, not additional
+runtime qualification.
+
+[TableSpec 0.0.12](https://github.com/DocumentDrivenDX/tablespec/releases/tag/v0.0.12)
+is published from `930a3657281ebe2ddf708877f590b3202d79c89e` with the current
+UMF 0.10 dependency. Its release workflow `39346450686` passed, including an
+installation from the actual public package index. The downloaded wheel
+SHA-256 is `c1cea596931851168db449399ec27ab30fc8234aaa27112318c9178a2f383449`;
+the index advertises that exact wheel and digest. Local full-source Pyright,
+Ruff formatting and Ruff checks pass. Earlier failed publication/static runs
+remain historical; Spark/Databricks qualification is not extended.
+
+These publication checks close the earlier pending-delivery statements only
+for these released artifacts. The successor Praxis lifecycle, performance
+audit, schema evolution and private integration acceptance remain separate
+unreleased work. Qualification is local macOS; no new multi-platform test
+campaign is required or claimed.
