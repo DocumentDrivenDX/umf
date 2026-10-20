@@ -209,7 +209,7 @@ jobs:
         if: matrix.weft-cohort == 'source-dbapi'
         with:
           repository: DocumentDrivenDX/weft
-          ref: 6e907632267a7140d07865d295da6ca2d23a6b3f
+          ref: c4018a9814c25fd18ffab9d8c682e7c55483d40f
           path: .ci-weft
       - uses: dtolnay/rust-toolchain@stable
         if: matrix.weft-cohort == 'source-dbapi'

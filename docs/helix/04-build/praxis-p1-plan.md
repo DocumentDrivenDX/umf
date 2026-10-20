@@ -986,3 +986,16 @@ nullable match columns, duplicate matching rows and an orphan membership.
 The portable source producer is being pinned for Weft's exact structural schema;
 Weft and native qualification for the new rule are pending at this commit.
 Do not treat the private compile result or this schema commit as released support.
+
+The [related-policy packet](evidence/praxis-p2/related-policies/receipt.json) now
+records paired Weftc4018a98 (UMF producer0fa1d777b),60 native PostgreSQL18.6
+assertions and48/48 balanced real pool leases for generated sync/async methods.
+Direct/nested association matching, NULL, duplicate matches, independent batch
+grants, writes and effect-only replay pass without a native foreign key. UMF
+Chromium passes60 assertions; embedded generation matches22 complete cases.
+Weft CLI/Python and Chromium WASM match41 cases, including unknown-pair refusals.
+All119 prospective declarations from the17 private tables now compile/check
+through this Weft cohort. Private source remains outside public repositories.
+Existing fixed application methods, native private/managed acceptance, seeds,
+broader evolution/adoption, resource consolidation and publication stay open.
+Qualification runs locally on macOS only; no multi-platform campaign is claimed.

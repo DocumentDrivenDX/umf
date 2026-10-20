@@ -290,3 +290,11 @@ generation. Persist the new installation reference after commit and regenerate
 clients from the new source; old references refuse. Unique-index failure rolls
 back the plan. Existing column, constraint, policy and index replacement/removal
 remain outside this qualified subset; seed execution is still pending.
+
+Use a `related` row rule when row scope follows an association that has no foreign
+key. Author its same-module target Record, explicit `{source,target}` field pairs
+and nested rule. Matching is existential over rows visible through the target's
+own native SELECT policy; NULL does not equal NULL and duplicate matches do not
+duplicate results. This does not add an integrity constraint. The paired local
+qualification covers direct/nested associations through generated sync/async
+clients. Existing FK-backed `via` paths retain their explicit FK mapping.
