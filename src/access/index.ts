@@ -41,7 +41,7 @@ function py(value:unknown):string {
  throw new Error('Non-JSON generation metadata');
 }
 function type(f:FieldInfo,missing=f.missing):string {
- const carriers:Record<string,string>={string:'str',integer:'int',decimal:'Decimal',boolean:'bool',binary:'bytes',date:'date',timestamp:'ExactTimestamp',uuid:'UUID',bits128:'bytes'};
+ const carriers:Record<string,string>={string:'str',integer:'int',decimal:'Decimal',float:'float',boolean:'bool',binary:'bytes',date:'date',timestamp:'ExactTimestamp',uuid:'UUID',bits128:'bytes'};
  if(!Object.hasOwn(carriers,f.scalar))fail(f.id,'Scalar cannot be represented exactly');
  let result=carriers[f.scalar]!;
  if(f.cardinality==='array')result='tuple['+type(f.item!,false)+', ...]';

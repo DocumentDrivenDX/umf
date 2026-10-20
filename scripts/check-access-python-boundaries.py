@@ -111,7 +111,7 @@ def check(root: Path) -> int:
         psycopg2_cursor = (name == 'umf_access.unified.session_psycopg2'
                           and target == 'psycopg2.extensions' and member == 'cursor')
         table_read_compiler = (name == 'umf_access.unified.table_reads' and target == 'weft'
-                               and member in {'compile_table_operation_json', 'check_table_operation_json'})
+                               and member == 'prepare_table_operation_module_json')
         seed_compiler = name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
         if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")

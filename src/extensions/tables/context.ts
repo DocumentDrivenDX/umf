@@ -7,11 +7,14 @@ export const refKey=(r:TableRef):string=>JSON.stringify([r.module,r.element]);
 export class TableContext {
  readonly diagnostics:Diagnostic[]=[];
  nodes=0;
- constructor(readonly document:Document,readonly module:Module,readonly path:string){}
+ private readonly elements=new Map<string,Element>();
+ constructor(readonly document:Document,readonly module:Module,readonly path:string){
+  for(const element of module.elements)this.elements.set(element.id,element);
+ }
  add(code:string,path:string,message:string,unknown=false):void{
   if(this.diagnostics.length>=256){if(this.diagnostics.length===256)this.diagnostics.push({code:'TABLES_DIAGNOSTIC_LIMIT',path:this.path,message:'Further diagnostics omitted after 256 entries; interpretation refused',severity:'error'});return;}
   this.diagnostics.push({code,path,message,severity:unknown?'warning':'error'});}
- element(ref:TableRef):Element|undefined{return this.document.modules.find(m=>m.id===ref.module)?.elements.find(e=>e.id===ref.element);}
+ element(ref:TableRef):Element|undefined{return ref.module===this.module.id?this.elements.get(ref.element):this.document.modules.find(m=>m.id===ref.module)?.elements.find(e=>e.id===ref.element);}
  field(ref:TableRef,path:string):Element|undefined{
   const value=this.element(ref);
   if(value?.kind!=='field'){this.add('TABLES_FIELD',path,'Expected an exact core Field reference');return;}

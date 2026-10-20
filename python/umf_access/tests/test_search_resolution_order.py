@@ -16,7 +16,7 @@ from umf_access.targets import PostgresConfiguration, binding_digest
 class SearchResolutionOrderTests(unittest.TestCase):
     def compiled(self):
         root = Path(__file__).resolve().parents[3]
-        request = json.loads((root / "fixtures/access/native-catalog-fence/source-6d7c463/ranked-request.json").read_text())
+        request = json.loads((root / "fixtures/access/native-catalog-fence/ranked-request-current-010.json").read_text())
         request["selection"]["binding"]["schemaBinding"] = "search-path"
         request["selection"]["binding"]["schema"] = None
         program = json.loads(weft.compile_search_json(json.dumps(request)))

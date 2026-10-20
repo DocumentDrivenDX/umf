@@ -6,7 +6,9 @@ import base64
 import hashlib
 import hmac
 import json
+import math
 import re
+import struct
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from uuid import UUID
@@ -121,6 +123,15 @@ def value_from_native(value,output):
         try:
             if Decimal(value).is_finite():return {'decimalToken':value}
         except InvalidOperation:pass
+    if kind=='float' and output.get('nativeEncoding')=='ieee754-binary64-hex':
+        if re.fullmatch('[0-9a-f]{16}',value):
+            number=struct.unpack('!d',bytes.fromhex(value))[0]
+            if math.isfinite(number):return {'floatToken':repr(number)}
+        raise SessionError('native result value differs from its declared carrier')
+    if kind=='float' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?',value):
+        try:
+            if math.isfinite(float(value)):return {'floatToken':value}
+        except ValueError:pass
     if kind=='uuid':
         try:
             if str(UUID(value))==value:return {'uuid':value}

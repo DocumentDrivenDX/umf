@@ -18,7 +18,7 @@ from umf_access.manifest_commands import (
 )
 
 ROOT = Path(__file__).resolve().parents[3]
-FIXTURE = ROOT / 'fixtures/access/manifest-command-original'
+FIXTURE = ROOT / 'fixtures/access/manifest-command-current-010'
 
 class ManifestProgramTests(unittest.TestCase):
     def program(self):

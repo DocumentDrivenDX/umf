@@ -19,7 +19,9 @@ export function tableClients(doc:Document,wanted:Set<string>|undefined,t:Tools){
   const payload=inspected.modules.find(x=>x.module===m.id)!.payload;
   const tables=payload.tables.filter(table=>!wanted||wanted.has(m.id+'.'+table.record.element));
   for(const table of tables)ids.add(m.id+'.'+table.record.element);
-  const operations=(payload.commands as TableOperation[]).filter(op=>tables.some(table=>table.id===op.body.table));
+  const selectedTables=new Set(tables.map(table=>table.id));
+  const columns=new Map(payload.tables.flatMap(table=>table.columns.map(column=>[JSON.stringify([column.field.module,column.field.element]),column] as const)));
+  const operations=(payload.commands as TableOperation[]).filter(op=>op.body.kind==='query'?tables.length===payload.tables.length:selectedTables.has(op.body.table));
   if(!operations.length)t.fail(m.id,'Native table lifecycle client requires declared operations');
   const python=t.name(m.id,'field',m.id),prefix=t.name(m.id,'class',m.id),cls=prefix+'Module';
   const reserve=(symbol:string)=>{if(t.used.has(symbol))t.fail(m.id,'Generated native type collision');t.used.add(symbol);};
@@ -28,24 +30,25 @@ export function tableClients(doc:Document,wanted:Set<string>|undefined,t:Tools){
   const commands:any[]=[],methods=new Set<string>();
   for(const op of operations){
    const path=m.id+'.'+op.id,method=t.name(op.id,'field',path);
-   const symbols=[method,...(op.body.kind!=='read'?[method+'_observe',...(op.batch?[method+'_batch',method+'_batch_observe']:[])]:[])];
+   const reading=op.body.kind==='read'||op.body.kind==='query';
+   const symbols=[method,...(!reading?[method+'_observe',...(op.batch?[method+'_batch',method+'_batch_observe']:[])]:[])];
    for(const symbol of symbols){if(methods.has(symbol))t.fail(path,'Generated operation method collision');methods.add(symbol);}
    const stem=prefix+t.name(op.id,'class',path),input=stem+'Input',row=stem+'Row';
    reserve(input);
    const parameters=op.parameters.map(p=>{
-    const f=t.field(p.field),column=payload.tables.flatMap(table=>table.columns).find(c=>c.field.module===p.field.module&&c.field.element===p.field.element)!;
+    const f=t.field(p.field),column=columns.get(JSON.stringify([p.field.module,p.field.element]));
     const name=t.name(p.id,'field',path+'/'+p.id);
     if(['self','items','size','cursor','idempotency_key'].includes(name))t.fail(path+'/'+p.id,'Parameter conflicts with generated signature');
-    return {...f,id:p.id,python:name,missing:false,native:column.nativeType};
+    return {...f,id:p.id,python:name,missing:false,native:column?.nativeType??null};
    });
    if(new Set(parameters.map(p=>p.python)).size!==parameters.length)t.fail(path,'Generated parameter name collision');
-   const projection=op.body.kind==='read'?op.body.fields:op.body.returning;
-   const fields=projection.map(ref=>({...t.field(ref),missing:false}));
+   const projection=op.body.kind==='query'?op.body.outputs.map(o=>o.field):op.body.kind==='read'?op.body.fields:op.body.returning;
+   const fields=projection.map((ref,i)=>({...t.field(ref),...(op.body.kind==='query'?{python:t.name(op.body.outputs[i]!.name,'field',path+'/outputs/'+i)}:{}),missing:false}));
    if(new Set(fields.map(f=>f.python)).size!==fields.length)t.fail(path,'Generated result name collision');
    if(fields.length)reserve(row);
-   const result=op.body.kind==='read'?op.body.result:'mutation';
+   const result=op.body.kind==='query'?'many':op.body.kind==='read'?op.body.result:'mutation';
    const info={module:m.id,id:op.id,python:method,input,row:fields.length?row:null,parameters,fields,result,maxRows:op.body.maxRows,
-    replay:op.replay,batch:op.batch??null,declaration:op};
+    fixedQuery:op.body.kind==='query',replay:op.replay,batch:op.batch??null,declaration:op};
    commands.push(info);
    for(const [symbol,specs]of [[input,parameters],...(fields.length?[[row,fields]]:[])] as [string,FieldInfo[]][]){
     lines.push('@dataclass(frozen=True)',`class ${symbol}:`);
@@ -71,11 +74,11 @@ export function tableClients(doc:Document,wanted:Set<string>|undefined,t:Tools){
     if(!mode.sync)lines.push(`    # Original operation: ${JSON.stringify(op.id)}`);
     for(const batch of [false,...(op.batch?[true]:[])]){
      const base=batch?[`items: tuple[${op.input}, ...]`]:op.parameters.map((p:FieldInfo)=>p.python+': '+t.type(p,false));
-     const options=write?[op.replay==='caller-key-required'?'idempotency_key: str':'idempotency_key: str | None = None']:op.result==='page'?['size: int | None = None','cursor: str | None = None']:op.result==='many'?['size: int | None = None']:[];
+     const options=write?[op.replay==='caller-key-required'?'idempotency_key: str':'idempotency_key: str | None = None']:op.result==='page'?['size: int | None = None','cursor: str | None = None']:op.result==='many'&&!op.fixedQuery?['size: int | None = None']:[];
      const args=[...base,...options],signature=args.length?', *, '+args.join(', '):'';
      const values=batch?'items':`${op.input}(${op.parameters.map((p:FieldInfo)=>p.python+'='+p.python).join(', ')})`;
      const common=`self._client, ${lookup}, ${values}, ${op.input}, ${op.row??'None'}`;
-     const call=`${mode.sync?'table_call_sync':'table_call'}(${common}, key=${write?'idempotency_key':'None'}, size=${!write&&['page','many'].includes(op.result)?'size':'None'}, cursor=${op.result==='page'?'cursor':'None'}, batch=${batch?'True':'False'})`;
+     const call=`${mode.sync?'table_call_sync':'table_call'}(${common}, key=${write?'idempotency_key':'None'}, size=${!write&&!op.fixedQuery&&['page','many'].includes(op.result)?'size':'None'}, cursor=${op.result==='page'?'cursor':'None'}, batch=${batch?'True':'False'})`;
      const method=op.python+(batch?'_batch':'');
      lines.push(`    ${mode.sync?'':'async '}def ${method}(self${signature}) -> ${result}:`,`        return cast(${t.py(result)}, ${mode.sync?'':'await '}${call})`,'');
      if(write){

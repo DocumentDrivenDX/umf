@@ -26,7 +26,9 @@ export function inspectOperations(payload:TableLifecyclePayload,ctx:TableContext
  ctx.unique(admitted,c=>c.id,ctx.path+'/commands','operation ID');
 }
 function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,ctx:TableContext,path:string):void {
- const table=payload.tables.find(t=>t.id===command.body.table);
+ if(command.body.kind==='query'){inspectQuery(command,ctx,path);return;}
+ const tableId=command.body.table;
+ const table=payload.tables.find(t=>t.id===tableId);
  if(!table){ctx.add('TABLES_OPERATION_TABLE',path+'/body/table','Operation requires a table in its owning module');return;}
  const sourceId=command.body.kind==='insertFrom'?command.body.source.table:undefined;
  const sourceTable=payload.tables.find(t=>t.id===sourceId);
@@ -146,4 +148,26 @@ function mutable(table:TableDeclaration,ref:TableRef,ctx:TableContext):boolean {
 
 function nativeDomain(type:TableNativeType):string {
  return JSON.stringify([type.kind,'length'in type?type.length:null,'precision'in type?type.precision:null,'scale'in type?type.scale:null]);
+}
+
+/** Fixed query text is compiler input. SQL parsing/resolution remains Weft-owned. */
+function inspectQuery(command:TableOperation,ctx:TableContext,path:string):void {
+ const body=command.body;if(body.kind!=='query')return;
+ if(command.replay!=='none'||command.batch)ctx.add('TABLES_OPERATION_READ',path,'Queries cannot declare write replay or write batches');
+ if(new TextEncoder().encode(body.sql).length>1048576||body.sql.includes('\0'))ctx.add('TABLES_QUERY_SQL',path+'/body/sql','Bounded fixed UTF-8 query source required');
+ ctx.unique(command.parameters,p=>p.id,path+'/parameters','operation parameter');
+ ctx.unique(body.outputs,o=>o.name,path+'/body/outputs','query output alias');
+ ctx.unique(body.outputs,o=>refKey(o.field),path+'/body/outputs','query output Field');
+ const inspect=(ref:TableRef,p:string)=>{
+  const field=ctx.field(ref,p);
+  if(ref.module!==ctx.module.id)ctx.add('TABLES_QUERY_MODULE',p,'Query domains must belong to the owning module');
+  if(field&&(Object.keys(field.extensions).length||field.semanticTypes?.length))ctx.add('TABLES_OPERATION_MEANING',p,'Selected query Field meaning needs a separately qualified interpreter',true);
+ };
+ for(const[i,p]of command.parameters.entries())inspect(p.field,path+'/parameters/'+i+'/field');
+ for(const[i,o]of body.outputs.entries()){
+  ctx.identifier(o.name,path+'/body/outputs/'+i+'/name');
+  inspect(o.field,path+'/body/outputs/'+i+'/field');
+ }
+ // Weft checks the parsed statement, parameter use, result aliases/types/nullability
+ // and complete relation scope. A textual regexp here would be a second parser.
 }

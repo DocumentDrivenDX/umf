@@ -1,0 +1,26 @@
+{
+  "scope": "Current UMF 0.10 source-generation fixture; no native compiler or engine qualification",
+  "predecessor": "fixtures/access/engine-catalog-successor/public-stage-one/stage-one-request.json",
+  "predecessorSourceSha256": "60e0c483e200d2c280ab07f531cf8cd8a329382541675f8c61e7cb93f1abd14e",
+  "currentSourceSha256": "fe1d257b00295f100a9e3bc52ee6b0fded9cfdc4acf2deb41d2ba880c49abac5",
+  "sourceMeaningChange": "Only the envelope UMF version changed; all authored fields and extension content are retained byte-for-byte after JSON parsing.",
+  "currentCoreValidation": {
+    "valid": true,
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "UNKNOWN_EXTENSION",
+        "path": "/vocabularies/umf.actions",
+        "message": "Exact extension version unavailable; content retained",
+        "severity": "warning"
+      },
+      {
+        "code": "UNKNOWN_EXTENSION",
+        "path": "/vocabularies/umf.access",
+        "message": "Exact extension version unavailable; content retained",
+        "severity": "warning"
+      }
+    ]
+  },
+  "generatedInputDigest": "bc2c8a8b68e4452c6d4e6fe28694b6a4a2e2071b6de51d340980d4217516bcf0"
+}

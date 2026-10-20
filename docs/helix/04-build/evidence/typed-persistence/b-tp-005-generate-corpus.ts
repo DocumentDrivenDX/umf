@@ -16,7 +16,7 @@ await scan('src');await scan('spec');codeInputs.sort((a,b)=>a.path<b.path?-1:a.p
 const codeDigest=hash(JSON.stringify(codeInputs));
 const mypyConfig=await readFile(new URL('./dsl-typing-spike/compatibility/mypy.ini',import.meta.url),'utf8');
 const pyrightConfig=await readFile(new URL('./dsl-typing-spike/compatibility/pyrightconfig.json',import.meta.url),'utf8');
-const runtimeCheckpoint=JSON.parse(await readFile(new URL('./production-packaging/stable-runtime-checkpoint.json',import.meta.url),'utf8'));
+const runtimeCheckpoint=JSON.parse(await readFile(process.env.UMF_ACCESS_INSTALLED_SNAPSHOT??new URL('./production-packaging/stable-runtime-checkpoint.json',import.meta.url),'utf8'));
 const outcomes=[];
 let baseline:ReturnType<typeof generateAccessPackage>|undefined;
 for(const variant of ['base','memo-rename','amount-retype','memo-remove','memo-rename-with-names-override']){
@@ -24,7 +24,7 @@ for(const variant of ['base','memo-rename','amount-retype','memo-remove','memo-r
  req.records=[{module:'commerce',element:'Order'},{module:'commerce',element:'Customer'}];
  req.projections=[{name:'orderSummary',record:req.records[0]!,fields:[{module:'commerce',element:'orderId'},{module:'commerce',element:'amount'}]},
                  {name:'customerSummary',record:req.records[1]!,fields:[{module:'commerce',element:'name'}]}];
- p.python.version='3.14.8';p.dependencies=p.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:'0.1.0.dev0'}:d);
+ p.python.version=runtimeCheckpoint.pythonVersion??p.python.version;p.dependencies=p.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:runtimeCheckpoint.version??d.version}:d.distribution==='pydantic'&&runtimeCheckpoint.pydanticVersion?{...d,version:runtimeCheckpoint.pydanticVersion}:d);
  p.subset='B005 selected commerce integration, runtime wheel '+runtimeCheckpoint.wheelSha256+'; no release/catalog/native acceptance';
  p.codeSha256=codeDigest;p.compilerVersion='local-source-'+codeDigest.slice(0,16);
  p.checkers=[{name:'mypy',version:'2.4.0',configuration:{check_untyped_defs:true,configText:mypyConfig,configSha256:hash(mypyConfig)}},{name:'pyright',version:'1.1.414',configuration:{...JSON.parse(pyrightConfig),environment:'installed-runtime-wheel-'+runtimeCheckpoint.wheelSha256,configSha256:hash(pyrightConfig)}}];

@@ -11,15 +11,18 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
+from email import message_from_bytes
+
 
 ROOT = Path(__file__).resolve().parents[3]
 EVIDENCE = ROOT / "docs/helix/04-build/evidence/typed-persistence"
-CHECKER_BIN = Path("/private/tmp/umf-tp001-compat-env/bin")
 sys.path.insert(0, str(Path(__file__).parent / "packaging"))
 from replay_installed import (
     inspect_wheel,
@@ -79,11 +82,24 @@ class RefactorByRegeneration(unittest.TestCase):
             check=True,
         )
         cls.probe = json.loads(probe.stdout)
+        with zipfile.ZipFile(wheel) as archive:
+            metadata_path = next(
+                name for name in archive.namelist()
+                if name.endswith(".dist-info/METADATA")
+            )
+            wheel_metadata = message_from_bytes(archive.read(metadata_path))
         if (
             cls.probe["abi"] != "umf-access-runtime/0.1"
-            or cls.probe["version"] != "0.1.0.dev0"
-            or cls.probe["pydantic"] != "2.14.1"
-            or cls.probe["python"] != [3, 14, 8]
+            or cls.probe["version"] != wheel_metadata["Version"]
+            or (
+                cls.snapshot.get("pydanticVersion")
+                and cls.probe["pydantic"] != cls.snapshot["pydanticVersion"]
+            )
+            or (
+                cls.snapshot.get("pythonVersion")
+                and ".".join(map(str, cls.probe["python"]))
+                != ".".join(cls.snapshot["pythonVersion"].split(".")[:3])
+            )
         ):
             raise AssertionError("installed profile mismatch")
         site = Path(cls.probe["file"]).parent.parent
@@ -161,6 +177,16 @@ class RefactorByRegeneration(unittest.TestCase):
 
     # @covers US-082-AC4
     def test_refactor_by_regeneration(self):
+        checker_bins = {
+            "ty": os.environ.get("UMF_TYPING_TY") or shutil.which("ty"),
+            "pyright": os.environ.get("UMF_TYPING_PYRIGHT") or shutil.which("pyright"),
+            "mypy": os.environ.get("UMF_TYPING_MYPY") or shutil.which("mypy"),
+        }
+        missing = [name for name, path in checker_bins.items() if not path]
+        if missing:
+            self.skipTest(
+                "typing compatibility tools unavailable: " + ", ".join(missing)
+            )
         expected = json.loads(
             (
                 ROOT / "tests/compilation/python/static/queries/refactor/expected.json"
@@ -189,7 +215,7 @@ class RefactorByRegeneration(unittest.TestCase):
                 "memo-rename-with-names-override": [],
             }
             ty_version = subprocess.run(
-                [str(CHECKER_BIN / "ty"), "--version"],
+                [str(checker_bins["ty"]), "--version"],
                 capture_output=True,
                 text=True,
                 check=True,
@@ -197,7 +223,7 @@ class RefactorByRegeneration(unittest.TestCase):
             self.assertEqual(ty_version.stdout.split()[:2], ["ty", "0.0.88"])
             commands = {
                 "ty": [
-                    str(CHECKER_BIN / "ty"),
+                    str(checker_bins["ty"]),
                     "check",
                     "--python",
                     self.snapshot["python"],
@@ -212,7 +238,7 @@ class RefactorByRegeneration(unittest.TestCase):
                     str(source),
                 ],
                 "pyright": [
-                    str(CHECKER_BIN / "pyright"),
+                    str(checker_bins["pyright"]),
                     "--project",
                     str(config),
                     "--pythonpath",
@@ -221,7 +247,7 @@ class RefactorByRegeneration(unittest.TestCase):
                     str(source),
                 ],
                 "mypy": [
-                    str(CHECKER_BIN / "mypy"),
+                    str(checker_bins["mypy"]),
                     "--python-executable",
                     self.snapshot["python"],
                     "--config-file",

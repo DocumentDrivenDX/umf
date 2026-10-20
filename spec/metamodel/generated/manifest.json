@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
-    "compilerSha256": "0da0764f2e55f91f223c6bcbcc15edff98cd350658465642040bfbc093cb0517"
+    "compilerSha256": "aab9cbfe21482c4e7a64e1104178b16078953e02ac93a5f0f3900abce245e327"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
@@ -18,20 +18,20 @@
     "src/validation/constraint-language.ts": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597",
     "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
     "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
-    "package.json": "a6ffb033a4031d828c4637911b74448fcd82c16c3def9b3930e703c39fdaa4a6",
+    "package.json": "27927cd27a389222cb39066dd79757db746375b0a3961f341566aaa515a53288",
     "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4"
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "e769332c4de4a446eeb40abc8cc45ca4a27db3210ee71aab0f1efd848f35a928",
+      "sha256": "b0467dec0393865ff643c6c82b373306cb66344720677960a04ca82be1b3b152",
       "bytes": 34651
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "dab9fb6d91ee1293874782f041916628e6d902ce203c247d462248bb393e1a5c",
+      "sha256": "12daea86d95b60f280e74e0f9c3240ba297bc3e8407003bdb1601a53cd7b78ce",
       "bytes": 34772
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "052b20c8921b03e0f8aad017be34267628b20d7f7e0d02e70f4ec8c9647275ea",
+      "sha256": "483a7e318ce45fb81921ca9020faf5b035582a956e0d07327ae9efd8be811e9a",
       "bytes": 34314
     },
     "spec/metamodel/package.json": {
@@ -39,27 +39,27 @@
       "bytes": 1265
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "d6d115a9eee3f0bb5e111f66a74f902c6c106bc22566e15a8635ee93858aa5b1",
+      "sha256": "ac88b54ace87baffd25751e8d8ab566a469f5613f42dd51ba03a791f1722990e",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "6eb76d8583acc3b3b645b98355a855a3a323c86449bc03d215fc3835262b3b2e",
+      "sha256": "3896bc6e108f42b1687f9c966bd97d1f5666590c015b1712bd767dc68501d6bb",
       "bytes": 14016
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "516ba60574fc1e67ebc58db4293820670a15358161abd83e99dfe23830dc25d7",
+      "sha256": "51bf60635884a641fe827ceff078e08d0ea4b39366eccdd9b90486bf2f200d32",
       "bytes": 75560
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "f229985091f329c6f113acfe6b6fc767550ad36a29194d26bced87e8162b8f24",
+      "sha256": "06fd7951ebdb26578f01196b92ad32f8f1a0e5ea51c295a7799b0594a4776cd2",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "872bed38ed205f11d5afe4bd8e5ea2d6625cd2054a23b1c2483b0f386750a3a9",
+      "sha256": "0aff2bb63009094ed91c80bbbe130e26497903c18af30b9ee252a56fe81f2672",
       "bytes": 5012
     },
     "src/generated/core-validators.ts": {
-      "sha256": "e698e22884288eb1bb6a0a568cefc757fdcee5888e7fb5b3dd6586a8700b0073",
+      "sha256": "d7abe68964c11508b45452accc5d24c41fdaddb5b9c01649c6582b80290216f8",
       "bytes": 284515
     }
   }

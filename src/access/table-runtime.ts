@@ -78,8 +78,8 @@ def _build(client: Any, spec: Mapping[str, Any], value: Any, input_type: Any, *,
         for field in spec['parameters']:
             v = getattr(item, field['python']); check(v, field)
             native = field['native']
-            if v is not None and native['kind'] == 'varchar' and len(v) > native['length']: raise AccessError('CAPACITY', field['id'])
-            bits = {'int2':16, 'int4':32, 'int8':64}.get(native['kind'])
+            if v is not None and native is not None and native['kind'] == 'varchar' and len(v) > native['length']: raise AccessError('CAPACITY', field['id'])
+            bits = {'int2':16, 'int4':32, 'int8':64}.get(native['kind']) if native is not None else None
             if v is not None and bits is not None and not -(2 ** (bits-1)) <= v < 2 ** (bits-1): raise AccessError('CAPACITY', field['id'])
             result[field['id']] = {'string':v} if type(v) is str else {'boolean':v} if type(v) is bool else encode(v, field)
         return result

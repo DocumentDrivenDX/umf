@@ -17,7 +17,7 @@ mutateSource(req,d=>{
  for(const v of views)if(v.record.element==='Order')for(const f of v.fields)if(['amount','revision'].includes(f.field.element)){f.row.null=true;f.create.null=true;if(f.field.element==='revision')f.generated=false;}
 });
 const nativeBinding=JSON.parse(req.sources[1]!.text);for(const id of ['parentId','peerId','optionalPeerId'])nativeBinding.extensions['umf.binding'].fields.push({module:'commerce',element:id,storage:'column',column:id});req.sources[1]!.text=JSON.stringify(nativeBinding);
-const pinned=profile();pinned.python.version='3.11.17';pinned.compilerVersion='local-inner-refinement-0.1';pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:'0.1.0.dev0'}:d);
+const pinned=profile();pinned.python.version=process.env.UMF_ACCESS_PYTHON_VERSION??'3.11.17';pinned.compilerVersion='local-inner-refinement-0.1';pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:process.env.UMF_ACCESS_RUNTIME_VERSION??'0.1.0.dev0'}:d.distribution==='pydantic'&&process.env.UMF_ACCESS_PYDANTIC_VERSION?{...d,version:process.env.UMF_ACCESS_PYDANTIC_VERSION}:d);
 const result=generateAccessPackage(req,pinned);if(result.outcome!=='candidate')throw Error(JSON.stringify(result.diagnostics));
 for(const file of result.files)await Bun.write(output+'/'+file.path,file.text);
 await Bun.write(output+'/stage-one-request.json',JSON.stringify(req,null,2)+'\n');

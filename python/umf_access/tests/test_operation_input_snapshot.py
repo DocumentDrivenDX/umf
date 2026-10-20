@@ -109,8 +109,12 @@ class _CompilerCapture:
             stack.enter_context(patch.object(table_reads, "_prepare", side_effect=prepare))
             stack.enter_context(patch.object(table_reads, "digest", side_effect=self.digest))
             compiler = ModuleType("weft")
-            compiler.check_table_operation_json = lambda _raw: None
-            compiler.compile_table_operation_json = self.compile
+            capture = self
+            class Operation:
+                def bind_json(self, raw):return capture.compile(raw)
+            class Module:
+                def prepare(self, _operation):return Operation()
+            compiler.prepare_table_operation_module_json = lambda _raw: Module()
             stack.enter_context(patch.dict(sys.modules, {"weft": compiler}))
             yield
 

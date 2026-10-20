@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact result and cursor trust boundaries; native scheduling is tested separately."""
 import copy
+import math
+import struct
 import unittest
 
 from umf_access.unified import SessionError, SessionIdentity, SessionPolicy
@@ -34,6 +36,22 @@ class TableReadValues(unittest.TestCase):
             self.assertEqual(key_literal(wire,carrier),
                              {'string':wire} if carrier=='string' else {'boolean':wire} if carrier=='boolean' else wire)
         self.assertIsNone(value_from_native(None,{'carrier':'string','nullable':True}))
+
+    def test_finite_binary64_query_results_preserve_tokens_and_signed_zero(self):
+        for text in ('0','-0','1.25','5e-324','1.7976931348623157e+308'):
+            self.assertEqual(value_from_native(text,{'carrier':'float','nullable':False}),{'floatToken':text})
+        for value in ('NaN','Infinity','-Infinity','1e9999','01','1.0 ',1.25):
+            with self.subTest(value=value),self.assertRaises(SessionError):
+                value_from_native(value,{'carrier':'float','nullable':False})
+
+    def test_binary64_native_encoding_avoids_session_float_text_rounding(self):
+        output={'carrier':'float','nullable':False,'nativeEncoding':'ieee754-binary64-hex'}
+        for number in (1.2345678901234567,-0.0,5e-324):
+            token=value_from_native(struct.pack('!d',number).hex(),output)['floatToken']
+            self.assertEqual(float(token),number)
+            self.assertEqual(math.copysign(1,float(token)),math.copysign(1,number))
+        for value in ('3ff000000000000','7ff0000000000000','fff0000000000000','7ff8000000000000','1.25'):
+            with self.assertRaises(SessionError):value_from_native(value,output)
 
     def test_native_values_cannot_lie_about_carriers_or_required_presence(self):
         for carrier,value in [('integer',1),('integer','01'),('decimal','NaN'),('decimal','Infinity'),

@@ -10,8 +10,8 @@ const req=request();req.sources=[{id:'logical',format:'json',text:await Bun.file
 const bindingArg=process.argv.indexOf('--binding'),bindingIdArg=process.argv.indexOf('--binding-id');
 if(bindingArg>=0||bindingIdArg>=0){if(bindingArg<0||bindingIdArg<0||!process.argv[bindingArg+1]||!process.argv[bindingIdArg+1])throw new Error('--binding and --binding-id require explicit values');const sourceId=process.argv[bindingIdArg+1]!;req.sources.push({id:sourceId,format:'json',text:await Bun.file(process.argv[bindingArg+1]!).text()});req.bindings=[sourceId];}
 if(exact&&bindingArg<0&&bindingIdArg<0){const sourceId='pg-search-original-columns';req.sources.push({id:sourceId,format:'json',text:await Bun.file('fixtures/access/search/postgresql18-source-exact-binding.json').text()});req.bindings=[sourceId];}
-const pinned=profile();pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:'0.1.0.dev0'}:d);
-pinned.python.version='3.11.17';pinned.compilerVersion='local-search-0.1';
+const pinned=profile();pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:process.env.UMF_ACCESS_RUNTIME_VERSION??'0.1.0.dev0'}:d.distribution==='pydantic'&&process.env.UMF_ACCESS_PYDANTIC_VERSION?{...d,version:process.env.UMF_ACCESS_PYDANTIC_VERSION}:d);
+pinned.python.version=process.env.UMF_ACCESS_PYTHON_VERSION??'3.11.17';pinned.compilerVersion='local-search-0.1';
 pinned.checkers=[{name:'mypy',version:'2.4.0',configuration:{check_untyped_defs:true,python_version:'3.11'}},{name:'pyright',version:'1.1.414',configuration:{typeCheckingMode:'basic',pythonVersion:'3.11',environment:'explicit-native-fixture'}},{name:'ty',version:'0.0.88',configuration:{pythonVersion:'3.11'}}];
 const inputs:{path:string;sha256:string}[]=[];
 for(const pattern of ['src/**/*.ts','spec/**/*.json'])for(const path of new Bun.Glob(pattern).scanSync({cwd:process.cwd(),onlyFiles:true}))inputs.push({path,sha256:new Bun.CryptoHasher('sha256').update(await Bun.file(path).arrayBuffer()).digest('hex')});

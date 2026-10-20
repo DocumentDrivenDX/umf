@@ -1,0 +1,72 @@
+{
+  "id": "test.access",
+  "version": "0.1.0",
+  "compilerVersion": "test",
+  "coreVersions": [
+    "0.10.0"
+  ],
+  "vocabularies": [
+    {
+      "id": "umf.access",
+      "version": "0.1.0"
+    },
+    {
+      "id": "umf.actions",
+      "version": "0.1.0"
+    },
+    {
+      "id": "umf.binding",
+      "version": "0.2.0"
+    }
+  ],
+  "python": {
+    "version": "3.11.17"
+  },
+  "dependencies": [
+    {
+      "distribution": "umf_access",
+      "version": "0.1.0.dev4"
+    },
+    {
+      "distribution": "pydantic",
+      "version": "2.13.5"
+    }
+  ],
+  "checkers": [
+    {
+      "name": "mypy",
+      "version": "2.4.0",
+      "configuration": {
+        "check_untyped_defs": true
+      }
+    },
+    {
+      "name": "pyright",
+      "version": "1.1.414",
+      "configuration": {
+        "typeCheckingMode": "strict",
+        "environment": "test"
+      }
+    }
+  ],
+  "reservedNames": [
+    "test_reserved"
+  ],
+  "importedNames": [
+    "decimal",
+    "pydantic",
+    "umf_access"
+  ],
+  "assertionKinds": [
+    "kind",
+    "nullability",
+    "Key",
+    "facets",
+    "defaults",
+    "relationships",
+    "actions",
+    "umf.access"
+  ],
+  "subset": "test fixture, not qualified",
+  "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

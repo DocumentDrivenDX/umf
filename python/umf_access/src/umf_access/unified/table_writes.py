@@ -83,8 +83,8 @@ def _effect_frames(program):
 class _TableWriter(_TableReader):
     _mutation=True
 
-    def __init__(self, session, bundle, reference, binding, *, outcome_secret: bytes, target='postgresql18'):
-        super().__init__(session,bundle,reference,binding,cursor_secret=outcome_secret,target=target)
+    def __init__(self, session, bundle, reference, binding, *, outcome_secret: bytes, target='postgresql18', _source_owner=None):
+        super().__init__(session,bundle,reference,binding,cursor_secret=outcome_secret,target=target,_source_owner=_source_owner)
 
     def _write_prepare(self, identity, operation, inputs, key, items):
         owned_inputs, owned_items = copy.deepcopy((inputs, items))
@@ -103,13 +103,13 @@ class _TableWriter(_TableReader):
         probe,program,scope,_,_=prepared
         before=yield from probe.operation_steps()
         self._before(identity,prepared,before)
-        request=loads(program['requestJson']);key=request['idempotencyKey']
+        key=program['idempotencyKey']
         principal=before['principalOid']
         slot=outcome_slot(identity,principal,scope,program['operation'],key)
         yield from probe.outcome_steps('lock',principal,slot)
         stored=yield from probe.outcome_steps('read',principal,slot)
         scope_digest=digest({k:v for k,v in scope.items() if k!='inputsDigest'})
-        invocation=outcome_invocation(self._secret,[scope,program['declarationDigest'],request['call']['kind']])
+        invocation=outcome_invocation(self._secret,[scope,program['declarationDigest'],program['callKind']])
         metadata={k:scope[k] for k in ('module','operation','sourceDigest','configurationDigest','bundleDigest','headDigest')}
         metadata.update(invocationDigest=invocation,scopeDigest=scope_digest)
         if stored is not None:
@@ -140,7 +140,7 @@ class SyncTableWriter(_TableWriter):
         try:
             owned_inputs, owned_items = copy.deepcopy((inputs, items))
             prepared=self._write_prepare_owned(identity,operation,owned_inputs,key,owned_items)
-            key=loads(prepared[1]['requestJson'])['idempotencyKey']
+            key=prepared[1]['idempotencyKey']
             with self._session.open(identity,read_only=observe and self._session.transaction_owner=='adapter') as native:
                 response=_drive(self._session,native,self._steps(identity,prepared,observe))
             return response
@@ -171,7 +171,7 @@ class AsyncTableWriter(_TableWriter):
             prepared=await asyncio.to_thread(
                 self._write_prepare_owned, identity, operation, owned_inputs, key, owned_items
             )
-            key=loads(prepared[1]['requestJson'])['idempotencyKey']
+            key=prepared[1]['idempotencyKey']
             async with self._session.open(identity,read_only=observe and self._session.transaction_owner=='adapter') as native:
                 response=await _drive_async(self._session,native,self._steps(identity,prepared,observe))
             return response

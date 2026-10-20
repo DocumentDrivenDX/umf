@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Signature-only presence controls and actual original0.1 byte preservation.
+"""Generated source presence controls and historic compiler-artifact refusals.
 
-Missing-only signatures are hypothetical: real Core0.8 absent Fields also admit
-null. These controls do not claim native engine0.2 qualification.
+Current 0.10 generated models retain nullable and missing states separately.
+Historic compiler exports remain frozen evidence and are not positive support
+claims for the current engine profile.
 """
 import hashlib
 import json
@@ -64,30 +65,25 @@ class EnginePresenceSignatureTests(unittest.TestCase):
                 self.assertEqual(entry.originals(),original)
                 self.assertEqual(entry.artifact()["version"],record["programVersion"])
 
-    def test_actual_original_successor_retains_logical_presence(self):
-        class Empty(StrictModel):
-            pass
-        class PresenceRow(StrictModel):
-            id: str
-            status: str | None | MISSING = MISSING
+    def test_current_010_generated_source_preserves_null_and_missing(self):
+        import importlib
+        import sys
+
         root = Path(__file__).resolve().parents[3] / "fixtures/access/engine-catalog-successor"
-        original = (root / "ordinary-presence-original.json").read_text()
-        entry = EngineRead.from_original(original, parameters=Empty, result=PresenceRow)
-        program = entry.artifact()
-        self.assertEqual(program["version"], "weft.engine-read/0.2")
-        self.assertEqual(entry.originals(), original)
-        self.assertFalse(program["artifact"]["columns"][1]["nullable"])
-        self.assertTrue(program["outputs"][1]["nullable"])
-        self.assertTrue(program["outputs"][1]["missing"])
-        class NarrowNull(StrictModel):
-            id: str
-            status: str | MISSING = MISSING
-        class NarrowMissing(StrictModel):
-            id: str
-            status: str | None
-        for model in (NarrowNull, NarrowMissing):
-            with self.subTest(model=model), self.assertRaises(ReadBuildError):
-                EngineRead.from_original(original, parameters=Empty, result=model)
+        sys.path.insert(0, str(root / "public-stage-one-010"))
+        try:
+            generated = importlib.import_module("engine_presence")
+            self.assertEqual(generated.UMF_GENERATED_SOURCE.core_version, "0.10.0")
+            missing = generated.Order.model_validate({"id": "o1", "tenant": "t1", "code": "c1"})
+            explicit_null = generated.Order.model_validate(
+                {"id": "o2", "tenant": "t1", "code": "c2", "status": None}
+            )
+            self.assertNotIn("status", missing.model_fields_set)
+            self.assertIn("status", explicit_null.model_fields_set)
+            self.assertIsNone(explicit_null.status)
+            self.assertEqual(generated.CustomerKey(customer_id="c1").customer_id, "c1")
+        finally:
+            sys.path.pop(0)
 
     def test_actual_successor_custody_faults_refuse_after_valid_digest(self):
         class Empty(StrictModel):
@@ -238,27 +234,19 @@ class EnginePresenceSignatureTests(unittest.TestCase):
             self.assertEqual(actual, original)
             self.assertEqual(owner.packet, packet)
 
-    def test_original_with_keys_uses_actual_generated_key_transport(self):
+    def test_current_010_generated_key_and_historical_with_keys_refusal(self):
         import importlib
         import sys
-
-        from umf_access.codec_support import make_projection_model
-        from umf_access.related_keys import make_related_result_model
         root = Path(__file__).resolve().parents[3] / "fixtures/access/engine-catalog-successor"
-        sys.path.insert(0, str(root / "public-stage-one"))
+        sys.path.insert(0, str(root / "public-stage-one-010"))
         try:
             generated = importlib.import_module("engine_presence")
-            row = make_projection_model("OriginalRelatedProjection", (("id", generated.Order, "id"),))
             original = (root / "final-ordered-8bb6ded/with-keys.json").read_text()
-            program = json.loads(original)
-            output = program["outputs"][1]
-            result = make_related_result_model("OriginalWithKeysTransport", row, generated.CustomerKey,
-                output["name"], output["decoder"], generated.Order)
             class Empty(StrictModel):
                 pass
-            entry = EngineRead.from_original(original, parameters=Empty, result=result)
-            self.assertEqual(entry.originals(), original)
-            self.assertIs(entry.result.UMF_RELATED_OUTPUT[1], generated.CustomerKey)
+            with self.assertRaisesRegex(ReadBuildError, "CATALOG_STALE"):
+                EngineRead.from_original(original, parameters=Empty, result=generated.Order)
+            self.assertEqual(generated.CustomerKey.UMF_SOURCE.core_version, "0.10.0")
         finally:
             sys.path.pop(0)
 
@@ -282,7 +270,7 @@ class EnginePresenceSignatureTests(unittest.TestCase):
         with self.assertRaises(ReadBuildError):
             _carrier(bytes)
 
-    def test_actual_truss_binary_originals_have_independent_cursor_profile(self):
+    def test_historical_binary_success_exports_refuse_current_core_admission(self):
         class Empty(StrictModel):
             pass
         class BinaryRow(StrictModel):
@@ -292,15 +280,8 @@ class EnginePresenceSignatureTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[3] / "fixtures/access/engine-catalog-successor/final-binary-8bb6ded"
         for name in ("read", "page"):
             original = (root / (name + ".json")).read_text()
-            entry = EngineRead.from_original(original, parameters=Empty, result=BinaryRow)
-            program = entry.artifact()
-            self.assertEqual(entry.originals(), original)
-            self.assertEqual({k: program["outputs"][0][k] for k in ("name", "carrier", "nullable", "missing")}, {"name": "label", "carrier": "string", "nullable": False, "missing": False})
-            self.assertEqual(program["outputs"][1]["stateDomain"]["states"], ["value"])
-            self.assertEqual(program["outputs"][2]["stateDomain"]["states"], ["missing", "null", "value"])
-            if name == "page":
-                self.assertNotIn("sortSlots", program["page"])
-                self.assertEqual(program["selectedKey"]["key"], program["artifact"]["logicalPlan"]["pageKey"]["id"])
+            with self.subTest(name=name), self.assertRaisesRegex(ReadBuildError, "current-core"):
+                EngineRead.from_original(original, parameters=Empty, result=BinaryRow)
 
     def test_actual_truss_binary_domain_and_key_faults_refuse(self):
         import copy
@@ -356,7 +337,7 @@ class EnginePresenceSignatureTests(unittest.TestCase):
             with self.subTest(packet=value), self.assertRaises(ReadBuildError):
                 EngineRead.from_original(canonical_json(changed), parameters=Empty, result=Target)
 
-    def test_actual_optional_truss_scalar_cannot_narrow_missing(self):
+    def test_historical_optional_binary_export_refuses_current_core_admission(self):
         class Empty(StrictModel):
             pass
         class Present(StrictModel):
@@ -369,10 +350,9 @@ class EnginePresenceSignatureTests(unittest.TestCase):
             optional_blob: str | None
         root = Path(__file__).resolve().parents[3] / "fixtures/access/engine-catalog-successor/final-binary-8bb6ded"
         original = (root / "optional-scalar-sibling.json").read_text()
-        program = EngineRead.from_original(original, parameters=Empty, result=Present).artifact()
-        self.assertTrue(program["outputs"][2]["missing"])
-        self.assertTrue(program["outputs"][2]["nullable"])
-        with self.assertRaises(ReadBuildError):
+        with self.assertRaisesRegex(ReadBuildError, "current-core"):
+            EngineRead.from_original(original, parameters=Empty, result=Present)
+        with self.assertRaisesRegex(ReadBuildError, "current-core"):
             EngineRead.from_original(original, parameters=Empty, result=Narrow)
 
     def test_truss_binary_navigation_refuses_before_owner_invocation(self):

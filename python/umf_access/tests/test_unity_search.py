@@ -41,7 +41,7 @@ class Key(StrictModel):
 
 
 def fixture():
-    raw = (Path(__file__).parent / "fixtures/unity-search-ann-compiler-r2.json").read_text()
+    raw = (Path(__file__).parent / "fixtures/unity-search-ann-current-010.json").read_text()
     program = json.loads(raw)
     statement = program["hydration"]["statement"]
     native = NativeProgram(raw, canonical_json({"/hydration/statement": {
@@ -99,10 +99,20 @@ class Transport:
         self.calls.append(key)
         if key == self.fail_key:
             raise PermissionError("original native SELECT denial")
-        rows = (("valid", "current body", "valid"),) if key == "valid" else ()
+        names = tuple(output["name"] for output in self.program["hydration"]["outputs"] + self.program["hydration"]["hiddenKey"])
+        values = {
+            "id": key,
+            "body": "current body",
+            "embedding": [1.0, 0.0, 0.0],
+            "count": 1,
+            "amount": Decimal("1.0000000000"),
+            "payload": b"\x00",
+            "__umf_key_0": key,
+        }
+        rows = (tuple(values[name] for name in names),) if key == "valid" else ()
         if self.duplicate:
             rows = rows + rows
-        return NativeHydration(("id", "body", "__umf_key_0"), rows,
+        return NativeHydration(names, rows,
                                table["id"], "repointed" if self.change_table else table["id"], self.subject, self.subject)
 
 

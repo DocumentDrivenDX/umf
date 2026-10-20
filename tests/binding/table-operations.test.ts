@@ -48,10 +48,11 @@ test('operation and parameter identities, ownership, source projection and domai
 });
 
 test('count/cardinality/page result declarations cannot imply unstated ordering or identity',()=>{
- for(const mutate of [(c:any)=>c.body.cursorKey='missing',(c:any)=>{c.body.orderBy.push({field:ref('owner'),direction:'asc'});c.body.orderBy.reverse();},(c:any)=>c.body.orderBy[0].direction='desc',(c:any)=>c.body.orderBy[0].field=ref('owner'),(c:any)=>c.body.fields=[ref('owner')]]){
+ for(const mutate of [(c:any)=>c.body.cursorKey='missing',(c:any)=>{c.body.orderBy.push({field:ref('owner'),direction:'asc'});},(c:any)=>c.body.orderBy[0].field=ref('owner'),(c:any)=>c.body.fields=[ref('owner')]]){
   const d=source();const c=payload(d).commands.find((c:any)=>c.id==='read_page');
   mutate(c);expect(codes(d)).toContain('TABLES_OPERATION_PAGE');
  }
+ const descending=source();payload(descending).commands.find((c:any)=>c.id==='read_page').body.orderBy[0].direction='desc';expect(inspect(descending).complete).toBe(true);
  const d=source();payload(d).commands.find((c:any)=>c.id==='read_count').body.fields=[ref('id')];expect(codes(d)).toContain('TABLES_OPERATION_COUNT');
  const e=source();payload(e).commands[0].batch={maxItems:10};expect(codes(e)).toContain('TABLES_OPERATION_READ');
 });

@@ -793,8 +793,9 @@ invented. Nesting shares the bounded predicate budget.
 
 Named reads and writes MUST use the same typed operation model and Weft compiler
 as directly composed methods. Commands declare stable ID, exact input/output
-identities, bounds, required capability and consistency. No raw SQL string is a
-named statement in this profile. Upsert declares an original nondeferrable Key,
+identities, bounds, required capability and consistency. A bare SQL string is insufficient for a named statement. A source-declared
+`query` below is compiled against exact typed inputs, derived result domains
+and registered owning-module tables; invocation accepts only its ID and values. Upsert declares an original nondeferrable Key,
 create input, update whitelist, conflict behavior and returned key/count shape.
 Native ON CONFLICT behavior and races require independent qualification.
 
@@ -803,6 +804,122 @@ The owner selected declared typed operations for final consumer acceptance on
 required untyped public entry point. Each required read/write becomes a declared
 operation with exact inputs/results and module capability; unsupported SQL is
 reported for explicit conversion rather than delegated to a consumer query layer.
+
+### Fixed typed PostgreSQL query source
+
+A `umf.table-operation/0.1` read may declare
+`body:{kind:"query",language:"weft.pg-select/0.1",sql,outputs,maxRows}`. The
+fixed `sql` is compiler input retained in the approved original module source;
+it is never an invocation parameter. Existing `parameters:[{id,field}]`
+provide exact core0.10 Field domains, including owning-module DTO Fields.
+Every named bind must resolve to one declared parameter, with no unused
+parameter. Ordered `outputs:[{name,field}]` have distinct aliases and Field
+identities. Weft resolves the source expression and conservatively establishes SQL
+nullability. The selected PostgreSQL backend determines native result types on
+first use and checks agreement with each declared Field. An authored output type cannot
+assert that a nullable aggregate or outer join is required.
+
+Weft parses one read-only statement, resolves base relations against registered
+tables in the owning module and emits the complete touched-table SELECT
+obligations. Identity column mappings use the pinned physical base relation
+with the original logical alias, preserving PostgreSQL primary-key functional
+dependencies without a projection. Renamed columns use a simple physical-to-logical
+projection; explicit column-alias lists also retain that projection so ordinal
+renaming follows the declared mapping order. PostgreSQL resolves column references,
+CTE and derived-table aliases, ambiguity and native expression types. Projections
+introduce no materialization stage, but PostgreSQL does not infer primary-key
+functional dependencies through them: queries over renamed projections must author
+complete GROUP BY expressions. This profile uses
+the deployment's whole-table SELECT grants and native RLS; it does not claim
+compatibility with independently configured column-only SELECT grants.
+
+CTEs, subqueries, aggregates, functions, casts and windows remain inside the
+implemented closed SELECT syntax; unsupported AST nodes refuse. Physical schema
+qualification, cross-module lookup and invocation-supplied SQL are unavailable.
+Normal principal/lifecycle checks apply to every read. The same generated typed
+method and native binding dispatch this body; embedders do not choose a second
+SQL execution path.
+
+The source bound is1MiB UTF-8 and1600 output columns; `maxRows` is1..1000.
+This profile returns bounded `many` rows and has no caller-selected pagination,
+row bound or write/replay behavior. The normal8MiB complete native/wire frame
+bound applies; excess results refuse rather than silently clipping source
+semantics. A source-authored LIMIT/OFFSET retains its PostgreSQL meaning.
+
+`weft.pg-select/0.1` inherits the scoped PostgreSQL session's timezone and
+locale. In particular, `date_trunc` on timestamptz groups in that timezone and
+`to_char` retains the selected locale's formatting. Only explicitly authored
+normalization can change those semantics; UTC rendering of returned instants
+does not make month grouping timezone-independent. A finite PostgreSQL float8
+result uses PostgreSQL `float8send` with hexadecimal binary transport
+(`nativeEncoding:"ieee754-binary64-hex"`) and maps to a finite Python IEEE
+binary64 `float` through core `floatToken`. This preserves native bits even
+when the caller sets `extra_float_digits` to a lossy text precision;
+NaN and infinities refuse. Exact integers and decimals retain separate codecs.
+No mathematical exactness is claimed for binary floating-point arithmetic.
+
+A native binding owns one immutable prepared module shared by its reader and
+writer. It admits original source and builds schema/name/column indexes once;
+selected operation metadata and fixed query AST/SQL are prepared lazily once per
+operation. Namespace-qualified records and module-qualified relationships use
+exact indexes, including when different modules reuse the same names. CTE bodies
+share a name index and visibility prefix rather than copying growing sets.
+
+Calls carry only typed inputs, batch items, paging values and the idempotency
+key. They MUST NOT serialize, parse, clone or hash the whole schema, reconstruct
+source proofs, or return the original request and full binding as a transcript.
+The trusted compiler's compact execution program retains only metadata needed
+for execution, result conversion and durable outcomes. Standalone export/check
+APIs may retain self-contained source for an explicit external ingress; generated
+native methods always select the prepared path automatically.
+
+Index storage is linear in admitted elements, columns, relationship references
+and command identities; it stores coordinates or shared references rather than
+another full object image. Independent-insert eligibility builds the module's
+policy dependency graph once and computes strongly connected components with
+O(V + E) graph visits and O(log V) ordered-index lookups; it does not traverse
+the whole graph for each table. Invocation
+work depends on the selected operation's
+syntax, supplied values and batch size, not unrelated schema contents. Dynamic
+CRUD lowering may rebuild that operation's SQL shape for paging or batch inputs;
+it reuses admitted metadata. Native query cost still follows the authored query
+and PostgreSQL plan. Result conversion is linear in returned cells.
+
+The first query invocation describes the original typed query with an outer LIMIT 0
+inside its normal verified read-only native lease. The runtime compares output
+names and native type OIDs, then retains only the small metadata tuple; it
+retains no connection, prepared handle, authorization decision or result. The
+constructor performs no native I/O. Concurrent first calls may repeat this
+cold description; no Python lock is held over sync or async driver I/O. A
+failed description does not warm the cache. Native OIDs do not prove expression
+nullability, numeric range or precision: derived expressions require nullable,
+unrefined DTO Fields unless the compiler establishes a narrower guarantee.
+Normal calls check the versioned compiler output
+ABI and supported obligation envelope; they do not reconstruct and compare the
+trusted compiler's source proof. Native session/lease and lifecycle/principal
+observations remain per call. Result conversion is linear in returned cells.
+
+The ordinary SQL budget follows directly from the statement schedule below.
+`W` is the number of native effect statements: one for a scalar write or an
+eligible independent insert batch; ordered fallback operations use their
+explicit number of item statements. Driver BEGIN/COMMIT and caller savepoint
+commands are excluded. A first fixed query adds one metadata description;
+warm calls add none. These are structural counts, not timing targets.
+
+| Operation | Adapter-owned transaction | Caller-owned transaction |
+| --- | ---: | ---: |
+| Ordinary read, page or count | 8 | 10 |
+| First use of a fixed typed query | 9 | 11 |
+| Fresh write or batch | 9 + W | 11 + W |
+| Matching durable replay | 8 | 10 |
+| Explicit outcome observation | 9 | 10 |
+
+The read budget is three lifecycle/principal statements, one business statement
+and four adapter session statements. Writes omit the read-only transaction
+statement and add outcome lock/read, effects and outcome insert. A caller-owned
+lease saves/restores its existing settings; reads additionally check that the
+outer transaction is already read-only. No row adds another schema admission,
+native catalog inventory, permission-closure scan or object-image copy.
 
 Durable replay binds module, full source/deployment authority, authenticated
 principal, command identity, idempotency key and exact input digest. The write

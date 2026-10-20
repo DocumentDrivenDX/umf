@@ -69,6 +69,15 @@ class _Cursor:
         return [tuple(row) for row in self.result.fetchall()]
 
     @property
+    def native_description(self):
+        # SQLAlchemy's key view omits DBAPI type OIDs. Retain the live native
+        # cursor metadata for the once-cold typed query description check.
+        cursor=getattr(self.result,'cursor',None)
+        if cursor is None or cursor.description is None:
+            raise SessionError('declared query description unavailable')
+        return cursor.description
+
+    @property
     def description(self):
         names = self.result.keys()
         return tuple((name,) for name in names)

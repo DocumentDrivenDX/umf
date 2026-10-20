@@ -111,7 +111,7 @@ class GoldenVectors(unittest.TestCase):
     # @covers US-081-AC2 -- helper agreement only; generated models pending.
     def test_non_temporal_core_oracle(self):
         corpus = json.loads(CORPUS.read_text())
-        self.assertEqual(corpus["coreVersion"], "0.8.0")
+        self.assertEqual(corpus["coreVersion"], "0.10.0")
         checked = 0
         for vector in corpus["vectors"]:
             if vector["field"].get("scalarType") in ("date", "timestamp"):

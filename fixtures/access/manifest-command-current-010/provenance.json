@@ -1,0 +1,32 @@
+{
+  "purpose": "Current UMF 0.10 successor for original-owner manifest command fixture; old 0.8 artifacts retained as historical evidence and are not active-positive.",
+  "predecessor": {
+    "request": "fixtures/access/manifest-command-original/request.json",
+    "requestSha256": "e03bd24075a880bd8b5c89ecf50894514553b822933f2d15fc3edbcd8f7e5eed",
+    "registry": "fixtures/access/manifest-command-original/registry.json",
+    "registrySha256": "47e8c972a5731db29280cb96c13e98d76219acb368ff3b1baae82dd0ae8a9794"
+  },
+  "currentSource": {
+    "path": "docs/helix/03-test/fixtures/bulk-update/model.json",
+    "sha256": "1b78acfa477a19da0bad939c47e77f58bd103fd118a7d609bae503def1879bf1",
+    "coreVersion": "0.10.0",
+    "semanticComparison": "matches predecessor logical model exactly after removing only the declared core-version field"
+  },
+  "producer": {
+    "identity": {
+      "build": "sha256:051d86a7d8043fdb2842533b79457f31e92baf8d969739973992b8cbab8e00eb",
+      "id": "umf.actions.plan-model",
+      "version": "1"
+    },
+    "planModelSchemaSha256": "b99226c6188624ec240fb1db96a5fcdfcb15c6fe2b8f2c60276e13f7003b9998",
+    "preparedArtifactSha256": "298d7ac5aca38e6c5d70cb653e45fa03b2cc2ecccc809ae09630746111f70207",
+    "preparationIsActualOwnerOutput": true
+  },
+  "successor": {
+    "request": "request.json",
+    "requestSha256": "b73c751a843c68df279e3628b23bead653914a424e4c83baec4c3f6ed4eb5bd3",
+    "registry": "registry.json",
+    "registrySha256": "0d54f432e95135ec3fad84c55dde4d7858899dfdb220fa897b1ecfacc30317c8"
+  },
+  "scope": "Request SQL, parameter tokens, action identity, target/key, batch size and limits are retained; the model and owner preparation come from current UMF source and `prepareActionPlanModel`. No execution/native authority is claimed."
+}

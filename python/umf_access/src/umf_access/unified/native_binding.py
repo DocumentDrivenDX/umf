@@ -2,7 +2,6 @@
 """Closed generated-module wire transport; authenticated identity stays outside it."""
 from __future__ import annotations
 
-import copy
 from dataclasses import dataclass
 from typing import Any
 
@@ -35,7 +34,7 @@ def _reason(error):
         if 'subject has no grant' in message:return 'DENIED'
         if message.endswith('-mismatch') or message in ('native write authority changed during execution','native write authority changed while waiting'):
             return 'SCHEMA_MISMATCH'
-        if message in ('declared read compilation refused','declared read source check refused','operation is not declared in this module'):
+        if message in ('declared read compilation refused','declared read source check refused','operation is not declared in this module','declared query result type differs','declared query description unavailable'):
             return 'INVALID'
         current=getattr(current,'orig',None) or getattr(current,'__cause__',None) or getattr(current,'__context__',None)
     return 'BUSY'
@@ -45,14 +44,14 @@ class _NativeBinding:
     def __init__(self,session,bundle,reference,binding,*,cursor_secret: bytes,outcome_secret: bytes,target='postgresql18'):
         expected=SyncSession if self._reader_type is SyncTableReader else AsyncSession
         if not isinstance(session,expected):raise SessionError("native binding session mode mismatch")
-        bundle,reference,binding=copy.deepcopy((bundle,reference,binding))
+        self._reader=self._reader_type(session,bundle,reference,binding,cursor_secret=cursor_secret,target=target)
+        bundle=self._reader._bundle
         self.schema=bundle['sourceDigest'];self.module=bundle['configuration']['module']
         if bundle['source']['format']!='json':raise SessionError('native operation binding requires JSON source')
         document=loads(bundle['source']['utf8'])
         module=next(m for m in document['modules'] if m['id']==self.module)
-        self._operations={op['id']:op for op in module['extensions']['umf.tables']['commands']}
-        self._reader=self._reader_type(session,bundle,reference,binding,cursor_secret=cursor_secret,target=target)
-        self._writer=self._writer_type(session,bundle,reference,binding,outcome_secret=outcome_secret,target=target)
+        self._operations={op['id']:op['body']['kind'] for op in module['extensions']['umf.tables']['commands']}
+        self._writer=self._writer_type(session,bundle,reference,binding,outcome_secret=outcome_secret,target=target,_source_owner=self._reader)
 
     def _parse(self,request,identity):
         self._reader._session.policy.role(identity)
@@ -62,7 +61,7 @@ class _NativeBinding:
             raise SessionError('generated table schema-mismatch')
         operation=self._operations.get(request['operation']) if type(request['operation']) is str else None
         if operation is None:raise SessionError('operation is not declared in this module')
-        write=operation['body']['kind']!='read'
+        write=operation not in ('read','query')
         if type(request['mutation']) is not bool or request['mutation']!=write or request['phase'] not in ('invoke','observe'):
             raise SessionError('invalid generated table request')
         call=request['call']

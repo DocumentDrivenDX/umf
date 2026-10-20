@@ -13,6 +13,7 @@ from inspect import iscoroutinefunction
 from uuid import UUID
 import base64
 import asyncio
+import math
 import re
 
 R = TypeVar('R')
@@ -53,6 +54,9 @@ def encode(value: Any, spec: Mapping[str, Any] | None = None) -> Any:
         raise AccessError('MISSING_VALUE')
     if value is None or type(value) in (str, bool): return value
     if type(value) is int: return {'integerToken': str(value)}
+    if type(value) is float:
+        if not math.isfinite(value): raise AccessError('INVALID_FLOAT')
+        return {'floatToken': repr(value)}
     if isinstance(value, Decimal):
         exponent = value.as_tuple().exponent
         if not value.is_finite() or type(exponent) is not int or len(value.as_tuple().digits) > 10000 or abs(exponent) > 10000:
@@ -72,10 +76,12 @@ def decode(value: Any, spec: Mapping[str, Any]) -> Any:
         if isinstance(value, dict) and len(value) == 1:
             if type(next(iter(value.values()))) is not str: raise AccessError('INVALID_RESPONSE')
             if 'integerToken' in value and not re.fullmatch(r'-?(?:0|[1-9][0-9]*)', value['integerToken']): raise AccessError('INVALID_RESPONSE')
+            if 'floatToken' in value and not re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?', value['floatToken']): raise AccessError('INVALID_RESPONSE')
             if 'decimalToken' in value and not re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?', value['decimalToken']): raise AccessError('INVALID_RESPONSE')
             if 'uuid' in value: value = UUID(value['uuid'])
             elif 'integerToken' in value: value = int(value['integerToken'])
             elif 'decimalToken' in value: value = Decimal(value['decimalToken'])
+            elif 'floatToken' in value: value = float(value['floatToken'])
             elif 'timestamp' in value: value = ExactTimestamp(value['timestamp'])
             elif 'date' in value: value = date.fromisoformat(value['date'])
             elif 'binaryHex' in value and spec['scalar'] == 'binary': value = bytes.fromhex(value['binaryHex'])
@@ -100,14 +106,14 @@ def check(value: Any, spec: Mapping[str, Any]) -> None:
         if not isinstance(value, tuple): raise AccessError('TYPE', spec['id'])
         for item in value: check(item, spec['item'])
         return
-    types: dict[str, type[Any]] = {'string': str, 'integer': int, 'decimal': Decimal,
+    types: dict[str, type[Any]] = {'string': str, 'integer': int, 'decimal': Decimal, 'float': float,
         'boolean': bool, 'binary': bytes, 'bits128': bytes, 'uuid': UUID, 'date': date, 'timestamp': ExactTimestamp}
     if kind not in types or type(value) is not types[kind]: raise AccessError('TYPE', spec['id'])
     if kind == 'string':
         try: value.encode('utf-8')
         except UnicodeError: raise AccessError('INVALID_VALUE', spec['id']) from None
     if kind == 'bits128' and len(value) != 16: raise AccessError('BITS128', spec['id'])
-    if kind == 'decimal': encode(value)
+    if kind in ('decimal','float'): encode(value)
     if 'allowed' in spec and value not in spec['allowed']: raise AccessError('ALLOWED_VALUE', spec['id'])
     if 'allowedLiterals' in spec:
         plain = {k:v for k,v in spec.items() if k not in ('allowed','allowedLiterals')}
