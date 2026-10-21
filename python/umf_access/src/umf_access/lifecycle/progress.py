@@ -2,12 +2,21 @@
 """Fixed owner-only durable receipts for mixed migration phases."""
 from __future__ import annotations
 
-import json
 import hashlib
+import json
 from typing import Any
 from uuid import uuid4
 
-from .catalog import CatalogError, _all, _columns, _constraint_shapes, _execute, _index_shapes, _one, _q
+from .catalog import (
+    CatalogError,
+    _all,
+    _columns,
+    _constraint_shapes,
+    _execute,
+    _index_shapes,
+    _one,
+    _q,
+)
 
 PROGRESS = 'umf_lifecycle_progress'
 _DEFINITIONS = [

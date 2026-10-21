@@ -8,20 +8,32 @@ import re
 
 from .catalog import CatalogError, _all, _execute, _installation, _one, _q
 from .concurrent import _index_state
-from .ledger import (_authorize_new_effects, _finalize_phased_migration, _history_rows, _verified_plan,
-                     _verify_installed)
-from .ledger_schema import _verify_history_schema
-from .outcome_schema import OUTCOMES, _verify_outcomes
-from .phase_fence import _head_grants, _unfenced_verification, _verify_phase_head
-from .progress import (_assert_progress_binding, _delete_progress, _drop_progress, _phase_digest,
-                       PROGRESS, _progress_rows, _verified_phases, _verify_progress_schema,
-                       _write_progress)
-from .witness import _capture_witness
 from .head_view import HEAD
-from .ledger_schema import HISTORY
-from .table_boundary import TABLE_BOUNDARY
-from .roles import verify_native_role_scope
+from .ledger import (
+    _authorize_new_effects,
+    _finalize_phased_migration,
+    _history_rows,
+    _verified_plan,
+    _verify_installed,
+)
+from .ledger_schema import HISTORY, _verify_history_schema
+from .outcome_schema import OUTCOMES, _verify_outcomes
+from .phase_fence import _head_grants, _verify_phase_head
 from .privileges import _EXTERNAL
+from .progress import (
+    PROGRESS,
+    _assert_progress_binding,
+    _delete_progress,
+    _drop_progress,
+    _phase_digest,
+    _progress_rows,
+    _verified_phases,
+    _verify_progress_schema,
+    _write_progress,
+)
+from .roles import verify_native_role_scope
+from .table_boundary import TABLE_BOUNDARY
+from .witness import _capture_witness
 
 
 def _phase_steps(plan, phase):
@@ -62,7 +74,6 @@ def _verify_mixed_prefix(connection, plan, receipt):
     if type(receipt['prefixWitness']) is not dict or expected_witness != receipt['prefixWitness']:
         raise CatalogError('progress-prefix-mismatch')
     bundle = plan['next']
-    schema = bundle['configuration']['schema']
     # The fixed metadata relation set is explicit. App relations may only be
     # names in the verified next source; no umf_* namespace blanket is used.
     _verify_mixed_metadata_inventory(connection, plan)

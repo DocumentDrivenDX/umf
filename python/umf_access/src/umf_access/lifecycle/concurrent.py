@@ -19,7 +19,12 @@ from .catalog import (
     _q,
     verify_native_catalog,
 )
-from .ledger import _apply_table_migration, _authorize_new_effects, _history_rows, _verified_plan
+from .ledger import (
+    _apply_table_migration,
+    _authorize_new_effects,
+    _history_rows,
+    _verified_plan,
+)
 from .ledger_schema import _verify_history_schema
 from .phase_fence import _head_grants, _unfenced_verification, _verify_phase_head
 from .privileges import verify_native_privileges
