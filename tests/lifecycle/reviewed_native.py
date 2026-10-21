@@ -7,12 +7,19 @@ import copy
 import hashlib
 import json
 from pathlib import Path
-from uuid import uuid4
 
 import psycopg
 from psycopg import sql
-from umf_access.lifecycle import CatalogError, apply_mixed_migration, apply_table_migration
-from umf_codegen import compile_table_deployment, compile_table_migration, verify_table_migration
+from umf_access.lifecycle import (
+    CatalogError,
+    apply_mixed_migration,
+    apply_table_migration,
+)
+from umf_codegen import (
+    compile_table_deployment,
+    compile_table_migration,
+    verify_table_migration,
+)
 
 parser=argparse.ArgumentParser()
 parser.add_argument('--dsn',default='dbname=postgres')
