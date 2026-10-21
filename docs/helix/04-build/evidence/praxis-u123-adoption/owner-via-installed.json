@@ -1,0 +1,18 @@
+{
+  "serverMajor": 18,
+  "scope": "fabricated owner-plus-via legal fixture; no managed/private-consumer or release claim",
+  "bundleDigest": "b591278d8573c5f04df719c3fd1d3f1494af953f15f2c9323a76eb000aca690e",
+  "assertions": [
+    "owner-only-row-visible",
+    "via-only-row-visible",
+    "neither-owner-nor-via-denied",
+    "force-row-level-security",
+    "old-row-visible-new-row-with-check-denies",
+    "membership-reassignment-revokes-alice",
+    "membership-reassignment-grants-bob",
+    "membership-reassignment-restores-alice",
+    "roster-write-denied-alice",
+    "roster-write-denied-batch"
+  ],
+  "count": 10
+}
