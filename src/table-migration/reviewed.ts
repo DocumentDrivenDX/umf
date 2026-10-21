@@ -40,11 +40,15 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
    const oldItems=(previous.expectedCatalog[kind] as {table:string;id:string}[]).filter(x=>x.table===oldTable.id),newItems=(next.expectedCatalog[kind] as {table:string;id:string}[]).filter(x=>x.table===oldTable.id);
    for(const old of oldItems){const fresh=by(newItems,old.id),tableIndex=next.expectedCatalog.tables.findIndex(t=>t.id===oldTable.id),decl=next.expectedCatalog.tables[tableIndex] as any;
     const list=kind==='keys'?[]:decl[kind],oldList=(previous.expectedCatalog.tables.find(t=>t.id===oldTable.id) as any)[kind];
-    const itemIndex=(fresh?list:oldList).findIndex((x:any)=>x.id===old.id),moduleIndex=readModuleIndex(next),module=next.expectedCatalog.tables.find(t=>t.id===oldTable.id)!.record.module;
+    const moduleIndex=readModuleIndex(next),module=next.expectedCatalog.tables.find(t=>t.id===oldTable.id)!.record.module;
     const recordIndex=newDocument.modules.find(m=>m.id===module)?.elements.findIndex(e=>e.id===decl.record.element)??0;
+    const logicalOld=oldDocument.modules.find(m=>m.id===module)?.elements.find(e=>e.id===decl.record.element) as any;
+    const logicalNew=newDocument.modules.find(m=>m.id===module)?.elements.find(e=>e.id===decl.record.element) as any;
+    const itemIndex=kind==='keys'?(logicalOld?.keys??[]).findIndex((x:any)=>x.id===old.id):(fresh?list:oldList).findIndex((x:any)=>x.id===old.id);
     const path=kind==='keys'?'/modules/'+moduleIndex+'/elements/'+recordIndex+'/keys/'+itemIndex:'/modules/'+moduleIndex+'/extensions/umf.tables/tables/'+tableIndex+'/'+kind+'/'+itemIndex;
     if(canonical(old)===canonical(fresh??null))continue;
-    const rk:ReviewedChangeKind=kind==='checks'?'replace-check':kind==='foreignKeys'?'replace-foreign-key':kind==='indexes'?'replace-index':'replace-primary-key';add(rk,path,old,fresh??null);
+    const rk:ReviewedChangeKind=kind==='checks'?'replace-check':kind==='foreignKeys'?'replace-foreign-key':kind==='indexes'?'replace-index':'replace-primary-key';
+    add(rk,path,kind==='keys'?{physical:old,logical:(logicalOld?.keys??[]).find((x:any)=>x.id===old.id)??null}:{physical:old,logical:(oldList??[]).find((x:any)=>x.id===old.id)??null},kind==='keys'?{physical:fresh??null,logical:(logicalNew?.keys??[]).find((x:any)=>x.id===old.id)??null}: {physical:fresh??null,logical:(list??[]).find((x:any)=>x.id===old.id)??null});
    }
   }
   for(const audience of ['person','batch'] as const)for(const command of ['select','insert','update','delete'] as const){

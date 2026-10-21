@@ -53,7 +53,8 @@ type PolicyCommand='select'|'insert'|'update'|'delete';
 type GrantChange={previous:TableDeploymentBundle['steps'];next:TableDeploymentBundle['steps']};
 type ColumnPair={old:TableDeploymentBundle['expectedCatalog']['columns'][number];fresh:TableDeploymentBundle['expectedCatalog']['columns'][number]};
 type IndexEvolution={drops:TableDeploymentBundle['expectedCatalog']['indexes'];replacements:Set<string>};
-type MigrationChanges={policyChanges:Set<string>;columnChanges:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;droppedColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;renamedColumns:Map<number,ColumnPair[]>;notNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;relaxNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;typeChanges:Map<number,ColumnPair[]>;indexChanges:Map<number,IndexEvolution>;checkChanges:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;droppedChecks:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;checkPaths:Map<number,Map<string,string>>;grantChanges:Map<string,GrantChange>};
+type KeyEvolution={drops:TableDeploymentBundle['expectedCatalog']['keys'];adds:TableDeploymentBundle['expectedCatalog']['keys']};
+type MigrationChanges={policyChanges:Set<string>;columnChanges:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;droppedColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;renamedColumns:Map<number,ColumnPair[]>;notNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;relaxNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;typeChanges:Map<number,ColumnPair[]>;indexChanges:Map<number,IndexEvolution>;keyChanges:Map<number,KeyEvolution>;checkChanges:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;droppedChecks:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;checkPaths:Map<number,Map<string,string>>;grantChanges:Map<string,GrantChange>};
 function reviewedMatch(markers:NonNullable<TableMigrationOptions['reviewedChanges']>,previous:TableDeploymentBundle,next:TableDeploymentBundle,kind:string,path:string,conversion?:string):boolean{
  const marker=markers.find(item=>item.path===path&&(item as any).kind===kind&&(conversion===undefined||(item as any).conversion===conversion));
  if(!marker)return false;
@@ -127,7 +128,7 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
    const previousMembers=before.kind==='record'?before.members??[]:[],nextMembers=after.kind==='record'?after.members??[]:[];
    if(same(without(before,['description']),without(after,['description'])))continue;
    const removed=previousMembers.filter(member=>!nextMembers.some(freshMember=>refKey(freshMember)===refKey(member)));
-   if(before.kind!=='record'||after.kind!=='record'||!same(without({...before,members:[]},['description']),without({...after,members:[]},['description']))||!same(previousMembers.filter(member=>!removed.some(x=>refKey(x)===refKey(member))),nextMembers.slice(0,Math.max(0,nextMembers.length-(fresh.elements.length-old.elements.length)))))fail('Existing logical elements must remain exact except explicitly reviewed column removal','/next/source/modules/'+i+'/elements/'+j);
+   if(before.kind!=='record'||after.kind!=='record'||!same(without({...before,members:[]},['description','keys']),without({...after,members:[]},['description','keys']))||!same(previousMembers.filter(member=>!removed.some(x=>refKey(x)===refKey(member))),nextMembers.slice(0,Math.max(0,nextMembers.length-(fresh.elements.length-old.elements.length)))))fail('Existing logical elements must remain exact except explicitly reviewed column removal and key evolution','/next/source/modules/'+i+'/elements/'+j);
    for(const member of removed){const column=previous.expectedCatalog.columns.find(c=>refKey(c.field)===refKey(member));if(!column||!reviewed.some(change=>change.kind==='drop-column'&&change.path===column.sourcePath))throw new UmfError('destructive_change_unreviewed','Unreviewed removal of existing column '+(column?.name??member.element)+' from table '+(previous.expectedCatalog.tables.find(t=>t.columns.some(c=>refKey(c.field)===refKey(member)))?.name??'unknown'),'/next/source/modules/'+i+'/elements/'+j+'/members');}
    for(const member of nextMembers.slice(previousMembers.length)){
     if(member.module!==old.id||!newFieldIds.has(member.element))fail('An existing Record may only append newly declared Fields','/next/source/modules/'+i+'/elements/'+j+'/members');
@@ -144,7 +145,7 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
  const previousForeignKeys=groupBy(previous.expectedCatalog.foreignKeys,item=>item.table),nextForeignKeys=groupBy(next.expectedCatalog.foreignKeys,item=>item.table);
  const previousPolicyGrants=groupBy(previous.steps.filter(step=>step.kind==='grant'&&step.sourcePath.includes('/policy/')),step=>step.sourcePath);
  const nextPolicyGrants=groupBy(next.steps.filter(step=>step.kind==='grant'&&step.sourcePath.includes('/policy/')),step=>step.sourcePath);
- const policyChanges=new Set<string>(),columnChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),droppedColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),renamedColumns=new Map<number,ColumnPair[]>(),notNullColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),relaxNullColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),typeChanges=new Map<number,ColumnPair[]>(),indexChanges=new Map<number,IndexEvolution>(),checkChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['checks']>(),droppedChecks=new Map<number,TableDeploymentBundle['expectedCatalog']['checks']>(),checkPaths=new Map<number,Map<string,string>>(),grantChanges=new Map<string,GrantChange>();
+ const policyChanges=new Set<string>(),columnChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),droppedColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),renamedColumns=new Map<number,ColumnPair[]>(),notNullColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),relaxNullColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),typeChanges=new Map<number,ColumnPair[]>(),indexChanges=new Map<number,IndexEvolution>(),keyChanges=new Map<number,KeyEvolution>(),checkChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['checks']>(),droppedChecks=new Map<number,TableDeploymentBundle['expectedCatalog']['checks']>(),checkPaths=new Map<number,Map<string,string>>(),grantChanges=new Map<string,GrantChange>();
  for(const[tableIndex,table]of oldTables.entries()){
   const target=nextTables[tableIndex]!;
   if(!same(without(table,['indexes','columns','policy','checks','foreignKeys']),without(target,['indexes','columns','policy','checks','foreignKeys'])))fail('Existing table definitions must remain exact except for reviewed object changes and appended columns','/next/expectedCatalog/tables/'+tableIndex);
@@ -221,7 +222,15 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
    if(!options&&addedChecks.some(entry=>!allowedDomainNames.has(entry.name)))fail('Only compiler-generated domain checks for appended columns are qualified','/next/expectedCatalog/checks');
    checkChanges.set(tableIndex,addedChecks);
   }
-  if(!same(previousKeys.get(table.id)??[],nextKeys.get(table.id)??[]))fail('Existing native Keys require separately qualified primary-key evolution','/next/expectedCatalog/keys');
+  const oldKeys=previousKeys.get(table.id)??[],newKeys=nextKeys.get(table.id)??[],dropKeys:typeof oldKeys=[],addKeys:typeof newKeys=[];
+  for(const oldKey of oldKeys){const fresh=newKeys.find(key=>key.id===oldKey.id);if(same(oldKey,fresh??null))continue;
+   const record=a.modules.find(m=>m.id===table.record.module)?.elements.find(e=>e.id===table.record.element) as any,index=record?.keys?.findIndex((key:any)=>key.id===oldKey.id)??-1,path='/modules/'+a.modules.findIndex(m=>m.id===table.record.module)+'/elements/'+a.modules.find(m=>m.id===table.record.module)?.elements.findIndex(e=>e.id===table.record.element)+'/keys/'+index;
+   if(!reviewedMatch(reviewed,previous,next,'replace-primary-key',path))throw new UmfError('destructive_change_unreviewed','Unreviewed replacement/removal of key '+oldKey.name,path);
+   if(previous.expectedCatalog.foreignKeys.some(fk=>fk.targetKey===oldKey.name))fail('Primary key '+oldKey.name+' has inbound foreign-key dependents: '+previous.expectedCatalog.foreignKeys.filter(fk=>fk.targetKey===oldKey.name).map(fk=>fk.name).join(', '),path);
+   dropKeys.push(oldKey);if(fresh)addKeys.push(fresh);
+  }
+  for(const fresh of newKeys)if(!oldKeys.some(old=>old.id===fresh.id))fail('Adding a new key alongside an existing key requires separate qualification',fresh.definitionSql);
+  if(dropKeys.length||addKeys.length)keyChanges.set(tableIndex,{drops:dropKeys,adds:addKeys});
   if(!same(previousForeignKeys.get(table.id)??[],(nextForeignKeys.get(table.id)??[]).slice(0,(previousForeignKeys.get(table.id)??[]).length))||(!options&&!same(previousForeignKeys.get(table.id)??[],nextForeignKeys.get(table.id)??[])))fail('Existing native foreign keys must remain exact; added FKs require migration options','/next/expectedCatalog/foreignKeys');
   for(const audience of ['person','batch'] as const)for(const command of ['select','insert','update','delete'] as const){
    const path=policyPath(moduleIndex,tableIndex,audience,command);
@@ -234,7 +243,7 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
   }
  }
  if(appendedFields.size)fail('Every appended Field on an existing Record needs one nullable native column mapping','/next/expectedCatalog/tables');
- return {policyChanges,columnChanges,droppedColumns,renamedColumns,notNullColumns,relaxNullColumns,typeChanges,indexChanges,checkChanges,droppedChecks,checkPaths,grantChanges};
+ return {policyChanges,columnChanges,droppedColumns,renamedColumns,notNullColumns,relaxNullColumns,typeChanges,indexChanges,keyChanges,checkChanges,droppedChecks,checkPaths,grantChanges};
 }
 
 function unreviewedDrop(column:TableDeploymentBundle['expectedCatalog']['columns'][number],previous:TableDeploymentBundle,next:TableDeploymentBundle):never{
@@ -284,7 +293,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   const previous=request.previous===null?null:verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
   if((previous===null)!==(request.predecessor===null))fail('Only initial deployment has a null predecessor','/predecessor');
   const options=migrationOptions(request.options,next,previous);
-  let changes:MigrationChanges={policyChanges:new Set(),columnChanges:new Map(),droppedColumns:new Map(),renamedColumns:new Map(),notNullColumns:new Map(),relaxNullColumns:new Map(),typeChanges:new Map(),indexChanges:new Map(),checkChanges:new Map(),droppedChecks:new Map(),checkPaths:new Map(),grantChanges:new Map()};
+  let changes:MigrationChanges={policyChanges:new Set(),columnChanges:new Map(),droppedColumns:new Map(),renamedColumns:new Map(),notNullColumns:new Map(),relaxNullColumns:new Map(),typeChanges:new Map(),indexChanges:new Map(),keyChanges:new Map(),checkChanges:new Map(),droppedChecks:new Map(),checkPaths:new Map(),grantChanges:new Map()};
   if(previous){
    changes=appendOnly(previous,next,options,allowLegacyUnreviewedPolicy);
    if(previous.bundleDigest===next.bundleDigest)fail('An unchanged bundle does not create a new migration','/next');
@@ -316,6 +325,8 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
      for(const column of changes.droppedColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP COLUMN '+quoteIdentifier(column.name)});
      for(const index of changes.indexChanges.get(tableIndex)?.drops??[])steps.push({id:'',kind:'index',sourcePath:'/next/expectedCatalog/indexes/'+index.id,transaction:'required',sql:'DROP INDEX '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(index.name)});
      for(const check of changes.droppedChecks.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:'/next/expectedCatalog/checks/'+check.id,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(check.name)});
+     for(const key of changes.keyChanges.get(tableIndex)?.drops??[])steps.push({id:'',kind:'table',sourcePath:'/next/expectedCatalog/keys/'+key.id,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(key.name)});
+     for(const key of changes.keyChanges.get(tableIndex)?.adds??[])steps.push({id:'',kind:'table',sourcePath:'/next/expectedCatalog/keys/'+key.id,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD '+key.definitionSql});
      for(const column of changes.columnChanges.get(tableIndex)??[]){
       steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD COLUMN '+(quoteIdentifier(column.name)+' '+nativeType(table.columns.find(c=>refKey(c.field)===refKey(column.field))!.nativeType)+(column.collation==='C'?' COLLATE pg_catalog.\"C\"':''))});
      }

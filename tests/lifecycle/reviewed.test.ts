@@ -94,3 +94,14 @@ test('policy revisions require old/new policy digests and update stored policy p
   expect(result.plan.steps.some(step=>step.sql.startsWith('REVOKE SELECT ON TABLE "legal_demo"."clients"'))).toBe(true);
  }
 });
+
+test('primary-key replacement requires an exact marker and refuses dependent foreign keys by name',()=>{
+ const source=legalSource(),before=deploy(source),changed=structuredClone(source),record=changed.modules[0]!.elements.find((e:any)=>e.id==='matters')!;
+ record.keys[0]!.fields=[{module:'legal_lifecycle',element:'matters__client_id'}];
+ changed.modules[0]!.extensions['umf.tables'].commands.find((c:any)=>c.id==='read_matters').body.orderBy=[{field:{module:'legal_lifecycle',element:'matters__client_id'},direction:'asc'}];
+ const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-primary-key')!;
+ const refused=compileTableMigration({id:'pk-unreviewed',predecessor:{id:'old',digest:'c'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[]}});
+ expect(refused.status).toBe('blocked');if(refused.status==='blocked')expect(refused.diagnostics[0]!.code).toBe('destructive_change_unreviewed');
+ const result=compileTableMigration({id:'pk-reviewed',predecessor:{id:'old',digest:'c'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ expect(result.status).toBe('blocked');if(result.status==='blocked')expect(result.diagnostics[0]!.message).toContain('inbound foreign-key dependents');
+});
