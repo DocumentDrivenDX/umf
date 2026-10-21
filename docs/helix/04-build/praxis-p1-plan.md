@@ -1198,3 +1198,28 @@ mirroring/platform coverage and immutable release versions. Private consumer,
 Lakebase, public publisher and Hohfeld gates remain open. Next action is the
 roadmap's U3/U4 authoring acceptance followed by U1/U2/U5 phase/evolution design;
 do not repeat the completed component campaign without a changed input/failure.
+
+### U1–U3 adoption execution — 2026-10-21
+
+The owner explicitly authorized implementation, independent Sol planning/review,
+parallel Luna worktrees, merge and immutable release. CONTRACT-081's revision2
+profile, TD-085 and STP-085 govern this cut. The active goal remains open through
+release verification. UMF retains schema/DDL ownership; Weft retains typed data
+SQL; host identity, administrative execution and native approval remain explicit.
+
+| Workstream | Execution and remaining gate |
+| --- | --- |
+| U1 | `codex/praxis-u1-mixed`: versioned phase graph and fixed progress metadata; mixed runner/finalizer, fault recovery and PostgreSQL evidence pending |
+| U2 | `codex/praxis-u2-reviewed`: digest-bound discovery/review markers; complete operation/dependency coverage and native positive/refusal evidence pending |
+| U3 | `codex/praxis-u3-authoring`: bounded normalizer and source fixtures; Sol found omitted-command regrant and rejected-input accessor defects, plus delivery/traceability/semantic-test gaps; remediation and native/browser acceptance pending |
+
+Do not equate focused normalizer tests or phase metadata with adoption acceptance.
+Run reviewed mixed migrations against populated disposable domain tables, verify
+durable fencing and no data replay across interruption, and exercise reviewed
+destructive changes and row_scope conversion through installed artifacts. Record
+the actual source and artifact cohort after integration; earlier component hashes
+remain historical. Remote main is `2ede4c879`; SDK0.5.3/access dev5/codegen a2 are
+already published. Proposed next versions are SDK0.5.4/access dev6/codegen a3,
+subject to a fresh publication check. Reuse unchanged core0.10 release bytes.
+Private Praxis workload, Lakebase, U5–U9 and general public-index delivery are
+separate gates and must not be implied by this U1–U3 release.
