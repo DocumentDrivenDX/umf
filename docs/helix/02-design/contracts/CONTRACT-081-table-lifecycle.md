@@ -1142,3 +1142,85 @@ explicit team membership, ordinary callers cannot create membership, and service
 permissions are command-specific. This is native PostgreSQL policy, not evidence
 of complete ethical-wall or shared-security semantics. Original domain source and
 projection decisions remain retained; no real client/person data is required.
+
+## Revision2 U1–U3 evolution profile
+
+The separately selected evolution profile extends the bounded completion profile
+above. Legacy plans MUST regenerate byte-for-byte under their original version.
+New plans use `umf.table-migration/0.2` and options use
+`umf.table-migration-options/0.2`. UMF owns declaration and DDL planning, Weft owns
+typed seed/backfill data SQL, and the host owns administrative connections,
+authentication and approval. The 0.2 options retain explicit `backfills` and
+`concurrentIndexes` and add explicit `reviewedChanges` and `validations` arrays;
+empty arrays mean no selections. Exact schemas remain closed and versioned.
+
+**U1 — mixed phases.** One approved plan MUST order nullable column addition,
+explicit scoped backfill, required-column completion, concurrent index creation,
+and CHECK/foreign-key ADD NOT VALID followed by VALIDATE. Each step MUST carry
+its transaction mode; validation is an explicit kind. A required phase commits
+its effects and progress atomically. Concurrent index creation runs outside a
+transaction with durable dispatch custody and exact native shape/validity
+recovery. NOT VALID does not promise lock-free DDL. Seeds remain explicit, typed
+and ordered; their effects and completion receipt share one transaction.
+
+Progress MUST bind the approved plan digest, predecessor head, original file
+digest when supplied, ordered phase/step digests and verified completed prefix.
+An interrupted runner MUST resume the first unfinished phase without replaying a
+committed backfill or seed. Divergent progress, changed file/source or unexpected
+native objects MUST refuse. A missing concurrent completion receipt MAY be
+reconciled only from exact source-selected native index shape and validity;
+invalid-index repair requires explicit approval and exact failed-object custody.
+The same lifecycle lock spans all phases. Person/batch metadata-head access MUST
+remain durably fenced from before the first committed effect through final
+publication. The immutable generation ledger and restored head grants commit
+together only after complete final catalog, privileges, RLS and source checks.
+Uncertain commit outcomes require observation, never automatic effect replay.
+
+Any new progress relation MUST use a fixed, versioned, owner-only metadata shape,
+with exact inventory, schema and privilege verification. Its admission MUST be
+selected by the mixed execution profile; a generic exception for unknown metadata
+tables is forbidden. Legacy installations retain strict inventory semantics.
+
+**U2 — reviewed existing-object changes.** The evolution profile MUST enumerate
+changes before effects. Each review marker identifies an exact change ID, kind,
+original source path and old/new canonical value digests; absence uses the
+canonical null digest. The approved plan digest closes over every marker.
+Unknown, duplicate, stale or unused markers MUST refuse. Missing review for a
+destructive change MUST report `destructive_change_unreviewed` and list affected
+native objects by name and original source path. Approval MUST NOT suppress
+unsupported semantics, dependency analysis or native correspondence checks.
+
+The selected surface covers column drop/rename, native type changes, NOT NULL
+tightening/relaxation, Key replacement, constraint/index drop/rename/replacement
+and command policy changes. Stable IDs identify objects; array position and
+display name do not establish identity. Column drop explicitly discloses lost
+stored values and uses dependency-aware RESTRICT behavior. Every affected Key,
+FK, check, index, policy and declared operation MUST have an explicit compatible
+next-source change and ordered plan or cause a located refusal. CASCADE and
+unreviewed dependent deletion are forbidden. Policy changes require markers even
+when a prior bounded profile emitted only a review notice.
+
+Type changes MUST admit a finite conversion inventory, including lossless integer
+widening and compatible capacity widening where logical and native domains agree.
+Selected conversions MUST name their strategy; arbitrary USING SQL, truncation,
+rounding, guessed timezone changes and unknown conversions refuse. NOT NULL
+tightening verifies populated rows natively and rolls back on nulls; it never
+invents values. Key replacement preserves ordered fields and primary/unique
+meaning and refuses unresolved inbound FK/operation dependencies or invalid data.
+Every supported change kind requires native positive and refusal evidence.
+
+**U3 — lossless row_scope authoring.** A bounded normalizer MAY accept the retained
+Praxis block and return canonical explicit person/batch command maps plus the
+copied original block and source-to-output locations. Unknown content MUST remain
+preserved and refuse interpretation. Omitted commands map to deny. Person owner
+and explicit via branches combine with any; a via branch uses related with exact
+supplied Field pairs and an owner predicate on its person Field. The source
+Record, association table, person Field and every join pair MUST resolve through
+explicit context. Matching names MUST NOT infer an FK or join. Unknown groups,
+ambiguous mappings and policy dependency cycles refuse. Trusted group aliases map
+to memberOfRole; an explicit open read maps to allow for that command only.
+Batch is an independently authenticated audience. The supplied block MUST yield
+person CRUD and batch SELECT/INSERT, with batch UPDATE/DELETE denied. Canonical
+payloads retain all four commands and ordinary FORCE RLS, old-row USING and
+new-row WITH CHECK semantics. Native RLS qualification does not establish
+shared-security or complete ethical-wall equivalence.
