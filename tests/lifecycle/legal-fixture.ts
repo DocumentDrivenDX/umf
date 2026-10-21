@@ -63,6 +63,40 @@ export function legalSource(alice='legal_alice',bob='legal_bob'){
  normalize('timekeepers',{commands:['select'],batch:[],groups:[{name:'billing_admin',commands:['select']}]},{groups:{billing_admin:'billing_admin'}});
  return document;
 }
+/** Exact owner-plus-via policy input used by the isolated native row-scope oracle. */
+export function ownerViaLegalSource(alice='legal_alice',bob='legal_bob'){
+ const document=structuredClone(legalSource(alice,bob)),module=document.modules[0]!,tables=module.extensions['umf.tables'].tables;
+ const matters=tables.find((t:any)=>t.id==='matters')!,teams=tables.find((t:any)=>t.id==='matter_teams')!;
+ const field=ref('matters__authorization_principal');
+ module.elements.push({id:field.element,name:field.element,description:'Synthetic authorization principal assigned by the host; separate from matter business identity.',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}});
+ module.elements.find((e:any)=>e.id==='matters')!.members.push(field);
+ matters.columns.push({field,name:'authorization_principal',nativeType:{kind:'text'}});
+ const seedRows=module.extensions['umf.tables'].seedSets[0]!.rows;
+ for(const row of seedRows.filter((r:any)=>r.table==='matters')){
+  const id=row.values.find((v:any)=>v.field.element==='matters__matter_id')?.value?.integerToken;
+  if(typeof id!=='string')throw Error('Legal owner-via matter seed is missing its source id.');
+  row.values.push({field,value:{string:id==='1'?alice:bob}});
+ }
+ // Matter 2 is owned by Bob but assigned to Alice, isolating the via grant.
+ const assignment=seedRows.find((r:any)=>r.table==='matter_teams'&&r.values.some((v:any)=>v.field.element==='matter_teams__matter_id'&&v.value.integerToken==='2'))!;
+ assignment.values.find((v:any)=>v.field.element==='matter_teams__database_role')!.value={string:alice};
+ const sourceField=ref('matters__matter_id'),keyField=ref('matter_teams__matter_id'),personField=ref('matter_teams__database_role');
+ const normalized=normalizeRowScope({row_scope:{owner_column:'authorization_principal',commands:['select','update'],via:[{table:'matter_teams',person_column:'database_role',key_column:'matter_id'}],batch:[]}},{
+  record:matters.record,
+  ownerColumns:{authorization_principal:field},
+  via:[{name:'matter_teams',record:teams.record,personColumnName:'database_role',keyColumnName:'matter_id',sourceField,keyField,personField}],
+  groups:{},
+  admitPolicy(policy){
+   const candidate=structuredClone(document);candidate.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters').policy=policy;
+   const checked=inspectTableLifecycle(candidate);if(!checked.valid||!checked.complete)return checked.diagnostics.map((d:any)=>({code:d.code,path:d.path,message:d.message}));
+   const compiled=compileTableDeployment({text:JSON.stringify(candidate),configuration:{module:moduleId,schema:'legal_demo',ownerRole:'legal_owner',personRole:'legal_person',batchRole:'legal_batch',groupRoles:{billing_admin:'legal_billing_admin'}}});
+   return compiled.status==='blocked'?compiled.diagnostics.map((d:any)=>({code:d.code,path:d.path,message:d.message})):[];
+  }
+ });
+ if(!normalized.valid||!normalized.policy)throw Error('Owner-plus-via legal row_scope normalization failed: '+JSON.stringify(normalized.diagnostics));
+ matters.policy=normalized.policy;
+ return document;
+}
 export function evolvedLegalSource(source=legalSource()){
  const d=structuredClone(source),m=d.modules[0]!,p=m.extensions['umf.tables'],t=p.tables.find((t:any)=>t.id==='matters')!;
  const column=ref('matters__review_state');

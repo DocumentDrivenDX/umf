@@ -26,6 +26,13 @@ fabricated legal fixture, including FORCE RLS, person-specific via visibility,
 old-row visibility/new-row WITH CHECK, trusted group access, open reference
 read, and batch UPDATE/DELETE denial.
 
+The separate [owner-plus-via PostgreSQL receipt](owner-via-native-20261021.json)
+covers the exact combined authoring block with 10 native assertions: owner-only
+and via-only visibility, denial to a principal with neither relationship,
+old/new-row update checks, live membership reassignment, FORCE RLS, and denied
+person and batch roster writes. Its `authorization_principal` is an explicit
+synthetic host-assigned identity field, separate from matter business IDs.
+
 This is scoped native RLS evidence. It does not establish shared-security
 equivalence, a complete ethical-wall system, Praxis consumer acceptance or
 managed-service qualification. The embedded Python wrapper source is present,

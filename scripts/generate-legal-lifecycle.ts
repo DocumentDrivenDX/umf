@@ -1,17 +1,18 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Development fixture materialization; schema libraries remain browser compatible. */
-import {legalSource,evolvedLegalSource,indexedLegalSource,originals,moduleId} from '../tests/lifecycle/legal-fixture';
+import {legalSource,evolvedLegalSource,indexedLegalSource,ownerViaLegalSource,originals,moduleId} from '../tests/lifecycle/legal-fixture';
 import {compileTableDeployment} from '../src/table-deployment';
 import {compileTableMigration} from '../src/table-migration';
 import {hashCanonical,sha256Text} from '../src/compilation/bundle/hash';
 const root=new URL('../fixtures/table-lifecycle/legal/',import.meta.url);
 const configuration={module:moduleId,schema:'legal_demo',ownerRole:'legal_owner',personRole:'legal_person',batchRole:'legal_batch',groupRoles:{billing_admin:'legal_billing_admin'}};
-const source=legalSource(),evolved=evolvedLegalSource(source),indexed=indexedLegalSource(evolved.source);
+const source=legalSource(),ownerVia=ownerViaLegalSource(),evolved=evolvedLegalSource(source),indexed=indexedLegalSource(evolved.source);
 const outputs=new Map<string,string>();
 const json=(value:unknown)=>JSON.stringify(value,null,2)+'\n';
 outputs.set('original-domain-sources.json',json(originals));
 outputs.set('configuration.json',json(configuration));
 outputs.set('initial.json',json(source));outputs.set('evolved.json',json(evolved.source));outputs.set('indexed.json',json(indexed.source));
+outputs.set('owner-via.json',json(ownerVia));
 outputs.set('evolution-options.json',json(evolved.options));outputs.set('index-options.json',json(indexed.options));
 let previous:any=null,predecessor:any=null;
 for(const [i,document]of [source,evolved.source,indexed.source].entries()){
