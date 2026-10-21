@@ -8,7 +8,8 @@
     "verifyTableDeployment",
     "compileTableMigration",
     "verifyTableMigration",
-    "normalizeRowScope"
+    "normalizeRowScope",
+    "discoverTableMigrationChanges"
   ],
   "v8": "14.4.258.23",
   "bundleSha256": "15b3be5523c9bef238561aebd5c1d0fc37c42f4b9d8d23756e7ecf5e29271aee",
@@ -247,7 +248,7 @@
     "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
     "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
     "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
-    "scripts/build-codegen.ts": "b16f3255b82e865bbb6cc7523e32ace572270dfa54fc83758056574a0dffed66",
+    "scripts/build-codegen.ts": "aa0854e148e47b6f0d5e385841a2d602155db2dc0a1f3cb8901f55b217bdcd9b",
     "scripts/codegen/gzip.ts": "ac7316a19cf573d91e20d54f17f65c5b7093669d5a72bb0523edf72c52a87ed3"
   },
   "dependencies": [
