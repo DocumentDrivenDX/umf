@@ -20,7 +20,7 @@ class GenerationError(ValueError):
 
 def execute(request: dict[str, object], timeout_seconds: float, *, operation: str = "generate") -> dict[str, object]:
     functions = {"generate": "__umf_codegen", "deployment": "__umf_table_deploy", "verify_deployment": "__umf_table_verify",
-                 "migration": "__umf_table_migrate", "verify_migration": "__umf_table_migration_verify"}
+                 "migration": "__umf_table_migrate", "verify_migration": "__umf_table_migration_verify", "row_scope": "__umf_row_scope"}
     if operation not in functions:
         raise ValueError("Unknown embedded operation")
     if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= 60:

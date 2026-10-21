@@ -6,6 +6,7 @@ import {inspectTableLifecycle} from '../src/extensions/tables';
 import {generatePythonClient} from '../src/access';
 import {compileTableDeployment} from '../src/table-deployment';
 import {compileTableMigration} from '../src/table-migration';
+import {normalizeRowScope} from '../src/table-authoring/row-scope';
 import {appendedTableSource,indexedTableSource} from '../tests/unified/table-migration-fixture';
 import {tableOperationSource} from '../tests/unified/table-operation-fixture';
 import {temporalSource} from '../tests/unified/table-temporal-fixture';
@@ -50,15 +51,27 @@ const legalMigrationExpected=legal.map((item,i)=>{
  legalPrev=item.deployment.bundle;legalPred={id:result.plan.id,digest:result.plan.digest};return result;
 });
 const related:any[]=[relatedSource(false),relatedSource(true),snapshotSource()].map(source=>{return {source,inspection:inspectTableLifecycle(source),deployment:deployed(source),client:generatePythonClient({text:JSON.stringify(source),package:'related_demo'})};});
+const rowScopeDocument=relatedSource();
+const rowScopeInput={row_scope:{owner_column:'owner',commands:['select','insert','update','delete'],via:[{table:'membership',person_column:'memberPerson',key_column:'memberNote'}],batch:['select','insert'],groups:[{name:'reviewers',commands:['select']}]}};
+const rowScopeContext:any={record:{module:'demo',element:'Note'},ownerColumns:{owner:{module:'demo',element:'owner'}},via:[{name:'membership',record:{module:'demo',element:'Membership'},personColumnName:'memberPerson',keyColumnName:'memberNote',sourceField:{module:'demo',element:'id'},keyField:{module:'demo',element:'memberNote'},personField:{module:'demo',element:'memberPerson'}}],groups:{reviewers:'reviewers'},lifecycleDocument:rowScopeDocument,tableId:'notes',deploymentConfiguration:{module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{reviewers:'plugin_reviewers'}}};
+const admitRowPolicy=(document:any,policy:any)=>{const candidate=structuredClone(document);candidate.modules[0].extensions['umf.tables'].tables[0].policy=policy;const inspection=inspectTableLifecycle(candidate);if(!inspection.valid||!inspection.complete)return inspection.diagnostics.map((d:any)=>({code:d.code,path:d.path,message:d.message}));const result=compileTableDeployment({text:JSON.stringify(candidate),configuration:rowScopeContext.deploymentConfiguration});return result.status==='blocked'?result.diagnostics.map((d:any)=>({code:d.code,path:d.path,message:d.message})):[];};
+const rowScopeExpected=normalizeRowScope(rowScopeInput,{...rowScopeContext,admitPolicy:(policy:any)=>admitRowPolicy(rowScopeDocument,policy)});
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(bundle,{headers:{'Content-Type':'text/javascript'}}):new Response('<!doctype html><title>UMF table declaration verification</title>',{headers:{'Content-Type':'text/html'}});}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
  const page=await browser.newPage(),origin='http://127.0.0.1:'+server.port,externalRequests:string[]=[];
  page.on('request',r=>{if(!r.url().startsWith(origin+'/'))externalRequests.push(r.url());});await page.goto(origin);
- const result=await page.evaluate(async ({fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected})=>{
+ const result=await (page as any).evaluate(async (args:any)=>{
+  const {fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,rowScopeInput,rowScopeContext,rowScopeExpected}=args;
   const path='/umf.js',u=await import(path);let assertions=0;
+
   const check=(value:boolean)=>{assertions++;if(!value)throw new Error('Browser table declaration assertion '+assertions);};
+  const rowContext={...rowScopeContext,admitPolicy:(policy:any)=>{const candidate=structuredClone(rowScopeContext.lifecycleDocument);candidate.modules[0].extensions['umf.tables'].tables.find((t:any)=>t.id===rowScopeContext.tableId).policy=policy;const inspection=u.inspectTableLifecycle(candidate);if(!inspection.valid||!inspection.complete)return inspection.diagnostics.map((d:any)=>({code:d.code,path:d.path,message:d.message}));const deployed=u.compileTableDeployment({text:JSON.stringify(candidate),configuration:rowScopeContext.deploymentConfiguration});return deployed.status==='blocked'?deployed.diagnostics.map((d:any)=>({code:d.code,path:d.path,message:d.message})):[];}};
+  const normalized=u.normalizeRowScope(rowScopeInput,rowContext);check(JSON.stringify(normalized)===JSON.stringify(rowScopeExpected));check(normalized.valid&&normalized.policy.batch.update.kind==='deny'&&normalized.policy.batch.delete.kind==='deny');check(normalized.sourceToOutput['/row_scope/owner_column'][0]==='/policy/person/select/rules/0/rules/0');
+  const widened=u.normalizeRowScope({row_scope:{owner_column:'owner',commands:['select'],batch:[],groups:[{name:'reviewers',commands:['delete']}] }},rowContext);check(!widened.valid&&widened.diagnostics.some((d:any)=>d.code==='ROW_SCOPE_GROUP_COMMAND'));
+  const rowUnknown=u.normalizeRowScope({row_scope:{commands:['select'],batch:[],future:{kept:true}}},rowContext);check(!rowUnknown.valid&&rowUnknown.source.row_scope.future.kept);
+
   const clone=()=>structuredClone(fixture) as any;
   const payload=(d:any)=>d.modules[0].extensions['umf.tables'];
   check(JSON.stringify(u.compileTableDeployment({text:JSON.stringify(temporal),configuration}))===JSON.stringify(temporalExpected.deployment));
@@ -133,9 +146,9 @@ try{
    legalPrevious=generated.bundle;legalPredecessor={id:result.plan.id,digest:result.plan.digest};
   }
   return {assertions,metadataParity:true,deploymentParity:true,migrationParity:true,nativeQualificationClaimed:false,nodeGlobalsAbsent:true};
- },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected});
+ },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,rowScopeInput,rowScopeContext,rowScopeExpected});
  if(externalRequests.length)throw new Error('Table inspection caused an external request');
- const sources=['src/table-migration/options.ts','tests/lifecycle/legal-fixture.ts','src/table-deployment/domains.ts','tests/unified/table-domain-fixture.ts','src/extensions/tables/temporal.ts','src/table-deployment/temporal.ts','tests/unified/table-temporal-fixture.ts','src/access/index.ts','src/access/table-client.ts','src/access/table-runtime.ts','src/access/types.ts','src/access/python-runtime.ts','src/index.ts','src/table-migration/index.ts','spec/extensions/tables/migration.schema.json','scripts/table-lifecycle-browser.ts','tests/unified/table-migration-fixture.ts','tests/binding/fixtures/table-lifecycle-note.json','spec/extensions/tables/schema.json','spec/extensions/tables/operation.schema.json','tests/unified/table-operation-fixture.ts','spec/extensions/tables/package.json','spec/extensions/tables/deployment.schema.json',...['types','context','expressions','columns','policies','seeds','operations','index'].map(n=>'src/extensions/tables/'+n+'.ts'),...['types','configuration','sql','policies','ddl','index'].map(n=>'src/table-deployment/'+n+'.ts')];
+ const sources=['src/table-authoring/row-scope.ts','src/table-migration/options.ts','tests/lifecycle/legal-fixture.ts','src/table-deployment/domains.ts','tests/unified/table-domain-fixture.ts','src/extensions/tables/temporal.ts','src/table-deployment/temporal.ts','tests/unified/table-temporal-fixture.ts','src/access/index.ts','src/access/table-client.ts','src/access/table-runtime.ts','src/access/types.ts','src/access/python-runtime.ts','src/index.ts','src/table-migration/index.ts','spec/extensions/tables/migration.schema.json','scripts/table-lifecycle-browser.ts','tests/unified/table-migration-fixture.ts','tests/binding/fixtures/table-lifecycle-note.json','spec/extensions/tables/schema.json','spec/extensions/tables/operation.schema.json','tests/unified/table-operation-fixture.ts','spec/extensions/tables/package.json','spec/extensions/tables/deployment.schema.json',...['types','context','expressions','columns','policies','seeds','operations','index'].map(n=>'src/extensions/tables/'+n+'.ts'),...['types','configuration','sql','policies','ddl','index'].map(n=>'src/table-deployment/'+n+'.ts')];
  const sourceHashes=Object.fromEntries(await Promise.all(sources.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  const report={scope:'current-core table inspection, generated module parity, deployment0.1/0.2 and bounded forward/backfill/index-only migration byte parity; portable browser evidence only',browser:browser.version(),result,externalRequests,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sourceHashes};
  await Bun.write(process.env.UMF_TABLE_BROWSER_EVIDENCE??'/private/tmp/umf-table-lifecycle-browser.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));

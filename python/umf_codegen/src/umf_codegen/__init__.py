@@ -103,6 +103,12 @@ def verify_table_deployment(bundle: dict[str, object], *, timeout_seconds: float
     return execute({"bundle": bundle}, timeout_seconds, operation="verify_deployment")
 
 
+def normalize_row_scope(input: dict[str, object], *, context: dict[str, object],
+                        timeout_seconds: float = 30) -> dict[str, object]:
+    """Normalize row_scope with exact host bindings and lifecycle/native admission."""
+    return execute({"input": input, "context": context}, timeout_seconds, operation="row_scope")
+
+
 def generate_python_client(text: str, *, package: str, format: Literal["json", "yaml"] = "json",
                            records: list[RecordSelection] | None = None,
                            actions: list[ActionSelection] | None = None,
@@ -131,6 +137,7 @@ __all__ = [
     "compile_table_deployment",
     "compile_table_migration",
     "generate_python_client",
+    "normalize_row_scope",
     "verify_table_deployment",
     "verify_table_migration",
 ]

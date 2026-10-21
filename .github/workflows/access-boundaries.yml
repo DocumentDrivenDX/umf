@@ -55,7 +55,7 @@ jobs:
       - run: bun scripts/check-table-lifecycle-boundaries.ts
       - run: bun scripts/check-table-deployment-boundaries.ts
       - run: >-
-          bun test tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-temporal.test.ts tests/binding/table-domains.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
+          bun test tests/table-authoring/row-scope.test.ts tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-temporal.test.ts tests/binding/table-domains.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
           tests/compilation/table-lifecycle-boundaries.test.ts tests/compilation/table-deployment-boundaries.test.ts
       - run: bunx playwright install --with-deps chromium
       - name: Actual browser metadata parity and preservation

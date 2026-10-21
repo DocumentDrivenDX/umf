@@ -4,16 +4,16 @@
   "id": "002",
   "predecessor": {
     "id": "001",
-    "digest": "f62b1fe62ae7d4ee03883aaa1ac49b3ff2c52b59cb96d9d86d961b9f5710c27d"
+    "digest": "a1cd90eaa3432605a4058e504db9aef7c0c51bd5ae76442d73179e40b1454fad"
   },
   "previous": {
     "version": "umf.table-deployment/0.2",
     "canonicalization": "RFC8785",
     "source": {
       "format": "json",
-      "utf8": "{\"umf\":\"0.10.0\",\"id\":\"legal-lifecycle-demo\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"legal_lifecycle\",\"namespace\":\"legal_lifecycle\",\"elements\":[{\"id\":\"clients__client_id\",\"name\":\"clients__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients__client_name\",\"name\":\"clients__client_name\",\"description\":\"Fabricated client name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients\",\"name\":\"clients\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"}]}],\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_id\",\"name\":\"timekeepers__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_name\",\"name\":\"timekeepers__timekeeper_name\",\"description\":\"Fabricated timekeeper name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_level\",\"name\":\"timekeepers__timekeeper_level\",\"description\":\"Fabricated timekeeper level\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__billing_rate\",\"name\":\"timekeepers__billing_rate\",\"description\":\"Fabricated billing rate\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":10,\"scale\":2},\"extensions\":{}},{\"id\":\"timekeepers\",\"name\":\"timekeepers\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matters__matter_id\",\"name\":\"matters__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__client_id\",\"name\":\"matters__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_number\",\"name\":\"matters__matter_number\",\"description\":\"Fabricated matter number\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_title\",\"name\":\"matters__matter_title\",\"description\":\"Fabricated matter title\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__practice_area\",\"name\":\"matters__practice_area\",\"description\":\"Fabricated practice area\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__open_date\",\"name\":\"matters__open_date\",\"description\":\"Fabricated open date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__close_date\",\"name\":\"matters__close_date\",\"description\":\"Fabricated close date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"matters__jurisdiction\",\"name\":\"matters__jurisdiction\",\"description\":\"Fabricated jurisdiction\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__court\",\"name\":\"matters__court\",\"description\":\"Fabricated court\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters\",\"name\":\"matters\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__matter_team_id\",\"name\":\"matter_teams__matter_team_id\",\"description\":\"Fabricated matter team id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__matter_id\",\"name\":\"matter_teams__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__timekeeper_id\",\"name\":\"matter_teams__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams\",\"name\":\"matter_teams\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"}]},{\"id\":\"unique_0\",\"name\":\"unique_0\",\"primary\":false,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__database_role\",\"description\":\"Synthetic database role assigned by the host; never a plugin-supplied identity claim.\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"clients\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"clients\"},\"name\":\"clients\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"name\":\"client_name\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"timekeepers\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"name\":\"timekeepers\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"name\":\"timekeeper_name\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"name\":\"timekeeper_level\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"name\":\"billing_rate\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":10,\"scale\":2}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOfRole\",\"role\":\"billing_admin\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matters\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"name\":\"matters\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"name\":\"matter_number\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"name\":\"matter_title\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"name\":\"practice_area\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"name\":\"open_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"name\":\"close_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"name\":\"jurisdiction\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"name\":\"court\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}},\"insert\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}},\"update\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}},\"delete\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"allow\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matter_teams\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"name\":\"matter_teams\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"name\":\"matter_team_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"name\":\"database_role\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[{\"id\":\"fk_0\",\"name\":\"matter_teams_fk_0\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false},{\"id\":\"fk_1\",\"name\":\"matter_teams_fk_1\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[{\"id\":\"synthetic-bootstrap\",\"conflict\":\"error\",\"rows\":[{\"table\":\"clients\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"value\":{\"string\":\"Fabricated client\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic A\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"associate\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"125.00\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic B\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"partner\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"250.00\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_alice\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_bob\"}}]}]}],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_clients\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"clients\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_timekeepers\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"timekeepers\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matters\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matters\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matter_teams\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matter_teams\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"rename_matter\",\"parameters\":[{\"id\":\"id\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}},{\"id\":\"title\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"}}],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"matters\",\"where\":{\"op\":\"eq\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"id\"}},\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"title\"}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
+      "utf8": "{\"umf\":\"0.10.0\",\"id\":\"legal-lifecycle-demo\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"legal_lifecycle\",\"namespace\":\"legal_lifecycle\",\"elements\":[{\"id\":\"clients__client_id\",\"name\":\"clients__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients__client_name\",\"name\":\"clients__client_name\",\"description\":\"Fabricated client name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients\",\"name\":\"clients\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"}]}],\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_id\",\"name\":\"timekeepers__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_name\",\"name\":\"timekeepers__timekeeper_name\",\"description\":\"Fabricated timekeeper name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_level\",\"name\":\"timekeepers__timekeeper_level\",\"description\":\"Fabricated timekeeper level\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__billing_rate\",\"name\":\"timekeepers__billing_rate\",\"description\":\"Fabricated billing rate\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":10,\"scale\":2},\"extensions\":{}},{\"id\":\"timekeepers\",\"name\":\"timekeepers\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matters__matter_id\",\"name\":\"matters__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__client_id\",\"name\":\"matters__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_number\",\"name\":\"matters__matter_number\",\"description\":\"Fabricated matter number\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_title\",\"name\":\"matters__matter_title\",\"description\":\"Fabricated matter title\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__practice_area\",\"name\":\"matters__practice_area\",\"description\":\"Fabricated practice area\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__open_date\",\"name\":\"matters__open_date\",\"description\":\"Fabricated open date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__close_date\",\"name\":\"matters__close_date\",\"description\":\"Fabricated close date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"matters__jurisdiction\",\"name\":\"matters__jurisdiction\",\"description\":\"Fabricated jurisdiction\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__court\",\"name\":\"matters__court\",\"description\":\"Fabricated court\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters\",\"name\":\"matters\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__matter_team_id\",\"name\":\"matter_teams__matter_team_id\",\"description\":\"Fabricated matter team id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__matter_id\",\"name\":\"matter_teams__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__timekeeper_id\",\"name\":\"matter_teams__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams\",\"name\":\"matter_teams\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"}]},{\"id\":\"unique_0\",\"name\":\"unique_0\",\"primary\":false,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__database_role\",\"description\":\"Synthetic database role assigned by the host; never a plugin-supplied identity claim.\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"clients\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"clients\"},\"name\":\"clients\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"name\":\"client_name\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"deny\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"timekeepers\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"name\":\"timekeepers\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"name\":\"timekeeper_name\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"name\":\"timekeeper_level\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"name\":\"billing_rate\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":10,\"scale\":2}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"deny\"},{\"kind\":\"memberOfRole\",\"role\":\"billing_admin\"}]},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"deny\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matters\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"name\":\"matters\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"name\":\"matter_number\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"name\":\"matter_title\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"name\":\"practice_area\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"name\":\"open_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"name\":\"close_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"name\":\"jurisdiction\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"name\":\"court\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"insert\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"update\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"delete\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"allow\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matter_teams\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"name\":\"matter_teams\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"name\":\"matter_team_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"name\":\"database_role\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[{\"id\":\"fk_0\",\"name\":\"matter_teams_fk_0\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false},{\"id\":\"fk_1\",\"name\":\"matter_teams_fk_1\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[{\"id\":\"synthetic-bootstrap\",\"conflict\":\"error\",\"rows\":[{\"table\":\"clients\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"value\":{\"string\":\"Fabricated client\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic A\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"associate\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"125.00\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic B\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"partner\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"250.00\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_alice\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_bob\"}}]}]}],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_clients\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"clients\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_timekeepers\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"timekeepers\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matters\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matters\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matter_teams\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matter_teams\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"rename_matter\",\"parameters\":[{\"id\":\"id\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}},{\"id\":\"title\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"}}],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"matters\",\"where\":{\"op\":\"eq\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"id\"}},\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"title\"}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
     },
-    "sourceDigest": "f8827f86ccc9c55126b67a0afdc338184a221240abe233da7f2e268172cdd137",
+    "sourceDigest": "8455e87c1de7f335a96b6316daeaaecce8d13d0b02d23fc839740d14d7931b8f",
     "configuration": {
       "module": "legal_lifecycle",
       "schema": "legal_demo",
@@ -159,472 +159,458 @@
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)"
       },
       {
         "id": "step-00020",
-        "kind": "grant",
-        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
-        "transaction": "required",
-        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"clients\" TO \"legal_batch\""
-      },
-      {
-        "id": "step-00021",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00022",
+        "id": "step-00021",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00023",
+        "id": "step-00022",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00024",
+        "id": "step-00023",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
         "transaction": "required",
         "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"timekeepers\" FROM PUBLIC"
       },
       {
-        "id": "step-00025",
+        "id": "step-00024",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (pg_catalog.pg_has_role(CURRENT_USER, E'legal_billing_admin', 'MEMBER'))"
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((FALSE OR pg_catalog.pg_has_role(CURRENT_USER, E'legal_billing_admin', 'MEMBER')))"
       },
       {
-        "id": "step-00026",
+        "id": "step-00025",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"timekeepers\" TO \"legal_person\""
       },
       {
-        "id": "step-00027",
+        "id": "step-00026",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00028",
+        "id": "step-00027",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00029",
+        "id": "step-00028",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)"
       },
       {
-        "id": "step-00030",
+        "id": "step-00029",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00031",
-        "kind": "grant",
-        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
-        "transaction": "required",
-        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"timekeepers\" TO \"legal_batch\""
-      },
-      {
-        "id": "step-00032",
+        "id": "step-00030",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00033",
+        "id": "step-00031",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00034",
+        "id": "step-00032",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00035",
+        "id": "step-00033",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
         "transaction": "required",
         "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matters\" FROM PUBLIC"
       },
       {
-        "id": "step-00036",
+        "id": "step-00034",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00037",
+        "id": "step-00035",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00038",
+        "id": "step-00036",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00039",
+        "id": "step-00037",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
         "transaction": "required",
         "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00040",
+        "id": "step-00038",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))) WITH CHECK ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))) WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00041",
+        "id": "step-00039",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
         "transaction": "required",
         "sql": "GRANT UPDATE (\"client_id\", \"matter_number\", \"matter_title\", \"practice_area\", \"open_date\", \"close_date\", \"jurisdiction\", \"court\") ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00042",
+        "id": "step-00040",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00043",
+        "id": "step-00041",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
         "transaction": "required",
         "sql": "GRANT DELETE ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00044",
+        "id": "step-00042",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
       },
       {
-        "id": "step-00045",
+        "id": "step-00043",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\""
       },
       {
-        "id": "step-00046",
+        "id": "step-00044",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (TRUE)"
       },
       {
-        "id": "step-00047",
+        "id": "step-00045",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
         "transaction": "required",
         "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\""
       },
       {
-        "id": "step-00048",
+        "id": "step-00046",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00049",
+        "id": "step-00047",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00050",
+        "id": "step-00048",
         "kind": "foreignKey",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/0",
         "transaction": "required",
         "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_0\" FOREIGN KEY (\"matter_id\") REFERENCES \"legal_demo\".\"matters\" (\"matter_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
       },
       {
-        "id": "step-00051",
+        "id": "step-00049",
         "kind": "foreignKey",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/1",
         "transaction": "required",
         "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_1\" FOREIGN KEY (\"timekeeper_id\") REFERENCES \"legal_demo\".\"timekeepers\" (\"timekeeper_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
       },
       {
-        "id": "step-00052",
+        "id": "step-00050",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
         "transaction": "required",
         "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matter_teams\" FROM PUBLIC"
       },
       {
-        "id": "step-00053",
+        "id": "step-00051",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
       },
       {
-        "id": "step-00054",
+        "id": "step-00052",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_person\""
       },
       {
-        "id": "step-00055",
+        "id": "step-00053",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00056",
+        "id": "step-00054",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00057",
+        "id": "step-00055",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)"
       },
       {
-        "id": "step-00058",
+        "id": "step-00056",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
       },
       {
-        "id": "step-00059",
+        "id": "step-00057",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_batch\""
       },
       {
-        "id": "step-00060",
+        "id": "step-00058",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00061",
+        "id": "step-00059",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00062",
+        "id": "step-00060",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00063",
+        "id": "step-00061",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"clients\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00064",
+        "id": "step-00062",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_id\" IS E'Fabricated client id'"
       },
       {
-        "id": "step-00065",
+        "id": "step-00063",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_name\" IS E'Fabricated client name'"
       },
       {
-        "id": "step-00066",
+        "id": "step-00064",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"timekeepers\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00067",
+        "id": "step-00065",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_id\" IS E'Fabricated timekeeper id'"
       },
       {
-        "id": "step-00068",
+        "id": "step-00066",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_name\" IS E'Fabricated timekeeper name'"
       },
       {
-        "id": "step-00069",
+        "id": "step-00067",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/2",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_level\" IS E'Fabricated timekeeper level'"
       },
       {
-        "id": "step-00070",
+        "id": "step-00068",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/3",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"billing_rate\" IS E'Fabricated billing rate'"
       },
       {
-        "id": "step-00071",
+        "id": "step-00069",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"matters\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00072",
+        "id": "step-00070",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_id\" IS E'Fabricated matter id'"
       },
       {
-        "id": "step-00073",
+        "id": "step-00071",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"client_id\" IS E'Fabricated client id'"
       },
       {
-        "id": "step-00074",
+        "id": "step-00072",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/2",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_number\" IS E'Fabricated matter number'"
       },
       {
-        "id": "step-00075",
+        "id": "step-00073",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/3",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_title\" IS E'Fabricated matter title'"
       },
       {
-        "id": "step-00076",
+        "id": "step-00074",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/4",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"practice_area\" IS E'Fabricated practice area'"
       },
       {
-        "id": "step-00077",
+        "id": "step-00075",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/5",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"open_date\" IS E'Fabricated open date'"
       },
       {
-        "id": "step-00078",
+        "id": "step-00076",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/6",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"close_date\" IS E'Fabricated close date'"
       },
       {
-        "id": "step-00079",
+        "id": "step-00077",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/7",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"jurisdiction\" IS E'Fabricated jurisdiction'"
       },
       {
-        "id": "step-00080",
+        "id": "step-00078",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/8",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"court\" IS E'Fabricated court'"
       },
       {
-        "id": "step-00081",
+        "id": "step-00079",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"matter_teams\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00082",
+        "id": "step-00080",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_team_id\" IS E'Fabricated matter team id'"
       },
       {
-        "id": "step-00083",
+        "id": "step-00081",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_id\" IS E'Fabricated matter id'"
       },
       {
-        "id": "step-00084",
+        "id": "step-00082",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/2",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"timekeeper_id\" IS E'Fabricated timekeeper id'"
       },
       {
-        "id": "step-00085",
+        "id": "step-00083",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/3",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"database_role\" IS E'Synthetic database role assigned by the host; never a plugin-supplied identity claim.'"
       },
       {
-        "id": "step-00086",
+        "id": "step-00084",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables",
         "transaction": "required",
@@ -683,7 +669,7 @@
             },
             "batch": {
               "select": {
-                "kind": "allow"
+                "kind": "deny"
               },
               "insert": {
                 "kind": "deny"
@@ -755,8 +741,16 @@
             "mode": "native-rls",
             "person": {
               "select": {
-                "kind": "memberOfRole",
-                "role": "billing_admin"
+                "kind": "any",
+                "rules": [
+                  {
+                    "kind": "deny"
+                  },
+                  {
+                    "kind": "memberOfRole",
+                    "role": "billing_admin"
+                  }
+                ]
               },
               "insert": {
                 "kind": "deny"
@@ -770,7 +764,7 @@
             },
             "batch": {
               "select": {
-                "kind": "allow"
+                "kind": "deny"
               },
               "insert": {
                 "kind": "deny"
@@ -890,108 +884,128 @@
             "mode": "native-rls",
             "person": {
               "select": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               },
               "insert": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               },
               "update": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               },
               "delete": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               }
             },
             "batch": {
@@ -2014,16 +2028,16 @@
       }
     ],
     "nativeQualified": false,
-    "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+    "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
   },
   "next": {
     "version": "umf.table-deployment/0.2",
     "canonicalization": "RFC8785",
     "source": {
       "format": "json",
-      "utf8": "{\"umf\":\"0.10.0\",\"id\":\"legal-lifecycle-demo\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"legal_lifecycle\",\"namespace\":\"legal_lifecycle\",\"elements\":[{\"id\":\"clients__client_id\",\"name\":\"clients__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients__client_name\",\"name\":\"clients__client_name\",\"description\":\"Fabricated client name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients\",\"name\":\"clients\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"}]}],\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_id\",\"name\":\"timekeepers__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_name\",\"name\":\"timekeepers__timekeeper_name\",\"description\":\"Fabricated timekeeper name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_level\",\"name\":\"timekeepers__timekeeper_level\",\"description\":\"Fabricated timekeeper level\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__billing_rate\",\"name\":\"timekeepers__billing_rate\",\"description\":\"Fabricated billing rate\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":10,\"scale\":2},\"extensions\":{}},{\"id\":\"timekeepers\",\"name\":\"timekeepers\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matters__matter_id\",\"name\":\"matters__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__client_id\",\"name\":\"matters__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_number\",\"name\":\"matters__matter_number\",\"description\":\"Fabricated matter number\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_title\",\"name\":\"matters__matter_title\",\"description\":\"Fabricated matter title\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__practice_area\",\"name\":\"matters__practice_area\",\"description\":\"Fabricated practice area\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__open_date\",\"name\":\"matters__open_date\",\"description\":\"Fabricated open date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__close_date\",\"name\":\"matters__close_date\",\"description\":\"Fabricated close date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"matters__jurisdiction\",\"name\":\"matters__jurisdiction\",\"description\":\"Fabricated jurisdiction\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__court\",\"name\":\"matters__court\",\"description\":\"Fabricated court\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters\",\"name\":\"matters\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__matter_team_id\",\"name\":\"matter_teams__matter_team_id\",\"description\":\"Fabricated matter team id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__matter_id\",\"name\":\"matter_teams__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__timekeeper_id\",\"name\":\"matter_teams__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams\",\"name\":\"matter_teams\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"}]},{\"id\":\"unique_0\",\"name\":\"unique_0\",\"primary\":false,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__database_role\",\"description\":\"Synthetic database role assigned by the host; never a plugin-supplied identity claim.\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__review_state\",\"description\":\"Administrative review state; backfilled explicitly before NOT NULL.\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"allowedValues\":[{\"string\":\"restricted\"},{\"string\":\"reviewed\"}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"clients\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"clients\"},\"name\":\"clients\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"name\":\"client_name\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"timekeepers\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"name\":\"timekeepers\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"name\":\"timekeeper_name\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"name\":\"timekeeper_level\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"name\":\"billing_rate\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":10,\"scale\":2}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOfRole\",\"role\":\"billing_admin\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matters\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"name\":\"matters\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"name\":\"matter_number\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"name\":\"matter_title\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"name\":\"practice_area\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"name\":\"open_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"name\":\"close_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"name\":\"jurisdiction\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"name\":\"court\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"},\"name\":\"review_state\",\"nativeType\":{\"kind\":\"text\"},\"default\":{\"kind\":\"literal\",\"value\":{\"string\":\"restricted\"}}}],\"indexes\":[],\"checks\":[{\"id\":\"positive_id\",\"name\":\"matters_positive_id\",\"expression\":{\"op\":\"gt\",\"left\":{\"op\":\"field\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}},\"right\":{\"op\":\"literal\",\"value\":{\"integerToken\":\"0\"}}}}],\"foreignKeys\":[{\"id\":\"fk_0\",\"name\":\"matters_fk_0\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"clients\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}},\"insert\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}},\"update\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}},\"delete\":{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"allow\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matter_teams\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"name\":\"matter_teams\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"name\":\"matter_team_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"name\":\"database_role\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[{\"id\":\"fk_0\",\"name\":\"matter_teams_fk_0\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false},{\"id\":\"fk_1\",\"name\":\"matter_teams_fk_1\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[{\"id\":\"synthetic-bootstrap\",\"conflict\":\"error\",\"rows\":[{\"table\":\"clients\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"value\":{\"string\":\"Fabricated client\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic A\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"associate\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"125.00\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic B\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"partner\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"250.00\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_alice\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_bob\"}}]}]}],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_clients\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"clients\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_timekeepers\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"timekeepers\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matters\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matters\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matter_teams\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matter_teams\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"rename_matter\",\"parameters\":[{\"id\":\"id\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}},{\"id\":\"title\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"}}],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"matters\",\"where\":{\"op\":\"eq\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"id\"}},\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"title\"}}],\"returning\":[],\"maxRows\":1}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"backfill_review\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"matters\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"}},\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"restricted\"}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+      "utf8": "{\"umf\":\"0.10.0\",\"id\":\"legal-lifecycle-demo\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"legal_lifecycle\",\"namespace\":\"legal_lifecycle\",\"elements\":[{\"id\":\"clients__client_id\",\"name\":\"clients__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients__client_name\",\"name\":\"clients__client_name\",\"description\":\"Fabricated client name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients\",\"name\":\"clients\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"}]}],\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_id\",\"name\":\"timekeepers__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_name\",\"name\":\"timekeepers__timekeeper_name\",\"description\":\"Fabricated timekeeper name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_level\",\"name\":\"timekeepers__timekeeper_level\",\"description\":\"Fabricated timekeeper level\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__billing_rate\",\"name\":\"timekeepers__billing_rate\",\"description\":\"Fabricated billing rate\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":10,\"scale\":2},\"extensions\":{}},{\"id\":\"timekeepers\",\"name\":\"timekeepers\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matters__matter_id\",\"name\":\"matters__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__client_id\",\"name\":\"matters__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_number\",\"name\":\"matters__matter_number\",\"description\":\"Fabricated matter number\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_title\",\"name\":\"matters__matter_title\",\"description\":\"Fabricated matter title\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__practice_area\",\"name\":\"matters__practice_area\",\"description\":\"Fabricated practice area\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__open_date\",\"name\":\"matters__open_date\",\"description\":\"Fabricated open date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__close_date\",\"name\":\"matters__close_date\",\"description\":\"Fabricated close date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"matters__jurisdiction\",\"name\":\"matters__jurisdiction\",\"description\":\"Fabricated jurisdiction\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__court\",\"name\":\"matters__court\",\"description\":\"Fabricated court\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters\",\"name\":\"matters\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__matter_team_id\",\"name\":\"matter_teams__matter_team_id\",\"description\":\"Fabricated matter team id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__matter_id\",\"name\":\"matter_teams__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__timekeeper_id\",\"name\":\"matter_teams__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams\",\"name\":\"matter_teams\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"}]},{\"id\":\"unique_0\",\"name\":\"unique_0\",\"primary\":false,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__database_role\",\"description\":\"Synthetic database role assigned by the host; never a plugin-supplied identity claim.\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__review_state\",\"description\":\"Administrative review state; backfilled explicitly before NOT NULL.\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"allowedValues\":[{\"string\":\"restricted\"},{\"string\":\"reviewed\"}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"clients\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"clients\"},\"name\":\"clients\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"name\":\"client_name\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"deny\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"timekeepers\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"name\":\"timekeepers\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"name\":\"timekeeper_name\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"name\":\"timekeeper_level\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"name\":\"billing_rate\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":10,\"scale\":2}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"deny\"},{\"kind\":\"memberOfRole\",\"role\":\"billing_admin\"}]},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"deny\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matters\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"name\":\"matters\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"name\":\"matter_number\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"name\":\"matter_title\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"name\":\"practice_area\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"name\":\"open_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"name\":\"close_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"name\":\"jurisdiction\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"name\":\"court\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"},\"name\":\"review_state\",\"nativeType\":{\"kind\":\"text\"},\"default\":{\"kind\":\"literal\",\"value\":{\"string\":\"restricted\"}}}],\"indexes\":[],\"checks\":[{\"id\":\"positive_id\",\"name\":\"matters_positive_id\",\"expression\":{\"op\":\"gt\",\"left\":{\"op\":\"field\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}},\"right\":{\"op\":\"literal\",\"value\":{\"integerToken\":\"0\"}}}}],\"foreignKeys\":[{\"id\":\"fk_0\",\"name\":\"matters_fk_0\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"clients\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"insert\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"update\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"delete\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"allow\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matter_teams\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"name\":\"matter_teams\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"name\":\"matter_team_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"name\":\"database_role\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[{\"id\":\"fk_0\",\"name\":\"matter_teams_fk_0\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false},{\"id\":\"fk_1\",\"name\":\"matter_teams_fk_1\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[{\"id\":\"synthetic-bootstrap\",\"conflict\":\"error\",\"rows\":[{\"table\":\"clients\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"value\":{\"string\":\"Fabricated client\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic A\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"associate\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"125.00\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic B\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"partner\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"250.00\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_alice\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_bob\"}}]}]}],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_clients\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"clients\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_timekeepers\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"timekeepers\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matters\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matters\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matter_teams\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matter_teams\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"rename_matter\",\"parameters\":[{\"id\":\"id\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}},{\"id\":\"title\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"}}],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"matters\",\"where\":{\"op\":\"eq\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"id\"}},\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"title\"}}],\"returning\":[],\"maxRows\":1}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"backfill_review\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"matters\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"}},\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__review_state\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"restricted\"}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
     },
-    "sourceDigest": "f2c804876f7e746a53588e9ba134fa962edb412487e78270940ce1c1ce9a67da",
+    "sourceDigest": "654ace17789c7acd16dcaab1541d5ab8208fbf1bb8d369a11c13e952d2802a0a",
     "configuration": {
       "module": "legal_lifecycle",
       "schema": "legal_demo",
@@ -2169,486 +2183,472 @@
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)"
       },
       {
         "id": "step-00020",
-        "kind": "grant",
-        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
-        "transaction": "required",
-        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"clients\" TO \"legal_batch\""
-      },
-      {
-        "id": "step-00021",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00022",
+        "id": "step-00021",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00023",
+        "id": "step-00022",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00024",
+        "id": "step-00023",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
         "transaction": "required",
         "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"timekeepers\" FROM PUBLIC"
       },
       {
-        "id": "step-00025",
+        "id": "step-00024",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (pg_catalog.pg_has_role(CURRENT_USER, E'legal_billing_admin', 'MEMBER'))"
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((FALSE OR pg_catalog.pg_has_role(CURRENT_USER, E'legal_billing_admin', 'MEMBER')))"
       },
       {
-        "id": "step-00026",
+        "id": "step-00025",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"timekeepers\" TO \"legal_person\""
       },
       {
-        "id": "step-00027",
+        "id": "step-00026",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00028",
+        "id": "step-00027",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00029",
+        "id": "step-00028",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)"
       },
       {
-        "id": "step-00030",
+        "id": "step-00029",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00031",
-        "kind": "grant",
-        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
-        "transaction": "required",
-        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"timekeepers\" TO \"legal_batch\""
-      },
-      {
-        "id": "step-00032",
+        "id": "step-00030",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00033",
+        "id": "step-00031",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00034",
+        "id": "step-00032",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00035",
+        "id": "step-00033",
         "kind": "foreignKey",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/foreignKeys/0",
         "transaction": "required",
         "sql": "ALTER TABLE \"legal_demo\".\"matters\" ADD CONSTRAINT \"matters_fk_0\" FOREIGN KEY (\"client_id\") REFERENCES \"legal_demo\".\"clients\" (\"client_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
       },
       {
-        "id": "step-00036",
+        "id": "step-00034",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
         "transaction": "required",
         "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matters\" FROM PUBLIC"
       },
       {
-        "id": "step-00037",
+        "id": "step-00035",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00038",
+        "id": "step-00036",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00039",
+        "id": "step-00037",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00040",
+        "id": "step-00038",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
         "transaction": "required",
         "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00041",
+        "id": "step-00039",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))) WITH CHECK ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))) WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00042",
+        "id": "step-00040",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
         "transaction": "required",
         "sql": "GRANT UPDATE (\"client_id\", \"matter_number\", \"matter_title\", \"practice_area\", \"open_date\", \"close_date\", \"jurisdiction\", \"court\", \"review_state\") ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00043",
+        "id": "step-00041",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
         "transaction": "required",
-        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING ((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_0\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_0\".\"matter_id\" AND (\"umf_j_0\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))"
+        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
       },
       {
-        "id": "step-00044",
+        "id": "step-00042",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
         "transaction": "required",
         "sql": "GRANT DELETE ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
       },
       {
-        "id": "step-00045",
+        "id": "step-00043",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
       },
       {
-        "id": "step-00046",
+        "id": "step-00044",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\""
       },
       {
-        "id": "step-00047",
+        "id": "step-00045",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (TRUE)"
       },
       {
-        "id": "step-00048",
+        "id": "step-00046",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
         "transaction": "required",
         "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\""
       },
       {
-        "id": "step-00049",
+        "id": "step-00047",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00050",
+        "id": "step-00048",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00051",
+        "id": "step-00049",
         "kind": "foreignKey",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/0",
         "transaction": "required",
         "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_0\" FOREIGN KEY (\"matter_id\") REFERENCES \"legal_demo\".\"matters\" (\"matter_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
       },
       {
-        "id": "step-00052",
+        "id": "step-00050",
         "kind": "foreignKey",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/1",
         "transaction": "required",
         "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_1\" FOREIGN KEY (\"timekeeper_id\") REFERENCES \"legal_demo\".\"timekeepers\" (\"timekeeper_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
       },
       {
-        "id": "step-00053",
+        "id": "step-00051",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
         "transaction": "required",
         "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matter_teams\" FROM PUBLIC"
       },
       {
-        "id": "step-00054",
+        "id": "step-00052",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
       },
       {
-        "id": "step-00055",
+        "id": "step-00053",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_person\""
       },
       {
-        "id": "step-00056",
+        "id": "step-00054",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00057",
+        "id": "step-00055",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00058",
+        "id": "step-00056",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)"
       },
       {
-        "id": "step-00059",
+        "id": "step-00057",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
       },
       {
-        "id": "step-00060",
+        "id": "step-00058",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
         "transaction": "required",
         "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_batch\""
       },
       {
-        "id": "step-00061",
+        "id": "step-00059",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/insert",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00062",
+        "id": "step-00060",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/update",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
       },
       {
-        "id": "step-00063",
+        "id": "step-00061",
         "kind": "policy",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/delete",
         "transaction": "required",
         "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
       },
       {
-        "id": "step-00064",
+        "id": "step-00062",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"clients\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00065",
+        "id": "step-00063",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_id\" IS E'Fabricated client id'"
       },
       {
-        "id": "step-00066",
+        "id": "step-00064",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_name\" IS E'Fabricated client name'"
       },
       {
-        "id": "step-00067",
+        "id": "step-00065",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"timekeepers\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00068",
+        "id": "step-00066",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_id\" IS E'Fabricated timekeeper id'"
       },
       {
-        "id": "step-00069",
+        "id": "step-00067",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_name\" IS E'Fabricated timekeeper name'"
       },
       {
-        "id": "step-00070",
+        "id": "step-00068",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/2",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_level\" IS E'Fabricated timekeeper level'"
       },
       {
-        "id": "step-00071",
+        "id": "step-00069",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/3",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"billing_rate\" IS E'Fabricated billing rate'"
       },
       {
-        "id": "step-00072",
+        "id": "step-00070",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"matters\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00073",
+        "id": "step-00071",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_id\" IS E'Fabricated matter id'"
       },
       {
-        "id": "step-00074",
+        "id": "step-00072",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"client_id\" IS E'Fabricated client id'"
       },
       {
-        "id": "step-00075",
+        "id": "step-00073",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/2",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_number\" IS E'Fabricated matter number'"
       },
       {
-        "id": "step-00076",
+        "id": "step-00074",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/3",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_title\" IS E'Fabricated matter title'"
       },
       {
-        "id": "step-00077",
+        "id": "step-00075",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/4",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"practice_area\" IS E'Fabricated practice area'"
       },
       {
-        "id": "step-00078",
+        "id": "step-00076",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/5",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"open_date\" IS E'Fabricated open date'"
       },
       {
-        "id": "step-00079",
+        "id": "step-00077",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/6",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"close_date\" IS E'Fabricated close date'"
       },
       {
-        "id": "step-00080",
+        "id": "step-00078",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/7",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"jurisdiction\" IS E'Fabricated jurisdiction'"
       },
       {
-        "id": "step-00081",
+        "id": "step-00079",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/8",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"court\" IS E'Fabricated court'"
       },
       {
-        "id": "step-00082",
+        "id": "step-00080",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/9",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"review_state\" IS E'Administrative review state; backfilled explicitly before NOT NULL.'"
       },
       {
-        "id": "step-00083",
+        "id": "step-00081",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments",
         "transaction": "required",
         "sql": "COMMENT ON TABLE \"legal_demo\".\"matter_teams\" IS E'Fabricated demonstration only; no real firm records.'"
       },
       {
-        "id": "step-00084",
+        "id": "step-00082",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/0",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_team_id\" IS E'Fabricated matter team id'"
       },
       {
-        "id": "step-00085",
+        "id": "step-00083",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/1",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_id\" IS E'Fabricated matter id'"
       },
       {
-        "id": "step-00086",
+        "id": "step-00084",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/2",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"timekeeper_id\" IS E'Fabricated timekeeper id'"
       },
       {
-        "id": "step-00087",
+        "id": "step-00085",
         "kind": "comment",
         "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/3",
         "transaction": "required",
         "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"database_role\" IS E'Synthetic database role assigned by the host; never a plugin-supplied identity claim.'"
       },
       {
-        "id": "step-00088",
+        "id": "step-00086",
         "kind": "grant",
         "sourcePath": "/modules/0/extensions/umf.tables",
         "transaction": "required",
@@ -2707,7 +2707,7 @@
             },
             "batch": {
               "select": {
-                "kind": "allow"
+                "kind": "deny"
               },
               "insert": {
                 "kind": "deny"
@@ -2779,8 +2779,16 @@
             "mode": "native-rls",
             "person": {
               "select": {
-                "kind": "memberOfRole",
-                "role": "billing_admin"
+                "kind": "any",
+                "rules": [
+                  {
+                    "kind": "deny"
+                  },
+                  {
+                    "kind": "memberOfRole",
+                    "role": "billing_admin"
+                  }
+                ]
               },
               "insert": {
                 "kind": "deny"
@@ -2794,7 +2802,7 @@
             },
             "batch": {
               "select": {
-                "kind": "allow"
+                "kind": "deny"
               },
               "insert": {
                 "kind": "deny"
@@ -2972,108 +2980,128 @@
             "mode": "native-rls",
             "person": {
               "select": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               },
               "insert": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               },
               "update": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               },
               "delete": {
-                "kind": "related",
-                "record": {
-                  "module": "legal_lifecycle",
-                  "element": "matter_teams"
-                },
-                "matches": [
+                "kind": "any",
+                "rules": [
                   {
-                    "source": {
+                    "kind": "related",
+                    "record": {
                       "module": "legal_lifecycle",
-                      "element": "matters__matter_id"
+                      "element": "matter_teams"
                     },
-                    "target": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams__matter_id"
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
                     }
                   }
-                ],
-                "rule": {
-                  "kind": "owner",
-                  "field": {
-                    "module": "legal_lifecycle",
-                    "element": "matter_teams__database_role"
-                  }
-                }
+                ]
               }
             },
             "batch": {
@@ -4136,10 +4164,10 @@
       }
     ],
     "nativeQualified": false,
-    "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+    "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
   },
-  "fromBundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51",
-  "toBundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f",
+  "fromBundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e",
+  "toBundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c",
   "steps": [
     {
       "id": "step-90000",
@@ -4150,12 +4178,12 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
@@ -4170,12 +4198,12 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
@@ -4189,12 +4217,12 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
@@ -4208,12 +4236,12 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
@@ -4227,12 +4255,12 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
@@ -4246,18 +4274,18 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
     },
     {
-      "id": "step-00035",
+      "id": "step-00033",
       "kind": "foreignKey",
       "sourcePath": "/modules/0/extensions/umf.tables/tables/2/foreignKeys/0",
       "transaction": "required",
@@ -4265,12 +4293,12 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
@@ -4284,18 +4312,18 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
     },
     {
-      "id": "step-00042",
+      "id": "step-00040",
       "kind": "grant",
       "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
       "transaction": "required",
@@ -4303,18 +4331,18 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
     },
     {
-      "id": "step-00082",
+      "id": "step-00080",
       "kind": "comment",
       "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/9",
       "transaction": "required",
@@ -4322,12 +4350,12 @@
       "preconditions": {
         "phase": "before-plan",
         "kind": "installed-source-cohort",
-        "bundleDigest": "1b280da543e8327fd76221104462b51699ff259862e69bb850c528ea8a12cb51"
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
       },
       "expectedOutcome": {
         "phase": "before-commit",
         "kind": "complete-next-source-catalog",
-        "bundleDigest": "e91c2ce1689bb03f9512c9becee972a6cbb63be6360d5965c820b02d3c187e5f"
+        "bundleDigest": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
       },
       "verification": "native-catalog-privileges-and-role-scope",
       "recovery": "rollback-transaction"
@@ -4358,5 +4386,5 @@
   ],
   "requiresApproval": true,
   "nativeQualified": false,
-  "digest": "a58ebfe632e8c424b11b7cf20e1d3c173da89674c2f7304f41f8cbcf3bc451ee"
+  "digest": "efef6d5e169a4ad58d70890aea371705734bb0c0447e51f0c3dbdc558d5d9221"
 }

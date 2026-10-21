@@ -1,0 +1,90 @@
+{
+  "profile": "umf.praxis-u3.native-row-scope/1",
+  "status": "passed",
+  "date": "2026-10-21",
+  "command": "/private/tmp/umf-lifecycle-mirror-venv/bin/python tests/lifecycle/native.py --dsn \"dbname=postgres\" --fixtures fixtures/table-lifecycle/legal",
+  "versions": {
+    "postgresqlMajor": 18,
+    "python": "3.11.17",
+    "pydantic": "2.14.1",
+    "weft": "0.4.49",
+    "bun": "1.4.3",
+    "embeddedV8": "14.4.258.23"
+  },
+  "scope": "local fabricated legal lifecycle; no managed/private-consumer or release claim",
+  "assertionCount": 34,
+  "assertions": [
+    "initial-commit-ledger",
+    "generated-sync-page-uses-native-membership",
+    "generated-sync-action-has-affected-count",
+    "generated-sync-action-durable-replay",
+    "generated-calls-return-every-lease",
+    "visible-matters-alice",
+    "visible-matters-bob",
+    "visible-matters-batch",
+    "public-reference-open-read",
+    "trusted-group-select",
+    "untrusted-person-group-denied",
+    "force-row-level-security",
+    "via-old-row-visible-new-row-check-denies",
+    "membership-forgery-denied-alice",
+    "membership-forgery-denied-batch",
+    "edited-applied-file-refuses",
+    "overbound-backfill-refuses",
+    "failed-backfill-column-rolled-back",
+    "required-backfill-preserves-protected-rows",
+    "forward-replay-has-no-data-effects",
+    "added-fk-and-check-installed",
+    "transactional-runner-refuses-concurrent",
+    "first-index-phase-retains-old-ledger",
+    "partial-phase-fences-client-head",
+    "unique-build-fails-with-inspect-recovery",
+    "invalid-index-needs-explicit-repair",
+    "failed-phases-do-not-advance-ledger",
+    "explicit-repair-resumes-and-commits",
+    "final-publication-restores-client-head",
+    "concurrent-replay-does-not-rebuild",
+    "full-source-and-native-history-correspondence",
+    "batch-update-denied",
+    "batch-delete-denied",
+    "native-comment-drift-refuses"
+  ],
+  "planDigests": [
+    "a8aeb0c66fbd924ee2e39acc164be1feb28efdf7ed42663e7c5126ae76b3a81f",
+    "da56c17d4ab1d91c3b729bedcbe473e155310d3c075a9a550cd47bff097cd1ee",
+    "f3810cd0ad93e651d0825a157e58f7c7cdd5bf662d10f9f8b526184a3fad7973"
+  ],
+  "pythonParity": {
+    "status": "passed",
+    "caseCount": 6,
+    "cases": [
+      "supplied-owner-via-group-batch",
+      "unknown-content-preserved",
+      "ambiguous-via-binding",
+      "group-command-widening-refused",
+      "policy-cycle-refused",
+      "related-select-dependency-refused"
+    ],
+    "transientCodegenBundleSha256": "6bbb09c6af64493140c50cfc2ffb332b4e581cd7ab1a0069682bcc57efa33aff"
+  },
+  "sourceSha256": {
+    "src/table-authoring/row-scope.ts": "d18ed69a608c5bffb3200a5e1a58725bc6c8e2daaedfbb4de79d72eec1fefee6",
+    "src/index.ts": "bf5c4683ed4fa3290d1908610f23392580194715db4117d0c84bdfb721fb794b",
+    "scripts/codegen/entry.ts": "70b84877550c49bdb3ae1437c17cea85ea3e36fbaaabd636e682a9ef4a96cccd",
+    "scripts/build-codegen.ts": "b16f3255b82e865bbb6cc7523e32ace572270dfa54fc83758056574a0dffed66",
+    "python/umf_codegen/src/umf_codegen/__init__.py": "db82f872ba8aaccfbaaad4c7de9c896f0e8791fd5c0afa6a7f8439ac3c8f42b4",
+    "python/umf_codegen/src/umf_codegen/_embedded.py": "7df0e1786e9cb4233a5e174a7b30268b6b65bafeae9f3aa68d6926c606178ac9",
+    "tests/lifecycle/legal-fixture.ts": "633558207f1e9fad8cd22b8f9ba0385900c36fe0bba0a883bbc354c5aa19993c",
+    "tests/lifecycle/native.py": "24571ce6d2e7fe1ffc70a40c03cbdf08c9f596048915a6a8b625c72b929adaf3",
+    "scripts/generate-legal-lifecycle.ts": "251004d95383b56c5b725657cbcacc63e7c151bdb4a19b46ff68dd71bec49210",
+    "scripts/row-scope-codegen-corpus.ts": "52f56402be0464e37a476d65e912cc9d1aa12d76bdb40ce6be9d13b10cc23d5b",
+    "tests/codegen/row_scope_probe.py": "2e907d6256b7dda88f8bba80c887821c9234e7634b7d3d62a74ae783f1611f12",
+    "fixtures/table-lifecycle/legal/initial.json": "6081ca38e4e231069e7ffaf48d487688efffa80a38096a33dd5117504610697a",
+    "fixtures/table-lifecycle/legal/initial.sql": "9a0293783ab17c4615b3a24db9d0ff3df143e06ecda2050f4a470493a663aebd"
+  },
+  "limitations": [
+    "Fabricated legal-domain fixture only; no Praxis consumer source or managed-service claim.",
+    "Native SQL behavior is qualified for this PostgreSQL18 local profile and exact generated source; no shared-security or complete ethical-wall equivalence.",
+    "Python parity used a locally rebuilt uncommitted codegen bundle; the published immutable codegen asset still requires root integration and installed-wheel replay."
+  ]
+}

@@ -74,6 +74,7 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
             admin.execute(sql.SQL('CREATE ROLE {} NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOREPLICATION').format(sql.Identifier(role)));created.append(role)
         for person in (alice,bob):
             admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT TRUE,SET FALSE').format(sql.Identifier(cfg['personRole']),sql.Identifier(person)))
+        admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT TRUE,SET FALSE').format(sql.Identifier(cfg['groupRoles']['billing_admin']),sql.Identifier(alice)))
         admin.execute(sql.SQL('CREATE SCHEMA {} AUTHORIZATION {}').format(sql.Identifier(cfg['schema']),sql.Identifier(cfg['ownerRole'])));schema_created=True
         def owner_transaction():
             return admin.transaction()
@@ -113,6 +114,14 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 return admin.execute(statement).fetchall()
         for role,expected in [(alice,[(1,)]),(bob,[(2,)]),(cfg['batchRole'],[(1,),(2,)])]:
             check('visible-matters-'+role.split('_')[-1],visible(role,sql.SQL('SELECT matter_id FROM {} ORDER BY matter_id').format(relation))==expected)
+        clients=sql.Identifier(cfg['schema'],'clients');timekeepers=sql.Identifier(cfg['schema'],'timekeepers')
+        check('public-reference-open-read',visible(alice,sql.SQL('SELECT client_id FROM {} ORDER BY client_id').format(clients))==[(1,)])
+        check('trusted-group-select',visible(alice,sql.SQL('SELECT timekeeper_id FROM {} ORDER BY timekeeper_id').format(timekeepers))==[(1,),(2,)])
+        check('untrusted-person-group-denied',visible(bob,sql.SQL('SELECT timekeeper_id FROM {}').format(timekeepers))==[])
+        check('force-row-level-security',admin.execute('SELECT relrowsecurity AND relforcerowsecurity FROM pg_catalog.pg_class WHERE oid=%s::regclass',(cfg['schema']+'.matters',)).fetchone()==(True,))
+        try:visible(alice,sql.SQL('UPDATE {} SET matter_id=99 WHERE matter_id=1 RETURNING matter_id').format(relation))
+        except psycopg.errors.InsufficientPrivilege:check('via-old-row-visible-new-row-check-denies',True)
+        else:raise AssertionError('via policy accepted update whose new row has no assigned membership')
         for role in (alice,cfg['batchRole']):
             try:visible(role,sql.SQL("INSERT INTO {} VALUES (9,1,1,'forged') RETURNING matter_team_id").format(sql.Identifier(cfg['schema'],'matter_teams')))
             except psycopg.errors.InsufficientPrivilege:check('membership-forgery-denied-'+role.split('_')[-1],True)
@@ -164,9 +173,10 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 check('full-source-and-native-history-correspondence',history['generation']==3)
         finally:
             admin.execute('RESET ROLE');admin.execute('RESET search_path')
-        try:visible(cfg['batchRole'],sql.SQL("UPDATE {} SET matter_title='batch forbidden' RETURNING matter_id").format(relation))
-        except psycopg.errors.InsufficientPrivilege:check('batch-update-denied',True)
-        else:raise AssertionError('batch updated')
+        for command,statement in [('update',"UPDATE {} SET matter_title='batch forbidden' RETURNING matter_id"),('delete','DELETE FROM {} RETURNING matter_id')]:
+            try:visible(cfg['batchRole'],sql.SQL(statement).format(relation))
+            except psycopg.errors.InsufficientPrivilege:check('batch-'+command+'-denied',True)
+            else:raise AssertionError('batch '+command+' admitted')
         admin.execute(sql.SQL("COMMENT ON TABLE {} IS 'drift'").format(relation))
         try:
             with admin.transaction():

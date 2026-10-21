@@ -459,7 +459,7 @@
                 },
                 "batch": {
                   "select": {
-                    "kind": "allow"
+                    "kind": "deny"
                   },
                   "insert": {
                     "kind": "deny"
@@ -531,8 +531,16 @@
                 "mode": "native-rls",
                 "person": {
                   "select": {
-                    "kind": "memberOfRole",
-                    "role": "billing_admin"
+                    "kind": "any",
+                    "rules": [
+                      {
+                        "kind": "deny"
+                      },
+                      {
+                        "kind": "memberOfRole",
+                        "role": "billing_admin"
+                      }
+                    ]
                   },
                   "insert": {
                     "kind": "deny"
@@ -546,7 +554,7 @@
                 },
                 "batch": {
                   "select": {
-                    "kind": "allow"
+                    "kind": "deny"
                   },
                   "insert": {
                     "kind": "deny"
@@ -724,108 +732,128 @@
                 "mode": "native-rls",
                 "person": {
                   "select": {
-                    "kind": "related",
-                    "record": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams"
-                    },
-                    "matches": [
+                    "kind": "any",
+                    "rules": [
                       {
-                        "source": {
+                        "kind": "related",
+                        "record": {
                           "module": "legal_lifecycle",
-                          "element": "matters__matter_id"
+                          "element": "matter_teams"
                         },
-                        "target": {
-                          "module": "legal_lifecycle",
-                          "element": "matter_teams__matter_id"
+                        "matches": [
+                          {
+                            "source": {
+                              "module": "legal_lifecycle",
+                              "element": "matters__matter_id"
+                            },
+                            "target": {
+                              "module": "legal_lifecycle",
+                              "element": "matter_teams__matter_id"
+                            }
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "legal_lifecycle",
+                            "element": "matter_teams__database_role"
+                          }
                         }
                       }
-                    ],
-                    "rule": {
-                      "kind": "owner",
-                      "field": {
-                        "module": "legal_lifecycle",
-                        "element": "matter_teams__database_role"
-                      }
-                    }
+                    ]
                   },
                   "insert": {
-                    "kind": "related",
-                    "record": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams"
-                    },
-                    "matches": [
+                    "kind": "any",
+                    "rules": [
                       {
-                        "source": {
+                        "kind": "related",
+                        "record": {
                           "module": "legal_lifecycle",
-                          "element": "matters__matter_id"
+                          "element": "matter_teams"
                         },
-                        "target": {
-                          "module": "legal_lifecycle",
-                          "element": "matter_teams__matter_id"
+                        "matches": [
+                          {
+                            "source": {
+                              "module": "legal_lifecycle",
+                              "element": "matters__matter_id"
+                            },
+                            "target": {
+                              "module": "legal_lifecycle",
+                              "element": "matter_teams__matter_id"
+                            }
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "legal_lifecycle",
+                            "element": "matter_teams__database_role"
+                          }
                         }
                       }
-                    ],
-                    "rule": {
-                      "kind": "owner",
-                      "field": {
-                        "module": "legal_lifecycle",
-                        "element": "matter_teams__database_role"
-                      }
-                    }
+                    ]
                   },
                   "update": {
-                    "kind": "related",
-                    "record": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams"
-                    },
-                    "matches": [
+                    "kind": "any",
+                    "rules": [
                       {
-                        "source": {
+                        "kind": "related",
+                        "record": {
                           "module": "legal_lifecycle",
-                          "element": "matters__matter_id"
+                          "element": "matter_teams"
                         },
-                        "target": {
-                          "module": "legal_lifecycle",
-                          "element": "matter_teams__matter_id"
+                        "matches": [
+                          {
+                            "source": {
+                              "module": "legal_lifecycle",
+                              "element": "matters__matter_id"
+                            },
+                            "target": {
+                              "module": "legal_lifecycle",
+                              "element": "matter_teams__matter_id"
+                            }
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "legal_lifecycle",
+                            "element": "matter_teams__database_role"
+                          }
                         }
                       }
-                    ],
-                    "rule": {
-                      "kind": "owner",
-                      "field": {
-                        "module": "legal_lifecycle",
-                        "element": "matter_teams__database_role"
-                      }
-                    }
+                    ]
                   },
                   "delete": {
-                    "kind": "related",
-                    "record": {
-                      "module": "legal_lifecycle",
-                      "element": "matter_teams"
-                    },
-                    "matches": [
+                    "kind": "any",
+                    "rules": [
                       {
-                        "source": {
+                        "kind": "related",
+                        "record": {
                           "module": "legal_lifecycle",
-                          "element": "matters__matter_id"
+                          "element": "matter_teams"
                         },
-                        "target": {
-                          "module": "legal_lifecycle",
-                          "element": "matter_teams__matter_id"
+                        "matches": [
+                          {
+                            "source": {
+                              "module": "legal_lifecycle",
+                              "element": "matters__matter_id"
+                            },
+                            "target": {
+                              "module": "legal_lifecycle",
+                              "element": "matter_teams__matter_id"
+                            }
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "legal_lifecycle",
+                            "element": "matter_teams__database_role"
+                          }
                         }
                       }
-                    ],
-                    "rule": {
-                      "kind": "owner",
-                      "field": {
-                        "module": "legal_lifecycle",
-                        "element": "matter_teams__database_role"
-                      }
-                    }
+                    ]
                   }
                 },
                 "batch": {
