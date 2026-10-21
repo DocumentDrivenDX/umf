@@ -155,6 +155,8 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
   if(!same(without(table,['indexes','columns','policy','checks','foreignKeys']),without(target,['indexes','columns','policy','checks','foreignKeys'])))fail('Existing table definitions must remain exact except for reviewed object changes and appended columns','/next/expectedCatalog/tables/'+tableIndex);
   const oldTableColumns=previousColumns.get(table.id)??[],nextTableColumns=nextColumns.get(table.id)??[];
   const removed=oldTableColumns.filter(column=>!nextTableColumns.some(fresh=>refKey(fresh.field)===refKey(column.field)));
+  const appended=nextTableColumns.filter(column=>!oldTableColumns.some(old=>refKey(old.field)===refKey(column.field)));
+  if(removed.length&&appended.length)fail('Combining column removal with appended columns on one existing table is not yet qualified','/next/expectedCatalog/tables/'+tableIndex+'/columns');
   const retained=table.columns.filter(column=>!removed.some(old=>refKey(old.field)===refKey(column.field)));
   const expectedRetained=target.columns.filter(column=>oldTableColumns.some(old=>refKey(old.field)===refKey(column.field)));
   const oldExpected=oldTableColumns.filter(column=>!removed.some(old=>refKey(old.field)===refKey(column.field))),newExpected=nextTableColumns.filter(column=>oldExpected.some(old=>refKey(old.field)===refKey(column.field)));
@@ -176,10 +178,11 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
     continue;
    }
    const oldLogicalField=a.modules.find(m=>m.id===old.field.module)?.elements.find(e=>e.id===old.field.element),newLogicalField=b.modules.find(m=>m.id===fresh.field.module)?.elements.find(e=>e.id===fresh.field.element);
-   const logicalTypeOnly=tableColumn.nativeType.kind==='numeric'
-    ? [oldLogicalField?.facets,newLogicalField?.facets].every((facets,index)=>{const physical=(index===0?tableColumn.nativeType:freshTableColumn.nativeType) as any;return !!facets&&Object.keys(facets).sort().join(',')==='precision,scale'&&same(facets,{precision:physical.precision,scale:physical.scale});})
-    : same(oldLogicalField?.facets??null,null)&&same(newLogicalField?.facets??null,null);
-   if(changedType&&!changedName&&!changedNull&&safeWidening(tableColumn.nativeType,freshTableColumn.nativeType)&&logicalTypeOnly){
+   const logicalTypeOnly=!!oldLogicalField&&!!newLogicalField&&same(without(oldLogicalField,['facets']),without(newLogicalField,['facets']))&&(tableColumn.nativeType.kind==='numeric'
+    ? [oldLogicalField.facets,newLogicalField.facets].every((facets,index)=>{const physical=(index===0?tableColumn.nativeType:freshTableColumn.nativeType) as any;return !!facets&&Object.keys(facets).sort().join(',')==='precision,scale'&&same(facets,{precision:physical.precision,scale:physical.scale});})
+    : same(oldLogicalField,newLogicalField));
+   const mappingTypeOnly=same(without(tableColumn,['nativeType','sourcePath']),without(freshTableColumn,['nativeType','sourcePath']));
+   if(changedType&&!changedName&&!changedNull&&mappingTypeOnly&&safeWidening(tableColumn.nativeType,freshTableColumn.nativeType)&&logicalTypeOnly){
     if(!reviewedMatch(reviewed,previous,next,'change-column-type',fresh.sourcePath,'pg-cast-v1'))throw new UmfError('destructive_change_unreviewed','Safe type widening for '+table.name+'.'+old.name+' requires an exact pg-cast-v1 review marker',fresh.sourcePath);
     typeChangesForTable.push({old,fresh});continue;
    }
@@ -376,10 +379,10 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
      continue;
     }
     if(step.kind==='foreignKey'&&options){
-     const idx=Number(parts[8]),oldCount=previous.expectedCatalog.tables[tableIndex]!.foreignKeys.length;
-     const replaced=changes.foreignKeyChanges.get(tableIndex)?.replacements.has(next.expectedCatalog.tables[tableIndex]!.foreignKeys[idx]?.id??'')??false;
-     if(idx>=oldCount||replaced){
-      const fk=next.expectedCatalog.tables[tableIndex]!.foreignKeys[idx]!;
+     const idx=Number(parts[8]),fk=next.expectedCatalog.tables[tableIndex]!.foreignKeys[idx]!;
+     const oldForeignKeys=previous.expectedCatalog.tables[tableIndex]!.foreignKeys;
+     const isNewStableId=!oldForeignKeys.some(old=>old.id===fk.id),replaced=changes.foreignKeyChanges.get(tableIndex)?.replacements.has(fk.id)??false;
+     if(isNewStableId||replaced){
       const selected=options.validations?.some(item=>item.table===next.expectedCatalog.tables[tableIndex]!.id&&item.constraint===fk.id&&item.kind==='foreignKey')??false;
       const sql=selected?{...step,sql:step.sql+' NOT VALID',operation:'add-not-valid',constraintKind:'foreignKey' as const}:{...step};
       steps.push(sql);
@@ -387,7 +390,10 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
       continue;
      }
     }
-    if(step.kind==='index'&&parts[7]==='indexes'&&/^\d+$/.test(parts[8]??'')&&(Number(parts[8])>=previous.expectedCatalog.tables[tableIndex]!.indexes.length||changes.indexChanges.get(tableIndex)?.replacements.has(next.expectedCatalog.tables[tableIndex]!.indexes[Number(parts[8])]!.id))){steps.push(step);continue;}
+    if(step.kind==='index'&&parts[7]==='indexes'&&/^\d+$/.test(parts[8]??'')){
+     const index=next.expectedCatalog.tables[tableIndex]!.indexes[Number(parts[8])]!,oldIndexes=previous.expectedCatalog.tables[tableIndex]!.indexes;
+     if(!oldIndexes.some(old=>old.id===index.id)||changes.indexChanges.get(tableIndex)?.replacements.has(index.id)){steps.push(step);continue;}
+    }
     if(step.kind==='policy'){
      const table=next.expectedCatalog.tables[tableIndex]!,audience=parts[8] as PolicyAudience,command=parts[9] as PolicyCommand;
      if(!['person','batch'].includes(audience)||!['select','insert','update','delete'].includes(command))fail('Unexpected compiler policy source path',step.sourcePath);

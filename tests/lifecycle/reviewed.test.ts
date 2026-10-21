@@ -45,6 +45,20 @@ test('reviewed middle-column removal preserves unchanged trailing fields by stab
  const result=compileTableMigration({id:'drop-middle-field',predecessor:{id:'old',digest:'7'.repeat(64)},previous:before,next:after,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
  expect(result.status).toBe('compiled');if(result.status==='compiled')expect(result.plan.steps.some(step=>step.sql==='ALTER TABLE "legal_demo"."matters" DROP COLUMN "jurisdiction"')).toBe(true);
 });
+test('column removal and appended fields refuse before producing an incomplete plan at same or mixed counts',()=>{
+ for(const addedCount of [1,2]){
+  const source=legalSource(),oldMatters=source.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='matters')!;oldMatters.policy.person.update={kind:'deny'};
+  const next=dropCourt(source),module=next.modules[0]!,payload=module.extensions['umf.tables'],table=payload.tables.find((item:any)=>item.id==='matters')!,record=module.elements.find((item:any)=>item.id==='matters')!;
+  for(let index=0;index<addedCount;index++){
+   const element='matters__replacement_'+index,field={module:module.id,element};
+   module.elements.push({id:element,name:element,kind:'field',scalarType:'string',cardinality:'one',nullability:'absent-allowed',extensions:{}} as any);
+   record.members.push(field);table.columns.push({field,name:'replacement_'+index,nativeType:{kind:'text'}});
+  }
+  const before=deploy(source),after=deploy(next),drop=discoverTableMigrationChanges(before,after).find(candidate=>candidate.kind==='drop-column')!;
+  const result=compileTableMigration({id:'drop-and-add-'+addedCount,predecessor:{id:'old',digest:'5'.repeat(64)},previous:before,next:after,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(drop)]}});
+  expect(result.status).toBe('blocked');if(result.status==='blocked')expect(result.diagnostics[0]!.message).toContain('Combining column removal with appended columns');
+ }
+});
 
 test('column drops resolve nested policy references by stable field identity and require a reviewed policy rewrite',()=>{
  const old=legalSource(),oldTable=old.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!;
@@ -151,6 +165,17 @@ test('type changes require a digest-bound explicit safe PostgreSQL widening conv
  const unsafeOptions={...options,reviewedChanges:[unsafeMarker]};
  const narrowing=compileTableMigration({id:'type-narrowing',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:unsafeBundle,options:unsafeOptions});
  expect(narrowing.status).toBe('blocked');if(narrowing.status==='blocked')expect(narrowing.diagnostics[0]!.code).toBe('TABLE_MIGRATION_UNSUPPORTED');
+ for(const [label,mutate] of [
+  ['default',(column:any)=>{column.default={kind:'literal',value:{decimalToken:'99.00'}};}],
+  ['immutable',(column:any)=>{column.immutable=true;}],
+ ] as const){
+  const hidden=structuredClone(widened),hiddenColumn=hidden.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='timekeepers')!.columns.find((column:any)=>column.field.element==='timekeepers__billing_rate');
+  mutate(hiddenColumn);
+  const hiddenBundle=deploy(hidden),hiddenCandidate=discoverTableMigrationChanges(before,hiddenBundle).find(item=>item.kind==='change-column-type')!;
+  const hiddenMarker=marker(hiddenCandidate);hiddenMarker.conversion='pg-cast-v1';
+  const hiddenResult=compileTableMigration({id:'type-plus-'+label,predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:hiddenBundle,options:{...options,reviewedChanges:[hiddenMarker]}});
+  expect(hiddenResult.status).toBe('blocked');if(hiddenResult.status==='blocked')expect(hiddenResult.diagnostics[0]!.code).toBe('TABLE_MIGRATION_UNSUPPORTED');
+ }
 });
 
 test('reviewed index replacement emits an ordered drop and create for the exact source object',()=>{
@@ -162,6 +187,16 @@ test('reviewed index replacement emits an ordered drop and create for the exact 
  expect(result.status).toBe('compiled');if(result.status==='compiled'){
   const drop=result.plan.steps.findIndex(s=>s.sql==='DROP INDEX "legal_demo"."matters_client_lookup"'),create=result.plan.steps.findIndex(s=>s.sql.includes('CREATE INDEX "matters_client_lookup_v2"'));
   expect(drop).toBeGreaterThan(-1);expect(create).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ }
+});
+test('stable-ID index replacement emits both drop and create at the same array position',()=>{
+ const source=indexedLegalSource().source,before=deploy(source),changed=structuredClone(source),table=changed.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='matters')!;
+ const index=table.indexes.find((item:any)=>item.id==='client_lookup')!;index.id='client_lookup_v2';index.name='matters_client_lookup_v2';
+ const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(item=>item.kind==='replace-index')!,review=marker(candidate);
+ const result=compileTableMigration({id:'index-replace-new-id',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[review]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  expect(result.plan.steps.some(step=>step.sql==='DROP INDEX "legal_demo"."matters_client_lookup"')).toBe(true);
+  expect(result.plan.steps.some(step=>step.sql.includes('CREATE INDEX "matters_client_lookup_v2"'))).toBe(true);
  }
 });
 
@@ -220,6 +255,16 @@ test('reviewed foreign-key replacement drops the old constraint before adding th
   const drop=result.plan.steps.findIndex(s=>s.sql.includes('DROP CONSTRAINT "matter_teams_fk_0"'));
   const add=result.plan.steps.findIndex(s=>s.sql.includes('ADD CONSTRAINT "matter_teams_fk_0"')&&s.sql.includes('ON DELETE CASCADE'));
   expect(drop).toBeGreaterThan(-1);expect(add).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ }
+});
+test('stable-ID foreign-key replacement emits drop and add at the same array position',()=>{
+ const source=legalSource(),before=deploy(source),changed=structuredClone(source),table=changed.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='matter_teams')!;
+ const foreignKey=table.foreignKeys[0]!;foreignKey.id='fk_replacement';foreignKey.name='matter_teams_fk_replacement';
+ const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(item=>item.kind==='replace-foreign-key')!,review=marker(candidate);
+ const result=compileTableMigration({id:'fk-replace-new-id',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[review]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  expect(result.plan.steps.some(step=>step.sql.includes('DROP CONSTRAINT "matter_teams_fk_0"'))).toBe(true);
+  expect(result.plan.steps.some(step=>step.sql.includes('ADD CONSTRAINT "matter_teams_fk_replacement"'))).toBe(true);
  }
 });
 
