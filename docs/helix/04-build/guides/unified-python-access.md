@@ -298,3 +298,129 @@ own native SELECT policy; NULL does not equal NULL and duplicate matches do not
 duplicate results. This does not add an integrity constraint. The paired local
 qualification covers direct/nested associations through generated sync/async
 clients. Existing FK-backed `via` paths retain their explicit FK mapping.
+
+## Optional inputs, conditions, batches and validation
+
+Use a generator build containing this adoption amendment; the published 0.5.2
+assets retain their earlier bytes. Generate the canonical current-format example:
+
+```sh
+python -m umf_codegen generate --schema tests/unified/adoption.json --package adoption --output generated
+```
+
+A custom ontology host supplies the transport; the worker imports only the
+stdlib generated package. `umf_access` is unnecessary for that arrangement.
+Generated output may be build-time-only and included in the plugin digest.
+Legacy Hohfeld actions in `module.actions` must first be converted by their
+owner to `module.extensions["umf.actions"].actions`; merely changing the core
+version does not convert action semantics. Generation refuses legacy actions
+instead of silently emitting an incomplete client.
+
+```python
+from adoption import (
+    Actions, CustomerKey, OpenProjectInput, OpenProjectPrecondition,
+    PreconditionFailed, WriteOutcomeUnknown,
+)
+
+async def open_projects(client):
+    actions = Actions(client)
+    customer = CustomerKey(code="C1")
+    await actions.open_project_validate(code="P1", title="Project", client=customer)
+    try:
+        batch = await actions.open_project_batch(
+            (OpenProjectInput(code="P1", title="Project", client=customer),),
+            atomic=True,
+            idempotency_key="open-projects-1",
+        )
+    except WriteOutcomeUnknown as error:
+        # Ask the authoritative host to reconcile error.key; never retry blindly.
+        raise
+    for item in batch.items:
+        if item.status == "refused" and isinstance(item.error, PreconditionFailed):
+            if item.error.precondition == OpenProjectPrecondition.FRESH:
+                return "Project code already exists"
+        if item.status == "unknown":
+            return "Host reconciliation required"
+    return batch
+```
+
+The same methods are available on SyncActions with direct return values.
+Batches accept 1–100 input objects of one action; the generated description
+records the cap. Atomic and stop-on-error flags are explicit host obligations.
+Per-item statuses distinguish applied, refused, rolled_back, unknown and
+unattempted. Every applied receipt uses the batch's one consistency token.
+The client does not split, retry or execute batches as a series of single calls.
+Hosts without a supported mode must refuse before effects.
+
+With stop_on_error enabled, the first refusal (or unknown in a partial batch)
+must be followed only by unattempted outcomes. Unattempted outcomes are never
+valid before that point or when stop_on_error is disabled, including atomic
+batches. An atomic failure contains at least one refusal and no applied/unknown
+outcomes; rolled_back identifies work actually undone.
+
+For graph-write/2, omitting `note` (or passing MISSING) omits its assignment;
+`note=None` explicitly supplies null. A create leaves an omitted optional Field
+absent; a set leaves it unchanged. Graph-write/1 still requires required value
+parameters for assignments. Executor support for the new profile is separate
+from generation. The example's `fresh` rule checks key absence and `exists`
+checks a referenced entity using declared read frames. Validation runs through
+the host without committing or reserving anything; apply can subsequently refuse.
+
+Graph Receipt.status is `committed`. A successful graph envelope acknowledges
+commit, with optional explicit wire `status:"committed"` for original protocol
+compatibility. A pending token is insufficient. Pending, lost or
+malformed write responses raise WriteOutcomeUnknown retaining the invocation
+key. Native table caller-owned results retain their separate durability states.
+
+Host success envelopes must contain `created`, `changed`, `counts` and a nonempty
+`consistency_token`, even if the collections are empty. For example:
+
+```python
+return {"schema": request["schema"], "created": [], "changed": [],
+        "counts": {}, "consistency_token": "committed-cut"}
+```
+
+Omitting `created`, `changed` or `counts` creates uncertainty; the decoder does
+not invent empty results. A transport-raised AccessError also creates uncertainty
+after dispatch. To acknowledge a definite refusal before effects, the host must
+return a matching-schema known-code error envelope instead:
+
+```python
+return {"schema": request["schema"], "error": {"code": "DENIED"}}
+```
+
+Cancellation preserves the original CancelledError. Inspect the exception with
+the generated typed helper to recover the attempted write keys, then propagate
+cancellation. The helper also handles TimeoutError created by asyncio.timeout:
+
+```python
+import asyncio
+from adoption import write_outcomes_unknown
+
+try:
+    async with asyncio.timeout(5):
+        await actions.open_project(
+            code="P1", title="Project", client=customer,
+            idempotency_key="open-project-1",
+        )
+except (asyncio.CancelledError, TimeoutError) as error:
+    for uncertain in write_outcomes_unknown(error):
+        # Retain uncertain.key for authoritative reconciliation; never retry blindly.
+        pass
+    raise
+```
+
+The helper returns its generated package's uncertainty objects represented by the
+displayed exception chain, including distinct invocations sharing a key. Foreign
+package annotations remain intact; call each involved package's helper when
+inspecting a chain shared across generated packages. It respects explicit causes
+and hidden context and terminates cycles. It does not infer that a wrapper's own
+operation wrote anything. Capture the exception inside a TaskGroup child if its
+keys are needed: TaskGroup normally suppresses cancelled child exceptions.
+Likewise, gather with return_exceptions=True can replace the original cancellation
+object and discard its annotations; inspect or retain the original inside the
+child before re-raising.
+Pre-dispatch cancellation, reads and validation add no write annotation.
+See [CONTRACT-079](../../02-design/contracts/CONTRACT-079-unified-python-access.md#graph-client-adoption-contract--2026-10-20)
+for complete settlement and error shapes. Production host execution and the full
+Linux/interpreter matrix require separate qualification.

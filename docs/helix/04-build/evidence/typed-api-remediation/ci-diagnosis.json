@@ -1,0 +1,246 @@
+{
+  "purpose": "PR40 CI repair provenance for Python Ruff findings and source-dbapi native reads.",
+  "failed_jobs": {
+    "39463352162": {
+      "workflow": "Typed access boundaries",
+      "head_sha": "7466c5a9c456e7c200737b82ebc664d6576fc27d",
+      "native_source_dbapi_job": "118768146226",
+      "python_job": "not present in run"
+    },
+    "39463352507": {
+      "workflow": "Python support",
+      "head_sha": "7466c5a9c456e7c200737b82ebc664d6576fc27d",
+      "python_job": "118768146039",
+      "native_source_dbapi_job": "not present in run"
+    },
+    "39463342372": {
+      "workflow": "Typed access boundaries (push)",
+      "head_sha": "7466c5a9c456e7c200737b82ebc664d6576fc27d",
+      "native_source_dbapi_job": "118768110785",
+      "python_job": "not present in run"
+    },
+    "39463342604": {
+      "workflow": "Python support (push)",
+      "head_sha": "7466c5a9c456e7c200737b82ebc664d6576fc27d",
+      "python_job": "118768111471",
+      "native_source_dbapi_job": "not present in run"
+    }
+  },
+  "python_lint": {
+    "ruff_version": "0.17.1",
+    "command": "ruff check python",
+    "result": "passed; 5 reported findings fixed (2 RUF059, 3 I001)",
+    "baseline_log": "/private/tmp/umf-pr40-python.log"
+  },
+  "source_api": {
+    "old_weft_commit": "c4018a9814c25fd18ffab9d8c682e7c55483d40f",
+    "old_api": "prepare_table_operation_module_json absent from Python binding exports; old installed Weft 0.4.46 raises ImportError on import",
+    "required_api": "prepare_table_operation_module_json",
+    "new_weft_commit": "db1e0dc5b1ec6aec0f12646421cefc314989d974",
+    "workflow_new_ref": "db1e0dc5b1ec6aec0f12646421cefc314989d974",
+    "new_version": "0.4.48",
+    "wheel_sha256": "c13ec524385f03025558856ebf18158335050a424fe3ed7a6e42e8611f252545",
+    "preflight": "python -I -c \"from weft import prepare_table_operation_module_json; assert callable(prepare_table_operation_module_json)\"",
+    "preflight_result": "passed"
+  },
+  "native_environment": {
+    "python": "3.11.17",
+    "postgresql": "18.6",
+    "psycopg": "3.2.13",
+    "psycopg_pool": "3.3.3",
+    "psycopg2": "2.9.11",
+    "sqlalchemy": "2.0.44",
+    "environment": "/private/tmp/umf-praxis-native-installed",
+    "host": "127.0.0.1:55441; disposable cluster /private/tmp/umf-pr40-pg",
+    "host_umf_wheel_path": "/private/tmp/umf-pr40-host-wheels/umf_access-0.1.0.dev4-py3-none-any.whl",
+    "host_umf_wheel_sha256": "6f4591a36d987bd076ab8eaadc8ac56beac9de66e68989557c43db02fc58197e",
+    "installed_table_reads_module": "/private/tmp/umf-praxis-native-installed/lib/python3.11/site-packages/umf_access/unified/table_reads.py",
+    "installed_module_matches_repository_source": true,
+    "repository_source_path": "/Users/erik/.codex/worktrees/430b/umf/python/umf_access/src/umf_access/unified/table_reads.py",
+    "disposable_cluster_stopped": true,
+    "cluster_data_path": "/private/tmp/umf-pr40-pg/data"
+  },
+  "native_results": {
+    "source-dbapi-table-reads.json": {
+      "assertions": 127,
+      "leases": {
+        "psycopg3": {
+          "acquired": 12,
+          "released": 12
+        },
+        "psycopg2": {
+          "acquired": 12,
+          "released": 12
+        },
+        "sqlalchemy-psycopg": {
+          "acquired": 12,
+          "released": 12
+        },
+        "sqlalchemy-psycopg2": {
+          "acquired": 12,
+          "released": 12
+        },
+        "psycopg3-async": {
+          "acquired": 12,
+          "released": 12,
+          "pid": 93853,
+          "advisoryCancellationPhase": "admission",
+          "relationCancellationPhase": "read-statement"
+        },
+        "sqlalchemy-async": {
+          "acquired": 12,
+          "released": 12,
+          "pid": 93893,
+          "advisoryCancellationPhase": "admission",
+          "relationCancellationPhase": "read-statement"
+        }
+      },
+      "postgresql": 180006
+    },
+    "source-dbapi-domains.json": {
+      "assertions": 150,
+      "leases": {
+        "psycopg3": {
+          "acquired": 13,
+          "released": 13
+        },
+        "psycopg2": {
+          "acquired": 13,
+          "released": 13
+        },
+        "sqlalchemy-psycopg": {
+          "acquired": 13,
+          "released": 13
+        },
+        "sqlalchemy-psycopg2": {
+          "acquired": 13,
+          "released": 13
+        },
+        "psycopg3-async": {
+          "acquired": 11,
+          "released": 11,
+          "pid": 95606
+        },
+        "sqlalchemy-async": {
+          "acquired": 11,
+          "released": 11,
+          "pid": 95615
+        }
+      },
+      "postgresql": 180006
+    },
+    "source-dbapi-temporal.json": {
+      "assertions": 88,
+      "leases": {
+        "psycopg3": {
+          "acquired": 11,
+          "released": 11
+        },
+        "psycopg2": {
+          "acquired": 11,
+          "released": 11
+        },
+        "sqlalchemy-psycopg": {
+          "acquired": 11,
+          "released": 11
+        },
+        "sqlalchemy-psycopg2": {
+          "acquired": 11,
+          "released": 11
+        },
+        "psycopg3-async": {
+          "acquired": 9,
+          "released": 9,
+          "pid": 96008
+        },
+        "sqlalchemy-async": {
+          "acquired": 9,
+          "released": 9,
+          "pid": 96038
+        }
+      },
+      "postgresql": 180006
+    },
+    "source-dbapi-generated.json": {
+      "assertions": 80,
+      "leases": {
+        "psycopg3": {
+          "acquired": 13,
+          "released": 13
+        },
+        "psycopg2": {
+          "acquired": 13,
+          "released": 13
+        },
+        "sqlalchemy-psycopg": {
+          "acquired": 13,
+          "released": 13
+        },
+        "sqlalchemy-psycopg2": {
+          "acquired": 13,
+          "released": 13
+        },
+        "psycopg3-async": {
+          "acquired": 8,
+          "released": 8,
+          "pid": 96752
+        },
+        "sqlalchemy-async": {
+          "acquired": 8,
+          "released": 8,
+          "pid": 96805
+        }
+      },
+      "postgresql": 180006
+    },
+    "source-dbapi-mutations.json": {
+      "assertions": 162,
+      "leases": {
+        "psycopg3": {
+          "acquired": 21,
+          "released": 21
+        },
+        "psycopg2": {
+          "acquired": 21,
+          "released": 21
+        },
+        "sqlalchemy-psycopg": {
+          "acquired": 21,
+          "released": 21
+        },
+        "sqlalchemy-psycopg2": {
+          "acquired": 21,
+          "released": 21
+        },
+        "psycopg3-async": {
+          "acquired": 17,
+          "released": 17,
+          "pid": 10066
+        },
+        "sqlalchemy-async": {
+          "acquired": 17,
+          "released": 17,
+          "pid": 10296
+        }
+      },
+      "postgresql": 180006
+    }
+  },
+  "test_corrections": [
+    "Cursor scope control now shows unrelated bob membership keeps the cursor valid and a declared configured group MEMBER edge invalidates it.",
+    "Outcome catalog drift controls call explicit verify_table_correspondence and require CatalogError(outcome-catalog-mismatch); ordinary operation/recovery remains on the fast path."
+  ],
+  "baseline_native_log": "/private/tmp/umf-pr40-native.log",
+  "failure_log_comparison": {
+    "push_run_logs_inspected": true,
+    "same_failures_reproduced": true,
+    "python": "Ruff 0.17.1 reports the same five findings (2 RUF059, 3 I001) in the pull-request and paired push logs.",
+    "source_dbapi": "First native read fails with SessionError(native declared read failed) in the pull-request and paired push logs.",
+    "logs": {
+      "pull_request_python": "/private/tmp/umf-pr40-python-second-full.log",
+      "pull_request_native": "/private/tmp/umf-pr40-native-second-full.log",
+      "push_python": "/private/tmp/umf-pr40-python.log",
+      "push_native": "/private/tmp/umf-pr40-native.log"
+    }
+  }
+}

@@ -26,7 +26,7 @@ ddx:
 # CONTRACT-900: Declarative actions
 
 **Type:** extension schema/library and executor obligations.
-**Version:** proposed `umf.actions` 0.1.0 over core 0.8.0.
+**Version:** `umf.actions` 0.1.0 over current core 0.10.0.
 **Status:** draft; package and public APIs are implemented experimentally.
 The [historical certificate](../../04-build/evidence/actions-certification.md)
 records completed qualification for its exact sources and bounded PostgreSQL
@@ -47,7 +47,7 @@ The extension attaches only to a module as `{actions: Action[]}`. Exact vocabula
 registration is required. Each Action is identified by `(module.id, action.id)`;
 IDs are unique within the module and distinct from element/relationship IDs.
 Names are presentation, not identity. An empty list declares no actions.
-References resolve only within the supplied core 0.8.0 document. Core versions,
+References resolve only within the supplied current core 0.10.0 document. Core versions,
 external references and native action imports outside this subset refuse public
 authoring/assessment while generic envelope preservation remains available.
 
@@ -198,7 +198,8 @@ read frame. Bounds apply to selected identities, including absent keys; exceedin
 them aborts atomically.
 
 A RecipeBinding is `{kind:"recipe",profile:{id:"graph-write",version:"1"},
-effects:Effect[]}` with a nonempty ordered effect list. A HandlerBinding is
+effects:Effect[]}` with a nonempty ordered effect list. Version 2 adds only the
+explicit optional-assignment meaning in the section below. A HandlerBinding is
 `{kind:"handler",profile:{id,version},handler:{id,version}}`. These are inert
 identities. A recipe defines required primitive effects, including explicitly
 specified association no-ops. A handler may branch or make no business change
@@ -373,7 +374,7 @@ Dependency obligations MUST be deduplicated by exact pointer; action/model IDs
 share one pointer-based namespace in the inventory. A dependency cycle terminates
 at the first revisited pointer and remains reported without discarding source.
 
-ExecutorProfile is `{id,version,actionVersion:"0.1.0",coreVersion:"0.8.0",
+ExecutorProfile is `{id,version,actionVersion:"0.1.0",coreVersion:"0.10.0",
 claims:{obligation:string,status:"supported"|"unsupported"|"unknown",
 evidence:string[]}[],source:Document,identity:{module:string,action:string}}`.
 The profile id/version MUST identify a bounded executor qualification profile,
@@ -401,7 +402,7 @@ block assessment; unknown members on referenced model definitions do.
 
 ## Precedence and Compatibility
 
-Core 0.8.0 defines Record/Field/Key/values and CONTRACT-041 relationship assertions;
+Current core 0.10.0 defines Record/Field/Key/values and CONTRACT-041 relationship assertions;
 this extension adds only the stated action profile. DDD metadata is independent:
 `dddOperation` validates association but imports no aggregate/event obligations.
 Native database/API semantics remain attached; disagreement blocks exact claims.
@@ -481,3 +482,17 @@ PAP-UMF-01 through PAP-UMF-04 require a separately versioned portable action-pla
 ### Explicit browser-local profile branch — 2026-10-15
 
 CONTRACT-905 adds exact local-owner actor/policy/invocation interpretation and conditional reuse of plan-model/1, plan/1 and manifest/1 carriers. Previous human/tx1 restrictions remain mandatory whenever invocation is umf.actions.tx/1; local invocation uses its separately defined local-owner custody and bulk companion, never a fabricated human or bulk.principal. Unknown/mixed profiles refuse. Existing native producer/enrollment bytes are not relabeled or requalified. Metadata success never issues a store capability or seal.
+
+
+## Optional assignment profile: graph-write/2
+
+The recipe profile `{id:"graph-write",version:"2"}` retains version 1 effects,
+frames, keys and exact-field assignment rules, with one explicit extension:
+a non-required value parameter may supply an assignment only to an
+`absent-allowed` destination Field. If that parameter is omitted, omit this
+assignment. Creation leaves the Field absent; set leaves its prior value intact.
+Explicit null is a supplied value checked against the destination domain.
+Required members and all Key components still need required assignments.
+Version 1 continues to require required assignment parameters. Unknown recipe
+profiles block selected client generation. This is declaration/admission meaning;
+executors must separately qualify version 2 before accepting its invocations.

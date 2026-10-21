@@ -1,0 +1,16 @@
+Initial failing run at an in-progress working tree. Full local output: /private/tmp/umf-remediation-focused-tests-initial-full.log
+Generated package dump omitted from this summary. Final passing gate: focused-tests-final.log
+
+error: expect(received).toThrow()
+(fail) all runtime reexports and sync/async client names remain reserved [17.54ms]
+error: Traceback (most recent call last):
+asyncio.exceptions.CancelledError: private cancellation detail
+(fail) latest UMF unified Python access > generates an isolated stdlib client usable by the independent ontology host [322.09ms]
+error: expect(received).toThrow(expected)
+(fail) action inventory and normalized parameter identities refuse with source locations [5.82ms]
+(fail) all runtime reexports and sync/async client names remain reserved [17.54ms]
+(fail) latest UMF unified Python access > generates an isolated stdlib client usable by the independent ontology host [322.09ms]
+(fail) action inventory and normalized parameter identities refuse with source locations [5.82ms]
+ 80 pass
+ 1 skip
+ 3 fail

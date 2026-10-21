@@ -15,7 +15,7 @@ export type ActionEntityBinding = ({parameter:string}|{created:string}) & {[key:
 export type ActionValueBinding = ({parameter:string}|{literal:CoreLiteral}) & {[key:string]:unknown};
 export interface ActionAssignment {field:ActionReference;value:ActionValueBinding;[key:string]:unknown}
 export type ActionEffect = ({id:string;kind:'create';record:ActionReference;key:string;values:ActionAssignment[]}|{id:string;kind:'set';entity:ActionEntityBinding;values:ActionAssignment[]}|{id:string;kind:'delete';entity:ActionEntityBinding}|{id:string;kind:'link'|'unlink';relationship:ActionRelationshipReference;source:ActionEntityBinding;target:ActionEntityBinding;association?:ActionEntityBinding}|{id:string;kind:string}) & {[key:string]:unknown};
-export type ActionBinding = ({kind:'recipe';profile:{id:'graph-write';version:'1';[key:string]:unknown};effects:ActionEffect[]}|{kind:'handler';profile:ActionProfileIdentity;handler:ActionProfileIdentity}) & {[key:string]:unknown};
+export type ActionBinding = ({kind:'recipe';profile:{id:'graph-write';version:'1'|'2';[key:string]:unknown};effects:ActionEffect[]}|{kind:'handler';profile:ActionProfileIdentity;handler:ActionProfileIdentity}) & {[key:string]:unknown};
 export type ActionAuthorization = ({kind:'roles';profile:ActionProfileIdentity;roles:string[]}|{kind:'policy';profile:ActionProfileIdentity;resources:string[]}) & {[key:string]:unknown};
 export interface Action {
  id:string;name:string;description:string;parameters:ActionParameter[];outputs:ActionParameter[];

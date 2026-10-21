@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {LOCAL_ERROR_CODES, MAX_BATCH_ITEMS} from './constants';
 const asyncRuntime = String.raw`# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated typed request builders. Standard library only; no SQL or host I/O."""
 from __future__ import annotations
@@ -8,7 +9,7 @@ from dataclasses import dataclass, fields, replace
 from datetime import date
 from decimal import Decimal, DecimalException
 from enum import Enum
-from typing import Any, Generic, Protocol, TypeVar, cast, overload
+from typing import Any, Generic, Literal, Protocol, TypeVar, cast, overload
 from inspect import iscoroutinefunction
 from uuid import UUID
 import base64
@@ -32,9 +33,56 @@ class AccessError(ValueError):
         super().__init__(code)
 class Unsupported(AccessError): pass
 class SchemaMismatch(AccessError): pass
-class PreconditionFailed(AccessError): pass
+class PreconditionFailed(AccessError):
+    """Declared action condition ID as str; compare with the generated enum value."""
 class WriteOutcomeUnknown(AccessError):
-    key: str | None = None
+    def __init__(self, code: str = 'WRITE_OUTCOME_UNKNOWN', field: str | None = None, *, precondition: str | None = None, key: str | None = None) -> None:
+        super().__init__(code, field, precondition=precondition)
+        self.key = key
+
+def write_outcomes_unknown(error: BaseException) -> tuple[WriteOutcomeUnknown, ...]:
+    """Return uncertainty annotations visible on an exception and its displayed chain."""
+    if not isinstance(error, BaseException): raise TypeError('error must be an exception')
+    result: list[WriteOutcomeUnknown] = []
+    included: set[int] = set()
+    visited: set[int] = set()
+    current: BaseException | None = error
+    while current is not None and id(current) not in visited:
+        visited.add(id(current))
+        candidates = [current] if isinstance(current, WriteOutcomeUnknown) else []
+        annotated = getattr(current, '_umf_write_outcomes_unknown', ())
+        if isinstance(annotated, tuple): candidates.extend(x for x in annotated if isinstance(x, WriteOutcomeUnknown))
+        for candidate in candidates:
+            if id(candidate) not in included:
+                included.add(id(candidate)); result.append(candidate)
+        if current.__cause__ is not None: current = current.__cause__
+        elif not current.__suppress_context__: current = current.__context__
+        else: current = None
+    return tuple(result)
+
+def _record_write_outcome_unknown(error: BaseException, key: str | None) -> None:
+    previous = getattr(error, '_umf_write_outcomes_unknown', ())
+    if not isinstance(previous, tuple): previous = ()
+    setattr(error, '_umf_write_outcomes_unknown', previous + (WriteOutcomeUnknown(key=key),))
+
+WIRE_ERROR_CODES = ('INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS',
+                    'LIMIT_EXCEEDED', 'BUSY', 'UNSUPPORTED', 'SCHEMA_MISMATCH',
+                    'WRITE_OUTCOME_UNKNOWN', 'NOT_YET_CURRENT', 'INVALID_CURSOR')
+LOCAL_ERROR_CODES = ${JSON.stringify(LOCAL_ERROR_CODES)}
+MAX_BATCH_ITEMS = ${MAX_BATCH_ITEMS}
+
+def wire_error(error: Any) -> AccessError:
+    if not isinstance(error, Mapping) or set(error) - {'code', 'field', 'precondition', 'message'}:
+        raise AccessError('INVALID_RESPONSE')
+    code = error.get('code')
+    if not isinstance(code, str) or code not in WIRE_ERROR_CODES:
+        raise AccessError('INVALID_RESPONSE')
+    if any(key in error and (not isinstance(error[key], str) or not error[key]) for key in ('field', 'precondition')):
+        raise AccessError('INVALID_RESPONSE')
+    if 'message' in error and not isinstance(error['message'], str): raise AccessError('INVALID_RESPONSE')
+    exception = {'UNSUPPORTED': Unsupported, 'SCHEMA_MISMATCH': SchemaMismatch,
+                 'PRECONDITION_FAILED': PreconditionFailed, 'WRITE_OUTCOME_UNKNOWN': WriteOutcomeUnknown}.get(code, AccessError)
+    return exception(code, error.get('field'), precondition=error.get('precondition'))
 
 @dataclass(frozen=True)
 class ExactTimestamp:
@@ -228,37 +276,68 @@ class Receipt(Generic[K, T]):
     counts: Mapping[str, int]
     consistency_token: str
     output: T
+    status: Literal['committed'] = 'committed'
+
+@dataclass(frozen=True)
+class ValidationResult:
+    valid: Literal[True] = True
+
+@dataclass(frozen=True)
+class BatchItemOutcome(Generic[K, T]):
+    status: Literal['applied', 'refused', 'rolled_back', 'unknown', 'unattempted']
+    receipt: Receipt[K, T] | None = None
+    error: AccessError | None = None
+
+@dataclass(frozen=True)
+class BatchReceipt(Generic[K, T]):
+    items: tuple[BatchItemOutcome[K, T], ...]
+    consistency_token: str
 
 class Client:
     def __init__(self, transport: Transport, schema: str, records: Mapping[str, Any], actions: Mapping[str, Any]) -> None:
         self.transport, self.schema = transport, schema
         self.records, self.actions = records, actions
+    def _action_refusal(self, action: str, raw: Any) -> AccessError:
+        refusal = wire_error(raw)
+        conditions = {item['id'] for item in self.actions[action].get('preconditions', ())}
+        if refusal.precondition is not None and refusal.precondition not in conditions:
+            raise AccessError('INVALID_RESPONSE')
+        return refusal
     async def request(self, body: dict[str, Any]) -> dict[str, Any]:
         request = {**body, 'contract': 'umf.access/1', 'schema': self.schema}
+        writing = body['kind'] in ('apply', 'apply_batch')
+        key = body.get('idempotency_key')
         try:
             response = await self.transport.execute(request)
-        except asyncio.CancelledError:
-            if body['kind'] in ('apply', 'apply_batch'): raise WriteOutcomeUnknown('WRITE_OUTCOME_UNKNOWN') from None
+        except asyncio.CancelledError as error:
+            if writing: _record_write_outcome_unknown(error, key)
             raise
-        except AccessError: raise
+        except AccessError:
+            if writing: raise WriteOutcomeUnknown(key=key) from None
+            raise
         except Exception:
-            if body['kind'] in ('apply', 'apply_batch'): raise WriteOutcomeUnknown('WRITE_OUTCOME_UNKNOWN') from None
+            if writing: raise WriteOutcomeUnknown(key=key) from None
             raise AccessError('TRANSPORT_FAILED') from None
-        if not isinstance(response, Mapping):
-            if body['kind'] == 'apply': raise WriteOutcomeUnknown('WRITE_OUTCOME_UNKNOWN')
-            raise AccessError('INVALID_RESPONSE')
-        if response.get('schema') != self.schema: raise SchemaMismatch('SCHEMA_MISMATCH')
-        error = response.get('error')
-        if error:
-            if not isinstance(error, Mapping) or not isinstance(error.get('code'), str): raise AccessError('INVALID_RESPONSE')
-            code = error['code']
-            exception = {'UNSUPPORTED': Unsupported, 'SCHEMA_MISMATCH': SchemaMismatch,
-                         'PRECONDITION_FAILED': PreconditionFailed, 'WRITE_OUTCOME_UNKNOWN': WriteOutcomeUnknown}.get(code, AccessError)
-            if code not in {'INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS', 'LIMIT_EXCEEDED', 'BUSY',
-                            'UNSUPPORTED', 'SCHEMA_MISMATCH', 'WRITE_OUTCOME_UNKNOWN', 'NOT_YET_CURRENT', 'INVALID_CURSOR'}:
-                raise AccessError('INVALID_RESPONSE')
-            raise exception(code, error.get('field'), precondition=error.get('precondition'))
-        return dict(response)
+        try:
+            if not isinstance(response, Mapping): raise AccessError('INVALID_RESPONSE')
+            if response.get('schema') != self.schema: raise SchemaMismatch('SCHEMA_MISMATCH')
+            if 'error' in response:
+                if set(response) - {'schema', 'error'}: raise AccessError('INVALID_RESPONSE')
+                action = body.get('action')
+                refusal = (self._action_refusal(action, response['error'])
+                           if isinstance(action, str) and action in self.actions
+                           else wire_error(response['error']))
+            else:
+                refusal = None
+                if writing and response.get('status', 'committed') != 'committed': raise AccessError('INVALID_RESPONSE')
+            result = dict(response)
+        except Exception:
+            if writing: raise WriteOutcomeUnknown(key=key) from None
+            raise
+        if refusal is not None:
+            if isinstance(refusal, WriteOutcomeUnknown): refusal.key = key
+            raise refusal
+        return result
     def key(self, record: str, value: Any) -> dict[str, Any]:
         spec = self.records[record]
         if type(value) is not spec['key_type']: raise AccessError('KEY_TYPE')
@@ -269,7 +348,7 @@ class Client:
         if not isinstance(value, Mapping): raise AccessError('INVALID_RESPONSE')
         if set(value) - {f['id'] for f in spec['fields']}: raise AccessError('INVALID_RESPONSE')
         return spec['row_type'](**{f['python']: decode(value[f['id']], f) if f['id'] in value else MISSING for f in spec['fields']})
-    async def apply(self, action: str, arguments: Mapping[str, Any], *, idempotency_key: str | None = None) -> Receipt[Any, Any]:
+    def action_inputs(self, action: str, arguments: Mapping[str, Any]) -> dict[str, Any]:
         spec = self.actions[action]
         encoded = {}
         for p in spec['parameters']:
@@ -281,25 +360,92 @@ class Client:
                 encoded[p['id']] = self.key(p['record'], value)
             else:
                 check(value, p['field']); encoded[p['id']] = encode(value, p['field'])
-        response = await self.request({'kind': 'apply', 'action': action, 'inputs': encoded, 'idempotency_key': idempotency_key})
+        return encoded
+    def action_receipt(self, action: str, response: Mapping[str, Any]) -> Receipt[Any, Any]:
+        if set(response) - {'schema', 'status', 'created', 'changed', 'counts', 'consistency_token'}:
+            raise AccessError('INVALID_RESPONSE')
+        if response.get('status', 'committed') != 'committed': raise AccessError('INVALID_RESPONSE')
+        spec = self.actions[action]
         def keys(name: str) -> tuple[Any, ...]:
+            raw = response[name]
+            if not isinstance(raw, list): raise AccessError('INVALID_RESPONSE')
             result = []
-            for item in response.get(name, []):
+            for item in raw:
+                if not isinstance(item, Mapping) or set(item) != {'record', 'key'}: raise AccessError('INVALID_RESPONSE')
                 record = item['record']
-                if record not in spec['affected']: raise AccessError('INVALID_RESPONSE')
+                if not isinstance(record, str) or record not in spec['affected']: raise AccessError('INVALID_RESPONSE')
                 info = self.records[record]
+                if not isinstance(item['key'], Mapping) or set(item['key']) != {f['id'] for f in info['key']}: raise AccessError('INVALID_RESPONSE')
                 result.append(info['key_type'](**{f['python']: decode(item['key'][f['id']], f) for f in info['key']}))
             return tuple(result)
-        token = response.get('consistency_token')
+        token = response['consistency_token']
         if not isinstance(token, str) or not token: raise AccessError('INVALID_RESPONSE')
-        counts = response.get('counts', {})
+        counts = response['counts']
         if not isinstance(counts, Mapping) or any(not isinstance(k, str) or type(v) is not int or v < 0 for k, v in counts.items()):
             raise AccessError('INVALID_RESPONSE')
+        return Receipt(keys('created'), keys('changed'), dict(counts), token, None)
+    async def apply(self, action: str, arguments: Mapping[str, Any], *, idempotency_key: str | None = None) -> Receipt[Any, Any]:
+        if idempotency_key is not None and (not isinstance(idempotency_key, str) or not idempotency_key): raise AccessError('INVALID')
+        encoded = self.action_inputs(action, arguments)
+        response = await self.request({'kind': 'apply', 'action': action, 'inputs': encoded, 'idempotency_key': idempotency_key})
         try:
-            created, changed = keys('created'), keys('changed')
-        except (KeyError, TypeError, ValueError):
-            raise AccessError('INVALID_RESPONSE') from None
-        return Receipt(created, changed, counts, token, None)
+            return self.action_receipt(action, response)
+        except Exception:
+            raise WriteOutcomeUnknown(key=idempotency_key) from None
+    async def validate(self, action: str, arguments: Mapping[str, Any]) -> ValidationResult:
+        encoded = self.action_inputs(action, arguments)
+        response = await self.request({'kind': 'validate', 'action': action, 'inputs': encoded})
+        if set(response) != {'schema', 'valid'} or response['valid'] is not True: raise AccessError('INVALID_RESPONSE')
+        return ValidationResult()
+    async def apply_batch(self, action: str, items: Sequence[Any], input_type: type[Any], *, atomic: bool = False, stop_on_error: bool = False, idempotency_key: str | None = None) -> BatchReceipt[Any, Any]:
+        if type(atomic) is not bool or type(stop_on_error) is not bool: raise AccessError('INVALID')
+        if idempotency_key is not None and (not isinstance(idempotency_key, str) or not idempotency_key): raise AccessError('INVALID')
+        if not isinstance(items, Sequence) or not 1 <= len(items) <= MAX_BATCH_ITEMS: raise AccessError('LIMIT')
+        snapshot: list[Any] = []
+        for item in items:
+            if len(snapshot) == MAX_BATCH_ITEMS: raise AccessError('LIMIT')
+            snapshot.append(item)
+        if not snapshot: raise AccessError('LIMIT')
+        if any(type(item) is not input_type for item in snapshot): raise AccessError('TYPE')
+        encoded = [self.action_inputs(action, {p['python']: getattr(item, p['python']) for p in self.actions[action]['parameters']}) for item in snapshot]
+        response = await self.request({'kind': 'apply_batch', 'action': action, 'items': encoded, 'atomic': atomic, 'stop_on_error': stop_on_error, 'idempotency_key': idempotency_key})
+        try:
+            if set(response) - {'schema', 'status', 'items', 'consistency_token'}: raise AccessError('INVALID_RESPONSE')
+            token = response['consistency_token']
+            raw = response['items']
+            if not isinstance(token, str) or not token or not isinstance(raw, list) or len(raw) != len(snapshot): raise AccessError('INVALID_RESPONSE')
+            results: list[BatchItemOutcome[Any, Any]] = []
+            stopped = False
+            for item in raw:
+                if not isinstance(item, Mapping): raise AccessError('INVALID_RESPONSE')
+                status = item.get('status')
+                receipt, error = None, None
+                if stopped and status != 'unattempted': raise AccessError('INVALID_RESPONSE')
+                if status == 'applied':
+                    if set(item) != {'status', 'receipt'} or not isinstance(item['receipt'], Mapping) or set(item['receipt']) != {'created', 'changed', 'counts'}: raise AccessError('INVALID_RESPONSE')
+                    receipt = self.action_receipt(action, {**item['receipt'], 'consistency_token': token})
+                elif status == 'refused':
+                    if set(item) != {'status', 'error'}: raise AccessError('INVALID_RESPONSE')
+                    error = self._action_refusal(action, item['error'])
+                    if isinstance(error, WriteOutcomeUnknown): raise AccessError('INVALID_RESPONSE')
+                elif status in ('rolled_back', 'unknown', 'unattempted'):
+                    if set(item) != {'status'}: raise AccessError('INVALID_RESPONSE')
+                else: raise AccessError('INVALID_RESPONSE')
+                if stop_on_error and status in ('refused', 'unknown'): stopped = True
+                results.append(BatchItemOutcome(status, receipt, error))
+            statuses = [item.status for item in results]
+            if atomic:
+                if not all(status == 'applied' for status in statuses) and ('applied' in statuses or 'unknown' in statuses or 'refused' not in statuses): raise AccessError('INVALID_RESPONSE')
+            elif 'rolled_back' in statuses:
+                raise AccessError('INVALID_RESPONSE')
+            if 'unattempted' in statuses:
+                if not stop_on_error: raise AccessError('INVALID_RESPONSE')
+                first = statuses.index('unattempted')
+                predecessors = ('refused',) if atomic else ('refused', 'unknown')
+                if first == 0 or statuses[first-1] not in predecessors or any(status != 'unattempted' for status in statuses[first:]): raise AccessError('INVALID_RESPONSE')
+            return BatchReceipt(tuple(results), token)
+        except Exception:
+            raise WriteOutcomeUnknown(key=idempotency_key) from None
 
 @dataclass(frozen=True)
 class Query(Generic[R, K]):

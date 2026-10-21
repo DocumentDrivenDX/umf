@@ -74,3 +74,12 @@ The ontology host and PostgreSQL action/executor callbacks are test fixtures.
 There is no production Hohfeld adoption or durable authorization/idempotency
 qualification claim. Freshness and action execution require authoritative host
 support; the client never invents those guarantees or retries uncertain writes.
+
+
+## Adoption successor — 2026-10-20
+
+The [adoption evidence](praxis-adoption.md) supersedes this initial cut's batch,
+advisory-validation and precondition-surface gaps for the portable generated
+client. Host execution remains separately qualified. Complete wire schemas,
+TypeScript generation, link-key projection and broader conformance/platform
+requirements retain their separate delivery gates.

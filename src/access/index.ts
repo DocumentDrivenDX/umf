@@ -8,6 +8,7 @@ import {sha256Text} from '../compilation/bundle/index';
 import {pythonRuntime} from './python-runtime';
 import {tableRuntime} from './table-runtime';
 import {tableClients} from './table-client';
+import {LOCAL_ERROR_CODES, MAX_BATCH_ITEMS} from './constants';
 import type {FieldInfo,Ref} from './types';
 
 export interface PythonClientRequest {
@@ -24,8 +25,9 @@ const fail=(path:string,message:string):never=>{throw new UmfError('ACCESS_UNSUP
 const object=(v:unknown):Record<string,any>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,any>:{};
 const refId=(r:Ref)=>r.module+'.'+r.element;
 const keywords=new Set('False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case'.split(' '));
-const runtimeExports=['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','Page','Receipt','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'] as const;
-const reserved=new Set<string>([...runtimeExports,'Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
+const runtimeExports=['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','write_outcomes_unknown','LOCAL_ERROR_CODES','MAX_BATCH_ITEMS','Page','Receipt','BatchReceipt','BatchItemOutcome','ValidationResult','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'] as const;
+const runtimeGeneratedSymbols=runtimeExports.filter(symbol=>symbol[0]===symbol[0]!.toUpperCase()).map(symbol=>symbol.split(/[_-]+/).map(part=>part[0]?.toUpperCase()+part.slice(1)).join(''));
+const reserved=new Set<string>([...runtimeExports,...runtimeGeneratedSymbols,'Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Enum','Sequence','BatchReceipt','BatchItemOutcome','ValidationResult','Decimal','UUID','date','MISSING','c','objects']);
 function name(raw:string,kind:'class'|'field',path:string):string {
  const words=raw.replace(/([a-z0-9])([A-Z])/g,'$1_$2').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').split(/[_. -]+/);
  const value=kind==='class'?words.map(w=>w[0]?.toUpperCase()+w.slice(1)).join(''):words.map(w=>w.toLowerCase()).join('_');
@@ -55,6 +57,11 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  const doc=readDocument(request.text,request.format??'json');
  if(doc.umf!==CURRENT_CORE_VERSION)fail('/umf','Use current UMF source');
  const sourceDigest=sha256Text(request.text),elements=new Map<string,Element>();
+ for(const [i,m] of doc.modules.entries()){
+  for(const [path,value] of [[`/modules/${i}/actions`,m.actions],[`/modules/${i}/extensions/umf.ddd/actions`,object(m.extensions?.['umf.ddd']).actions]] as const){
+   if(value!==undefined&&(!Array.isArray(value)||value.length))fail(path,'Unsupported legacy action declarations; convert to current module.extensions[\"umf.actions\"].actions before generation');
+  }
+ }
  for(const m of doc.modules)for(const e of m.elements){
   const id=refId({module:m.id,element:e.id});
   if(elements.has(id))fail(id,'Qualified identity collision');
@@ -123,19 +130,34 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  }
  const actions:{module:string;id:string;python:string;raw:Action;parameters:any[];affected:string[]}[]=[];
  const actionSelection=request.actions&&new Set(request.actions.map(r=>r.module+'.'+r.action));
- for(const m of doc.modules){
-  const payload=object(m.extensions?.['umf.actions']);
-  for(const raw of payload.actions??[]){
-   const id=m.id+'.'+raw.id;if(actionSelection&&!actionSelection.has(id))continue;
+ const actionIds=new Set<string>();
+ for(const [moduleIndex,m] of doc.modules.entries()){
+  const actionPayload=m.extensions?.['umf.actions'],payload=object(actionPayload);
+  if(actionPayload!==undefined){
+   const path=`/modules/${moduleIndex}/extensions/umf.actions`;
+   if(!actionPayload||typeof actionPayload!=='object'||Array.isArray(actionPayload)||!Array.isArray(payload.actions))fail(path,'Expected an action declaration object with an actions array');
+   if(doc.vocabularies['umf.actions']?.version!=='0.1.0')fail('/vocabularies/umf.actions/version','Unsupported action vocabulary version');
+   for(const key of Object.keys(payload))if(key!=='actions')fail(path+'/'+key.replaceAll('~','~0').replaceAll('/','~1'),'Unknown action declaration qualifier');
+  }
+  for(const [actionIndex,raw] of (payload.actions??[]).entries()){
+   const actionPath=`/modules/${moduleIndex}/extensions/umf.actions/actions/${actionIndex}`;
+   if(!raw||typeof raw!=='object'||Array.isArray(raw)||typeof raw.id!=='string'||!raw.id)fail(actionPath,'Action inventory entries require a nonempty identity');
+   const id=m.id+'.'+raw.id;
+   if(actionIds.has(id))fail(actionPath+'/id','Qualified action identity collision');actionIds.add(id);
+   if(actionSelection&&!actionSelection.has(id))continue;
    if(Object.hasOwn(m.extensions??{},'umf.tables'))fail('/modules/'+doc.modules.indexOf(m)+'/extensions/umf.tables','Native table lifecycle action interpretation is not qualified');
-   const action=admitAction(raw);
+   const action=(()=>{try{return admitAction(raw);}catch(error){return fail(actionPath,error instanceof Error?'Invalid action declaration: '+error.message:'Invalid action declaration');}})();
+   if(action.binding.kind==='recipe'&&(action.binding.profile.id!=='graph-write'||!['1','2'].includes(action.binding.profile.version)))fail(id+'/binding/profile','Unsupported selected recipe profile');
    const nativeDependency=doc.modules.find(module=>Object.hasOwn(module.extensions??{},'umf.tables')&&[...action.reads,...action.writes].some(frame=>frame.record.module===module.id));
    if(nativeDependency)fail('/modules/'+doc.modules.indexOf(nativeDependency)+'/extensions/umf.tables','Native table lifecycle action interpretation is not qualified');
    const analysis=analyzeAction(doc,action,'/modules/'+m.id+'/actions/'+raw.id);
    if(analysis.diagnostics.some(d=>d.severity==='error'))fail(id,'Invalid action declarations: '+analysis.diagnostics.filter(d=>d.severity==='error').map(d=>d.code).join(','));
+   if(action.binding.kind==='recipe'&&analysis.obligations.some(o=>o.status==='unchecked'&&(o.kind==='unknown'||o.kind==='effect')&&o.path.includes('/binding')))fail(id+'/binding','Uninterpreted selected recipe meaning');
    if(action.outputs.length)fail(id,'Action declares unsupported business outputs');
-   const parameters=action.parameters.map(p=>{
+   const parameterNames=new Set<string>();
+   const parameters=action.parameters.map((p,parameterIndex)=>{
     const python=name(String(p.name??p.id),'field',id+'/'+p.id);
+    if(parameterNames.has(python))fail(actionPath+'/parameters/'+parameterIndex,'Generated parameter name collision');parameterNames.add(python);
     if(['self','idempotency_key'].includes(python))fail(id+'/'+p.id,'Parameter conflicts with generated method signature');
     if(p.kind==='entity'){
      const r=records.find(r=>r.id===refId(p.target));if(!r||r.keyId!==p.target.key)fail(id+'/'+p.id,'Entity parameter must use its declared generated Key');
@@ -151,9 +173,9 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  }
  if(actionSelection)for(const id of actionSelection)if(!actions.some(a=>a.id===id))fail(id,'Selected Action not found');
  const metadata=Object.fromEntries(records.map(r=>[r.id,{fields:r.fields,key:r.key,key_id:r.keyId,selected:r.selected}]));
- const actionMetadata=Object.fromEntries(actions.map(a=>[a.id,{parameters:a.parameters,affected:a.affected,declaration:a.raw}]));
- const description={contract:'umf.access/1',umf:doc.umf,sourceDigest,records:metadata,relationships:rels,actions:actionMetadata,...(native.modules.length?{tableModules:native.modules,nativeExecutionQualified:false}:{}),limits:{page:100,getManyKeys:100}};
- const lines=['# SPDX-License-Identifier: MIT OR Apache-2.0','# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, SyncClient as RuntimeSyncClient, Query, SyncQuery, Field, Relationship, Missing, MISSING, Transport, SyncTransport, AsyncTransport, Receipt, ExactTimestamp, AccessError, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
+ const actionMetadata=Object.fromEntries(actions.map(a=>[a.id,{parameters:a.parameters,affected:a.affected,preconditions:a.raw.preconditions.map(c=>({id:c.id,failure:c.failure})),operations:['apply','apply_batch','validate'],declaration:a.raw}]));
+ const description={contract:'umf.access/1',umf:doc.umf,sourceDigest,records:metadata,relationships:rels,actions:actionMetadata,...(native.modules.length?{tableModules:native.modules,nativeExecutionQualified:false}:{}),errorCodes:['INVALID','DENIED','CONFLICT','PRECONDITION_FAILED','TOO_MANY_ROWS','LIMIT_EXCEEDED','BUSY','UNSUPPORTED','SCHEMA_MISMATCH','WRITE_OUTCOME_UNKNOWN','NOT_YET_CURRENT','INVALID_CURSOR'],localErrorCodes:LOCAL_ERROR_CODES,limits:{page:100,getManyKeys:100,batchItems:MAX_BATCH_ITEMS}};
+ const lines=['# SPDX-License-Identifier: MIT OR Apache-2.0','# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from enum import Enum','from collections.abc import Sequence','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, SyncClient as RuntimeSyncClient, Query, SyncQuery, Field, Relationship, Missing, MISSING, Transport, SyncTransport, AsyncTransport, Receipt, BatchReceipt, BatchItemOutcome, ValidationResult, ExactTimestamp, AccessError, LOCAL_ERROR_CODES as LOCAL_ERROR_CODES, MAX_BATCH_ITEMS as MAX_BATCH_ITEMS, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
  if(native.modules.length)lines.push('from ._runtime import Page','from ._table_runtime import Applied, Recovered, NotObserved, EffectReceipt, MutationItem, table_call, table_call_sync','',...native.lines);
  for(const r of records){
   lines.push('@dataclass(frozen=True)',`class ${r.python}Key:`);
@@ -174,6 +196,22 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   }
   lines.push('',`${r.python}.c = ${r.python}Columns()`,`${r.python}.objects = Query(${py(r.id)})`,`cast(dict[str, Any], _METADATA[${py(r.id)}]).update(row_type=${r.python}, key_type=${r.python}Key)`,'');
  }
+ for(const a of actions){
+  const className=name(a.raw.id,'class',a.id);
+  for(const symbol of [className+'Input',className+'Precondition']){if(used.has(symbol))fail(a.id,'Generated action type collision');used.add(symbol);}
+  lines.push('@dataclass(frozen=True, kw_only=True)',`class ${className}Input:`);
+  for(const p of a.parameters)lines.push(`    ${p.python}: ${p.record?records.find(r=>r.id===p.record)!.python+'Key':type(p.field,false)}${p.required?'':' | Missing = MISSING'}`);
+  if(!a.parameters.length)lines.push('    pass');
+  lines.push('',`class ${className}Precondition(str, Enum):`);
+  const members=new Set<string>();
+  for(const condition of a.raw.preconditions){
+   const member=name(condition.id,'field',a.id+'/preconditions/'+condition.id).toUpperCase();
+   if(['NAME','VALUE','MRO'].includes(member)||members.has(member))fail(a.id+'/preconditions/'+condition.id,'Precondition enum member collision');members.add(member);
+   lines.push(`    ${member} = ${py(condition.id)}`);
+  }
+  if(!members.size)lines.push('    pass');
+  lines.push('');
+ }
  for(const mode of [{client:'Client',base:'RuntimeClient',actions:'Actions',async:true},{client:'SyncClient',base:'RuntimeSyncClient',actions:'SyncActions',async:false}]){
   const transport=mode.async?'Transport':'SyncTransport';
   lines.push(`class ${mode.client}(${mode.base}):`,`    def __init__(self, transport: ${transport}) -> None:`,
@@ -184,8 +222,16 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   for(const a of actions){
    const params=a.parameters.map(p=>p.python+': '+(p.record?records.find(r=>r.id===p.record)!.python+'Key':type(p.field,false))+(p.required?'':' | Missing = MISSING'));
    const affected=a.affected.map(id=>records.find(r=>r.id===id)!.python+'Key').join(' | ')||'None';
+   const inputName=name(a.raw.id,'class',a.id)+'Input',argumentsText='{'+a.parameters.map(p=>py(p.python)+': '+p.python).join(', ')+'}';
+   for(const method of [a.python,a.python+'_batch',a.python+'_validate']){
+    if(actions.some(other=>other!==a&&other.python===method))fail(a.id,'Generated action terminal collision');
+   }
    lines.push(`    ${mode.async?'async ':''}def ${a.python}(self, *, ${[...params,'idempotency_key: str | None = None'].join(', ')}) -> Receipt[${affected}, None]:`,
-    `        return cast(Receipt[${affected}, None], ${mode.async?'await ':''}self._client.apply(${py(a.id)}, {${a.parameters.map(p=>py(p.python)+': '+p.python).join(', ')}}, idempotency_key=idempotency_key))`,'');
+    `        return cast(Receipt[${affected}, None], ${mode.async?'await ':''}self._client.apply(${py(a.id)}, ${argumentsText}, idempotency_key=idempotency_key))`,'',
+    `    ${mode.async?'async ':''}def ${a.python}_validate(self${params.length?', *, '+params.join(', '):''}) -> ValidationResult:`,
+    `        return ${mode.async?'await ':''}self._client.validate(${py(a.id)}, ${argumentsText})`,'',
+    `    ${mode.async?'async ':''}def ${a.python}_batch(self, items: Sequence[${inputName}], *, atomic: bool = False, stop_on_error: bool = False, idempotency_key: str | None = None) -> BatchReceipt[${affected}, None]:`,
+    `        return cast(BatchReceipt[${affected}, None], ${mode.async?'await ':''}self._client.apply_batch(${py(a.id)}, items, ${inputName}, atomic=atomic, stop_on_error=stop_on_error, idempotency_key=idempotency_key))`,'');
   }
  }
  lines.push('AsyncClient = Client','AsyncActions = Actions','');
