@@ -91,7 +91,7 @@ function revokeGrantSql(step:TableDeploymentBundle['steps'][number],table:TableD
 function groupBy<T>(values:readonly T[],key:(value:T)=>string):Map<string,T[]>{
  const result=new Map<string,T[]>();for(const value of values){const id=key(value),group=result.get(id);if(group)group.push(value);else result.set(id,[value]);}return result;
 }
-function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,options?:TableMigrationOptions):MigrationChanges{
+function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,options?:TableMigrationOptions,allowLegacyUnreviewedPolicy=false):MigrationChanges{
  if(!same(previous.configuration,next.configuration))fail('Changing module, namespace or trusted role configuration requires a separately qualified migration','/next/configuration');
  const a=readDocument(previous.source.utf8,previous.source.format),b=readDocument(next.source.utf8,next.source.format);
  if(!same({...a,modules:[]},{...b,modules:[]}))fail('Root metadata/vocabulary changes require a separately qualified migration','/next/source');
@@ -221,7 +221,7 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
   for(const audience of ['person','batch'] as const)for(const command of ['select','insert','update','delete'] as const){
    const path=policyPath(moduleIndex,tableIndex,audience,command);
    if(!same(table.policy[audience][command],target.policy[audience][command])){
-    if(options?.version==='umf.table-migration-options/0.2'&&!reviewedMatch(reviewed,previous,next,'change-policy',path))throw new UmfError('destructive_change_unreviewed','Unreviewed policy change for '+table.id+'.'+audience+'.'+command,path);
+    if(!allowLegacyUnreviewedPolicy&&!reviewedMatch(reviewed,previous,next,'change-policy',path))throw new UmfError('destructive_change_unreviewed','Unreviewed policy change for '+table.id+'.'+audience+'.'+command,path);
     policyChanges.add(path);
    }
    const oldGrants=previousPolicyGrants.get(path)??[],newGrants=nextPolicyGrants.get(path)??[];
@@ -246,11 +246,26 @@ function assertNoColumnDependents(column:TableDeploymentBundle['expectedCatalog'
  for(const check of previous.expectedCatalog.checks.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted)))affected.push('constraint:'+check.name);
  for(const fk of previous.expectedCatalog.foreignKeys.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted)))affected.push('foreign-key:'+fk.name);
  for(const key of previous.expectedCatalog.keys.filter(x=>x.table===column.table&&x.columns.includes(column.name)))affected.push('key:'+key.name);
+ const localKeys=previous.expectedCatalog.keys.filter(key=>key.table===column.table&&key.columns.includes(column.name));
+ for(const fk of previous.expectedCatalog.foreignKeys){if(localKeys.some(key=>key.name===fk.targetKey))affected.push('inbound-foreign-key:'+fk.name);}
+ const oldDocument=readDocument(previous.source.utf8,previous.source.format),newDocument=readDocument(next.source.utf8,next.source.format);
+ const module=oldDocument.modules.find(m=>m.id===previous.module),nextModule=newDocument.modules.find(m=>m.id===previous.module);
+ const tables=(module?.extensions?.['umf.tables'] as any)?.tables??[],nextTables=(nextModule?.extensions?.['umf.tables'] as any)?.tables??[];
+ const ref=JSON.stringify(column.field);
+ const hasRef=(value:unknown):boolean=>Array.isArray(value)?value.some(hasRef):!!value&&typeof value==='object'?(canonical(value)===ref||Object.values(value).some(hasRef)):false;
+ for(const[commandIndex,command]of ((module?.extensions?.['umf.tables'] as any)?.commands??[]).entries())if(hasRef(command))affected.push('command:'+(command.id??commandIndex));
+ for(const[tableIndex,tableDef]of tables.entries()){
+  const fresh=nextTables[tableIndex]??{};
+  for(const[kind,items]of Object.entries({checks:tableDef.checks??[],foreignKeys:tableDef.foreignKeys??[],indexes:tableDef.indexes??[]}))for(const item of items as any[]){
+   const replacement=(fresh[kind]??[]).find((x:any)=>x.id===item.id);
+   if(hasRef(item)&&(!replacement||canonical(item)!==canonical(replacement)))affected.push(kind.slice(0,-1)+':'+item.id);
+  }
+ }
  if(affected.length)fail('Column '+table.name+'.'+column.name+' is referenced by dependent objects: '+[...new Set(affected)].join(', '),column.sourcePath);
 }
 
 /** Inert forward plans: initial deployment, bounded additive DDL or command revisions. */
-export function compileTableMigration(input:TableMigrationRequest):TableMigrationResult{
+function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUnreviewedPolicy=false):TableMigrationResult{
  try{
   const request=copyJson(input) as unknown as TableMigrationRequest;
   if(!request||Object.keys(request).some(k=>!['id','predecessor','previous','next','options'].includes(k))||!['id','predecessor','previous','next'].every(k=>Object.hasOwn(request,k)))fail('Unknown or missing migration request member');
@@ -266,7 +281,7 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
   const options=migrationOptions(request.options,next,previous);
   let changes:MigrationChanges={policyChanges:new Set(),columnChanges:new Map(),droppedColumns:new Map(),renamedColumns:new Map(),notNullColumns:new Map(),typeChanges:new Map(),indexChanges:new Map(),checkChanges:new Map(),droppedChecks:new Map(),checkPaths:new Map(),grantChanges:new Map()};
   if(previous){
-   changes=appendOnly(previous,next,options);
+   changes=appendOnly(previous,next,options,allowLegacyUnreviewedPolicy);
    if(previous.bundleDigest===next.bundleDigest)fail('An unchanged bundle does not create a new migration','/next');
   }
   const firstNew=previous?.expectedCatalog.tables.length??0;
@@ -362,7 +377,7 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
   if(options?.concurrentIndexes.length){
    const docs=[previous!,next].map(bundle=>readDocument(bundle.source.utf8,bundle.source.format));
    for(const doc of docs){const m=doc.modules.find(m=>m.id===next.module)!;const p=m.extensions!['umf.tables'] as unknown as {tables:{indexes:unknown[]}[]};for(const t of p.tables)t.indexes=[];}
-   if(!same(docs[0],docs[1]))fail('Concurrent phases may change only index declarations','/options/concurrentIndexes');
+   if(options.version==='umf.table-migration-options/0.1'&&!same(docs[0],docs[1]))fail('Concurrent phases may change only index declarations','/options/concurrentIndexes');
    if(addedSeeds.length||options.backfills.length)fail('Concurrent indexes cannot share a migration with seeds or backfills','/options/concurrentIndexes');
    const selected=new Set(options.concurrentIndexes.map(selection=>{const table=next.expectedCatalog.tables.findIndex(t=>t.id===selection.table),index=next.expectedCatalog.tables[table]!.indexes.findIndex(i=>i.id===selection.index);return table+':'+index;}));
    if(options.version==='umf.table-migration-options/0.1'&&steps.some(step=>step.kind!=='index'))fail('Legacy concurrent-index plans must contain indexes only','/options/concurrentIndexes');
@@ -391,11 +406,15 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
  }
 }
 
+export function compileTableMigration(input:TableMigrationRequest):TableMigrationResult{
+ return compileTableMigrationInternal(input,false);
+}
+
 /** Source recompilation verifies complete plans, even after untrusted rehashing. */
 export function verifyTableMigration(input:unknown):TableMigrationPlan{
  const value=copyJson(input) as unknown as TableMigrationPlan;
  if(!value||!['umf.table-migration/0.1','umf.table-migration/0.2'].includes(value.version))fail('Unknown migration plan');
- const result=compileTableMigration({id:value.id,predecessor:value.predecessor,previous:value.previous,next:value.next,...(value.options?{options:value.options}:{})});
+ const result=compileTableMigrationInternal({id:value.id,predecessor:value.predecessor,previous:value.previous,next:value.next,...(value.options?{options:value.options}:{})},value.version==='umf.table-migration/0.1');
  if(result.status!=='compiled')return fail('Migration differs from exact source recompilation');
  if(!same(value,result.plan))fail('Migration differs from exact source recompilation');
  return result.plan;
