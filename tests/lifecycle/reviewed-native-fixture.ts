@@ -145,7 +145,7 @@ const cases:any[]=[];
  const changed=structuredClone(before);findTable(changed).foreignKeys[0]!.onDelete='cascade';
  const renamed=structuredClone(changed);findTable(renamed).foreignKeys[0]!.name='matter_teams_fk_renamed';
  const replaced=structuredClone(renamed),fk=findTable(replaced).foreignKeys[0]!;fk.id='fk_successor';fk.name='matter_teams_fk_successor';fk.onUpdate='cascade';
- const removed=structuredClone(replaced);findTable(removed).foreignKeys=[];
+ const removed=structuredClone(replaced);findTable(removed).foreignKeys=findTable(removed).foreignKeys.filter((item:any)=>item.id!=='fk_successor');
  const b1=deploy(before,config('foreign_key_lifecycle')),b2=deploy(changed,config('foreign_key_lifecycle')),b3=deploy(renamed,config('foreign_key_lifecycle')),b4=deploy(replaced,config('foreign_key_lifecycle')),b5=deploy(removed,config('foreign_key_lifecycle'));
  cases.push(createCase('foreign-key-lifecycle',before,[
   {id:'foreign_key_lifecycle-002',source:changed,options:selectedMarkerOptions(b1,b2,['replace-foreign-key']),checks:['foreign-key-action-replaced-preserving-rows']},
