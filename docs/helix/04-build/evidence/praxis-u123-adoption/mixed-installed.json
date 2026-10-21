@@ -1,0 +1,67 @@
+{
+  "serverMajor": 18,
+  "scope": "PostgreSQL18 migration oracle plus fabricated mixed migration; no managed/private-consumer claim",
+  "assertions": [
+    "published-v053-initial-additive-history-verifies-after-upgrade",
+    "original-v01-history-verifies-and-replays",
+    "reidentified-unreviewed-v01-policy-refused-before-effects",
+    "malformed-digest-refuses-before-fence",
+    "tampered-phase-digest-refuses-before-backfill",
+    "tampered-prefix-witness-refuses-before-backfill",
+    "trigger-drift-refuses-before-backfill",
+    "private-schema-acl-drift-refuses-before-backfill",
+    "trusted-role-attribute-drift-refuses-before-backfill",
+    "external-role-authority-refuses-before-backfill",
+    "resumed-file-digest-binding",
+    "backfill-effect-committed-once-after-unknown-result",
+    "concurrent-index-success-observed-without-replay",
+    "failed-unique-index-requires-explicit-repair",
+    "source-shaped-invalid-index-repaired-explicitly",
+    "typed-seed-effect-committed-once-after-unknown-result",
+    "conflict-error-seed-not-replayed",
+    "publication-drops-progress-relation",
+    "applied-replay-enforces-file-and-head-bindings",
+    "ordinary-native-history-and-catalog-readers-pass",
+    "person-read-observes-final-generation-after-publication"
+  ],
+  "count": 21,
+  "planDigest": "c48e92b6943ac39db8c2aa169482cd17da2837f042a361a0a281f2f22b51da21",
+  "phaseKinds": [
+    "transaction",
+    "backfill",
+    "transaction",
+    "constraint-add",
+    "constraint-validation",
+    "constraint-add",
+    "constraint-validation",
+    "concurrent-index",
+    "concurrent-index",
+    "transaction",
+    "seed"
+  ],
+  "publishedOracle": {
+    "releaseTag": "umf-v0.5.3",
+    "sha256sumsSha256": "bfbfb6ffbeb16629f2db62aacabe4a794d8ed7a6f9606ba6b53c142bc58e10f9",
+    "wheels": {
+      "umf_codegen-0.1.0a2-py3-none-any.whl": {
+        "sha256": "11da338987de1accd1eff626eed6d8395cb51c9e647e5c833fadae85f66d41c2",
+        "recordEntries": 25
+      },
+      "umf_access-0.1.0.dev5-py3-none-any.whl": {
+        "sha256": "e4c77075281f82c2d1b67eba432a718f847b186d1e0293b034dceb068d1a9a9d",
+        "recordEntries": 84
+      }
+    },
+    "runtime": {
+      "python": "3.11.17",
+      "access": "0.1.0.dev5",
+      "codegen": "0.1.0a2",
+      "codegenManifestSha256": "dbfa630dec39561fe0123896855dad0c88ced9445d6443b9c3ad9d6b1dab0a18",
+      "codegenBundleSha256": "a678b1ac2b281622138b2d52642e12a1bc47140dfb92bf03f9a73ef784247614"
+    },
+    "codegenManifestSha256": "dbfa630dec39561fe0123896855dad0c88ced9445d6443b9c3ad9d6b1dab0a18",
+    "codegenBundleSha256": "a678b1ac2b281622138b2d52642e12a1bc47140dfb92bf03f9a73ef784247614",
+    "history": "published initial and additive histories were recorded by published access and verified/replayed by current access",
+    "policy": "published compiler emitted a v0.1 policy-change plan; current fresh-effect admission refuses its unreviewed replay"
+  }
+}
