@@ -149,13 +149,66 @@ Record completed slice IDs, source/profile
 versions, evidence paths, failures, remaining decisions and next action here when
 execution begins. Do not discover or create tracker work without selection.
 
+## Design review and remaining migration gaps
+
+The owner requires ongoing collaboration until the selected implementation passes
+independent design review and native verification. The U1–U3 implementation
+workstream owns code, integrated native evidence and status updates. Migration
+design reviewers own acceptance against this matrix. A passing bounded release does not close unsupported
+full-lifecycle requirements. Do not remove or renumber entries when changing
+status; link their eventual source-bound evidence and owning slice instead.
+
+### Active verification blockers
+
+Snapshot: integrated native work reviewed on 2026-10-21; final receipts pending.
+The current conclusion is **not approved**. Partial U1/U3 tests do not discharge
+these gates. Record each resolution against the final integrated artifact cohort.
+
+| ID | Status | Finding / required acceptance | Owner / allocation | Closure evidence |
+| --- | --- | --- | --- | --- |
+| MIG-R01 | Open | Typed Field-reference dependency matching compares canonical JSON against noncanonical JSON text, missing ordinary refs. Resolve by stable identity, check old/new dependency disposition, and test both key orders, commands, policies and cross-table refs. | U2 compiler; MIG-05/06 | Portable negative controls plus native reviewed-drop/dependency refusal on exact integrated sources |
+| MIG-R02 | Open | Already-applied mixed replay must bind the original file digest and predecessor head; changed inputs must not receive successful replay. | U1 host; MIG-07 | Native correct replay and wrong-file/wrong-head refusals without repeat effects |
+| MIG-R03 | Open | A paused phase must reject added user triggers, altered trusted roles or schema privileges before any resumed data effect. Check complete relevant native boundary while required app locks are held. | U1 host; MIG-04/07 | Native pause/tamper/resume tests demonstrate zero data effects and continued fencing |
+| MIG-R04 | Open | One combined native plan must exercise backfill, concurrent index, NOT VALID/VALIDATE and seeds through commit-boundary interruption, uncertain result and exact index repair. | U1 host; MIG-04/07 | Source-bound native receipts show no repeated committed backfill/seed, explicit repair and final ledger/head publication |
+| MIG-R05 | Open | Every advertised U2 operation needs native positive/refusal evidence: reviewed purge disclosure, name ordering, actual-data NOT NULL validation, finite logical/native widening, constraint/index/Key/FK/policy dependency handling. Unsupported combinations must refuse. | U2 compiler and native harness; MIG-03/05/06 | Integrated native operation inventory, constraint/concurrency failures and retained final-state observations |
+| MIG-R06 | Open | Final installed generator/runtime and browser results must correspond to the exact reviewed source and embedded assets. Historical plan verification must preserve old rules without authorizing new unreviewed effects. | Integration/release owner; MIG-07 | Manifest/wheel/source correspondence, historical verifier controls, focused regression, Chromium parity and installed-native replay |
+
+MIG-R02/R03 were reported by the implementation chat's independent runtime
+review; MIG-R01 was independently reproduced in this design chat. These findings
+are review inputs, not assertions that a newer unreviewed source still contains
+them. Recheck actual fixes before updating status.
+
+### Explicit capability residuals
+
+These are full-design gaps retained beyond the selected maintenance-window
+PostgreSQL U1/U2 profile. They are neither successful execution nor evidence of
+native support. A release inventory must state the exact refusal/limit, including
+whether refusal occurs in planning or requires unqualified host capability.
+
+| ID | Current boundary / remaining requirement | Owning follow-up | Verification needed to close |
+| --- | --- | --- | --- |
+| MIG-G01 | Existing optional-column fill followed by NOT NULL is unsupported. Selected tightening fails if nulls exist; selected historical fill targets newly appended columns. | MIG-03/04; table migration maintainer | Existing populated Person with null/non-null birthdays; explicit fill leaves present values intact; guarded validation/cutover and rollback/resume |
+| MIG-G02 | Arbitrary per-row derived backfills are unsupported. Current bounded assignments use literals or the selected transaction clock; a trusted transform protocol and versioned semantics remain to be designed. | MIG-00/04; UMF intent, Weft lowering and host transform owners | Exact transform identity, typed input/output, invalid-value disposition, effect bounds and no repeat/non-idempotent work |
+| MIG-G03 | General future-default changes on existing columns are outside the selected subset. Appended-column default installation after fill does not imply SET/DROP/default-expression lifecycle support. | MIG-03; table compiler/host | Default change/removal, omitted versus explicit-null writes, old-row nonmutation and exact native correspondence |
+| MIG-G04 | General narrowing, cross-family conversions and shadow representation rewrites are unsupported; finite proven widening is the selected type-change subset. | MIG-06; backend conversion owner | Date/string/timestamp format/timezone decisions, overflow/rounding/loss policy, target keys/references and retained-original recovery |
+| MIG-G05 | Retained-value retirement windows and reversible physical deletion are not implemented. Reviewed immediate column purge must explicitly disclose irreversibility; metadata history is not a data backup. | MIG-05; host retention/purge owner | Access retirement, approved retention/backup policy, restore with post-cutover writes and separately authorized final purge |
+| MIG-G06 | Online chunked backfill/rewrite with concurrent application writes is unqualified. Fenced maintenance execution and durable phase resume do not imply online row reconciliation. | MIG-04/07; execution host | Stable-key/version chunking, concurrent insert/update/delete/reinsert, no lost edits, cancellation and gap-free activation |
+| MIG-G07 | Cross-document schema migration and coordinated multi-store execution are not delivered by single-document deployment digests. | US-050/CONTRACT-045 then MIG-02/08 | Exact revision/dependency closure, unknown extensions, source/target identity and explicit cross-store recovery without assumed distributed atomicity |
+| MIG-G08 | Truss, Ashlar and other storage backends lack qualification for this shared migration design. Mutable admission and immutable new-publication semantics remain backend-owned. | MIG-08; each backend owner | Same Person intent with genuine graph/table/file effects, backend-specific refusals and publication/journal recovery |
+| MIG-G09 | Actual managed Lakebase/Praxis consumer migration acceptance is unverified. Local PostgreSQL evidence and installed wheels do not establish managed privileges, platform limits or adoption. | MIG-07; integration and consumer owners | Dedicated managed target and actual consumer schema/workload replay on frozen installed artifacts |
+
+Do not invent dates or erase residuals to close the bounded release. Each owner
+must select and design its next slice before advertising the corresponding
+capability. A change that was explicitly refused becomes supported only after
+its native and portable acceptance gates pass for the declared version/subset.
+
 ## Risks and Rollbacks
 
 | Risk | Response | Recovery |
 | --- | --- | --- |
 | New format interpreted under old semantics | New closed profile and explicit version admission | Preserve original intent/source; reject unsupported profile |
 | Backfill overwrites concurrent updates | Versioned rows or qualified equivalent; protected writers | Idempotent conditional replay or abort staged candidate |
-| Cutover after incomplete checks | Complete native target validation under write guards | Keep old active generation; retain checkpointed candidate |
+| Cutover after incomplete checks | Complete native target validation under write guards | No target publication; atomic rollback or fenced staged forward repair |
 | Drop/type change loses data | Retain source values or verified backup; explicit loss approval | Restore only when data and post-cutover writes permit; otherwise forward repair |
 | Private birthday/reject values leak | Host-controlled storage; summary counts in receipts | Restrict capture and retention; test diagnostics for raw values |
 | Backend cannot meet online/atomic promise | Capability-specific mode/refusal | Qualified maintenance window or separately approved staged plan |
