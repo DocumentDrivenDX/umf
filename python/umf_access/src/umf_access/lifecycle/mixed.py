@@ -4,21 +4,24 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 
-from .catalog import CatalogError, _all, _execute, _installation, _one, _q, verify_native_catalog
+from .catalog import CatalogError, _all, _execute, _installation, _one, _q
 from .concurrent import _index_state
 from .ledger import (_finalize_phased_migration, _history_rows, _verified_plan,
                      _verify_installed)
 from .ledger_schema import _verify_history_schema
 from .outcome_schema import OUTCOMES, _verify_outcomes
 from .phase_fence import _head_grants, _unfenced_verification, _verify_phase_head
-from .privileges import verify_native_privileges
 from .progress import (_assert_progress_binding, _delete_progress, _drop_progress, _phase_digest,
                        PROGRESS, _progress_rows, _verified_phases, _verify_progress_schema,
                        _write_progress)
 from .witness import _capture_witness
 from .head_view import HEAD
 from .ledger_schema import HISTORY
+from .table_boundary import TABLE_BOUNDARY
+from .roles import verify_native_role_scope
+from .privileges import _EXTERNAL
 
 
 def _phase_steps(plan, phase):
@@ -137,6 +140,57 @@ def _lock_phase_tables(connection, plan):
             _execute(connection, 'LOCK TABLE '+_q(schema)+'.'+_q(table['name'])+' IN ACCESS EXCLUSIVE MODE')
 
 
+def _verify_phase_execution_boundary(connection, plan, person_roles):
+    """Recheck source-independent execution and authority boundaries under locks.
+
+    The phase witness binds the intentional partial source prefix. This check
+    independently rejects native triggers/rules, external incoming references,
+    changed schema ACLs, unexpected app relations, and newly widened role
+    authority before any next source-authored data or DDL effect can run.
+    """
+    bundle = plan['next']
+    schema = bundle['configuration']['schema']
+    cfg = bundle['configuration']
+    _verify_mixed_metadata_inventory(connection, plan)
+    _verify_history_schema(connection, bundle)
+    _verify_outcomes(connection, bundle)
+    _verify_progress_schema(connection, bundle)
+    _verify_phase_head(connection, bundle)
+    relation_ids = []
+    for table in bundle['expectedCatalog']['tables']:
+        row = _one(connection, """SELECT c.oid,c.relkind,c.relam FROM pg_catalog.pg_class c
+JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s""",
+                   (schema, table['name']))
+        heap = _one(connection, "SELECT oid FROM pg_catalog.pg_am WHERE amname='heap'")[0]
+        if row is None or row[1:] != ('r', heap):
+            raise CatalogError('phase-table-boundary-mismatch')
+        relation_ids.append(row[0])
+    owner_id = _one(connection, 'SELECT oid FROM pg_catalog.pg_roles WHERE rolname=%s', (cfg['ownerRole'],))[0]
+    for table in bundle['expectedCatalog']['tables']:
+        boundary = _one(connection, TABLE_BOUNDARY, (relation_ids, relation_ids, schema, table['name']))
+        if boundary != ('r','p',True,True,False,False,False,'d',owner_id,
+                        _one(connection,"SELECT oid FROM pg_catalog.pg_am WHERE amname='heap'")[0],
+                        False,8,False,False):
+            raise CatalogError('phase-table-boundary-mismatch')
+    schema_id = _one(connection, 'SELECT oid FROM pg_catalog.pg_namespace WHERE nspname=%s', (schema,))[0]
+    actual_acl = _all(connection, """SELECT x.grantor,x.grantee,x.privilege_type,x.is_grantable
+FROM pg_catalog.pg_namespace n,LATERAL pg_catalog.aclexplode(COALESCE(n.nspacl,pg_catalog.acldefault('n',n.nspowner))) x
+WHERE n.oid=%s ORDER BY 1,2,3,4""", (schema_id,))
+    expected_acl = _all(connection, """SELECT grantor,grantee,privilege_type,is_grantable
+FROM pg_catalog.aclexplode(pg_catalog.acldefault('n',%s::pg_catalog.oid))""", (owner_id,))
+    for key in ('personRole','batchRole'):
+        role_id = _one(connection, 'SELECT oid FROM pg_catalog.pg_roles WHERE rolname=%s', (cfg[key],))[0]
+        expected_acl.append((owner_id, role_id, 'USAGE', False))
+    if actual_acl != sorted(expected_acl):
+        raise CatalogError('phase-schema-privilege-mismatch')
+    verify_native_role_scope(connection, bundle, person_roles=person_roles)
+    for name in (cfg['ownerRole'],cfg['personRole'],cfg['batchRole']):
+        role_id = _one(connection, 'SELECT oid FROM pg_catalog.pg_roles WHERE rolname=%s', (name,))[0]
+        if _one(connection, _EXTERNAL,
+                (role_id,schema,role_id,schema,role_id,role_id,schema,role_id,role_id,role_id,role_id,role_id)) != (False,):
+            raise CatalogError('phase-external-authority-present')
+
+
 def _run_required_phase(connection, plan, phase, person_roles, *, statement_timeout_ms, lock_timeout_ms):
     bundle = plan['next']
     from .backfills import _apply_backfill
@@ -180,7 +234,7 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
             or source_plan.get('options', {}).get('version') != 'umf.table-migration-options/0.2'
             or approved_digest != source_plan['digest']):
         raise CatalogError('mixed-phase-profile')
-    if file_digest is not None and (type(file_digest) is not str or len(file_digest) != 64):
+    if file_digest is not None and (type(file_digest) is not str or not re.fullmatch('[a-f0-9]{64}', file_digest)):
         raise CatalogError('migration-file-digest-conflict')
     if stop_after_phase is not None and (type(stop_after_phase) is not int or stop_after_phase < 1):
         raise ValueError('invalid recovery options')
@@ -209,7 +263,11 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
                 raise CatalogError('ledger-history-missing')
             matches = [entry for entry in history if entry['plan']['id'] == source_plan['id']]
             if matches:
-                if matches[0]['plan']['digest'] != source_plan['digest']:
+                match = matches[0]
+                prior_head = history[match['position']-2]['entryDigest'] if match['position'] > 1 else None
+                if (match['plan']['digest'] != source_plan['digest']
+                        or match.get('fileDigest') != file_digest
+                        or prior_head != expected_head):
                     raise CatalogError('ledger-digest-conflict')
                 if history[-1]['plan']['toBundleDigest'] != bundle['bundleDigest']:
                     raise CatalogError('installed-generation-mismatch')
@@ -226,8 +284,10 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
             rows = _progress_rows(connection, schema) if progress_exists else []
             if rows:
                 receipt = rows[0]
+                if receipt['fileDigest'] != file_digest:
+                    raise CatalogError('migration-file-digest-conflict')
                 _assert_progress_binding(receipt, migration_id=source_plan['id'], plan_digest=source_plan['digest'],
-                                         expected_head=expected_head, file_digest=file_digest)
+                                         expected_head=expected_head, file_digest=receipt['fileDigest'])
                 _verify_mixed_prefix(connection, source_plan, receipt)
             else:
                 _verify_installed(connection, history[-1], person_roles, statement_timeout_ms, lock_timeout_ms)
@@ -254,6 +314,7 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
                 repair_step = None
                 with connection.transaction():
                     _lock_phase_tables(connection, source_plan)
+                    _verify_phase_execution_boundary(connection, source_plan, person_roles)
                     _verify_mixed_metadata_inventory(connection, source_plan)
                     current = _capture_witness(connection, bundle)
                     if _without_concurrent_effect(current, source_plan, phase) != receipt['prefixWitness']:
@@ -288,6 +349,7 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
                         raise CatalogError('migration-outcome-unknown-observe-progress')
                     with connection.transaction():
                         _lock_phase_tables(connection, source_plan)
+                        _verify_phase_execution_boundary(connection, source_plan, person_roles)
                         _verify_mixed_metadata_inventory(connection, source_plan)
                         current = _capture_witness(connection, bundle)
                         if _without_concurrent_effect(current, source_plan, phase) != receipt['prefixWitness']:
@@ -307,6 +369,8 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
                     continue
             if phase['transaction'] == 'forbidden':
                 with connection.transaction():
+                    _lock_phase_tables(connection, source_plan)
+                    _verify_phase_execution_boundary(connection, source_plan, person_roles)
                     current = _capture_witness(connection, bundle)
                     if current != receipt['prefixWitness']:
                         raise CatalogError('progress-prefix-mismatch')
@@ -318,6 +382,7 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
                     raise CatalogError('migration-outcome-unknown-observe-progress')
                 with connection.transaction():
                     _lock_phase_tables(connection, source_plan)
+                    _verify_phase_execution_boundary(connection, source_plan, person_roles)
                     _verify_mixed_metadata_inventory(connection, source_plan)
                     current = _capture_witness(connection, bundle)
                     if _without_concurrent_effect(current, source_plan, phase) != receipt['prefixWitness']:
@@ -331,6 +396,7 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
             else:
                 with connection.transaction():
                     _lock_phase_tables(connection, source_plan)
+                    _verify_phase_execution_boundary(connection, source_plan, person_roles)
                     _verify_mixed_metadata_inventory(connection, source_plan)
                     current = _capture_witness(connection, bundle)
                     if current != receipt['prefixWitness']:
@@ -357,9 +423,9 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
             _head_grants(connection, bundle, True)
             _delete_progress(connection, schema, source_plan['id'])
             _drop_progress(connection, schema)
-            verify_native_catalog(connection, bundle, statement_timeout_ms=statement_timeout_ms, lock_timeout_ms=lock_timeout_ms)
-            verify_native_privileges(connection, bundle, person_roles=person_roles,
-                statement_timeout_ms=statement_timeout_ms, lock_timeout_ms=lock_timeout_ms)
+            # The private finalizer performs full catalog and privilege
+            # verification before recording history. Avoid a second complete
+            # source probe while preserving its atomic publication boundary.
             result = _finalize_phased_migration(connection, source_plan, approved_digest=approved_digest,
                 expected_head=expected_head, person_roles=person_roles,
                 statement_timeout_ms=statement_timeout_ms, lock_timeout_ms=lock_timeout_ms,
