@@ -264,10 +264,10 @@ function assertNoColumnDependents(column:TableDeploymentBundle['expectedCatalog'
   const successor=next.steps.find(fresh=>fresh.sourcePath===step.sourcePath);
   if(!successor||successor.sql.includes(quoted))affected.push(step.sourcePath);
  }
- for(const index of previous.expectedCatalog.indexes.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted)))affected.push('index:'+index.name);
- for(const check of previous.expectedCatalog.checks.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted)))affected.push('constraint:'+check.name);
- for(const fk of previous.expectedCatalog.foreignKeys.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted)))affected.push('foreign-key:'+fk.name);
- for(const key of previous.expectedCatalog.keys.filter(x=>x.table===column.table&&x.columns.includes(column.name)))affected.push('key:'+key.name);
+ for(const index of previous.expectedCatalog.indexes.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted))){const fresh=next.expectedCatalog.indexes.find(x=>x.table===column.table&&x.id===index.id);if(fresh?.definitionSql.includes(quoted))affected.push('index:'+index.name);}
+ for(const check of previous.expectedCatalog.checks.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted))){const fresh=next.expectedCatalog.checks.find(x=>x.table===column.table&&x.id===check.id);if(fresh?.definitionSql.includes(quoted))affected.push('constraint:'+check.name);}
+ for(const fk of previous.expectedCatalog.foreignKeys.filter(x=>x.table===column.table&&x.definitionSql.includes(quoted))){const fresh=next.expectedCatalog.foreignKeys.find(x=>x.table===column.table&&x.id===fk.id);if(fresh?.definitionSql.includes(quoted))affected.push('foreign-key:'+fk.name);}
+ for(const key of previous.expectedCatalog.keys.filter(x=>x.table===column.table&&x.columns.includes(column.name))){const fresh=next.expectedCatalog.keys.find(x=>x.table===column.table&&x.id===key.id);if(fresh?.columns.includes(column.name))affected.push('key:'+key.name);}
  const localKeys=previous.expectedCatalog.keys.filter(key=>key.table===column.table&&key.columns.includes(column.name));
  for(const fk of previous.expectedCatalog.foreignKeys){if(localKeys.some(key=>key.name===fk.targetKey))affected.push('inbound-foreign-key:'+fk.name);}
  const oldDocument=readDocument(previous.source.utf8,previous.source.format),newDocument=readDocument(next.source.utf8,next.source.format);
