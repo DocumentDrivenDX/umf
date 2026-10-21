@@ -19,7 +19,7 @@ ddx:
 
 **Scope:** One generated typed model/query/action API for direct tables and ontology-backed graphs, with Weft compilation and consumer-owned execution.
 **Owner:** UMF stack maintainers; individual assignees remain unassigned.
-**Last revised:** 2026-10-21, following Praxis table-lifecycle revision2 against reported UMF0.5.3/Weft0.4.49 releases. The R1–R11 assessment below is the current planning cut; the original baseline is retained as dated context.
+**Last revised:** 2026-10-21, following bounded U1–U3 source review and installed candidate acceptance. The current checkpoint below supersedes resolved implementation gaps in the historical R1–R11 assessment; consumer adoption and broader requirements remain open. The original baseline is retained as dated context.
 
 ## Horizon and Cadence
 
@@ -89,9 +89,9 @@ are not evidence that the posted wheels contain the successor changes.
 
 | Requirement | Existing workstream / accountable role | Disposition and next-release gate |
 | --- | --- | --- |
-| U1: transaction modes, validation and reviewed data steps | WS-6, WS-7; UMF lifecycle maintainer, Weft for typed data SQL | Accept. Local successor work covers bounded source-declared backfill, immediate added CHECK/FK validation and **index-only** concurrent phases. It does not yet satisfy a single mixed migration containing data, constraints and concurrent indexes. Extend the versioned plan with ADD NOT VALID / VALIDATE steps and phase barriers, durable progress, fail-closed runtime admission and failed-step recovery. Preserve source/old-head custody throughout. Gate: one ordered mixed plan containing all three effects; failures before/after every commit boundary; no repeated backfill or partially published generation. NOT VALID reduces validation-time blocking; it does not promise no locks ([PostgreSQL18 ALTER TABLE](https://www.postgresql.org/docs/18/sql-altertable.html)). |
-| U2: reviewed changes to existing objects | WS-6; UMF migration/schema maintainer | Accept guarded evolution; preserve unsupported refusals. Define reviewed markers by exact change ID/kind/source path and old/new digest, bound by the approved plan digest. Unmarked destructive changes return `destructive_change_unreviewed` and enumerate affected objects. Implement independently qualified drop/rename, NOT NULL tightening, type change, constraint/index replacement, Key change and policy changes. A marker cannot bypass dependency analysis, explicit type conversion, data-loss disclosure, source correspondence or native capability checks. Gate: unreviewed column drop refuses with the named reason; reviewed supported drop compiles and applies only to the approved source, with dependent FK/policy/operation and stale-client negative controls. Keep unsupported forms explicitly blocked. |
-| U3: command subsets, groups, open reference reads, owner+via | WS-6, WS-5; UMF authoring/security maintainer | Existing explicit command maps already express subsets using deny for omitted commands; memberOfRole expresses trusted groups and allow expresses an open read. Related matching is available for explicit association fields without inventing an FK. Add/document a bounded row_scope authoring normalization into these existing forms: resolve every field/table/pair explicitly; omitted command denies; batch is an authenticated audience. Keep canonical payload command maps explicit. Gate: exact supplied owner+via block normalizes to person CRUD and batch SELECT/INSERT, never UPDATE/DELETE; FORCE RLS and old/new row checks remain; unknown groups/joins/cycles refuse. This is native RLS, not shared-security equivalence or a complete ethical-wall system. |
+| U1: transaction modes, validation and reviewed data steps | WS-6, WS-7; UMF lifecycle maintainer, Weft for typed data SQL | Bounded maintenance profile accepted locally: one v0.2 plan contains backfill, ADD NOT VALID/VALIDATE, concurrent indexes and seeds. Durable phase custody, old-head fencing, unknown-commit observation, explicit exact index repair and no repeated committed data effects pass 21 installed native checks and an independent replay. App locks and native authority/prefix checks precede effects. This is not online chunked execution or managed-service qualification. |
+| U2: reviewed changes to existing objects | WS-6; UMF migration/schema maintainer | Source review fixes exact marker binding, typed dependency closure and ordered native dispositions. Installed reviewed shards A/B/C/D pass 128 checks across 14 native cases and two additional compiler refusal cases for column/policy/Key/index/CHECK/FK/nullability/finite widening. Independent source/evidence review closes MIG-R01–R06 for this profile. Drops disclose immediate irreversible stored-value purge; history is not a backup. Preserve explicit refusal of unsupported conversions, dependencies and combined column drop/append. |
+| U3: command subsets, groups, open reference reads, owner+via | WS-6, WS-5; UMF authoring/security maintainer | Bounded row_scope normalization is public in TypeScript/browser and embedded Python. It preserves sources and explicit command maps, denies omitted commands, resolves trusted groups/joins and refuses cycles or inaccessible related SELECT dependencies. Installed owner+via native checks pass owner-only/via-only/neither, old/new rows, FORCE RLS and membership reassignment. This is native RLS qualification, not a complete ethical-wall system or managed consumer acceptance. |
 | U4: comments and simple checks | WS-6; UMF schema/deployment maintainer | Comments from core descriptions are in the local successor. Core allowedValues and exact range facets already drive blocking native domain CHECKs. Document enum/range authoring first; if named native-check shorthand is needed, normalize it to the existing typed expressions rather than invent competing range/null semantics. Gate: descriptions and exact enum/range bounds round-trip, emit deterministic comments/CHECKs, enforce in native PostgreSQL and produce located refusals for unsupported carriers. |
 | U5: reference applier and approval custody | WS-7, WS-6; UMF administrative runtime maintainer | Accept. Local native applier now has file-byte digest custody and explicit approval/head inputs. Extract a small typed host protocol for read-history, execute-step and persist-step/approval, leaving Psycopg/native correspondence as one qualified adapter. Host atomicity/durability capabilities must be explicit; a fake interface is not native proof. Record approved plan/file digest, decider supplied by the trusted host, native evidence/qualification and per-phase outcomes. `nativeQualified:false` remains a compiler statement; host approval is a separate recorded receipt, not mutation of the compiled plan. Gate: edited applied file, reordered chain, wrong terminal snapshot, wrong approval and interrupted step refuse/recover through the shared state machine. |
 | U6: optional containment for untrusted author SQL | WS-6, WS-7; UMF admission and Weft SQL owners | Accept as separately versioned optional profile. Generated plans already require complete original-source recompilation; untrusted SQL is not admitted by rehashing. Review the contributed checker before choosing reuse. Any hand-authored SQL ingress must use parsed statements with positive supported syntax/object-reference closure, not regex approval. Reject foreign schemas, role/schema creation, external grants, settings and stored code; trusted runner's own role/timeout/fence setup is a separate host authority. Gate: malicious CTEs, quoting/comments/dollar strings, multi-statements, indirect object references and source-rehashed altered SQL; unsupported syntax blocks. |
@@ -101,18 +101,19 @@ are not evidence that the posted wheels contain the successor changes.
 
 ### Next release order and completion boundary
 
-1. **WS-6/7 — close the current local successor:** comments, reviewed bounded
-   backfill, added constraints, index-only recovery/fence, migration CLI and file
-   digests; finish native/browser/installed verification and record limitations.
-2. **WS-6/5 — U3/U4 authoring acceptance:** normalize the supplied row_scope,
-   show enum/range/description examples on legal domain fixtures and the exact
-   consumer tables when available. Preserve original metadata and explicit policy
-   additions; fabricated domain evidence does not substitute for Praxis acceptance.
-3. **WS-6/7 — U1/U2/U5 adoption gate:** evolve contract/design/test coverage for
-   mixed phases, NOT VALID/VALIDATE, reviewed existing-object changes and the host
-   applier protocol before coding those extensions. U1–U3 are the consumer's stated
-   deletion gate. Do not mark U1 complete from index-only tests or U2 complete from
-   existing all-plan approval. Run each supported object change and its refusals.
+1. **WS-6/7 — promote the bounded candidate:** retain exact installed source and
+   wheel custody through hosted CI and publication. The
+   [candidate packet](../04-build/evidence/praxis-u123-adoption/README.md) records
+   accepted mixed-phase, reviewed-operation and owner+via results; independent
+   source/evidence review closes MIG-R01–R06 for the recorded maintenance profile.
+2. **WS-6/5 — consumer authoring acceptance:** row_scope normalization and native
+   authorization pass the bounded fixtures. Port the exact consumer schema and
+   enum/range/description metadata when available; fabricated legal-domain
+   evidence does not substitute for Praxis acceptance.
+3. **WS-6/7 — preserve the adoption boundary:** U1–U3 are upstream replacement
+   capabilities, not evidence that Praxis has deleted its emitter. U5's general
+   host protocol and MIG-G01–G11 remain separately selected work. Keep the exact
+   eleven-table/four-migration consumer and managed-target gates below.
 4. **WS-9/5 — U7/U8 distribution:** start matrix and mirror preparation alongside
    the above, finalize against the exact release cohort. Publish only passing
    capability/matrix claims; do not let packaging erase unresolved P1 requirements.

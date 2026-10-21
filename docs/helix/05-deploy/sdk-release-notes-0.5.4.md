@@ -20,11 +20,12 @@ ddx:
 ## Release Scope
 
 Candidate distribution versions are `@umf/core` 0.5.4, `umf_access` 0.1.0.dev6,
-and `umf_codegen` 0.1.0a3. The Weft compiler version is unchanged. Core semantic
-version 0.10 and the access runtime identity `0.1.0.dev0` are unchanged. These
-version assignments describe this draft only; release qualification depends on
-the final integrated source, embedded assets, installed wheels and acceptance
-evidence.
+and `umf_codegen` 0.1.0a3. No Weft source change is included; the recorded native
+cohort uses published Weft 0.4.49. Core semantic version 0.10.0 and the access
+runtime identity `0.1.0.dev0` are unchanged. The original core 0.10.0 release assets
+are reused; refreshed generated SDK headers record package provenance only.
+These are candidate versions; publication and hosted CI acceptance are separate
+from the local evidence below.
 
 ## Audience and Channels
 
@@ -77,11 +78,21 @@ Irreversible purge cannot be rolled back from metadata history alone.
 
 ## Validation
 
-This draft is not a release receipt. Final source/browser parity, portable
-compiler and verifier checks, installed generator correspondence, native
-PostgreSQL lifecycle tests and historical 0.1 compatibility evidence must be
-reported against the frozen integrated artifacts before promotion. No test
-counts or managed-target qualification are asserted here.
+The [candidate evidence packet](../04-build/evidence/praxis-u123-adoption/README.md)
+records 55 affected tests (282 assertions), 91 Chromium assertions with zero
+external requests, and 139 SDK installation conformance checks. Installed native
+receipts record 42 legal lifecycle checks, 10 owner+via checks, 21 mixed-phase
+checks and an independent replay of the same 21 mixed checks. Reviewed-operation
+shards A/B/C/D pass 28/27/40/33 checks: 128 assertions across 14 native cases and
+two additional compiler refusal cases. Counts describe separate, partly
+overlapping suites and are not a combined coverage total.
+
+Wheel/source/RECORD correspondence and the actual published SDK 0.5.3 historical
+initial/additive oracle are retained. The current compiler refuses newly
+identified unreviewed legacy policy effects while preserving historical
+verification/replay. Independent source/evidence review closes MIG-R01–R06 for
+the recorded PostgreSQL 18 maintenance profile. This draft is not a posted-release,
+hosted CI or managed-target receipt.
 
 ## Known Issues and Support
 

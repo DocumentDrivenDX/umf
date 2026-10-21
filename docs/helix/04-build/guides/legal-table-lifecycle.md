@@ -36,10 +36,12 @@ VALIDATE phases. New concurrent indexes can share a plan with backfills and othe
 phases. Seeds have their own ordered data phase and receipt; the finalizer does not
 replay a completed seed phase.
 
-The public TypeScript API `discoverTableMigrationChanges(previous, next)` and the
-Python `umf_codegen.discover_table_migration_changes(previous_bundle, next_bundle)`
-recompile and verify both deployment bundles before returning exact source-bound
-review candidates. Candidates include `oldValue` and `newValue` for human review.
+The public TypeScript API `discoverTableMigrationChanges(previous, next)` accepts
+verified deployment bundles; callers must verify both inputs with
+`verifyTableDeployment`. The Python
+`umf_codegen.discover_table_migration_changes(previous_bundle, next_bundle)` wrapper
+recompiles and verifies both bundles before returning exact source-bound review
+candidates. Candidates include `oldValue` and `newValue` for human review.
 Copy only `id`, `kind`, `path`, `oldDigest`, and `newDigest` into an option's
 `reviewedChanges`; never copy the explanatory values. Type changes also require an
 explicit `conversion: "pg-cast-v1"` marker. The resulting plan digest binds its
@@ -56,7 +58,7 @@ combinations must be split into independently valid migrations.
 
 Type conversion is limited to safe, capacity-checked PostgreSQL widening pairs:
 `smallint` to `integer`, `integer` to `bigint`, and numeric widening that does not
-reduce scale and increases integral capacity. The exact accepted source and target
+reduce scale or integral capacity. The exact accepted source and target
 representations are checked by the compiler, and PostgreSQL validates existing
 values and target constraints. Narrowing, cross-family casts, rounding,
 arbitrary expressions, unrelated default/generated/immutable/collation changes,
@@ -108,9 +110,10 @@ retirement/restore, online chunked rewrites, cross-document work, non-PostgreSQL
 backends, managed-consumer qualification, v0.2 inventory/bootstrap and combined
 column drop/append. They are explicit scope limits, not implied support.
 
-Portable source, schema and browser parity tests cover candidate discovery,
-compilation and refusal behavior. Python source verification and native PostgreSQL
-acceptance must be reported against the final integrated source and installed
-assets. Do not treat candidate or local evidence as managed production acceptance.
+The [U1–U3 evidence packet](../evidence/praxis-u123-adoption/README.md) records the
+exact installed candidate wheels, source correspondence, portable/browser checks,
+mixed-phase recovery, all four reviewed-operation shards and owner+via native
+authorization. MIG-R01–R06 are closed for this recorded PostgreSQL 18 maintenance
+profile. These results do not establish managed production acceptance.
 Run native tests only on an explicitly selected development database with
 authority to create isolated roles and schemas.

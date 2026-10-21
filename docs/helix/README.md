@@ -6,7 +6,7 @@ requiredness/default/backfill, removals and type changes. The existing
 CONTRACT-081/TD-085/STP-085 stream owns the bounded PostgreSQL implementation;
 broader transforms, retained-value recovery and backend profiles remain planned.
 
-[Table lifecycle successor evidence](04-build/evidence/table-lifecycle-completion/README.md) records documented legal-domain schemas, reviewed bounded backfills, index-only concurrent recovery/fencing and installed verification. [Use the candidate](04-build/guides/legal-table-lifecycle.md); [stage a wheel mirror](04-build/guides/python-wheel-mirror.md). Revision2 mixed phases and reviewed existing-object evolution remain next-release work.
+[U1–U3 candidate evidence](04-build/evidence/praxis-u123-adoption/README.md) records mixed-phase recovery, reviewed existing-object evolution and row_scope authorization against exact installed wheels. Mixed, reviewed-operation and owner+via native acceptance pass for the recorded maintenance profile. The [earlier lifecycle evidence](04-build/evidence/table-lifecycle-completion/README.md) retains its bounded predecessor scope. [Use the candidate](04-build/guides/legal-table-lifecycle.md); [stage a wheel mirror](04-build/guides/python-wheel-mirror.md). Local PostgreSQL qualification does not establish managed consumer adoption.
 
 [Praxis revision2 next-release requirements](01-frame/praxis-lifecycle-roadmap.md#next-release-requirements--praxis-revision2-2026-10-21) maps U1–U9 to existing WS-5–9, preserves the U1–U3 adoption gate, and distinguishes posted releases from locally verified successor work.
 

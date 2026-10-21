@@ -27,7 +27,8 @@ ddx:
 
 Owner request, 2026-10-21: plan additions, requiredness with defaults/backfills,
 removals and type changes, with explicit UMF/backend ownership. This is a design
-and delivery proposal; no migration implementation or release claim follows.
+and delivery proposal for the broader design; the bounded implementation checkpoint
+below records separately authorized work and does not establish full delivery.
 
 Governing artifacts: PRD FR-18/19, FEAT-007 COMP-06–11, US-051-AC11–16,
 SD-007, architecture, CONTRACT-046/049/081, ADR-002 and TP-001. Catalog: installed
@@ -54,16 +55,17 @@ do not start a second implementation or redefine its versioned interfaces.
 | Existing work | Observed scope | Relationship to this plan |
 | --- | --- | --- |
 | Bounded lifecycle candidate | Evidence packet reports required appended columns, literal/transaction-clock backfills, later default/NOT NULL installation, added checks/FKs and index-only concurrent recovery | Reuse for MIG-03; qualify exact accepted artifacts |
-| U1, active | Mixed transactional/concurrent phases, explicit validation, durable progress, fencing and recovery without replaying committed data effects | Owns native phase execution portions of MIG-04/07 |
-| U2, active | Source-bound reviewed markers; drop/rename, nullability, finite type conversions and constraint/Key/policy dependency changes | Owns bounded native portions of MIG-05/06 |
-| U3, active | row_scope normalization into canonical policies | Related authoring/security work, not a new migration engine |
+| U1, bounded local acceptance | Mixed transactional/concurrent phases, explicit validation, durable progress, fencing and recovery without replaying committed data effects | Owns native phase execution portions of MIG-04/07 |
+| U2, bounded local acceptance | Source-bound reviewed markers; drop/rename, nullability, finite type conversions and constraint/Key/policy dependency changes | Owns bounded native portions of MIG-05/06 |
+| U3, bounded local acceptance | row_scope normalization into canonical policies | Related authoring/security work, not a new migration engine |
 
-The candidate evidence is local and unpublished; U1/U2 were not observed complete
-or released. Bounded backfill and finite conversions do not establish arbitrary
-per-row transforms, online chunked rewrites, recoverable retirement windows or
-non-PostgreSQL execution. Assess those against the accepted capability inventory
-before assigning residual implementation. Reconcile overlapping documentation
-with that chat; this checkout is not the current native implementation baseline.
+The [accepted candidate packet](evidence/praxis-u123-adoption/README.md) now records
+local source/evidence acceptance of U1–U3 against SDK 0.5.4, access dev6 and codegen
+a3. It does not establish release publication or managed consumer adoption.
+Bounded backfill and finite conversions do not establish arbitrary per-row
+transforms, online chunked rewrites, recoverable retirement windows or
+non-PostgreSQL execution. Assess those against MIG-G01–G11 before assigning
+residual implementation; do not duplicate the accepted native state machine.
 
 ### Invariants
 
@@ -142,12 +144,20 @@ metering/enforcement availability must be stated at that time.
 ## Continuation Evidence
 
 Planning baseline: requirements, solution design, project test gates and this
-sequence recorded; no implementation performed in this chat. Native work is
-active in Plan UMF and Weft Praxis asks. Next action: MIG-00 reconciliation and
-design review against that stream's accepted interfaces/evidence.
-Record completed slice IDs, source/profile
-versions, evidence paths, failures, remaining decisions and next action here when
-execution begins. Do not discover or create tracker work without selection.
+sequence were recorded separately from the native implementation workstream.
+The 2026-10-21 [U1–U3 packet](evidence/praxis-u123-adoption/README.md) reconciles its
+accepted existing-table maintenance profile. Installed native receipts cover
+mixed execution (21 checks, independently replayed), reviewed operations (128
+assertions across 14 native cases plus two compiler refusal cases), legal
+lifecycle (42) and owner+via authorization (10). Portable affected tests pass
+55 tests (282 assertions); Chromium passes 91 assertions; SDK installation conformance
+passes 139 checks. Exact package/source custody and published 0.5.3 historical
+initial/additive verification/replay are retained. Counts overlap across suites.
+
+This closes the bounded review findings below, not the full MIG-03–08 slices or
+US-051-AC11–16. Next actions are hosted CI/publication and actual consumer
+qualification for the selected profile, then owner selection of residual design
+work. Do not discover or create tracker work without selection.
 
 ## Design review and remaining migration gaps
 
@@ -160,23 +170,28 @@ status; link their eventual source-bound evidence and owning slice instead.
 
 ### Active verification blockers
 
-Snapshot: integrated native work reviewed on 2026-10-21; final receipts pending.
-The current conclusion is **not approved**. Partial U1/U3 tests do not discharge
-these gates. Record each resolution against the final integrated artifact cohort.
+Snapshot: source/evidence review completed on 2026-10-21 against the retained
+installed candidate cohort. **Approved for the recorded local PostgreSQL 18.6
+maintenance profile.** Each closed finding below is bounded by CONTRACT-081,
+TD-085/STP-085 and the [candidate packet](evidence/praxis-u123-adoption/README.md).
+Hosted CI, publication and actual managed consumer acceptance remain separate.
 
 | ID | Status | Finding / required acceptance | Owner / allocation | Closure evidence |
 | --- | --- | --- | --- | --- |
-| MIG-R01 | Open | Typed Field-reference dependency matching compares canonical JSON against noncanonical JSON text, missing ordinary refs. Resolve by stable identity, check old/new dependency disposition, and test both key orders, commands, policies and cross-table refs. | U2 compiler; MIG-05/06 | Portable negative controls plus native reviewed-drop/dependency refusal on exact integrated sources |
-| MIG-R02 | Open | Already-applied mixed replay must bind the original file digest and predecessor head; changed inputs must not receive successful replay. | U1 host; MIG-07 | Native correct replay and wrong-file/wrong-head refusals without repeat effects |
-| MIG-R03 | Open | A paused phase must reject added user triggers, altered trusted roles or schema privileges before any resumed data effect. Check complete relevant native boundary while required app locks are held. | U1 host; MIG-04/07 | Native pause/tamper/resume tests demonstrate zero data effects and continued fencing |
-| MIG-R04 | Open | One combined native plan must exercise backfill, concurrent index, NOT VALID/VALIDATE and seeds through commit-boundary interruption, uncertain result and exact index repair. | U1 host; MIG-04/07 | Source-bound native receipts show no repeated committed backfill/seed, explicit repair and final ledger/head publication |
-| MIG-R05 | Open | Every advertised U2 operation needs native positive/refusal evidence: reviewed purge disclosure, name ordering, actual-data NOT NULL validation, finite logical/native widening, constraint/index/Key/FK/policy dependency handling. Unsupported combinations must refuse. | U2 compiler and native harness; MIG-03/05/06 | Integrated native operation inventory, constraint/concurrency failures and retained final-state observations |
-| MIG-R06 | Open | Final installed generator/runtime and browser results must correspond to the exact reviewed source and embedded assets. Historical plan verification must preserve old rules without authorizing new unreviewed effects. | Integration/release owner; MIG-07 | Manifest/wheel/source correspondence, historical verifier controls, focused regression, Chromium parity and installed-native replay |
+| MIG-R01 | Closed, bounded profile | Canonical typed Field-reference dependency matching, old/new disposition and ordered policy/dependency changes precede destructive native effects. Markers cannot bypass unsupported dependencies. | U2 compiler; MIG-05/06 | Current-source review, affected portable corpus and reviewed A/D receipts: policy rewrite before purge, unchanged native dependency refusal and inbound Key refusal; exact source hashes retained |
+| MIG-R02 | Closed, bounded profile | Applied mixed replay binds the original file digest and predecessor head; changed inputs refuse without replaying effects. | U1 host; MIG-07 | Installed mixed receipt: resumed file binding, applied wrong-file/wrong-head refusals and correct historical replay |
+| MIG-R03 | Closed, bounded profile | Complete relevant native boundary is checked under required app locks before resumed effects, including triggers, trusted role attributes and schema ACLs. | U1 host; MIG-04/07 | Installed mixed receipt: phase/prefix tamper, trigger, ACL, BYPASSRLS and external-authority drift refuse with zero backfill effects and continued fencing |
+| MIG-R04 | Closed, bounded profile | One plan combines backfill, NOT VALID/VALIDATE, concurrent indexes and seeds; committed effects are observed without replay, with explicit invalid-index repair and atomic final publication. | U1 host; MIG-04/07 | Installed mixed 21-check receipt and independent 21-check replay; progress removed, ordinary history/catalog and final person read pass |
+| MIG-R05 | Closed, bounded profile | Native qualification covers advertised column purge/rename, nullability, finite widening, CHECK/FK/index/Key/policy changes and selected refusals; unsupported compounds remain blocked. | U2 compiler and native harness; MIG-03/05/06 | Installed reviewed A/B/C/D: 28/27/40/33 assertions, 14 native cases plus two compiler refusal cases; actual-data failure rollback, second-session NOT NULL lock/write controls, preserved unrelated constraints, source-bound markers and final native catalogs |
+| MIG-R06 | Closed, bounded profile | Exact installed generator/runtime source and embedded assets correspond to portable/browser/native evidence; historical verification/replay does not authorize fresh unreviewed effects. | Integration/release owner; MIG-07 | Wheel/source/RECORD audit, 55 affected tests/282 assertions, Chromium 91 assertions, SDK install 139 checks, installed native receipts and actual published 0.5.3 initial/additive oracle with fresh legacy policy-effect refusal |
 
-MIG-R02/R03 were reported by the implementation chat's independent runtime
-review; MIG-R01 was independently reproduced in this design chat. These findings
-are review inputs, not assertions that a newer unreviewed source still contains
-them. Recheck actual fixes before updating status.
+All four retained reviewed fixture/report hash closures and final C critical
+source/asset hashes were independently checked. A/B/D retain their original
+reports and builder hashes: the complete selected fixture bytes are identical
+under the final builder, documented in `fixture-equivalence.json`. C changed and
+was rerun against its final fixture. This custody qualification does not relabel
+old reports as newly executed runs. The earlier frozen candidate policy fixture
+and the actual published 0.5.3 oracle retain distinct provenance.
 
 ### Explicit capability residuals
 
