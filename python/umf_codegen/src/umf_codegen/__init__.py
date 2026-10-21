@@ -74,11 +74,13 @@ class BlockedTableMigration(TypedDict):
 
 def compile_table_migration(*, migration_id: str, predecessor: TableMigrationPredecessor | None,
                             previous_bundle: dict[str, object] | None, next_bundle: dict[str, object],
+                            options: dict[str, object] | None = None,
                             timeout_seconds: float = 30) -> CompiledTableMigration | BlockedTableMigration:
     """Compile an inert forward plan; native ledger and approval remain required."""
     return cast(CompiledTableMigration | BlockedTableMigration,
                 execute({"id": migration_id, "predecessor": predecessor,
-                         "previous": previous_bundle, "next": next_bundle},
+                         "previous": previous_bundle, "next": next_bundle,
+                         **({"options": options} if options is not None else {})},
                         timeout_seconds, operation="migration"))
 
 

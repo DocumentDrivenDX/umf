@@ -9,6 +9,7 @@ from __future__ import annotations
 import re
 from typing import Any, cast
 
+from .backfills import _apply_backfill
 from .catalog import (
     CatalogError,
     _all,
@@ -53,7 +54,9 @@ def _history_rows(connection: Any, schema: str) -> list[dict[str, Any]]:
     previous: dict[str, Any] | None = None
     for position, row in enumerate(rows,1):
         number, migration_id, predecessor, plan_digest, entry_digest, payload = row
-        if type(payload) is not dict or set(payload) != {'plan','witness'} or type(payload['plan']) is not dict or type(payload['witness']) is not dict:
+        if type(payload) is not dict or set(payload) not in ({'plan','witness'},{'plan','witness','fileDigest'}) or type(payload['plan']) is not dict or type(payload['witness']) is not dict:
+            raise CatalogError('ledger-digest-conflict')
+        if 'fileDigest' in payload and (type(payload['fileDigest']) is not str or not re.fullmatch('[a-f0-9]{64}',payload['fileDigest'])):
             raise CatalogError('ledger-digest-conflict')
         try:
             plan = _verified_plan(payload['plan'])
@@ -61,11 +64,11 @@ def _history_rows(connection: Any, schema: str) -> list[dict[str, Any]]:
             raise CatalogError('ledger-digest-conflict') from None
         if (number != position or migration_id != plan['id'] or plan_digest != plan['digest']
                 or predecessor != (previous['entryDigest'] if previous else None)
-                or entry_digest != _entry_digest(position,predecessor,plan_digest,payload['witness'])
+                or entry_digest != _entry_digest(position,predecessor,plan_digest,payload['witness'],payload.get('fileDigest'))
                 or plan['predecessor'] != ({'id':previous['plan']['id'],'digest':previous['plan']['digest']} if previous else None)
                 or plan['fromBundleDigest'] != (previous['plan']['toBundleDigest'] if previous else None)):
             raise CatalogError('ledger-digest-conflict')
-        previous = {'position':position,'entryDigest':entry_digest,'plan':plan,'witness':payload['witness']}
+        previous = {'position':position,'entryDigest':entry_digest,'plan':plan,'witness':payload['witness'],'fileDigest':payload.get('fileDigest')}
         history.append(previous)
     return history
 
@@ -83,16 +86,30 @@ def _verify_installed(connection: Any, entry: dict[str, Any], person_roles: tupl
 def apply_table_migration(connection: Any, plan: dict[str, object], *, approved_digest: str,
                           expected_head: str | None, person_roles: tuple[str, ...],
                           statement_timeout_ms: int = 30_000,
-                          lock_timeout_ms: int = 5_000) -> dict[str, object]:
+                          lock_timeout_ms: int = 5_000, file_digest: str | None = None) -> dict[str, object]:
     """Apply/replay an approved initial/append plan in a caller-owned transaction.
 
     expected_head is the prior receipt's entryDigest (initial None), not a
     value inferred from the database. History and effects roll back together.
     A successful result is pending the caller's commit; no writes are retried.
     """
+    return _apply_table_migration(connection,plan,approved_digest=approved_digest,
+                                  expected_head=expected_head,person_roles=person_roles,
+                                  statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms,file_digest=file_digest)
+
+
+def _apply_table_migration(connection,plan,*,approved_digest,expected_head,person_roles,
+                           statement_timeout_ms=30_000,lock_timeout_ms=5_000,prebuilt_indexes=False,file_digest=None):
     from psycopg.types.json import Jsonb
 
+    if file_digest is not None and (type(file_digest) is not str or not re.fullmatch('[a-f0-9]{64}',file_digest)):
+        raise CatalogError('migration-file-digest-conflict')
     source_plan = _verified_plan(plan)
+    concurrent = any(step['transaction'] == 'forbidden' for step in source_plan['steps'])
+    if concurrent and not prebuilt_indexes:
+        raise CatalogError('nontransactional-runner-required')
+    if prebuilt_indexes and (not concurrent or any(step['kind'] != 'index' for step in source_plan['steps'])):
+        raise CatalogError('index-phase-profile')
     if type(approved_digest) is not str or approved_digest != source_plan['digest']:
         raise CatalogError('approval-required')
     if expected_head is not None and (type(expected_head) is not str or not re.fullmatch('[a-f0-9]{64}',expected_head)):
@@ -106,11 +123,13 @@ def apply_table_migration(connection: Any, plan: dict[str, object], *, approved_
         history = _history_rows(connection,schema) if exists else []
         if exists and not history:
             raise CatalogError('ledger-history-missing')
-        if history:
+        if history and not prebuilt_indexes:
             _verify_installed(connection,history[-1],person_roles,statement_timeout_ms,lock_timeout_ms)
         matches = [entry for entry in history if entry['plan']['id'] == source_plan['id']]
         if matches:
             entry = matches[0]
+            if entry.get('fileDigest') != file_digest:
+                raise CatalogError('migration-file-digest-conflict')
             previous_head = history[entry['position']-2]['entryDigest'] if entry['position']>1 else None
             if entry['plan']['digest'] != source_plan['digest'] or previous_head != expected_head:
                 raise CatalogError('ledger-digest-conflict')
@@ -133,7 +152,12 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
             if occupied != (False,):
                 raise CatalogError('initial-schema-not-empty')
         for step in source_plan['steps']:
-            _execute(connection,step['sql'])
+            if step['transaction'] == 'forbidden':
+                continue
+            if step['kind'] == 'backfill':
+                _apply_backfill(connection,source_plan,step)
+            else:
+                _execute(connection,step['sql'])
         if not exists:
             _create_history(connection,schema)
             _create_head_view(connection,source)
@@ -144,8 +168,8 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
         _apply_seeds(connection,source_plan,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
         witness = _capture_witness(connection,source)
         position = len(history)+1
-        entry_digest = _entry_digest(position,expected_head,source_plan['digest'],witness)
-        payload = {'plan':source_plan,'witness':witness}
+        entry_digest = _entry_digest(position,expected_head,source_plan['digest'],witness,file_digest)
+        payload = {'plan':source_plan,'witness':witness,**({'fileDigest':file_digest} if file_digest is not None else {})}
         _execute(connection,'INSERT INTO '+_q_bound(schema)+'.'+_q_bound(HISTORY)+' (position,migration_id,predecessor_entry_digest,plan_digest,entry_digest,payload) VALUES (%s,%s,%s,%s,%s,%s)',
                  (position,source_plan['id'],expected_head,source_plan['digest'],entry_digest,Jsonb(payload)))
         # Also verify the newly persisted JSONB round trip, full chain and caps

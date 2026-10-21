@@ -10,7 +10,8 @@ import {quoteIdentifier} from './sql';
 import type {DeploymentContext,TableDeploymentBundle,TableDeploymentResult,TableDeploymentStep} from './types';
 export type {TableDeploymentConfiguration,TableDeploymentBundle,TableDeploymentResult,TableDeploymentStep} from './types';
 /** Generate inert reviewable SQL; no I/O, installation or native qualification. */
-export function compileTableDeployment(input:{text:string;format?:'json'|'yaml';configuration:unknown}):TableDeploymentResult{
+export function compileTableDeployment(input:{text:string;format?:'json'|'yaml';configuration:unknown}):TableDeploymentResult{return compileDeployment(input,false);}
+function compileDeployment(input:{text:string;format?:'json'|'yaml';configuration:unknown},legacyComments:boolean):TableDeploymentResult{
  try{
   const format=input.format??'json';
   if(format!=='json'&&format!=='yaml')deploymentError('Unknown source serialization','/source/format');
@@ -31,8 +32,10 @@ export function compileTableDeployment(input:{text:string;format?:'json'|'yaml';
    add(kind,sourcePath,sql){if(steps.length>=8192||new TextEncoder().encode(sql).length>1_000_000)deploymentError('Deployment step/statement bound exceeded',sourcePath);steps.push({id:'step-'+String(steps.length+1).padStart(5,'0'),kind,sourcePath,transaction:'required',sql});}
   };
   const expectedCatalog=deploymentSteps(ctx);
+  if(legacyComments){delete expectedCatalog.comments;for(let i=steps.length-1;i>=0;i--)if(steps[i]!.kind==='comment')steps.splice(i,1);for(const [i,step]of steps.entries())step.id='step-'+String(i+1).padStart(5,'0');}
   ctx.add('grant',path,'GRANT USAGE ON SCHEMA '+quoteIdentifier(configuration.schema)+' TO '+quoteIdentifier(configuration.personRole)+', '+quoteIdentifier(configuration.batchRole));
-  const body={version:'umf.table-deployment/0.1' as const,canonicalization:'RFC8785' as const,source:{format,utf8:input.text},sourceDigest,configuration,configurationDigest:hashCanonical(configuration),module:configuration.module,profile:payload.profile,steps,expectedCatalog,seedSets:payload.seedSets,nativeQualified:false as const};
+  const version:TableDeploymentBundle['version']=expectedCatalog.comments?'umf.table-deployment/0.2':'umf.table-deployment/0.1';
+  const body={version,canonicalization:'RFC8785' as const,source:{format,utf8:input.text},sourceDigest,configuration,configurationDigest:hashCanonical(configuration),module:configuration.module,profile:payload.profile,steps,expectedCatalog,seedSets:payload.seedSets,nativeQualified:false as const};
   // copyJson prevents output aliases from escaping into caller input or authority.
   if(new TextEncoder().encode(canonical(body)).length>16_000_000)deploymentError('Deployment bundle exceeds16MB');
   const bundle=copyJson({...body,bundleDigest:hashCanonical(body)}) as unknown as TableDeploymentBundle;
@@ -46,8 +49,8 @@ export function compileTableDeployment(input:{text:string;format?:'json'|'yaml';
 /** Recompile complete source/configuration; self-consistent forged SQL is not authority. */
 export function verifyTableDeployment(input:unknown):TableDeploymentBundle{
  const value=copyJson(input) as unknown as TableDeploymentBundle;
- if(!value||value.version!=='umf.table-deployment/0.1'||!value.source)deploymentError('Unknown deployment bundle');
- const result=compileTableDeployment({text:value.source.utf8,format:value.source.format,configuration:value.configuration});
+ if(!value||!['umf.table-deployment/0.1','umf.table-deployment/0.2'].includes(value.version)||!value.source)deploymentError('Unknown deployment bundle');
+ const result=compileDeployment({text:value.source.utf8,format:value.source.format,configuration:value.configuration},value.version==='umf.table-deployment/0.1');
  if(result.status!=='compiled'||canonical(value)!==canonical(result.bundle))deploymentError('Deployment differs from exact source recompilation');
  return result.bundle;
 }

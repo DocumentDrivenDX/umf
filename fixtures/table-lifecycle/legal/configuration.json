@@ -1,0 +1,10 @@
+{
+  "module": "legal_lifecycle",
+  "schema": "legal_demo",
+  "ownerRole": "legal_owner",
+  "personRole": "legal_person",
+  "batchRole": "legal_batch",
+  "groupRoles": {
+    "billing_admin": "legal_billing_admin"
+  }
+}

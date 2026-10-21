@@ -19,7 +19,7 @@ ddx:
 
 **Scope:** One generated typed model/query/action API for direct tables and ontology-backed graphs, with Weft compilation and consumer-owned execution.
 **Owner:** UMF stack maintainers; individual assignees remain unassigned.
-**Last revised:** 2026-10-18, following the owner's Praxis integration and stack licensing requests.
+**Last revised:** 2026-10-21, following Praxis table-lifecycle revision2 against reported UMF0.5.3/Weft0.4.49 releases. The R1–R11 assessment below is the current planning cut; the original baseline is retained as dated context.
 
 ## Horizon and Cadence
 
@@ -56,7 +56,7 @@ WS-1 through WS-4 are already allocated by the domain-pack roadmap and remain un
 | WS-8 | Graph-host convergence | Current-core Hohfeld, protected Truss, publication-bound Ashlar | Hohfeld, Truss and Ashlar maintainers | active planning |
 | WS-9 | Distribution and licensing | Dual licensing, reproducible wheels, index publication, release manifests | Stack release maintainers | active; licensing implemented separately |
 
-## P1 implementation checkpoint
+## Original P1 implementation checkpoint — historical baseline
 
 The owner authorized P1 implementation after publication of the licensing work.
 [The build plan](../04-build/praxis-p1-plan.md) sequences the implementation.
@@ -69,7 +69,165 @@ Native connection/session/driver qualification, the Bun-free generator and index
 publication remain open. No P1 release or complete-P1 acceptance is claimed.
 The table below retains the original baseline audit and proposed landing cuts.
 
-## Baseline gap assessment and proposed fixes
+## Next release requirements — Praxis revision2, 2026-10-21
+
+The [retained revision2](../00-discover/inputs/praxis-table-lifecycle-asks-v2-2026-10-21.md)
+supersedes the original consumer draft. Its U1–U9 identifiers govern the next
+release acceptance map; the R1–R11 analysis below is historical context. The
+consumer reports scratch execution of release-digest-matching UMF0.5.3 and
+Weft0.4.49 wheels. That is useful consumer evidence, not a native Praxis workload
+or an independent release audit performed by this assessment. No new release
+number or calendar date is reserved here.
+
+Keep WS-5–9 and their existing owners. This revision does not create another
+policy language, emitter, migration ledger, workstream registry or issue queue.
+It recognizes sync/Python generation, licensing, the Pydantic range and initial
+DDL/RLS as delivered in the consumer's inspected release. Do not reopen those as
+new implementation projects. The current owner-authorized local lifecycle changes
+must finish their focused/browser/installed/native gates before release; they
+are not evidence that the posted wheels contain the successor changes.
+
+| Requirement | Existing workstream / accountable role | Disposition and next-release gate |
+| --- | --- | --- |
+| U1: transaction modes, validation and reviewed data steps | WS-6, WS-7; UMF lifecycle maintainer, Weft for typed data SQL | Accept. Local successor work covers bounded source-declared backfill, immediate added CHECK/FK validation and **index-only** concurrent phases. It does not yet satisfy a single mixed migration containing data, constraints and concurrent indexes. Extend the versioned plan with ADD NOT VALID / VALIDATE steps and phase barriers, durable progress, fail-closed runtime admission and failed-step recovery. Preserve source/old-head custody throughout. Gate: one ordered mixed plan containing all three effects; failures before/after every commit boundary; no repeated backfill or partially published generation. NOT VALID reduces validation-time blocking; it does not promise no locks ([PostgreSQL18 ALTER TABLE](https://www.postgresql.org/docs/18/sql-altertable.html)). |
+| U2: reviewed changes to existing objects | WS-6; UMF migration/schema maintainer | Accept guarded evolution; preserve unsupported refusals. Define reviewed markers by exact change ID/kind/source path and old/new digest, bound by the approved plan digest. Unmarked destructive changes return `destructive_change_unreviewed` and enumerate affected objects. Implement independently qualified drop/rename, NOT NULL tightening, type change, constraint/index replacement, Key change and policy changes. A marker cannot bypass dependency analysis, explicit type conversion, data-loss disclosure, source correspondence or native capability checks. Gate: unreviewed column drop refuses with the named reason; reviewed supported drop compiles and applies only to the approved source, with dependent FK/policy/operation and stale-client negative controls. Keep unsupported forms explicitly blocked. |
+| U3: command subsets, groups, open reference reads, owner+via | WS-6, WS-5; UMF authoring/security maintainer | Existing explicit command maps already express subsets using deny for omitted commands; memberOfRole expresses trusted groups and allow expresses an open read. Related matching is available for explicit association fields without inventing an FK. Add/document a bounded row_scope authoring normalization into these existing forms: resolve every field/table/pair explicitly; omitted command denies; batch is an authenticated audience. Keep canonical payload command maps explicit. Gate: exact supplied owner+via block normalizes to person CRUD and batch SELECT/INSERT, never UPDATE/DELETE; FORCE RLS and old/new row checks remain; unknown groups/joins/cycles refuse. This is native RLS, not shared-security equivalence or a complete ethical-wall system. |
+| U4: comments and simple checks | WS-6; UMF schema/deployment maintainer | Comments from core descriptions are in the local successor. Core allowedValues and exact range facets already drive blocking native domain CHECKs. Document enum/range authoring first; if named native-check shorthand is needed, normalize it to the existing typed expressions rather than invent competing range/null semantics. Gate: descriptions and exact enum/range bounds round-trip, emit deterministic comments/CHECKs, enforce in native PostgreSQL and produce located refusals for unsupported carriers. |
+| U5: reference applier and approval custody | WS-7, WS-6; UMF administrative runtime maintainer | Accept. Local native applier now has file-byte digest custody and explicit approval/head inputs. Extract a small typed host protocol for read-history, execute-step and persist-step/approval, leaving Psycopg/native correspondence as one qualified adapter. Host atomicity/durability capabilities must be explicit; a fake interface is not native proof. Record approved plan/file digest, decider supplied by the trusted host, native evidence/qualification and per-phase outcomes. `nativeQualified:false` remains a compiler statement; host approval is a separate recorded receipt, not mutation of the compiled plan. Gate: edited applied file, reordered chain, wrong terminal snapshot, wrong approval and interrupted step refuse/recover through the shared state machine. |
+| U6: optional containment for untrusted author SQL | WS-6, WS-7; UMF admission and Weft SQL owners | Accept as separately versioned optional profile. Generated plans already require complete original-source recompilation; untrusted SQL is not admitted by rehashing. Review the contributed checker before choosing reuse. Any hand-authored SQL ingress must use parsed statements with positive supported syntax/object-reference closure, not regex approval. Reject foreign schemas, role/schema creation, external grants, settings and stored code; trusted runner's own role/timeout/fence setup is a separate host authority. Gate: malicious CTEs, quoting/comments/dollar strings, multi-statements, indirect object references and source-rehashed altered SQL; unsupported syntax blocks. |
+| U7: pure-Python host or tested V8 matrix | WS-5, WS-9; generator/release maintainer | Take the offered matrix alternative first. Publish exact mini-racer0.14.1 platform/Python/wheel hashes and installed generation/refusal parity evidence, plus native dependency size/notices. Generated application code stays stdlib-only; the build/administrative compiler currently embeds V8. Do not claim production apply is V8-free: native source verification invokes codegen. A pure-Python compiler or verified source-free execution artifact would require a separate parity/custody design; no duplicate compiler is promised for this release. Gate: every advertised matrix cell has an installed receipt; unsupported hosts have an explicit build-outside-host/vendoring boundary or refusal. |
+| U8: index publication or mirror procedure | WS-9; stack release maintainer | Accept. Produce a hash-pinned local PEP503 mirror/vendoring procedure for umf-core, umf-access, umf-codegen, weft-sql and their selected dependencies; verify clean and offline installs plus license/source manifests. Public index upload needs actual publisher authority and new immutable versions. A local mirror proof is not public-index availability. |
+| U9: Hohfeld0.10/date | WS-8; Hohfeld owner, UMF conformance support | Retain the separate reader/graph-host cut and uncommitted date. Table modules can move to0.10 independently of legacy ontology documents. Never relabel a0.10 source to0.7; any bridge retains original/version and explicit fidelity/refusal evidence. No release/date claim without an owner commitment and actual reader/host tests. |
+
+### Next release order and completion boundary
+
+1. **WS-6/7 — close the current local successor:** comments, reviewed bounded
+   backfill, added constraints, index-only recovery/fence, migration CLI and file
+   digests; finish native/browser/installed verification and record limitations.
+2. **WS-6/5 — U3/U4 authoring acceptance:** normalize the supplied row_scope,
+   show enum/range/description examples on legal domain fixtures and the exact
+   consumer tables when available. Preserve original metadata and explicit policy
+   additions; fabricated domain evidence does not substitute for Praxis acceptance.
+3. **WS-6/7 — U1/U2/U5 adoption gate:** evolve contract/design/test coverage for
+   mixed phases, NOT VALID/VALIDATE, reviewed existing-object changes and the host
+   applier protocol before coding those extensions. U1–U3 are the consumer's stated
+   deletion gate. Do not mark U1 complete from index-only tests or U2 complete from
+   existing all-plan approval. Run each supported object change and its refusals.
+4. **WS-9/5 — U7/U8 distribution:** start matrix and mirror preparation alongside
+   the above, finalize against the exact release cohort. Publish only passing
+   capability/matrix claims; do not let packaging erase unresolved P1 requirements.
+5. **WS-6/7/9 — consumer acceptance:** port the exact eleven tables/four migration
+   history, preserving their applied byte digests; run typed calls on real
+   per-person/batch connections and the selected Lakebase environment. Remove
+   consumer machinery only when the corresponding replacement is accepted. U5/U6
+   may remain explicit host components until their separate gates pass.
+
+U6 and U9 keep separate acceptance and can proceed independently. Revise sequence
+on a mixed-phase safety counterexample, reviewed-change dependency conflict,
+unavailable platform wheel, changed consumer source/lock or failed managed proof.
+No newer external requirement is silently treated as implemented by this checkout.
+
+## Additional consumer assessment — 2026-10-21
+
+Recommendation: accept the consumer outcomes, with the revisions below. Most
+belong to UMF's existing table-lifecycle profile and host tooling. Weft remains
+the query/mutation compiler; it does not need a second DDL or migration system.
+This is an alignment assessment and remaining delivery sequence, not authorization
+to execute migrations, change core, publish packages or contact the consumer.
+
+The [retained request](../00-discover/inputs/praxis-table-lifecycle-asks-2026-10-20.md)
+is dated 2026-10-20 but describes older installed artifacts. Its R1–R11 identifiers
+are local to that request, distinct from the ontology request's R1–R21 and the
+baseline table below. The exact eleven YAML tables and four migrations from its
+referenced consumer revision have **not** been inspected in this assessment.
+Earlier private conversion evidence covers a different selected cohort: seventeen
+tables and prospective operations, not acceptance of these eleven examples.
+No live database, package index or release inventory was requalified here.
+
+Catalog: installed HELIX `workflows/graph.yml`; routes `align` then `iterate`.
+The existing WS-5–9 registry and roadmap remain the planning authority. Governing
+boundaries are PRD FR-43/52–56, ADR-004, FEAT-033 and CONTRACT-079/081. New wire
+semantics require corresponding design/test amendments before implementation.
+
+### Ownership and request dispositions
+
+“Source implemented” below means the cited bounded component exists with retained
+evidence. It does not mean released, supported on every platform, or accepted by
+Praxis. Reviewed source is this UMF checkout; sibling Weft/Hohfeld reads are local
+observations, not remote-head or installed-package claims.
+
+| Ask | Assessment / disposition | Owner and remaining acceptance |
+| --- | --- | --- |
+| R1: core table vocabulary, no extensions | **DIVERGENT acceptance; accept the modeling outcome.** Core0.10 already provides Records, Fields, descriptions, Keys, relationships and scalar domains. Physical columns/indexes/defaults and native policy belong in versioned `umf.tables`0.1.0, governed by CONTRACT-081. Requiring empty extension content would discard the intended native semantics. | UMF model/generator. Replace “no extension content” with “no Praxis-private vocabulary; registered, understood declarations; unknown content retained and selected execution refused.” Convert the exact eleven tables, check semantic round trips and generated types. Clarify whether TIMESTAMP means local time or an instant. |
+| R2: PostgreSQL18 DDL | **INCOMPLETE; accept.** `src/table-deployment/ddl.ts` emits tables, keys, typed defaults, checks, FKs, ordinary/unique indexes, RLS and grants. Identifier admission enforces63 UTF-8 bytes. Comment emission and concurrent index phases are missing. `timestamp` without timezone is explicitly refused by this executable subset; `timestamptz` has bounded finite precision/range evidence. | UMF portable deployment generator; host executes approved output. Complete comments and needed typed defaults, qualify exact example DDL and reads/writes on PostgreSQL18, then separately on the actual Lakebase build. Do not infer managed equivalence from the server major. |
+| R3: forward migrations/checks | **INCOMPLETE; accept with a bounded execution contract.** `src/table-migration/index.ts`, Python codegen compile/verify functions and `lifecycle/ledger.py` provide source-bound forward plans, predecessor/digest history, reviewed application, seeds, appended tables/indexes, nullable columns and bounded policy changes. Required-column backfills, general added checks/FKs, nontransactional steps and a lifecycle `new/check/apply` CLI remain gaps. Existing unsupported changes refuse; all compiled plans require exact-digest approval. | UMF migration compiler and administrative host API/CLI. Keep SQL generation/checking available without execution. Host-supplied connection and explicit approval are required for optional apply; no automatic deployment. Compare each historical migration's effects and snapshot, rather than promising its original bytes can be inferred from schema endpoints. |
+| R4: row policy/grants | **ALIGNED outcome; INCOMPLETE consumer qualification.** CONTRACT-081 and native related-policy evidence cover owner/group, FK-backed via and explicit association matching without an FK, person/batch command rules, forced RLS and grants. The blanket “Weft refuses extensions” claim is stale for its selected table-operation path. | UMF owns declaration and DDL/policy generation; Weft consumes selected obligations for reads/writes; host owns trusted roles and application. Qualify the actual task/project membership example for SELECT/INSERT/UPDATE/DELETE, including old/new row checks. No missing-policy default allow, inferred joins or implicit batch authority. |
+| R5: synchronous client | **STALE_PLAN in the request; source implemented.** Generated SyncClient/SyncActions use synchronous transports, without an event loop per call; async remains available. | UMF generator/runtime. Demonstrate a plain function reading a page and invoking the required typed action using the exact installed candidate and Psycopg3. Source/test evidence is not evidence the consumer's pinned wheel has it. |
+| R6: per-call connection | **STALE_PLAN / partial adoption.** Native per-call leases, identity/session setup, caller-owned transactions and pool cleanup have scoped evidence; no global pool is required. | `umf_access` binding, with host-owned authentication and connection custody. Replay two people through the same binding plus explicit batch, exceptions, cancellation, pool reuse and child-process creation. Role names from plugin input are never authority. |
+| R7: paging/upsert/counts/binds | **ALIGNED, bounded source support.** Declared pages use keysets, including mixed directions and complete unique-Key tie-breakers. Nullable sort fields are refused by this profile; live pages are not a held snapshot. Typed CRUD/upsert/batch and durable outcomes have native evidence. | UMF API and host bounds/receipts; Weft SQL lowering. Verify exact bound NULLs, page/row/frame caps, affected-row counts and conflict/update semantics in the consumer cohort. ON CONFLICT alone is not retry idempotency: retain durable outcome keys, current authorization checks and unknown-write recovery without automatic retries. |
+| R8: dependency pins | **PARTLY STALE; accept remaining packaging work.** `umf_access` currently admits `pydantic>=2.13,<3`, with installed2.13.5/2.14.1 evidence. `typing-extensions==4.16.0` remains pinned. | Runtime packaging. Select a justified typing-extensions minimum/range from actual imports and installed tests against the Praxis frozen lock. Publish a tested matrix; a declared range is not proof of every intermediate version. Generated application packages remain stdlib-only. |
+| R9: index/licenses | **PARTLY STALE; release gap remains.** LICENSE.md, MIT/Apache texts and SPDX package license expressions now exist. This assessment establishes no usable package index for a complete cohort. | Stack release maintainers. Verify wheel contents and standard license metadata, clean install and offline vendoring from a proven index/mirror, immutable versions and checksums. Keep verified asset URLs/hashes meanwhile; no need to add an obsolete classifier just to duplicate valid license metadata. |
+| R10: Python generator/check | **STALE_PLAN in the request; source implemented with packaging limits.** `python -m umf_codegen generate/check` and `umf-codegen` embed the original generator via pinned mini-racer; no external Bun/Node is required. This is a build tool with a native engine dependency, not a stdlib-only generator. | UMF codegen/release. Qualify wheel availability on the consumer's actual build platforms, complete-byte/refusal parity and CI drift checks. Generated output remains stdlib-only. Keep build dependencies out of plugin runtime requirements. |
+| R11: Hohfeld alignment/date | **INCOMPLETE; coordinate separately.** The inspected local `hohfeld/umf.py` still requires0.7.0. A current generated client is not evidence of a current Hohfeld reader or native graph transport. | Hohfeld owner, with UMF conformance support (WS-8). No defensible date is available. Use current-core direct-table bindings for this table cut; keep any legacy Hohfeld schema as a distinct explicitly converted/qualified artifact. Never relabel0.10 as0.7. |
+
+### Contract clarifications and pushback
+
+- Keep one declaration/compiler path. Reuse the existing profile, generators,
+  administrative ledger and typed operations; do not lift a second Praxis table
+  reader/emitter into the SDK. Use its implementation as differential behavior
+  input after source/licensing review. Preserve unsupported original metadata.
+- Separate logical defaults from server expressions. Existing deployment supports
+  typed literal, random UUID and transaction-time timestamp defaults. Arbitrary
+  SQL expressions are not automatically supported by an expression string field.
+  Expand a typed, versioned subset only for inspected examples and native tests.
+- An old/new schema pair cannot recover backfill intent, seed order, concurrency
+  decisions or original file formatting. Require explicit reviewed data/phase
+  declarations and source snapshots. Guarantee byte stability for identical
+  complete inputs/compiler versions. If old SQL files remain authoritative,
+  retain and verify their original byte digests; never regenerate their history
+  and silently bless new digests.
+- Scope widening needs a visible permission delta and explicit digest-bound review.
+  Existing all-plan approval is useful but does not replace a named widening
+  diagnostic. Arbitrary destructive/type/key/FK transformations stay refused
+  until their own qualified plan exists; approval is not a bypass for unsupported
+  semantics. Backfills must declare scoped-table access and affected-row bounds.
+- “No stored code” means no user-defined functions, triggers, procedures or logic
+  views emitted by this profile; approved built-in expressions such as
+  CURRENT_TIMESTAMP and native role checks still have their native meanings.
+  The request's exclusion of data migration is read as excluding automatic
+  execution: explicit seed/backfill *plans* remain required. Clarify this boundary
+  with the consumer before offering an apply interface.
+- FORCE RLS does not constrain superusers/BYPASSRLS or stop an owner altering its
+  own policy. Keep administrative custody separate, verify effective role closure
+  and never grant ordinary runtime users ownership/BYPASSRLS. Related policies
+  must work through visible membership rows without privileged helper functions;
+  cycles refuse. PostgreSQL's native integrity checks are not proof of the stronger
+  shared-security non-disclosure profile. See [PostgreSQL18 RLS](https://www.postgresql.org/docs/18/ddl-rowsecurity.html).
+- Concurrent index builds require a durable phase state machine, failed/invalid
+  index inspection, explicit repair decisions and resume tests. They cannot be
+  simulated by retrying the whole migration transaction. See [PostgreSQL18 CREATE INDEX](https://www.postgresql.org/docs/18/sql-createindex.html).
+
+### Evidence used and limits
+
+Read-only assessment; no new functional/native tests were run. Relevant retained
+component evidence, each with its own immutable cohort and limitations:
+
+- [P1 clients/packaging](../04-build/evidence/praxis-p1.md),
+  [native sessions](../04-build/evidence/praxis-p1/session-native-postgresql.json),
+  [Python generator](../04-build/evidence/praxis-p1/python-codegen.json).
+- [Generated native modules](../04-build/evidence/praxis-p2/generated-modules/receipt.json),
+  [durable outcomes](../04-build/evidence/praxis-p2/durable-outcomes/receipt.json),
+  [finite temporal/scalar domains](../04-build/evidence/praxis-p2/scalar-domains/receipt.json).
+- [Related native policies](../04-build/evidence/praxis-p2/related-policies/README.md),
+  [mixed-direction paging/deletes](../04-build/evidence/praxis-p2/related-operations/receipt.json),
+  [seeds/additive evolution](../04-build/evidence/praxis-p2/seed-migrations/receipt.json).
+
+These are not one integrated release certificate. The seed/evolution packet
+explicitly excludes required-column backfill/type/key/FK evolution and states
+`published:false` and `fullPraxisAcceptance:false`. Earlier roadmap “missing”
+statements below are the2026-10-18 baseline, not the current source inventory.
+
+## Original baseline gap assessment and proposed fixes — 2026-10-18
 
 “Partial” means the cited subset exists; it is not an assertion that the full Praxis requirement is supported. Versions in the last column are **proposed landing targets**, not approved dates or existing releases. Core schema version, SDK archive version and Python distribution version are independent.
 
@@ -123,14 +281,27 @@ Preserve UUID/128-bit, integer/decimal, date/time, absence/null and collection s
 
 ## Sequenced Outcomes
 
-| Order | Outcome | Workstream | Governing artifacts / Praxis requirement | Target cut | Depends on | Confidence | Rationale |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Reproducible, dual-licensed distribution and precise installed capability inventory | WS-9 | PRD FR-5/23; requests 7, 9, 10; licensing amendment | P1 | Package payload/build checks | high for licenses; medium for index | A lockable artifact is necessary to reproduce every later claim. |
-| 2 | Sync/async module-scoped API with trusted per-call connections and deterministic generator/check tooling | WS-5, WS-7 | FEAT-033 OA-12/14/18/19; requests 4, 5, 10 | P1 | 1; sync/wire/driver contracts | medium | Resolves host integration without changing the storage-independent API. |
-| 3 | Authored table/security/deployment profile can express the complete Praxis module | WS-6 | FEAT-008 SEC-01–04; requests 1–3 | P2 | Versioned profile and native counterexamples | medium | Policy and physical meaning must be settled before generating deployable SQL. |
-| 4 | Direct PostgreSQL lifecycle, RLS, counts, named commands and replay pass on installed packages | WS-6, WS-7 | FEAT-033; CONTRACT-062/063/079; requests 2, 3, 5, 6 | P2 | 2, 3; native compiler and migration gates | medium locally; low until managed replay | Eliminates the Praxis query/emitter layer only after native equivalence is shown. |
-| 5 | Current-core Hohfeld and real graph-host conformance preserve one application surface | WS-8 | ADR-004; FEAT-033 OA-10–12/20; request 8 | P3 | 2; accepted Truss and publication-bound Ashlar hosts | low until dependency qualification | A graph fixture cannot qualify engine authorization, durability or publication behavior. |
-| 6 | Praxis vendors one complete cohort and removes its private query/emitter implementations | WS-9, WS-5–8 | Owner lifecycle requirement; requests 1–10 | P3 | 1–5; Praxis native acceptance | medium after prerequisites | Client adoption is the final proof, not an inference from unit tests. |
+The next horizon is the direct-table acceptance/release cut and its bounded
+migration follow-on. Hohfeld graph work stays separately sequenced; it is not a
+prerequisite for Praxis deleting its table emitter. Dates, individual assignees
+and new version numbers are uncommitted. Role owners below are accountable
+proposals; existing workstream aliases remain unchanged.
+
+| Order | Outcome / owner | Workstream | Governing artifact / additional request | Depends on | Confidence / rationale | Exit evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Exact consumer baseline and acceptance mapping; UMF maintainer with Praxis host owner | WS-5, WS-6 | CONTRACT-079/081; R1–R4 | Pinned eleven tables/four migrations and platform lock | high for assessment; source access pending. Prevents solving a different cohort. | Every source field/default/check/index/FK/policy/data step maps or has a located refusal; confirm local-time versus instant and no-extension/apply revisions. Private source stays private; public evidence uses aggregate hashes only. |
+| 2 | Reusable source-authoring/DDL gaps closed; UMF schema maintainer | WS-6 | CONTRACT-081; R1/R2/R4 | 1 | medium. Comments and exact default/type requirements must precede adoption. | Comments survive document round trips and native catalog inspection; identifiers/escaping include multibyte63/64-byte cases; deterministic SQL/client source authority and two-person/batch policy tests pass. Amend CONTRACT-081, relevant design and test plan before new payload/program fields. |
+| 3 | Installed direct-table consumer scenario passes; UMF runtime and Weft maintainers | WS-5, WS-7 | FEAT-033, CONTRACT-079/081; R5–R7 | 1,2; exact candidate wheels | medium locally, low managed. Reuse implemented paths rather than rebuild. | Plain sync page/action and async parity; task owner/related membership, batch SELECT/INSERT with UPDATE/DELETE denied; typed NULL/binds, bounds/counts/upsert/replay, pool/cancellation controls. PostgreSQL18 and Lakebase receipts stay separate. |
+| 4 | Required forward migration subset and administrative CLI pass; UMF lifecycle maintainer with Weft for typed data steps | WS-6, WS-7 | CONTRACT-081; R3 | 1,2; individual phase design | medium for additive work; low concurrent recovery. Original four migrations determine required breadth. | Library and CLI new/check/apply parity; immutable original/history digests; terminal snapshot equals current document; named unsafe/widening reasons; reviewed scoped backfill to NOT NULL and added checks/FKs where required. Nontransactional concurrency is a separate phase gate; failed-step/invalid-index recovery must pass before advertising it. No destructive fallback. |
+| 5 | Consumable immutable wheel cohort and build tool; release maintainer | WS-9, WS-5 | FEAT-033, CONTRACT-079; R8–R10 | 3, required portions of4; verified publisher/index access | medium until index/platform proof. Packaging compatibility probes can start during1. | Frozen Praxis lock resolves; tested dependency ranges; actual generate/check CLI works without external Bun; wheel license/hash/source manifests; clean/offline install from demonstrated index/mirror on selected Python/platform matrix. New artifacts get new versions. |
+| 6 | Praxis removes table machinery; Praxis host owner with stack maintainer | WS-6, WS-7, WS-9 | CONTRACT-081; R1–R10 | 1–5 or explicit consumer deferral of unsupported subset | medium after native/managed gates. Deletion is acceptance, not inferred upstream completion. | Eleven tables/four migrations checked; one complete plugin plus scheduled batch runs on vendored artifacts. Host retains provisioning, identity, audit, approvals and administrative invocation only; required unsupported features block deletion. |
+| Separate graph cut | Current-core Hohfeld/real graph transports; Hohfeld, Truss and Ashlar owners | WS-8 | ADR-004, FEAT-033; R11 | Reader/transport and engine conformance | low; date uncommitted. Does not block direct-table adoption. | Current0.10 reader, native graph authorization/durability and explicit compatibility evidence; no version relabeling. |
+
+Before starting each new implementation slice, extend the existing design/test
+coverage only where the inspected examples expose missing semantics. No new
+tracker, parallel emitter or wholesale artifact rewrite is required. This plan
+contains no execution-time/token estimate: comparable usage and runtime metering
+were not available for this assessment.
 
 ## Acceptance and release gates
 
@@ -144,7 +315,9 @@ Each cut records exact sources, schema/profile versions, driver/compiler/wheel h
 - **Graph gate:** unchanged application scenario over installed Truss and held Ashlar publication; original admission/journal/feed/ack evidence, policy revocation, schema evolution, stale publication refusal, bounded counts/paging and explicit read-only/publication-action distinction. Hohfeld core 0.10 reader has a shared conformance corpus and no mandatory DDD worldview.
 - **Managed/consumer gate:** independently replay on the specified Lakebase/PostgreSQL 18 environment with its actual role-switch/pool restrictions. Vendor all wheels from the selected immutable source into a clean/offline Databricks App build; inspect License-Expression/License-File metadata and included texts. Run one Praxis plugin entirely through generated methods, including scheduled batch work; compare results and errors with independently authored expectations.
 
-## Open decisions and risks
+## Original open decisions and risks — 2026-10-18
+
+The additional assessment and current sequence above supersede resolved source/toolchain unknowns in this baseline. Exact consumer inputs, frozen locks, managed acceptance and publication proof remain gates.
 
 Named individual owners, publisher/index credentials, actual Praxis table modules/emitter source, its frozen platform dependency lock and a dedicated managed test environment were not supplied or validated. Assign them before committing dates. Choose supported psycopg2, psycopg 3 and SQLAlchemy version ranges based on installed tests; none is silently interchangeable. Select the Python codegen packaging strategy before promising a Bun-free entry point. Confirm command count semantics, supported check-expression grammar, seed mutation rules, via-path bounds and transactional versus publication operations in downstream contracts.
 

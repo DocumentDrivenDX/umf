@@ -818,3 +818,21 @@ from schema fragments. Inert historical archives cannot enter current packages.
 Architecture checks must enforce these boundaries and retired import families.
 One `reference/core.html` host owns ontology/reference/catalog; reusable current
 renderer behavior belongs in a qualified released package, not host shims.
+
+### Table lifecycle administration ownership
+
+`src/table-deployment` and `src/table-migration` own inert portable SQL/schema
+programs, original-source verification and explicit migration options. They use
+portable model/validation/hashing and never driver, process, filesystem or network
+APIs. Weft's prepared-operation boundary owns backfill UPDATE lowering; UMF does
+not assemble data mutation SQL. `umf_access.lifecycle` owns administrative native
+catalog/privilege verification, ledger/file digests, typed backfill execution and
+index-only concurrent phases. Its `cli` owns explicit connection creation and
+filesystem inputs; no global pool or implicit database invocation exists.
+`phase_fence` owns the exact metadata-head SELECT fence and rollback-only
+verification grants; `concurrent` owns the session lifecycle lock and final
+transactional publication. The boundary checker admits Weft only in backfills
+and seeds, codegen compiler functions only in the explicit CLI/prefix preparation,
+and leaves portable application clients unchanged. Existing negative controls
+remain required. Generic host-applier and mixed-phase profiles are revision2
+next-release work; no adapter-independent native guarantee follows here.

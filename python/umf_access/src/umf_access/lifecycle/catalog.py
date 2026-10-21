@@ -273,5 +273,13 @@ WHERE n.nspname=%s AND c.relname=%s""", (schema, table["name"]))
             if boundary != ('r','p',True,True,False,False,False,'d',owner_id,heap,False,8,False,False):
                 raise CatalogError('catalog-mismatch')
             _verify_table_shape(connection, source, table)
+        for comment in source['expectedCatalog'].get('comments', []):
+            table = next(t for t in source['expectedCatalog']['tables'] if t['id'] == comment['table'])
+            if 'column' in comment:
+                actual = _one(connection, "SELECT pg_catalog.col_description(c.oid,a.attnum) FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace JOIN pg_catalog.pg_attribute a ON a.attrelid=c.oid WHERE n.nspname=%s AND c.relname=%s AND a.attname=%s AND NOT a.attisdropped", (schema,table['name'],comment['column']))
+            else:
+                actual = _one(connection, "SELECT pg_catalog.obj_description(c.oid,'pg_class') FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s", (schema,table['name']))
+            if actual != (comment['text'],):
+                raise CatalogError('catalog-comment-mismatch')
         _verify_policies(connection, source)
     return {"bundleDigest": source["bundleDigest"], "catalogShapeVerified": True, "lifecycleAdmission": False}

@@ -1,0 +1,35 @@
+{
+  "sourcePaths": [
+    "spec/domain-packs/legal/umf/clients.json",
+    "spec/domain-packs/legal/umf/timekeepers.json",
+    "spec/domain-packs/legal/umf/matters.json",
+    "spec/domain-packs/legal/umf/matter_teams.json"
+  ],
+  "originalsDigest": "2259e219e5580b7d46b6d4a0db837b1b3f07a83587652d843066ebb1f33cceb5",
+  "core": "0.10.0",
+  "tablesProfile": "postgresql18/0.1",
+  "scope": "Fabricated legal lifecycle fixture; not ethical-wall, clinical, regulatory or managed-service qualification",
+  "decisions": [
+    "Original domain metadata retained completely in original-domain-sources.json; it is not silently interpreted as executable validation.",
+    "TableSpec INTEGER explicitly selects int4; unconstrained VARCHAR explicitly selects native text/C collation. No general TableSpec-native equivalence is claimed.",
+    "Native FK semantics choose NO ACTION update, RESTRICT delete, immediate nondeferrable; source FK metadata is preserved.",
+    "Matters SELECT/INSERT/UPDATE/DELETE require visible assigned membership; membership writes denied to ordinary and batch roles.",
+    "Clients are explicitly public synthetic reference reads; billing data is readable only by a trusted billing_admin group.",
+    "Batch may SELECT and INSERT matters but cannot UPDATE/DELETE them. This is a command boundary, not retry idempotency.",
+    "The original matters/client FK is deliberately delayed to exercise added constraints; review_state and database_role are explicit fixture additions.",
+    "Default review state keeps historical immutable seeds valid for fresh installation. Evolution removes the default during ADD, performs the explicit backfill, then installs DEFAULT and NOT NULL."
+  ],
+  "files": {
+    "original-domain-sources.json": "abe27df5ad1b6181ef82a483e8d8976254da0b4197a4eefb23e188141ebfe16c",
+    "configuration.json": "9aaf4232cd3ca12403e6c902efa9896e488ec0c1daec75526946dc6a74977ddf",
+    "initial.json": "361855dda2145f10abe77b11c5f7552b8711179847cdfee56f7734099f62e972",
+    "evolved.json": "72cc37608b8583fd896041423d2170857d64cdbe059b723a294a3f011fd7a416",
+    "indexed.json": "d0ed0770bc20bf09e8db888c77f368dc0bf74d57b03c5f5b32cecbcc65900f46",
+    "evolution-options.json": "aae3c1c82267f6c36190cb6e899ec00601bfadd3054ecd30fecd86b8b038cfc9",
+    "index-options.json": "e3e99bc6bc1284a061c14be3970c7ea9551991b121de9ce33402ba50d72c065c",
+    "initial.sql": "60a5acb6622596c093522dc351512ba78925edf5096c0bb12d85c47cf191f565",
+    "plan-001.json": "28c7c08ae3918803c79a6b30dfedc320be29e4cc125a3db1f46582e34a64ca79",
+    "plan-002.json": "163ee44a9c85e542a9e54efe38e50fdfcf1fb4d9c99519e1f702812d06963f2d",
+    "plan-003.json": "4ae414a4da596217f8bb0559933ea314c832bb558761b5c98bcc6a0fa98b9e7b"
+  }
+}

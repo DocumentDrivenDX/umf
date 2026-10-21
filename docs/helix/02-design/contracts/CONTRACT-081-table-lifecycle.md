@@ -1101,3 +1101,44 @@ and requires native text/varchar storage. Native target constraints continue to
 apply. Snapshot capture requires target INSERT (and SELECT for returned fields)
 and source SELECT, with each table's own RLS. Targets, source rows, identity and
 transaction time remain inside the same native statement/transaction boundary.
+
+
+## Reviewed lifecycle completion profile — 2026-10-21
+
+Core descriptions generate deterministic table/column COMMENT statements, with
+native correspondence checks. No duplicate native description field is added.
+Description-bearing deployments use bundle0.2; the verifier retains exact legacy0.1 regeneration without comment emission. Description-free bundles retain their original representation. Explicit removal of an authored description clears its comment during migration.
+
+Migration requests may explicitly select a versioned options profile. Backfills
+name original zero-parameter typed UPDATE declarations, source table/column and
+an explicit acknowledgement of administrative access to scoped rows. Weft alone
+lowers these declarations. Required appended columns are first added nullable,
+backfilled under the install owner's reviewed administrative custody and then
+made NOT NULL. A selected server default is installed only after the explicit backfill; it does not silently replace that step. Backfill bounds are enforced with whole-migration rollback;
+constraints remain enforced and RLS is restored before correspondence checks.
+Arbitrary SQL and unreviewed scoped data effects are refused. Existing columns'
+types, keys and meanings cannot be changed by this profile. Added authored
+checks/FKs validate existing rows inside the migration transaction.
+
+Policy changes produce located permission-change review notices. All plans still
+require their exact digest approval; an unsupported destructive change cannot be
+made executable by approval. History checks close over original plan digests,
+predecessors and final source snapshots. CLI new/check are offline; apply is an
+explicit host command with a caller-selected connection and trusted approval/head.
+
+Concurrent index options select only newly appended ordinary/unique btree indexes
+on existing tables, in index-only migrations without seeds, policy or column
+changes. A separate autocommit administrative runner serializes with the same
+lifecycle lock across phases. It verifies native source correspondence for each
+completed prefix, refuses invalid indexes with a named repair requirement, and
+requires explicit approval to remove/rebuild an invalid source-selected index.
+A missing receipt after execution is reconciled from native index validity and
+exact shape, never from IF NOT EXISTS. The immutable ledger advances only after
+all phases and the complete final source verify. The head view's person/batch SELECT grants are durably revoked before the first phase, including after failure or an in-progress return; source-shape verification temporarily restores them only inside a rolled-back savepoint. Final head grants and ledger publication commit together. Transactional application refuses
+nontransactional plans. No mixed-phase atomicity is claimed.
+
+Domain qualification uses fabricated legal-pack data. Matter access follows
+explicit team membership, ordinary callers cannot create membership, and service
+permissions are command-specific. This is native PostgreSQL policy, not evidence
+of complete ethical-wall or shared-security semantics. Original domain source and
+projection decisions remain retained; no real client/person data is required.

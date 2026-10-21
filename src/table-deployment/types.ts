@@ -6,7 +6,7 @@ export interface TableDeploymentConfiguration {
  groupRoles:Record<string,string>;
 }
 export interface TableDeploymentStep {
- id:string;kind:'table'|'foreignKey'|'index'|'policy'|'grant';sourcePath:string;
+ id:string;kind:'table'|'foreignKey'|'index'|'policy'|'grant'|'comment';sourcePath:string;
  transaction:'required';sql:string;
 }
 export interface TableColumnExpectation {
@@ -18,12 +18,12 @@ export interface TableColumnExpectation {
 export interface TableConstraintExpectation {table:string;id:string;name:string;definitionSql:string}
 export interface TableIndexExpectation extends TableConstraintExpectation {unique:boolean}
 export interface TableDeploymentBundle {
- version:'umf.table-deployment/0.1';canonicalization:'RFC8785';
+ version:'umf.table-deployment/0.1'|'umf.table-deployment/0.2';canonicalization:'RFC8785';
  source:{format:'json'|'yaml';utf8:string};sourceDigest:string;
  configuration:TableDeploymentConfiguration;configurationDigest:string;
  module:string;profile:'postgresql18/0.1';
  steps:TableDeploymentStep[];
- expectedCatalog:{tables:TableDeclaration[];columns:TableColumnExpectation[];keys:(TableConstraintExpectation&{primary:boolean;columns:string[]})[];checks:TableConstraintExpectation[];foreignKeys:(TableConstraintExpectation&{targetKey:string})[];indexes:TableIndexExpectation[]};
+ expectedCatalog:{comments?:{table:string;column?:string;text:string}[];tables:TableDeclaration[];columns:TableColumnExpectation[];keys:(TableConstraintExpectation&{primary:boolean;columns:string[]})[];checks:TableConstraintExpectation[];foreignKeys:(TableConstraintExpectation&{targetKey:string})[];indexes:TableIndexExpectation[]};
  seedSets:TableLifecyclePayload['seedSets'];
  bundleDigest:string;nativeQualified:false;
 }

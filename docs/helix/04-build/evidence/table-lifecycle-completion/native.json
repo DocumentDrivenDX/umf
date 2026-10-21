@@ -1,0 +1,40 @@
+{
+  "serverMajor": 18,
+  "scope": "local fabricated legal lifecycle; no managed/private-consumer or release claim",
+  "assertions": [
+    "initial-commit-ledger",
+    "generated-sync-page-uses-native-membership",
+    "generated-sync-action-has-affected-count",
+    "generated-sync-action-durable-replay",
+    "generated-calls-return-every-lease",
+    "visible-matters-alice",
+    "visible-matters-bob",
+    "visible-matters-batch",
+    "membership-forgery-denied-alice",
+    "membership-forgery-denied-batch",
+    "edited-applied-file-refuses",
+    "overbound-backfill-refuses",
+    "failed-backfill-column-rolled-back",
+    "required-backfill-preserves-protected-rows",
+    "forward-replay-has-no-data-effects",
+    "added-fk-and-check-installed",
+    "transactional-runner-refuses-concurrent",
+    "first-index-phase-retains-old-ledger",
+    "partial-phase-fences-client-head",
+    "unique-build-fails-with-inspect-recovery",
+    "invalid-index-needs-explicit-repair",
+    "failed-phases-do-not-advance-ledger",
+    "explicit-repair-resumes-and-commits",
+    "final-publication-restores-client-head",
+    "concurrent-replay-does-not-rebuild",
+    "full-source-and-native-history-correspondence",
+    "batch-update-denied",
+    "native-comment-drift-refuses"
+  ],
+  "count": 28,
+  "planDigests": [
+    "efff35e2c2fb1f6d2660ef2d539f2ec60d30ff9477d97a3d3ae32b5913815e15",
+    "89ad697c59f51ab038dbf182d198190605f9a58efd6f7a18fcbdee43096eae1b",
+    "b7d3d1875a74bcbe90b6c89f42c9bf56c79bf93766529a13e346c88f3ba77944"
+  ]
+}

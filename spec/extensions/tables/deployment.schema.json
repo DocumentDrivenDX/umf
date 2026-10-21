@@ -5,7 +5,7 @@
   "type": "object",
   "properties": {
     "version": {
-      "const": "umf.table-deployment/0.1"
+      "enum": ["umf.table-deployment/0.1", "umf.table-deployment/0.2"]
     },
     "canonicalization": {
       "const": "RFC8785"
@@ -111,7 +111,8 @@
               "foreignKey",
               "index",
               "policy",
-              "grant"
+              "grant",
+              "comment"
             ]
           },
           "sourcePath": {
@@ -392,6 +393,29 @@
               "name",
               "definitionSql",
               "unique"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "comments": {
+          "type": "array",
+          "maxItems": 4352,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "column": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "table",
+              "text"
             ],
             "additionalProperties": false
           }

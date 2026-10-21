@@ -95,7 +95,9 @@ def check(root: Path) -> int:
         if source_owner == "lifecycle" and package in {"psycopg", "umf_codegen"}:
             public = (target == "psycopg" and member == "Error" or target == "psycopg.rows" and member == "tuple_row"
                       or target == "psycopg.types.json" and member == "Jsonb"
-                      or target == "umf_codegen" and member in {"verify_table_deployment", "verify_table_migration"})
+                      or target == "umf_codegen" and member in {"verify_table_deployment", "verify_table_migration"}
+                      or name == "umf_access.lifecycle.concurrent" and target == "umf_codegen" and member == "compile_table_deployment"
+                      or name == "umf_access.lifecycle.cli" and (target == "umf_codegen" and member == "compile_table_migration" or target == "psycopg" and member == "connect"))
             if not public:
                 fail(path, "PRIVATE", "administration uses only the original public verifier and native exception boundary")
                 return
@@ -112,7 +114,8 @@ def check(root: Path) -> int:
                           and target == 'psycopg2.extensions' and member == 'cursor')
         table_read_compiler = (name == 'umf_access.unified.table_reads' and target == 'weft'
                                and member == 'prepare_table_operation_module_json')
-        seed_compiler = name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
+        seed_compiler = (name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
+                         or name == 'umf_access.lifecycle.backfills' and target == 'weft' and member == 'prepare_table_operation_module_json')
         if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):

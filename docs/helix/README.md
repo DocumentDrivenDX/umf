@@ -1,5 +1,11 @@
 # UMF project documentation
 
+[Table lifecycle successor evidence](04-build/evidence/table-lifecycle-completion/README.md) records documented legal-domain schemas, reviewed bounded backfills, index-only concurrent recovery/fencing and installed verification. [Use the candidate](04-build/guides/legal-table-lifecycle.md); [stage a wheel mirror](04-build/guides/python-wheel-mirror.md). Revision2 mixed phases and reviewed existing-object evolution remain next-release work.
+
+[Praxis revision2 next-release requirements](01-frame/praxis-lifecycle-roadmap.md#next-release-requirements--praxis-revision2-2026-10-21) maps U1–U9 to existing WS-5–9, preserves the U1–U3 adoption gate, and distinguishes posted releases from locally verified successor work.
+
+[Additional Praxis table asks assessment](01-frame/praxis-lifecycle-roadmap.md#additional-consumer-assessment--2026-10-21) evaluates R1–R11, separates current source evidence from consumer/release acceptance, and sequences remaining DDL, migration, packaging and host work. It recommends the registered table profile rather than new core fields; Hohfeld alignment is a separate delivery cut.
+
 [Praxis lifecycle roadmap](01-frame/praxis-lifecycle-roadmap.md) assesses the ten
 client integration gaps and proposes gated delivery for direct tables, native
 identity/policies and Truss/Ashlar graph hosts. Release numbers are proposed;

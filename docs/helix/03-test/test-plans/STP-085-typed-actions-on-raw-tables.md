@@ -113,3 +113,28 @@ then each platform adapter in TD-085's order. Every AC needs an exercising
 assertion carrying its `@covers` tag. Done for a platform only when every case
 for that platform has passed with retained evidence; unrun platforms stay
 unqualified, and support is claimed per platform version only.
+
+## Table lifecycle successor qualification — 2026-10-21
+
+CONTRACT-081 and the Praxis roadmap govern the bounded lifecycle extension.
+`tests/lifecycle/migration.test.ts` covers source-derived comments, legacy bundle
+recovery, required-column backfill options, appended checks/FKs, exact plan
+recompilation and refusal of unacknowledged/mixed concurrent effects.
+`tests/lifecycle/test_cli.py` covers offline chain/terminal-source/original-file
+checks, exclusive new-file creation and approval before native connection.
+`tests/lifecycle/native.py` uses fabricated legal domain-pack schemas: assigned
+team membership limits matters, reference metadata is explicitly readable,
+billing data has a trusted group, roster writes deny ordinary/batch callers,
+and batch has only declared commands. Native checks cover backfill bound rollback,
+NOT NULL/default completion, added constraints, failed concurrent uniqueness,
+source-prefix resume, explicit invalid-index repair, metadata-head fencing,
+immutable file/ledger replay and native comment drift. Generated sync page/action
+calls exercise the original Weft prepared compiler. Exact installed wheel and
+source hashes must accompany success; no private Praxis/Lakebase proof is inferred.
+
+The existing real Chromium lifecycle script includes the three legal schema
+stages and source-exact migration verification; the embedded corpus includes the
+same generation/refusal cases. U1 mixed phases/NOT VALID/VALIDATE, U2 reviewed
+existing-object changes, U5 generic host custody and U6 untrusted SQL containment
+require their own new tests before next-release support claims. Existing scalar
+and host/platform qualifications remain independently scoped.
