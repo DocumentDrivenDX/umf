@@ -18,7 +18,16 @@
   "nativeReports": [
     "legal-installed.json",
     "mixed-installed.json",
-    "owner-via-installed.json"
+    "owner-via-installed.json",
+    "reviewed-a-installed.json",
+    "reviewed-b-installed.json",
+    "reviewed-c-installed.json",
+    "reviewed-d-installed.json"
   ],
-  "isolation": "Each suite ran in an independent disposable database; database-wide external authority checks are preserved."
+  "isolation": "Each suite ran in an independent disposable database; database-wide external authority checks are preserved.",
+  "cleanup": {
+    "ownedDisposableDatabasesRemoved": 7,
+    "ownedDatabasesRemaining": 0,
+    "testHarnessesRemovedTheirSyntheticSchemasAndRoles": true
+  }
 }
