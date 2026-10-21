@@ -1,0 +1,11 @@
+{
+  "row_scope": {
+    "owner_column": "owner_id",
+    "commands": ["select", "insert", "update", "delete"],
+    "via": [
+      {"table": "watershed_member", "person_column": "person_id", "key_column": "watershed_id"}
+    ],
+    "batch": ["select", "insert"],
+    "groups": [{"name": "ecology_reviewers", "commands": ["select"]}]
+  }
+}

@@ -44,7 +44,7 @@ for(const [name] of Object.entries(result.metafile.inputs).sort(([a],[b])=>compa
 inputs['scripts/build-codegen.ts']=hash(await readFile(join(root,'scripts/build-codegen.ts')));
 inputs['scripts/codegen/gzip.ts']=hash(await readFile(join(root,'scripts/codegen/gzip.ts')));
 const manifest={profile:'umf.codegen-v8/1',generator:'generatePythonClient',engine:'mini-racer==0.14.1',
- operations:['generatePythonClient','compileTableDeployment','verifyTableDeployment','compileTableMigration','verifyTableMigration'],
+ operations:['generatePythonClient','compileTableDeployment','verifyTableDeployment','compileTableMigration','verifyTableMigration','normalizeRowScope','discoverTableMigrationChanges'],
  v8:'14.4.258.23',bundleSha256:hash(js),builder:'bun@'+Bun.version,license:'MIT OR Apache-2.0',inputs,
  dependencies:[...dependencies.values()].sort((a,b)=>compare(a.name,b.name)),
  files:Object.fromEntries([...payloads].sort(([a],[b])=>compare(a,b)).map(([name,bytes])=>[name,hash(bytes)]))};

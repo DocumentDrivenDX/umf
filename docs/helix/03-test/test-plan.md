@@ -37,6 +37,33 @@ ddx:
 
 ## Core ideal acceptance gates
 
+### Proposed field migration acceptance
+
+FR-18/19, FEAT-007 COMP-06–11, US-051-AC11–16 and
+[SD-007](../02-design/solution-designs/SD-007-schema-migrations.md) require the
+following separate proof layers. The [build plan](../04-build/schema-migration-plan.md)
+sequences reconciliation with CONTRACT-081/TD-085/STP-085 in the existing U1/U2
+implementation stream. Allocate remaining criteria in TD-051/STP-051 before
+residual implementation; reuse native cases already owned by STP-085.
+
+| Primary layer / criteria | Required proof |
+| --- | --- |
+| Portable contract / AC11, AC16 | Stable-ID intent, exact sources, dependency/unknown retention, backend capability refusal, deterministic plans and receipt tamper controls; Bun and real Chromium agree |
+| Native integration / AC12 | Optional and required date additions; tightening; default versus backfill; empty/populated data; full target constraint checks with concurrent-write protection |
+| Native integration / AC13 | Dependent key/FK/policy/action/catalog/client changes; explicit retirement versus purge; retained-data recovery and irreversible purge accounting |
+| Native integration / AC14 | Proven preservation versus authored conversion; invalid values, timezone/format decisions, overflow/rounding, target key collisions and retained source values |
+| Host end-to-end / AC15 | Resume after every phase, drift, approval tampering, competing migrators/writers, cancellation, lost commit response, generated-client cutover and honest recovery |
+
+The reconciled story-test allocation must map each criterion to named fixtures
+and tests with parseable
+`@covers US-051-ACn` markers. AC16's portable capability cases are primary;
+backend-specific native execution is supplementary evidence required for each
+support claim. PostgreSQL, Truss and Ashlar remain distinct native profiles.
+Sampling does not prove whole-dataset acceptance. Evidence must bind exact
+sources, native/driver versions, transforms, installed artifacts, target generation
+and limits. Birthdays/reject values stay in access-controlled host data stores;
+portable receipts contain bounded summaries and protected evidence references.
+
 ### Authored relationship and binding amendment
 
 FR-42–FR-44, FEAT-006, US-045–US-049 and CONTRACT-041–044 govern this

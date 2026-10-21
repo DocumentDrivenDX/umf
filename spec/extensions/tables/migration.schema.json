@@ -83,7 +83,9 @@
               "foreignKey",
               "index",
               "policy",
-              "grant"
+              "grant",
+              "comment",
+              "backfill"
             ]
           },
           "sourcePath": {
@@ -91,11 +93,14 @@
             "minLength": 1
           },
           "transaction": {
-            "const": "required"
+            "enum": [
+              "required",
+              "forbidden"
+            ]
           },
           "sql": {
             "type": "string",
-            "minLength": 1,
+            "minLength": 0,
             "maxLength": 1000000
           },
           "preconditions": {
@@ -152,7 +157,14 @@
             "const": "native-catalog-privileges-and-role-scope"
           },
           "recovery": {
-            "const": "rollback-transaction"
+            "enum": [
+              "rollback-transaction",
+              "inspect-index"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
@@ -208,6 +220,95 @@
     },
     "digest": {
       "$ref": "#/$defs/digest"
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.table-migration-options/0.1"
+        },
+        "backfills": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "column": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "operation": {
+                "type": "string"
+              },
+              "scopedRows": {
+                "const": true
+              }
+            },
+            "required": [
+              "table",
+              "column",
+              "operation",
+              "scopedRows"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "concurrentIndexes": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "index": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "table",
+              "index"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "version",
+        "backfills",
+        "concurrentIndexes"
+      ],
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "array",
+      "maxItems": 2304,
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "enum": [
+              "SCOPED_BACKFILL",
+              "POLICY_CHANGE_REVIEW"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message"
+        ],
+        "additionalProperties": false
+      }
     }
   },
   "required": [

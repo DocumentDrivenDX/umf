@@ -1,0 +1,190 @@
+[
+  {
+    "version": "1.0",
+    "table_name": "clients",
+    "description": "Fabricated demonstration only; no real firm records.",
+    "columns": [
+      {
+        "name": "client_id",
+        "data_type": "INTEGER",
+        "nullable": false,
+        "description": "Fabricated client id"
+      },
+      {
+        "name": "client_name",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated client name",
+        "domain_type": "client_name"
+      }
+    ],
+    "primary_key": [
+      "client_id"
+    ]
+  },
+  {
+    "version": "1.0",
+    "table_name": "timekeepers",
+    "description": "Fabricated demonstration only; no real firm records.",
+    "columns": [
+      {
+        "name": "timekeeper_id",
+        "data_type": "INTEGER",
+        "nullable": false,
+        "description": "Fabricated timekeeper id"
+      },
+      {
+        "name": "timekeeper_name",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated timekeeper name",
+        "domain_type": "timekeeper_name"
+      },
+      {
+        "name": "timekeeper_level",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated timekeeper level",
+        "domain_type": "timekeeper_level"
+      },
+      {
+        "name": "billing_rate",
+        "data_type": "DECIMAL",
+        "nullable": false,
+        "description": "Fabricated billing rate",
+        "domain_type": "billing_rate",
+        "precision": 10,
+        "scale": 2
+      }
+    ],
+    "primary_key": [
+      "timekeeper_id"
+    ]
+  },
+  {
+    "version": "1.0",
+    "table_name": "matters",
+    "description": "Fabricated demonstration only; no real firm records.",
+    "columns": [
+      {
+        "name": "matter_id",
+        "data_type": "INTEGER",
+        "nullable": false,
+        "description": "Fabricated matter id"
+      },
+      {
+        "name": "client_id",
+        "data_type": "INTEGER",
+        "nullable": false,
+        "description": "Fabricated client id"
+      },
+      {
+        "name": "matter_number",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated matter number",
+        "domain_type": "matter_number"
+      },
+      {
+        "name": "matter_title",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated matter title",
+        "domain_type": "matter_title"
+      },
+      {
+        "name": "practice_area",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated practice area",
+        "domain_type": "practice_area"
+      },
+      {
+        "name": "open_date",
+        "data_type": "DATE",
+        "nullable": false,
+        "description": "Fabricated open date"
+      },
+      {
+        "name": "close_date",
+        "data_type": "DATE",
+        "nullable": true,
+        "description": "Fabricated close date"
+      },
+      {
+        "name": "jurisdiction",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated jurisdiction",
+        "domain_type": "jurisdiction"
+      },
+      {
+        "name": "court",
+        "data_type": "VARCHAR",
+        "nullable": false,
+        "description": "Fabricated court",
+        "domain_type": "court"
+      }
+    ],
+    "primary_key": [
+      "matter_id"
+    ],
+    "relationships": {
+      "foreign_keys": [
+        {
+          "column": "client_id",
+          "references_table": "clients",
+          "references_column": "client_id"
+        }
+      ]
+    }
+  },
+  {
+    "version": "1.0",
+    "table_name": "matter_teams",
+    "description": "Fabricated demonstration only; no real firm records.",
+    "columns": [
+      {
+        "name": "matter_team_id",
+        "data_type": "INTEGER",
+        "nullable": false,
+        "description": "Fabricated matter team id"
+      },
+      {
+        "name": "matter_id",
+        "data_type": "INTEGER",
+        "nullable": false,
+        "description": "Fabricated matter id"
+      },
+      {
+        "name": "timekeeper_id",
+        "data_type": "INTEGER",
+        "nullable": false,
+        "description": "Fabricated timekeeper id"
+      }
+    ],
+    "primary_key": [
+      "matter_team_id"
+    ],
+    "relationships": {
+      "foreign_keys": [
+        {
+          "column": "matter_id",
+          "references_table": "matters",
+          "references_column": "matter_id"
+        },
+        {
+          "column": "timekeeper_id",
+          "references_table": "timekeepers",
+          "references_column": "timekeeper_id"
+        }
+      ]
+    },
+    "unique_constraints": [
+      [
+        "matter_id",
+        "timekeeper_id"
+      ]
+    ]
+  }
+]

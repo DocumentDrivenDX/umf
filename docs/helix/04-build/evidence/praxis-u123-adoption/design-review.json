@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "scope": "bounded maintenance/fenced PostgreSQL18.6 migration profile; current core0.10.0; table migration0.2 and exact legacy0.1 verification/admission rules",
+  "reviewerChat": "Explain UMF schema migrations",
+  "reviewerThreadId": "01a1605c-de92-72c0-afcd-0498b7422c1c",
+  "date": "2026-10-21",
+  "runtime": {
+    "umf-access": {
+      "version": "0.1.0.dev6",
+      "matchedFiles": 83
+    },
+    "umf-codegen": {
+      "version": "0.1.0a3",
+      "matchedFiles": 18
+    }
+  },
+  "browser": {
+    "assertions": 91,
+    "sourceFiles": 40,
+    "sourceHashesMatch": true,
+    "externalRequests": []
+  },
+  "independentNative": {
+    "mixedChecks": 21,
+    "checkForeignKeyAssertions": 40,
+    "serverVersion": 180006,
+    "isolatedDatabases": true,
+    "disposableDatabasesRemoved": true
+  },
+  "integratedNative": {
+    "reviewedAssertions": 128,
+    "reviewedScenarios": 14,
+    "compilerRefusalScenarios": 2,
+    "mixedChecks": 21,
+    "legalChecks": 42,
+    "ownerViaChecks": 10
+  },
+  "gates": {
+    "MIG-R01": "passed for the declared bounded profile",
+    "MIG-R02": "passed for the declared bounded profile",
+    "MIG-R03": "passed for the declared bounded profile",
+    "MIG-R04": "passed for the declared bounded profile",
+    "MIG-R05": "passed for the declared bounded profile",
+    "MIG-R06": "passed for the declared bounded profile"
+  },
+  "remainingCapabilityGaps": {
+    "MIG-G01": "open; retained in canonical schema-migration-plan",
+    "MIG-G02": "open; retained in canonical schema-migration-plan",
+    "MIG-G03": "open; retained in canonical schema-migration-plan",
+    "MIG-G04": "open; retained in canonical schema-migration-plan",
+    "MIG-G05": "open; retained in canonical schema-migration-plan",
+    "MIG-G06": "open; retained in canonical schema-migration-plan",
+    "MIG-G07": "open; retained in canonical schema-migration-plan",
+    "MIG-G08": "open; retained in canonical schema-migration-plan",
+    "MIG-G09": "open; retained in canonical schema-migration-plan",
+    "MIG-G10": "open; retained in canonical schema-migration-plan",
+    "MIG-G11": "open; retained in canonical schema-migration-plan"
+  },
+  "evidence": {
+    "umf-design-review-mixed.json": {
+      "path": "/private/tmp/umf-design-review-mixed.json",
+      "sha256": "502a2bea54681d4bbc93bb7f113ad0e498cbe9c8f78961d4e46ccb2e23af7da5"
+    },
+    "umf-design-review-constraints-final.json": {
+      "path": "/private/tmp/umf-design-review-constraints-final.json",
+      "sha256": "2dc40312e8a307646851d9dbfd4f5f746388850b340c2e4ddae8ec4e40368677"
+    },
+    "umf-design-review-fixture-equivalence.json": {
+      "path": "/private/tmp/umf-design-review-fixture-equivalence.json",
+      "sha256": "2d4978b4418f5b0bb85b60b5b27680d7759d1bc1df83a77c54c6386b9f70910c"
+    }
+  },
+  "qualificationLimits": [
+    "Local macOS ARM64/Python3.11.17/PostgreSQL18.6 installed cohort",
+    "Existing optional-column fill, broader conversions, online chunks, retention/reversal and other backends remain unsupported/unqualified as tracked",
+    "No full migration support claim; merge/release owned by implementation workstream"
+  ]
+}

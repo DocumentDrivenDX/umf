@@ -1,0 +1,40 @@
+{
+  "reviewModel": "gpt-6.1-sol",
+  "sourceCommit": "63b65704caef3538ae65b4512549d8d85bc145a1",
+  "decision": "approved for recorded bounded PostgreSQL18 maintenance profile",
+  "scope": "U1-U3; source and installed/native/browser/package evidence. Hosted CI, merge and publication are subsequent gates.",
+  "verified": [
+    "all four reviewed native shard fixture/raw/report hashes and case inventories:128assertions",
+    "final C critical source and embedded-asset hashes",
+    "complete A/B/D final selected-input byte equivalence with original receipts unchanged",
+    "all browser source hashes against current source",
+    "installed access83/codegen18 source-byte and wheel custody",
+    "mixed installed21 and independent21, legal42, owner-via10"
+  ],
+  "closedReviewFindings": [
+    "MIG-R01",
+    "MIG-R02",
+    "MIG-R03",
+    "MIG-R04",
+    "MIG-R05",
+    "MIG-R06"
+  ],
+  "retainedCapabilityResiduals": [
+    "MIG-G01",
+    "MIG-G02",
+    "MIG-G03",
+    "MIG-G04",
+    "MIG-G05",
+    "MIG-G06",
+    "MIG-G07",
+    "MIG-G08",
+    "MIG-G09",
+    "MIG-G10",
+    "MIG-G11"
+  ],
+  "limitations": [
+    "No managed Praxis/Lakebase or private consumer acceptance",
+    "No complete SD-007 or arbitrary/online/multibackend migration support",
+    "No package-index publication claim"
+  ]
+}

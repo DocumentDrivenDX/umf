@@ -3,7 +3,7 @@ import {hashCanonical} from '../compilation/bundle/hash';
 import type {TableDeclaration} from '../extensions/tables';
 import type {DeploymentContext,TableDeploymentBundle} from './types';
 import {deploymentError} from './configuration';
-import {expressionSql,literalSql,nativeType,nativeTypeExpectation,quoteIdentifier as q} from './sql';
+import {expressionSql,literalSql,nativeType,nativeTypeExpectation,quoteIdentifier as q,quoteText} from './sql';
 import {policySql} from './policies';
 import {domainPredicates} from './domains';
 const keyName=(table:string,id:string):string=>'umf_k_'+hashCanonical([table,id]).slice(0,32);
@@ -79,7 +79,20 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
   }
   emitPolicies(table,path,ctx);
  }
- return {tables:ctx.payload.tables,columns:expectations,keys,checks,foreignKeys,indexes};
+ const comments:NonNullable<TableDeploymentBundle['expectedCatalog']['comments']>=[];
+ for(const [i,table] of ctx.payload.tables.entries()){
+  const record=ctx.document.modules.find(m=>m.id===table.record.module)!.elements.find(e=>e.id===table.record.element)!;
+  const path=ctx.path+'/tables/'+i;
+  const add=(text:string,column?:string)=>{
+   if(text.includes('\0'))deploymentError('PostgreSQL comments cannot contain NUL',path);
+   comments.push({table:table.id,...(column===undefined?{}:{column}),text});
+   ctx.add('comment',path+'/comments'+(column===undefined?'':'/'+table.columns.findIndex(c=>c.name===column)),
+    'COMMENT ON '+(column===undefined?'TABLE ':'COLUMN ')+ctx.relation(table)+(column===undefined?'':'.'+q(column))+' IS '+quoteText(text));
+  };
+  if(record.description!==undefined)add(record.description);
+  for(const column of table.columns){const field=ctx.field(column.field);if(field.description!==undefined)add(field.description,column.name);}
+ }
+ return {tables:ctx.payload.tables,columns:expectations,keys,checks,foreignKeys,indexes,...(comments.length?{comments}:{})};
 }
 function emitPolicies(table:TableDeclaration,path:string,ctx:DeploymentContext):void{
  const relation=ctx.relation(table);

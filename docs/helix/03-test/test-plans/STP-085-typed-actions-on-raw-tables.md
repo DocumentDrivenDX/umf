@@ -113,3 +113,65 @@ then each platform adapter in TD-085's order. Every AC needs an exercising
 assertion carrying its `@covers` tag. Done for a platform only when every case
 for that platform has passed with retained evidence; unrun platforms stay
 unqualified, and support is claimed per platform version only.
+
+## Table lifecycle successor qualification — 2026-10-21
+
+CONTRACT-081 and the Praxis roadmap govern the bounded lifecycle extension.
+`tests/lifecycle/migration.test.ts` covers source-derived comments, legacy bundle
+recovery, required-column backfill options, appended checks/FKs, exact plan
+recompilation and refusal of unacknowledged/mixed concurrent effects.
+`tests/lifecycle/test_cli.py` covers offline chain/terminal-source/original-file
+checks, exclusive new-file creation and approval before native connection.
+`tests/lifecycle/native.py` uses fabricated legal domain-pack schemas: assigned
+team membership limits matters, reference metadata is explicitly readable,
+billing data has a trusted group, roster writes deny ordinary/batch callers,
+and batch has only declared commands. Native checks cover backfill bound rollback,
+NOT NULL/default completion, added constraints, failed concurrent uniqueness,
+source-prefix resume, explicit invalid-index repair, metadata-head fencing,
+immutable file/ledger replay and native comment drift. Generated sync page/action
+calls exercise the original Weft prepared compiler. Exact installed wheel and
+source hashes must accompany success; no private Praxis/Lakebase proof is inferred.
+
+The existing real Chromium lifecycle script includes the three legal schema
+stages and source-exact migration verification; the embedded corpus includes the
+same generation/refusal cases. U1 mixed phases/NOT VALID/VALIDATE, U2 reviewed
+existing-object changes, U5 generic host custody and U6 untrusted SQL containment
+require their own new tests before next-release support claims. Existing scalar
+and host/platform qualifications remain independently scoped.
+
+## Revision2 U1–U3 release acceptance
+
+CONTRACT-081's evolution profile and the Praxis roadmap govern these P0 cases.
+Use fabricated legal data only; no private consumer payload is required. Record
+exact PostgreSQL, source, schema, compiler and installed wheel versions/hashes.
+Native PostgreSQL evidence and managed Lakebase/Praxis acceptance remain separate.
+
+| Case | Primary layer | Required observation |
+| --- | --- | --- |
+| U1 mixed plan | Bun, real Chromium, embedded Python | One exact plan adds/backfills a required column, builds a concurrent index, adds a NOT VALID CHECK/FK and validates it; phase order and transaction modes agree across runtimes; legacy 0.1 bytes remain exact. |
+| U1 committed progress | PostgreSQL18 installed native | Interrupt before/after every commit boundary and concurrent dispatch; resume preserves exact backfill/seed effects without repetition, history stays old until complete, and ordinary old/new clients stay fenced. |
+| U1 hostile recovery | PostgreSQL18 installed native | Changed plan/file/head, forged progress, wrong ACL/metadata shape, unrelated objects, invalid index and noncontiguous prefix refuse; explicit exact invalid-index repair succeeds; lost final response is observed without resending effects. |
+| U2 reviews | Bun/Chromium/embedded Python | Unreviewed drop returns destructive_change_unreviewed with names/paths; each missing, stale, duplicate, unknown or unused marker refuses; changing approved source/digests fails recompilation. |
+| U2 supported effects | PostgreSQL18 installed native | Independently exercise column drop/rename, finite type widening, nullability, Key replacement, constraint/index drop/rename/replacement and policy change. Compare rows and catalogs with independent expectations and assert old-client refusal. |
+| U2 unsafe forms | PostgreSQL18 installed native | Nulls block tightening; invalid/duplicate data blocks constraints/Keys; narrowing/unknown conversion, inbound FK, policy/operation reference and unreviewed dependent deletion refuse without partial transaction effects. No CASCADE fallback. |
+| U3 normalization | Bun/Chromium/embedded Python | Exact supplied owner+via block plus explicit Field-pair context yields person CRUD, batch SELECT/INSERT and denied batch UPDATE/DELETE. Preserve original/unknown bytes and output locations; unknown groups/joins/cycles refuse. |
+| U3 actual policy | PostgreSQL18 installed native | Two people plus separate batch: owner and membership access, open reference SELECT, trusted group, hidden membership, membership reassignment, old/new-row denial and direct SQL controls. FORCE RLS remains enabled; omitted commands gain no grant. |
+
+Release requires these native examples on the actual built wheels, source-exact
+generation/check and CLI/library parity. A passing schema validator or inert SQL
+comparison cannot substitute for effects/recovery evidence. Bound support claims
+to the exercised conversion/dependency inventory; report remaining unsupported
+forms with their located refusals. Public release does not prove that Praxis can
+delete its emitter without its independent eleven-table/four-migration workload.
+
+SD-007 release review additionally requires typed dependency cases where a native
+column drop would automatically remove a local check/index despite RESTRICT;
+logical-domain narrowing disguised as native widening; and concurrent direct
+authorized writes during requiredness validation/activation. Review disclosure
+must name irreversible instance-value loss. Separate fail-if-null tightening of
+an existing optional column from historical fill, which remains unsupported;
+retain positive appended-column backfill coverage. After an interrupted committed
+stage, assert old metadata head, changed physical state, fenced clients and exact
+resume without replay. Do not assert physical rollback from an unchanged ledger.
+The release inventory marks these bounded operations qualified/refused/remaining
+and does not claim complete SD-007 field-lifecycle delivery.

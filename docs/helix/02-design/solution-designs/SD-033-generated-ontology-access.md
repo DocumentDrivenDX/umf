@@ -238,3 +238,12 @@ batch settlement defensively, converting unreadable write acknowledgements to
 uncertainty. See CONTRACT-079 and CONTRACT-900 for exact wire/profile rules.
 Legacy Hohfeld conversion is consumer-owned; unsupported action declarations
 must refuse. No architecture or ADR direction changes.
+
+
+## Table lifecycle completion
+
+CONTRACT-081 owns reviewed deployment/migration semantics. Portable UMF modules
+emit comments and schema changes; Weft lowers typed backfill operations. Python
+lifecycle administration owns caller-supplied native execution and recovery. The
+application client gains neither DDL privileges nor administrative identity. Legal
+domain-pack projections retain original metadata and explicit security additions.

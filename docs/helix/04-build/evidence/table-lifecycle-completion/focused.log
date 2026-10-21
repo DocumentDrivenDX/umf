@@ -1,0 +1,43 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/lifecycle/migration.test.ts:
+(pass) domain descriptions, reviewed scoped backfills, checks/FKs and concurrent phases have exact source custody [1059.23ms]
+(pass) unacknowledged, duplicate, unrelated or parameterized backfills refuse without erasing source [1006.86ms]
+(pass) concurrent source selections refuse mixed effects and rehashed/unapproved phase substitution [680.47ms]
+(pass) comments escape SQL text and multibyte identifier bounds are byte-based [107.11ms]
+(pass) legacy description-bearing deployment bundles retain exact verifier recovery [634.87ms]
+(pass) removing an authored description explicitly clears its native comment [176.98ms]
+(pass) backfill column generation never parses SQL-looking identifier text [590.90ms]
+
+tests/binding/table-migration.test.ts:
+(pass) initial plan retains exact source and ordered compiler steps; approval is not inferred [79.80ms]
+(pass) append table plans reuse only new table steps and preserve source order [178.90ms]
+(pass) rehashed SQL, source, history pins, approval and unknown fields cannot forge a plan [700.25ms]
+(pass) initial/forward predecessor and exact request shapes refuse invalid histories [723.00ms]
+(pass) unsupported logical, native and module changes still require separate qualification [474.17ms]
+(pass) migration schema is closed and seed/namespace transitions are explicit [356.38ms]
+(pass) source-rehashed deployment mutations and removing existing tables never produce SQL plans [295.69ms]
+(pass) forward indexes reuse only original new-index compiler steps and preserve existing definitions [490.01ms]
+(pass) nullable appended columns and grant-preserving policy revisions compile as ordered source DDL [167.59ms]
+(pass) column evolution refuses backfill, defaults, and existing native meaning changes [398.17ms]
+(pass) appended numeric and date fields carry their compiler-generated domain checks [165.95ms]
+(pass) policy allow/deny transitions alter the source policy and reconcile its exact grant [232.13ms]
+(pass) declared command revisions advance a source-bound generation without DDL or inferred data access [504.68ms]
+(pass) seed sets append immutably and source approval binds their exact ordered values [389.31ms]
+
+tests/binding/table-deployment.test.ts:
+(pass) deployment is deterministic inert copied output with exact bytes and configuration authority [145.87ms]
+(pass) deployment verification rejects tampering even with recomputed untrusted digests [318.77ms]
+(pass) emitted bundle satisfies its exact machine schema and unknown envelope fields refuse [52.96ms]
+(pass) configuration refuses shared/system schemas, principal collisions, unknowns and NUL [0.47ms]
+(pass) native quoting has no string or identifier injection and no implicit seed execution [20.85ms]
+(pass) unqualified native codecs, logical facets and semantic policy combinations refuse [93.33ms]
+(pass) per-row group lookup is bounded to host declared groups [44.28ms]
+(pass) role alias object ordering cannot change native SQL after JSONB storage [47.05ms]
+(pass) lifecycle metadata table and index names cannot be authored as plugin data [62.38ms]
+(pass) via correlation cannot be shadowed by an authored table name and requires audience SELECT closure [51.90ms]
+
+ 31 pass
+ 0 fail
+ 179 expect() calls
+Ran 31 tests across 3 files. [10.47s]

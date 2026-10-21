@@ -1,0 +1,39 @@
+{
+  "serverMajor": 18,
+  "scope": "fabricated owner-plus-via legal fixture; no managed/private-consumer or release claim",
+  "bundleDigest": "c295f23ad8cf23d9e8e2801a5f78be55d6ab03c16d9a93550eb6e319bb11af70",
+  "assertions": [
+    "owner-only-row-visible",
+    "via-only-row-visible",
+    "neither-owner-nor-via-denied",
+    "force-row-level-security",
+    "old-row-visible-new-row-with-check-denies",
+    "membership-reassignment-revokes-alice",
+    "membership-reassignment-grants-bob",
+    "membership-reassignment-restores-alice",
+    "roster-write-denied-alice",
+    "roster-write-denied-batch"
+  ],
+  "count": 10,
+  "profile": "umf.praxis-u3.owner-via-native/1",
+  "date": "2026-10-21",
+  "command": "PYTHONPATH=python/umf_codegen/src /private/tmp/umf-lifecycle-mirror-venv/bin/python tests/lifecycle/owner_via_native.py --dsn \"dbname=postgres\"",
+  "versions": {
+    "postgresqlMajor": 18,
+    "python": "3.11.17",
+    "pydantic": "2.14.1",
+    "weft": "0.4.49",
+    "embeddedV8": "14.4.258.23"
+  },
+  "sourceSha256": {
+    "scripts/generate-legal-lifecycle.ts": "e9640710536138b32746d125c91428c3a868af0c55e2eba1f719c7a7f34334a4",
+    "tests/lifecycle/legal-fixture.ts": "bbff90ab325b23dfcb48220547ce01c22404c2a94f90245d54749feea7631a41",
+    "tests/lifecycle/owner_via_native.py": "23775efd6ce412e82dc5427ed01b4f44d5bdc8cd80cc9af3d694d80e18acc92d",
+    "fixtures/table-lifecycle/legal/owner-via.json": "d68ed2a04760b7ed3b45db1358433273a3738c0dc4bb9fd91ef09a4b6da44d9c"
+  },
+  "limitations": [
+    "Fabricated legal-domain policy and identities only.",
+    "Source was normalized, lifecycle/deployment admitted, then the generated deployment SQL was applied to isolated PostgreSQL 18.",
+    "No managed service, private consumer, shared-security equivalence, or complete ethical-wall claim."
+  ]
+}

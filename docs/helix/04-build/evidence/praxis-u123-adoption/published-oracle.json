@@ -1,0 +1,33 @@
+{
+  "releaseTag": "umf-v0.5.3",
+  "releaseAssetBase": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.3",
+  "sha256sumsSha256": "bfbfb6ffbeb16629f2db62aacabe4a794d8ed7a6f9606ba6b53c142bc58e10f9",
+  "wheels": {
+    "umf_codegen-0.1.0a2-py3-none-any.whl": {
+      "sha256": "11da338987de1accd1eff626eed6d8395cb51c9e647e5c833fadae85f66d41c2",
+      "recordEntries": 25
+    },
+    "umf_access-0.1.0.dev5-py3-none-any.whl": {
+      "sha256": "e4c77075281f82c2d1b67eba432a718f847b186d1e0293b034dceb068d1a9a9d",
+      "recordEntries": 84
+    }
+  },
+  "dependencies": [
+    "mini-racer==0.14.1",
+    "pydantic==2.13.5",
+    "psycopg[binary]==3.2.13"
+  ],
+  "runtime": {
+    "python": "3.11.17",
+    "access": "0.1.0.dev5",
+    "codegen": "0.1.0a2",
+    "pydantic": "2.13.5",
+    "psycopg": "3.2.13",
+    "miniRacer": "0.14.1",
+    "accessPath": "/private/tmp/umf-legacy-v053-published/venv/lib/python3.11/site-packages/umf_access/__init__.py",
+    "codegenPath": "/private/tmp/umf-legacy-v053-published/venv/lib/python3.11/site-packages/umf_codegen/__init__.py",
+    "codegenManifestSha256": "dbfa630dec39561fe0123896855dad0c88ced9445d6443b9c3ad9d6b1dab0a18",
+    "codegenBundleSha256": "a678b1ac2b281622138b2d52642e12a1bc47140dfb92bf03f9a73ef784247614"
+  },
+  "oraclePython": "/private/tmp/umf-legacy-v053-published/venv/bin/python"
+}

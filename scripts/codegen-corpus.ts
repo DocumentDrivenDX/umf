@@ -1,3 +1,4 @@
+import {legalSource,evolvedLegalSource,indexedLegalSource} from '../tests/lifecycle/legal-fixture';
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Cross-runtime corpus uses the real portable generator and complete results. */
 import {generatePythonClient,type PythonClientRequest} from '../src/access';
@@ -40,6 +41,7 @@ cases.push({name:'declared-native-domain-clock-module',request:{text:JSON.string
 cases.push({name:'native-related-policy',request:{text:JSON.stringify(relatedSource()),package:'related_demo'}});
 cases.push({name:'native-nested-related-policy',request:{text:JSON.stringify(relatedSource(true)),package:'related_demo'}});
 cases.push({name:'native-source-snapshot',request:{text:JSON.stringify(snapshotSource()),package:'snapshot_demo'}});
+for(const [i,source]of [legalSource(),evolvedLegalSource().source,indexedLegalSource().source].entries())cases.push({name:'legal-lifecycle-'+i,request:{text:JSON.stringify(source),package:'legal_demo'}});
 const corpus=cases.map(item=>{try{return {...item,expected:{ok:true,result:generatePythonClient(item.request)}};}catch(error){const e=error as {code?:string;message?:string;path?:string};return {...item,expected:{ok:false,error:{code:e.code??'GENERATION_FAILED',message:e.message??'Generation refused',...(e.path===undefined?{}:{path:e.path})}}};}});
 await Bun.write(process.argv[2]??'/private/tmp/umf-codegen-corpus.json',JSON.stringify(corpus,null,2)+'\n');
 console.log(JSON.stringify(corpus.map(x=>({name:x.name,accepted:x.expected.ok}))));

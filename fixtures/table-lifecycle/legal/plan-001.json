@@ -1,0 +1,3640 @@
+{
+  "version": "umf.table-migration/0.1",
+  "canonicalization": "RFC8785",
+  "id": "001",
+  "predecessor": null,
+  "previous": null,
+  "next": {
+    "version": "umf.table-deployment/0.2",
+    "canonicalization": "RFC8785",
+    "source": {
+      "format": "json",
+      "utf8": "{\"umf\":\"0.10.0\",\"id\":\"legal-lifecycle-demo\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"legal_lifecycle\",\"namespace\":\"legal_lifecycle\",\"elements\":[{\"id\":\"clients__client_id\",\"name\":\"clients__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients__client_name\",\"name\":\"clients__client_name\",\"description\":\"Fabricated client name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"clients\",\"name\":\"clients\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"}]}],\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_id\",\"name\":\"timekeepers__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_name\",\"name\":\"timekeepers__timekeeper_name\",\"description\":\"Fabricated timekeeper name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__timekeeper_level\",\"name\":\"timekeepers__timekeeper_level\",\"description\":\"Fabricated timekeeper level\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"timekeepers__billing_rate\",\"name\":\"timekeepers__billing_rate\",\"description\":\"Fabricated billing rate\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":10,\"scale\":2},\"extensions\":{}},{\"id\":\"timekeepers\",\"name\":\"timekeepers\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matters__matter_id\",\"name\":\"matters__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__client_id\",\"name\":\"matters__client_id\",\"description\":\"Fabricated client id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_number\",\"name\":\"matters__matter_number\",\"description\":\"Fabricated matter number\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__matter_title\",\"name\":\"matters__matter_title\",\"description\":\"Fabricated matter title\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__practice_area\",\"name\":\"matters__practice_area\",\"description\":\"Fabricated practice area\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__open_date\",\"name\":\"matters__open_date\",\"description\":\"Fabricated open date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__close_date\",\"name\":\"matters__close_date\",\"description\":\"Fabricated close date\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"matters__jurisdiction\",\"name\":\"matters__jurisdiction\",\"description\":\"Fabricated jurisdiction\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters__court\",\"name\":\"matters__court\",\"description\":\"Fabricated court\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matters\",\"name\":\"matters\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__matter_team_id\",\"name\":\"matter_teams__matter_team_id\",\"description\":\"Fabricated matter team id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__matter_id\",\"name\":\"matter_teams__matter_id\",\"description\":\"Fabricated matter id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams__timekeeper_id\",\"name\":\"matter_teams__timekeeper_id\",\"description\":\"Fabricated timekeeper id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"matter_teams\",\"name\":\"matter_teams\",\"description\":\"Fabricated demonstration only; no real firm records.\",\"kind\":\"record\",\"members\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"}]},{\"id\":\"unique_0\",\"name\":\"unique_0\",\"primary\":false,\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}]}],\"extensions\":{}},{\"id\":\"matter_teams__database_role\",\"description\":\"Synthetic database role assigned by the host; never a plugin-supplied identity claim.\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"clients\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"clients\"},\"name\":\"clients\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"name\":\"client_name\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"deny\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"timekeepers\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"name\":\"timekeepers\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"name\":\"timekeeper_name\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"name\":\"timekeeper_level\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"name\":\"billing_rate\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":10,\"scale\":2}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"deny\"},{\"kind\":\"memberOfRole\",\"role\":\"billing_admin\"}]},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"deny\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matters\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"name\":\"matters\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"name\":\"client_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"name\":\"matter_number\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"name\":\"matter_title\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"name\":\"practice_area\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"name\":\"open_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"name\":\"close_date\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"name\":\"jurisdiction\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"name\":\"court\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"insert\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"update\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]},\"delete\":{\"kind\":\"any\",\"rules\":[{\"kind\":\"related\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"matches\":[{\"source\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"target\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}}}]}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"allow\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"matter_teams\",\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams\"},\"name\":\"matter_teams\",\"columns\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"name\":\"matter_team_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"name\":\"matter_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"name\":\"timekeeper_id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"name\":\"database_role\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[{\"id\":\"fk_0\",\"name\":\"matter_teams_fk_0\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"matters\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false},{\"id\":\"fk_1\",\"name\":\"matter_teams_fk_1\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"}],\"target\":{\"record\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers\"},\"key\":\"primary\"},\"onUpdate\":\"noAction\",\"onDelete\":\"restrict\",\"deferrable\":false}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[{\"id\":\"synthetic-bootstrap\",\"conflict\":\"error\",\"rows\":[{\"table\":\"clients\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"},\"value\":{\"string\":\"Fabricated client\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic A\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"associate\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"125.00\"}}]},{\"table\":\"timekeepers\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},\"value\":{\"string\":\"Synthetic B\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},\"value\":{\"string\":\"partner\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"},\"value\":{\"decimalToken\":\"250.00\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matters\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},\"value\":{\"string\":\"DEMO-2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"string\":\"Synthetic client's matter\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},\"value\":{\"string\":\"demonstration\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},\"value\":{\"date\":\"2026-01-01\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},\"value\":null},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},\"value\":{\"string\":\"synthetic\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"},\"value\":{\"string\":\"demonstration\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"1\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_alice\"}}]},{\"table\":\"matter_teams\",\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},\"value\":{\"integerToken\":\"2\"}},{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"},\"value\":{\"string\":\"legal_bob\"}}]}]}],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_clients\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"clients\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_name\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"clients__client_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_timekeepers\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"timekeepers\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_name\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_level\"},{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__billing_rate\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"timekeepers__timekeeper_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matters\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matters\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__client_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_number\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__practice_area\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__open_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__close_date\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__jurisdiction\"},{\"module\":\"legal_lifecycle\",\"element\":\"matters__court\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_matter_teams\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"matter_teams\",\"fields\":[{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__timekeeper_id\"},{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__database_role\"}],\"where\":{\"op\":\"all\"},\"orderBy\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matter_teams__matter_team_id\"},\"direction\":\"asc\"}],\"result\":\"page\",\"maxRows\":100,\"cursorKey\":\"primary\"}},{\"version\":\"umf.table-operation/0.1\",\"id\":\"rename_matter\",\"parameters\":[{\"id\":\"id\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"}},{\"id\":\"title\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"}}],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"matters\",\"where\":{\"op\":\"eq\",\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_id\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"id\"}},\"values\":[{\"field\":{\"module\":\"legal_lifecycle\",\"element\":\"matters__matter_title\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"title\"}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
+    },
+    "sourceDigest": "8455e87c1de7f335a96b6316daeaaecce8d13d0b02d23fc839740d14d7931b8f",
+    "configuration": {
+      "module": "legal_lifecycle",
+      "schema": "legal_demo",
+      "ownerRole": "legal_owner",
+      "personRole": "legal_person",
+      "batchRole": "legal_batch",
+      "groupRoles": {
+        "billing_admin": "legal_billing_admin"
+      }
+    },
+    "configurationDigest": "46f4ed54641a6adacdc31c2d29dc74dcc612efb11a40311d73b9cb8e061ccd0b",
+    "module": "legal_lifecycle",
+    "profile": "postgresql18/0.1",
+    "steps": [
+      {
+        "id": "step-00001",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+        "transaction": "required",
+        "sql": "CREATE TABLE \"legal_demo\".\"clients\" (\n  \"client_id\" pg_catalog.\"int4\" NOT NULL,\n  \"client_name\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_6d7f9e45a2abf651f2b4dc6eec6c8223\" PRIMARY KEY (\"client_id\")\n)"
+      },
+      {
+        "id": "step-00002",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"clients\" ENABLE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00003",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"clients\" FORCE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00004",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "CREATE TABLE \"legal_demo\".\"timekeepers\" (\n  \"timekeeper_id\" pg_catalog.\"int4\" NOT NULL,\n  \"timekeeper_name\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"timekeeper_level\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"billing_rate\" pg_catalog.\"numeric\"(10,2) NOT NULL,\n  CONSTRAINT \"umf_k_2fc221ae5773e7cb5654db97ab8c4606\" PRIMARY KEY (\"timekeeper_id\"),\n  CONSTRAINT \"umf_d_075795fa5319b8ae591c2ed31f74cfc7\" CHECK (\"billing_rate\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))\n)"
+      },
+      {
+        "id": "step-00005",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"timekeepers\" ENABLE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00006",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"timekeepers\" FORCE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00007",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+        "transaction": "required",
+        "sql": "CREATE TABLE \"legal_demo\".\"matters\" (\n  \"matter_id\" pg_catalog.\"int4\" NOT NULL,\n  \"client_id\" pg_catalog.\"int4\" NOT NULL,\n  \"matter_number\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"matter_title\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"practice_area\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"open_date\" pg_catalog.\"date\" NOT NULL,\n  \"close_date\" pg_catalog.\"date\",\n  \"jurisdiction\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"court\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_4fd93e7fa34fed37823182eb9d5cd174\" PRIMARY KEY (\"matter_id\"),\n  CONSTRAINT \"umf_d_f9d924873abd87caa336e79dd3bd1b33\" CHECK (\"open_date\" >= '0001-01-01'::pg_catalog.date AND \"open_date\" <= '9999-12-31'::pg_catalog.date),\n  CONSTRAINT \"umf_d_44e579157ca33821a853608f1bc0f327\" CHECK (\"close_date\" >= '0001-01-01'::pg_catalog.date AND \"close_date\" <= '9999-12-31'::pg_catalog.date)\n)"
+      },
+      {
+        "id": "step-00008",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"matters\" ENABLE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00009",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"matters\" FORCE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00010",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+        "transaction": "required",
+        "sql": "CREATE TABLE \"legal_demo\".\"matter_teams\" (\n  \"matter_team_id\" pg_catalog.\"int4\" NOT NULL,\n  \"matter_id\" pg_catalog.\"int4\" NOT NULL,\n  \"timekeeper_id\" pg_catalog.\"int4\" NOT NULL,\n  \"database_role\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_b4702e666d52b66dc7d637aad8e22861\" PRIMARY KEY (\"matter_team_id\"),\n  CONSTRAINT \"umf_k_3537084debb60256317080882fa0d624\" UNIQUE (\"matter_id\", \"timekeeper_id\")\n)"
+      },
+      {
+        "id": "step-00011",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ENABLE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00012",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" FORCE ROW LEVEL SECURITY"
+      },
+      {
+        "id": "step-00013",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+        "transaction": "required",
+        "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"clients\" FROM PUBLIC"
+      },
+      {
+        "id": "step-00014",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (TRUE)"
+      },
+      {
+        "id": "step-00015",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+        "transaction": "required",
+        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"clients\" TO \"legal_person\""
+      },
+      {
+        "id": "step-00016",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00017",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00018",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)"
+      },
+      {
+        "id": "step-00019",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)"
+      },
+      {
+        "id": "step-00020",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00021",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00022",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
+      },
+      {
+        "id": "step-00023",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"timekeepers\" FROM PUBLIC"
+      },
+      {
+        "id": "step-00024",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((FALSE OR pg_catalog.pg_has_role(CURRENT_USER, E'legal_billing_admin', 'MEMBER')))"
+      },
+      {
+        "id": "step-00025",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+        "transaction": "required",
+        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"timekeepers\" TO \"legal_person\""
+      },
+      {
+        "id": "step-00026",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00027",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00028",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)"
+      },
+      {
+        "id": "step-00029",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)"
+      },
+      {
+        "id": "step-00030",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00031",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00032",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
+      },
+      {
+        "id": "step-00033",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+        "transaction": "required",
+        "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matters\" FROM PUBLIC"
+      },
+      {
+        "id": "step-00034",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
+      },
+      {
+        "id": "step-00035",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
+        "transaction": "required",
+        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
+      },
+      {
+        "id": "step-00036",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
+      },
+      {
+        "id": "step-00037",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
+        "transaction": "required",
+        "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
+      },
+      {
+        "id": "step-00038",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))) WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
+      },
+      {
+        "id": "step-00039",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
+        "transaction": "required",
+        "sql": "GRANT UPDATE (\"client_id\", \"matter_number\", \"matter_title\", \"practice_area\", \"open_date\", \"close_date\", \"jurisdiction\", \"court\") ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
+      },
+      {
+        "id": "step-00040",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))"
+      },
+      {
+        "id": "step-00041",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
+        "transaction": "required",
+        "sql": "GRANT DELETE ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\""
+      },
+      {
+        "id": "step-00042",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
+      },
+      {
+        "id": "step-00043",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
+        "transaction": "required",
+        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\""
+      },
+      {
+        "id": "step-00044",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (TRUE)"
+      },
+      {
+        "id": "step-00045",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
+        "transaction": "required",
+        "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\""
+      },
+      {
+        "id": "step-00046",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00047",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
+      },
+      {
+        "id": "step-00048",
+        "kind": "foreignKey",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/0",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_0\" FOREIGN KEY (\"matter_id\") REFERENCES \"legal_demo\".\"matters\" (\"matter_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
+      },
+      {
+        "id": "step-00049",
+        "kind": "foreignKey",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/1",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_1\" FOREIGN KEY (\"timekeeper_id\") REFERENCES \"legal_demo\".\"timekeepers\" (\"timekeeper_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
+      },
+      {
+        "id": "step-00050",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+        "transaction": "required",
+        "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matter_teams\" FROM PUBLIC"
+      },
+      {
+        "id": "step-00051",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+      },
+      {
+        "id": "step-00052",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
+        "transaction": "required",
+        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_person\""
+      },
+      {
+        "id": "step-00053",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00054",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00055",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)"
+      },
+      {
+        "id": "step-00056",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)"
+      },
+      {
+        "id": "step-00057",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
+        "transaction": "required",
+        "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_batch\""
+      },
+      {
+        "id": "step-00058",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00059",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)"
+      },
+      {
+        "id": "step-00060",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)"
+      },
+      {
+        "id": "step-00061",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments",
+        "transaction": "required",
+        "sql": "COMMENT ON TABLE \"legal_demo\".\"clients\" IS E'Fabricated demonstration only; no real firm records.'"
+      },
+      {
+        "id": "step-00062",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/0",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_id\" IS E'Fabricated client id'"
+      },
+      {
+        "id": "step-00063",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/1",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_name\" IS E'Fabricated client name'"
+      },
+      {
+        "id": "step-00064",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments",
+        "transaction": "required",
+        "sql": "COMMENT ON TABLE \"legal_demo\".\"timekeepers\" IS E'Fabricated demonstration only; no real firm records.'"
+      },
+      {
+        "id": "step-00065",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/0",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_id\" IS E'Fabricated timekeeper id'"
+      },
+      {
+        "id": "step-00066",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/1",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_name\" IS E'Fabricated timekeeper name'"
+      },
+      {
+        "id": "step-00067",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/2",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_level\" IS E'Fabricated timekeeper level'"
+      },
+      {
+        "id": "step-00068",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/3",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"billing_rate\" IS E'Fabricated billing rate'"
+      },
+      {
+        "id": "step-00069",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments",
+        "transaction": "required",
+        "sql": "COMMENT ON TABLE \"legal_demo\".\"matters\" IS E'Fabricated demonstration only; no real firm records.'"
+      },
+      {
+        "id": "step-00070",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/0",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_id\" IS E'Fabricated matter id'"
+      },
+      {
+        "id": "step-00071",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/1",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"client_id\" IS E'Fabricated client id'"
+      },
+      {
+        "id": "step-00072",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/2",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_number\" IS E'Fabricated matter number'"
+      },
+      {
+        "id": "step-00073",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/3",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_title\" IS E'Fabricated matter title'"
+      },
+      {
+        "id": "step-00074",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/4",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"practice_area\" IS E'Fabricated practice area'"
+      },
+      {
+        "id": "step-00075",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/5",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"open_date\" IS E'Fabricated open date'"
+      },
+      {
+        "id": "step-00076",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/6",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"close_date\" IS E'Fabricated close date'"
+      },
+      {
+        "id": "step-00077",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/7",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"jurisdiction\" IS E'Fabricated jurisdiction'"
+      },
+      {
+        "id": "step-00078",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/8",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"court\" IS E'Fabricated court'"
+      },
+      {
+        "id": "step-00079",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments",
+        "transaction": "required",
+        "sql": "COMMENT ON TABLE \"legal_demo\".\"matter_teams\" IS E'Fabricated demonstration only; no real firm records.'"
+      },
+      {
+        "id": "step-00080",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/0",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_team_id\" IS E'Fabricated matter team id'"
+      },
+      {
+        "id": "step-00081",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/1",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_id\" IS E'Fabricated matter id'"
+      },
+      {
+        "id": "step-00082",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/2",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"timekeeper_id\" IS E'Fabricated timekeeper id'"
+      },
+      {
+        "id": "step-00083",
+        "kind": "comment",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/3",
+        "transaction": "required",
+        "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"database_role\" IS E'Synthetic database role assigned by the host; never a plugin-supplied identity claim.'"
+      },
+      {
+        "id": "step-00084",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables",
+        "transaction": "required",
+        "sql": "GRANT USAGE ON SCHEMA \"legal_demo\" TO \"legal_person\", \"legal_batch\""
+      }
+    ],
+    "expectedCatalog": {
+      "tables": [
+        {
+          "id": "clients",
+          "record": {
+            "module": "legal_lifecycle",
+            "element": "clients"
+          },
+          "name": "clients",
+          "columns": [
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "clients__client_id"
+              },
+              "name": "client_id",
+              "nativeType": {
+                "kind": "int4"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "clients__client_name"
+              },
+              "name": "client_name",
+              "nativeType": {
+                "kind": "text"
+              }
+            }
+          ],
+          "indexes": [],
+          "checks": [],
+          "foreignKeys": [],
+          "policy": {
+            "mode": "native-rls",
+            "person": {
+              "select": {
+                "kind": "allow"
+              },
+              "insert": {
+                "kind": "deny"
+              },
+              "update": {
+                "kind": "deny"
+              },
+              "delete": {
+                "kind": "deny"
+              }
+            },
+            "batch": {
+              "select": {
+                "kind": "deny"
+              },
+              "insert": {
+                "kind": "deny"
+              },
+              "update": {
+                "kind": "deny"
+              },
+              "delete": {
+                "kind": "deny"
+              }
+            }
+          }
+        },
+        {
+          "id": "timekeepers",
+          "record": {
+            "module": "legal_lifecycle",
+            "element": "timekeepers"
+          },
+          "name": "timekeepers",
+          "columns": [
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "timekeepers__timekeeper_id"
+              },
+              "name": "timekeeper_id",
+              "nativeType": {
+                "kind": "int4"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "timekeepers__timekeeper_name"
+              },
+              "name": "timekeeper_name",
+              "nativeType": {
+                "kind": "text"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "timekeepers__timekeeper_level"
+              },
+              "name": "timekeeper_level",
+              "nativeType": {
+                "kind": "text"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "timekeepers__billing_rate"
+              },
+              "name": "billing_rate",
+              "nativeType": {
+                "kind": "numeric",
+                "precision": 10,
+                "scale": 2
+              }
+            }
+          ],
+          "indexes": [],
+          "checks": [],
+          "foreignKeys": [],
+          "policy": {
+            "mode": "native-rls",
+            "person": {
+              "select": {
+                "kind": "any",
+                "rules": [
+                  {
+                    "kind": "deny"
+                  },
+                  {
+                    "kind": "memberOfRole",
+                    "role": "billing_admin"
+                  }
+                ]
+              },
+              "insert": {
+                "kind": "deny"
+              },
+              "update": {
+                "kind": "deny"
+              },
+              "delete": {
+                "kind": "deny"
+              }
+            },
+            "batch": {
+              "select": {
+                "kind": "deny"
+              },
+              "insert": {
+                "kind": "deny"
+              },
+              "update": {
+                "kind": "deny"
+              },
+              "delete": {
+                "kind": "deny"
+              }
+            }
+          }
+        },
+        {
+          "id": "matters",
+          "record": {
+            "module": "legal_lifecycle",
+            "element": "matters"
+          },
+          "name": "matters",
+          "columns": [
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__matter_id"
+              },
+              "name": "matter_id",
+              "nativeType": {
+                "kind": "int4"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__client_id"
+              },
+              "name": "client_id",
+              "nativeType": {
+                "kind": "int4"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__matter_number"
+              },
+              "name": "matter_number",
+              "nativeType": {
+                "kind": "text"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__matter_title"
+              },
+              "name": "matter_title",
+              "nativeType": {
+                "kind": "text"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__practice_area"
+              },
+              "name": "practice_area",
+              "nativeType": {
+                "kind": "text"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__open_date"
+              },
+              "name": "open_date",
+              "nativeType": {
+                "kind": "date"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__close_date"
+              },
+              "name": "close_date",
+              "nativeType": {
+                "kind": "date"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__jurisdiction"
+              },
+              "name": "jurisdiction",
+              "nativeType": {
+                "kind": "text"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matters__court"
+              },
+              "name": "court",
+              "nativeType": {
+                "kind": "text"
+              }
+            }
+          ],
+          "indexes": [],
+          "checks": [],
+          "foreignKeys": [],
+          "policy": {
+            "mode": "native-rls",
+            "person": {
+              "select": {
+                "kind": "any",
+                "rules": [
+                  {
+                    "kind": "related",
+                    "record": {
+                      "module": "legal_lifecycle",
+                      "element": "matter_teams"
+                    },
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
+                    }
+                  }
+                ]
+              },
+              "insert": {
+                "kind": "any",
+                "rules": [
+                  {
+                    "kind": "related",
+                    "record": {
+                      "module": "legal_lifecycle",
+                      "element": "matter_teams"
+                    },
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
+                    }
+                  }
+                ]
+              },
+              "update": {
+                "kind": "any",
+                "rules": [
+                  {
+                    "kind": "related",
+                    "record": {
+                      "module": "legal_lifecycle",
+                      "element": "matter_teams"
+                    },
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
+                    }
+                  }
+                ]
+              },
+              "delete": {
+                "kind": "any",
+                "rules": [
+                  {
+                    "kind": "related",
+                    "record": {
+                      "module": "legal_lifecycle",
+                      "element": "matter_teams"
+                    },
+                    "matches": [
+                      {
+                        "source": {
+                          "module": "legal_lifecycle",
+                          "element": "matters__matter_id"
+                        },
+                        "target": {
+                          "module": "legal_lifecycle",
+                          "element": "matter_teams__matter_id"
+                        }
+                      }
+                    ],
+                    "rule": {
+                      "kind": "owner",
+                      "field": {
+                        "module": "legal_lifecycle",
+                        "element": "matter_teams__database_role"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "batch": {
+              "select": {
+                "kind": "allow"
+              },
+              "insert": {
+                "kind": "allow"
+              },
+              "update": {
+                "kind": "deny"
+              },
+              "delete": {
+                "kind": "deny"
+              }
+            }
+          }
+        },
+        {
+          "id": "matter_teams",
+          "record": {
+            "module": "legal_lifecycle",
+            "element": "matter_teams"
+          },
+          "name": "matter_teams",
+          "columns": [
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matter_teams__matter_team_id"
+              },
+              "name": "matter_team_id",
+              "nativeType": {
+                "kind": "int4"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matter_teams__matter_id"
+              },
+              "name": "matter_id",
+              "nativeType": {
+                "kind": "int4"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matter_teams__timekeeper_id"
+              },
+              "name": "timekeeper_id",
+              "nativeType": {
+                "kind": "int4"
+              }
+            },
+            {
+              "field": {
+                "module": "legal_lifecycle",
+                "element": "matter_teams__database_role"
+              },
+              "name": "database_role",
+              "nativeType": {
+                "kind": "text"
+              }
+            }
+          ],
+          "indexes": [],
+          "checks": [],
+          "foreignKeys": [
+            {
+              "id": "fk_0",
+              "name": "matter_teams_fk_0",
+              "fields": [
+                {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__matter_id"
+                }
+              ],
+              "target": {
+                "record": {
+                  "module": "legal_lifecycle",
+                  "element": "matters"
+                },
+                "key": "primary"
+              },
+              "onUpdate": "noAction",
+              "onDelete": "restrict",
+              "deferrable": false
+            },
+            {
+              "id": "fk_1",
+              "name": "matter_teams_fk_1",
+              "fields": [
+                {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__timekeeper_id"
+                }
+              ],
+              "target": {
+                "record": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers"
+                },
+                "key": "primary"
+              },
+              "onUpdate": "noAction",
+              "onDelete": "restrict",
+              "deferrable": false
+            }
+          ],
+          "policy": {
+            "mode": "native-rls",
+            "person": {
+              "select": {
+                "kind": "owner",
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__database_role"
+                }
+              },
+              "insert": {
+                "kind": "deny"
+              },
+              "update": {
+                "kind": "deny"
+              },
+              "delete": {
+                "kind": "deny"
+              }
+            },
+            "batch": {
+              "select": {
+                "kind": "allow"
+              },
+              "insert": {
+                "kind": "deny"
+              },
+              "update": {
+                "kind": "deny"
+              },
+              "delete": {
+                "kind": "deny"
+              }
+            }
+          }
+        }
+      ],
+      "columns": [
+        {
+          "table": "clients",
+          "name": "client_id",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "clients__client_id"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/0",
+          "typeSchema": "pg_catalog",
+          "typeName": "int4",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"client_id\" pg_catalog.\"int4\" NOT NULL"
+        },
+        {
+          "table": "clients",
+          "name": "client_name",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "clients__client_name"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/1",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"client_name\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "timekeepers",
+          "name": "timekeeper_id",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "timekeepers__timekeeper_id"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/columns/0",
+          "typeSchema": "pg_catalog",
+          "typeName": "int4",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"timekeeper_id\" pg_catalog.\"int4\" NOT NULL"
+        },
+        {
+          "table": "timekeepers",
+          "name": "timekeeper_name",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "timekeepers__timekeeper_name"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/columns/1",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"timekeeper_name\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "timekeepers",
+          "name": "timekeeper_level",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "timekeepers__timekeeper_level"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/columns/2",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"timekeeper_level\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "timekeepers",
+          "name": "billing_rate",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "timekeepers__billing_rate"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/columns/3",
+          "typeSchema": "pg_catalog",
+          "typeName": "numeric",
+          "typeMod": 655366,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"billing_rate\" pg_catalog.\"numeric\"(10,2) NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "matter_id",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__matter_id"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/0",
+          "typeSchema": "pg_catalog",
+          "typeName": "int4",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"matter_id\" pg_catalog.\"int4\" NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "client_id",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__client_id"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/1",
+          "typeSchema": "pg_catalog",
+          "typeName": "int4",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"client_id\" pg_catalog.\"int4\" NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "matter_number",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__matter_number"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/2",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"matter_number\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "matter_title",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__matter_title"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/3",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"matter_title\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "practice_area",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__practice_area"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/4",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"practice_area\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "open_date",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__open_date"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/5",
+          "typeSchema": "pg_catalog",
+          "typeName": "date",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"open_date\" pg_catalog.\"date\" NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "close_date",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__close_date"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/6",
+          "typeSchema": "pg_catalog",
+          "typeName": "date",
+          "typeMod": -1,
+          "nullable": true,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"close_date\" pg_catalog.\"date\""
+        },
+        {
+          "table": "matters",
+          "name": "jurisdiction",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__jurisdiction"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/7",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"jurisdiction\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "matters",
+          "name": "court",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matters__court"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/8",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"court\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        },
+        {
+          "table": "matter_teams",
+          "name": "matter_team_id",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matter_teams__matter_team_id"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/3/columns/0",
+          "typeSchema": "pg_catalog",
+          "typeName": "int4",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"matter_team_id\" pg_catalog.\"int4\" NOT NULL"
+        },
+        {
+          "table": "matter_teams",
+          "name": "matter_id",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matter_teams__matter_id"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/3/columns/1",
+          "typeSchema": "pg_catalog",
+          "typeName": "int4",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"matter_id\" pg_catalog.\"int4\" NOT NULL"
+        },
+        {
+          "table": "matter_teams",
+          "name": "timekeeper_id",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matter_teams__timekeeper_id"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/3/columns/2",
+          "typeSchema": "pg_catalog",
+          "typeName": "int4",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": null,
+          "identity": "",
+          "definitionSql": "\"timekeeper_id\" pg_catalog.\"int4\" NOT NULL"
+        },
+        {
+          "table": "matter_teams",
+          "name": "database_role",
+          "field": {
+            "module": "legal_lifecycle",
+            "element": "matter_teams__database_role"
+          },
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/3/columns/3",
+          "typeSchema": "pg_catalog",
+          "typeName": "text",
+          "typeMod": -1,
+          "nullable": false,
+          "collation": "C",
+          "identity": "",
+          "definitionSql": "\"database_role\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+        }
+      ],
+      "keys": [
+        {
+          "table": "clients",
+          "id": "primary",
+          "name": "umf_k_6d7f9e45a2abf651f2b4dc6eec6c8223",
+          "primary": true,
+          "columns": [
+            "client_id"
+          ],
+          "definitionSql": "CONSTRAINT \"umf_k_6d7f9e45a2abf651f2b4dc6eec6c8223\" PRIMARY KEY (\"client_id\")"
+        },
+        {
+          "table": "timekeepers",
+          "id": "primary",
+          "name": "umf_k_2fc221ae5773e7cb5654db97ab8c4606",
+          "primary": true,
+          "columns": [
+            "timekeeper_id"
+          ],
+          "definitionSql": "CONSTRAINT \"umf_k_2fc221ae5773e7cb5654db97ab8c4606\" PRIMARY KEY (\"timekeeper_id\")"
+        },
+        {
+          "table": "matters",
+          "id": "primary",
+          "name": "umf_k_4fd93e7fa34fed37823182eb9d5cd174",
+          "primary": true,
+          "columns": [
+            "matter_id"
+          ],
+          "definitionSql": "CONSTRAINT \"umf_k_4fd93e7fa34fed37823182eb9d5cd174\" PRIMARY KEY (\"matter_id\")"
+        },
+        {
+          "table": "matter_teams",
+          "id": "primary",
+          "name": "umf_k_b4702e666d52b66dc7d637aad8e22861",
+          "primary": true,
+          "columns": [
+            "matter_team_id"
+          ],
+          "definitionSql": "CONSTRAINT \"umf_k_b4702e666d52b66dc7d637aad8e22861\" PRIMARY KEY (\"matter_team_id\")"
+        },
+        {
+          "table": "matter_teams",
+          "id": "unique_0",
+          "name": "umf_k_3537084debb60256317080882fa0d624",
+          "primary": false,
+          "columns": [
+            "matter_id",
+            "timekeeper_id"
+          ],
+          "definitionSql": "CONSTRAINT \"umf_k_3537084debb60256317080882fa0d624\" UNIQUE (\"matter_id\", \"timekeeper_id\")"
+        }
+      ],
+      "checks": [
+        {
+          "table": "timekeepers",
+          "id": "domain:legal_lifecycle.timekeepers__billing_rate",
+          "name": "umf_d_075795fa5319b8ae591c2ed31f74cfc7",
+          "definitionSql": "CONSTRAINT \"umf_d_075795fa5319b8ae591c2ed31f74cfc7\" CHECK (\"billing_rate\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))"
+        },
+        {
+          "table": "matters",
+          "id": "domain:legal_lifecycle.matters__open_date",
+          "name": "umf_d_f9d924873abd87caa336e79dd3bd1b33",
+          "definitionSql": "CONSTRAINT \"umf_d_f9d924873abd87caa336e79dd3bd1b33\" CHECK (\"open_date\" >= '0001-01-01'::pg_catalog.date AND \"open_date\" <= '9999-12-31'::pg_catalog.date)"
+        },
+        {
+          "table": "matters",
+          "id": "domain:legal_lifecycle.matters__close_date",
+          "name": "umf_d_44e579157ca33821a853608f1bc0f327",
+          "definitionSql": "CONSTRAINT \"umf_d_44e579157ca33821a853608f1bc0f327\" CHECK (\"close_date\" >= '0001-01-01'::pg_catalog.date AND \"close_date\" <= '9999-12-31'::pg_catalog.date)"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "matter_teams",
+          "id": "fk_0",
+          "name": "matter_teams_fk_0",
+          "targetKey": "umf_k_4fd93e7fa34fed37823182eb9d5cd174",
+          "definitionSql": "CONSTRAINT \"matter_teams_fk_0\" FOREIGN KEY (\"matter_id\") REFERENCES \"legal_demo\".\"matters\" (\"matter_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
+        },
+        {
+          "table": "matter_teams",
+          "id": "fk_1",
+          "name": "matter_teams_fk_1",
+          "targetKey": "umf_k_2fc221ae5773e7cb5654db97ab8c4606",
+          "definitionSql": "CONSTRAINT \"matter_teams_fk_1\" FOREIGN KEY (\"timekeeper_id\") REFERENCES \"legal_demo\".\"timekeepers\" (\"timekeeper_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE"
+        }
+      ],
+      "indexes": [],
+      "comments": [
+        {
+          "table": "clients",
+          "text": "Fabricated demonstration only; no real firm records."
+        },
+        {
+          "table": "clients",
+          "column": "client_id",
+          "text": "Fabricated client id"
+        },
+        {
+          "table": "clients",
+          "column": "client_name",
+          "text": "Fabricated client name"
+        },
+        {
+          "table": "timekeepers",
+          "text": "Fabricated demonstration only; no real firm records."
+        },
+        {
+          "table": "timekeepers",
+          "column": "timekeeper_id",
+          "text": "Fabricated timekeeper id"
+        },
+        {
+          "table": "timekeepers",
+          "column": "timekeeper_name",
+          "text": "Fabricated timekeeper name"
+        },
+        {
+          "table": "timekeepers",
+          "column": "timekeeper_level",
+          "text": "Fabricated timekeeper level"
+        },
+        {
+          "table": "timekeepers",
+          "column": "billing_rate",
+          "text": "Fabricated billing rate"
+        },
+        {
+          "table": "matters",
+          "text": "Fabricated demonstration only; no real firm records."
+        },
+        {
+          "table": "matters",
+          "column": "matter_id",
+          "text": "Fabricated matter id"
+        },
+        {
+          "table": "matters",
+          "column": "client_id",
+          "text": "Fabricated client id"
+        },
+        {
+          "table": "matters",
+          "column": "matter_number",
+          "text": "Fabricated matter number"
+        },
+        {
+          "table": "matters",
+          "column": "matter_title",
+          "text": "Fabricated matter title"
+        },
+        {
+          "table": "matters",
+          "column": "practice_area",
+          "text": "Fabricated practice area"
+        },
+        {
+          "table": "matters",
+          "column": "open_date",
+          "text": "Fabricated open date"
+        },
+        {
+          "table": "matters",
+          "column": "close_date",
+          "text": "Fabricated close date"
+        },
+        {
+          "table": "matters",
+          "column": "jurisdiction",
+          "text": "Fabricated jurisdiction"
+        },
+        {
+          "table": "matters",
+          "column": "court",
+          "text": "Fabricated court"
+        },
+        {
+          "table": "matter_teams",
+          "text": "Fabricated demonstration only; no real firm records."
+        },
+        {
+          "table": "matter_teams",
+          "column": "matter_team_id",
+          "text": "Fabricated matter team id"
+        },
+        {
+          "table": "matter_teams",
+          "column": "matter_id",
+          "text": "Fabricated matter id"
+        },
+        {
+          "table": "matter_teams",
+          "column": "timekeeper_id",
+          "text": "Fabricated timekeeper id"
+        },
+        {
+          "table": "matter_teams",
+          "column": "database_role",
+          "text": "Synthetic database role assigned by the host; never a plugin-supplied identity claim."
+        }
+      ]
+    },
+    "seedSets": [
+      {
+        "id": "synthetic-bootstrap",
+        "conflict": "error",
+        "rows": [
+          {
+            "table": "clients",
+            "values": [
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "clients__client_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "clients__client_name"
+                },
+                "value": {
+                  "string": "Fabricated client"
+                }
+              }
+            ]
+          },
+          {
+            "table": "timekeepers",
+            "values": [
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__timekeeper_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__timekeeper_name"
+                },
+                "value": {
+                  "string": "Synthetic A"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__timekeeper_level"
+                },
+                "value": {
+                  "string": "associate"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__billing_rate"
+                },
+                "value": {
+                  "decimalToken": "125.00"
+                }
+              }
+            ]
+          },
+          {
+            "table": "timekeepers",
+            "values": [
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__timekeeper_id"
+                },
+                "value": {
+                  "integerToken": "2"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__timekeeper_name"
+                },
+                "value": {
+                  "string": "Synthetic B"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__timekeeper_level"
+                },
+                "value": {
+                  "string": "partner"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "timekeepers__billing_rate"
+                },
+                "value": {
+                  "decimalToken": "250.00"
+                }
+              }
+            ]
+          },
+          {
+            "table": "matters",
+            "values": [
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__matter_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__client_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__matter_number"
+                },
+                "value": {
+                  "string": "DEMO-1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__matter_title"
+                },
+                "value": {
+                  "string": "Synthetic client's matter"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__practice_area"
+                },
+                "value": {
+                  "string": "demonstration"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__open_date"
+                },
+                "value": {
+                  "date": "2026-01-01"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__close_date"
+                },
+                "value": null
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__jurisdiction"
+                },
+                "value": {
+                  "string": "synthetic"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__court"
+                },
+                "value": {
+                  "string": "demonstration"
+                }
+              }
+            ]
+          },
+          {
+            "table": "matters",
+            "values": [
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__matter_id"
+                },
+                "value": {
+                  "integerToken": "2"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__client_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__matter_number"
+                },
+                "value": {
+                  "string": "DEMO-2"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__matter_title"
+                },
+                "value": {
+                  "string": "Synthetic client's matter"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__practice_area"
+                },
+                "value": {
+                  "string": "demonstration"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__open_date"
+                },
+                "value": {
+                  "date": "2026-01-01"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__close_date"
+                },
+                "value": null
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__jurisdiction"
+                },
+                "value": {
+                  "string": "synthetic"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matters__court"
+                },
+                "value": {
+                  "string": "demonstration"
+                }
+              }
+            ]
+          },
+          {
+            "table": "matter_teams",
+            "values": [
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__matter_team_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__matter_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__timekeeper_id"
+                },
+                "value": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__database_role"
+                },
+                "value": {
+                  "string": "legal_alice"
+                }
+              }
+            ]
+          },
+          {
+            "table": "matter_teams",
+            "values": [
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__matter_team_id"
+                },
+                "value": {
+                  "integerToken": "2"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__matter_id"
+                },
+                "value": {
+                  "integerToken": "2"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__timekeeper_id"
+                },
+                "value": {
+                  "integerToken": "2"
+                }
+              },
+              {
+                "field": {
+                  "module": "legal_lifecycle",
+                  "element": "matter_teams__database_role"
+                },
+                "value": {
+                  "string": "legal_bob"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "nativeQualified": false,
+    "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+  },
+  "fromBundleDigest": null,
+  "toBundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e",
+  "steps": [
+    {
+      "id": "step-00001",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+      "transaction": "required",
+      "sql": "CREATE TABLE \"legal_demo\".\"clients\" (\n  \"client_id\" pg_catalog.\"int4\" NOT NULL,\n  \"client_name\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_6d7f9e45a2abf651f2b4dc6eec6c8223\" PRIMARY KEY (\"client_id\")\n)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00002",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"clients\" ENABLE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00003",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"clients\" FORCE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00004",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+      "transaction": "required",
+      "sql": "CREATE TABLE \"legal_demo\".\"timekeepers\" (\n  \"timekeeper_id\" pg_catalog.\"int4\" NOT NULL,\n  \"timekeeper_name\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"timekeeper_level\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"billing_rate\" pg_catalog.\"numeric\"(10,2) NOT NULL,\n  CONSTRAINT \"umf_k_2fc221ae5773e7cb5654db97ab8c4606\" PRIMARY KEY (\"timekeeper_id\"),\n  CONSTRAINT \"umf_d_075795fa5319b8ae591c2ed31f74cfc7\" CHECK (\"billing_rate\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))\n)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00005",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"timekeepers\" ENABLE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00006",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"timekeepers\" FORCE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00007",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+      "transaction": "required",
+      "sql": "CREATE TABLE \"legal_demo\".\"matters\" (\n  \"matter_id\" pg_catalog.\"int4\" NOT NULL,\n  \"client_id\" pg_catalog.\"int4\" NOT NULL,\n  \"matter_number\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"matter_title\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"practice_area\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"open_date\" pg_catalog.\"date\" NOT NULL,\n  \"close_date\" pg_catalog.\"date\",\n  \"jurisdiction\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"court\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_4fd93e7fa34fed37823182eb9d5cd174\" PRIMARY KEY (\"matter_id\"),\n  CONSTRAINT \"umf_d_f9d924873abd87caa336e79dd3bd1b33\" CHECK (\"open_date\" >= '0001-01-01'::pg_catalog.date AND \"open_date\" <= '9999-12-31'::pg_catalog.date),\n  CONSTRAINT \"umf_d_44e579157ca33821a853608f1bc0f327\" CHECK (\"close_date\" >= '0001-01-01'::pg_catalog.date AND \"close_date\" <= '9999-12-31'::pg_catalog.date)\n)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00008",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"matters\" ENABLE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00009",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"matters\" FORCE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00010",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+      "transaction": "required",
+      "sql": "CREATE TABLE \"legal_demo\".\"matter_teams\" (\n  \"matter_team_id\" pg_catalog.\"int4\" NOT NULL,\n  \"matter_id\" pg_catalog.\"int4\" NOT NULL,\n  \"timekeeper_id\" pg_catalog.\"int4\" NOT NULL,\n  \"database_role\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_b4702e666d52b66dc7d637aad8e22861\" PRIMARY KEY (\"matter_team_id\"),\n  CONSTRAINT \"umf_k_3537084debb60256317080882fa0d624\" UNIQUE (\"matter_id\", \"timekeeper_id\")\n)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00011",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ENABLE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00012",
+      "kind": "table",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" FORCE ROW LEVEL SECURITY",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00013",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+      "transaction": "required",
+      "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"clients\" FROM PUBLIC",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00014",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (TRUE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00015",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+      "transaction": "required",
+      "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"clients\" TO \"legal_person\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00016",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00017",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00018",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00019",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00020",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00021",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00022",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"clients\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00023",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+      "transaction": "required",
+      "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"timekeepers\" FROM PUBLIC",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00024",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((FALSE OR pg_catalog.pg_has_role(CURRENT_USER, E'legal_billing_admin', 'MEMBER')))",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00025",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+      "transaction": "required",
+      "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"timekeepers\" TO \"legal_person\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00026",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00027",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00028",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00029",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00030",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00031",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00032",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"timekeepers\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00033",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+      "transaction": "required",
+      "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matters\" FROM PUBLIC",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00034",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00035",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
+      "transaction": "required",
+      "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00036",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00037",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
+      "transaction": "required",
+      "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00038",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))) WITH CHECK (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00039",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
+      "transaction": "required",
+      "sql": "GRANT UPDATE (\"client_id\", \"matter_number\", \"matter_title\", \"practice_area\", \"open_date\", \"close_date\", \"jurisdiction\", \"court\") ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00040",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (((EXISTS (SELECT 1 FROM \"legal_demo\".\"matter_teams\" AS \"umf_j_1\" WHERE \"legal_demo\".\"matters\".\"matter_id\" = \"umf_j_1\".\"matter_id\" AND (\"umf_j_1\".\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00041",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
+      "transaction": "required",
+      "sql": "GRANT DELETE ON TABLE \"legal_demo\".\"matters\" TO \"legal_person\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00042",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00043",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
+      "transaction": "required",
+      "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00044",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (TRUE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00045",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
+      "transaction": "required",
+      "sql": "GRANT INSERT ON TABLE \"legal_demo\".\"matters\" TO \"legal_batch\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00046",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00047",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matters\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00048",
+      "kind": "foreignKey",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/0",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_0\" FOREIGN KEY (\"matter_id\") REFERENCES \"legal_demo\".\"matters\" (\"matter_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00049",
+      "kind": "foreignKey",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/foreignKeys/1",
+      "transaction": "required",
+      "sql": "ALTER TABLE \"legal_demo\".\"matter_teams\" ADD CONSTRAINT \"matter_teams_fk_1\" FOREIGN KEY (\"timekeeper_id\") REFERENCES \"legal_demo\".\"timekeepers\" (\"timekeeper_id\") ON UPDATE NO ACTION ON DELETE RESTRICT NOT DEFERRABLE",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00050",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3",
+      "transaction": "required",
+      "sql": "REVOKE ALL PRIVILEGES ON TABLE \"legal_demo\".\"matter_teams\" FROM PUBLIC",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00051",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_person\" USING ((\"database_role\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00052",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/select",
+      "transaction": "required",
+      "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_person\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00053",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_person\" WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00054",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_person\" USING (FALSE) WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00055",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/person/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_person_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_person\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00056",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_select\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR SELECT TO \"legal_batch\" USING (TRUE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00057",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/select",
+      "transaction": "required",
+      "sql": "GRANT SELECT ON TABLE \"legal_demo\".\"matter_teams\" TO \"legal_batch\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00058",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/insert",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_insert\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR INSERT TO \"legal_batch\" WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00059",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/update",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_update\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR UPDATE TO \"legal_batch\" USING (FALSE) WITH CHECK (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00060",
+      "kind": "policy",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/policy/batch/delete",
+      "transaction": "required",
+      "sql": "CREATE POLICY \"umf_batch_delete\" ON \"legal_demo\".\"matter_teams\" AS PERMISSIVE FOR DELETE TO \"legal_batch\" USING (FALSE)",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00061",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments",
+      "transaction": "required",
+      "sql": "COMMENT ON TABLE \"legal_demo\".\"clients\" IS E'Fabricated demonstration only; no real firm records.'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00062",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/0",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_id\" IS E'Fabricated client id'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00063",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/0/comments/1",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"clients\".\"client_name\" IS E'Fabricated client name'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00064",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments",
+      "transaction": "required",
+      "sql": "COMMENT ON TABLE \"legal_demo\".\"timekeepers\" IS E'Fabricated demonstration only; no real firm records.'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00065",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/0",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_id\" IS E'Fabricated timekeeper id'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00066",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/1",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_name\" IS E'Fabricated timekeeper name'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00067",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/2",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"timekeeper_level\" IS E'Fabricated timekeeper level'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00068",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/1/comments/3",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"timekeepers\".\"billing_rate\" IS E'Fabricated billing rate'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00069",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments",
+      "transaction": "required",
+      "sql": "COMMENT ON TABLE \"legal_demo\".\"matters\" IS E'Fabricated demonstration only; no real firm records.'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00070",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/0",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_id\" IS E'Fabricated matter id'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00071",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/1",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"client_id\" IS E'Fabricated client id'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00072",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/2",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_number\" IS E'Fabricated matter number'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00073",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/3",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"matter_title\" IS E'Fabricated matter title'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00074",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/4",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"practice_area\" IS E'Fabricated practice area'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00075",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/5",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"open_date\" IS E'Fabricated open date'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00076",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/6",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"close_date\" IS E'Fabricated close date'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00077",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/7",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"jurisdiction\" IS E'Fabricated jurisdiction'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00078",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/2/comments/8",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matters\".\"court\" IS E'Fabricated court'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00079",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments",
+      "transaction": "required",
+      "sql": "COMMENT ON TABLE \"legal_demo\".\"matter_teams\" IS E'Fabricated demonstration only; no real firm records.'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00080",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/0",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_team_id\" IS E'Fabricated matter team id'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00081",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/1",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"matter_id\" IS E'Fabricated matter id'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00082",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/2",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"timekeeper_id\" IS E'Fabricated timekeeper id'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00083",
+      "kind": "comment",
+      "sourcePath": "/modules/0/extensions/umf.tables/tables/3/comments/3",
+      "transaction": "required",
+      "sql": "COMMENT ON COLUMN \"legal_demo\".\"matter_teams\".\"database_role\" IS E'Synthetic database role assigned by the host; never a plugin-supplied identity claim.'",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    },
+    {
+      "id": "step-00084",
+      "kind": "grant",
+      "sourcePath": "/modules/0/extensions/umf.tables",
+      "transaction": "required",
+      "sql": "GRANT USAGE ON SCHEMA \"legal_demo\" TO \"legal_person\", \"legal_batch\"",
+      "preconditions": {
+        "phase": "before-plan",
+        "kind": "empty-private-schema",
+        "bundleDigest": null
+      },
+      "expectedOutcome": {
+        "phase": "before-commit",
+        "kind": "complete-next-source-catalog",
+        "bundleDigest": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e"
+      },
+      "verification": "native-catalog-privileges-and-role-scope",
+      "recovery": "rollback-transaction"
+    }
+  ],
+  "seedExecution": {
+    "version": "umf.table-seed-execution/0.1",
+    "sets": [
+      "synthetic-bootstrap"
+    ]
+  },
+  "requiresApproval": true,
+  "nativeQualified": false,
+  "digest": "a1cd90eaa3432605a4058e504db9aef7c0c51bd5ae76442d73179e40b1454fad"
+}

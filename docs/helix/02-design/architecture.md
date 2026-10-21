@@ -52,6 +52,26 @@ remain different claims.
 
 ## Level 1: System Context
 
+### Proposed schema migration ownership
+
+FR-18, FEAT-007 COMP-06–11 and [SD-007](solution-designs/SD-007-schema-migrations.md)
+define the proposed field migration boundary. The portable library owns exact
+source comparison, declared migration intent, dependency and loss analysis,
+capability-qualified plan generation and receipt verification. Backend compilers
+own physical lowering and version-specific operations. Execution hosts own
+authenticated installation state, approval, data scans/transforms, writer
+coordination, checkpoints, native validation, cutover and recovery. Optional
+UMF-distributed host code follows this boundary; portable core remains free of
+connections and storage execution under NFR-50.
+
+Backfills, logical defaults and defaults for future native writes are separate.
+Logical Field retirement, physical deletion and historical purge are separate.
+Type conversion requires explicit meaning/loss rules and complete target checks.
+No shared online, atomic or reversible guarantee is inferred across backends.
+CONTRACT-046 remains observational; CONTRACT-081 governs the first table host
+profile. The [migration plan](../04-build/schema-migration-plan.md) sequences
+exact contracts, module/checker adoption and native qualification before support.
+
 | Participant | Relationship to UMF | Boundary |
 | --- | --- | --- |
 | Schema authors and tooling | Create, inspect, validate, compare, and transform artifacts | Programmatic and human workflows; no mandatory UI |
@@ -819,6 +839,24 @@ from schema fragments. Inert historical archives cannot enter current packages.
 Architecture checks must enforce these boundaries and retired import families.
 One `reference/core.html` host owns ontology/reference/catalog; reusable current
 renderer behavior belongs in a qualified released package, not host shims.
+
+### Table lifecycle administration ownership
+
+`src/table-deployment` and `src/table-migration` own inert portable SQL/schema
+programs, original-source verification and explicit migration options. They use
+portable model/validation/hashing and never driver, process, filesystem or network
+APIs. Weft's prepared-operation boundary owns backfill UPDATE lowering; UMF does
+not assemble data mutation SQL. `umf_access.lifecycle` owns administrative native
+catalog/privilege verification, ledger/file digests, typed backfill execution and
+index-only concurrent phases. Its `cli` owns explicit connection creation and
+filesystem inputs; no global pool or implicit database invocation exists.
+`phase_fence` owns the exact metadata-head SELECT fence and rollback-only
+verification grants; `concurrent` owns the session lifecycle lock and final
+transactional publication. The boundary checker admits Weft only in backfills
+and seeds, codegen compiler functions only in the explicit CLI/prefix preparation,
+and leaves portable application clients unchanged. Existing negative controls
+remain required. Generic host-applier and mixed-phase profiles are revision2
+next-release work; no adapter-independent native guarantee follows here.
 
 ## Shared Rust engine target
 
