@@ -123,3 +123,25 @@ test('reviewed primary-key replacement emits ordered DROP and ADD when dependenc
   expect(drop).toBeGreaterThan(-1);expect(add).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
  }
 });
+
+test('reviewed foreign-key replacement drops the old constraint before adding the exact successor',()=>{
+ const source=legalSource(),before=deploy(source),changed=structuredClone(source),fk=changed.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matter_teams')!.foreignKeys[0]!;
+ fk.onDelete='cascade';const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-foreign-key')!;
+ const result=compileTableMigration({id:'fk-reviewed',predecessor:{id:'old',digest:'e'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  const drop=result.plan.steps.findIndex(s=>s.sql.includes('DROP CONSTRAINT "matter_teams_fk_0"'));
+  const add=result.plan.steps.findIndex(s=>s.sql.includes('ADD CONSTRAINT "matter_teams_fk_0"')&&s.sql.includes('ON DELETE CASCADE'));
+  expect(drop).toBeGreaterThan(-1);expect(add).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ }
+});
+
+test('selected new foreign keys compile as add-not-valid and separate validation phases',()=>{
+ const source=legalSource(),before=deploy(source),changed=structuredClone(source),table=changed.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!;
+ table.foreignKeys.push({id:'client_fk',name:'matters_client_fk',fields:[{module:'legal_lifecycle',element:'matters__client_id'}],target:{record:{module:'legal_lifecycle',element:'clients'},key:'primary'},onUpdate:'noAction',onDelete:'restrict',deferrable:false});
+ const next=deploy(changed),result=compileTableMigration({id:'fk-add-validated',predecessor:{id:'old',digest:'f'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],reviewedChanges:[],validations:[{table:'matters',constraint:'client_fk',kind:'foreignKey'}]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  expect(result.plan.steps.some(s=>s.operation==='add-not-valid'&&s.constraintKind==='foreignKey'&&s.sql.includes('ADD CONSTRAINT "matters_client_fk"')&&s.sql.endsWith('NOT VALID'))).toBe(true);
+  expect(result.plan.steps.some(s=>s.operation==='validate'&&s.constraintKind==='foreignKey'&&s.sql.endsWith('VALIDATE CONSTRAINT "matters_client_fk"'))).toBe(true);
+  expect(result.plan.phases?.some(p=>p.kind==='constraint-add')).toBe(true);expect(result.plan.phases?.some(p=>p.kind==='constraint-validation')).toBe(true);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ }
+});
