@@ -1,0 +1,197 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+"""Fixed owner-only durable receipts for mixed migration phases."""
+from __future__ import annotations
+
+import json
+import hashlib
+from typing import Any
+from uuid import uuid4
+
+from .catalog import CatalogError, _all, _columns, _constraint_shapes, _execute, _index_shapes, _one, _q
+
+PROGRESS = 'umf_lifecycle_progress'
+_DEFINITIONS = [
+    '"migration_id" pg_catalog.text COLLATE pg_catalog."C" NOT NULL',
+    '"plan_digest" pg_catalog.text COLLATE pg_catalog."C" NOT NULL',
+    '"expected_head" pg_catalog.text COLLATE pg_catalog."C"',
+    '"file_digest" pg_catalog.text COLLATE pg_catalog."C"',
+    '"phase_index" pg_catalog.int8 NOT NULL',
+    '"state" pg_catalog.text COLLATE pg_catalog."C" NOT NULL',
+    '"phase_digest" pg_catalog.text COLLATE pg_catalog."C" NOT NULL',
+    '"completed_steps" pg_catalog.jsonb NOT NULL',
+    '"prefix_witness" pg_catalog.jsonb',
+]
+_CONSTRAINTS = [
+    ('umf_lifecycle_progress_pkey', 'PRIMARY KEY ("migration_id")'),
+    ('progress_positive_phase', 'CHECK ("phase_index">=0)'),
+    ('progress_plan_digest', 'CHECK ("plan_digest" ~ \'^[a-f0-9]{64}$\')'),
+    ('progress_head_digest', 'CHECK ("expected_head" IS NULL OR "expected_head" ~ \'^[a-f0-9]{64}$\')'),
+    ('progress_file_digest', 'CHECK ("file_digest" IS NULL OR "file_digest" ~ \'^[a-f0-9]{64}$\')'),
+    ('progress_state', 'CHECK ("state" IN (\'ready\',\'intent\',\'complete\'))'),
+    ('progress_phase_digest', 'CHECK ("phase_digest" ~ \'^[a-f0-9]{64}$\')'),
+    ('progress_step_array', 'CHECK (pg_catalog.jsonb_typeof("completed_steps")=\'array\')'),
+    ('progress_witness_object', 'CHECK ("prefix_witness" IS NULL OR pg_catalog.jsonb_typeof("prefix_witness")=\'object\')'),
+]
+_STATE = """SELECT c.relkind,c.relpersistence,r.rolname,c.relrowsecurity,c.relforcerowsecurity,
+c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,
+EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid AND NOT t.tgisinternal),
+EXISTS(SELECT FROM pg_catalog.pg_inherits i WHERE i.inhrelid=c.oid),
+EXISTS(SELECT FROM pg_catalog.pg_policy p WHERE p.polrelid=c.oid),r.oid,c.oid,c.relam
+FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+JOIN pg_catalog.pg_roles r ON r.oid=c.relowner WHERE n.nspname=%s AND c.relname=%s"""
+
+
+def _canonical_bytes(value: Any) -> bytes:
+    """Bounded JSON subset used for phase receipt hashes."""
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')
+
+
+def _phase_digest(phase: dict[str, Any], steps: list[dict[str, Any]]) -> str:
+    return hashlib.sha256(_canonical_bytes({'phase': phase, 'steps': steps})).hexdigest()
+
+
+def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
+    """Check exact ordered step coverage before consulting or creating progress."""
+    profile = plan.get('executionProfile')
+    phases = plan.get('phases')
+    if (profile != {'version': 'umf.table-migration-execution/0.1',
+                    'progressRelation': PROGRESS, 'ownerOnly': True}
+            or type(phases) is not list or not phases or type(plan.get('steps')) is not list):
+        raise CatalogError('mixed-phase-profile')
+    by_id = {step.get('id'): step for step in plan['steps'] if type(step) is dict}
+    if len(by_id) != len(plan['steps']):
+        raise CatalogError('mixed-phase-profile')
+    seen: list[str] = []
+    for index, phase in enumerate(phases, 1):
+        if (type(phase) is not dict or set(phase) != {'id','kind','transaction','steps'}
+                or phase['id'] != 'phase-'+str(index).zfill(5)
+                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed')
+                or phase['transaction'] not in ('required','forbidden')
+                or type(phase['steps']) is not list or not phase['steps']):
+            raise CatalogError('mixed-phase-profile')
+        selected = []
+        for step_id in phase['steps']:
+            step = by_id.get(step_id)
+            if step is None or step['transaction'] != phase['transaction']:
+                raise CatalogError('mixed-phase-profile')
+            selected.append(step)
+            seen.append(step_id)
+        expected_kind = []
+        for step in selected:
+            if step['kind'] == 'backfill':
+                expected_kind.append('backfill')
+            elif step['kind'] == 'index' and step['transaction'] == 'forbidden':
+                expected_kind.append('concurrent-index')
+            elif step.get('operation') == 'add-not-valid':
+                expected_kind.append('constraint-add')
+            elif step.get('operation') == 'validate':
+                expected_kind.append('constraint-validation')
+            elif step.get('kind') == 'seed':
+                expected_kind.append('seed')
+            else:
+                expected_kind.append('transaction')
+        if (len(set(expected_kind)) != 1 or expected_kind[0] != phase['kind']
+                or phase['kind'] != 'transaction' and len(selected) != 1):
+            raise CatalogError('mixed-phase-profile')
+        if phase['kind'] == 'backfill' and (len(selected) != 1 or selected[0]['kind'] != 'backfill'):
+            raise CatalogError('mixed-phase-profile')
+        if phase['kind'] == 'concurrent-index' and (len(selected) != 1 or selected[0]['kind'] != 'index' or selected[0]['transaction'] != 'forbidden'):
+            raise CatalogError('mixed-phase-profile')
+        if phase['kind'] == 'constraint-add' and (len(selected) != 1 or selected[0].get('operation') != 'add-not-valid'):
+            raise CatalogError('mixed-phase-profile')
+        if phase['kind'] == 'constraint-validation' and (len(selected) != 1 or selected[0].get('operation') != 'validate'):
+            raise CatalogError('mixed-phase-profile')
+        if phase['kind'] == 'seed' and (len(selected) != 1 or selected[0].get('kind') != 'seed'):
+            raise CatalogError('mixed-phase-profile')
+    if seen != [step['id'] for step in plan['steps']]:
+        raise CatalogError('mixed-phase-profile')
+    return phases
+
+
+def _create_progress(connection: Any, schema: str, name: str = PROGRESS) -> dict[str, str]:
+    definitions = list(_DEFINITIONS)
+    aliases: dict[str, str] = {}
+    for constraint, body in _CONSTRAINTS:
+        actual = constraint if name == PROGRESS else 'umf_verify_'+uuid4().hex
+        aliases[actual] = constraint
+        definitions.append('CONSTRAINT '+_q(actual)+' '+body)
+    _execute(connection, 'CREATE TABLE '+_q(schema)+'.'+_q(name)+' ('+', '.join(definitions)+') USING heap')
+    return aliases
+
+
+def _verify_progress_schema(connection: Any, source: dict[str, Any], *, create: bool = False) -> bool:
+    """Exact schema, owner, heap, constraints, indexes and default ACL check."""
+    schema, owner = source['configuration']['schema'], source['configuration']['ownerRole']
+    state = _one(connection, _STATE, (schema, PROGRESS))
+    if state is None:
+        if not create:
+            return False
+        _create_progress(connection, schema)
+        state = _one(connection, _STATE, (schema, PROGRESS))
+    if tuple(state[:12]) != ('r','p',owner,False,False,False,False,False,'d',False,False,False):
+        # Relhasrules and relreplident are checked separately below; keep the
+        # expected tuple explicit to reject views, partitions, RLS and triggers.
+        raise CatalogError('progress-catalog-mismatch')
+    owner_id, relation_id = state[12:14]
+    if state[14] != _one(connection, "SELECT oid FROM pg_catalog.pg_am WHERE amname='heap'")[0]:
+        raise CatalogError('progress-catalog-mismatch')
+    _execute(connection, 'LOCK TABLE '+_q(schema)+'.'+_q(PROGRESS)+' IN ACCESS EXCLUSIVE MODE')
+    if _one(connection, _STATE, (schema, PROGRESS)) != state:
+        raise CatalogError('progress-catalog-mismatch')
+    actual_acl = _all(connection, """SELECT x.grantor,x.grantee,x.privilege_type,x.is_grantable
+FROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner))) x
+WHERE c.oid=%s ORDER BY 1,2,3,4""", (relation_id,))
+    expected_acl = _all(connection, """SELECT grantor,grantee,privilege_type,is_grantable
+FROM pg_catalog.aclexplode(pg_catalog.acldefault('r',%s::pg_catalog.oid)) ORDER BY 1,2,3,4""", (owner_id,))
+    if actual_acl != expected_acl or _one(connection, """SELECT count(*) FROM pg_catalog.pg_attribute a,
+LATERAL pg_catalog.aclexplode(a.attacl) x WHERE a.attrelid=%s""", (relation_id,)) != (0,):
+        raise CatalogError('progress-privilege-mismatch')
+    temporary = 'umf_verify_'+uuid4().hex
+    aliases = _create_progress(connection, schema, temporary)
+    if (_columns(connection, schema, PROGRESS) != _columns(connection, schema, temporary)
+            or _constraint_shapes(connection, schema, PROGRESS, {}) != _constraint_shapes(connection, schema, temporary, aliases)
+            or _index_shapes(connection, schema, PROGRESS, {}) != _index_shapes(connection, schema, temporary, aliases)):
+        _execute(connection, 'DROP TABLE '+_q(schema)+'.'+_q(temporary))
+        raise CatalogError('progress-catalog-mismatch')
+    _execute(connection, 'DROP TABLE '+_q(schema)+'.'+_q(temporary))
+    return True
+
+
+def _progress_rows(connection: Any, schema: str) -> list[dict[str, Any]]:
+    rows = _all(connection, 'SELECT migration_id,plan_digest,expected_head,file_digest,phase_index,state,phase_digest,completed_steps,prefix_witness FROM '+_q(schema)+'.'+_q(PROGRESS)+' ORDER BY migration_id', ())
+    if len(rows) > 1:
+        raise CatalogError('progress-capacity')
+    result = []
+    for row in rows:
+        migration_id, plan_digest, expected_head, file_digest, phase_index, state, phase_digest, steps, witness = row
+        if type(steps) is not list or witness is not None and type(witness) is not dict:
+            raise CatalogError('progress-state-mismatch')
+        result.append({'migrationId': migration_id, 'planDigest': plan_digest,
+                       'expectedHead': expected_head, 'fileDigest': file_digest,
+                       'phaseIndex': phase_index, 'state': state,
+                       'phaseDigest': phase_digest, 'completedSteps': steps,
+                       'prefixWitness': witness})
+    return result
+
+
+def _write_progress(connection: Any, schema: str, receipt: dict[str, Any]) -> None:
+    """Upsert is only called inside the same transaction as its required phase."""
+    payload = json.dumps(receipt['completedSteps'], separators=(',', ':'))
+    witness = None if receipt['prefixWitness'] is None else json.dumps(receipt['prefixWitness'], separators=(',', ':'))
+    _execute(connection, 'INSERT INTO '+_q(schema)+'.'+_q(PROGRESS)+' (migration_id,plan_digest,expected_head,file_digest,phase_index,state,phase_digest,completed_steps,prefix_witness) VALUES (%s,%s,%s,%s,%s,%s,%s,%s::pg_catalog.jsonb,%s::pg_catalog.jsonb) ON CONFLICT (migration_id) DO UPDATE SET phase_index=EXCLUDED.phase_index,state=EXCLUDED.state,phase_digest=EXCLUDED.phase_digest,completed_steps=EXCLUDED.completed_steps,prefix_witness=EXCLUDED.prefix_witness',
+             (receipt['migrationId'], receipt['planDigest'], receipt['expectedHead'], receipt['fileDigest'], receipt['phaseIndex'], receipt['state'], receipt['phaseDigest'], payload, witness))
+
+
+def _assert_progress_binding(receipt: dict[str, Any], *, migration_id: str, plan_digest: str,
+                             expected_head: str | None, file_digest: str | None) -> None:
+    if (receipt['migrationId'] != migration_id or receipt['planDigest'] != plan_digest
+            or receipt['expectedHead'] != expected_head or receipt['fileDigest'] != file_digest):
+        raise CatalogError('progress-binding-mismatch')
+
+
+def _delete_progress(connection: Any, schema: str, migration_id: str) -> None:
+    _execute(connection, 'DELETE FROM '+_q(schema)+'.'+_q(PROGRESS)+' WHERE migration_id=%s', (migration_id,))
+
+
+def _drop_progress(connection: Any, schema: str) -> None:
+    _execute(connection, 'DROP TABLE '+_q(schema)+'.'+_q(PROGRESS))

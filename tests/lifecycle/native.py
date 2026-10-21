@@ -17,10 +17,12 @@ from psycopg import sql
 from umf_access.lifecycle import (
     CatalogError,
     apply_concurrent_indexes,
+    apply_mixed_migration,
     apply_table_migration,
     inspect_table_history,
     verify_native_catalog,
 )
+from umf_access.lifecycle.progress import _verify_progress_schema
 from umf_access.lifecycle.seeds import _binding
 from umf_access.unified import (
     SessionIdentity,
@@ -85,6 +87,73 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 return apply_table_migration(admin,current,approved_digest=current['digest'],expected_head=head,person_roles=(alice,bob),**kwargs)
         first=apply(initial,None,file_digest=file_digest)
         check('initial-commit-ledger',first['generation']==1)
+        # Exercise the new durable phase runner in an isolated second schema:
+        # the fixture's bounded typed backfill commits independently from the
+        # final source/history publication.
+        mixed_cfg={**cfg,'schema':prefix+'mixed_schema','ownerRole':prefix+'mixed_owner',
+            'personRole':prefix+'mixed_person','batchRole':prefix+'mixed_batch',
+            'groupRoles':{'billing_admin':prefix+'mixed_billing'}}
+        mixed_alice,mixed_bob=prefix+'mixed_alice',prefix+'mixed_bob'
+        for role in (mixed_cfg['ownerRole'],mixed_cfg['personRole'],mixed_cfg['batchRole'],
+                     mixed_cfg['groupRoles']['billing_admin'],mixed_alice,mixed_bob):
+            admin.execute(sql.SQL('CREATE ROLE {} NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOREPLICATION').format(sql.Identifier(role)))
+            created.append(role)
+        for person in (mixed_alice,mixed_bob):
+            admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT TRUE,SET FALSE').format(sql.Identifier(mixed_cfg['personRole']),sql.Identifier(person)))
+        def mixed_bundle(name):
+            result=compile_table_deployment(json.dumps(source(name),separators=(',',':')),configuration=mixed_cfg)
+            assert result['status']=='compiled',result
+            return result['bundle']
+        mixed_initial_bundle=mixed_bundle('initial.json')
+        mixed_next_bundle=mixed_bundle('evolved.json')
+        mixed_initial=compile_table_migration(migration_id='mixed-001',previous_bundle=None,
+            next_bundle=mixed_initial_bundle,predecessor=None)['plan']
+        mixed_options=json.loads((args.fixtures/'evolution-options.json').read_text())
+        mixed_options.update(version='umf.table-migration-options/0.2',reviewedChanges=[],validations=[])
+        mixed_plan=compile_table_migration(migration_id='mixed-002',previous_bundle=mixed_initial_bundle,
+            next_bundle=mixed_next_bundle,predecessor={'id':'mixed-001','digest':mixed_initial['digest']},
+            options=mixed_options)['plan']
+        admin.execute(sql.SQL('CREATE SCHEMA {} AUTHORIZATION {}').format(sql.Identifier(mixed_cfg['schema']),sql.Identifier(mixed_cfg['ownerRole'])))
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(mixed_cfg['ownerRole'])))
+            admin.execute('SET LOCAL search_path=pg_catalog')
+            mixed_first=apply_table_migration(admin,mixed_initial,approved_digest=mixed_initial['digest'],
+                expected_head=None,person_roles=(mixed_alice,mixed_bob))
+        admin.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(mixed_cfg['ownerRole'])))
+        admin.execute('SET search_path=pg_catalog')
+        try:
+            staged=apply_mixed_migration(admin,mixed_plan,approved_digest=mixed_plan['digest'],
+                expected_head=mixed_first['headDigest'],person_roles=(mixed_alice,mixed_bob),file_digest='c'*64,stop_after_phase=1)
+            check('mixed-first-phase-receipt-keeps-old-head',staged['status']=='in-progress' and not staged['ledgerAdvanced'])
+            check('mixed-progress-fences-client-head',not admin.execute("SELECT pg_catalog.has_table_privilege(%s,%s,'SELECT')",(mixed_alice,mixed_cfg['schema']+'.umf_lifecycle_head')).fetchone()[0])
+            from umf_access.lifecycle import mixed as mixed_module
+            backfill_calls=[]
+            original_backfill=mixed_module._run_required_phase
+            def counted_phase(*call_args,**call_kwargs):
+                if call_args[2]['kind']=='backfill': backfill_calls.append(call_args[2]['id'])
+                return original_backfill(*call_args,**call_kwargs)
+            mixed_module._run_required_phase=counted_phase
+            try:
+                try:
+                    apply_mixed_migration(admin,mixed_plan,approved_digest=mixed_plan['digest'],
+                        expected_head=mixed_first['headDigest'],person_roles=(mixed_alice,mixed_bob),file_digest='c'*64,
+                        after_phase_commit_unknown=True)
+                except CatalogError as error:
+                    check('mixed-unknown-backfill-commit-requires-observation',str(error)=='migration-outcome-unknown-observe-progress')
+                else: raise AssertionError('unknown phase commit was not surfaced')
+                completed=apply_mixed_migration(admin,mixed_plan,approved_digest=mixed_plan['digest'],
+                    expected_head=mixed_first['headDigest'],person_roles=(mixed_alice,mixed_bob),file_digest='c'*64)
+            finally:
+                mixed_module._run_required_phase=original_backfill
+            check('mixed-backfill-committed-once-across-resume',len(backfill_calls)==1)
+            check('mixed-final-publication-drops-progress-and-advances-history',completed['status']=='committed'
+                and admin.execute("SELECT to_regclass(%s)",(mixed_cfg['schema']+'.umf_lifecycle_progress',)).fetchone()==(None,))
+            check('mixed-final-publication-restores-head',admin.execute("SELECT pg_catalog.has_table_privilege(%s,%s,'SELECT')",
+                (mixed_alice,mixed_cfg['schema']+'.umf_lifecycle_head')).fetchone()[0])
+        finally:
+            admin.execute('RESET ROLE')
+            admin.execute('RESET search_path')
+            admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(mixed_cfg['schema'])))
         with tempfile.TemporaryDirectory() as generated:
             result=generate_python_client(initial['next']['source']['utf8'],package='legal_generated')
             for file in result['files']:
@@ -184,6 +253,11 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 verify_native_catalog(admin,concurrent['next'])
         except CatalogError as error:check('native-comment-drift-refuses',str(error)=='catalog-comment-mismatch')
         else:raise AssertionError('comment drift accepted')
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
+            admin.execute('SET LOCAL search_path=pg_catalog')
+            check('mixed-progress-owner-schema-created',_verify_progress_schema(admin,concurrent['next'],create=True))
+        check('mixed-progress-relation-has-owner-only-acl',admin.execute("SELECT NOT pg_catalog.has_table_privilege('public',%s,'SELECT')",(cfg['schema']+'.umf_lifecycle_progress',)).fetchone()==(True,))
     finally:
         admin.execute('RESET ROLE')
         if schema_created:admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(cfg['schema'])))

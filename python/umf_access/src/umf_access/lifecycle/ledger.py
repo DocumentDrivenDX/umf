@@ -99,15 +99,20 @@ def apply_table_migration(connection: Any, plan: dict[str, object], *, approved_
 
 
 def _apply_table_migration(connection,plan,*,approved_digest,expected_head,person_roles,
-                           statement_timeout_ms=30_000,lock_timeout_ms=5_000,prebuilt_indexes=False,file_digest=None):
+                           statement_timeout_ms=30_000,lock_timeout_ms=5_000,prebuilt_indexes=False,file_digest=None,
+                           phases_applied=False):
     from psycopg.types.json import Jsonb
 
     if file_digest is not None and (type(file_digest) is not str or not re.fullmatch('[a-f0-9]{64}',file_digest)):
         raise CatalogError('migration-file-digest-conflict')
     source_plan = _verified_plan(plan)
+    if source_plan.get('phases') and not phases_applied:
+        raise CatalogError('mixed-phase-runner-required')
     concurrent = any(step['transaction'] == 'forbidden' for step in source_plan['steps'])
-    if concurrent and not prebuilt_indexes:
+    if concurrent and not prebuilt_indexes and not phases_applied:
         raise CatalogError('nontransactional-runner-required')
+    if phases_applied and not source_plan.get('phases'):
+        raise CatalogError('mixed-phase-profile')
     if prebuilt_indexes and (not concurrent or any(step['kind'] != 'index' for step in source_plan['steps'])):
         raise CatalogError('index-phase-profile')
     if type(approved_digest) is not str or approved_digest != source_plan['digest']:
@@ -123,7 +128,7 @@ def _apply_table_migration(connection,plan,*,approved_digest,expected_head,perso
         history = _history_rows(connection,schema) if exists else []
         if exists and not history:
             raise CatalogError('ledger-history-missing')
-        if history and not prebuilt_indexes:
+        if history and not prebuilt_indexes and not phases_applied:
             _verify_installed(connection,history[-1],person_roles,statement_timeout_ms,lock_timeout_ms)
         matches = [entry for entry in history if entry['plan']['id'] == source_plan['id']]
         if matches:
@@ -151,13 +156,14 @@ OR EXISTS(SELECT FROM pg_catalog.pg_type WHERE typnamespace=n.oid)
 FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
             if occupied != (False,):
                 raise CatalogError('initial-schema-not-empty')
-        for step in source_plan['steps']:
-            if step['transaction'] == 'forbidden':
-                continue
-            if step['kind'] == 'backfill':
-                _apply_backfill(connection,source_plan,step)
-            else:
-                _execute(connection,step['sql'])
+        if not phases_applied:
+            for step in source_plan['steps']:
+                if step['transaction'] == 'forbidden':
+                    continue
+                if step['kind'] == 'backfill':
+                    _apply_backfill(connection,source_plan,step)
+                else:
+                    _execute(connection,step['sql'])
         if not exists:
             _create_history(connection,schema)
             _create_head_view(connection,source)
@@ -165,7 +171,11 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
         verify_native_catalog(connection,source,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
         verify_native_privileges(connection,source,person_roles=person_roles,
                                  statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
-        _apply_seeds(connection,source_plan,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
+        # Phased plans include their typed seed execution as an ordered phase
+        # with a durable prefix receipt. Reapplying seeds during publication
+        # would repeat committed data effects after a recovery boundary.
+        if not phases_applied:
+            _apply_seeds(connection,source_plan,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
         witness = _capture_witness(connection,source)
         position = len(history)+1
         entry_digest = _entry_digest(position,expected_head,source_plan['digest'],witness,file_digest)
@@ -181,6 +191,18 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
                 'headDigest':entry_digest,'generation':position,'installedBundleDigest':source['bundleDigest'],
                 'installationReference':_issue_reference(connection,source,stored[-1]),
                 'commitResponsibility':'caller','lifecycleAdmission':False}
+
+
+def _finalize_phased_migration(connection,plan,*,approved_digest,expected_head,person_roles,
+                               statement_timeout_ms=30_000,lock_timeout_ms=5_000,file_digest=None):
+    """Publish history after the mixed runner has durably completed every phase."""
+    source_plan = _verified_plan(plan)
+    if not source_plan.get('phases'):
+        raise CatalogError('mixed-phase-profile')
+    return _apply_table_migration(connection,source_plan,approved_digest=approved_digest,
+        expected_head=expected_head,person_roles=person_roles,
+        statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms,
+        file_digest=file_digest,phases_applied=True)
 
 
 def inspect_table_history(connection: Any, bundle: dict[str, object], *, person_roles: tuple[str, ...],

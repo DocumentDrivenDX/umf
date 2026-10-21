@@ -11,6 +11,7 @@ from pathlib import Path
 from .catalog import CatalogError, _execute, _q
 from .concurrent import apply_concurrent_indexes
 from .ledger import apply_table_migration
+from .mixed import apply_mixed_migration
 
 
 def _load(path):
@@ -92,7 +93,13 @@ def main(argv=None):
             file_digest = hashlib.sha256(raw).hexdigest()
             with connect(args.dsn,autocommit=True) as connection:
                 owner = plan['next']['configuration']['ownerRole']
-                if any(s['transaction']=='forbidden' for s in plan['steps']):
+                if plan.get('executionProfile') is not None:
+                    _execute(connection,'SET ROLE '+_q(owner))
+                    _execute(connection,'SET search_path=pg_catalog')
+                    response = apply_mixed_migration(connection,plan,approved_digest=args.approved_digest,
+                        expected_head=head,person_roles=tuple(args.person_role),file_digest=file_digest,
+                        repair_invalid=args.repair_invalid)
+                elif any(s['transaction']=='forbidden' for s in plan['steps']):
                     _execute(connection,'SET ROLE '+_q(owner))
                     _execute(connection,'SET search_path=pg_catalog')
                     response = apply_concurrent_indexes(connection,plan,approved_digest=args.approved_digest,
