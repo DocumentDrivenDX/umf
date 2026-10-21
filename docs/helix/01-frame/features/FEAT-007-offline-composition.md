@@ -20,8 +20,8 @@ ddx:
 # FEAT-007: Offline composition of pinned model revisions
 
 **Priority:** Next governed product slice begins with US-050 (owner direction,
-2026-10-02). US-051 follows only after US-050 passes its design, test and
-implementation gates.
+2026-10-02). US-051's cross-document comparison follows US-050 design/test/implementation gates;
+current-source field migration planning proceeds under the 2026-10-21 amendment.
 **Covered PRD Subsystem(s)**: Identity / Composition / Evolution
 **Covered PRD Requirements**: FR-15, FR-16, FR-17, FR-18, FR-19, FR-41
 **Cross-Subsystem Rationale**: Offline composition gives programmatic consumers exact revision-qualified identities without expanding the feature beyond composition and evolution. NFR-4–6, NFR-10–11, NFR-20–21, and NFR-50 also apply. **Stories:** US-050, US-051.
@@ -65,6 +65,31 @@ way to identify both type and revision. Its data execution remains outside UMF.
   archives remain recoverable, while unsafe edits or projections block when a
   required dependency cannot be interpreted.
 
+## Field migration requirements
+
+Owner direction, 2026-10-21, extends FR-18 planning to the complete field-change
+lifecycle. These requirements govern [SD-007](../../02-design/solution-designs/SD-007-schema-migrations.md)
+and the [migration build plan](../../04-build/schema-migration-plan.md).
+
+- COMP-06: Describe additions, optional-to-required changes, removals and type
+  changes using stable identities and exact before/after sources. Retain unknown
+  content and report unresolved dependency meaning.
+- COMP-07: Distinguish logical default resolution, future-write defaults and
+  historical backfill. Required additions and tightening require evidence that
+  all existing and concurrent writes satisfy the target before activation.
+- COMP-08: Require explicit conversions, invalid-value policy and loss decisions
+  for type changes. Native cast availability alone does not establish preservation.
+- COMP-09: Separate logical retirement, physical deletion and retained-history
+  policy. Resolve affected keys, relationships, queries, actions and security
+  dependencies; never infer a destructive cascade.
+- COMP-10: Produce deterministic, versioned plans and verifiable outcomes with
+  backend capabilities, preconditions, approval scope and recovery behavior.
+  Hosts execute scans, transformations and physical operations. Metadata alone
+  cannot grant execution authority or establish complete data acceptance.
+- COMP-11: Support atomic execution where qualified and resumable staged
+  execution where required. Explicitly describe concurrent-write protection,
+  client cutover, irreversible steps and recovery after uncertain outcomes.
+
 ## Success Criteria
 
 US-050 exercises two revisions of a shared model, a sales-to-shared reference,
@@ -94,6 +119,13 @@ supported revision-token syntax, public package API, package format, digest
 scope and resource bounds. CONTRACT-045 records the proposal and diagnostics;
 the decision, TD-050 and AC-level test allocation must land before implementation.
 
-US-051 and FR-18/FR-19 are explicitly deferred until US-050 passes. Other
+US-051 cross-document comparison under FR-18/FR-19 remains deferred until
+US-050 passes. Other
 undelivered FR/NFR obligations remain product scope and await product-owner
 selection of a later release slice; this ordering does not demote them.
+
+The field migration design may proceed now. A first current-core, single-document
+table profile may bind exact source bytes and deployment digests through
+CONTRACT-081 without adding revision members to core. Cross-document comparison
+and migration still require US-050/CONTRACT-045; this narrower delivery does not
+claim those gates passed. Backend rollout order beyond PostgreSQL remains open.

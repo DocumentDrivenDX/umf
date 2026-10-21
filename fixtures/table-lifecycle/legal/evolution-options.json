@@ -1,0 +1,15 @@
+{
+  "version": "umf.table-migration-options/0.1",
+  "backfills": [
+    {
+      "table": "matters",
+      "column": {
+        "module": "legal_lifecycle",
+        "element": "matters__review_state"
+      },
+      "operation": "backfill_review",
+      "scopedRows": true
+    }
+  ],
+  "concurrentIndexes": []
+}

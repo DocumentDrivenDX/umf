@@ -141,7 +141,19 @@ retargeting the primary key. A cycle is reported but is not itself an error.
 
 ## Evidence, Migration and Open Decisions
 
-This contract and US-051 are deferred until US-050 passes its design, test and
+The owner's field migration request is planned in
+[SD-007](../solution-designs/SD-007-schema-migrations.md) and the
+[migration build plan](../../04-build/schema-migration-plan.md). This contract
+remains a read-only comparison interface. Its report is an input to migration
+planning, never execution authority or proof that stored data satisfies a target.
+A separate migration contract must bind intent, backend capabilities, data-check
+obligations, default/backfill/conversion policies, approved loss and outcomes.
+Current-core single-document table plans may use exact source/deployment identity
+under CONTRACT-081; they must not claim this pinned cross-document comparator's
+gates passed or infer revision-envelope members. The deferral below applies to
+this cross-document comparison contract, not to designing that table profile.
+
+This contract and US-051-AC1–10 are deferred until US-050 passes its design, test and
 implementation gates. The deferral preserves FR-18/FR-19 in product scope and
 does not authorize comparator implementation.
 

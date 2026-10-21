@@ -40,8 +40,8 @@ def _json_bytes(value: Any) -> bytes:
     return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
 
 
-def _entry_digest(position: int, predecessor: str | None, plan_digest: str, witness: Any) -> str:
-    return hashlib.sha256(_json_bytes({'position':position,'predecessor':predecessor,'planDigest':plan_digest,'witness':witness})).hexdigest()
+def _entry_digest(position: int, predecessor: str | None, plan_digest: str, witness: Any, file_digest: str | None = None) -> str:
+    return hashlib.sha256(_json_bytes({'position':position,'predecessor':predecessor,'planDigest':plan_digest,'witness':witness,**({'fileDigest':file_digest} if file_digest is not None else {})})).hexdigest()
 
 
 def _capture_witness(connection: Any, source: dict[str, Any]) -> dict[str, Any]:

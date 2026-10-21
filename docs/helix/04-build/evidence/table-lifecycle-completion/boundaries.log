@@ -1,0 +1,4 @@
+$ bun scripts/check-compilation-boundaries.ts && python3 scripts/check-access-python-boundaries.py
+compilation boundaries: 9 files, 0 violations
+scan roots: python/umf_access, python/umf_access/src/umf_access
+access Python boundaries: 85 modules, 0 violations

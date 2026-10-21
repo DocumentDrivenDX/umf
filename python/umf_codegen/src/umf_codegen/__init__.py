@@ -72,19 +72,47 @@ class BlockedTableMigration(TypedDict):
     diagnostics: list[TableDeploymentDiagnostic]
 
 
+class ReviewedChangeCandidate(TypedDict):
+    id: str
+    kind: str
+    path: str
+    oldDigest: str
+    newDigest: str
+    oldValue: object
+    newValue: object
+
+
 def compile_table_migration(*, migration_id: str, predecessor: TableMigrationPredecessor | None,
                             previous_bundle: dict[str, object] | None, next_bundle: dict[str, object],
+                            options: dict[str, object] | None = None,
                             timeout_seconds: float = 30) -> CompiledTableMigration | BlockedTableMigration:
     """Compile an inert forward plan; native ledger and approval remain required."""
     return cast(CompiledTableMigration | BlockedTableMigration,
                 execute({"id": migration_id, "predecessor": predecessor,
-                         "previous": previous_bundle, "next": next_bundle},
+                         "previous": previous_bundle, "next": next_bundle,
+                         **({"options": options} if options is not None else {})},
                         timeout_seconds, operation="migration"))
 
 
 def verify_table_migration(plan: dict[str, object], *, timeout_seconds: float = 30) -> dict[str, object]:
     """Recompile a complete plan; consistency cannot authenticate native history."""
     return execute({"plan": plan}, timeout_seconds, operation="verify_migration")
+
+
+def discover_table_migration_changes(previous_bundle: dict[str, object], next_bundle: dict[str, object],
+                                     *, timeout_seconds: float = 30) -> list[ReviewedChangeCandidate]:
+    """Discover exact source-bound review candidates from two verified deployment bundles.
+
+    Returned values explain each delta. Copy only id, kind, path, oldDigest and
+    newDigest into `reviewedChanges`; a supported type conversion must also be
+    selected explicitly as `pg-cast-v1`.
+    """
+    result = execute({"previous": previous_bundle, "next": next_bundle}, timeout_seconds,
+                     operation="discover_changes")
+    changes = result.get("changes")
+    if not isinstance(changes, list) or any(not isinstance(item, dict) for item in changes):
+        raise GenerationError("PAYLOAD_INVALID", "Embedded compiler returned invalid reviewed changes")
+    return cast(list[ReviewedChangeCandidate], changes)
 
 
 def compile_table_deployment(text: str, *, configuration: TableDeploymentConfiguration,
@@ -99,6 +127,12 @@ def compile_table_deployment(text: str, *, configuration: TableDeploymentConfigu
 def verify_table_deployment(bundle: dict[str, object], *, timeout_seconds: float = 30) -> dict[str, object]:
     """Recompile a bundle; hosts must additionally verify their trusted digest."""
     return execute({"bundle": bundle}, timeout_seconds, operation="verify_deployment")
+
+
+def normalize_row_scope(input: dict[str, object], *, context: dict[str, object],
+                        timeout_seconds: float = 30) -> dict[str, object]:
+    """Normalize row_scope with exact host bindings and lifecycle/native admission."""
+    return execute({"input": input, "context": context}, timeout_seconds, operation="row_scope")
 
 
 def generate_python_client(text: str, *, package: str, format: Literal["json", "yaml"] = "json",
@@ -123,12 +157,15 @@ __all__ = [
     "GenerationError",
     "PythonClientResult",
     "RecordSelection",
+    "ReviewedChangeCandidate",
     "TableDeploymentConfiguration",
     "TableDeploymentDiagnostic",
     "TableMigrationPredecessor",
     "compile_table_deployment",
     "compile_table_migration",
+    "discover_table_migration_changes",
     "generate_python_client",
+    "normalize_row_scope",
     "verify_table_deployment",
     "verify_table_migration",
 ]

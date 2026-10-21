@@ -1137,3 +1137,89 @@ cases pass. All76 SDK wheel modules match source and dual-license metadata is
 present. Required-column/type/key/FK evolution, unsupported native codecs and full
 private analytics/method acceptance are not implied. The release goal remains
 active; this is an unpublished component.
+
+
+## Authorized lifecycle gap completion — 2026-10-21
+
+The user authorized the remaining roadmap work and domain-pack table/security
+fixtures. Installed HELIX catalog is workflows/graph.yml; evolve hands source
+implementation to the runtime. Existing uncommitted assessment files are retained.
+No public release, external message or production migration is implied.
+
+| Slice | Owner / boundary | Verification |
+| --- | --- | --- |
+| LC-01 | UMF descriptions/deployment; native catalog correspondence | Description escaping, deterministic bytes, catalog/comment drift |
+| LC-02 | UMF forward-plan options; Weft typed backfill lowering; host atomic apply | Required column with explicit scoped UPDATE; row-bound rollback; added check/FK validation; named policy-change review |
+| LC-03 | Host concurrent-index phases; same UMF source/ledger | Valid-prefix resume, unique duplicate failure, explicit invalid-index repair, unchanged history on failure, stale/tampered plans |
+| LC-04 | Python new/check/apply CLI and dependency metadata | Offline full-chain/source check, exit reasons, approved apply, installed Python entrypoints, dependency compatibility |
+| LC-05 | Legal domain-pack derived table cohort | Matter/team access, separate service commands, generated sync reads/actions, schema evolution and browser/embedded parity |
+| LC-06 | Packaging and handoff | Fresh wheel checksums/licenses, local index/offline install; exact consumer/managed/public index acceptance remains externally gated |
+
+Existing boundary commands are check:access-boundaries,
+check:unified-client-boundaries and the codegen ownership checker; retain their
+negative controls. New lifecycle modules stay under the administrative owner.
+No general Weft import permission is added to generated clients or pure runtime.
+Run focused Bun tests, TypeScript, actual Chromium, Python packaging/CLI checks
+and PostgreSQL18 where locally available. Retain exact source/artifact hashes and
+failures. No comparable token baseline or enforced runtime metering is available;
+work proceeds in bounded reviewed slices with continuation evidence here.
+
+
+### Revision2 steering — 2026-10-21
+
+The consumer's U1–U9 replaces its original draft. The existing roadmap owns its
+next-release order and ownership map. Complete LC-01–06 verification already in
+progress, then use the U1/U2/U5 design gates before widening execution scope.
+Current concurrent execution is index-only; mixed data/DDL/concurrent plans and
+NOT VALID/VALIDATE remain explicit next-release gaps. Reviewed destructive/type/
+Key evolution and the generic host protocol are not implied by local additive
+migration support. U3 maps existing native policy forms; no new core policy
+language is authorized. U7 takes the tested-mini-racer matrix alternative; U8
+includes a documented verified mirror route. External consumer/managed/public
+publication and Hohfeld0.10 acceptance remain separate, unfulfilled gates.
+
+### Lifecycle successor checkpoint — 2026-10-21
+
+[The source-pinned component packet](evidence/table-lifecycle-completion/README.md)
+records LC-01–05's bounded implementation and LC-06 local wheel/mirror proof:
+31 focused Bun tests/179 assertions,83 Chromium assertions,28 final installed
+PostgreSQL checks,30 installed generator cases, four CLI tests and source/license
+wheel correspondence. The fixture derives four documented legal tables with
+explicit membership/billing/batch restrictions, reviewed backfill and failed
+concurrent-index recovery. Scoped review fixed quoted-identifier SQL parsing,
+legacy comment-bundle recovery and durable phase fencing. No code/SQL lowering
+was moved from Weft into UMF.
+
+Continuation: the current local source is verified, not published. U1 mixed phases
+and NOT VALID/VALIDATE, U2 reviewed existing-object changes, U3 row_scope conversion,
+U5 generic host protocol and U6 untrusted-SQL containment require the revision2
+contract/test gates before implementation. Packaging needs complete dependency
+mirroring/platform coverage and immutable release versions. Private consumer,
+Lakebase, public publisher and Hohfeld gates remain open. Next action is the
+roadmap's U3/U4 authoring acceptance followed by U1/U2/U5 phase/evolution design;
+do not repeat the completed component campaign without a changed input/failure.
+
+### U1–U3 adoption execution — 2026-10-21
+
+The owner explicitly authorized implementation, independent Sol planning/review,
+parallel Luna worktrees, merge and immutable release. CONTRACT-081's revision2
+profile, TD-085 and STP-085 govern this cut. The active goal remains open through
+release verification. UMF retains schema/DDL ownership; Weft retains typed data
+SQL; host identity, administrative execution and native approval remain explicit.
+
+| Workstream | Execution and remaining gate |
+| --- | --- |
+| U1 | `codex/praxis-u1-mixed`: versioned phase graph and fixed progress metadata; mixed runner/finalizer, fault recovery and PostgreSQL evidence pending |
+| U2 | `codex/praxis-u2-reviewed`: digest-bound discovery/review markers; complete operation/dependency coverage and native positive/refusal evidence pending |
+| U3 | `codex/praxis-u3-authoring`: bounded normalizer and source fixtures; Sol found omitted-command regrant and rejected-input accessor defects, plus delivery/traceability/semantic-test gaps; remediation and native/browser acceptance pending |
+
+Do not equate focused normalizer tests or phase metadata with adoption acceptance.
+Run reviewed mixed migrations against populated disposable domain tables, verify
+durable fencing and no data replay across interruption, and exercise reviewed
+destructive changes and row_scope conversion through installed artifacts. Record
+the actual source and artifact cohort after integration; earlier component hashes
+remain historical. Remote main is `2ede4c879`; SDK0.5.3/access dev5/codegen a2 are
+already published. Proposed next versions are SDK0.5.4/access dev6/codegen a3,
+subject to a fresh publication check. Reuse unchanged core0.10 release bytes.
+Private Praxis workload, Lakebase, U5–U9 and general public-index delivery are
+separate gates and must not be implied by this U1–U3 release.

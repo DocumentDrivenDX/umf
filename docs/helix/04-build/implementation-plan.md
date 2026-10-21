@@ -43,6 +43,36 @@ ddx:
 
 ## Scope
 
+### Field schema migration planning
+
+The owner's 2026-10-21 request is governed by FR-18, FEAT-007 COMP-06–11,
+US-051-AC11–16 and SD-007. The [field migration build plan](schema-migration-plan.md)
+owns the ordered design/implementation gates for additions, requiredness with
+defaults/backfills, removals and type changes. It separates portable intent and
+verification from host/backend execution. Exact contracts, technical design and
+story-test allocation remain its entry gate; this is planned support, not a
+broader claim for the existing bounded table migration compiler.
+
+### U1–U3 bounded adoption checkpoint — 2026-10-21
+
+CONTRACT-081/TD-085/STP-085 own the existing-table PostgreSQL maintenance profile.
+The [candidate packet](evidence/praxis-u123-adoption/README.md) binds SDK 0.5.4,
+access dev6 and codegen a3 to source/embedded assets and installed-wheel receipts.
+U1 mixed phases pass 21 native checks plus an independent replay; U3 owner+via
+passes 10 native checks. Reviewed-operation shards A/B/C/D pass 28/27/40/33 checks
+across 14 native cases and two additional compiler refusal cases. Independent
+source/evidence review closes MIG-R01–R06 for this profile. Portable affected
+coverage is 55 tests/282
+assertions, Chromium parity is 91 assertions, and SDK installation conformance is
+139 checks. Publication and hosted CI gates remain separate.
+
+The [migration plan](schema-migration-plan.md) retains MIG-G01–G11: existing-column
+NULL fill, arbitrary transforms, general defaults, narrowing/shadow conversion,
+retirement/restore, online chunking, cross-document/multi-store work, other
+backends, managed adoption, v0.2 bootstrap/inventory and combined column drop/add
+are not delivered by these bounded results. Earlier implementation evidence below
+keeps its original source and version scope.
+
 ### Current alignment and execution priorities
 
 The relationship/binding amendment below is historical preparation. Its scoped

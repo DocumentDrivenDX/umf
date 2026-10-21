@@ -247,7 +247,57 @@ execution on that target. Reverting code does not undo committed native effects.
 
 Prerequisites: US-083, W-4, W-0 (action entries are specified in CONTRACT-071).
 
-## Risks
+## Revision2 lifecycle integration
+
+CONTRACT-081's U1–U3 evolution profile governs the next direct-table cut under
+FEAT-033. Keep the existing legacy compiler path exact. The source-aware change
+analyzer matches stable table/Field/Key/constraint/index identities before emitting
+reviewed DDL; ordinary positional append checks cannot authorize removal or rename.
+The phase scheduler consumes typed emitted steps and original selected metadata,
+groups adjacent transactional effects, and introduces explicit validation/index
+barriers. It does not parse arbitrary SQL to infer source meaning.
+
+`src/table-migration/index.ts`, `options.ts` and a new reviewed-change module own
+diff admission, review markers and operation emission. A separate `phases.ts`
+owns scheduling through a pure postprocessor, with a small compile hook before
+final IDs and hashing. New 0.2 schemas dispatch independently of legacy 0.1.
+The authoring normalizer lives separately from canonical extension inspection;
+retained original row_scope and exact join context yield the existing RowRule
+forms without adding an alternate native policy interpreter.
+
+The Python mixed runner owns one supplied administrative session and session lock.
+It records phase effects and progress together, fences ordinary data admission,
+and invokes a separate verified ledger finalizer after final correspondence.
+It MUST NOT re-enter the existing all-required-steps executor after a committed
+prefix, which would replay data effects. A source-selected metadata profile
+registers the fixed progress relation with exact shape and owner-only privileges;
+catalog inventory and witness verification explicitly admit that profile only.
+Legacy inventory remains unchanged. A completed prefix requires source-bound
+catalog correspondence, including unvalidated-constraint state where selected.
+
+Implement in separate source worktrees: U1 owns the phase module, Python runner,
+finalizer, metadata inventory and CLI; U2 owns reviewed diff/emission, shared
+options/schema dispatch and TypeScript tests; U3 owns normalization and its tests.
+Integrate the shared options and compile hook once. Verify each native change
+kind separately, then run one mixed migration through interrupted phases.
+Committed effects are forward-only; recovery resumes verified progress or requires
+an explicit corrective migration, never a simulated whole-plan rollback.
+
+SD-007's field lifecycle acceptance applies to the release inventory. Analyze
+typed source references before DDL, including local constraints/indexes that
+PostgreSQL removes automatically on column drop even with RESTRICT. Native
+dependency errors supplement this analysis. Review disclosures explicitly name
+stored-value loss and immediate irreversibility or supplied recovery custody.
+Validate both logical/native domains for finite type conversions. Existing
+optional-column tightening uses fail-if-null native activation; filling its
+historical nulls is a distinct unsupported operation. Appended-column backfill
+retains its existing explicit source-declared path. Hold native write protection
+through actual-data validation and activation; a metadata fence protects ordinary
+generated calls but cannot alone exclude direct authorized SQL. A failed committed
+stage keeps clients fenced and requires resume/forward repair even while the old
+metadata head remains. Reusing that head does not undo physical effects.
+
+## Raw action risks
 
 Weft may not be able to fold conditions into one Delta statement; those actions
 refuse on Delta and remain available on Postgres or Truss. Lakebase minor

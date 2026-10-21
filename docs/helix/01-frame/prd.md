@@ -73,9 +73,10 @@ preserving only opaque native envelopes is insufficient.
 through FEAT-007 and US-050 as an offline, revision-pinned cross-document
 reference slice. CONTRACT-045 must first settle the public package API, bounds,
 and permitted crossing members; TD-050 and AC-level test allocation must then
-precede implementation. FR-18/FR-19 through US-051 are deferred until US-050
-passes its governed gates because schema comparison depends on verified revision
-identity and package resolution. All other undelivered FR/NFR obligations remain
+precede implementation. Cross-document FR-18/FR-19 comparison through US-051
+retains its US-050 gates for verified revision identity and package resolution.
+The 2026-10-21 field-migration amendment separately permits current-source,
+single-document planning under SD-007 and CONTRACT-081. Other undelivered FR/NFR obligations remain
 in product scope and are deferred to the product owner for later release
 selection; absence from this slice does not demote or waive them.
 
@@ -97,7 +98,9 @@ semantic coverage, migration/recovery, stable API, Python consumption and native
 pipeline acceptance needs. That framing must identify which US-050 capabilities
 are prerequisites and which can remain separate. The dependency decision remains
 open; neither the native port nor US-050 gains implementation authorization from
-this sequencing clarification. US-051 retains its dependency on US-050.
+this sequencing clarification. US-051's cross-document comparison retains its
+dependency on US-050; its current-source field-migration amendment has the
+separate design and qualification gates in SD-007.
 
 1. Users retain native meaning when moving supported schemas through UMF.
 2. Users translate where mappings exist and can inspect every semantic limit.
@@ -487,6 +490,12 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 - **FR-18** — **Schema evolution.** UMF must represent and compare additions,
   removals, type, constraint, identity, relationship, and extension-specific
   changes, enabling integrations to apply native compatibility rules.
+  For field additions, requiredness changes, removals and type changes, UMF must
+  describe explicit migration intent, dependencies, data-check obligations,
+  defaults/backfills, conversion and loss decisions, and recovery requirements.
+  Defaults for future writes and repair of existing data are separate choices.
+  Consumers must receive verifiable plans and outcomes qualified by backend
+  capabilities; storage hosts own physical execution and data acceptance.
 - **FR-19** — **Semantic comparison.** Comparison must distinguish textual and
   representational differences from equivalent or materially different semantics
   for round-trip validation and schema evolution.
@@ -720,9 +729,10 @@ be inspected.
   spike findings? Owner: product owner; blocks release commitments. All 45
   requirements remain product obligations until explicitly changed.
 - Which slice follows the completed relationship and binding queue? Resolved for
-  planning on 2026-10-02: US-050 is next. US-051 and every other residual
-  obligation remain deferred to the product owner pending US-050 evidence and a
-  later release-boundary decision; their product priority is unchanged.
+  planning on 2026-10-02: US-050 is next for cross-document composition.
+  The 2026-10-21 amendment selects single-document field-migration planning;
+  cross-document US-051 and other residual obligations retain their independent
+  owner selection and qualification gates.
 
 ## Success Criteria
 

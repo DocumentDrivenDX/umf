@@ -1,0 +1,69 @@
+{
+  "mode": "Whole ordered cases sharded across isolated databases and distinct principals. Gzip fixtures retain exact uncompressed tested bytes. A/B/D complete-input equivalence against the final builder is recorded separately; original receipts are unchanged.",
+  "totalAssertions": 128,
+  "totalCases": 14,
+  "negativeCases": 2,
+  "shards": [
+    {
+      "shard": "a",
+      "fixture": "reviewed-a-fixture.json.gz",
+      "rawSha256": "9e5cd14c02f95f5e60e8922c8c7bf0898893bdee959124e60d3a0bf37c123a28",
+      "gzipSha256": "3f51ae0f3bc3909b5491652c1c21e70c240568a5ddb28b562ff0411d98432078",
+      "cases": [
+        "drop-court",
+        "policy-drop-court",
+        "rename-court",
+        "widen-types"
+      ],
+      "negativeCases": [],
+      "assertions": 28,
+      "reportSha256": "91259e12fe8ef75cf54ca8d73b79979bcfb8bc90b9aa4329cba8b90e2beb4348"
+    },
+    {
+      "shard": "b",
+      "fixture": "reviewed-b-fixture.json.gz",
+      "rawSha256": "6c2354ce3759c72c291c3f46ccd321758673ab072d5d7b7ccffa716a6ec18353",
+      "gzipSha256": "4bfc5c98541ee1eb71beb37387bcb6f446849ef0e5adb216c0ec4351b61b378a",
+      "cases": [
+        "not-null",
+        "replace-index",
+        "remove-index",
+        "index-newid-successor"
+      ],
+      "negativeCases": [],
+      "assertions": 27,
+      "reportSha256": "cb09b3b0a1991a2041961557721bb9a574afbcc41a26a016d003f294fd9dc426"
+    },
+    {
+      "shard": "c",
+      "fixture": "reviewed-c-fixture.json.gz",
+      "rawSha256": "c0b792ed122ab0be80424e88168fa67f19422812e76527030644ec86841fdfe9",
+      "gzipSha256": "944a919db2e49075ff261fedb343be6798854007dcf729b953475a1cb0dec23d",
+      "cases": [
+        "check-lifecycle",
+        "foreign-key-lifecycle"
+      ],
+      "negativeCases": [],
+      "assertions": 40,
+      "reportSha256": "3d596c3c8debcf3d8baaeaefcce19bf559644833e8c2a962bc35f2b95572e642"
+    },
+    {
+      "shard": "d",
+      "fixture": "reviewed-d-fixture.json.gz",
+      "rawSha256": "14b1cf0bc02ccda8713d63679798d39e0cecffdbd66a78d718436a722c944b9f",
+      "gzipSha256": "e9ad17bf78081d7d79087f82976aa230ae3050a3ab426ebfa71cddd06fb9c7d7",
+      "cases": [
+        "replace-pk",
+        "policy",
+        "invalid-pk",
+        "not-null-failure"
+      ],
+      "negativeCases": [
+        "inbound-pk",
+        "narrow-numeric"
+      ],
+      "assertions": 33,
+      "reportSha256": "ed5f137e2ee9f58290018a3c61344bffd5bb3a980877d0217c279946ba68186c"
+    }
+  ]
+}

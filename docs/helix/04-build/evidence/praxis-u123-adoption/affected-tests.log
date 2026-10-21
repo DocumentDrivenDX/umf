@@ -1,0 +1,73 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/lifecycle/reviewed.test.ts:
+(pass) a column drop needs its exact review marker, compiles a digest-bound drop and rejects changed source [1605.09ms]
+(pass) reviewed middle-column removal preserves unchanged trailing fields by stable Field identity [535.15ms]
+(pass) column removal and appended fields refuse before producing an incomplete plan at same or mixed counts [1021.74ms]
+(pass) column drops resolve nested policy references by stable field identity and require a reviewed policy rewrite [950.01ms]
+(pass) column drops detect related-policy references from other selected tables and order reviewed rewrites first [956.34ms]
+(pass) column drops resolve nested command references independent of object key order [635.06ms]
+(pass) reviewed column rename and NOT NULL tightening compile only with exact source markers [1794.54ms]
+(pass) renamed columns revoke old column grants before changing the physical name [826.76ms]
+(pass) type changes require a digest-bound explicit safe PostgreSQL widening conversion [1885.03ms]
+(pass) reviewed index replacement emits an ordered drop and create for the exact source object [1066.59ms]
+(pass) stable-ID index replacement emits both drop and create at the same array position [745.47ms]
+(pass) reviewed index removal names unreviewed objects and emits an explicit DROP INDEX [891.66ms]
+(pass) policy revisions require old/new policy digests and update stored policy plus grants [673.91ms]
+(pass) primary-key replacement requires an exact marker and refuses dependent foreign keys by name [622.53ms]
+(pass) reviewed primary-key replacement emits ordered DROP and ADD when dependency closure is empty [799.64ms]
+(pass) reviewed foreign-key replacement drops the old constraint before adding the exact successor [789.60ms]
+(pass) stable-ID foreign-key replacement emits drop and add at the same array position [567.53ms]
+(pass) reviewed foreign-key removal requires a marker and emits an explicit constraint drop [781.33ms]
+(pass) reviewed check-constraint replacement drops the old definition before adding its successor [833.83ms]
+(pass) reviewed check-constraint removal requires a marker and emits an explicit constraint drop [561.38ms]
+(pass) selected new foreign keys compile as add-not-valid and separate validation phases [519.21ms]
+(pass) version 0.2 refuses table inventory changes the phase runtime cannot fence yet [371.24ms]
+(pass) version 0.2 refuses initial publication until the mixed runtime supports it [283.42ms]
+
+tests/lifecycle/phases.test.ts:
+(pass) mixed phase plan keeps source order and puts durable effects behind individual barriers [0.39ms]
+
+tests/lifecycle/migration.test.ts:
+(pass) domain descriptions, reviewed scoped backfills, checks/FKs and concurrent phases have exact source custody [919.18ms]
+(pass) unacknowledged, duplicate, unrelated or parameterized backfills refuse without erasing source [1271.21ms]
+(pass) concurrent source selections refuse mixed effects and rehashed/unapproved phase substitution [1006.51ms]
+(pass) comments escape SQL text and multibyte identifier bounds are byte-based [608.35ms]
+(pass) legacy description-bearing deployment bundles retain exact verifier recovery [960.05ms]
+(pass) removing an authored description explicitly clears its native comment [449.67ms]
+(pass) backfill column generation never parses SQL-looking identifier text [1231.69ms]
+
+tests/binding/table-migration.test.ts:
+(pass) frozen 0.1 policy migration retains exact verifier recovery while new compilation requires reviewed markers [139.54ms]
+(pass) initial plan retains exact source and ordered compiler steps; approval is not inferred [98.11ms]
+(pass) append table plans reuse only new table steps and preserve source order [226.70ms]
+(pass) rehashed SQL, source, history pins, approval and unknown fields cannot forge a plan [728.90ms]
+(pass) initial/forward predecessor and exact request shapes refuse invalid histories [595.00ms]
+(pass) unsupported logical, native and module changes still require separate qualification [519.64ms]
+(pass) migration schema is closed and seed/namespace transitions are explicit [453.44ms]
+(pass) source-rehashed deployment mutations and removing existing tables never produce SQL plans [329.32ms]
+(pass) forward indexes reuse only original new-index compiler steps and preserve existing definitions [493.94ms]
+(pass) nullable appended columns and grant-preserving policy revisions compile as ordered source DDL [177.60ms]
+(pass) column evolution refuses backfill, defaults, and existing native meaning changes [402.03ms]
+(pass) appended numeric and date fields carry their compiler-generated domain checks [190.50ms]
+(pass) policy allow/deny transitions alter the source policy and reconcile its exact grant [236.12ms]
+(pass) declared command revisions advance a source-bound generation without DDL or inferred data access [459.53ms]
+(pass) seed sets append immutably and source approval binds their exact ordered values [418.87ms]
+
+tests/table-authoring/row-scope.test.ts:
+(pass) row_scope authoring normalization > normalizes explicit owner/via, trusted group, and exact batch subset [0.23ms]
+(pass) row_scope authoring normalization > omitted commands deny, group grants cannot widen subsets, and ownerless forms can be complete [0.14ms]
+(pass) row_scope authoring normalization > unknown content and unresolved aliases or joins are preserved and refuse; invalid JSON is never traversed [0.13ms]
+(pass) normalized owner/via/group and audience subsets pass lifecycle and native policy admission [89.51ms]
+(pass) dependency cycles and missing related-table SELECT refuse normalization [82.25ms]
+
+tests/compilation/table-deployment-boundaries.test.ts:
+(pass) actual deployment sources have declared pure compilation owners [45.25ms]
+(pass) migration plan owner cannot import hosts, SDKs or private compiler internals [0.75ms]
+(pass) deployment cannot acquire filesystem, driver, native compiler or dynamic execution hooks [0.44ms]
+(pass) row-scope authoring helper has an explicit pure-source owner and rejects host/compiler hooks [0.33ms]
+
+ 55 pass
+ 0 fail
+ 282 expect() calls
+Ran 55 tests across 6 files. [32.15s]

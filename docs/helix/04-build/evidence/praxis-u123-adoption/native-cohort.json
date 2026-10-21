@@ -1,0 +1,33 @@
+{
+  "mode": "installed wheels; python -I; no source PYTHONPATH",
+  "serverVersion": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit",
+  "sourceSha256": {
+    "tests/lifecycle/native.py": "456bf88b1475ade002f94541ef043d86868b6c1b07590a41d7ed554eed70c706",
+    "tests/lifecycle/mixed-native.py": "4c9c171329bb97e1afa3bb4ab7789c3ef7ec2badb5c81ecb81d7d87e73737b3a",
+    "tests/lifecycle/owner_via_native.py": "23775efd6ce412e82dc5427ed01b4f44d5bdc8cd80cc9af3d694d80e18acc92d",
+    "python/umf_access/pyproject.toml": "51607f442f4ee2785904396ce51450322d2b95f57445eaf82a6464f774fdcfcd",
+    "python/umf_codegen/pyproject.toml": "ee3fe91f0c26558fdf9d85191e521044d4bc11f8d08176c81b037d28790f8012",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "71b8164baf15394d6f89913773ca1e56953d9873e2d3ba9f0908867cb7790917",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "fba0dcdc8b4ec5ed61a86c2168fd5f16479661c01917c94f527e48f5e88e0693",
+    "python/umf_access/src/umf_access/lifecycle/mixed.py": "2241dc41e549c1940439341dccddbaf5c38f1a8b30ed196aaeb989973be856ff",
+    "python/umf_access/src/umf_access/lifecycle/ledger.py": "1d126c08aab44205ab7bd3c646a4482f5aabad340507e3276b9109155a8528c0",
+    "python/umf_access/src/umf_access/lifecycle/concurrent.py": "fa3ac5cd8e850b54d03459e5aaae7840867dfd500f1a97cd2c42738c2ca2d826"
+  },
+  "wheelAudit": "package-audit.json",
+  "environment": "installed-environment.json",
+  "nativeReports": [
+    "legal-installed.json",
+    "mixed-installed.json",
+    "owner-via-installed.json",
+    "reviewed-a-installed.json",
+    "reviewed-b-installed.json",
+    "reviewed-c-installed.json",
+    "reviewed-d-installed.json"
+  ],
+  "isolation": "Each suite ran in an independent disposable database; database-wide external authority checks are preserved.",
+  "cleanup": {
+    "ownedDisposableDatabasesRemoved": 7,
+    "ownedDatabasesRemaining": 0,
+    "testHarnessesRemovedTheirSyntheticSchemasAndRoles": true
+  }
+}
