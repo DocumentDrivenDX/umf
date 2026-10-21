@@ -3,10 +3,14 @@ import {readDocument} from '../model/document';
 import {UmfError} from '../model/types';
 import type {TableDeploymentBundle} from '../table-deployment';
 import type {TableOperation,TableRef} from '../extensions/tables';
+import {validateReviewedChangeMarkers,type ReviewedChangeMarker} from './reviewed';
+export type {ReviewedChangeMarker,ReviewedChangeKind,ReviewedChangeCandidate} from './reviewed';
 export interface TableMigrationOptions {
- version:'umf.table-migration-options/0.1';
+ version:'umf.table-migration-options/0.1'|'umf.table-migration-options/0.2';
  backfills:{table:string;column:TableRef;operation:string;scopedRows:true}[];
  concurrentIndexes:{table:string;index:string}[];
+ reviewedChanges?:ReviewedChangeMarker[];
+ validations?:{table:string;constraint:string;kind:'check'|'foreignKey'}[];
 }
 export interface MigrationReview {code:'SCOPED_BACKFILL'|'POLICY_CHANGE_REVIEW';path:string;message:string}
 const fail=(message:string,path='/options'):never=>{throw new UmfError('TABLE_MIGRATION_OPTIONS',message,path);};
@@ -14,8 +18,21 @@ const exact=(value:unknown,keys:string[]):boolean=>!!value&&typeof value==='obje
 export const refKey=(ref:TableRef):string=>JSON.stringify([ref.module,ref.element]);
 export function migrationOptions(value:TableMigrationOptions|undefined,next:TableDeploymentBundle,previous:TableDeploymentBundle|null):TableMigrationOptions|undefined{
  if(value===undefined)return;
- if(!exact(value,['version','backfills','concurrentIndexes'])||value.version!=='umf.table-migration-options/0.1'||!Array.isArray(value.backfills)||!Array.isArray(value.concurrentIndexes)||value.backfills.length>256||value.concurrentIndexes.length>256)fail('Unknown options profile, members or resource bounds');
+ const v1=value.version==='umf.table-migration-options/0.1',v2=value.version==='umf.table-migration-options/0.2';
+ if((v1&&!exact(value,['version','backfills','concurrentIndexes']))||(v2&&!exact(value,['version','backfills','concurrentIndexes','reviewedChanges','validations']))||(!v1&&!v2)||!Array.isArray(value.backfills)||!Array.isArray(value.concurrentIndexes)||value.backfills.length>256||value.concurrentIndexes.length>256||(v2&&(!Array.isArray(value.reviewedChanges)||!Array.isArray(value.validations)||value.validations.length>256)))fail('Unknown options profile, members or resource bounds');
  if(!previous)return fail('Options require a previous installed source');
+ if(v2){
+  try{value.reviewedChanges=validateReviewedChangeMarkers(value.reviewedChanges,previous,next);}catch(error){fail(error instanceof Error?error.message:'Invalid reviewed change marker');}
+  const seenValidations=new Set<string>();
+  for(const [i,selection] of value.validations!.entries()){
+   const path='/options/validations/'+i;
+   if(!exact(selection,['table','constraint','kind'])||!['check','foreignKey'].includes(selection.kind)||typeof selection.table!=='string'||typeof selection.constraint!=='string')fail('Validation selection requires table, constraint and supported kind',path);
+   const id=JSON.stringify([selection.table,selection.constraint,selection.kind]);if(seenValidations.has(id))fail('Duplicate validation selection',path);seenValidations.add(id);
+   const oldTable=previous.expectedCatalog.tables.find(t=>t.id===selection.table),newTable=next.expectedCatalog.tables.find(t=>t.id===selection.table);
+   const oldItems=selection.kind==='check'?oldTable?.checks:oldTable?.foreignKeys,newItems=selection.kind==='check'?newTable?.checks:newTable?.foreignKeys;
+   if(!newTable||!newItems?.some(item=>item.id===selection.constraint)||oldItems?.some(item=>item.id===selection.constraint))fail('Validation must select a newly added constraint on an existing table',path);
+  }
+ }
  const document=readDocument(next.source.utf8,next.source.format),module=document.modules.find(m=>m.id===next.module)!;
  const commands=(module.extensions!['umf.tables'] as unknown as {commands:TableOperation[]}).commands;
  const seen=new Set<string>();

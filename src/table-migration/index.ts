@@ -7,6 +7,9 @@ import {UmfError,type Diagnostic} from '../model/types';
 import {canonical,hashCanonical} from '../compilation/bundle/hash';
 import {nativeType,literalSql} from '../table-deployment/sql';
 import {verifyTableDeployment,type TableDeploymentBundle,type TableDeploymentStep} from '../table-deployment';
+import {discoverTableMigrationChanges} from './reviewed';
+export {discoverTableMigrationChanges,reviewedValueDigest} from './reviewed';
+export type {ReviewedChangeCandidate,ReviewedChangeKind,ReviewedChangeMarker} from './reviewed';
 
 export interface TableMigrationRequest {
  id:string;predecessor:{id:string;digest:string}|null;
@@ -19,7 +22,7 @@ export interface TableMigrationStep extends Omit<TableDeploymentStep,'transactio
  verification:'native-catalog-privileges-and-role-scope';recovery:'rollback-transaction'|'inspect-index';
 }
 export interface TableMigrationPlan extends TableMigrationRequest {
- version:'umf.table-migration/0.1';canonicalization:'RFC8785';
+ version:'umf.table-migration/0.1'|'umf.table-migration/0.2';canonicalization:'RFC8785';
  fromBundleDigest:string|null;toBundleDigest:string;
  steps:TableMigrationStep[];
  seedExecution:'none'|{version:'umf.table-seed-execution/0.1';sets:string[]};
@@ -262,7 +265,8 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
    preconditions:{phase:'before-plan',kind:previous?'installed-source-cohort':'empty-private-schema',bundleDigest:previous?.bundleDigest??null},
    expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest:next.bundleDigest},
    verification:'native-catalog-privileges-and-role-scope',recovery:step.transaction==='forbidden'?'inspect-index':'rollback-transaction'}));
-  const body={version:'umf.table-migration/0.1' as const,canonicalization:'RFC8785' as const,id:request.id,predecessor:request.predecessor,previous,next,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:migrationSteps,seedExecution,...(options?{options,review}:{}),requiresApproval:true as const,nativeQualified:false as const};
+ const migrationVersion=options?.version==='umf.table-migration-options/0.2'?'umf.table-migration/0.2' as const:'umf.table-migration/0.1' as const;
+ const body={version:migrationVersion,canonicalization:'RFC8785' as const,id:request.id,predecessor:request.predecessor,previous,next,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:migrationSteps,seedExecution,...(options?{options,review}:{}),requiresApproval:true as const,nativeQualified:false as const};
   if(new TextEncoder().encode(canonical(body)).length>24_000_000)fail('Migration plan exceeds24MB');
   return {status:'compiled',plan:copyJson({...body,digest:hashCanonical(body)}) as unknown as TableMigrationPlan,diagnostics:[]};
  }catch(error){
@@ -275,7 +279,7 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
 /** Source recompilation verifies complete plans, even after untrusted rehashing. */
 export function verifyTableMigration(input:unknown):TableMigrationPlan{
  const value=copyJson(input) as unknown as TableMigrationPlan;
- if(!value||value.version!=='umf.table-migration/0.1')fail('Unknown migration plan');
+ if(!value||!['umf.table-migration/0.1','umf.table-migration/0.2'].includes(value.version))fail('Unknown migration plan');
  const result=compileTableMigration({id:value.id,predecessor:value.predecessor,previous:value.previous,next:value.next,...(value.options?{options:value.options}:{})});
  if(result.status!=='compiled')return fail('Migration differs from exact source recompilation');
  if(!same(value,result.plan))fail('Migration differs from exact source recompilation');
