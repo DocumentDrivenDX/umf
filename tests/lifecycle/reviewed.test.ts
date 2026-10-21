@@ -114,6 +114,15 @@ test('reviewed index replacement emits an ordered drop and create for the exact 
  }
 });
 
+test('reviewed index removal names unreviewed objects and emits an explicit DROP INDEX',()=>{
+ const source=indexedLegalSource().source,before=deploy(source),changed=structuredClone(source),table=changed.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!;
+ table.indexes=table.indexes.filter((index:any)=>index.id!=='client_lookup');const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-index')!;
+ const denied=compileTableMigration({id:'index-drop-denied',predecessor:{id:'old',digest:'6'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[]}});
+ expect(denied.status).toBe('blocked');if(denied.status==='blocked'){expect(denied.diagnostics[0]!.code).toBe('destructive_change_unreviewed');expect(denied.diagnostics[0]!.message).toContain('matters_client_lookup');}
+ const result=compileTableMigration({id:'index-drop-reviewed',predecessor:{id:'old',digest:'6'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ if(result.status==='blocked')throw Error(JSON.stringify(result.diagnostics));expect(result.status).toBe('compiled');if(result.status==='compiled')expect(result.plan.steps.some(s=>s.sql==='DROP INDEX "legal_demo"."matters_client_lookup"')).toBe(true);
+});
+
 test('policy revisions require old/new policy digests and update stored policy plus grants',()=>{
  const source=legalSource(),before=deploy(source),changed=structuredClone(source),clients=changed.modules[0]!.extensions['umf.tables'].tables.find((x:any)=>x.id==='clients')!;
  clients.policy.person.select={kind:'deny'};
@@ -163,6 +172,15 @@ test('reviewed foreign-key replacement drops the old constraint before adding th
  }
 });
 
+test('reviewed foreign-key removal requires a marker and emits an explicit constraint drop',()=>{
+ const source=legalSource(),before=deploy(source),changed=structuredClone(source),table=changed.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matter_teams')!;
+ table.foreignKeys=table.foreignKeys.slice(1);const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-foreign-key')!;
+ const denied=compileTableMigration({id:'fk-drop-denied',predecessor:{id:'old',digest:'5'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[]}});
+ expect(denied.status).toBe('blocked');if(denied.status==='blocked'){expect(denied.diagnostics[0]!.code).toBe('destructive_change_unreviewed');expect(denied.diagnostics[0]!.message).toContain('matter_teams_fk_0');}
+ const result=compileTableMigration({id:'fk-drop-reviewed',predecessor:{id:'old',digest:'5'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled')expect(result.plan.steps.some(s=>s.sql.includes('DROP CONSTRAINT "matter_teams_fk_0"'))).toBe(true);
+});
+
 test('reviewed check-constraint replacement drops the old definition before adding its successor',()=>{
  const source=evolvedLegalSource().source,before=deploy(source),changed=structuredClone(source),check=changed.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!.checks.find((c:any)=>c.id==='positive_id')!;
  check.expression.right.value.integerToken='10';const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-check')!;
@@ -172,6 +190,13 @@ test('reviewed check-constraint replacement drops the old definition before addi
   const add=result.plan.steps.findIndex(s=>s.sql.includes('ADD CONSTRAINT "matters_positive_id"')&&s.sql.includes('E\'1e1\''));
   expect(drop).toBeGreaterThan(-1);expect(add).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
  }
+});
+
+test('reviewed check-constraint removal requires a marker and emits an explicit constraint drop',()=>{
+ const source=evolvedLegalSource().source,before=deploy(source),changed=structuredClone(source),table=changed.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!;
+ table.checks=[];const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-check')!;
+ const result=compileTableMigration({id:'check-drop-reviewed',predecessor:{id:'old',digest:'4'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled')expect(result.plan.steps.some(s=>s.sql.includes('DROP CONSTRAINT "matters_positive_id"'))).toBe(true);
 });
 
 test('selected new foreign keys compile as add-not-valid and separate validation phases',()=>{
