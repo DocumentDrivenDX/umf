@@ -2,6 +2,10 @@
 import {expect,test} from 'bun:test';
 import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/table-migration';
 import {compileTableDeployment} from '../../src/table-deployment';
+import {createValidator} from '../../src/validation/schema';
+import migrationV2Schema from '../../spec/extensions/tables/migration-0.2.schema.json';
+import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
+import tableSchema from '../../spec/extensions/tables/schema.json';
 import {legalSource,indexedLegalSource} from './legal-fixture';
 const configuration={module:'legal_lifecycle',schema:'legal_demo',ownerRole:'legal_owner',personRole:'legal_person',batchRole:'legal_batch',groupRoles:{billing_admin:'legal_billing_admin'}};
 function deploy(source:any){const result=compileTableDeployment({text:JSON.stringify(source),configuration});if(result.status!=='compiled')throw Error(JSON.stringify(result));return result.bundle;}
@@ -25,6 +29,7 @@ test('a column drop needs its exact review marker, compiles a digest-bound drop 
  const planned=compileTableMigration({id:'drop-reviewed',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:after,options});
  expect(planned.status).toBe('compiled');if(planned.status==='compiled'){
   expect(planned.plan.version).toBe('umf.table-migration/0.2');expect(planned.plan.review?.some(item=>item.code==='IRREVERSIBLE_COLUMN_PURGE'&&item.message.includes('Metadata history is not a data backup'))).toBe(true);expect(planned.plan.steps.some(s=>s.sql==='ALTER TABLE "legal_demo"."matters" DROP COLUMN "court"')).toBe(true);
+  const validator=createValidator();validator.addSchema(tableSchema);validator.addSchema(deploymentSchema);expect(validator.compile(migrationV2Schema)(planned.plan)).toBe(true);
   expect(verifyTableMigration(planned.plan)).toEqual(planned.plan);
   const changed=dropCourt();changed.modules[0]!.extensions['umf.tables'].tables.find(x=>x.id==='matters')!.name='matters_renamed';
   const changedBundle=deploy(changed);expect(compileTableMigration({id:'drop-reviewed',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:changedBundle,options}).status).toBe('blocked');
@@ -104,4 +109,17 @@ test('primary-key replacement requires an exact marker and refuses dependent for
  expect(refused.status).toBe('blocked');if(refused.status==='blocked')expect(refused.diagnostics[0]!.code).toBe('destructive_change_unreviewed');
  const result=compileTableMigration({id:'pk-reviewed',predecessor:{id:'old',digest:'c'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
  expect(result.status).toBe('blocked');if(result.status==='blocked')expect(result.diagnostics[0]!.message).toContain('inbound foreign-key dependents');
+});
+
+test('reviewed primary-key replacement emits ordered DROP and ADD when dependency closure is empty',()=>{
+ const source=legalSource(),before=deploy(source),changed=structuredClone(source),record=changed.modules[0]!.elements.find((e:any)=>e.id==='matter_teams')!;
+ record.keys.find((k:any)=>k.primary)!.fields=[{module:'legal_lifecycle',element:'matter_teams__matter_id'},{module:'legal_lifecycle',element:'matter_teams__database_role'}];
+ changed.modules[0]!.extensions['umf.tables'].commands.find((c:any)=>c.id==='read_matter_teams').body.orderBy=[{field:{module:'legal_lifecycle',element:'matter_teams__matter_id'},direction:'asc'},{field:{module:'legal_lifecycle',element:'matter_teams__database_role'},direction:'asc'}];
+ const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-primary-key')!;
+ const result=compileTableMigration({id:'pk-reviewed-no-dependents',predecessor:{id:'old',digest:'d'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  const drop=result.plan.steps.findIndex(s=>s.sql.includes('DROP CONSTRAINT "umf_k_'));
+  const add=result.plan.steps.findIndex(s=>s.sql.includes('ADD CONSTRAINT "umf_k_')&&s.sql.includes('PRIMARY KEY'));
+  expect(drop).toBeGreaterThan(-1);expect(add).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ }
 });
