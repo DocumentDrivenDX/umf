@@ -1,4 +1,4 @@
-import argparse,hashlib,json
+import argparse,hashlib,json,subprocess
 from pathlib import Path
 import psycopg
 from psycopg import sql
@@ -9,6 +9,7 @@ import umf_access.lifecycle.seeds as seeds
 parser=argparse.ArgumentParser()
 parser.add_argument('--dsn',default='dbname=postgres')
 parser.add_argument('--report',type=Path,required=True)
+parser.add_argument('--legacy-python',type=Path,default=Path('/private/tmp/umf-lifecycle-mirror-venv/bin/python'))
 args=parser.parse_args()
 checks=[]
 def record(name):checks.append(name)
@@ -19,6 +20,16 @@ def source(n):return json.loads((f/n).read_text())
 def bundle(d):
  r=compile_table_deployment(json.dumps(d,separators=(',',':')),configuration=cfg);assert r['status']=='compiled',r;return r['bundle']
 a=bundle(source('initial.json')); old=compile_table_migration(migration_id='base',previous_bundle=None,next_bundle=a,predecessor=None)['plan']
+policy_source=source('initial.json')
+policy_source['modules'][0]['extensions']['umf.tables']['tables'][0]['policy']['person']['select']={'kind':'deny'}
+legacy_payload={'source':source('initial.json'),'nextSource':policy_source,'configuration':cfg,
+                'predecessor':{'id':'base','digest':old['digest']},'migrationId':'reidentified-policy'}
+legacy_script='import json,sys; from umf_codegen import compile_table_deployment,compile_table_migration; x=json.load(sys.stdin); c=x["configuration"]; b=lambda d: compile_table_deployment(json.dumps(d,separators=(",",":")),configuration=c)["bundle"]; a=b(x["source"]); z=b(x["nextSource"]); r=compile_table_migration(migration_id=x["migrationId"],previous_bundle=a,next_bundle=z,predecessor=x["predecessor"]); assert r["status"]=="compiled",r; print(json.dumps({"previous":a,"next":z,"plan":r["plan"]},separators=(",",":")))'
+legacy_result=subprocess.run([str(args.legacy_python),'-I','-c',legacy_script],input=json.dumps(legacy_payload),text=True,capture_output=True,check=True)
+legacy_artifact=json.loads(legacy_result.stdout)
+assert legacy_artifact['previous']==a,'legacy compiler predecessor bundle differs from current source'
+assert legacy_artifact['plan']['version']=='umf.table-migration/0.1'
+assert any(step['kind']=='policy' for step in legacy_artifact['plan']['steps'])
 target=source('indexed.json'); target['modules'][0]['extensions']['umf.tables']['seedSets'].append({'id':'mixed-once','conflict':'error','rows':[{'table':'clients','values':[{'field':{'module':'legal_lifecycle','element':'clients__client_id'},'value':{'integerToken':'777'}},{'field':{'module':'legal_lifecycle','element':'clients__client_name'},'value':{'string':'Once only'}}]}]})
 z=bundle(target)
 o=json.loads((f/'evolution-options.json').read_text());o.update(version='umf.table-migration-options/0.2',concurrentIndexes=json.loads((f/'index-options.json').read_text())['concurrentIndexes'],reviewedChanges=[],validations=[{'table':'matters','constraint':'positive_id','kind':'check'},{'table':'matters','constraint':'fk_0','kind':'foreignKey'}])
@@ -32,6 +43,20 @@ with psycopg.connect(args.dsn,autocommit=True) as c:
   c.execute(sql.SQL('CREATE SCHEMA {} AUTHORIZATION {}').format(sql.Identifier(cfg['schema']),sql.Identifier(cfg['ownerRole'])))
   c.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(cfg['ownerRole'])));c.execute('SET search_path=pg_catalog')
   with c.transaction(): base=apply_table_migration(c,old,approved_digest=old['digest'],expected_head=None,person_roles=(alice,bob))
+  with c.transaction(): replay=apply_table_migration(c,old,approved_digest=old['digest'],expected_head=None,person_roles=(alice,bob))
+  assert replay['status']=='already-applied',replay
+  record('original-v01-history-verifies-and-replays')
+  from umf_access.lifecycle.ledger import _verified_plan
+  _verified_plan(legacy_artifact['plan'])
+  try:
+   with c.transaction(): apply_table_migration(c,legacy_artifact['plan'],approved_digest=legacy_artifact['plan']['digest'],expected_head=base['headDigest'],person_roles=(alice,bob))
+  except CatalogError as e:assert str(e)=='new-effect-admission-required',e
+  else:raise AssertionError('reidentified unreviewed v0.1 plan admitted effects')
+  with c.transaction():
+   history=inspect_table_history(c,a,person_roles=(alice,bob))
+   verify_native_catalog(c,a)
+  assert history['generation']==1,history
+  record('reidentified-unreviewed-v01-policy-refused-before-effects')
   try:apply_mixed_migration(c,p,approved_digest=p['digest'],expected_head=base['headDigest'],person_roles=(alice,bob),file_digest='g'*64)
   except CatalogError as e:assert str(e)=='migration-file-digest-conflict',e
   else:raise AssertionError('malformed file digest admitted')
@@ -40,19 +65,45 @@ with psycopg.connect(args.dsn,autocommit=True) as c:
   # First effect creates only the nullable column. A new user trigger and external
   # role authority must be rejected before the following Weft backfill executes.
   staged=apply_mixed_migration(c,p,approved_digest=p['digest'],expected_head=base['headDigest'],person_roles=(alice,bob),file_digest=file,stop_after_phase=1);assert staged['status']=='in-progress'
+  blocked_backfills=[];boundary_orig=mixed._run_required_phase
+  def count_blocked_phase(conn,plan,phase,*args,**kwargs):
+   if phase['kind']=='backfill':blocked_backfills.append(phase['id'])
+   return boundary_orig(conn,plan,phase,*args,**kwargs)
+  mixed._run_required_phase=count_blocked_phase
+  def assert_still_fenced_and_unmodified():
+   nulls=c.execute(sql.SQL('SELECT count(*) FILTER (WHERE review_state IS NULL),count(*) FROM {}.matters').format(sql.Identifier(cfg['schema']))).fetchone()
+   assert nulls[0]==nulls[1],nulls
+   assert not c.execute('SELECT pg_catalog.has_table_privilege(%s,%s,\'SELECT\')',(alice,cfg['schema']+'.umf_lifecycle_head')).fetchone()[0]
   c.execute(sql.SQL('CREATE FUNCTION {}.u1_noop() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RETURN NEW; END $$').format(sql.Identifier(cfg['schema'])))
   c.execute(sql.SQL('CREATE TRIGGER u1_noop BEFORE UPDATE ON {}.matters FOR EACH ROW EXECUTE FUNCTION {}.u1_noop()').format(sql.Identifier(cfg['schema']),sql.Identifier(cfg['schema'])))
   try:apply_mixed_migration(c,p,approved_digest=p['digest'],expected_head=base['headDigest'],person_roles=(alice,bob),file_digest=file)
   except CatalogError as e:assert str(e)=='phase-table-boundary-mismatch',e
   else:raise AssertionError('trigger tamper admitted')
+  assert_still_fenced_and_unmodified()
   record('trigger-drift-refuses-before-backfill')
   c.execute(sql.SQL('DROP TRIGGER u1_noop ON {}.matters').format(sql.Identifier(cfg['schema'])));c.execute(sql.SQL('DROP FUNCTION {}.u1_noop()').format(sql.Identifier(cfg['schema'])))
+  c.execute('RESET ROLE');c.execute(sql.SQL('GRANT CREATE ON SCHEMA {} TO {}').format(sql.Identifier(cfg['schema']),sql.Identifier(cfg['personRole'])));c.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
+  try:apply_mixed_migration(c,p,approved_digest=p['digest'],expected_head=base['headDigest'],person_roles=(alice,bob),file_digest=file)
+  except CatalogError as e:assert str(e)=='phase-schema-privilege-mismatch',e
+  else:raise AssertionError('private schema ACL tamper admitted')
+  assert_still_fenced_and_unmodified()
+  record('private-schema-acl-drift-refuses-before-backfill')
+  c.execute('RESET ROLE');c.execute(sql.SQL('REVOKE CREATE ON SCHEMA {} FROM {}').format(sql.Identifier(cfg['schema']),sql.Identifier(cfg['personRole'])));c.execute(sql.SQL('ALTER ROLE {} BYPASSRLS').format(sql.Identifier(cfg['ownerRole'])));c.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
+  try:apply_mixed_migration(c,p,approved_digest=p['digest'],expected_head=base['headDigest'],person_roles=(alice,bob),file_digest=file)
+  except CatalogError as e:assert str(e)=='install-authority-required',e
+  else:raise AssertionError('trusted role attribute tamper admitted')
+  assert_still_fenced_and_unmodified()
+  record('trusted-role-attribute-drift-refuses-before-backfill')
+  c.execute('RESET ROLE');c.execute(sql.SQL('ALTER ROLE {} NOBYPASSRLS').format(sql.Identifier(cfg['ownerRole'])));c.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
   c.execute('RESET ROLE');c.execute('GRANT CREATE ON SCHEMA public TO '+sql.Identifier(cfg['ownerRole']).as_string(c));c.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
   try:apply_mixed_migration(c,p,approved_digest=p['digest'],expected_head=base['headDigest'],person_roles=(alice,bob),file_digest=file)
   except CatalogError as e:assert str(e)=='phase-external-authority-present',e
   else:raise AssertionError('role authority tamper admitted')
+  assert_still_fenced_and_unmodified()
   record('external-role-authority-refuses-before-backfill')
   c.execute('RESET ROLE');c.execute('REVOKE CREATE ON SCHEMA public FROM '+sql.Identifier(cfg['ownerRole']).as_string(c));c.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
+  mixed._run_required_phase=boundary_orig
+  assert blocked_backfills==[],blocked_backfills
   backfills=[];orig=mixed._run_required_phase
   def count_phase(conn,plan,phase,*args,**kwargs):
    if phase['kind']=='backfill':backfills.append(phase['id'])

@@ -19,7 +19,7 @@ from .catalog import (
     _q,
     verify_native_catalog,
 )
-from .ledger import _apply_table_migration, _history_rows, _verified_plan
+from .ledger import _apply_table_migration, _authorize_new_effects, _history_rows, _verified_plan
 from .ledger_schema import _verify_history_schema
 from .phase_fence import _head_grants, _unfenced_verification, _verify_phase_head
 from .privileges import verify_native_privileges
@@ -124,6 +124,7 @@ def apply_concurrent_indexes(connection, plan, *, approved_digest, expected_head
                     or source_plan['predecessor'] != {'id':history[-1]['plan']['id'],'digest':history[-1]['plan']['digest']}
                     or history[-1]['plan']['toBundleDigest'] != source_plan['fromBundleDigest']):
                 raise CatalogError('ledger-head-mismatch')
+            _authorize_new_effects(source_plan)
         with connection.transaction():
             observed = _capture_witness(connection,source_plan['previous'])
             selected_names = {t['id']:{i['name'] for i in t['indexes'] if any(s['table']==t['id'] and s['index']==i['id'] for s in selections)} for t in bundle['expectedCatalog']['tables']}

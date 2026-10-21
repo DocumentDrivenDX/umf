@@ -8,7 +8,7 @@ import re
 
 from .catalog import CatalogError, _all, _execute, _installation, _one, _q
 from .concurrent import _index_state
-from .ledger import (_finalize_phased_migration, _history_rows, _verified_plan,
+from .ledger import (_authorize_new_effects, _finalize_phased_migration, _history_rows, _verified_plan,
                      _verify_installed)
 from .ledger_schema import _verify_history_schema
 from .outcome_schema import OUTCOMES, _verify_outcomes
@@ -280,6 +280,7 @@ def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, p
                     or source_plan['predecessor'] != {'id':history[-1]['plan']['id'],'digest':history[-1]['plan']['digest']}
                     or history[-1]['plan']['toBundleDigest'] != source_plan['fromBundleDigest']):
                 raise CatalogError('ledger-head-mismatch')
+            _authorize_new_effects(source_plan)
             progress_exists = _verify_progress_schema(connection, bundle, create=False)
             rows = _progress_rows(connection, schema) if progress_exists else []
             if rows:

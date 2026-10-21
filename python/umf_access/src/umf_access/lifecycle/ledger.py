@@ -41,6 +41,32 @@ def _verified_plan(plan: dict[str, object]) -> dict[str, Any]:
         raise CatalogError('source-mismatch') from None
 
 
+def _authorize_new_effects(plan: dict[str, Any]) -> None:
+    """Require current public compilation admission before first-time effects.
+
+    `_verified_plan` deliberately accepts exact historical v0.1 plans so
+    installed history remains verifiable. That compatibility path is not
+    authorization to execute a previously unreviewed v0.1 change today.
+    Recompile through the public entry point and require its exact result.
+    """
+    from umf_codegen import compile_table_migration
+
+    request = {
+        'migration_id': plan['id'],
+        'previous_bundle': plan['previous'],
+        'next_bundle': plan['next'],
+        'predecessor': plan['predecessor'],
+    }
+    if 'options' in plan:
+        request['options'] = plan['options']
+    try:
+        admitted = compile_table_migration(**request)
+    except (ValueError, TypeError):
+        raise CatalogError('new-effect-admission-required') from None
+    if admitted.get('status') != 'compiled' or admitted.get('plan') != plan:
+        raise CatalogError('new-effect-admission-required')
+
+
 def _history_rows(connection: Any, schema: str) -> list[dict[str, Any]]:
     relation = _q(schema)+'.'+_q(HISTORY)
     count, size = _one(connection,'SELECT count(*),COALESCE(sum(pg_catalog.octet_length(payload::pg_catalog.text)),0) FROM '+relation)
@@ -147,6 +173,7 @@ def _apply_table_migration(connection,plan,*,approved_digest,expected_head,perso
                 or source_plan['predecessor'] != ({'id':history[-1]['plan']['id'],'digest':history[-1]['plan']['digest']} if history else None)
                 or source_plan['fromBundleDigest'] != (history[-1]['plan']['toBundleDigest'] if history else None)):
             raise CatalogError('ledger-head-mismatch')
+        _authorize_new_effects(source_plan)
         if len(history) >= _MAX_ENTRIES:
             raise CatalogError('ledger-capacity')
         if not exists:
