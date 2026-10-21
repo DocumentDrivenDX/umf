@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {phaseTableMigrationSteps} from '../../src/table-migration/phases';
+import {phaseTableMigrationSteps,type PhasedMigrationStep} from '../../src/table-migration/phases';
 
 test('mixed phase plan keeps source order and puts durable effects behind individual barriers',()=>{
- const steps=[
+ const steps:PhasedMigrationStep[]=[
   {id:'step-00001',kind:'table',transaction:'required'},
   {id:'step-00002',kind:'backfill',transaction:'required',operation:'review'},
   {id:'step-00003',kind:'table',transaction:'required'},
   {id:'step-00004',kind:'constraint',transaction:'required',operation:'add-not-valid'},
   {id:'step-00005',kind:'index',transaction:'forbidden'},
   {id:'step-00006',kind:'constraint',transaction:'required',operation:'validate'},
- ] as const;
+ ];
  const result=phaseTableMigrationSteps(steps,{bundleDigest:'a'.repeat(64)} as never,{bundleDigest:'b'.repeat(64)} as never,undefined,{version:'umf.table-seed-execution/0.1',sets:['seed-a']});
  expect(result.phases).toEqual([
   {id:'phase-00001',kind:'transaction',transaction:'required',steps:['step-00001']},

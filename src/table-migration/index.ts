@@ -18,7 +18,7 @@ export interface TableMigrationRequest {
  previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options?:TableMigrationOptions;
 }
 export interface TableMigrationStep extends Omit<TableDeploymentStep,'transaction'|'kind'> {
- kind:TableDeploymentStep['kind']|'backfill';transaction:'required'|'forbidden';operation?:string;constraintKind?:'check'|'foreignKey';
+ kind:TableDeploymentStep['kind']|'backfill'|'seed';transaction:'required'|'forbidden';operation?:string;constraintKind?:'check'|'foreignKey';seedSets?:string[];
  preconditions:{phase:'before-plan';kind:'empty-private-schema'|'installed-source-cohort';bundleDigest:string|null};
  expectedOutcome:{phase:'before-commit';kind:'complete-next-source-catalog';bundleDigest:string};
  verification:'native-catalog-privileges-and-role-scope';recovery:'rollback-transaction'|'inspect-index';
@@ -52,7 +52,8 @@ type PolicyAudience='person'|'batch';
 type PolicyCommand='select'|'insert'|'update'|'delete';
 type GrantChange={previous:TableDeploymentBundle['steps'];next:TableDeploymentBundle['steps']};
 type ColumnPair={old:TableDeploymentBundle['expectedCatalog']['columns'][number];fresh:TableDeploymentBundle['expectedCatalog']['columns'][number]};
-type MigrationChanges={policyChanges:Set<string>;columnChanges:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;droppedColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;renamedColumns:Map<number,ColumnPair[]>;notNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;typeChanges:Map<number,ColumnPair[]>;checkChanges:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;checkPaths:Map<number,Map<string,string>>;grantChanges:Map<string,GrantChange>};
+type IndexEvolution={drops:TableDeploymentBundle['expectedCatalog']['indexes'];replacements:Set<string>};
+type MigrationChanges={policyChanges:Set<string>;columnChanges:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;droppedColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;renamedColumns:Map<number,ColumnPair[]>;notNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;typeChanges:Map<number,ColumnPair[]>;indexChanges:Map<number,IndexEvolution>;checkChanges:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;droppedChecks:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;checkPaths:Map<number,Map<string,string>>;grantChanges:Map<string,GrantChange>};
 function reviewedMatch(markers:NonNullable<TableMigrationOptions['reviewedChanges']>,previous:TableDeploymentBundle,next:TableDeploymentBundle,kind:string,path:string,conversion?:string):boolean{
  const marker=markers.find(item=>item.path===path&&(item as any).kind===kind&&(conversion===undefined||(item as any).conversion===conversion));
  if(!marker)return false;
@@ -138,10 +139,10 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
  const previousForeignKeys=groupBy(previous.expectedCatalog.foreignKeys,item=>item.table),nextForeignKeys=groupBy(next.expectedCatalog.foreignKeys,item=>item.table);
  const previousPolicyGrants=groupBy(previous.steps.filter(step=>step.kind==='grant'&&step.sourcePath.includes('/policy/')),step=>step.sourcePath);
  const nextPolicyGrants=groupBy(next.steps.filter(step=>step.kind==='grant'&&step.sourcePath.includes('/policy/')),step=>step.sourcePath);
- const policyChanges=new Set<string>(),columnChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),droppedColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),renamedColumns=new Map<number,ColumnPair[]>(),notNullColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),typeChanges=new Map<number,ColumnPair[]>(),checkChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['checks']>(),checkPaths=new Map<number,Map<string,string>>(),grantChanges=new Map<string,GrantChange>();
+ const policyChanges=new Set<string>(),columnChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),droppedColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),renamedColumns=new Map<number,ColumnPair[]>(),notNullColumns=new Map<number,TableDeploymentBundle['expectedCatalog']['columns']>(),typeChanges=new Map<number,ColumnPair[]>(),indexChanges=new Map<number,IndexEvolution>(),checkChanges=new Map<number,TableDeploymentBundle['expectedCatalog']['checks']>(),droppedChecks=new Map<number,TableDeploymentBundle['expectedCatalog']['checks']>(),checkPaths=new Map<number,Map<string,string>>(),grantChanges=new Map<string,GrantChange>();
  for(const[tableIndex,table]of oldTables.entries()){
   const target=nextTables[tableIndex]!;
-  if(!same(without(table,['indexes','columns','policy','checks','foreignKeys']),without(target,['indexes','columns','policy','checks','foreignKeys']))||!same(table.indexes,target.indexes.slice(0,table.indexes.length)))fail('Existing table definitions must remain exact except for appended columns, policy rules and indexes','/next/expectedCatalog/tables/'+tableIndex);
+  if(!same(without(table,['indexes','columns','policy','checks','foreignKeys']),without(target,['indexes','columns','policy','checks','foreignKeys'])))fail('Existing table definitions must remain exact except for reviewed object changes and appended columns','/next/expectedCatalog/tables/'+tableIndex);
   const oldTableColumns=previousColumns.get(table.id)??[],nextTableColumns=nextColumns.get(table.id)??[];
   const removed=oldTableColumns.filter(column=>!nextTableColumns.some(fresh=>refKey(fresh.field)===refKey(column.field)));
   const retained=table.columns.filter(column=>!removed.some(old=>refKey(old.field)===refKey(column.field)));
@@ -164,7 +165,11 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
     if(changedNull)tightened.push(fresh);
     continue;
    }
-   if(changedType&&!changedName&&!changedNull&&safeWidening(tableColumn.nativeType,freshTableColumn.nativeType)){
+   const oldLogicalField=a.modules.find(m=>m.id===old.field.module)?.elements.find(e=>e.id===old.field.element),newLogicalField=b.modules.find(m=>m.id===fresh.field.module)?.elements.find(e=>e.id===fresh.field.element);
+   const logicalTypeOnly=tableColumn.nativeType.kind==='numeric'
+    ? [oldLogicalField?.facets,newLogicalField?.facets].every((facets,index)=>{const physical=(index===0?tableColumn.nativeType:freshTableColumn.nativeType) as any;return !!facets&&Object.keys(facets).sort().join(',')==='precision,scale'&&same(facets,{precision:physical.precision,scale:physical.scale});})
+    : same(oldLogicalField?.facets??null,null)&&same(newLogicalField?.facets??null,null);
+   if(changedType&&!changedName&&!changedNull&&safeWidening(tableColumn.nativeType,freshTableColumn.nativeType)&&logicalTypeOnly){
     if(!reviewedMatch(reviewed,previous,next,'change-column-type',fresh.sourcePath,'pg-cast-v1'))throw new UmfError('destructive_change_unreviewed','Safe type widening for '+table.name+'.'+old.name+' requires an exact pg-cast-v1 review marker',fresh.sourcePath);
     typeChangesForTable.push({old,fresh});continue;
    }
@@ -191,25 +196,32 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
    columnChanges.set(tableIndex,expectations);
    checkPaths.set(tableIndex,pathsByConstraint);
   }
-  const before=previousIndexes.get(table.id)??[],after=nextIndexes.get(table.id)??[];
-  if(!same(before,after.slice(0,before.length)))fail('Existing native indexes changed','/next/expectedCatalog/indexes');
-  const oldCheckEntries=previousChecks.get(table.id)??[],newCheckEntries=nextChecks.get(table.id)??[],remainingOld=new Map<string,number>();
-  for(const entry of oldCheckEntries){const key=canonical(entry);remainingOld.set(key,(remainingOld.get(key)??0)+1);}
-  const addedChecks:typeof newCheckEntries=[];
-  for(const entry of newCheckEntries){const key=canonical(entry),count=remainingOld.get(key)??0;if(count)remainingOld.set(key,count-1);else addedChecks.push(entry);}
-  if([...remainingOld.values()].some(count=>count!==0))fail('Existing native check constraints changed','/next/expectedCatalog/checks');
+  const before=previousIndexes.get(table.id)??[],after=nextIndexes.get(table.id)??[],indexDrops:typeof before=[],indexReplacements=new Set<string>();
+  for(const[oldIndex,index]of before.entries()){
+   const fresh=after.find(item=>item.id===index.id),declarationIndex=table.indexes.findIndex(item=>item.id===index.id),path='/modules/'+moduleIndex+'/extensions/umf.tables/tables/'+tableIndex+'/indexes/'+declarationIndex;
+   if(!fresh){if(!reviewedMatch(reviewed,previous,next,'replace-index',path))throw new UmfError('destructive_change_unreviewed','Unreviewed removal of index '+index.name,'/next/expectedCatalog/indexes');indexDrops.push(index);continue;}
+   if(!same(index,fresh)){if(!reviewedMatch(reviewed,previous,next,'replace-index',path))throw new UmfError('destructive_change_unreviewed','Unreviewed replacement of index '+index.name,'/next/expectedCatalog/indexes');indexDrops.push(index);indexReplacements.add(fresh.id);}
+  }
+  if(indexDrops.length||indexReplacements.size)indexChanges.set(tableIndex,{drops:indexDrops,replacements:indexReplacements});
+  const oldCheckEntries=previousChecks.get(table.id)??[],newCheckEntries=nextChecks.get(table.id)??[],removedChecks:typeof oldCheckEntries=[],addedChecks:typeof newCheckEntries=[];
+  for(const old of oldCheckEntries){const fresh=newCheckEntries.find(item=>item.id===old.id);if(!fresh||!same(old,fresh)){
+   const checkIndex=table.checks.findIndex(item=>item.id===old.id),path='/modules/'+moduleIndex+'/extensions/umf.tables/tables/'+tableIndex+'/checks/'+checkIndex;
+   if(!reviewedMatch(reviewed,previous,next,'replace-check',path))throw new UmfError('destructive_change_unreviewed','Unreviewed replacement/removal of check constraint '+old.name,path);
+   removedChecks.push(old);if(fresh)addedChecks.push(fresh);
+  }}
+  for(const fresh of newCheckEntries)if(!oldCheckEntries.some(old=>old.id===fresh.id))addedChecks.push(fresh);
+  if(removedChecks.length)droppedChecks.set(tableIndex,removedChecks);
   if(addedChecks.length){
    const allowedDomainNames=new Set(additions.map(column=>'umf_d_'+hashCanonical([table.id,column.field,'finite-domain']).slice(0,32)));
    if(!options&&addedChecks.some(entry=>!allowedDomainNames.has(entry.name)))fail('Only compiler-generated domain checks for appended columns are qualified','/next/expectedCatalog/checks');
    checkChanges.set(tableIndex,addedChecks);
   }
-  if(!same(previousKeys.get(table.id)??[],nextKeys.get(table.id)??[])||!same(previousForeignKeys.get(table.id)??[],(nextForeignKeys.get(table.id)??[]).slice(0,(previousForeignKeys.get(table.id)??[]).length))||(!options&&!same(previousForeignKeys.get(table.id)??[],nextForeignKeys.get(table.id)??[])))fail('Existing native keys and foreign keys must remain exact; added FKs require migration options','/next/expectedCatalog');
+  if(!same(previousKeys.get(table.id)??[],nextKeys.get(table.id)??[]))fail('Existing native Keys require separately qualified primary-key evolution','/next/expectedCatalog/keys');
+  if(!same(previousForeignKeys.get(table.id)??[],(nextForeignKeys.get(table.id)??[]).slice(0,(previousForeignKeys.get(table.id)??[]).length))||(!options&&!same(previousForeignKeys.get(table.id)??[],nextForeignKeys.get(table.id)??[])))fail('Existing native foreign keys must remain exact; added FKs require migration options','/next/expectedCatalog/foreignKeys');
   for(const audience of ['person','batch'] as const)for(const command of ['select','insert','update','delete'] as const){
    const path=policyPath(moduleIndex,tableIndex,audience,command);
    if(!same(table.policy[audience][command],target.policy[audience][command])){
-    if(options?.version==='umf.table-migration-options/0.2'){
-     if(!reviewedMatch(reviewed,previous,next,'change-policy',path))throw new UmfError('destructive_change_unreviewed','Unreviewed policy change for '+table.id+'.'+audience+'.'+command,path);
-    }
+    if(options?.version==='umf.table-migration-options/0.2'&&!reviewedMatch(reviewed,previous,next,'change-policy',path))throw new UmfError('destructive_change_unreviewed','Unreviewed policy change for '+table.id+'.'+audience+'.'+command,path);
     policyChanges.add(path);
    }
    const oldGrants=previousPolicyGrants.get(path)??[],newGrants=nextPolicyGrants.get(path)??[];
@@ -217,7 +229,7 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
   }
  }
  if(appendedFields.size)fail('Every appended Field on an existing Record needs one nullable native column mapping','/next/expectedCatalog/tables');
- return {policyChanges,columnChanges,droppedColumns,renamedColumns,notNullColumns,typeChanges,checkChanges,checkPaths,grantChanges};
+ return {policyChanges,columnChanges,droppedColumns,renamedColumns,notNullColumns,typeChanges,indexChanges,checkChanges,droppedChecks,checkPaths,grantChanges};
 }
 
 function unreviewedDrop(column:TableDeploymentBundle['expectedCatalog']['columns'][number],previous:TableDeploymentBundle,next:TableDeploymentBundle):never{
@@ -252,7 +264,7 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
   const previous=request.previous===null?null:verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
   if((previous===null)!==(request.predecessor===null))fail('Only initial deployment has a null predecessor','/predecessor');
   const options=migrationOptions(request.options,next,previous);
-  let changes:MigrationChanges={policyChanges:new Set(),columnChanges:new Map(),droppedColumns:new Map(),renamedColumns:new Map(),notNullColumns:new Map(),typeChanges:new Map(),checkChanges:new Map(),checkPaths:new Map(),grantChanges:new Map()};
+  let changes:MigrationChanges={policyChanges:new Set(),columnChanges:new Map(),droppedColumns:new Map(),renamedColumns:new Map(),notNullColumns:new Map(),typeChanges:new Map(),indexChanges:new Map(),checkChanges:new Map(),droppedChecks:new Map(),checkPaths:new Map(),grantChanges:new Map()};
   if(previous){
    changes=appendOnly(previous,next,options);
    if(previous.bundleDigest===next.bundleDigest)fail('An unchanged bundle does not create a new migration','/next');
@@ -281,6 +293,8 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
      for(const column of changes.notNullColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET NOT NULL'});
      for(const change of changes.typeChanges.get(tableIndex)??[]){const targetColumn=table.columns.find(c=>refKey(c.field)===refKey(change.fresh.field))!;const type=nativeType(targetColumn.nativeType);steps.push({id:'',kind:'table',sourcePath:change.fresh.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(change.fresh.name)+' TYPE '+type+' USING '+quoteIdentifier(change.old.name)+'::'+type});}
      for(const column of changes.droppedColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP COLUMN '+quoteIdentifier(column.name)});
+     for(const index of changes.indexChanges.get(tableIndex)?.drops??[])steps.push({id:'',kind:'index',sourcePath:'/next/expectedCatalog/indexes/'+index.id,transaction:'required',sql:'DROP INDEX '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(index.name)});
+     for(const check of changes.droppedChecks.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:'/next/expectedCatalog/checks/'+check.id,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(check.name)});
      for(const column of changes.columnChanges.get(tableIndex)??[]){
       steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD COLUMN '+(quoteIdentifier(column.name)+' '+nativeType(table.columns.find(c=>refKey(c.field)===refKey(column.field))!.nativeType)+(column.collation==='C'?' COLLATE pg_catalog.\"C\"':''))});
      }
@@ -304,7 +318,7 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
      continue;
     }
     if(step.kind==='foreignKey'&&options&&Number(parts[8])>=previous.expectedCatalog.tables[tableIndex]!.foreignKeys.length){steps.push(step);continue;}
-    if(step.kind==='index'&&parts[7]==='indexes'&&/^\d+$/.test(parts[8]??'')&&Number(parts[8])>=previous.expectedCatalog.tables[tableIndex]!.indexes.length){steps.push(step);continue;}
+    if(step.kind==='index'&&parts[7]==='indexes'&&/^\d+$/.test(parts[8]??'')&&(Number(parts[8])>=previous.expectedCatalog.tables[tableIndex]!.indexes.length||changes.indexChanges.get(tableIndex)?.replacements.has(next.expectedCatalog.tables[tableIndex]!.indexes[Number(parts[8])]!.id))){steps.push(step);continue;}
     if(step.kind==='policy'){
      const table=next.expectedCatalog.tables[tableIndex]!,audience=parts[8] as PolicyAudience,command=parts[9] as PolicyCommand;
      if(!['person','batch'].includes(audience)||!['select','insert','update','delete'].includes(command))fail('Unexpected compiler policy source path',step.sourcePath);
@@ -349,17 +363,23 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
    const docs=[previous!,next].map(bundle=>readDocument(bundle.source.utf8,bundle.source.format));
    for(const doc of docs){const m=doc.modules.find(m=>m.id===next.module)!;const p=m.extensions!['umf.tables'] as unknown as {tables:{indexes:unknown[]}[]};for(const t of p.tables)t.indexes=[];}
    if(!same(docs[0],docs[1]))fail('Concurrent phases may change only index declarations','/options/concurrentIndexes');
-   if(addedSeeds.length||options.backfills.length||steps.some(step=>step.kind!=='index'))fail('Concurrent indexes require an index-only migration without seeds or other effects','/options/concurrentIndexes');
+   if(addedSeeds.length||options.backfills.length)fail('Concurrent indexes cannot share a migration with seeds or backfills','/options/concurrentIndexes');
    const selected=new Set(options.concurrentIndexes.map(selection=>{const table=next.expectedCatalog.tables.findIndex(t=>t.id===selection.table),index=next.expectedCatalog.tables[table]!.indexes.findIndex(i=>i.id===selection.index);return table+':'+index;}));
-   for(const [i,step]of steps.entries()){const parts=step.sourcePath.split('/');if(!selected.has(parts[6]+':'+parts[8]))fail('Every index in this phase must be explicitly selected as concurrent','/options/concurrentIndexes');steps[i]={...step,transaction:'forbidden',sql:step.sql.replace(/^(CREATE (?:UNIQUE )?INDEX) /,'$1 CONCURRENTLY ')};}
+   if(options.version==='umf.table-migration-options/0.1'&&steps.some(step=>step.kind!=='index'))fail('Legacy concurrent-index plans must contain indexes only','/options/concurrentIndexes');
+   for(const [i,step]of steps.entries()){
+    if(step.kind!=='index')continue;
+    const parts=step.sourcePath.split('/');
+    if(selected.has(parts[6]+':'+parts[8]))steps[i]={...step,transaction:'forbidden',sql:step.sql.replace(/^(CREATE (?:UNIQUE )?INDEX) /,'$1 CONCURRENTLY ')};
+    else if(options.version==='umf.table-migration-options/0.1')fail('Every index in this legacy phase must be explicitly selected as concurrent','/options/concurrentIndexes');
+   }
   }
-  const review:MigrationReview[]=options?[...options.backfills.map((_,i)=>({code:'SCOPED_BACKFILL' as const,path:'/options/backfills/'+i,message:'Administrative UPDATE may touch protected rows; exact source and effect bound require approval'})),...Array.from(changes.policyChanges,path=>({code:'POLICY_CHANGE_REVIEW' as const,path,message:'Changed row predicate may widen access; review old and new command policy'}))]:[];
+  const review:MigrationReview[]=options?[...options.backfills.map((_,i)=>({code:'SCOPED_BACKFILL' as const,path:'/options/backfills/'+i,message:'Administrative UPDATE may touch protected rows; exact source and effect bound require approval'})),...Array.from(changes.policyChanges,path=>({code:'POLICY_CHANGE_REVIEW' as const,path,message:'Changed row predicate may widen access; review old and new command policy'})),...Array.from(changes.droppedColumns.values()).flat().map(column=>({code:'IRREVERSIBLE_COLUMN_PURGE' as const,path:column.sourcePath,message:'Irreversible purge of stored values for Field '+column.field.module+'.'+column.field.element+' at table '+column.table+'.'+column.name+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'}))]:[];
   let migrationSteps:TableMigrationStep[]=steps.map(step=>({...step,
    preconditions:{phase:'before-plan',kind:previous?'installed-source-cohort':'empty-private-schema',bundleDigest:previous?.bundleDigest??null},
    expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest:next.bundleDigest},
    verification:'native-catalog-privileges-and-role-scope',recovery:step.transaction==='forbidden'?'inspect-index':'rollback-transaction'}));
   const migrationVersion=options?.version==='umf.table-migration-options/0.2'?'umf.table-migration/0.2' as const:'umf.table-migration/0.1' as const;
-  const phased=migrationVersion==='umf.table-migration/0.2'?phaseTableMigrationSteps(migrationSteps,previous,next,options):undefined;
+  const phased=migrationVersion==='umf.table-migration/0.2'?phaseTableMigrationSteps(migrationSteps,previous,next,options,seedExecution):undefined;
   if(phased)migrationSteps=phased.steps;
   const body={version:migrationVersion,canonicalization:'RFC8785' as const,id:request.id,predecessor:request.predecessor,previous,next,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:migrationSteps,seedExecution,...(phased?{phases:phased.phases,executionProfile:phased.executionProfile}:{}),...(options?{options,review}:{}),requiresApproval:true as const,nativeQualified:false as const};
   if(new TextEncoder().encode(canonical(body)).length>24_000_000)fail('Migration plan exceeds24MB');

@@ -4,7 +4,7 @@ import {readdir,readFile} from 'node:fs/promises';
 const owners:Record<string,readonly string[]>={
  'migration/index.ts':['./options','./reviewed','./phases','./phases-options','../model/json','../model/document','../model/types','../compilation/bundle/hash','../table-deployment','../table-deployment/sql'],
  'migration/options.ts':['../model/document','../model/types','../table-deployment','../extensions/tables','./reviewed'],
- 'migration/reviewed.ts':['../compilation/bundle/hash','../table-deployment'],
+ 'migration/reviewed.ts':['../compilation/bundle/hash','../model/document','../table-deployment'],
  'migration/phases.ts':['../table-deployment','./phases-options'],
  'migration/phases-options.ts':['../extensions/tables'],
  'types.ts':['../model/types','../extensions/tables'],

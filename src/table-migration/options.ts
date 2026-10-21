@@ -12,7 +12,7 @@ export interface TableMigrationOptions {
  reviewedChanges?:ReviewedChangeMarker[];
  validations?:{table:string;constraint:string;kind:'check'|'foreignKey'}[];
 }
-export interface MigrationReview {code:'SCOPED_BACKFILL'|'POLICY_CHANGE_REVIEW';path:string;message:string}
+export interface MigrationReview {code:'SCOPED_BACKFILL'|'POLICY_CHANGE_REVIEW'|'IRREVERSIBLE_COLUMN_PURGE';path:string;message:string}
 const fail=(message:string,path='/options'):never=>{throw new UmfError('TABLE_MIGRATION_OPTIONS',message,path);};
 const exact=(value:unknown,keys:string[]):boolean=>!!value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length===keys.length&&keys.every(k=>Object.hasOwn(value,k));
 export const refKey=(ref:TableRef):string=>JSON.stringify([ref.module,ref.element]);
