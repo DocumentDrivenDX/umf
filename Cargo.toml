@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/rust-spike-core",
+  "crates/rust-spike-cli",
+  "bindings/rust-spike/python",
+  "bindings/rust-spike/node",
+  "bindings/rust-spike/wasm",
+]

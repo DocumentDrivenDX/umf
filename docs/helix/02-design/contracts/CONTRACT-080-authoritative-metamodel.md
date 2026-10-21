@@ -184,3 +184,18 @@ toggle, keyboard/mobile/deep-link behavior remain mandatory.
 US-089-AC19–25 and STP-091 govern qualification. Completion requires closed
 retirement census, full required regression, independent review, current docs,
 automated build-role signing and live manifest/signature/browser verification.
+
+## Rust execution binding amendment
+
+ADR-006 changes the shared implementation language, preserving this contract's
+authored-model authority and inert program grammar. The target compiler and
+structural/semantic/literal mechanics MUST have one Rust implementation shared
+by native Python, Node/Bun and browser WASM. Generated TS/Python shapes and inert
+resources remain derived outputs; bindings MUST NOT maintain parallel core rules.
+The named current TS/Python implementation paths above are migration inputs, not
+permission to retain separate interpreters after cutover. R0/R1 of the Rust plan
+freeze replacement paths/interfaces before implementation. Exact diagnostics,
+callback source context, bootstrap independence, fixed-point generation and
+unknown-content requirements remain. No core version change follows solely from
+changing language; any semantic or public-interface correction requires its own
+reviewed compatibility decision.

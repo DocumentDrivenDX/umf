@@ -1,0 +1,498 @@
+#!/usr/bin/env python3
+"""Emit a source-bound, machine-readable census for the Rust migration."""
+from __future__ import annotations
+
+import ast
+import hashlib
+import json
+import re
+import subprocess
+import sys
+try:
+    import tomllib
+except ModuleNotFoundError:  # local legacy Python; CI uses the standard-library tomllib on 3.12
+    from pip._vendor import tomli as tomllib
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "docs/helix/04-build/evidence/rust-migration/r0/inventory.json"
+TS_EXPORT = re.compile(r"(?m)^\s*export\s+(?:declare\s+)?(?:async\s+)?(?:function|class|interface|type|enum|const|let|var)\s+([A-Za-z_$][\w$]*)")
+TS_IMPORT = re.compile(r"(?m)^\s*(?:import|export)\s+(?:type\s+)?(?:[^;]*?\s+from\s+)?[\"']([^\"']+)[\"']")
+PY_IMPORT = re.compile(r"(?m)^\s*(?:from\s+([\w.]+)\s+import|import\s+([\w.]+))")
+FUNC_TS = re.compile(r"(?m)^\s*(?:export\s+)?(?:async\s+)?(?:function\s+([\w$]+)|(?:const|let)\s+([\w$]+)\s*=\s*(?:async\s*)?(?:\([^\n]*?\)|[\w$]+)\s*=>)")
+
+
+def sha(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def text(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
+def rel(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
+
+
+def tracked_or_existing(paths: list[Path]) -> list[Path]:
+    return sorted({p.resolve() for p in paths if p.is_file() and ROOT in p.resolve().parents})
+
+
+def ts_symbols(source: str) -> list[str]:
+    names = set(TS_EXPORT.findall(source))
+    for line in source.splitlines():
+        if line.lstrip().startswith("export {"):
+            names.update(re.findall(r"\b([A-Za-z_$][\w$]*)\s*(?:as\s+[A-Za-z_$][\w$]*)?", line))
+    return sorted(names - {"export", "type"})
+
+
+def py_symbols(path: Path, source: str) -> list[str]:
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return []
+    exports = None
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "__all__" for t in node.targets):
+            try:
+                exports = ast.literal_eval(node.value)
+            except (ValueError, TypeError):
+                pass
+    if isinstance(exports, (list, tuple)):
+        return sorted(str(x) for x in exports)
+    return sorted(n.name for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and not n.name.startswith("_"))
+
+
+def source_disposition(path: str) -> tuple[str, str]:
+    if path.startswith("src/model/") or path.startswith("src/validation/") or path.startswith("src/registry/"):
+        return "shared-semantic-engine", "R5 or R2 migration obligation; preserve contract and generated authority"
+    if path.startswith("src/access/") or path.startswith("src/compilation/") or path.startswith("src/table-deployment/") or path.startswith("src/table-migration/"):
+        return "shared-generator-or-planner", "R3 port candidate; host presentation and generated boundary stay explicit"
+    if path.startswith("src/domain-packs/"):
+        if path.endswith("loader-contract.ts"):
+            return "domain-pack-public-contract", "R5 preserve loader API and keep source acquisition/consumer execution separately qualified"
+        if path.endswith("loader-inventory.ts"):
+            return "domain-pack-generated-inventory", "R5 preserve source and digest provenance; owner of generation must be confirmed from provenance"
+        return "domain-pack-tooling-and-admission", "R5 migrate portable pack admission/preservation; data sources and consumer I/O remain explicit"
+    if path.startswith("src/generated/"):
+        return "generated-metamodel-output", "ADR-005 authored metamodel remains authority; R2 replace compiler/validator execution without editing generated rules"
+    if path == "src/index.ts":
+        return "typescript-public-api-facade", "R2/R5 preserve public operations while operation families move in qualified slices"
+    if path.startswith("src/types/"):
+        return "host-type-declaration", "R5 preserve browser boundary declarations and remove only with corresponding family retirement"
+    if path.startswith("src/adapters/") or path.startswith("src/projections/") or path.startswith("src/core-ideals/") or path.startswith("src/extensions/"):
+        return "shared-adapter-or-extension", "R5 individual family qualification required"
+    if path.startswith("python/umf_codegen/"):
+        return "python-codegen-wrapper-or-writer", "R3/R4; dispatch is currently embedded V8 and writer remains host I/O"
+    if path.startswith("python/umf_access/src/umf_access/"):
+        name = path.removeprefix("python/umf_access/src/umf_access/")
+        explicit = {
+            "__init__.py": ("python-public-package-surface", "R6 preserve package imports and declared public names"),
+            "adoption.py": ("adoption-and-compatibility-checks", "R6 migrate UMF-owned request and compatibility algorithms"),
+            "bulk.py": ("shared-bulk-planning", "R6 move portable bulk planning; retain transport and transaction host"),
+            "capture.py": ("host-native-capture", "R6 host driver/catalog capture glue; Rust consumes explicit captured data"),
+            "catalog.py": ("shared-catalog-admission", "R6 move portable catalog admission and integrity algorithms"),
+            "codec_support.py": ("shared-value-codecs", "R2/R6 move shared typed codecs while retaining host model presentation"),
+            "commands.py": ("shared-command-planning", "R6 move portable command construction and verification"),
+            "delta_read.py": ("host-delta-reader", "R6 retain storage/session integration; classify embedded planning separately"),
+            "engine_catalog.py": ("shared-engine-catalog", "R6 move portable engine/catalog validation"),
+            "generated_core.py": ("generated-data", "ADR-005 derived generated core data; keep authority in the metamodel"),
+            "manifest_commands.py": ("shared-manifest-planning", "R6 move portable manifest command algorithms"),
+            "native_actions.py": ("host-native-action-adapter", "R6 retain driver and transaction boundary; move reusable plan semantics"),
+            "native_program.py": ("shared-native-program-model", "R6 move portable program interpretation; preserve explicit native boundary"),
+            "pages.py": ("host-pagination", "R6 retain host cursor/transport lifecycle"),
+            "postgres_bulk.py": ("host-postgresql-bulk-adapter", "R6 host DBAPI/transaction execution"),
+            "postgres_read.py": ("host-postgresql-read-adapter", "R6 host DBAPI/session execution"),
+            "postgres_search.py": ("host-postgresql-search-adapter", "R6 host DBAPI/session execution"),
+            "protocols.py": ("binding-protocols", "R6 preserve consumer-owned executor/transport interfaces"),
+            "related_keys.py": ("shared-related-key-planning", "R6 move portable relationship key selection and checks"),
+            "reviewed.py": ("shared-reviewed-plan-validation", "R6 move portable verification; caller authorization remains host-owned"),
+            "search_catalog.py": ("shared-search-catalog", "R6 move portable search catalog admission"),
+            "targets.py": ("shared-target-resolution", "R6 move portable target/engine resolution"),
+            "types.py": ("host-value-shapes", "R2/R6 preserve Python ergonomic and exact host-value admission boundary"),
+            "unity_search.py": ("host-managed-search-adapter", "R6 retain managed engine/session execution"),
+            "values.py": ("shared-value-semantics", "R2/R6 move shared exact value rules behind host admission"),
+            "verification.py": ("shared-verification", "R6 move portable request/report verification"),
+        }
+        if name in explicit:
+            return explicit[name]
+        if name.startswith("build/"):
+            if name in {"build/__init__.py"}:
+                return "build-package-surface", "R6 preserve build API imports"
+            if name in {"build/pg_privileges.py", "build/privileges.py"}:
+                return "host-privilege-introspection", "R6 keep database catalog and privilege observation in host adapter"
+            return "shared-build-planner", "R6 migrate portable catalog/SQL plan generation; host execution remains external"
+        if name.startswith("dsl/"):
+            return ("generated-client-dsl", "R6 preserve client expression ergonomics; move shared query validation/rendering after parity")
+        if name.startswith("lifecycle/"):
+            if name in {"lifecycle/__init__.py", "lifecycle/catalog.py", "lifecycle/ledger_schema.py", "lifecycle/outcome_schema.py", "lifecycle/table_boundary.py"}:
+                return "lifecycle-model-and-schema", "R6 migrate portable lifecycle admission/planning; preserve inert source and host boundary"
+            if name in {"lifecycle/probe.py", "lifecycle/roles.py", "lifecycle/privileges.py"}:
+                return "host-lifecycle-observation", "R6 retain database role/catalog probes in host adapter"
+            return "lifecycle-plan-or-executor", "R6 move portable lifecycle validation; keep transaction, authorization and storage in host"
+        if name in {"managed_actions.py", "managed_bulk.py", "managed_delta.py", "managed_support.py"}:
+            return "managed-host-adapter", "R6 host managed-engine calls and transactions stay in Python; portable admission/planning moves to Rust"
+        if name.startswith("unified/"):
+            if name in {"unified/__init__.py", "unified/_binding.py", "unified/session_binding.py", "unified/native_binding.py", "unified/session_async.py", "unified/session_sync.py", "unified/session_psycopg2.py", "unified/session_sqlalchemy.py"}:
+                return "host-session-binding", "R6 retain driver session, transaction, async and cancellation glue"
+            return "shared-unified-value-or-operation", "R6 migrate portable row/value/admission algorithms; retain driver execution in binding modules"
+        if name == "dsl/__init__.py":
+            return "generated-client-dsl", "R6 preserve Python client expression surface"
+        return "python-access-explicit-review", "R0 semantic owner needs a named disposition before its migration slice can close"
+    if path.startswith("python/src/umf/"):
+        name = path.removeprefix("python/src/umf/")
+        explicit = {
+            "__init__.py": ("python-public-core-surface", "R2/R4 preserve public imports and behavior during cutover"),
+            "constraint_kernel.py": ("shared-constraint-interpreter", "R2 port generic interpreter; consume generated inert program as authority"),
+            "generated_resources.py": ("generated-data-loader", "R2/R4 retain ADR-005-derived resources and standard Python package loading"),
+            "json.py": ("python-native-json-admission", "R2 port or bind exact source admission with Python host-value preservation"),
+            "literal_kernel.py": ("shared-literal-interpreter", "R2 port generic exact literal mechanics; consume generated policy"),
+            "models.py": ("python-model-presentation", "R2 preserve Pydantic/public shapes while shared admission moves to Rust"),
+            "registry.py": ("python-registry-binding", "R2 preserve callback/resource host capability registration"),
+            "schemas.py": ("python-schema-presentation", "R2 retain schema API and generated shapes; generic validation moves to Rust"),
+            "serialization.py": ("python-serialization-boundary", "R2 preserve exact host values and public serialization behavior"),
+            "validation.py": ("python-validation-binding", "R2 preserve Python diagnostics/callback API around shared Rust validation"),
+        }
+        return explicit.get(name, ("python-core-explicit-review", "R0 semantic owner needs a named disposition before migration closure"))
+    return "unclassified", "human disposition required before migration closure"
+
+
+def module_record(path: Path) -> dict[str, object]:
+    source = text(path)
+    p = rel(path)
+    if p.endswith(".ts"):
+        imports = sorted(set(TS_IMPORT.findall(source)))
+        exports = ts_symbols(source)
+        lang = "typescript"
+    else:
+        imports = sorted({a or b for a, b in PY_IMPORT.findall(source)})
+        exports = py_symbols(path, source)
+        lang = "python"
+        resolved = []
+        try:
+            tree = ast.parse(source)
+            module_root = next((marker for marker in ("/src/umf/", "/src/umf_access/", "/src/umf_codegen/") if marker in path.as_posix()), None)
+            if module_root:
+                root_text = path.as_posix().split(module_root, 1)[0] + module_root.strip("/")
+                root_path = Path(root_text)
+                module_index = path.relative_to(root_path)
+                module_parts = list(module_index.with_suffix("").parts)
+                is_package_init = module_parts[-1] == "__init__"
+                if is_package_init:
+                    module_parts.pop()
+                package_parts = module_parts if is_package_init else module_parts[:-1]
+                for node in ast.walk(tree):
+                    target = None
+                    if isinstance(node, ast.ImportFrom):
+                        base = package_parts[:len(package_parts) - node.level + 1] if node.level else []
+                        if node.module:
+                            base.extend(node.module.split("."))
+                        target = ".".join(base)
+                    elif isinstance(node, ast.Import):
+                        for alias in node.names:
+                            if (root_path.joinpath(*alias.name.split(".")).with_suffix(".py").exists() or root_path.joinpath(*alias.name.split("."), "__init__.py").exists()):
+                                resolved.append(alias.name)
+                    if target and (root_path.joinpath(*target.split(".")).with_suffix(".py").exists() or root_path.joinpath(*target.split("."), "__init__.py").exists()):
+                        resolved.append(target)
+        except (SyntaxError, ValueError):
+            pass
+        resolved_imports = sorted(set(resolved))
+    disposition, obligation = source_disposition(p)
+    record = {"path": p, "language": lang, "sha256": sha(path.read_bytes()), "bytes": path.stat().st_size,
+            "publicExports": exports, "imports": imports, "disposition": disposition,
+            "migrationObligation": obligation}
+    if lang == "python":
+        record["resolvedInternalImports"] = resolved_imports
+    return record
+
+
+def algorithm_names(path: Path, source: str) -> list[str]:
+    if path.suffix == ".py":
+        try:
+            tree = ast.parse(source)
+        except SyntaxError:
+            return []
+        return sorted(n.name for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)))
+    return sorted(set(a or b for a, b in FUNC_TS.findall(source)))
+
+
+def rust_module_disposition(path: str) -> tuple[str, str]:
+    if path.startswith("crates/rust-spike-core/"):
+        return "host-free-shared-rust-spike", "R1 prototype only; close only with source-bound conformance and target-qualified dependency evidence"
+    if path.startswith("crates/rust-spike-cli/"):
+        return "rust-cli-host-adapter", "R1 CLI binding; retain process/argument/environment integration at host edge"
+    if path.startswith("bindings/rust-spike/"):
+        return "rust-language-binding-host-adapter", "R1 binding glue; keep runtime-specific imports in the corresponding host adapter"
+    return "rust-spike-workspace-support", "R1 build or test support; individual migration disposition required before closure"
+
+
+def rust_module_record(path: Path) -> dict[str, object]:
+    source = text(path)
+    p = rel(path)
+    names = sorted(set(re.findall(r"(?m)^\s*pub\s+(?:async\s+)?(?:fn|struct|enum|trait|type|const|static)\s+([A-Za-z_][A-Za-z0-9_]*)", source)))
+    disposition, obligation = rust_module_disposition(p)
+    return {"path": p, "language": "rust", "sha256": sha(path.read_bytes()), "bytes": path.stat().st_size,
+            "publicExports": names, "imports": sorted(set(re.findall(r"(?m)^\s*use\s+([^;]+);", source))),
+            "disposition": disposition, "migrationObligation": obligation}
+
+
+def script_disposition(path: str, active: bool) -> tuple[str, str]:
+    if path.startswith("tests/") or path.startswith("python/") and "/tests/" in path:
+        return ("test-oracle-fixture-algorithm", "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default") if active else ("unreferenced-test-source", "Retained test/evidence source with no discovered current activation edge")
+    if path.startswith("docs/helix/05-deploy/"):
+        return ("deployed-reference-ui-or-build", "R7 browser/UI or generated-reference tooling; shared model computation remains migration scope") if active else ("unreferenced-deploy-tool", "No current activation edge discovered")
+    if path.startswith("tools/security/"):
+        return ("security-evidence-harness", "Active security oracle/harness; retain its independent authority and source identity") if active else ("unreferenced-security-source", "No current activation edge discovered")
+    return ("active-host-tooling-algorithm", "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary") if active else ("unreferenced-script-source", "No current package/workflow/import activation edge discovered")
+
+
+def bun_closure(package: dict[str, object], lock: dict[str, object]) -> list[dict[str, object]]:
+    packages = lock.get("packages", {})
+    roots = {}
+    roots.update({name: (specifier, "runtime") for name, specifier in package.get("dependencies", {}).items()})
+    roots.update({name: (specifier, "build-test") for name, specifier in package.get("devDependencies", {}).items()})
+    name_to_key: dict[str, list[str]] = {}
+    for key, value in packages.items():
+        # Lock keys are package identities such as name@version or @scope/name@version.
+        ident = value[0]
+        if ident.startswith("@"):
+            name, _, version = ident.rpartition("@")
+        else:
+            name, _, version = ident.partition("@")
+        name_to_key.setdefault(name, []).append(key)
+    output: dict[str, dict[str, object]] = {}
+    todo: list[tuple[str, str, str, str, str]] = [(name, specifier, "direct", category, name) for name, (specifier, category) in roots.items()]
+    seen: set[tuple[str, str]] = set()
+    while todo:
+        name, requested, kind, category, origin_root = todo.pop(0)
+        resolved_name = name
+        resolved_request = requested
+        alias_target = None
+        if requested.startswith("npm:"):
+            alias_target = requested.removeprefix("npm:")
+            resolved_name, _, resolved_request = alias_target.rpartition("@")
+        candidates = name_to_key.get(resolved_name, [])
+        key = next((x for x in candidates if packages[x][0].endswith("@" + resolved_request)), candidates[0] if candidates else None)
+        if key is None:
+            optional_peer = kind == "transitive:peerDependencies"
+            output[f"{name}@{requested}"] = {"name": name, "requested": requested, "resolution": "optional-peer-not-locked" if optional_peer else "missing-from-lock", "edge": kind,
+                                              "migrationDisposition": "optional peer not present in lock closure; feature-specific use is not established" if optional_peer else "unresolved dependency must be dispositioned before migration closure"}
+            continue
+        record = packages[key]
+        ident, _, metadata = record[0], record[0], record[2] if len(record) > 2 and isinstance(record[2], dict) else {}
+        if ident not in output:
+            if ident.startswith("@"):
+                resolved_name, _, version = ident.rpartition("@")
+            else:
+                resolved_name, _, version = ident.partition("@")
+            output[ident] = {"name": resolved_name, "version": version, "resolution": "locked", "alias": name if alias_target else None,
+                             "directSpecifiers": [], "origins": [], "dependencies": []}
+        origin = {"root": origin_root, "category": category, "edge": kind}
+        if origin not in output[ident]["origins"]:
+            output[ident]["origins"].append(origin)
+        if kind == "direct":
+            direct = {"name": name, "specifier": requested, "category": category, "resolvedAlias": resolved_name if alias_target else None}
+            if direct not in output[ident]["directSpecifiers"]:
+                output[ident]["directSpecifiers"].append(direct)
+        output[ident]["migrationDisposition"] = dependency_disposition(output[ident]["name"], output[ident]["origins"])
+        edge_key = (ident, category)
+        if edge_key in seen:
+            continue
+        seen.add(edge_key)
+        dep_names = set()
+        for group_name in ("dependencies", "optionalDependencies", "peerDependencies"):
+            for dep, spec in (metadata.get(group_name) or {}).items():
+                dep_names.add(dep)
+                todo.append((dep, str(spec), f"transitive:{group_name}", category, origin_root))
+        output[ident]["dependencies"] = sorted(dep_names)
+    return [output[k] for k in sorted(output)]
+
+
+def python_project_declarations(project_data: dict[str, object], project_path: str) -> list[dict[str, object]]:
+    project = project_data.get("project", {})
+    declarations = []
+    def add(requirement: str, group: str, kind: str) -> None:
+        match = re.match(r"\s*([A-Za-z0-9_.-]+)", requirement)
+        if not match:
+            raise RuntimeError(f"Cannot parse declared Python requirement {requirement!r} in {project_path}")
+        declarations.append({"project": project_path, "projectName": project.get("name"), "group": group,
+                             "requirement": requirement, "package": match.group(1), "kind": kind,
+                             "resolution": "unlocked", "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot"})
+    for requirement in project.get("dependencies", []):
+        add(requirement, "project.dependencies", "runtime")
+    for group, requirements in sorted(project.get("optional-dependencies", {}).items()):
+        for requirement in requirements:
+            add(requirement, f"project.optional-dependencies.{group}", "optional")
+    for group, requirements in sorted(project_data.get("dependency-groups", {}).items()):
+        for requirement in requirements:
+            add(requirement, f"dependency-groups.{group}", "development")
+    build = project_data.get("build-system", {})
+    for requirement in build.get("requires", []):
+        add(requirement, "build-system.requires", "build-requirement")
+    # build-system.build-backend is an entry point, not a package requirement.
+    return declarations
+
+
+def dependency_disposition(name: str, origins: list[dict[str, object]]) -> str:
+    if name.startswith("@typespec/") or name == "@typespec/compiler":
+        family = "TypeSpec compiler and emitter toolchain"
+    elif name in {"ajv", "ajv-draft-04"}:
+        family = "JSON Schema validators"
+    elif name in {"@bufbuild/protobuf", "@launchql/protobufjs", "protobufjs"}:
+        family = "Protobuf runtime/compiler support"
+    elif name in {"yaml"}:
+        family = "YAML parser/stringifier"
+    elif name in {"graphql"}:
+        family = "GraphQL parser/runtime"
+    elif name in {"avsc"}:
+        family = "Avro runtime"
+    elif name in {"jsonld", "n3", "rdf-literal", "rdf-validate-shacl", "rdfxml-streaming-parser"}:
+        family = "RDF/JSON-LD/SHACL parser and semantic packages"
+    elif name in {"apache-arrow", "hyparquet", "flatbuffers"}:
+        family = "Arrow/Parquet/binary format packages"
+    elif name in {"@libpg-query/parser"}:
+        family = "PostgreSQL SQL parser"
+    else:
+        family = "transitive utility or tooling package; inspect each import/lock origin before removal"
+    categories = sorted({str(origin["category"]) for origin in origins})
+    if "runtime" in categories:
+        return f"{family}; present in production dependency closure, replace or explicitly retain with versioned family evidence"
+    return f"{family}; build/test dependency closure, keep while an active tool or test imports it"
+
+
+def main() -> int:
+    ts_capture = json.loads(subprocess.check_output(["bun", "scripts/rust-inventory-typescript.ts"], cwd=ROOT, text=True))
+    package = json.loads((ROOT / "package.json").read_text())
+    # Bun lock uses JSON with trailing commas.
+    lock_text = (ROOT / "bun.lock").read_text()
+    lock = json.loads(re.sub(r",\s*([}\]])", r"\1", lock_text))
+    source_paths = tracked_or_existing(list((ROOT / "src").rglob("*.ts")) +
+        list((ROOT / "python/src").rglob("*.py")) +
+        list((ROOT / "python/umf_access/src").rglob("*.py")) +
+        list((ROOT / "python/umf_codegen/src").rglob("*.py")))
+    modules = [module_record(p) for p in source_paths]
+    for module in modules:
+        captured = ts_capture["files"].get(module["path"])
+        if module["language"] == "typescript":
+            if captured is None:
+                raise RuntimeError(f"TypeScript compiler did not load active source module: {module['path']}")
+            module["publicExports"] = captured["publicExports"]
+            module["imports"] = captured["imports"]
+            module["resolvedImports"] = captured["resolvedImports"]
+    code_roots = [ROOT / "scripts", ROOT / "tests", ROOT / "tools", ROOT / "docs/helix/05-deploy/schema-browser", ROOT / "python", ROOT / "bindings"]
+    all_script_paths = tracked_or_existing([p for base in code_roots if base.exists() for p in base.rglob("*") if p.suffix in {".ts", ".py", ".js", ".mjs", ".cjs"}])
+    activation_files = [ROOT / "package.json", *sorted((ROOT / ".github/workflows").glob("*.yml")), ROOT / ".githooks/pre-commit"]
+    activation_text = "\n".join(text(p) for p in activation_files if p.exists())
+    roots = set()
+    # Capture executable first-party paths mentioned by package scripts, workflow commands and hooks.
+    for match in re.findall(r"(?:scripts|tests|tools|python|bindings|docs/helix/05-deploy/schema-browser)/[A-Za-z0-9_./-]+\.(?:ts|py|js|mjs|cjs)", activation_text):
+        candidate = match.removeprefix("./")
+        if candidate.startswith(("scripts/", "tests/", "tools/", "docs/helix/05-deploy/", "python/")) and (ROOT / candidate).is_file():
+            roots.add(candidate)
+    for match in re.findall(r"(?m)\bbun\s+test\s+(tests/[A-Za-z0-9_./*-]+)", activation_text):
+        test_dir = ROOT / match.rstrip("/*")
+        if test_dir.is_dir():
+            roots.update(rel(path) for path in all_script_paths if path.is_relative_to(test_dir))
+    ts_script_imports = {name: data["resolvedImports"] for name, data in ts_capture["files"].items()}
+    script_paths_by_stem: dict[str, list[str]] = {}
+    for path in all_script_paths:
+        script_paths_by_stem.setdefault(path.stem, []).append(rel(path))
+    reachable = set(roots)
+    unknown_activation_roots = []
+    for command in re.findall(r"(?m)(?:^|\s)(?:bun|python(?:3)?|node|tsx)\s+(?:-I\s+)?((?:scripts|tests|tools|python|bindings|docs/helix/05-deploy/schema-browser)/[A-Za-z0-9_./-]+\.(?:ts|py|js|mjs|cjs))", activation_text):
+        if (ROOT / command).is_file():
+            roots.add(command)
+            reachable.add(command)
+        else:
+            unknown_activation_roots.append(command)
+    queue = list(roots)
+    while queue:
+        current = queue.pop()
+        imported = list(ts_script_imports.get(current, []))
+        source_path = ROOT / current
+        if source_path.suffix == ".py":
+            try:
+                tree = ast.parse(text(source_path))
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.ImportFrom) and node.module:
+                        imported.extend(script_paths_by_stem.get(node.module.rsplit(".", 1)[-1], []))
+                    elif isinstance(node, ast.Import):
+                        for alias in node.names:
+                            imported.extend(script_paths_by_stem.get(alias.name.rsplit(".", 1)[-1], []))
+            except SyntaxError:
+                pass
+        for path in imported:
+            if path in {rel(p) for p in all_script_paths} and path not in reachable:
+                reachable.add(path)
+                queue.append(path)
+    scripts = []
+    for path in all_script_paths:
+        p = rel(path)
+        source = text(path)
+        active_matches = [rel(file) for file in activation_files if file.exists() and re.search(r"(?:^|[\s'\"`])" + re.escape(p) + r"(?:$|[\s'\"`])", text(file))]
+        internal_matches = [parent for parent in reachable if parent != p and p in (ts_script_imports.get(parent, []) if parent.endswith(".ts") else [])]
+        active = p in reachable
+        disposition, obligation = script_disposition(p, active)
+        scripts.append({"path": p, "language": path.suffix.lstrip("."), "sha256": sha(path.read_bytes()), "bytes": path.stat().st_size,
+                        "active": active, "activationEvidence": sorted(set(active_matches + internal_matches + (["transitive-import-closure"] if active and not active_matches else []))),
+                        "algorithmSymbols": algorithm_names(path, source),
+                        "disposition": disposition, "migrationObligation": obligation})
+    pyprojects = []
+    py_direct = []
+    py_resolution = []
+    resolver_dir = ROOT / "docs/helix/04-build/evidence/rust-migration/r0"
+    for project, filename in [("umf-core", "python-core-macos-arm64-py311.txt"),
+                              ("umf_access", "python-access-macos-arm64-py311.txt"),
+                              ("umf-codegen", "python-codegen-macos-arm64-py311.txt")]:
+        snapshot = resolver_dir / filename
+        if snapshot.exists():
+            py_resolution.append({"project": project, "path": rel(snapshot), "sha256": sha(snapshot.read_bytes()),
+                                  "target": "aarch64-apple-darwin / CPython 3.11", "kind": "non-installing uv resolution snapshot; candidate versions and hashes, not repository lock or installed qualification"})
+    for path in sorted((ROOT / "python").glob("*/pyproject.toml")) + [ROOT / "python/pyproject.toml"]:
+        if path.exists():
+            source = text(path)
+            pyprojects.append({"path": rel(path), "sha256": sha(path.read_bytes()), "text": source})
+            project_data = tomllib.loads(source)
+            py_direct.extend(python_project_declarations(project_data, rel(path)))
+    rust_paths = tracked_or_existing([p for base in [ROOT / "crates", ROOT / "bindings"] if base.exists() for p in base.rglob("*.rs")])
+    rust_modules = [rust_module_record(p) for p in rust_paths]
+    result = {
+        "schema": "umf.rust-migration-inventory/0.1",
+        "capture": {"inventoryFormat": "0.1", "inventoryScript": rel(Path(__file__).resolve()),
+                    "typescriptApi": ts_capture["typescriptVersion"], "sourceCohortSha256": sha(("\n".join(f"{m['path']} {m['sha256']}" for m in modules) + "\n" + "\n".join(f"{s['path']} {s['sha256']}" for s in scripts) + "\n" + sha((ROOT / "package.json").read_bytes()) + "\n" + sha((ROOT / "bun.lock").read_bytes())).encode())},
+        "counts": {"sourceModules": len(modules), "typescriptModules": sum(m["language"] == "typescript" for m in modules),
+                   "pythonModules": sum(m["language"] == "python" for m in modules), "scriptFiles": len(scripts),
+                   "activeScriptFiles": sum(s["active"] for s in scripts), "algorithmSymbols": sum(len(s["algorithmSymbols"]) for s in scripts)},
+        "sourceModules": modules,
+        "rustSpikeModules": rust_modules,
+        "scripts": scripts,
+        "dependencies": {"javascript": {"direct": package.get("dependencies", {}), "devDirect": package.get("devDependencies", {}),
+                                             "lockfileSha256": sha((ROOT / "bun.lock").read_bytes()), "resolvedClosure": bun_closure(package, lock),
+                                             "dispositionPolicy": "each resolved package is retained as a named migration input; family owners must be assigned before its closure can be retired"},
+                          "python": {"lockfile": None, "status": "direct declarations captured; repository has no Python lock; separate non-installing resolver snapshots capture candidate closure for one target", "projects": pyprojects,
+                                     "directDeclarations": py_direct, "resolverSnapshots": py_resolution}},
+        "operations": [
+            {"id": "generate", "publicApi": "umf_codegen.generate_python_client", "bridge": "__umf_codegen", "source": ["scripts/codegen/entry.ts", "src/access"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
+            {"id": "deployment", "publicApi": "umf_codegen.compile_table_deployment", "bridge": "__umf_table_deploy", "source": ["scripts/codegen/entry.ts", "src/table-deployment"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
+            {"id": "verify_deployment", "publicApi": "umf_codegen.verify_table_deployment", "bridge": "__umf_table_verify", "source": ["scripts/codegen/entry.ts", "src/table-deployment"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
+            {"id": "migration", "publicApi": "umf_codegen.compile_table_migration", "bridge": "__umf_table_migrate", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
+            {"id": "verify_migration", "publicApi": "umf_codegen.verify_table_migration", "bridge": "__umf_table_migration_verify", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"}],
+        "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)), "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
+        "knownOpenItems": ["python transitive dependency closure is unlocked", "per-module dispositions are a named migration-obligation inventory and still require owner review before closure", "native evidence identities are captured in the accompanying README and plan references"]
+    }
+    payload = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    if len(sys.argv) > 1 and sys.argv[1] == "--check":
+        current = OUT.read_text() if OUT.exists() else ""
+        if current != payload:
+            print(f"Rust inventory is stale: {OUT}", file=sys.stderr)
+            return 1
+        print(f"Rust inventory current: {len(modules)} source modules; {sum(s['active'] for s in scripts)} active scripts")
+        return 0
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(payload, encoding="utf-8")
+    print(f"Wrote {OUT.relative_to(ROOT)}: {len(modules)} source modules; {sum(s['active'] for s in scripts)} active scripts; {len(result['dependencies']['javascript']['resolvedClosure'])} JS locked packages")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

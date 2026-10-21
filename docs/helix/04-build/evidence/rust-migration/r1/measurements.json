@@ -1,0 +1,1873 @@
+{
+  "evidence": "UMF R1 shared Rust binding spike; current-host qualification only",
+  "capturedAt": "2026-10-21T22:55:03.499Z",
+  "platform": {
+    "os": "darwin",
+    "arch": "arm64",
+    "uname": "Darwin SYN-5177 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:06:40 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T6050 arm64"
+  },
+  "toolchain": {
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "python": "Python 3.11.17",
+    "maturin": "maturin 1.9.6",
+    "node": "v26.12.0",
+    "bun": "1.4.3",
+    "chromium": "153.0.8010.12",
+    "pythonAbi": "umf_rust_spike-0.1.0-cp311-cp311-macosx_11_0_arm64.whl",
+    "nodeApiAbi": "10",
+    "nodeModuleAbi": "147",
+    "bunNapiAbi": "10",
+    "wasmBindgen": "wasm-bindgen 0.2.100",
+    "cargoDependencies": "umf-rust-spike v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/crates/rust-spike-cli)\numf-rust-spike-core v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/crates/rust-spike-core)\njsonschema v0.29.1\nahash v0.8.12\ncfg-if v1.0.5\ngetrandom v0.3.4\ncfg-if v1.0.5\nlibc v0.2.191\nonce_cell v1.21.4\nserde v1.0.219\nserde_derive v1.0.219 (proc-macro)\nproc-macro2 v1.0.107\nunicode-ident v1.0.27\nquote v1.0.47\nproc-macro2 v1.0.107 (*)\nsyn v2.0.119\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nunicode-ident v1.0.27\nzerocopy v0.8.63\nversion_check v0.9.5\nbase64 v0.22.1\nbytecount v0.6.9\nemail_address v0.2.9\nserde v1.0.219 (*)\nfancy-regex v0.14.0\nbit-set v0.8.0\nbit-vec v0.8.0\nregex-automata v0.4.18\naho-corasick v1.1.5\nmemchr v2.8.3\nmemchr v2.8.3\nregex-syntax v0.8.11\nregex-syntax v0.8.11\nfraction v0.15.4\nlazy_static v1.5.1\nnum v0.4.3\nnum-bigint v0.4.8\nnum-integer v0.1.47\nnum-traits v0.2.19\nautocfg v1.5.1\nnum-traits v0.2.19 (*)\nnum-complex v0.4.6\nnum-traits v0.2.19 (*)\nnum-integer v0.1.47 (*)\nnum-iter v0.1.46\nnum-integer v0.1.47 (*)\nnum-traits v0.2.19 (*)\nnum-rational v0.4.2\nnum-bigint v0.4.8 (*)\nnum-integer v0.1.47 (*)\nnum-traits v0.2.19 (*)\nnum-traits v0.2.19 (*)\nidna v1.1.0\nidna_adapter v1.2.2\nicu_normalizer v2.3.0\nicu_collections v2.3.0\ndisplaydoc v0.2.7 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nunicode-ident v1.0.27\npotential_utf v0.1.6\nzerovec v0.11.8\nyoke v0.8.3\nstable_deref_trait v1.2.1\nyoke-derive v0.8.4 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nsynstructure v0.14.0\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nzerofrom v0.1.8\nzerofrom-derive v0.1.8 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nsynstructure v0.14.0 (*)\nzerofrom v0.1.8 (*)\nzerovec-derive v0.11.6 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nutf8_iter v1.0.4\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerovec v0.11.8 (*)\nicu_normalizer_data v2.3.0\nicu_provider v2.3.1\ndisplaydoc v0.2.7 (proc-macro) (*)\nicu_locale_core v2.3.0\ndisplaydoc v0.2.7 (proc-macro) (*)\nlitemap v0.8.3\ntinystr v0.8.4\ndisplaydoc v0.2.7 (proc-macro) (*)\nzerovec v0.11.8 (*)\nwriteable v0.6.4\nzerovec v0.11.8 (*)\nwriteable v0.6.4\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerotrie v0.2.5\ndisplaydoc v0.2.7 (proc-macro) (*)\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerovec v0.11.8 (*)\nsmallvec v1.16.3\nzerovec v0.11.8 (*)\nicu_properties v2.3.0\ndisplaydoc v0.2.7 (proc-macro) (*)\nicu_collections v2.3.0 (*)\nicu_locale_core v2.3.0 (*)\nicu_properties_data v2.3.0\nicu_provider v2.3.1 (*)\nzerotrie v0.2.5 (*)\nzerovec v0.11.8 (*)\nsmallvec v1.16.3\nutf8_iter v1.0.4\nitoa v1.0.18\nnum-cmp v0.1.0\nonce_cell v1.21.4\npercent-encoding v2.3.2\nreferencing v0.29.1\nahash v0.8.12 (*)\nfluent-uri v0.3.2\nborrow-or-share v0.2.4\nref-cast v1.0.27\nref-cast-impl v1.0.27 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nserde v1.0.219 (*)\nonce_cell v1.21.4\nparking_lot v0.12.5\nlock_api v0.4.14\nscopeguard v1.2.0\nparking_lot_core v0.9.12\ncfg-if v1.0.5\nlibc v0.2.191\nsmallvec v1.16.3\npercent-encoding v2.3.2\nserde_json v1.0.140\nitoa v1.0.18\nmemchr v2.8.3\nryu v1.0.23\nserde v1.0.219 (*)\nregex-syntax v0.8.11\nserde v1.0.219 (*)\nserde_json v1.0.140 (*)\nuuid-simd v0.8.0\noutref v0.5.2\nuuid v1.28.0\nvsimd v0.8.0\nserde v1.0.219 (*)\nserde_json v1.0.140 (*)\nsha2 v0.10.8\ncfg-if v1.0.5\ncpufeatures v0.2.17\nlibc v0.2.191\ndigest v0.10.7\nblock-buffer v0.10.4\ngeneric-array v0.14.7\ntypenum v1.20.1\nversion_check v0.9.5\ncrypto-common v0.1.7\ngeneric-array v0.14.7 (*)\ntypenum v1.20.1\n\numf-rust-spike-core v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/crates/rust-spike-core) (*)\n\numf-rust-spike-node v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/rust-spike/node)\nnapi v2.16.17\nbitflags v2.13.2\nctor v0.2.9 (proc-macro)\nquote v1.0.47 (*)\nsyn v2.0.119 (*)\nnapi-sys v2.4.0\nonce_cell v1.21.4\nnapi-derive v2.16.13 (proc-macro)\ncfg-if v1.0.5\nconvert_case v0.6.0\nunicode-segmentation v1.13.3\nnapi-derive-backend v1.0.75\nconvert_case v0.6.0 (*)\nonce_cell v1.21.4\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nregex v1.13.1\naho-corasick v1.1.5 (*)\nmemchr v2.8.3\nregex-automata v0.4.18\naho-corasick v1.1.5 (*)\nmemchr v2.8.3\nregex-syntax v0.8.11\nregex-syntax v0.8.11\nsemver v1.0.28\nsyn v2.0.119 (*)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v2.0.119 (*)\numf-rust-spike-core v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/crates/rust-spike-core) (*)\nnapi-build v2.1.3\n\numf-rust-spike-python v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/rust-spike/python)\npyo3 v0.23.5\ncfg-if v1.0.5\nindoc v2.0.8 (proc-macro)\nrustversion v1.0.23 (proc-macro)\nlibc v0.2.191\nmemoffset v0.9.1\nautocfg v1.5.1\nonce_cell v1.21.4\npyo3-ffi v0.23.5\nlibc v0.2.191\npyo3-build-config v0.23.5\nonce_cell v1.21.4\ntarget-lexicon v0.12.16\ntarget-lexicon v0.12.16\npyo3-macros v0.23.5 (proc-macro)\nproc-macro2 v1.0.107 (*)\npyo3-macros-backend v0.23.5\nheck v0.5.0\nproc-macro2 v1.0.107 (*)\npyo3-build-config v0.23.5 (*)\nquote v1.0.47 (*)\nsyn v2.0.119 (*)\npyo3-build-config v0.23.5 (*)\nquote v1.0.47 (*)\nsyn v2.0.119 (*)\nunindent v0.2.4\npyo3-build-config v0.23.5 (*)\nserde_json v1.0.140 (*)\numf-rust-spike-core v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/crates/rust-spike-core) (*)\npyo3-build-config v0.23.5 (*)\n\numf-rust-spike-wasm v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/rust-spike/wasm)\njs-sys v0.3.77\nonce_cell v1.21.4\nwasm-bindgen v0.2.100\ncfg-if v1.0.5\nonce_cell v1.21.4\nrustversion v1.0.23 (proc-macro)\nwasm-bindgen-macro v0.2.100 (proc-macro)\nquote v1.0.47 (*)\nwasm-bindgen-macro-support v0.2.100\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v2.0.119 (*)\nwasm-bindgen-backend v0.2.100\nbumpalo v3.20.3\nlog v0.4.34\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v2.0.119 (*)\nwasm-bindgen-shared v0.2.100\nunicode-ident v1.0.27\nwasm-bindgen-shared v0.2.100 (*)\nserde_json v1.0.140 (*)\numf-rust-spike-core v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/crates/rust-spike-core) (*)\nwasm-bindgen v0.2.100 (*)",
+    "pythonBindingVersion": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/rust-spike/python/venv/lib/python3.11/site-packages/_umf_rust_spike/__init__.py",
+    "nodeBindingVersion": "v26.12.0",
+    "bunBindingVersion": "1.4.3"
+  },
+  "scope": {
+    "coreVersion": "0.10.0",
+    "operations": [
+      "source-roundtrip",
+      "validate-record",
+      "generate-keyed-record"
+    ],
+    "completeClaim": false,
+    "platformsQualified": [
+      "darwin-arm64"
+    ],
+    "pythonVersions": [
+      "3.11"
+    ],
+    "nodeBindingRuntimes": [
+      "Node",
+      "Bun"
+    ],
+    "browser": "Chromium"
+  },
+  "artifacts": [
+    {
+      "label": "native-cli",
+      "path": "target/release/umf-rust-spike",
+      "bytes": 4539088,
+      "sha256": "29ef7175133602fc4e8c83fdb156c42f347dd54b97fc189bfae492ad2250f246",
+      "installedPath": "<worktree>/target/release/umf-rust-spike"
+    },
+    {
+      "label": "python-wheel",
+      "path": "target/rust-spike/python/wheelhouse/umf_rust_spike-0.1.0-cp311-cp311-macosx_11_0_arm64.whl",
+      "bytes": 1672995,
+      "sha256": "adbd8cc4d419a814f1e860dda9b44cd1352faad1ea8dd94f7bcc8fba8a7c04f6",
+      "installedPath": "<worktree>/target/rust-spike/python/wheelhouse/umf_rust_spike-0.1.0-cp311-cp311-macosx_11_0_arm64.whl"
+    },
+    {
+      "label": "node-native-addon",
+      "path": "target/rust-spike/node/stage/umf_rust_spike_node.node",
+      "bytes": 4522960,
+      "sha256": "edfec0ae15023b018c6df8c4df7ea0e507dc6abb61398d5c3511e1ae6f9f65d4",
+      "installedPath": "<worktree>/target/rust-spike/node/stage/umf_rust_spike_node.node"
+    },
+    {
+      "label": "node-package-tarball",
+      "path": "target/rust-spike/node/stage/umf-rust-spike-node-0.1.0.tgz",
+      "bytes": 1656601,
+      "sha256": "eccde4b887ec5c6500420c1f2f6621a1e8452489e2b7162f3dd3935fd3f7cf61",
+      "installedPath": "<worktree>/target/rust-spike/node/stage/umf-rust-spike-node-0.1.0.tgz"
+    },
+    {
+      "label": "browser-wasm",
+      "path": "target/rust-spike/wasm/pkg/umf_rust_spike_wasm_bg.wasm",
+      "bytes": 3336518,
+      "sha256": "007d35d8606920439e358a2b0ffa84c012e20033b1b249f8cdf99173acfd3b36",
+      "installedPath": "<worktree>/target/rust-spike/wasm/pkg/umf_rust_spike_wasm_bg.wasm"
+    },
+    {
+      "label": "browser-js-glue",
+      "path": "target/rust-spike/wasm/pkg/umf_rust_spike_wasm.js",
+      "bytes": 12778,
+      "sha256": "130b8cb7e00bd111337732b1fd0e437739bde7d6d96298066a9414715a8fe610",
+      "installedPath": "<worktree>/target/rust-spike/wasm/pkg/umf_rust_spike_wasm.js"
+    }
+  ],
+  "source": [
+    {
+      "label": "Cargo.toml",
+      "path": "Cargo.toml",
+      "bytes": 188,
+      "sha256": "e0aad4e2dccf97c93a72870ee1d028f804767ba0ec4c4d1859145524eb74e981"
+    },
+    {
+      "label": "Cargo.lock",
+      "path": "Cargo.lock",
+      "bytes": 29965,
+      "sha256": "85d826771dc15de3e1f57562b2e8f041387789017581b7dcda7ffc0f20c08a58"
+    },
+    {
+      "label": "rust-toolchain.toml",
+      "path": "rust-toolchain.toml",
+      "bytes": 76,
+      "sha256": "9af7a084f6c81634ad8ed71a2a095dc77bc1723406e0f95dccf19f4af5d984e6"
+    },
+    {
+      "label": ".cargo/config.toml",
+      "path": ".cargo/config.toml",
+      "bytes": 87,
+      "sha256": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c"
+    },
+    {
+      "label": "crates/rust-spike-core/Cargo.toml",
+      "path": "crates/rust-spike-core/Cargo.toml",
+      "bytes": 402,
+      "sha256": "ae580f8c3ed0b339635b4b1050fb7ba613051f8a84a1f33d54a786b6053f4c7b"
+    },
+    {
+      "label": "crates/rust-spike-core/src/lib.rs",
+      "path": "crates/rust-spike-core/src/lib.rs",
+      "bytes": 32091,
+      "sha256": "546b601d03d5ddd568237e4eecd4f6d50a3528a9275a5604b763d780a6136de5"
+    },
+    {
+      "label": "crates/rust-spike-cli/Cargo.toml",
+      "path": "crates/rust-spike-cli/Cargo.toml",
+      "bytes": 239,
+      "sha256": "50a2a40c391dc42b5137a579497fe56be4c9d08bc67a4df7eab85c8336bc7e11"
+    },
+    {
+      "label": "crates/rust-spike-cli/src/main.rs",
+      "path": "crates/rust-spike-cli/src/main.rs",
+      "bytes": 2659,
+      "sha256": "58749c115709ab399c1b5c7333a648d456ddbc532752771c5f0e2824dce4f1cd"
+    },
+    {
+      "label": "bindings/rust-spike/python/Cargo.toml",
+      "path": "bindings/rust-spike/python/Cargo.toml",
+      "bytes": 451,
+      "sha256": "0bed0049d498f1a256f8b81d7741204a533f9e59b0dc5b6d87c8ab0b1b3754b0"
+    },
+    {
+      "label": "bindings/rust-spike/python/build.rs",
+      "path": "bindings/rust-spike/python/build.rs",
+      "bytes": 225,
+      "sha256": "183a659ec787ed47935a51e3dcab2d0d0461c564fc6d50ffe07acca2428d6174"
+    },
+    {
+      "label": "bindings/rust-spike/python/pyproject.toml",
+      "path": "bindings/rust-spike/python/pyproject.toml",
+      "bytes": 306,
+      "sha256": "f66014de4e5ad9853934d7afab79b8d487a9e4cd516d858659dc5b9437d4b89f"
+    },
+    {
+      "label": "bindings/rust-spike/python/src/lib.rs",
+      "path": "bindings/rust-spike/python/src/lib.rs",
+      "bytes": 2681,
+      "sha256": "cad184cdcba8e085fed3127b61ad48ecb541034bafdd91366afd22d55abb4412"
+    },
+    {
+      "label": "bindings/rust-spike/node/Cargo.toml",
+      "path": "bindings/rust-spike/node/Cargo.toml",
+      "bytes": 383,
+      "sha256": "1ada780dc1ae343ec00c1ff23a0500747fc476a515331841b18c5f24f62ac8b2"
+    },
+    {
+      "label": "bindings/rust-spike/node/build.rs",
+      "path": "bindings/rust-spike/node/build.rs",
+      "bytes": 35,
+      "sha256": "6f35679663f4d839df85865a2f3afa4b87fbb06a809d51407e4cb542a48e52db"
+    },
+    {
+      "label": "bindings/rust-spike/node/src/lib.rs",
+      "path": "bindings/rust-spike/node/src/lib.rs",
+      "bytes": 2174,
+      "sha256": "89b70a33128f133a64f573014195ef35af7c7ee438ab3b0d579b2986f77a0ea1"
+    },
+    {
+      "label": "bindings/rust-spike/node/index.js",
+      "path": "bindings/rust-spike/node/index.js",
+      "bytes": 1105,
+      "sha256": "58d0be09bc793512183135e7f45c6642e056c90e547db75ff7f10a5477ae745f"
+    },
+    {
+      "label": "bindings/rust-spike/node/package.json",
+      "path": "bindings/rust-spike/node/package.json",
+      "bytes": 173,
+      "sha256": "534153ce37d15afc04884b61e89389e5922b3e72133af644417692f6191ad853"
+    },
+    {
+      "label": "bindings/rust-spike/node/index.d.ts",
+      "path": "bindings/rust-spike/node/index.d.ts",
+      "bytes": 331,
+      "sha256": "bada4bd162b6d7eb20fe374146ce92631a4bb6210ab63780d631c00adc21212f"
+    },
+    {
+      "label": "bindings/rust-spike/wasm/Cargo.toml",
+      "path": "bindings/rust-spike/wasm/Cargo.toml",
+      "bytes": 610,
+      "sha256": "c7eb4429fa2ad48eea56b23f134a639841aca535cf978096de2b4046e81a5a63"
+    },
+    {
+      "label": "bindings/rust-spike/wasm/src/lib.rs",
+      "path": "bindings/rust-spike/wasm/src/lib.rs",
+      "bytes": 3511,
+      "sha256": "b738dc9f94e02c303c91bfb3716671a0b28fbdee36630cb4e7a01b8091fd7f26"
+    },
+    {
+      "label": "bindings/rust-spike/wasm/index.js",
+      "path": "bindings/rust-spike/wasm/index.js",
+      "bytes": 1351,
+      "sha256": "d80eec2496fdb0602674a6198c9c77e3202d1aac13bee1004e5ea979b14ae8b6"
+    },
+    {
+      "label": "spec/core/schema.json",
+      "path": "spec/core/schema.json",
+      "bytes": 34651,
+      "sha256": "b0467dec0393865ff643c6c82b373306cb66344720677960a04ca82be1b3b152"
+    },
+    {
+      "label": "spec/core/semantic-type-reference.schema.json",
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "bytes": 34772,
+      "sha256": "12daea86d95b60f280e74e0f9c3240ba297bc3e8407003bdb1601a53cd7b78ce"
+    },
+    {
+      "label": "tests/rust-spike/vectors.ts",
+      "path": "tests/rust-spike/vectors.ts",
+      "bytes": 7632,
+      "sha256": "b9235615ee28f39a005ad301e280115462aec1c09346ce53fb5b00aa6d58354e"
+    },
+    {
+      "label": "tests/rust-spike/emit-vectors.ts",
+      "path": "tests/rust-spike/emit-vectors.ts",
+      "bytes": 1946,
+      "sha256": "51847209beefe119706637d453f59b3b7b2c7bf33e635eca1f25d0c2b93011b3"
+    },
+    {
+      "label": "tests/rust-spike/browser-shell.html",
+      "path": "tests/rust-spike/browser-shell.html",
+      "bytes": 186,
+      "sha256": "de0b035a4787d47c282f2f5320aa58eae3922d7652e163d871c074e21c7f63ef"
+    },
+    {
+      "label": "scripts/rust-spike/package-conformance.sh",
+      "path": "scripts/rust-spike/package-conformance.sh",
+      "bytes": 5605,
+      "sha256": "b51160adb13312f8c77ec62994954f3b3cbc4a771b265040b658a3a9bd1ee28e"
+    },
+    {
+      "label": "scripts/rust-spike/cli-conformance.ts",
+      "path": "scripts/rust-spike/cli-conformance.ts",
+      "bytes": 7478,
+      "sha256": "03136a9255b52ff95bcbbe3a2f7ad1e2c78882afbbed3abc0b4f74e8a7c872a7"
+    },
+    {
+      "label": "scripts/rust-spike/js-binding-conformance.cjs",
+      "path": "scripts/rust-spike/js-binding-conformance.cjs",
+      "bytes": 10376,
+      "sha256": "f5782b2ef5666a52e24cc1ed114dd199b4fb8ec91cb0ced038d054e87a75563d"
+    },
+    {
+      "label": "scripts/rust-spike/browser-conformance.ts",
+      "path": "scripts/rust-spike/browser-conformance.ts",
+      "bytes": 13652,
+      "sha256": "651b49c3aef559a88b697e04a23be2e437ce45fe136881ea7c5b8425ae152676"
+    },
+    {
+      "label": "scripts/rust-spike/capture-evidence.ts",
+      "path": "scripts/rust-spike/capture-evidence.ts",
+      "bytes": 6866,
+      "sha256": "7cad129185cefa953727b0ffea7ca11a2fb072703170116df18dc7b37b2dc1f0"
+    },
+    {
+      "label": "python/rust-spike/run_conformance.py",
+      "path": "python/rust-spike/run_conformance.py",
+      "bytes": 12273,
+      "sha256": "610cae28dd103e93d809365ac67269e0bd484eff02d132e30947a4238b0426c6"
+    }
+  ],
+  "measurements": {
+    "cli": {
+      "status": "pass",
+      "executable": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/release/umf-rust-spike",
+      "cases": [
+        {
+          "index": 0,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 1,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 2,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 3,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 4,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 5,
+          "op": "validate-record",
+          "ok": false,
+          "code": "INVALID_SOURCE"
+        },
+        {
+          "index": 6,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 7,
+          "op": "validate-record",
+          "ok": false,
+          "code": "DUPLICATE_JSON_KEY"
+        },
+        {
+          "index": 8,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 9,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 10,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD"
+        },
+        {
+          "index": 11,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 12,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 13,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 14,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 15,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 16,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 17,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 18,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 19,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 20,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 21,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 22,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 23,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 24,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 25,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 26,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 27,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 28,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 29,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 30,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 31,
+          "op": "source-roundtrip",
+          "ok": false,
+          "code": "CAPACITY"
+        },
+        {
+          "index": 32,
+          "op": "validate-record",
+          "ok": false,
+          "code": "CANCELLED"
+        },
+        {
+          "index": 33,
+          "op": "source-roundtrip",
+          "ok": false,
+          "code": "CAPABILITY_REQUIRED"
+        },
+        {
+          "index": 34,
+          "op": "source-roundtrip",
+          "ok": false,
+          "code": "DEADLINE"
+        }
+      ],
+      "childPath": "(empty)",
+      "measurement": {
+        "operation": "source-roundtrip",
+        "coldProcessLaunchSamples": 10,
+        "coldLaunchMedianMs": 2.189458000000002,
+        "coldLaunchMinMs": 1.9857920000000036,
+        "coldLaunchMaxMs": 2.99008299999997,
+        "bulkRequests": 10000,
+        "bulkElapsedMs": 14.057833000000016,
+        "callsPerSecond": 711347.1898549363,
+        "note": "Cold launch includes Bun spawn plus fresh CLI process and one JSONL request; bulk rate includes one process startup, JSONL I/O, and Rust JSON parse/serialize. Not isolated engine or FFI cost."
+      }
+    },
+    "python": {
+      "calls": 10000,
+      "callsPerSecond": 459524.50701636483,
+      "coldImportAndOneCallMaxMs": 24.16475,
+      "coldImportAndOneCallMedianMs": 18.5805,
+      "coldImportAndOneCallMinMs": 18.019916,
+      "coldProcessSamples": 10,
+      "elapsedNs": 21761625,
+      "meanMicroseconds": 2.1761624999999998,
+      "note": "Throughput includes JSON encoding/decoding and native engine work; cold start includes fresh Python process, extension import, and one call. Not an isolated FFI-only estimate.",
+      "operation": "source-roundtrip",
+      "peakRssBytes": 343883776
+    },
+    "node": {
+      "operation": "source-roundtrip",
+      "calls": 10000,
+      "elapsedMs": 8.759208000000001,
+      "meanMicroseconds": 0.8759208,
+      "callsPerSecond": 1141655.729604777,
+      "processRssBytes": 337316528,
+      "coldProcessSamples": 10,
+      "coldImportAndOneCallMedianMs": 88.79787499999998,
+      "coldImportAndOneCallMinMs": 84.59120799999994,
+      "coldImportAndOneCallMaxMs": 95.97633400000001,
+      "note": "Throughput includes JS JSON encoding/decoding, runtime process memory, and native engine work; cold start includes fresh runtime, native addon load, and one call. Not an isolated FFI-only estimate."
+    },
+    "bun": {
+      "operation": "source-roundtrip",
+      "calls": 10000,
+      "elapsedMs": 6.891292000000007,
+      "meanMicroseconds": 0.6891292000000007,
+      "callsPerSecond": 1451106.701036611,
+      "processRssBytes": 335233984,
+      "coldProcessSamples": 10,
+      "coldImportAndOneCallMedianMs": 10.69108399999999,
+      "coldImportAndOneCallMinMs": 8.391041000000001,
+      "coldImportAndOneCallMaxMs": 14.147041999999999,
+      "note": "Throughput includes JS JSON encoding/decoding, runtime process memory, and native engine work; cold start includes fresh runtime, native addon load, and one call. Not an isolated FFI-only estimate."
+    },
+    "browser": {
+      "wasmBootMs": 9.5,
+      "operation": "source-roundtrip",
+      "calls": 10000,
+      "elapsedMs": 12.700000047683716,
+      "meanMicroseconds": 1.2700000047683715,
+      "callsPerSecond": 787401.5718467534,
+      "missingCryptoPreflight": true,
+      "note": "Includes JavaScript JSON encoding/decoding and WASM engine work; not an isolated boundary-only estimate."
+    },
+    "cliResource": "        0.08 real         0.06 user         0.01 sys\n           325107712  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               20060  page reclaims\n                   0  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                  54  involuntary context switches\n          1351181213  instructions retired\n           343761028  cycles elapsed\n           322732680  peak memory footprint\n",
+    "limits": "Host-local sample workload only. Binding numbers include JSON encoding/decoding and engine work; cold-start numbers include fresh host runtime and one call. CLI process RSS includes process/startup; Chromium process memory and cross-platform variance are not measured. No performance target or platform generalization follows."
+  },
+  "install": {
+    "python": "fresh Python 3.11 venv; installed the locally built wheel from a prepared wheelhouse with pip --no-index --no-deps",
+    "node": "npm pack + npm install --offline from local tarball into a clean consumer prefix",
+    "runtime": "Python conformance invoked by absolute venv interpreter with PATH=/usr/bin:/bin; no Node/Bun on child PATH. CLI conformance invoked by absolute executable with empty PATH."
+  },
+  "conformance": {
+    "cli": {
+      "status": "pass",
+      "executable": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/release/umf-rust-spike",
+      "cases": [
+        {
+          "index": 0,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 1,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 2,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 3,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 4,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 5,
+          "op": "validate-record",
+          "ok": false,
+          "code": "INVALID_SOURCE"
+        },
+        {
+          "index": 6,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 7,
+          "op": "validate-record",
+          "ok": false,
+          "code": "DUPLICATE_JSON_KEY"
+        },
+        {
+          "index": 8,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 9,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 10,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD"
+        },
+        {
+          "index": 11,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 12,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 13,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 14,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 15,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 16,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 17,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 18,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 19,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 20,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 21,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 22,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 23,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 24,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 25,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 26,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 27,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 28,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 29,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 30,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 31,
+          "op": "source-roundtrip",
+          "ok": false,
+          "code": "CAPACITY"
+        },
+        {
+          "index": 32,
+          "op": "validate-record",
+          "ok": false,
+          "code": "CANCELLED"
+        },
+        {
+          "index": 33,
+          "op": "source-roundtrip",
+          "ok": false,
+          "code": "CAPABILITY_REQUIRED"
+        },
+        {
+          "index": 34,
+          "op": "source-roundtrip",
+          "ok": false,
+          "code": "DEADLINE"
+        }
+      ],
+      "childPath": "(empty)",
+      "measurement": {
+        "operation": "source-roundtrip",
+        "coldProcessLaunchSamples": 10,
+        "coldLaunchMedianMs": 2.189458000000002,
+        "coldLaunchMinMs": 1.9857920000000036,
+        "coldLaunchMaxMs": 2.99008299999997,
+        "bulkRequests": 10000,
+        "bulkElapsedMs": 14.057833000000016,
+        "callsPerSecond": 711347.1898549363,
+        "note": "Cold launch includes Bun spawn plus fresh CLI process and one JSONL request; bulk rate includes one process startup, JSONL I/O, and Rust JSON parse/serialize. Not isolated engine or FFI cost."
+      }
+    },
+    "python": {
+      "binding": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/rust-spike/python/venv/lib/python3.11/site-packages/_umf_rust_spike/__init__.py",
+      "callbacks": {
+        "rawSource": {
+          "exact": true,
+          "expectedUnits": [
+            55296,
+            65,
+            56320
+          ],
+          "receivedUnits": [
+            55296,
+            65,
+            56320
+          ]
+        },
+        "reentrantValidation": {
+          "exact": true,
+          "unitCount": 652
+        },
+        "validationSource": {
+          "exact": true,
+          "unitCount": 652
+        }
+      },
+      "cases": [
+        {
+          "code": null,
+          "index": 0,
+          "ok": true,
+          "op": "source-roundtrip"
+        },
+        {
+          "code": null,
+          "index": 1,
+          "ok": true,
+          "op": "source-roundtrip"
+        },
+        {
+          "code": null,
+          "index": 2,
+          "ok": true,
+          "op": "source-roundtrip"
+        },
+        {
+          "code": null,
+          "index": 3,
+          "ok": true,
+          "op": "source-roundtrip"
+        },
+        {
+          "code": null,
+          "index": 4,
+          "ok": true,
+          "op": "validate-record"
+        },
+        {
+          "code": "INVALID_SOURCE",
+          "index": 5,
+          "ok": false,
+          "op": "validate-record"
+        },
+        {
+          "code": null,
+          "index": 6,
+          "ok": true,
+          "op": "validate-record"
+        },
+        {
+          "code": "DUPLICATE_JSON_KEY",
+          "index": 7,
+          "ok": false,
+          "op": "validate-record"
+        },
+        {
+          "code": null,
+          "index": 8,
+          "ok": true,
+          "op": "generate-keyed-record"
+        },
+        {
+          "code": null,
+          "index": 9,
+          "ok": true,
+          "op": "generate-keyed-record"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 10,
+          "ok": false,
+          "op": "generate-keyed-record"
+        },
+        {
+          "code": "INVALID_MODEL",
+          "index": 11,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "code": "INVALID_MODEL",
+          "index": 12,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 13,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 14,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 15,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 16,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": false
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 17,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": true
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 18,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": false
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 19,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": true
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 20,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": true
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 21,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 22,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 23,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 24,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 25,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 26,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 27,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": true
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 28,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": true
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 29,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": true
+        },
+        {
+          "code": "UNSUPPORTED_RECORD",
+          "index": 30,
+          "ok": false,
+          "op": "generate-keyed-record",
+          "qualification": "conservative refusal outside exact TypeScript normalization subset",
+          "tsAccepted": true
+        }
+      ],
+      "engineVersion": "r1-structural-schema-spike/0.1.0",
+      "measurement": {
+        "calls": 10000,
+        "callsPerSecond": 459524.50701636483,
+        "coldImportAndOneCallMaxMs": 24.16475,
+        "coldImportAndOneCallMedianMs": 18.5805,
+        "coldImportAndOneCallMinMs": 18.019916,
+        "coldProcessSamples": 10,
+        "elapsedNs": 21761625,
+        "meanMicroseconds": 2.1761624999999998,
+        "note": "Throughput includes JSON encoding/decoding and native engine work; cold start includes fresh Python process, extension import, and one call. Not an isolated FFI-only estimate.",
+        "operation": "source-roundtrip",
+        "peakRssBytes": 343883776
+      },
+      "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+      "status": "pass"
+    },
+    "node": {
+      "status": "pass",
+      "runtime": "v26.12.0",
+      "napi": "10",
+      "nodeModuleAbi": "147",
+      "runtimeName": "Node",
+      "runtimeVersion": "v26.12.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "binding": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/rust-spike/node/consumer/node_modules/umf-rust-spike-node/index.js",
+      "cases": [
+        {
+          "index": 0,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 1,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 2,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 3,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 4,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 5,
+          "op": "validate-record",
+          "ok": false,
+          "code": "INVALID_SOURCE"
+        },
+        {
+          "index": 6,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 7,
+          "op": "validate-record",
+          "ok": false,
+          "code": "DUPLICATE_JSON_KEY"
+        },
+        {
+          "index": 8,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 9,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 10,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD"
+        },
+        {
+          "index": 11,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 12,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 13,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 14,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 15,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 16,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 17,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 18,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 19,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 20,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 21,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 22,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 23,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 24,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 25,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 26,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 27,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 28,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 29,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 30,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        }
+      ],
+      "callbacks": {
+        "rawSource": {
+          "expectedUnits": [
+            55296,
+            65,
+            56320
+          ],
+          "receivedUnits": [
+            55296,
+            65,
+            56320
+          ],
+          "exact": true
+        },
+        "validationSource": {
+          "unitCount": 652,
+          "exact": true
+        },
+        "reentrantValidation": {
+          "unitCount": 652,
+          "exact": true
+        }
+      },
+      "measurement": {
+        "operation": "source-roundtrip",
+        "calls": 10000,
+        "elapsedMs": 8.759208000000001,
+        "meanMicroseconds": 0.8759208,
+        "callsPerSecond": 1141655.729604777,
+        "processRssBytes": 337316528,
+        "coldProcessSamples": 10,
+        "coldImportAndOneCallMedianMs": 88.79787499999998,
+        "coldImportAndOneCallMinMs": 84.59120799999994,
+        "coldImportAndOneCallMaxMs": 95.97633400000001,
+        "note": "Throughput includes JS JSON encoding/decoding, runtime process memory, and native engine work; cold start includes fresh runtime, native addon load, and one call. Not an isolated FFI-only estimate."
+      }
+    },
+    "bun": {
+      "status": "pass",
+      "runtime": "v26.3.0",
+      "napi": "10",
+      "nodeModuleAbi": "147",
+      "runtimeName": "Bun",
+      "runtimeVersion": "1.4.3",
+      "platform": "darwin",
+      "arch": "arm64",
+      "binding": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/rust-spike/node/consumer/node_modules/umf-rust-spike-node/index.js",
+      "cases": [
+        {
+          "index": 0,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 1,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 2,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 3,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 4,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 5,
+          "op": "validate-record",
+          "ok": false,
+          "code": "INVALID_SOURCE"
+        },
+        {
+          "index": 6,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 7,
+          "op": "validate-record",
+          "ok": false,
+          "code": "DUPLICATE_JSON_KEY"
+        },
+        {
+          "index": 8,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 9,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 10,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD"
+        },
+        {
+          "index": 11,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 12,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 13,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 14,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 15,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 16,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 17,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 18,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 19,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 20,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 21,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 22,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 23,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 24,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 25,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 26,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 27,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 28,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 29,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 30,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        }
+      ],
+      "callbacks": {
+        "rawSource": {
+          "expectedUnits": [
+            55296,
+            65,
+            56320
+          ],
+          "receivedUnits": [
+            55296,
+            65,
+            56320
+          ],
+          "exact": true
+        },
+        "validationSource": {
+          "unitCount": 652,
+          "exact": true
+        },
+        "reentrantValidation": {
+          "unitCount": 652,
+          "exact": true
+        }
+      },
+      "measurement": {
+        "operation": "source-roundtrip",
+        "calls": 10000,
+        "elapsedMs": 6.891292000000007,
+        "meanMicroseconds": 0.6891292000000007,
+        "callsPerSecond": 1451106.701036611,
+        "processRssBytes": 335233984,
+        "coldProcessSamples": 10,
+        "coldImportAndOneCallMedianMs": 10.69108399999999,
+        "coldImportAndOneCallMinMs": 8.391041000000001,
+        "coldImportAndOneCallMaxMs": 14.147041999999999,
+        "note": "Throughput includes JS JSON encoding/decoding, runtime process memory, and native engine work; cold start includes fresh runtime, native addon load, and one call. Not an isolated FFI-only estimate."
+      }
+    },
+    "browser": {
+      "status": "pass",
+      "chromium": "153.0.8010.12",
+      "wasmDir": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/rust-spike/wasm/pkg",
+      "chromiumPath": "/Users/erik/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "cases": [
+        {
+          "index": 0,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 1,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 2,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 3,
+          "op": "source-roundtrip",
+          "ok": true
+        },
+        {
+          "index": 4,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 5,
+          "op": "validate-record",
+          "ok": false,
+          "code": "INVALID_SOURCE"
+        },
+        {
+          "index": 6,
+          "op": "validate-record",
+          "ok": true
+        },
+        {
+          "index": 7,
+          "op": "validate-record",
+          "ok": false,
+          "code": "DUPLICATE_JSON_KEY"
+        },
+        {
+          "index": 8,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 9,
+          "op": "generate-keyed-record",
+          "ok": true
+        },
+        {
+          "index": 10,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD"
+        },
+        {
+          "index": 11,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 12,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "INVALID_MODEL",
+          "tsError": "INVALID_DOCUMENT"
+        },
+        {
+          "index": 13,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 14,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 15,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 16,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 17,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 18,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": false,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 19,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 20,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 21,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 22,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 23,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 24,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 25,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 26,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsError": "ACCESS_UNSUPPORTED"
+        },
+        {
+          "index": 27,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 28,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 29,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        },
+        {
+          "index": 30,
+          "op": "generate-keyed-record",
+          "ok": false,
+          "code": "UNSUPPORTED_RECORD",
+          "tsAccepted": true,
+          "qualification": "conservative refusal outside exact TypeScript normalization subset"
+        }
+      ],
+      "callbacks": {
+        "rawSource": {
+          "expectedUnits": [
+            55296,
+            65,
+            56320
+          ],
+          "receivedUnits": [
+            55296,
+            65,
+            56320
+          ],
+          "exact": true
+        },
+        "validationSource": {
+          "unitCount": 652,
+          "exact": true
+        },
+        "reentrantValidation": {
+          "unitCount": 652,
+          "exact": true
+        }
+      },
+      "measurement": {
+        "wasmBootMs": 9.5,
+        "operation": "source-roundtrip",
+        "calls": 10000,
+        "elapsedMs": 12.700000047683716,
+        "meanMicroseconds": 1.2700000047683715,
+        "callsPerSecond": 787401.5718467534,
+        "missingCryptoPreflight": true,
+        "note": "Includes JavaScript JSON encoding/decoding and WASM engine work; not an isolated boundary-only estimate."
+      },
+      "externalRequestCount": 0,
+      "localRequestCount": 4,
+      "independentContextCount": 3,
+      "independentContextDeterminism": "same validity and generated output in fresh contexts"
+    }
+  },
+  "limitations": [
+    "Only this host platform and pinned runtime versions are qualified.",
+    "Core operation matrix is three R1 operations, not all UMF operations.",
+    "No production V8 or MiniRacer removal is established.",
+    "Browser memory, async cancellation and cross-platform wheels/addons remain open.",
+    "The WASM schema-validator dependency chain currently enables getrandom wasm_js for randomized hash-map seeding; this requires browser crypto capability and keeps a host-free WASM claim open."
+  ]
+}

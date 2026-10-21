@@ -1,5 +1,13 @@
 # UMF project documentation
 
+[Shared Rust migration and Python V8 removal plan](04-build/rust-migration-plan.md)
+sequences a native Rust CLI and Python/Node/Bun/browser bindings over one engine.
+[ADR-006](02-design/adr/ADR-006-shared-rust-implementation.md) records the target
+ownership; the [R0 inventory](04-build/evidence/rust-migration/r0/README.md) and
+[R1 installed binding/browser evidence](04-build/evidence/rust-migration/r1/README.md)
+qualify a bounded Darwin-arm64 spike. Production V8 removal and the full Rust
+migration remain unimplemented.
+
 [Praxis lifecycle roadmap](01-frame/praxis-lifecycle-roadmap.md) assesses the ten
 client integration gaps and proposes gated delivery for direct tables, native
 identity/policies and Truss/Ashlar graph hosts. Release numbers are proposed;
