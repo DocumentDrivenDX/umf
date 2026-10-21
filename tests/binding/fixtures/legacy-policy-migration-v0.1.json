@@ -1,0 +1,1042 @@
+{
+  "provenance": "Frozen from the legacy umf.table-migration/0.1 compiler corpus before reviewed-policy enforcement; the old compiler emitted this exact compiled plan.",
+  "name": "existing-policy-change-refuses",
+  "plan": {
+    "version": "umf.table-migration/0.1",
+    "canonicalization": "RFC8785",
+    "id": "002",
+    "predecessor": {
+      "id": "001",
+      "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "previous": {
+      "version": "umf.table-deployment/0.1",
+      "canonicalization": "RFC8785",
+      "source": {
+        "format": "json",
+        "utf8": "{\n  \"umf\": \"0.10.0\",\n  \"id\": \"synthetic-table-lifecycle\",\n  \"vocabularies\": {\n    \"umf.tables\": {\n      \"version\": \"0.1.0\"\n    }\n  },\n  \"modules\": [\n    {\n      \"id\": \"demo\",\n      \"namespace\": \"demo\",\n      \"elements\": [\n        {\n          \"id\": \"id\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"owner\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"Note\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"demo\",\n              \"element\": \"id\"\n            },\n            {\n              \"module\": \"demo\",\n              \"element\": \"owner\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"primary\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"demo\",\n                  \"element\": \"id\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {}\n        }\n      ],\n      \"extensions\": {\n        \"umf.tables\": {\n          \"profile\": \"postgresql18/0.1\",\n          \"tables\": [\n            {\n              \"id\": \"notes\",\n              \"record\": {\n                \"module\": \"demo\",\n                \"element\": \"Note\"\n              },\n              \"name\": \"notes\",\n              \"columns\": [\n                {\n                  \"field\": {\n                    \"module\": \"demo\",\n                    \"element\": \"id\"\n                  },\n                  \"name\": \"id\",\n                  \"nativeType\": {\n                    \"kind\": \"text\"\n                  }\n                },\n                {\n                  \"field\": {\n                    \"module\": \"demo\",\n                    \"element\": \"owner\"\n                  },\n                  \"name\": \"owner\",\n                  \"nativeType\": {\n                    \"kind\": \"text\"\n                  }\n                }\n              ],\n              \"indexes\": [],\n              \"checks\": [],\n              \"foreignKeys\": [],\n              \"policy\": {\n                \"mode\": \"native-rls\",\n                \"person\": {\n                  \"select\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  },\n                  \"insert\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  },\n                  \"update\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  },\n                  \"delete\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  }\n                },\n                \"batch\": {\n                  \"select\": {\n                    \"kind\": \"allow\"\n                  },\n                  \"insert\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"update\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"delete\": {\n                    \"kind\": \"deny\"\n                  }\n                }\n              }\n            }\n          ],\n          \"seedSets\": [],\n          \"commands\": []\n        }\n      }\n    }\n  ]\n}\n"
+      },
+      "sourceDigest": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "configuration": {
+        "module": "demo",
+        "schema": "plugin_demo",
+        "ownerRole": "plugin_owner",
+        "personRole": "plugin_person",
+        "batchRole": "plugin_batch",
+        "groupRoles": {
+          "readers": "plugin_readers"
+        }
+      },
+      "configurationDigest": "ead4e90999e5e300906a0ae022cc8276837e4efef46fd27b077357b8c2621a46",
+      "module": "demo",
+      "profile": "postgresql18/0.1",
+      "steps": [
+        {
+          "id": "step-00001",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "CREATE TABLE \"plugin_demo\".\"notes\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\")\n)"
+        },
+        {
+          "id": "step-00002",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"plugin_demo\".\"notes\" ENABLE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00003",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"plugin_demo\".\"notes\" FORCE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00004",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "REVOKE ALL PRIVILEGES ON TABLE \"plugin_demo\".\"notes\" FROM PUBLIC"
+        },
+        {
+          "id": "step-00005",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_select\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR SELECT TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00006",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00007",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_insert\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR INSERT TO \"plugin_person\" WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00008",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "GRANT INSERT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00009",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_update\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")) WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00010",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "GRANT UPDATE (\"owner\") ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00011",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_delete\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR DELETE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00012",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "GRANT DELETE ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00013",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_select\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR SELECT TO \"plugin_batch\" USING (TRUE)"
+        },
+        {
+          "id": "step-00014",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_batch\""
+        },
+        {
+          "id": "step-00015",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_insert\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR INSERT TO \"plugin_batch\" WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00016",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_update\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"plugin_batch\" USING (FALSE) WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00017",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_delete\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR DELETE TO \"plugin_batch\" USING (FALSE)"
+        },
+        {
+          "id": "step-00018",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables",
+          "transaction": "required",
+          "sql": "GRANT USAGE ON SCHEMA \"plugin_demo\" TO \"plugin_person\", \"plugin_batch\""
+        }
+      ],
+      "expectedCatalog": {
+        "tables": [
+          {
+            "id": "notes",
+            "record": {
+              "module": "demo",
+              "element": "Note"
+            },
+            "name": "notes",
+            "columns": [
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "id"
+                },
+                "name": "id",
+                "nativeType": {
+                  "kind": "text"
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "owner"
+                },
+                "name": "owner",
+                "nativeType": {
+                  "kind": "text"
+                }
+              }
+            ],
+            "indexes": [],
+            "checks": [],
+            "foreignKeys": [],
+            "policy": {
+              "mode": "native-rls",
+              "person": {
+                "select": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "insert": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "update": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "delete": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              },
+              "batch": {
+                "select": {
+                  "kind": "allow"
+                },
+                "insert": {
+                  "kind": "deny"
+                },
+                "update": {
+                  "kind": "deny"
+                },
+                "delete": {
+                  "kind": "deny"
+                }
+              }
+            }
+          }
+        ],
+        "columns": [
+          {
+            "table": "notes",
+            "name": "id",
+            "field": {
+              "module": "demo",
+              "element": "id"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/0",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          },
+          {
+            "table": "notes",
+            "name": "owner",
+            "field": {
+              "module": "demo",
+              "element": "owner"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/1",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          }
+        ],
+        "keys": [
+          {
+            "table": "notes",
+            "id": "primary",
+            "name": "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+            "primary": true,
+            "columns": [
+              "id"
+            ],
+            "definitionSql": "CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\")"
+          }
+        ],
+        "checks": [],
+        "foreignKeys": [],
+        "indexes": []
+      },
+      "seedSets": [],
+      "nativeQualified": false,
+      "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+    },
+    "next": {
+      "version": "umf.table-deployment/0.1",
+      "canonicalization": "RFC8785",
+      "source": {
+        "format": "json",
+        "utf8": "{\n  \"umf\": \"0.10.0\",\n  \"id\": \"synthetic-table-lifecycle\",\n  \"vocabularies\": {\n    \"umf.tables\": {\n      \"version\": \"0.1.0\"\n    }\n  },\n  \"modules\": [\n    {\n      \"id\": \"demo\",\n      \"namespace\": \"demo\",\n      \"elements\": [\n        {\n          \"id\": \"id\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"owner\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"Note\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"demo\",\n              \"element\": \"id\"\n            },\n            {\n              \"module\": \"demo\",\n              \"element\": \"owner\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"primary\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"demo\",\n                  \"element\": \"id\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"extraId\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"Extra\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"demo\",\n              \"element\": \"extraId\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"primary\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"demo\",\n                  \"element\": \"extraId\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {}\n        }\n      ],\n      \"extensions\": {\n        \"umf.tables\": {\n          \"profile\": \"postgresql18/0.1\",\n          \"tables\": [\n            {\n              \"id\": \"notes\",\n              \"record\": {\n                \"module\": \"demo\",\n                \"element\": \"Note\"\n              },\n              \"name\": \"notes\",\n              \"columns\": [\n                {\n                  \"field\": {\n                    \"module\": \"demo\",\n                    \"element\": \"id\"\n                  },\n                  \"name\": \"id\",\n                  \"nativeType\": {\n                    \"kind\": \"text\"\n                  }\n                },\n                {\n                  \"field\": {\n                    \"module\": \"demo\",\n                    \"element\": \"owner\"\n                  },\n                  \"name\": \"owner\",\n                  \"nativeType\": {\n                    \"kind\": \"text\"\n                  }\n                }\n              ],\n              \"indexes\": [],\n              \"checks\": [],\n              \"foreignKeys\": [],\n              \"policy\": {\n                \"mode\": \"native-rls\",\n                \"person\": {\n                  \"select\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  },\n                  \"insert\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  },\n                  \"update\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  },\n                  \"delete\": {\n                    \"kind\": \"owner\",\n                    \"field\": {\n                      \"module\": \"demo\",\n                      \"element\": \"owner\"\n                    }\n                  }\n                },\n                \"batch\": {\n                  \"select\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"insert\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"update\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"delete\": {\n                    \"kind\": \"deny\"\n                  }\n                }\n              }\n            },\n            {\n              \"id\": \"extras\",\n              \"record\": {\n                \"module\": \"demo\",\n                \"element\": \"Extra\"\n              },\n              \"name\": \"extras\",\n              \"columns\": [\n                {\n                  \"field\": {\n                    \"module\": \"demo\",\n                    \"element\": \"extraId\"\n                  },\n                  \"name\": \"id\",\n                  \"nativeType\": {\n                    \"kind\": \"text\"\n                  }\n                }\n              ],\n              \"indexes\": [],\n              \"checks\": [],\n              \"foreignKeys\": [],\n              \"policy\": {\n                \"mode\": \"native-rls\",\n                \"person\": {\n                  \"select\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"insert\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"update\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"delete\": {\n                    \"kind\": \"deny\"\n                  }\n                },\n                \"batch\": {\n                  \"select\": {\n                    \"kind\": \"allow\"\n                  },\n                  \"insert\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"update\": {\n                    \"kind\": \"deny\"\n                  },\n                  \"delete\": {\n                    \"kind\": \"deny\"\n                  }\n                }\n              }\n            }\n          ],\n          \"seedSets\": [],\n          \"commands\": []\n        }\n      }\n    }\n  ]\n}\n"
+      },
+      "sourceDigest": "752ef562db9af26e78f481b16967b4428ba585f89d74606da34b6550f4395b2c",
+      "configuration": {
+        "module": "demo",
+        "schema": "plugin_demo",
+        "ownerRole": "plugin_owner",
+        "personRole": "plugin_person",
+        "batchRole": "plugin_batch",
+        "groupRoles": {
+          "readers": "plugin_readers"
+        }
+      },
+      "configurationDigest": "ead4e90999e5e300906a0ae022cc8276837e4efef46fd27b077357b8c2621a46",
+      "module": "demo",
+      "profile": "postgresql18/0.1",
+      "steps": [
+        {
+          "id": "step-00001",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "CREATE TABLE \"plugin_demo\".\"notes\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\")\n)"
+        },
+        {
+          "id": "step-00002",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"plugin_demo\".\"notes\" ENABLE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00003",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"plugin_demo\".\"notes\" FORCE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00004",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+          "transaction": "required",
+          "sql": "CREATE TABLE \"plugin_demo\".\"extras\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_9a8823257eb192a709ec17a704aeecb6\" PRIMARY KEY (\"id\")\n)"
+        },
+        {
+          "id": "step-00005",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"plugin_demo\".\"extras\" ENABLE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00006",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"plugin_demo\".\"extras\" FORCE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00007",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "REVOKE ALL PRIVILEGES ON TABLE \"plugin_demo\".\"notes\" FROM PUBLIC"
+        },
+        {
+          "id": "step-00008",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_select\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR SELECT TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00009",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00010",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_insert\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR INSERT TO \"plugin_person\" WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00011",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "GRANT INSERT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00012",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_update\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")) WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00013",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "GRANT UPDATE (\"owner\") ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00014",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_delete\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR DELETE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00015",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "GRANT DELETE ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+        },
+        {
+          "id": "step-00016",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_select\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR SELECT TO \"plugin_batch\" USING (FALSE)"
+        },
+        {
+          "id": "step-00017",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_insert\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR INSERT TO \"plugin_batch\" WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00018",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_update\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"plugin_batch\" USING (FALSE) WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00019",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_delete\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR DELETE TO \"plugin_batch\" USING (FALSE)"
+        },
+        {
+          "id": "step-00020",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+          "transaction": "required",
+          "sql": "REVOKE ALL PRIVILEGES ON TABLE \"plugin_demo\".\"extras\" FROM PUBLIC"
+        },
+        {
+          "id": "step-00021",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_select\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR SELECT TO \"plugin_person\" USING (FALSE)"
+        },
+        {
+          "id": "step-00022",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_insert\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR INSERT TO \"plugin_person\" WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00023",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_update\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR UPDATE TO \"plugin_person\" USING (FALSE) WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00024",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_delete\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR DELETE TO \"plugin_person\" USING (FALSE)"
+        },
+        {
+          "id": "step-00025",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_select\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR SELECT TO \"plugin_batch\" USING (TRUE)"
+        },
+        {
+          "id": "step-00026",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"extras\" TO \"plugin_batch\""
+        },
+        {
+          "id": "step-00027",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_insert\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR INSERT TO \"plugin_batch\" WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00028",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_update\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR UPDATE TO \"plugin_batch\" USING (FALSE) WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00029",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_delete\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR DELETE TO \"plugin_batch\" USING (FALSE)"
+        },
+        {
+          "id": "step-00030",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables",
+          "transaction": "required",
+          "sql": "GRANT USAGE ON SCHEMA \"plugin_demo\" TO \"plugin_person\", \"plugin_batch\""
+        }
+      ],
+      "expectedCatalog": {
+        "tables": [
+          {
+            "id": "notes",
+            "record": {
+              "module": "demo",
+              "element": "Note"
+            },
+            "name": "notes",
+            "columns": [
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "id"
+                },
+                "name": "id",
+                "nativeType": {
+                  "kind": "text"
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "owner"
+                },
+                "name": "owner",
+                "nativeType": {
+                  "kind": "text"
+                }
+              }
+            ],
+            "indexes": [],
+            "checks": [],
+            "foreignKeys": [],
+            "policy": {
+              "mode": "native-rls",
+              "person": {
+                "select": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "insert": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "update": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "delete": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              },
+              "batch": {
+                "select": {
+                  "kind": "deny"
+                },
+                "insert": {
+                  "kind": "deny"
+                },
+                "update": {
+                  "kind": "deny"
+                },
+                "delete": {
+                  "kind": "deny"
+                }
+              }
+            }
+          },
+          {
+            "id": "extras",
+            "record": {
+              "module": "demo",
+              "element": "Extra"
+            },
+            "name": "extras",
+            "columns": [
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "extraId"
+                },
+                "name": "id",
+                "nativeType": {
+                  "kind": "text"
+                }
+              }
+            ],
+            "indexes": [],
+            "checks": [],
+            "foreignKeys": [],
+            "policy": {
+              "mode": "native-rls",
+              "person": {
+                "select": {
+                  "kind": "deny"
+                },
+                "insert": {
+                  "kind": "deny"
+                },
+                "update": {
+                  "kind": "deny"
+                },
+                "delete": {
+                  "kind": "deny"
+                }
+              },
+              "batch": {
+                "select": {
+                  "kind": "allow"
+                },
+                "insert": {
+                  "kind": "deny"
+                },
+                "update": {
+                  "kind": "deny"
+                },
+                "delete": {
+                  "kind": "deny"
+                }
+              }
+            }
+          }
+        ],
+        "columns": [
+          {
+            "table": "notes",
+            "name": "id",
+            "field": {
+              "module": "demo",
+              "element": "id"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/0",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          },
+          {
+            "table": "notes",
+            "name": "owner",
+            "field": {
+              "module": "demo",
+              "element": "owner"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/1",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          },
+          {
+            "table": "extras",
+            "name": "id",
+            "field": {
+              "module": "demo",
+              "element": "extraId"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/1/columns/0",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          }
+        ],
+        "keys": [
+          {
+            "table": "notes",
+            "id": "primary",
+            "name": "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+            "primary": true,
+            "columns": [
+              "id"
+            ],
+            "definitionSql": "CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\")"
+          },
+          {
+            "table": "extras",
+            "id": "primary",
+            "name": "umf_k_9a8823257eb192a709ec17a704aeecb6",
+            "primary": true,
+            "columns": [
+              "id"
+            ],
+            "definitionSql": "CONSTRAINT \"umf_k_9a8823257eb192a709ec17a704aeecb6\" PRIMARY KEY (\"id\")"
+          }
+        ],
+        "checks": [],
+        "foreignKeys": [],
+        "indexes": []
+      },
+      "seedSets": [],
+      "nativeQualified": false,
+      "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+    },
+    "fromBundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d",
+    "toBundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc",
+    "steps": [
+      {
+        "id": "step-00004",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "CREATE TABLE \"plugin_demo\".\"extras\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_9a8823257eb192a709ec17a704aeecb6\" PRIMARY KEY (\"id\")\n)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00005",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"plugin_demo\".\"extras\" ENABLE ROW LEVEL SECURITY",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00006",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"plugin_demo\".\"extras\" FORCE ROW LEVEL SECURITY",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-90000",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+        "transaction": "required",
+        "sql": "ALTER POLICY \"umf_batch_select\" ON \"plugin_demo\".\"notes\" USING (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-90001",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+        "transaction": "required",
+        "sql": "REVOKE SELECT ON TABLE \"plugin_demo\".\"notes\" FROM \"plugin_batch\"",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00020",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+        "transaction": "required",
+        "sql": "REVOKE ALL PRIVILEGES ON TABLE \"plugin_demo\".\"extras\" FROM PUBLIC",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00021",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_select\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR SELECT TO \"plugin_person\" USING (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00022",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_insert\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR INSERT TO \"plugin_person\" WITH CHECK (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00023",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_update\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR UPDATE TO \"plugin_person\" USING (FALSE) WITH CHECK (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00024",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_person_delete\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR DELETE TO \"plugin_person\" USING (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00025",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_select\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR SELECT TO \"plugin_batch\" USING (TRUE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00026",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+        "transaction": "required",
+        "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"extras\" TO \"plugin_batch\"",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00027",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/insert",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_insert\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR INSERT TO \"plugin_batch\" WITH CHECK (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00028",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/update",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_update\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR UPDATE TO \"plugin_batch\" USING (FALSE) WITH CHECK (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00029",
+        "kind": "policy",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/delete",
+        "transaction": "required",
+        "sql": "CREATE POLICY \"umf_batch_delete\" ON \"plugin_demo\".\"extras\" AS PERMISSIVE FOR DELETE TO \"plugin_batch\" USING (FALSE)",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "ed9b1ccf993e154de3f77d6a34aeed11a62213beb276f56ee53f78ff4cc5f92d"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "8eda7219ce688abf812c62ba845b4857925b023d1077f9b5d65a0810e76611fc"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      }
+    ],
+    "seedExecution": "none",
+    "requiresApproval": true,
+    "nativeQualified": false,
+    "digest": "d7e8607ff329d777e00d9ba72ceafe39a60f4d910c6d7a5050ee36a8c67c606d"
+  }
+}

@@ -9,6 +9,7 @@ import deploymentSchema from '../../spec/extensions/tables/deployment.schema.jso
 import tableSchema from '../../spec/extensions/tables/schema.json';
 import migrationSchema from '../../spec/extensions/tables/migration.schema.json';
 import fixture from './fixtures/table-lifecycle-note.json';
+import legacyPolicyMigration from './fixtures/legacy-policy-migration-v0.1.json';
 import {appendedTableSource as appended,indexedTableSource as indexed} from '../unified/table-migration-fixture';
 const configuration={module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{readers:'plugin_readers'}};
 const source=()=>structuredClone(fixture) as any;
@@ -16,6 +17,12 @@ function bundle(doc=source()):TableDeploymentBundle{const r=compileTableDeployme
 function reviewedOptions(previous:TableDeploymentBundle,next:TableDeploymentBundle){return {version:'umf.table-migration-options/0.2' as const,backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:discoverTableMigrationChanges(previous,next).map(({oldValue:_old,newValue:_new,...marker})=>marker)};}
 const initial=():TableMigrationRequest=>({id:'001',predecessor:null,previous:null,next:bundle()});
 const forward=():TableMigrationRequest=>({id:'002',predecessor:{id:'001',digest:'a'.repeat(64)},previous:bundle(),next:bundle(appended())});
+test('frozen 0.1 policy migration retains exact verifier recovery while new compilation requires reviewed markers',()=>{
+ const plan=legacyPolicyMigration.plan as any,verified=verifyTableMigration(plan);
+ expect(verified.digest).toBe(plan.digest);expect(verified).toEqual(plan);
+ const current=compileTableMigration({id:plan.id,predecessor:plan.predecessor,previous:plan.previous,next:plan.next});
+ expect(current.status).toBe('blocked');if(current.status==='blocked')expect(current.diagnostics[0]!.code).toBe('destructive_change_unreviewed');
+});
 test('initial plan retains exact source and ordered compiler steps; approval is not inferred',()=>{
  const input=initial(),r=compileTableMigration(input);expect(r.status).toBe('compiled');if(r.status!=='compiled')return;
  expect(r.plan.steps.map(({preconditions,expectedOutcome,verification,recovery,...step})=>step)).toEqual(input.next.steps);expect(r.plan.fromBundleDigest).toBeNull();expect(r.plan.requiresApproval).toBe(true);expect(r.plan.nativeQualified).toBe(false);expect(verifyTableMigration(r.plan)).toEqual(r.plan);
