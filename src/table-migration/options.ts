@@ -20,7 +20,7 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
  if(value===undefined)return;
  const v1=value.version==='umf.table-migration-options/0.1',v2=value.version==='umf.table-migration-options/0.2';
  if((v1&&!exact(value,['version','backfills','concurrentIndexes']))||(v2&&!exact(value,['version','backfills','concurrentIndexes','reviewedChanges','validations']))||(!v1&&!v2)||!Array.isArray(value.backfills)||!Array.isArray(value.concurrentIndexes)||value.backfills.length>256||value.concurrentIndexes.length>256||(v2&&(!Array.isArray(value.reviewedChanges)||!Array.isArray(value.validations)||value.validations.length>256)))fail('Unknown options profile, members or resource bounds');
- if(!previous)return fail('Options require a previous installed source');
+ if(!previous)return fail(v2?'Version 0.2 phased plans require a previous installed source; initial publication is not supported':'Options require a previous installed source');
  if(v2){
   try{value.reviewedChanges=validateReviewedChangeMarkers(value.reviewedChanges,previous,next);}catch(error){fail(error instanceof Error?error.message:'Invalid reviewed change marker');}
   const seenValidations=new Set<string>();

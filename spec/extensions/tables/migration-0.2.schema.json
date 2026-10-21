@@ -16,52 +16,31 @@
       "maxLength": 256
     },
     "predecessor": {
-      "anyOf": [
-        {
-          "type": "null"
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
         },
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            "digest": {
-              "$ref": "#/$defs/digest"
-            }
-          },
-          "required": [
-            "id",
-            "digest"
-          ],
-          "additionalProperties": false
+        "digest": {
+          "$ref": "#/$defs/digest"
         }
-      ]
+      },
+      "required": [
+        "id",
+        "digest"
+      ],
+      "additionalProperties": false
     },
     "previous": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "$ref": "urn:umf:table-deployment:0.1"
-        }
-      ]
+      "$ref": "urn:umf:table-deployment:0.1"
     },
     "next": {
       "$ref": "urn:umf:table-deployment:0.1"
     },
     "fromBundleDigest": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "$ref": "#/$defs/digest"
-        }
-      ]
+      "$ref": "#/$defs/digest"
     },
     "toBundleDigest": {
       "$ref": "#/$defs/digest"

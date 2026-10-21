@@ -7,6 +7,7 @@ const owners:Record<string,readonly string[]>={
  'migration/reviewed.ts':['../compilation/bundle/hash','../model/document','../table-deployment'],
  'migration/phases.ts':['../table-deployment','./phases-options'],
  'migration/phases-options.ts':['../extensions/tables'],
+ 'authoring/row-scope.ts':['../model/json','../model/types','../extensions/tables'],
  'types.ts':['../model/types','../extensions/tables'],
  'configuration.ts':['../model/json','../model/types','./types'],
  'sql.ts':['../model/schema-literals','../extensions/tables','./types','./configuration','./temporal'],
@@ -36,6 +37,8 @@ if(import.meta.main){
  const sources=Object.fromEntries(await Promise.all(files.map(async f=>[f,await readFile(new URL(f,base),'utf8')])));
  const migration=new URL('../src/table-migration/',import.meta.url);
  for(const file of (await readdir(migration)).filter(f=>f.endsWith('.ts')))sources['migration/'+file]=await readFile(new URL(file,migration),'utf8');
+ const authoring=new URL('../src/table-authoring/',import.meta.url);
+ try{for(const file of (await readdir(authoring)).filter(f=>f.endsWith('.ts')))sources['authoring/'+file]=await readFile(new URL(file,authoring),'utf8');}catch(error){if(!(error instanceof Error)||!('code'in error)||error.code!=='ENOENT')throw error;}
  const errors=checkTableDeploymentBoundaries(sources);
  if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log('Table deployment boundaries: '+Object.keys(sources).length+' pure browser modules; inert SQL; no host I/O');
 }

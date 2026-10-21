@@ -37,6 +37,9 @@ const same=(a:unknown,b:unknown):boolean=>canonical(a)===canonical(b);
 function without(value:object,keys:string[]):Record<string,unknown>{
  return Object.fromEntries(Object.entries(value).filter(([key])=>!keys.includes(key)));
 }
+function withoutSourcePaths<T>(values:readonly T[]):unknown[]{
+ return values.map(value=>value&&typeof value==='object'&&!Array.isArray(value)?without(value as object,['sourcePath']):value);
+}
 function commandOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle):boolean{
  const documents=[previous,next].map(bundle=>readDocument(bundle.source.utf8,bundle.source.format));
  for(const document of documents){
@@ -180,10 +183,10 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
     if(!reviewedMatch(reviewed,previous,next,'change-column-type',fresh.sourcePath,'pg-cast-v1'))throw new UmfError('destructive_change_unreviewed','Safe type widening for '+table.name+'.'+old.name+' requires an exact pg-cast-v1 review marker',fresh.sourcePath);
     typeChangesForTable.push({old,fresh});continue;
    }
-   if(!same(without(tableColumn,['name']),without(freshTableColumn,['name']))||!same(old,fresh))fail('Existing native column type or semantics changed beyond the supported reviewed subset','/next/expectedCatalog/tables/'+tableIndex+'/columns');
+   if(!same(without(tableColumn,['name','sourcePath']),without(freshTableColumn,['name','sourcePath']))||!same(without(old,['sourcePath']),without(fresh,['sourcePath'])))fail('Existing native column type or semantics changed beyond the supported reviewed subset','/next/expectedCatalog/tables/'+tableIndex+'/columns');
   }
   const evolvedRefs=new Set([...renames.map(r=>refKey(r.old.field)),...tightened.map(c=>refKey(c.field)),...relaxed.map(c=>refKey(c.field)),...typeChangesForTable.map(c=>refKey(c.old.field))]);
-  if(!same(retained.filter(x=>!evolvedRefs.has(refKey(x.field))),expectedRetained.filter(x=>!evolvedRefs.has(refKey(x.field))))||!same(oldExpected.filter(x=>!evolvedRefs.has(refKey(x.field))),newExpected.filter(x=>!evolvedRefs.has(refKey(x.field)))))fail('Existing native columns changed beyond reviewed changes','/next/expectedCatalog/tables/'+tableIndex+'/columns');
+  if(!same(withoutSourcePaths(retained.filter(x=>!evolvedRefs.has(refKey(x.field)))),withoutSourcePaths(expectedRetained.filter(x=>!evolvedRefs.has(refKey(x.field)))))||!same(withoutSourcePaths(oldExpected.filter(x=>!evolvedRefs.has(refKey(x.field)))),withoutSourcePaths(newExpected.filter(x=>!evolvedRefs.has(refKey(x.field))))))fail('Existing native columns changed beyond reviewed changes','/next/expectedCatalog/tables/'+tableIndex+'/columns');
   if(renames.length)renamedColumns.set(tableIndex,renames);if(tightened.length)notNullColumns.set(tableIndex,tightened);if(relaxed.length)relaxNullColumns.set(tableIndex,relaxed);if(typeChangesForTable.length)typeChanges.set(tableIndex,typeChangesForTable);
   if(removed.length){
    for(const column of removed){if(!reviewedMatch(reviewed,previous,next,'drop-column',column.sourcePath))unreviewedDrop(column,previous,next);assertNoColumnDependents(column,previous,next);}
@@ -283,11 +286,12 @@ function assertNoColumnDependents(column:TableDeploymentBundle['expectedCatalog'
    if(hasRef(item)&&(!replacement||canonical(item)!==canonical(replacement)))affected.push(kind.slice(0,-1)+':'+item.id);
   }
  }
- const tableIndex=previous.expectedCatalog.tables.findIndex(t=>t.id===column.table),oldTable=tables[tableIndex],nextTable=nextTables[tableIndex];
- if(oldTable&&nextTable){
+ for(const oldTable of tables){
+  const nextTable=nextTables.find((fresh:any)=>fresh.id===oldTable.id);
+  if(!nextTable)continue;
   for(const audience of ['person','batch'])for(const command of ['select','insert','update','delete']){
    const before=oldTable.policy?.[audience]?.[command],after=nextTable.policy?.[audience]?.[command];
-   if(hasRef(before)&&hasRef(after))affected.push('policy:'+table.name+'.'+audience+'.'+command);
+   if(hasRef(before)&&hasRef(after))affected.push('policy:'+oldTable.id+'.'+audience+'.'+command);
   }
  }
  if(affected.length)fail('Column '+table.name+'.'+column.name+' is referenced by dependent objects: '+[...new Set(affected)].join(', '),column.sourcePath);
@@ -308,6 +312,8 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   const previous=request.previous===null?null:verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
   if((previous===null)!==(request.predecessor===null))fail('Only initial deployment has a null predecessor','/predecessor');
   const options=migrationOptions(request.options,next,previous);
+  if(options?.version==='umf.table-migration-options/0.2'&&!previous)fail('Version 0.2 phased plans require an installed predecessor; use the legacy initial-install profile until the mixed runtime supports initial publication','/previous');
+  if(previous&&options?.version==='umf.table-migration-options/0.2'&&!same(previous.expectedCatalog.tables.map(t=>t.id).sort(),next.expectedCatalog.tables.map(t=>t.id).sort()))fail('Version 0.2 phased plans cannot add or remove tables until the runtime models absent and newly created table identities explicitly','/next/expectedCatalog/tables');
   let changes:MigrationChanges={policyChanges:new Set(),columnChanges:new Map(),droppedColumns:new Map(),renamedColumns:new Map(),notNullColumns:new Map(),relaxNullColumns:new Map(),typeChanges:new Map(),indexChanges:new Map(),keyChanges:new Map(),foreignKeyChanges:new Map(),checkChanges:new Map(),droppedChecks:new Map(),checkPaths:new Map(),grantChanges:new Map()};
   if(previous){
    changes=appendOnly(previous,next,options,allowLegacyUnreviewedPolicy);
@@ -319,11 +325,13 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   if(previous){
    const emittedColumns=new Set<number>();
    const emittedGrantChanges=new Set<string>();
+   const revokedGrantChanges=new Set<string>();
    const addRevokes=(path:string,tableIndex:number):void=>{
-    const change=changes.grantChanges.get(path);if(!change||!change.previous.length)return;
+    const change=changes.grantChanges.get(path);if(!change||!change.previous.length||revokedGrantChanges.has(path))return;
     const parts=path.split('/'),audience=parts[8] as PolicyAudience,table=next.expectedCatalog.tables[tableIndex]!;
     if(!['person','batch'].includes(audience))fail('Unexpected compiler grant source path',path);
     for(const grant of change.previous)steps.push({id:'',kind:'grant',sourcePath:path,transaction:'required',sql:revokeGrantSql(grant,table,next.configuration,audience)});
+    revokedGrantChanges.add(path);
    };
    for(const step of next.steps){
     const parts=step.sourcePath.split('/');
@@ -333,6 +341,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
     if(step.kind==='table'&&parts.length===7&&!emittedColumns.has(tableIndex)){
      emittedColumns.add(tableIndex);
      const table=next.expectedCatalog.tables[tableIndex]!;
+     if(changes.renamedColumns.get(tableIndex)?.length)for(const path of changes.grantChanges.keys())if(Number(path.split('/')[6])===tableIndex)addRevokes(path,tableIndex);
      for(const rename of changes.renamedColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:rename.fresh.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' RENAME COLUMN '+quoteIdentifier(rename.old.name)+' TO '+quoteIdentifier(rename.fresh.name)});
      for(const column of changes.notNullColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET NOT NULL'});
      for(const column of changes.relaxNullColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' DROP NOT NULL'});

@@ -35,6 +35,16 @@ test('a column drop needs its exact review marker, compiles a digest-bound drop 
   const changedBundle=deploy(changed);expect(compileTableMigration({id:'drop-reviewed',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:changedBundle,options}).status).toBe('blocked');
  }
 });
+test('reviewed middle-column removal preserves unchanged trailing fields by stable Field identity',()=>{
+ const source=legalSource(),next=structuredClone(source),module=next.modules[0]!,payload=module.extensions['umf.tables'],table=payload.tables.find((item:any)=>item.id==='matters')!,element='matters__jurisdiction';
+ table.columns=table.columns.filter((column:any)=>column.field.element!==element);
+ module.elements.find((item:any)=>item.id==='matters')!.members=module.elements.find((item:any)=>item.id==='matters')!.members.filter((field:any)=>field.element!==element);
+ payload.commands.find((command:any)=>command.id==='read_matters')!.body.fields=payload.commands.find((command:any)=>command.id==='read_matters')!.body.fields.filter((field:any)=>field.element!==element);
+ for(const set of payload.seedSets)for(const row of set.rows)if(row.table==='matters')row.values=row.values.filter((value:any)=>value.field.element!==element);
+ const before=deploy(source),after=deploy(next),candidate=discoverTableMigrationChanges(before,after).find(item=>item.kind==='drop-column')!;
+ const result=compileTableMigration({id:'drop-middle-field',predecessor:{id:'old',digest:'7'.repeat(64)},previous:before,next:after,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled')expect(result.plan.steps.some(step=>step.sql==='ALTER TABLE "legal_demo"."matters" DROP COLUMN "jurisdiction"')).toBe(true);
+});
 
 test('column drops resolve nested policy references by stable field identity and require a reviewed policy rewrite',()=>{
  const old=legalSource(),oldTable=old.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!;
@@ -49,6 +59,30 @@ test('column drops resolve nested policy references by stable field identity and
   const drop=result.plan.steps.findIndex(step=>step.sql.includes('DROP COLUMN "court"'));
   expect(policy).toBeGreaterThan(-1);expect(drop).toBeGreaterThan(policy);
  }
+});
+
+test('column drops detect related-policy references from other selected tables and order reviewed rewrites first',()=>{
+ const old=legalSource(),oldJoin=old.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matter_teams')!;
+ // Remove the fixture's reverse relation so this cross-table relation is acyclic.
+ const oldMatters=old.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!;
+ oldMatters.policy.person=Object.fromEntries(['select','insert','update','delete'].map(command=>[command,{kind:'allow'}]));
+ oldJoin.policy.person.select={kind:'related',record:{module:'legal_lifecycle',element:'matters'},matches:[{source:{module:'legal_lifecycle',element:'matter_teams__matter_id'},target:{module:'legal_lifecycle',element:'matters__matter_id'}}],rule:{kind:'owner',field:{element:'matters__court',module:'legal_lifecycle'}}};
+ const next=dropCourt(),nextTables=next.modules[0]!.extensions['umf.tables'].tables,nextJoin=nextTables.find((t:any)=>t.id==='matter_teams')!;
+ nextTables.find((t:any)=>t.id==='matters')!.policy.person=structuredClone(oldMatters.policy.person);
+ nextJoin.policy.person.select={kind:'related',record:{module:'legal_lifecycle',element:'matters'},matches:[{source:{module:'legal_lifecycle',element:'matter_teams__matter_id'},target:{module:'legal_lifecycle',element:'matters__matter_id'}}],rule:{kind:'owner',field:{module:'legal_lifecycle',element:'matters__matter_number'}}};
+ const before=deploy(old),after=deploy(next),markers=discoverTableMigrationChanges(before,after).filter(c=>c.kind==='drop-column'||c.kind==='change-policy').map(marker);
+ const options={version:'umf.table-migration-options/0.2' as const,backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:markers};
+ const denied=compileTableMigration({id:'drop-cross-policy-denied',predecessor:{id:'old',digest:'3'.repeat(64)},previous:before,next:after,options:{...options,reviewedChanges:markers.filter(m=>m.kind!=='change-policy')}});
+ expect(denied.status).toBe('blocked');if(denied.status==='blocked')expect(denied.diagnostics[0]!.code).toBe('destructive_change_unreviewed');
+ const result=compileTableMigration({id:'drop-cross-policy-reviewed',predecessor:{id:'old',digest:'3'.repeat(64)},previous:before,next:after,options});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  const rewrite=result.plan.steps.findIndex(step=>step.sql.startsWith('ALTER POLICY "umf_person_select" ON "legal_demo"."matter_teams"'));
+  const drop=result.plan.steps.findIndex(step=>step.sql.includes('DROP COLUMN "court"'));
+  expect(rewrite).toBeGreaterThan(-1);expect(drop).toBeGreaterThan(rewrite);
+ }
+ const unresolved=structuredClone(next);unresolved.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matter_teams')!.policy.person.select=structuredClone(oldJoin.policy.person.select);
+ const unresolvedResult=compileTableDeployment({text:JSON.stringify(unresolved),configuration});
+ expect(unresolvedResult.status).toBe('blocked');
 });
 
 test('column drops resolve nested command references independent of object key order',()=>{
@@ -87,6 +121,19 @@ test('reviewed column rename and NOT NULL tightening compile only with exact sou
  const relaxed=compileTableMigration({id:'not-null-relaxed',predecessor:{id:'old',digest:'b'.repeat(64)},previous:strictBundle,next:strictBefore,options:relaxedOptions});
  if(relaxed.status==='blocked')throw Error(JSON.stringify(relaxed.diagnostics));expect(relaxed.status).toBe('compiled');if(relaxed.status==='compiled')expect(relaxed.plan.steps.some(s=>s.sql==='ALTER TABLE "legal_demo"."matters" ALTER COLUMN "close_date" DROP NOT NULL')).toBe(true);
 });
+test('renamed columns revoke old column grants before changing the physical name',()=>{
+ const source=legalSource(),oldTable=source.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='matters')!;
+ oldTable.policy.person.select={kind:'owner',field:{module:'legal_lifecycle',element:'matters__court'}};
+ const before=deploy(source),nextSource=structuredClone(source),nextTable=nextSource.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='matters')!;
+ nextTable.columns.find((column:any)=>column.field.element==='matters__court')!.name='court_name';
+ const next=deploy(nextSource),candidate=discoverTableMigrationChanges(before,next).find(item=>item.kind==='rename-column')!,markerValue=marker(candidate);
+ const result=compileTableMigration({id:'rename-with-column-grant',predecessor:{id:'old',digest:'1'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[markerValue]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  const rename=result.plan.steps.findIndex(step=>step.sql.includes('RENAME COLUMN "court" TO "court_name"'));
+  const revoke=result.plan.steps.findIndex(step=>step.sql.includes('REVOKE')&&step.sql.includes('"court"'));
+  expect(revoke).toBeGreaterThan(-1);expect(rename).toBeGreaterThan(revoke);
+ }
+});
 
 test('type changes require a digest-bound explicit safe PostgreSQL widening conversion',()=>{
  const source=legalSource(),before=deploy(source),widened=structuredClone(source),module=widened.modules[0]!,table=module.extensions['umf.tables'].tables.find(x=>x.id==='timekeepers')!;
@@ -99,7 +146,11 @@ test('type changes require a digest-bound explicit safe PostgreSQL widening conv
  const result=compileTableMigration({id:'type-reviewed',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next,options});
  expect(result.status).toBe('compiled');if(result.status==='compiled')expect(result.plan.steps.some(s=>s.sql.includes('ALTER COLUMN "billing_rate" TYPE pg_catalog."numeric"(12,2) USING "billing_rate"::pg_catalog."numeric"(12,2)'))).toBe(true);
  const unsafe=structuredClone(widened);unsafe.modules[0]!.extensions['umf.tables'].tables.find((x:any)=>x.id==='timekeepers')!.columns.find((c:any)=>c.field.element==='timekeepers__billing_rate')!.nativeType={kind:'numeric',precision:5,scale:2};unsafe.modules[0]!.elements.find((e:any)=>e.id==='timekeepers__billing_rate')!.facets={precision:5,scale:2};
- expect(compileTableMigration({id:'type-narrowing',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:deploy(unsafe),options}).status).toBe('blocked');
+ const unsafeBundle=deploy(unsafe),unsafeCandidate=discoverTableMigrationChanges(before,unsafeBundle).find(x=>x.kind==='change-column-type')!;
+ const unsafeMarker=marker(unsafeCandidate);unsafeMarker.conversion='pg-cast-v1';
+ const unsafeOptions={...options,reviewedChanges:[unsafeMarker]};
+ const narrowing=compileTableMigration({id:'type-narrowing',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:unsafeBundle,options:unsafeOptions});
+ expect(narrowing.status).toBe('blocked');if(narrowing.status==='blocked')expect(narrowing.diagnostics[0]!.code).toBe('TABLE_MIGRATION_UNSUPPORTED');
 });
 
 test('reviewed index replacement emits an ordered drop and create for the exact source object',()=>{
@@ -208,4 +259,18 @@ test('selected new foreign keys compile as add-not-valid and separate validation
   expect(result.plan.steps.some(s=>s.operation==='validate'&&s.constraintKind==='foreignKey'&&s.sql.endsWith('VALIDATE CONSTRAINT "matters_client_fk"'))).toBe(true);
   expect(result.plan.phases?.some(p=>p.kind==='constraint-add')).toBe(true);expect(result.plan.phases?.some(p=>p.kind==='constraint-validation')).toBe(true);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
  }
+});
+
+test('version 0.2 refuses table inventory changes the phase runtime cannot fence yet',()=>{
+ const old=legalSource(),next=structuredClone(old),module=next.modules[0]!,tables=module.extensions['umf.tables'].tables;
+ const field={module:module.id,element:'audit__id'};
+ module.elements.push({id:'audit__id',name:'audit__id',kind:'field',scalarType:'integer',cardinality:'one',nullability:'required',extensions:{}} as any);
+ module.elements.push({id:'audit',name:'audit',kind:'record',members:[field],keys:[{id:'primary',name:'primary',primary:true,fields:[field]}],extensions:{}} as any);
+ tables.push({id:'audit',record:{module:module.id,element:'audit'},name:'audit',columns:[{field,name:'id',nativeType:{kind:'int4'}}],indexes:[],checks:[],foreignKeys:[],policy:{mode:'native-rls',person:{select:{kind:'deny'},insert:{kind:'deny'},update:{kind:'deny'},delete:{kind:'deny'}},batch:{select:{kind:'allow'},insert:{kind:'deny'},update:{kind:'deny'},delete:{kind:'deny'}}}} as any);
+ const before=deploy(old),after=deploy(next),result=compileTableMigration({id:'add-table-v02',predecessor:{id:'old',digest:'a'.repeat(64)},previous:before,next:after,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[]}});
+ expect(result.status).toBe('blocked');if(result.status==='blocked')expect(result.diagnostics[0]!.message).toContain('cannot add or remove tables');
+});
+test('version 0.2 refuses initial publication until the mixed runtime supports it',()=>{
+ const result=compileTableMigration({id:'initial-v02',predecessor:null,previous:null,next:deploy(legalSource()),options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[]}});
+ expect(result.status).toBe('blocked');if(result.status==='blocked')expect(result.diagnostics[0]!.message).toContain('initial publication is not supported');
 });

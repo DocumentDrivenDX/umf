@@ -15,3 +15,7 @@ test('migration plan owner cannot import hosts, SDKs or private compiler interna
 test('deployment cannot acquire filesystem, driver, native compiler or dynamic execution hooks',()=>{
  for(const[file,text]of [['unknown.ts','export const x=1;'],['ddl.ts',"import fs from 'node:fs';"],['index.ts',"import weft from 'weft';"],['types.ts',"export * from '../access';"],['configuration.ts',"import('./ddl');"],['policies.ts',"fetch('https://example.invalid')"],['sql.ts',"new Function('return 1')"],['sql.ts',"globalThis['eval']('1')"]])expect(checkTableDeploymentBoundaries({[file!]:text!}).length).toBeGreaterThan(0);
 });
+test('row-scope authoring helper has an explicit pure-source owner and rejects host/compiler hooks',()=>{
+ expect(checkTableDeploymentBoundaries({'authoring/row-scope.ts':"import {copyJson} from '../model/json'; import type {TablePolicy} from '../extensions/tables'; export const normalize=(x:unknown)=>copyJson(x);"})).toEqual([]);
+ for(const text of ["import fs from 'node:fs';",'fetch(\'https://example.invalid\')',"import('../table-deployment/ddl')",'process.env.HOME'])expect(checkTableDeploymentBoundaries({'authoring/row-scope.ts':text}).length).toBeGreaterThan(0);
+});
