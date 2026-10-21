@@ -6,7 +6,7 @@ import {createValidator} from '../../src/validation/schema';
 import migrationV2Schema from '../../spec/extensions/tables/migration-0.2.schema.json';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
 import tableSchema from '../../spec/extensions/tables/schema.json';
-import {legalSource,indexedLegalSource} from './legal-fixture';
+import {legalSource,evolvedLegalSource,indexedLegalSource} from './legal-fixture';
 const configuration={module:'legal_lifecycle',schema:'legal_demo',ownerRole:'legal_owner',personRole:'legal_person',batchRole:'legal_batch',groupRoles:{billing_admin:'legal_billing_admin'}};
 function deploy(source:any){const result=compileTableDeployment({text:JSON.stringify(source),configuration});if(result.status!=='compiled')throw Error(JSON.stringify(result));return result.bundle;}
 
@@ -44,7 +44,11 @@ test('column drops resolve nested policy references by stable field identity and
  const refused=compileTableMigration({id:'drop-policy-unreviewed',predecessor:{id:'old',digest:'9'.repeat(64)},previous:before,next:after,options:{...options,reviewedChanges:options.reviewedChanges.filter((m:any)=>m.kind!=='change-policy')}});
  expect(refused.status).toBe('blocked');if(refused.status==='blocked')expect(refused.diagnostics[0]!.code).toBe('destructive_change_unreviewed');
  const result=compileTableMigration({id:'drop-policy-reviewed',predecessor:{id:'old',digest:'9'.repeat(64)},previous:before,next:after,options});
- expect(result.status).toBe('compiled');if(result.status==='compiled')expect(result.plan.steps.some(step=>step.sql.startsWith('ALTER POLICY "umf_person_select"'))).toBe(true);
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  const policy=result.plan.steps.findIndex(step=>step.sql.startsWith('ALTER POLICY "umf_person_select"'));
+  const drop=result.plan.steps.findIndex(step=>step.sql.includes('DROP COLUMN "court"'));
+  expect(policy).toBeGreaterThan(-1);expect(drop).toBeGreaterThan(policy);
+ }
 });
 
 test('column drops resolve nested command references independent of object key order',()=>{
@@ -155,6 +159,17 @@ test('reviewed foreign-key replacement drops the old constraint before adding th
  expect(result.status).toBe('compiled');if(result.status==='compiled'){
   const drop=result.plan.steps.findIndex(s=>s.sql.includes('DROP CONSTRAINT "matter_teams_fk_0"'));
   const add=result.plan.steps.findIndex(s=>s.sql.includes('ADD CONSTRAINT "matter_teams_fk_0"')&&s.sql.includes('ON DELETE CASCADE'));
+  expect(drop).toBeGreaterThan(-1);expect(add).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+ }
+});
+
+test('reviewed check-constraint replacement drops the old definition before adding its successor',()=>{
+ const source=evolvedLegalSource().source,before=deploy(source),changed=structuredClone(source),check=changed.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id==='matters')!.checks.find((c:any)=>c.id==='positive_id')!;
+ check.expression.right.value.integerToken='10';const next=deploy(changed),candidate=discoverTableMigrationChanges(before,next).find(x=>x.kind==='replace-check')!;
+ const result=compileTableMigration({id:'check-reviewed',predecessor:{id:'old',digest:'7'.repeat(64)},previous:before,next,options:{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker(candidate)]}});
+ expect(result.status).toBe('compiled');if(result.status==='compiled'){
+  const drop=result.plan.steps.findIndex(s=>s.sql.includes('DROP CONSTRAINT "matters_positive_id"'));
+  const add=result.plan.steps.findIndex(s=>s.sql.includes('ADD CONSTRAINT "matters_positive_id"')&&s.sql.includes('E\'1e1\''));
   expect(drop).toBeGreaterThan(-1);expect(add).toBeGreaterThan(drop);expect(verifyTableMigration(result.plan)).toEqual(result.plan);
  }
 });

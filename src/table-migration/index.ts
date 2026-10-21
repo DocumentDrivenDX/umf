@@ -283,6 +283,13 @@ function assertNoColumnDependents(column:TableDeploymentBundle['expectedCatalog'
    if(hasRef(item)&&(!replacement||canonical(item)!==canonical(replacement)))affected.push(kind.slice(0,-1)+':'+item.id);
   }
  }
+ const tableIndex=previous.expectedCatalog.tables.findIndex(t=>t.id===column.table),oldTable=tables[tableIndex],nextTable=nextTables[tableIndex];
+ if(oldTable&&nextTable){
+  for(const audience of ['person','batch'])for(const command of ['select','insert','update','delete']){
+   const before=oldTable.policy?.[audience]?.[command],after=nextTable.policy?.[audience]?.[command];
+   if(hasRef(before)&&hasRef(after))affected.push('policy:'+table.name+'.'+audience+'.'+command);
+  }
+ }
  if(affected.length)fail('Column '+table.name+'.'+column.name+' is referenced by dependent objects: '+[...new Set(affected)].join(', '),column.sourcePath);
 }
 
@@ -335,7 +342,6 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
      for(const fk of changes.foreignKeyChanges.get(tableIndex)?.drops??[])steps.push({id:'',kind:'table',sourcePath:'/next/expectedCatalog/foreignKeys/'+fk.id,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(fk.name)});
      for(const key of changes.keyChanges.get(tableIndex)?.drops??[])steps.push({id:'',kind:'table',sourcePath:'/next/expectedCatalog/keys/'+key.id,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(key.name)});
      for(const key of changes.keyChanges.get(tableIndex)?.adds??[])steps.push({id:'',kind:'table',sourcePath:'/next/expectedCatalog/keys/'+key.id,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD '+key.definitionSql});
-     for(const column of changes.droppedColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP COLUMN '+quoteIdentifier(column.name)});
      for(const column of changes.columnChanges.get(tableIndex)??[]){
       steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD COLUMN '+(quoteIdentifier(column.name)+' '+nativeType(table.columns.find(c=>refKey(c.field)===refKey(column.field))!.nativeType)+(column.collation==='C'?' COLLATE pg_catalog.\"C\"':''))});
      }
@@ -401,7 +407,10 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
    const target=quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+(comment.column===undefined?'':'.'+quoteIdentifier(comment.column));
    steps.push({id:'',kind:'comment',sourcePath:'/next/expectedCatalog/comments',transaction:'required',sql:'COMMENT ON '+(comment.column===undefined?'TABLE ':'COLUMN ')+target+' IS NULL'});
   }
- if(steps.length>8192)fail('Migration step count exceeds8192','/steps');
+  const deferredColumnDrops:typeof steps=[];
+  for(const[tableIndex,columns]of changes.droppedColumns){const table=next.expectedCatalog.tables[tableIndex]!;for(const column of columns)deferredColumnDrops.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP COLUMN '+quoteIdentifier(column.name)});}
+  steps.push(...deferredColumnDrops);
+  if(steps.length>8192)fail('Migration step count exceeds8192','/steps');
   const stepIds=new Set(steps.filter(step=>step.id).map(step=>step.id));let syntheticId=90000;
   for(const step of steps)if(!step.id){while(stepIds.has('step-'+String(syntheticId).padStart(5,'0')))syntheticId++;step.id='step-'+String(syntheticId++).padStart(5,'0');stepIds.add(step.id);}
   if(previous&&!steps.length&&!commandOnly(previous,next))fail('A plan without DDL may change only declared commands or source serialization','/next/source');
