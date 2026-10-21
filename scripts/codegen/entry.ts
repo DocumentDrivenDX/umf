@@ -3,7 +3,7 @@
 import './polyfills';
 import {generatePythonClient,type PythonClientRequest} from '../../src/access';
 import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration,verifyTableMigration} from '../../src/table-migration';
+import {compileTableMigration,verifyTableMigration,discoverTableMigrationChanges} from '../../src/table-migration';
 import {normalizeRowScope} from '../../src/table-authoring/row-scope';
 import {inspectTableLifecycle} from '../../src/extensions/tables';
 import {copyJson} from '../../src/model/json';
@@ -17,6 +17,13 @@ Object.assign(globalThis,{__umf_table_migrate(input:string):string {
 },__umf_table_migration_verify(input:string):string {
  try {return JSON.stringify({ok:true,result:verifyTableMigration(JSON.parse(input).plan)});}
  catch(error){const e=error as {code?:string;message?:string;path?:string};return JSON.stringify({ok:false,error:{code:e.code??'MIGRATION_INVALID',message:e.message??'Migration verification refused',...(e.path===undefined?{}:{path:e.path})}});}
+},__umf_table_migration_changes(input:string):string {
+ try {
+  const request=JSON.parse(input);
+  if(!request||typeof request!=='object'||Array.isArray(request)||Object.keys(request).sort().join(',')!=='next,previous')throw new Error('Expected exact previous and next deployment bundle members');
+  const previous=verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
+  return JSON.stringify({ok:true,result:{changes:discoverTableMigrationChanges(previous,next)}});
+ } catch(error){const e=error as {code?:string;message?:string;path?:string};return JSON.stringify({ok:false,error:{code:e.code??'MIGRATION_CHANGES_FAILED',message:e.message??'Reviewed change discovery refused',...(e.path===undefined?{}:{path:e.path})}});}
 }});
 Object.assign(globalThis,{__umf_table_deploy(input:string):string {
  try {return JSON.stringify({ok:true,result:compileTableDeployment(JSON.parse(input))});}

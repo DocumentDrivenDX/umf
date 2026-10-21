@@ -13,77 +13,104 @@ the trusted `billing_admin` alias. Client metadata is explicitly open for reads;
 batch may read and insert matters but cannot update/delete them. All tables retain
 FORCE RLS. Person identity, role provisioning and schema creation remain host-owned.
 
-The second schema adds a required review state, a positive-ID CHECK and the
-original client FK. Its exact scoped backfill is an original zero-parameter
-bounded typed UPDATE. Weft compiles that UPDATE; UMF generates only the surrounding
-DDL. The column starts nullable without its server default, then the reviewed
-backfill runs before DEFAULT/NOT NULL and native correspondence. The literal
-default keeps immutable historical seed rows usable for a fresh installation of
-the final source. Any bound/constraint failure rolls back data, DDL, policy and
-ledger together. Seed execution is explicit; importing metadata executes nothing.
+## Bootstrap and evolution profiles
 
-The third schema appends two concurrent indexes. This is deliberately an
-index-only migration: mixed backfill/concurrent/NOT VALID plans are revision2
-next-release work. Duplicate synthetic matter titles initially make its unique
-index fail. The runner retains the successful prefix, refuses automatic repair,
-and accepts explicit repair only after checking the original failed index shape.
-The immutable ledger advances only after every phase and the final source verify.
+Use the legacy `umf.table-migration/0.1` compiler profile for bootstrap and its
+qualified additive-table path. Its historical plans retain their original exact
+verification behavior. Do not rewrite stored plans when adopting the newer
+evolution profile.
+
+Existing-table evolution uses migration plan `umf.table-migration/0.2` and options
+`umf.table-migration-options/0.2`. It requires an installed predecessor and an
+unchanged table inventory. Initial publication, table additions/removals, and a
+single plan that drops and appends columns are refused. Bootstrap first, then
+evolve a stable existing-table inventory. This profile is a bounded PostgreSQL
+subset, not a general schema migration engine.
+
+Options carry explicit `backfills`, `concurrentIndexes`, `reviewedChanges`, and
+`validations` arrays, including empty arrays. A selected backfill is a source-bound
+parameter-free UPDATE limited to the new column while it is NULL. It is used for
+new columns; existing NULL values cannot be filled by this profile. `validations`
+selects newly added CHECK or foreign-key constraints for separate NOT VALID and
+VALIDATE phases. New concurrent indexes can share a plan with backfills and other
+phases. Seeds have their own ordered data phase and receipt; the finalizer does not
+replay a completed seed phase.
+
+The public TypeScript API `discoverTableMigrationChanges(previous, next)` and the
+Python `umf_codegen.discover_table_migration_changes(previous_bundle, next_bundle)`
+recompile and verify both deployment bundles before returning exact source-bound
+review candidates. Candidates include `oldValue` and `newValue` for human review.
+Copy only `id`, `kind`, `path`, `oldDigest`, and `newDigest` into an option's
+`reviewedChanges`; never copy the explanatory values. Type changes also require an
+explicit `conversion: "pg-cast-v1"` marker. The resulting plan digest binds its
+complete source and approved markers. A marker cannot make an unsupported
+operation executable.
+
+The reviewed subset includes explicit column drop/rename, nullability tightening
+and relaxation, policy changes, and replacement of supported CHECK, FK, index and
+primary-key declarations. Drops disclose immediate irreversible physical value
+purge; metadata history is not a data backup. The compiler checks typed dependent
+commands, policies, inbound references, keys and indexes and refuses unresolved or
+unschedulable dependencies. Column addition/drop compounds and other unsupported
+combinations must be split into independently valid migrations.
+
+Type conversion is limited to safe, capacity-checked PostgreSQL widening pairs:
+`smallint` to `integer`, `integer` to `bigint`, and numeric widening that does not
+reduce scale and increases integral capacity. The exact accepted source and target
+representations are checked by the compiler, and PostgreSQL validates existing
+values and target constraints. Narrowing, cross-family casts, rounding,
+arbitrary expressions, unrelated default/generated/immutable/collation changes,
+and hidden logical facet changes refuse even with a fresh review marker. Existing
+column NULL backfill, online chunked rewrite, retained-value retirement windows,
+and automatic data rollback after purge are unsupported.
 
 ## Python administration
 
-Install the qualified `umf-access`, `umf-codegen` and Weft wheels plus the selected
-Psycopg3 driver in the administrative environment. The compiler/verifier uses
-mini-racer0.14.1; this is not a pure-Python execution environment. Generated plugin
-code remains stdlib-only. All source/profile/wheel versions require their own
-installed evidence; a wheel version alone does not describe a complete cohort.
+Install the `umf-access`, `umf-codegen` and Weft wheels plus the selected Psycopg3
+driver in the administrative environment. The compiler/verifier uses
+mini-racer0.14.1; generated plugin code remains stdlib-only. A wheel version alone
+does not qualify a source/wheel/runtime cohort.
 
-`umf-table new --request request.json --output migration.json` takes the existing
-compiler request `{id,predecessor,previous,next,options?}`. `previous` and `next`
-are source-recompiled deployment bundles; use `compile_table_deployment` from
-`umf_codegen` to build them with the trusted host's schema/role configuration.
-`options` uses `umf.table-migration-options/0.1`, with explicit `backfills` and
-`concurrentIndexes` arrays as shown in the generated fixture files. New refuses
-to overwrite an existing file. `python -m umf_access.lifecycle.cli` is equivalent.
+`umf-table new --request request.json --output migration.json` compiles the
+complete `{id,predecessor,previous,next,options?}` request. `previous` and `next`
+are source-recompiled deployment bundles; `compile_table_deployment` creates them
+with the trusted host's schema and role configuration. Use the public Python
+discovery function above to author review markers, then compile the request.
+`umf-table check --plan ... --current-bundle current.json` verifies ordered
+predecessors and the final source. A trusted file manifest can bind original file
+bytes; a rehashed plan alone does not provide host authority.
 
-`umf-table check --plan 001.json --plan 002.json --current-bundle current.json`
-verifies ordered predecessors and the final source snapshot. Add `--manifest`
-with a trusted JSON mapping of each filename to its SHA256 to verify original file
-bytes too. A rehashed plan is not authority: verification recompiles complete
-source and refuses substituted SQL. An edited file with an unchanged applied
-plan also refuses on replay because the CLI records its original byte digest.
-The library's optional `file_digest` is supplied by the trusted file-reading host;
-older entries without byte digests retain canonical-plan verification only.
+`umf-table apply` routes plans with the v0.2 execution profile to the public
+`umf_access.lifecycle.apply_mixed_migration` runner. It requires an explicitly
+supplied idle-autocommit connection, approved plan digest, expected head and
+person-role set. The CLI accepts the explicit DSN and approval arguments, owns its
+connection transaction/session behavior, and reports success only after durable
+publication. The mixed runner holds the session lock across phases, fences normal
+lifecycle data access while progress is incomplete, and resumes only the same
+approved source-bound plan. Legacy transaction-only plans continue through
+`apply_table_migration`; import and compilation execute no database effects.
 
-`umf-table apply --plan migration.json --dsn 'service=plugin_install' --approved-digest DIGEST --expected-head PRIOR_ENTRY_DIGEST --person-role ALICE --person-role BOB`
-opens only that explicitly supplied session. Use `initial` for the initial expected
-head. The host must already have provisioned the private schema, separate NOLOGIN
-install owner and audiences. Approval must match the complete plan digest. Normal
-library application requires a caller-owned transaction; the CLI commits its own
-explicit transaction and never reports success before it commits.
+UMF owns source comparison, review candidates, plan binding and refusal. Weft owns
+lowering declared typed data operations such as the scoped backfill. The native
+host owns credentials, connection selection, durable locking/progress/history,
+approval, PostgreSQL catalog/data checks, recovery and publication. PostgreSQL
+evidence does not qualify managed Praxis/Lakebase or another storage backend.
 
-Concurrent plans use a separate idle-autocommit runner. Its session lock spans
-all phases. It durably revokes person/batch access to the fixed lifecycle metadata
-head before the first index build; lifecycle data calls remain blocked after a
-failure or an in-progress return. Verification grants exist only in a rolled-back
-savepoint. Final head access and ledger publication commit together. Resume the
-same approved plan and expected predecessor. `--repair-invalid` explicitly allows
-removal/rebuild of an exact source-selected failed index; it cannot authorize an
-unrelated drop. Direct SQL outside lifecycle clients remains the host's custody.
-The fixed administrative metadata view is separate from author-supplied stored SQL.
+The fixed administrative metadata view is separate from author-supplied stored
+SQL. Direct SQL outside the lifecycle clients remains under host custody.
 
-Descriptions generate deployment bundle0.2 comments. Legacy bundle0.1 recovery
-retains its original comment-free generation, including description-bearing old
-sources; a new migration can explicitly install their comments. Unsupported
-existing-object/destructive transformations still refuse, even if a caller
-approves a digest. See [revision2 sequencing](../../01-frame/praxis-lifecycle-roadmap.md#next-release-requirements--praxis-revision2-2026-10-21).
+## Validation and remaining limits
 
-## Validation
+The migration implementation plan tracks residuals MIG-G01 through MIG-G11 in
+[`schema-migration-plan.md`](../schema-migration-plan.md). Those entries include
+existing-column NULL fills, arbitrary row transforms, general defaults, narrowing,
+retirement/restore, online chunked rewrites, cross-document work, non-PostgreSQL
+backends, managed-consumer qualification, v0.2 inventory/bootstrap and combined
+column drop/append. They are explicit scope limits, not implied support.
 
-`tests/lifecycle/migration.test.ts` checks source/schema/SQL custody and refusals.
-`tests/lifecycle/test_cli.py` checks offline CLI and history semantics.
-`tests/lifecycle/native.py --dsn SERVICE_DSN --report REPORT` provisions disposable
-synthetic schemas and roles on PostgreSQL18 and cleans them up. It verifies actual
-membership isolation, generated sync page/action/replay, file/history checks,
-backfill rollback, constraints, index recovery/fence and comment drift. Run only
-on an explicitly selected development database with authority to create its
-isolated roles/schemas. It establishes no private Praxis or Lakebase acceptance.
+Portable source, schema and browser parity tests cover candidate discovery,
+compilation and refusal behavior. Python source verification and native PostgreSQL
+acceptance must be reported against the final integrated source and installed
+assets. Do not treat candidate or local evidence as managed production acceptance.
+Run native tests only on an explicitly selected development database with
+authority to create isolated roles and schemas.

@@ -180,6 +180,11 @@ jobs:
         run: >-
           python -I tests/codegen/migration_probe.py
           --corpus /tmp/umf-migration-corpus.json --report /tmp/umf-migration-python.json
+      - run: bun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json
+      - name: Installed reviewed-change discovery parity and source-forgery refusals
+        run: >-
+          python -I tests/codegen/reviewed_changes_probe.py
+          --corpus /tmp/umf-reviewed-changes-corpus.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
