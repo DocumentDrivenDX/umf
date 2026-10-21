@@ -36,8 +36,9 @@ does not qualify managed Praxis/Lakebase or another storage backend.
 ## Highlights
 
 - Versioned `umf.table-migration/0.2` plans add bounded existing-table evolution
-  with durable mixed execution phases. The legacy 0.1 compiler and historical
-  plan verification retain their original versioned behavior.
+  with durable mixed execution phases. Legacy 0.1 bootstrap/additive support and
+  exact historical verification/replay remain. New effects require admission
+  through the current public compiler, including explicit policy-change review.
 - Reviewed source-bound changes cover selected column, nullability, policy,
   CHECK/FK, index and primary-key changes. `discoverTableMigrationChanges` and
   `discover_table_migration_changes` return candidates with source values for
