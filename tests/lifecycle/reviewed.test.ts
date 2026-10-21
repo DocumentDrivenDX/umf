@@ -49,6 +49,10 @@ test('reviewed column rename and NOT NULL tightening compile only with exact sou
   expect(tightened.plan.steps.some(s=>s.sql==='ALTER TABLE "legal_demo"."matters" ALTER COLUMN "close_date" SET NOT NULL')).toBe(true);
   expect(verifyTableMigration(tightened.plan)).toEqual(tightened.plan);
  }
+ const relaxedCandidate=discoverTableMigrationChanges(strictBundle,strictBefore).find(x=>x.kind==='relax-not-null')!;
+ const relaxedOptions={...options,reviewedChanges:[marker(relaxedCandidate)]};
+ const relaxed=compileTableMigration({id:'not-null-relaxed',predecessor:{id:'old',digest:'b'.repeat(64)},previous:strictBundle,next:strictBefore,options:relaxedOptions});
+ if(relaxed.status==='blocked')throw Error(JSON.stringify(relaxed.diagnostics));expect(relaxed.status).toBe('compiled');if(relaxed.status==='compiled')expect(relaxed.plan.steps.some(s=>s.sql==='ALTER TABLE "legal_demo"."matters" ALTER COLUMN "close_date" DROP NOT NULL')).toBe(true);
 });
 
 test('type changes require a digest-bound explicit safe PostgreSQL widening conversion',()=>{

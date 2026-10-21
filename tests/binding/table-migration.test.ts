@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {compileTableDeployment,type TableDeploymentBundle} from '../../src/table-deployment';
-import {compileTableMigration,verifyTableMigration,type TableMigrationRequest} from '../../src/table-migration';
+import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration,type TableMigrationRequest} from '../../src/table-migration';
 import {tableOperationSource} from '../unified/table-operation-fixture';
 import {hashCanonical} from '../../src/compilation/bundle/hash';
 import {createValidator} from '../../src/validation/schema';
@@ -13,6 +13,7 @@ import {appendedTableSource as appended,indexedTableSource as indexed} from '../
 const configuration={module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{readers:'plugin_readers'}};
 const source=()=>structuredClone(fixture) as any;
 function bundle(doc=source()):TableDeploymentBundle{const r=compileTableDeployment({text:JSON.stringify(doc),configuration});if(r.status!=='compiled')throw Error(JSON.stringify(r));return r.bundle;}
+function reviewedOptions(previous:TableDeploymentBundle,next:TableDeploymentBundle){return {version:'umf.table-migration-options/0.2' as const,backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:discoverTableMigrationChanges(previous,next).map(({oldValue:_old,newValue:_new,...marker})=>marker)};}
 const initial=():TableMigrationRequest=>({id:'001',predecessor:null,previous:null,next:bundle()});
 const forward=():TableMigrationRequest=>({id:'002',predecessor:{id:'001',digest:'a'.repeat(64)},previous:bundle(),next:bundle(appended())});
 test('initial plan retains exact source and ordered compiler steps; approval is not inferred',()=>{
@@ -72,7 +73,7 @@ test('nullable appended columns and grant-preserving policy revisions compile as
  module.elements.push(field);module.elements.find((element:any)=>element.id==='Note')!.members.push({module:'demo',element:'summary'});
  table.columns.push({field:{module:'demo',element:'summary'},name:'summary',nativeType:{kind:'text'}});
  table.policy.person.select={kind:'allow'};
- const previous=bundle(),next=bundle(doc),input={id:'column-policy-002',predecessor:{id:'column-policy-001',digest:'c'.repeat(64)},previous,next};
+ const previous=bundle(),next=bundle(doc),input={id:'column-policy-002',predecessor:{id:'column-policy-001',digest:'c'.repeat(64)},previous,next,options:reviewedOptions(previous,next)};
  const result=compileTableMigration(input);if(result.status!=='compiled')throw Error(JSON.stringify(result));
  expect(result.plan.steps.map(step=>step.sql)).toEqual([
   'ALTER TABLE "plugin_demo"."notes" ADD COLUMN "summary" pg_catalog."text" COLLATE pg_catalog."C"',
@@ -114,13 +115,13 @@ test('policy allow/deny transitions alter the source policy and reconcile its ex
  const allowed=source(),denied=structuredClone(allowed);
  denied.modules[0]!.extensions['umf.tables'].tables[0]!.policy.person.insert={kind:'deny'};
  const first=bundle(allowed),second=bundle(denied);
- const disabled=compileTableMigration({id:'policy-002',predecessor:{id:'policy-001',digest:'e'.repeat(64)},previous:first,next:second});
+ const disabled=compileTableMigration({id:'policy-002',predecessor:{id:'policy-001',digest:'e'.repeat(64)},previous:first,next:second,options:reviewedOptions(first,second)});
  if(disabled.status!=='compiled')throw Error(JSON.stringify(disabled));
  expect(disabled.plan.steps.map(step=>step.sql)).toEqual([
   'ALTER POLICY "umf_person_insert" ON "plugin_demo"."notes" WITH CHECK (FALSE)',
   'REVOKE INSERT ON TABLE "plugin_demo"."notes" FROM "plugin_person"',
  ]);
- const enabled=compileTableMigration({id:'policy-003',predecessor:{id:'policy-002',digest:disabled.plan.digest},previous:second,next:first});
+ const enabled=compileTableMigration({id:'policy-003',predecessor:{id:'policy-002',digest:disabled.plan.digest},previous:second,next:first,options:reviewedOptions(second,first)});
  if(enabled.status!=='compiled')throw Error(JSON.stringify(enabled));
  expect(enabled.plan.steps.map(step=>step.sql)).toEqual([
   'ALTER POLICY "umf_person_insert" ON "plugin_demo"."notes" WITH CHECK (("owner" COLLATE pg_catalog."C" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog."C"))',

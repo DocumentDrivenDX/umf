@@ -3,7 +3,7 @@ import {canonical,hashCanonical} from '../compilation/bundle/hash';
 import {readDocument} from '../model/document';
 import type {TableDeploymentBundle} from '../table-deployment';
 
-export type ReviewedChangeKind='drop-column'|'rename-column'|'change-column-type'|'tighten-not-null'|'replace-check'|'replace-foreign-key'|'replace-index'|'replace-primary-key'|'change-policy';
+export type ReviewedChangeKind='drop-column'|'rename-column'|'change-column-type'|'tighten-not-null'|'relax-not-null'|'replace-check'|'replace-foreign-key'|'replace-index'|'replace-primary-key'|'change-policy';
 export interface ReviewedChangeMarker {
  id:string;kind:ReviewedChangeKind;path:string;oldDigest:string;newDigest:string;conversion?:string;
 }
@@ -34,6 +34,7 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
    if(old.name!==fresh.name)add('rename-column',path,oldMeaning,newMeaning);
    if(canonical({typeSchema:old.typeSchema,typeName:old.typeName,typeMod:old.typeMod})!==canonical({typeSchema:fresh.typeSchema,typeName:fresh.typeName,typeMod:fresh.typeMod}))add('change-column-type',path,oldMeaning,newMeaning);
    if(old.nullable&&!fresh.nullable)add('tighten-not-null',path,oldMeaning,newMeaning);
+   if(!old.nullable&&fresh.nullable)add('relax-not-null',path,oldMeaning,newMeaning);
   }
   for(const kind of ['checks','foreignKeys','indexes','keys'] as const){
    const oldItems=(previous.expectedCatalog[kind] as {table:string;id:string}[]).filter(x=>x.table===oldTable.id),newItems=(next.expectedCatalog[kind] as {table:string;id:string}[]).filter(x=>x.table===oldTable.id);
