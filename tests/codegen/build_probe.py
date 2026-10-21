@@ -17,7 +17,7 @@ with tempfile.TemporaryDirectory() as directory:
     # Test-only presence sentinel for the hook's repository-input verification.
     (repository/'.helix.yml').write_text('# test fixture\n')
     manifest=json.loads((package/'src/umf_codegen/_assets/manifest.json').read_text())
-    assert manifest['operations'] == ['generatePythonClient','compileTableDeployment','verifyTableDeployment','compileTableMigration','verifyTableMigration','normalizeRowScope']
+    assert manifest['operations'] == ['generatePythonClient','compileTableDeployment','verifyTableDeployment','compileTableMigration','verifyTableMigration','normalizeRowScope','discoverTableMigrationChanges']
     for name in manifest['inputs']:
         if name.startswith('node_modules/'):continue
         destination=repository/name;destination.parent.mkdir(parents=True,exist_ok=True)
