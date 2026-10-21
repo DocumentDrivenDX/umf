@@ -273,9 +273,9 @@ function assertNoColumnDependents(column:TableDeploymentBundle['expectedCatalog'
  const oldDocument=readDocument(previous.source.utf8,previous.source.format),newDocument=readDocument(next.source.utf8,next.source.format);
  const module=oldDocument.modules.find(m=>m.id===previous.module),nextModule=newDocument.modules.find(m=>m.id===previous.module);
  const tables=(module?.extensions?.['umf.tables'] as any)?.tables??[],nextTables=(nextModule?.extensions?.['umf.tables'] as any)?.tables??[];
- const ref=JSON.stringify(column.field);
- const hasRef=(value:unknown):boolean=>Array.isArray(value)?value.some(hasRef):!!value&&typeof value==='object'?(canonical(value)===ref||Object.values(value).some(hasRef)):false;
- for(const[commandIndex,command]of ((module?.extensions?.['umf.tables'] as any)?.commands??[]).entries())if(hasRef(command))affected.push('command:'+(command.id??commandIndex));
+ const hasRef=(value:unknown):boolean=>Array.isArray(value)?value.some(hasRef):!!value&&typeof value==='object'?(canonical(value)===canonical(column.field)||Object.values(value).some(hasRef)):false;
+ const oldCommands=(module?.extensions?.['umf.tables'] as any)?.commands??[],newCommands=(nextModule?.extensions?.['umf.tables'] as any)?.commands??[];
+ for(const[commandIndex,command]of oldCommands.entries())if(hasRef(command)){const successor=newCommands.find((item:any)=>item.id===command.id);if(successor&&hasRef(successor))affected.push('command:'+(command.id??commandIndex));}
  for(const[tableIndex,tableDef]of tables.entries()){
   const fresh=nextTables[tableIndex]??{};
   for(const[kind,items]of Object.entries({checks:tableDef.checks??[],foreignKeys:tableDef.foreignKeys??[],indexes:tableDef.indexes??[]}))for(const item of items as any[]){
