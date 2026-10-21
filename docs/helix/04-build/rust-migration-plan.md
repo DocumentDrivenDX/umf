@@ -34,8 +34,10 @@ Move UMF-owned shared executable semantics to Rust. Deliver one Rust engine as a
 native CLI, Python bindings, Node/Bun bindings and browser WASM. First remove V8
 from the complete Python generator operation surface; then finish the broader
 single-source migration. Neither milestone implies new native semantic support.
-The owner authorizes R0/R1 execution in a worktree, with Sol planning/review and
-Luna implementation in parallel. R2–R8 and publication remain separate actions.
+The owner authorizes R0–R2 in this worktree, with Sol planning/review and Luna
+implementation in parallel. R2 includes resolving production interfaces/resources,
+implementation, tests, review, main integration and the PR/merge handoff. R3–R8
+and package publication remain separate actions.
 
 Governing artifacts: [ADR-006](../02-design/adr/ADR-006-shared-rust-implementation.md),
 [PRD](../01-frame/prd.md), [cross-cutting requirements](../01-frame/cross-cutting-requirements.md),
@@ -119,10 +121,12 @@ versions as supported APIs. Historical fixtures remain usable as inert controls.
 | R7 | Default JS/browser and tooling retirement; ADR-005/006, CONTRACT-077/080 | R5, R6 | Node and Bun default to the qualified Rust binding; browser defaults to same Rust engine in WASM. Port remaining shared metamodel/reference/pack/build computation, keep UI and test harness glue. Complete export/module/dependency retirement census, no shipped fallback engine, no duplicated semantic kernels. Consumer and browser journeys pass with packaged artifacts. |
 | R8 | Integrated qualification and release preparation; TP-001 | R4–R7 | Full regression and required native corpus from one captured source cohort, clean builds, installed wheels/npm/CLI/WASM, current docs/reference/examples/notices and independent review. Produce release artifacts and hashes; actual publication/deployment requires separate authorization. Milestone B below. |
 
-R0's proposed single migration command is `bun run check:rust-boundaries`, to be
-implemented and wired locally, in pre-commit and CI before R2. It extends the
-existing `check:access-boundaries`, `check:core-authority` and
-`check:unified-client-boundaries` checks; it is not an existing passing command.
+The migration command `bun run check:rust-boundaries` is implemented and wired
+locally, in pre-commit and CI. R2 extends it for production crate/binding ownership
+and successor generated provenance; it complements `check:access-boundaries`,
+`check:core-authority` and `check:unified-client-boundaries`. The R0/R1 captures
+remain historical source-bound evidence; new R2 captures identify their own inputs.
+
 It checks the Cargo dependency graph and cross-language imports, core-to-host
 cycles/private access, forbidden JS engines/subprocess fallbacks, generated
 provenance and obsolete kernel imports. Include allowed and forbidden import
@@ -244,7 +248,7 @@ compatibility with a different documentation release.
 Execute R0–R8 only after implementation authorization, in dependency order, through
 their gates. Scope includes ordinary debugging and relevant canonical documentation;
 publication, production deployment, external messages and consumer-repository
-semantic changes are separately authorized. One plan is sufficient; no tracker is selected. For R0/R1 the owner selects
+semantic changes are separately authorized. One plan is sufficient; no tracker is selected. For R0–R2 the owner selects
 Sol for planning/review and Luna agents for implementation, using parallel work
 where file ownership and dependencies permit it.
 
@@ -262,7 +266,7 @@ gates. No dates, speedup or package-size promises are made.
 R0/R1 executed in the managed `rust-binding-spike` worktree on
 `codex/rust-binding-spike`. Sol planned and independently reviewed the slices;
 Luna agents implemented the census/boundary gate, Rust engine/bindings and installed
-package/browser harness in parallel. R2–R8 remain unexecuted. Aggregate runtime
+package/browser harness in parallel. At that checkpoint R2–R8 remained unexecuted. Aggregate runtime
 agent-token metering was unavailable; neither an enforced ceiling nor a measured
 whole-migration cost is claimed.
 
@@ -335,9 +339,11 @@ and final capture requests are resolved. The existing access-boundary gate also
 passes (nine TypeScript files and 81 Python modules, zero violations). No complete
 production/native compatibility corpus was replayed for this experimental slice.
 Neither Milestone A nor Milestone B is complete.
-The next implementation slice is R2 after its explicit authorization and the
-production interface/resource decisions above; no production cutover or release
-has been performed.
+R2 is now authorized. Sol reviewed and completed its production interface/resource
+freeze in CONTRACT-080/TD-091/STP-091 before the parallel implementation began. The working branch is kept
+current with main at integration checkpoints; preserve other agents' work and
+replay affected tests when the source cohort changes. No production package
+publication is authorized by this slice.
 
 ## Exit criteria
 
@@ -352,3 +358,42 @@ closed retirement census, fresh source-bound native/browser/installed evidence,
 updated consumer-facing documentation and review. Release publication and native
 claims outside the tested matrix remain separate. No incomplete adapter or
 consumer gate is closed by the language migration.
+
+## R2 execution and continuation
+
+The owner selects the same worktree and an active runtime goal through tested,
+reviewed integration and PR/merge. R0/R1 was checkpointed before merging current
+main; append-only requirement/test/plan conflicts preserved both workstreams.
+Sol owns production interface/resource decisions and independent review. Luna
+preparation is read-only until that freeze; implementation then uses three
+disjoint shards for foundation/compiler, literal/program/registry, and production
+bindings/installed conformance. Root owns integration, plan/evidence reconciliation
+and Git/PR operations.
+
+No additional R2 token ceiling was specified. The R0/R1 provisional accounting
+limit does not describe R2. Comparable full-port usage is unavailable; use the
+active goal's available metering at implementation checkpoints and retain honest
+limits on agent-wide accounting. Estimate remaining work from actual port/test
+results; no calendar, performance or monetary promise is made.
+
+Current state: main synchronized through `2ede4c879`; the production freeze is
+complete and three Luna implementation shards are active. The owned UTF-16 value,
+closed private wire, explicit immutable resources and host callback tokens are
+frozen. Cooperative limits are the supported profile; HardIsolated must fail
+before work. Production core/compound compiler closures have no R1 entropy
+exception. The native compiler owns nine portable outputs; the Bun assembler
+adds the explicit Ajv standalone backend and final manifest (eleven total).
+The synchronous TypeScript build APIs now delegate to native Rust rather than
+retain executable compiler logic. Full semantic and installed parity is pending.
+
+Initial integration checks: TypeScript typechecks and authored-authority checks
+pass; nine boundary negative controls and four inventory controls pass; four JS
+host-admission tests pass. The separate R2 live inventory and boundary capture
+preserve the immutable R0/R1 cohorts. See
+[R2 integration evidence](evidence/rust-migration/r2/integration.md) for exact
+commands, intentional debt-pin/lock adaptation and outstanding qualification.
+Next: finish compiler/schema/serialization, full literals/program/registry and
+installed native/Python/Node/Bun/Chromium paths; run the full frozen and mutation
+corpus, resolve Sol review findings, refresh evidence and main, then PR/merge.
+R2 completion requires all work represented by its row above; unresolved support
+subsets are gaps, not permission to call a smaller port complete.

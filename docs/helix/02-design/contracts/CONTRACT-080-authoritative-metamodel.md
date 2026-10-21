@@ -199,3 +199,194 @@ callback source context, bootstrap independence, fixed-point generation and
 unknown-content requirements remain. No core version change follows solely from
 changing language; any semantic or public-interface correction requires its own
 reviewed compatibility decision.
+
+
+### R2 production Rust interface and resource freeze
+
+R2 implements the complete current compiler, structural gate, literal/domain
+mechanics, ordered program, registry, copying and serialization. The three R1
+operations and their JSON request protocol are experimental controls, not the
+production interface. R3 generators and R4 codegen-package/V8 removal are separate.
+The existing TypeScript/Python implementations remain frozen differential inputs
+until their respective qualified cutovers; their historical results are not Rust
+evidence. R2's installed `umf-core` candidate preserves its public import names,
+Pydantic model ergonomics, supplied extensions and synchronous operations.
+
+`crates/umf-core` owns the public Rust library. Its owned `Value` variants are
+`Null`, `Bool`, `Number`, `String`, `Array`, and `Object`. `String` and object keys
+use `Utf16` code-unit sequences; `Object` stores unique ordered `(Utf16, Value)`
+members. Number constructors and public operation admission enforce CONTRACT-001's
+finite binary64/safe-integer/nonnegative-zero envelope. Typed literal tokens remain
+strings; exact coefficient/exponent arithmetic MUST NOT pass through binary64.
+Interpreter-only `Missing` and keyed-map values are distinct from JSON null and
+MUST NOT escape as JSON data. Object enumeration, canonical sorting, string
+length/coercion and number formatting preserve the current JavaScript contract,
+including UTF-16 ordering and integer-index member enumeration where applicable.
+
+Bindings transfer values using the private `umf.core-wire/1` tagged tree:
+`{kind:"null"}`, `{kind:"boolean",value:boolean}`,
+`{kind:"number",bits:"<16 lowercase IEEE-754 hex digits>"}`,
+`{kind:"string",units:u16[]}`, `{kind:"array",items:WireValue[]}`, or
+`{kind:"object",members:[{key:u16[],value:WireValue}]}`. All fields are required
+as shown; unrecognized fields/tags, duplicate decoded keys and malformed payloads
+reject. Numeric bits are the big-endian IEEE-754 binary64 bit pattern. Native
+bindings MAY use an equivalent direct typed traversal. A generic host JSON stringify
+or UTF-8 conversion MUST NOT precede hostile-object/numeric/Unicode admission.
+Host wrappers may inspect descriptors/types and construct this tree, but Rust
+owns semantic admission and all model decisions. No wrapper may replace core rules.
+
+The shared Rust types are `Format::{Json,Yaml}`, `EngineError {code,path,message}`,
+`Diagnostic {code,path,message,severity}`, and
+`Validation {valid,complete,diagnostics}`. Paths/messages preserve UTF-16. Public
+entry points return owned snapshots or `Result<_,EngineError>`; validation returns
+its contracted invalid/incomplete diagnostic report for ordinary invalid documents.
+`Engine::new(ResourceSet)` admits and privately owns immutable resources;
+`ResourceSet` contains the three schemas, constraint program and domain policy.
+The public modules expose `value::copy_json`, `serialization::{read_json_value,
+write_json_value}`, `document::{read_document,write_document,validate_document}`,
+`literal::{prepare_policy,literal_errors,literal_identity,numeric_interval,
+exact_coefficient}`, `constraints::{check_program,execute_constraints,
+run_core_constraints}`, `schema::CompiledSchema::{compile,validate}`, and
+`registry::Registry::{new,register,get}`. Context/budget arguments are explicit;
+concrete Rust lifetime/allocation details may evolve without changing these meanings.
+
+`CompiledSchema` operates on owned values and explicit supplied resources only.
+The core evaluator's diagnostic codes, pointer paths, messages and ordering match
+frozen current controls; no error-count truncation is permitted. Consumer schema
+and registry admission MUST retain their existing dialect/resource behavior,
+including Python's declared Draft 7 validator surface, strict unknown-keyword
+refusal where currently required, exact identity conflicts, boolean schemas and
+no implicit retrieval. A new restrictive schema subset cannot silently replace
+an accepted current capability. Unsupported implementation cases remain an open
+R2 gate. Structural checks precede semantic access and use the same generic
+canonical equality for `const`, `enum` and `uniqueItems` as the program kernel.
+
+Registry records own immutable copied manifests/schemas and an optional trusted
+capability token. The core invokes an explicit host `Capabilities` interface with
+that token, a copied payload and `{document,path,scope}` containing the original
+source document. Callback results are ordered diagnostics; callback errors follow
+the model-owned failure rule and MUST NOT become successful unchecked validation.
+Host exception presentation, thread affinity and synchronous reentry stay in the
+binding. Missing semantic capabilities report incomplete; documents cannot load
+callbacks, fetch resources or select installed code by text. Registry instances
+and invocation budgets MUST NOT depend on mutable global defaults.
+
+Ordinary limits remain 4,000,000 UTF-16 text units, depth 128 and 100,000 traversed
+values; the explicit synchronous catalog scope retains 1,000,000 values. Preserve
+the existing 5,000,000 constraint-instruction ceiling and charge copies,
+enumeration, sorting, exact arithmetic and nested interpretation. The invocation
+`Context` owns counters, an optional caller meter and cooperative cancellation;
+clock deadlines require an explicit host clock capability. Resource failure,
+cancellation or callback failure publishes no partial successful result. Reentrant
+calls own independent state. Parser/regex calls and trusted callbacks are not
+claimed hard-preemptible. The default resource profile is `Cooperative`. A request for `HardIsolated` MUST
+return `RESOURCE_PROFILE_UNAVAILABLE` before parsing, compilation or callbacks in
+R2; no hard-deadline or whole-process-memory guarantee is implied. Future native
+worker/browser Worker profiles require separate implementation and execution
+proof. They cannot silently replace synchronous public operations. Copies, output
+units, exact coefficient expansion (at most 4,000,000 digits), collection work and
+allocation requests are charged before allocation/work; counters describe owned
+work, not whole-process resident memory. An optional caller meter may impose a
+stricter limit and its errors propagate. Depth/value ceilings apply to each
+admitted/copied JSON tree as in the current API; repeated legitimate copies do
+not consume a new cumulative 100,000-value default allowance. Invocation work
+meters remain cumulative where contracted. Private wire tags/code-unit arrays
+are transport overhead, not extra semantic JSON values. The R1 8-MiB request
+ceiling MUST NOT narrow the production 4-million-code-unit profile. No parser/regex/trusted-callback
+preemption claim follows from cooperative checks around those calls.
+
+`crates/umf-metamodel` exposes `parse_model`, `compile_model` and `render_outputs`;
+the compiler accepts independently admitted source, then checks the complete closed
+vocabulary/program/policy before emitting. Its filesystem CLI is `crates/umf-cli`.
+The eleven canonical output paths listed above remain compiler-owned, including
+the output manifest and `python/umf_access/src/umf_access/generated_core.py`.
+Current schemas/program/domain-policy/shapes must match predecessor meanings;
+compiler provenance changes identify the new Rust source closure and Cargo.lock.
+The manifest retains `umf.metamodel.outputs/1` with truthful successor provenance.
+Its `sources` names the actual Rust compiler/runtime helper closure, Cargo.lock
+and explicit build-backend inputs; the compiler digest MUST NOT retain the retired
+TypeScript compiler identity. Hashes use UTF-8 output bytes, never host object
+serialization. Successor generation is byte-identical on its second pass and
+`--check` remains entirely non-writing, detecting missing/stale/extra files.
+
+`src/generated/core-validators.ts` may remain a pinned Ajv standalone build output
+until the default JS cutover in R7. This is an explicit third-party build backend,
+not the production Rust structural engine or a hidden native compiler dependency.
+Rust owns authored-model parsing, grammar checks, schema/rule/type/data emission;
+the Bun assembler may supply only Ajv standalone emission and final manifest
+assembly. Its final eleven-file inventory and fixed-point/no-write checks remain
+mandatory. The native Rust CLI emits portable compiled data without invoking
+JavaScript; it MUST NOT claim to independently emit Ajv's standalone artifact.
+Predecessor comparisons permit only reviewed provenance changes and approved
+backend-artifact differences; do not omit semantic schema/rule/type comparisons.
+
+R2 qualifies a dedicated Rust-backed native/Node/Bun/browser entry plus an installed
+`umf-core` candidate; the existing default JS engine remains a separately identified
+differential implementation until its planned cutover. Browser loading is explicit:
+asynchronous initialization returns an engine whose model operations remain
+synchronous. Preserve existing default-entry synchronous APIs during this staged
+qualification. No Rust-backed operation may silently fall back to JavaScript when
+its native module or WASM initialization is absent.
+
+
+#### Rust skeleton shared between implementation owners
+
+These signatures freeze the cross-module split. Implementations may add private
+helpers, but peers do not invent alternate value/resource/callback protocols.
+`Utf16` owns `Vec<u16>` with borrowed `units()` and explicit fallible UTF-8
+conversion; it MUST NOT replace unpaired units. `Value` is recursively owned.
+`EngineError` and `Diagnostic` preserve the fields specified above.
+
+```rust
+// Foundation-owned public types; all public constructors re-admit caller data.
+pub enum Value { Null, Bool(bool), Number(f64), String(Utf16),
+    Array(Vec<Value>), Object(Vec<(Utf16, Value)>) }
+pub enum Format { Json, Yaml }
+pub enum ResourceProfile { Cooperative, HardIsolated }
+pub struct Limits { pub max_text_units: usize, pub max_depth: usize,
+    pub max_values: usize, pub max_constraint_steps: usize,
+    pub max_coefficient_digits: usize }
+// Context owns counters and optional meter/cancel/clock capabilities; no ambient
+// state. Context::ordinary() uses 4M/128/100K/5M/4M, catalog() changes values to 1M.
+pub struct Context<'a> { /* private counters and borrowed host capabilities */ }
+pub struct StructuralError { pub instance_path: Utf16, pub schema_path: Utf16,
+    pub keyword: String, pub params: Value, pub message: Utf16 }
+pub struct SchemaResources { pub entries: Vec<(Utf16, Value)> }
+pub struct CompiledSchema { /* privately owned immutable admitted schema */ }
+impl CompiledSchema {
+    pub fn compile(schema: &Value, resources: &SchemaResources,
+        ctx: &mut Context<'_>) -> Result<Self, EngineError>;
+    pub fn validate(&self, value: &Value, ctx: &mut Context<'_>)
+        -> Result<Vec<StructuralError>, EngineError>;
+}
+pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>;
+pub fn read_json_value(source: &[u16], format: Format, ctx: &mut Context<'_>)
+    -> Result<Value, EngineError>;
+pub fn write_json_value(value: &Value, format: Format, ctx: &mut Context<'_>)
+    -> Result<Utf16, EngineError>;
+// Semantic-owner types; callback handles never originate from document content.
+pub struct ResourceSet { pub core_schema: Value, pub reference_schema: Value,
+    pub package_schema: Value, pub constraints: Value, pub domain_policy: Value }
+pub struct SemanticContext { pub document: Value, pub path: Utf16, pub scope: String }
+pub trait Capabilities {
+    fn validate_extension(&mut self, token: u64, payload: &Value,
+        context: &SemanticContext) -> Result<Vec<Diagnostic>, Utf16>;
+}
+pub struct Engine { /* private immutable ResourceSet and prepared programs */ }
+impl Engine {
+    pub fn new(resources: ResourceSet, ctx: &mut Context<'_>)
+        -> Result<Self, EngineError>;
+    pub fn validate_document(&self, value: &Value, registry: &Registry,
+        capabilities: &mut dyn Capabilities, ctx: &mut Context<'_>)
+        -> Result<Validation, EngineError>;
+}
+```
+
+`Registry` is semantic-owner code. It accepts immutable copied package manifests
+and optional capability tokens; the Python `Extension` adapter retains its current
+public shape and maps it to a Rust-owned registration admission operation, rather
+than implementing an independent package/schema/diagnostic policy in Python.
+The empty capability implementation refuses unknown tokens. `Engine` current
+resources are supplied explicitly by each distribution's embedded resource module;
+they must match the compiler manifest. Rust tests may construct mutated resources
+through the same admission API. Core code never opens package files itself.
