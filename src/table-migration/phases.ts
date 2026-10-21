@@ -16,6 +16,20 @@ export interface PhasedMigrationStep {
  transaction:MigrationPhaseTransaction;
  operation?:string;
  constraintKind?:'check'|'foreignKey';
+ seedSets?:string[];
+}
+
+export interface SeedMigrationStep extends PhasedMigrationStep {
+ kind:'seed';
+ transaction:'required';
+ sourcePath:'/seedExecution/sets';
+ sql:'';
+ operation:'apply-seeds';
+ seedSets:string[];
+ preconditions:{phase:'before-plan';kind:'installed-source-cohort';bundleDigest:string};
+ expectedOutcome:{phase:'before-commit';kind:'complete-next-source-catalog';bundleDigest:string};
+ verification:'native-catalog-privileges-and-role-scope';
+ recovery:'rollback-transaction';
 }
 
 export interface PhasedMigrationResult<TStep extends PhasedMigrationStep> {
@@ -32,6 +46,7 @@ const EXECUTION_PROFILE:TableMigrationExecutionProfile={
 
 function phaseKind(step:PhasedMigrationStep):MigrationPhaseKind{
  if(step.kind==='backfill')return 'backfill';
+ if(step.kind==='seed')return 'seed';
  if(step.kind==='index'&&step.transaction==='forbidden')return 'concurrent-index';
  if(step.operation==='add-not-valid')return 'constraint-add';
  if(step.operation==='validate')return 'constraint-validation';
@@ -48,11 +63,26 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
  _previous:TableDeploymentBundle|null,
  _next:TableDeploymentBundle,
  _options?:unknown,
-):PhasedMigrationResult<TStep>{
+ seedExecution:'none'|{version:'umf.table-seed-execution/0.1';sets:string[]}|undefined='none',
+):PhasedMigrationResult<TStep|SeedMigrationStep>{
+ const plannedSteps:(TStep|SeedMigrationStep)[]=[...steps];
+ if(seedExecution!=='none'&&seedExecution!==undefined){
+  let nextId=1;
+  for(const step of steps){const match=/^step-(\d{5})$/.exec(step.id);if(match)nextId=Math.max(nextId,Number(match[1])+1);}
+  if(nextId>99999)throw new Error('migration-step-capacity');
+  const bundleDigest=_next.bundleDigest;
+  const previousDigest=_previous?.bundleDigest;
+  if(!previousDigest)throw new Error('seed-phase-requires-predecessor');
+  plannedSteps.push({id:'step-'+String(nextId).padStart(5,'0'),kind:'seed',transaction:'required',
+   sourcePath:'/seedExecution/sets',sql:'',operation:'apply-seeds',seedSets:[...seedExecution.sets],
+   preconditions:{phase:'before-plan',kind:'installed-source-cohort',bundleDigest:previousDigest},
+   expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest},
+   verification:'native-catalog-privileges-and-role-scope',recovery:'rollback-transaction'});
+ }
  const phases:TableMigrationPhase[]=[];
  let current:TableMigrationPhase|undefined;
  const flush=()=>{if(current){phases.push(current);current=undefined;}};
- for(const step of steps){
+ for(const step of plannedSteps){
   const kind=phaseKind(step),isolated=kind!=='transaction';
   if(isolated)flush();
   if(!current){
@@ -65,5 +95,5 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
   if(isolated)flush();
  }
  flush();
- return {steps:[...steps],phases,executionProfile:EXECUTION_PROFILE};
+ return {steps:plannedSteps,phases,executionProfile:EXECUTION_PROFILE};
 }

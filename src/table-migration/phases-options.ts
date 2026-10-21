@@ -18,7 +18,7 @@ export interface TableMigrationPhasesOptions {
 }
 
 export type MigrationPhaseTransaction='required'|'forbidden';
-export type MigrationPhaseKind='transaction'|'backfill'|'concurrent-index'|'constraint-add'|'constraint-validation';
+export type MigrationPhaseKind='transaction'|'backfill'|'concurrent-index'|'constraint-add'|'constraint-validation'|'seed';
 
 /** Durable execution profile, bound by the enclosing migration plan digest. */
 export interface TableMigrationExecutionProfile {
