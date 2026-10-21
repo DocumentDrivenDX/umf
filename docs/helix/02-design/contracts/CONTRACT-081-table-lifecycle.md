@@ -1224,3 +1224,34 @@ person CRUD and batch SELECT/INSERT, with batch UPDATE/DELETE denied. Canonical
 payloads retain all four commands and ordinary FORCE RLS, old-row USING and
 new-row WITH CHECK semantics. Native RLS qualification does not establish
 shared-security or complete ethical-wall equivalence.
+
+### Field migration release boundary
+
+SD-007 and US-051-AC11–16 govern the broader field lifecycle. This profile's
+qualified subset MUST distinguish appended-column backfill from tightening an
+existing optional column. Tightening is fail-if-null under atomic native
+constraint activation or a qualified fenced phase; historical null filling of
+an existing column remains explicitly unsupported until separately qualified.
+A metadata-head fence alone MUST NOT be presented as protection against direct
+authorized SQL; native locks/constraints or a documented writer-quiescence
+precondition protect actual data through validation and activation.
+
+DROP RESTRICT is only a native safeguard. PostgreSQL can automatically remove
+local indexes and constraints when dropping a column, so the planner MUST resolve
+typed dependency closure before emitting the drop. Every affected local/inbound
+constraint, index, Key, policy and operation MUST have a reviewed compatible
+companion change or a located refusal. SQL-name matching alone does not prove
+closure. Relevant unknown or externally uninventoried dependencies refuse.
+The review surface MUST name the column/Field, deleted stored values and approved
+immediate irreversibility or an explicit recovery policy. Retained schema/source
+history is not retained instance data and cannot establish data rollback.
+
+Finite type conversions MUST validate logical scalar meaning, nullability,
+facets, defaults, allowed values and unknown extension semantics alongside native
+capacity. Physical widening cannot authorize unrelated semantic narrowing.
+Combined changes need a verified dependency/name order or explicit refusal.
+Committed staged effects may remain after failure while the old metadata head
+is retained and all ordinary clients stay fenced. Only uncommitted atomic
+effects roll back. No release claim may imply full migration support, online
+rewrites, arbitrary transforms or retained-value recovery from this bounded
+profile.

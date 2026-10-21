@@ -1,5 +1,11 @@
 # UMF project documentation
 
+[Schema migration design](02-design/solution-designs/SD-007-schema-migrations.md)
+and [delivery plan](04-build/schema-migration-plan.md) define field additions,
+requiredness/default/backfill, removals and type changes. The existing
+CONTRACT-081/TD-085/STP-085 stream owns the bounded PostgreSQL implementation;
+broader transforms, retained-value recovery and backend profiles remain planned.
+
 [Table lifecycle successor evidence](04-build/evidence/table-lifecycle-completion/README.md) records documented legal-domain schemas, reviewed bounded backfills, index-only concurrent recovery/fencing and installed verification. [Use the candidate](04-build/guides/legal-table-lifecycle.md); [stage a wheel mirror](04-build/guides/python-wheel-mirror.md). Revision2 mixed phases and reviewed existing-object evolution remain next-release work.
 
 [Praxis revision2 next-release requirements](01-frame/praxis-lifecycle-roadmap.md#next-release-requirements--praxis-revision2-2026-10-21) maps U1–U9 to existing WS-5–9, preserves the U1–U3 adoption gate, and distinguishes posted releases from locally verified successor work.

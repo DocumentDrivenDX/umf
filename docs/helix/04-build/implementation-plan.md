@@ -43,6 +43,16 @@ ddx:
 
 ## Scope
 
+### Field schema migration planning
+
+The owner's 2026-10-21 request is governed by FR-18, FEAT-007 COMP-06–11,
+US-051-AC11–16 and SD-007. The [field migration build plan](schema-migration-plan.md)
+owns the ordered design/implementation gates for additions, requiredness with
+defaults/backfills, removals and type changes. It separates portable intent and
+verification from host/backend execution. Exact contracts, technical design and
+story-test allocation remain its entry gate; this is planned support, not a
+broader claim for the existing bounded table migration compiler.
+
 ### Current alignment and execution priorities
 
 The relationship/binding amendment below is historical preparation. Its scoped

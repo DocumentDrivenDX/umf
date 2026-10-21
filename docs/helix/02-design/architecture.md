@@ -52,6 +52,26 @@ remain different claims.
 
 ## Level 1: System Context
 
+### Proposed schema migration ownership
+
+FR-18, FEAT-007 COMP-06–11 and [SD-007](solution-designs/SD-007-schema-migrations.md)
+define the proposed field migration boundary. The portable library owns exact
+source comparison, declared migration intent, dependency and loss analysis,
+capability-qualified plan generation and receipt verification. Backend compilers
+own physical lowering and version-specific operations. Execution hosts own
+authenticated installation state, approval, data scans/transforms, writer
+coordination, checkpoints, native validation, cutover and recovery. Optional
+UMF-distributed host code follows this boundary; portable core remains free of
+connections and storage execution under NFR-50.
+
+Backfills, logical defaults and defaults for future native writes are separate.
+Logical Field retirement, physical deletion and historical purge are separate.
+Type conversion requires explicit meaning/loss rules and complete target checks.
+No shared online, atomic or reversible guarantee is inferred across backends.
+CONTRACT-046 remains observational; CONTRACT-081 governs the first table host
+profile. The [migration plan](../04-build/schema-migration-plan.md) sequences
+exact contracts, module/checker adoption and native qualification before support.
+
 | Participant | Relationship to UMF | Boundary |
 | --- | --- | --- |
 | Schema authors and tooling | Create, inspect, validate, compare, and transform artifacts | Programmatic and human workflows; no mandatory UI |

@@ -163,3 +163,15 @@ comparison cannot substitute for effects/recovery evidence. Bound support claims
 to the exercised conversion/dependency inventory; report remaining unsupported
 forms with their located refusals. Public release does not prove that Praxis can
 delete its emitter without its independent eleven-table/four-migration workload.
+
+SD-007 release review additionally requires typed dependency cases where a native
+column drop would automatically remove a local check/index despite RESTRICT;
+logical-domain narrowing disguised as native widening; and concurrent direct
+authorized writes during requiredness validation/activation. Review disclosure
+must name irreversible instance-value loss. Separate fail-if-null tightening of
+an existing optional column from historical fill, which remains unsupported;
+retain positive appended-column backfill coverage. After an interrupted committed
+stage, assert old metadata head, changed physical state, fenced clients and exact
+resume without replay. Do not assert physical rollback from an unchanged ledger.
+The release inventory marks these bounded operations qualified/refused/remaining
+and does not claim complete SD-007 field-lifecycle delivery.

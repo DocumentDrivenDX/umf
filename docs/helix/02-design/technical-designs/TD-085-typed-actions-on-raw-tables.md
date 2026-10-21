@@ -247,8 +247,6 @@ execution on that target. Reverting code does not undo committed native effects.
 
 Prerequisites: US-083, W-4, W-0 (action entries are specified in CONTRACT-071).
 
-## Risks
-
 ## Revision2 lifecycle integration
 
 CONTRACT-081's U1–U3 evolution profile governs the next direct-table cut under
@@ -284,6 +282,20 @@ Integrate the shared options and compile hook once. Verify each native change
 kind separately, then run one mixed migration through interrupted phases.
 Committed effects are forward-only; recovery resumes verified progress or requires
 an explicit corrective migration, never a simulated whole-plan rollback.
+
+SD-007's field lifecycle acceptance applies to the release inventory. Analyze
+typed source references before DDL, including local constraints/indexes that
+PostgreSQL removes automatically on column drop even with RESTRICT. Native
+dependency errors supplement this analysis. Review disclosures explicitly name
+stored-value loss and immediate irreversibility or supplied recovery custody.
+Validate both logical/native domains for finite type conversions. Existing
+optional-column tightening uses fail-if-null native activation; filling its
+historical nulls is a distinct unsupported operation. Appended-column backfill
+retains its existing explicit source-declared path. Hold native write protection
+through actual-data validation and activation; a metadata fence protects ordinary
+generated calls but cannot alone exclude direct authorized SQL. A failed committed
+stage keeps clients fenced and requires resume/forward repair even while the old
+metadata head remains. Reusing that head does not undo physical effects.
 
 ## Raw action risks
 
