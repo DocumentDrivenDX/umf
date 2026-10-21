@@ -76,6 +76,9 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
             try:
                 for index,transition in enumerate(case['transitions']):
                     print('native-case',case['id'],transition['id'],flush=True)
+                    unchanged_checks_before=None
+                    if case['id']=='check-lifecycle':
+                        unchanged_checks_before=admin.execute("SELECT c.conname,pg_catalog.pg_get_constraintdef(c.oid) FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t ON t.oid=c.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=t.relnamespace WHERE n.nspname=%s AND t.relname='matters' AND c.contype='c' AND c.conname NOT IN ('matters_positive_id','matters_positive_id_v2') ORDER BY c.conname",(schema,)).fetchall()
                     next_bundle=deploy(transition['source'],cfg)
                     result=compile_plan(transition['id'],predecessor,current_bundle,next_bundle,transition['options'])
                     assert result['status']=='compiled',result
@@ -209,32 +212,43 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                         matter_rows=admin.execute(sql.SQL('SELECT count(*) FROM {}').format(sql.Identifier(schema,'matters'))).fetchone()[0]
                         admin.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(owner)))
                         check('standalone-index-removal-preserves-rows',matter_rows==2)
+                    elif case['id']=='index-newid-successor':
+                        index_state=admin.execute("SELECT c.relname,i.indisvalid,pg_catalog.pg_get_indexdef(i.indexrelid) FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class c ON c.oid=i.indexrelid JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname IN ('matters_client_lookup','matters_client_lookup_successor') ORDER BY c.relname",(schema,)).fetchall()
+                        check('same-count-new-id-index-drop-and-create-observed',len(index_state)==1 and index_state[0][0]=='matters_client_lookup_successor' and index_state[0][1] is True and 'client_id' in index_state[0][2])
+                        admin.execute('RESET ROLE')
+                        matter_rows=admin.execute(sql.SQL('SELECT count(*) FROM {}').format(sql.Identifier(schema,'matters'))).fetchone()[0]
+                        admin.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(owner)))
+                        check('new-id-index-recreation-preserves-rows',matter_rows==2)
                     elif case['id']=='check-lifecycle':
                         expected={
-                            'check_lifecycle-002':('matters_positive_id',"matter_id > '-1'::numeric"),
-                            'check_lifecycle-003':('matters_positive_id_v2',"matter_id > '-1'::numeric"),
+                            'check_lifecycle-002':('matters_positive_id',"(matter_id)::numeric > '-1'::numeric"),
+                            'check_lifecycle-003':('matters_positive_id_v2',"(matter_id)::numeric > '-1'::numeric"),
                             'check_lifecycle-004':None,
                         }[transition['id']]
-                        native_checks=admin.execute("SELECT c.conname,pg_catalog.pg_get_constraintdef(c.oid) FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t ON t.oid=c.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=t.relnamespace WHERE n.nspname=%s AND t.relname='matters' AND c.contype='c' ORDER BY c.conname",(schema,)).fetchall()
+                        all_native_checks=admin.execute("SELECT c.conname,pg_catalog.pg_get_constraintdef(c.oid) FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t ON t.oid=c.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=t.relnamespace WHERE n.nspname=%s AND t.relname='matters' AND c.contype='c' ORDER BY c.conname",(schema,)).fetchall()
+                        native_checks=[item for item in all_native_checks if item[0] in ('matters_positive_id','matters_positive_id_v2')]
                         if expected is None:check('reviewed-check-constraint-removal-observed',native_checks==[])
                         else:check('reviewed-check-native-name-and-definition-observed',len(native_checks)==1 and native_checks[0][0]==expected[0] and expected[1] in native_checks[0][1])
+                        unchanged_checks_after=[item for item in all_native_checks if item[0] not in ('matters_positive_id','matters_positive_id_v2')]
+                        check('unrelated-generated-check-constraints-preserved',unchanged_checks_after==unchanged_checks_before)
                         admin.execute('RESET ROLE')
                         matter_rows=admin.execute(sql.SQL('SELECT count(*) FROM {}').format(sql.Identifier(schema,'matters'))).fetchone()[0]
                         admin.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(owner)))
                         check('check-constraint-evolution-preserves-rows',matter_rows==2)
                     elif case['id']=='foreign-key-lifecycle':
                         fk_rows=admin.execute("SELECT c.conname,pg_catalog.pg_get_constraintdef(c.oid) FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t ON t.oid=c.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=t.relnamespace WHERE n.nspname=%s AND t.relname='matter_teams' AND c.contype='f' ORDER BY c.conname",(schema,)).fetchall()
-                        target={
-                            'foreign_key_lifecycle-002':('matter_teams_fk_0',('ON UPDATE NO ACTION','ON DELETE CASCADE')),
-                            'foreign_key_lifecycle-003':('matter_teams_fk_renamed',('ON UPDATE NO ACTION','ON DELETE CASCADE')),
-                            'foreign_key_lifecycle-004':('matter_teams_fk_successor',('ON UPDATE CASCADE','ON DELETE CASCADE')),
+                        expected={
+                            'foreign_key_lifecycle-002':('matter_teams_fk_0','c','a'),
+                            'foreign_key_lifecycle-003':('matter_teams_fk_renamed','c','a'),
+                            'foreign_key_lifecycle-004':('matter_teams_fk_successor','c','c'),
                             'foreign_key_lifecycle-005':None,
                         }[transition['id']]
-                        if target is None:ok=fk_rows==[]
+                        if expected is None:ok={name for name,_ in fk_rows}=={'matter_teams_fk_1'}
                         else:
-                            chosen=[definition for name,definition in fk_rows if name==target[0]]
-                            other_names={name for name,_ in fk_rows}-{target[0]}
-                            ok=len(chosen)==1 and all(action in chosen[0] for action in target[1]) and other_names=={'matter_teams_fk_1'}
+                            chosen=[(name,definition) for name,definition in fk_rows if name==expected[0]]
+                            other_names={name for name,_ in fk_rows}-{expected[0]}
+                            actions=admin.execute("SELECT c.confupdtype,c.confdeltype FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t ON t.oid=c.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=t.relnamespace WHERE n.nspname=%s AND t.relname='matter_teams' AND c.conname=%s",(schema,expected[0])).fetchone()
+                            ok=len(chosen)==1 and ('REFERENCES '+schema+'.matters') in chosen[0][1] and actions==(expected[2],expected[1]) and other_names=={'matter_teams_fk_1'}
                         check('reviewed-foreign-key-native-name-definition-and-action-observed',ok)
                         admin.execute('RESET ROLE')
                         team_rows=admin.execute(sql.SQL('SELECT count(*) FROM {}').format(sql.Identifier(schema,'matter_teams'))).fetchone()[0]

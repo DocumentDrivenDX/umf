@@ -120,6 +120,14 @@ const cases:any[]=[];
  cases.push(createCase('remove-index',indexed,[{id:'remove_index-002',source:removed,options:selectedMarkerOptions(b2,b3,['replace-index']),checks:['standalone-index-removed']}],['reviewed-standalone-index-removal-observed']));
 }
 {
+ const before=base(),indexed=structuredClone(before),table=indexed.modules[0]!.extensions['umf.tables'].tables.find((x:any)=>x.id==='matters')!;
+ table.indexes.push({id:'client_lookup',name:'matters_client_lookup',fields:[ref('matters__client_id')],unique:false,include:[]});
+ const successor=structuredClone(indexed),nextTable=successor.modules[0]!.extensions['umf.tables'].tables.find((x:any)=>x.id==='matters')!;
+ nextTable.indexes[0]!.id='client_lookup_successor';nextTable.indexes[0]!.name='matters_client_lookup_successor';
+ const b1=deploy(indexed,config('index_newid')),b2=deploy(successor,config('index_newid'));
+ cases.push(createCase('index-newid-successor',indexed,[{id:'index_newid_successor-002',source:successor,options:selectedMarkerOptions(b1,b2,['replace-index']),checks:['old-index-dropped-new-id-index-created']}],['same-count-new-id-index-recreation-observed']));
+}
+{
  const before=evolvedLegalSource().source,tableId='matters',findTable=(s:any)=>s.modules[0]!.extensions['umf.tables'].tables.find((t:any)=>t.id===tableId)!;
  const changed=structuredClone(before),check=findTable(changed).checks.find((c:any)=>c.id==='positive_id')!;
  check.expression.right.value.integerToken='-1';
