@@ -167,12 +167,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "b1437dae2c81010459d0042f4d4bb2b9ce8a417286278a234bb5f1b7d04494bb",
+    "sourceCohortSha256": "e2ed661166baa060e1c45884f300d6dc2a9c677a19c6df0fe613a2baa4a5f70f",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 301,
-    "algorithmSymbols": 9750,
+    "algorithmSymbols": 9752,
     "pythonModules": 98,
     "rustBuildInputs": 73,
     "rustModules": 80,
@@ -31591,17 +31591,19 @@
         "sha256",
         "target_method",
         "target_record",
+        "typed_method_diagnostic",
+        "typed_method_path",
         "typed_python_value",
         "verify_complete_profile_receipt",
         "verify_cross_version_profiles",
         "verify_legacy_ap_correction"
       ],
-      "bytes": 71431,
+      "bytes": 73663,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/schema-evaluation-order-conformance.py",
-      "sha256": "3ed8f2ef44bd935b35d4360b1794ef5bfb20cced62ab5bed370d435e4ba5c078"
+      "sha256": "165be4a6d7bea3bb42e881ddd264363c7804d2409a3fba0894b3d50cbc4be9d1"
     },
     {
       "activationEvidence": [],

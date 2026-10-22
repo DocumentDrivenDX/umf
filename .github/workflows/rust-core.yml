@@ -55,3 +55,10 @@ jobs:
           UMF_PYTHON: python
       - name: Migration boundaries
         run: bun run check:rust-boundaries
+      - name: Preserve source-bound qualification receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-production-core-${{ matrix.os }}-python-${{ matrix.python }}
+          path: docs/helix/04-build/evidence/rust-migration/r2/production-host-qualification.json
+          if-no-files-found: ignore

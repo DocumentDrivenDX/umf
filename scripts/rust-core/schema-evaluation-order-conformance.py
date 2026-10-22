@@ -264,20 +264,51 @@ def make_instance(case: dict, values: dict) -> object:
     raise RuntimeError(f"Unknown frozen schema instance shape: {shape}")
 
 
-def error_record(error: BaseException) -> dict:
+def typed_method_path(path: object) -> list[dict]:
+    """Compare native paths and frozen paths in exact Key/Index form."""
+    result = []
+    for segment in path:
+        if type(segment) is str:
+            result.append({"key": [ord(point) for point in segment]})
+        elif type(segment) is int:
+            result.append({"index": segment})
+        elif isinstance(segment, dict) and set(segment) == {"key"}:
+            points = segment["key"]
+            if (not isinstance(points, list)
+                    or any(type(point) is not int or not 0 <= point <= 0x10FFFF
+                           for point in points)):
+                raise RuntimeError(f"Malformed frozen path key: {segment!r}")
+            result.append({"key": points.copy()})
+        elif (isinstance(segment, dict) and set(segment) == {"index"}
+                and type(segment["index"]) is int):
+            result.append({"index": segment["index"]})
+        else:
+            raise RuntimeError(f"Malformed schema method path segment: {segment!r}")
+    return result
+
+
+def typed_method_diagnostic(error: dict) -> dict:
+    return {**error, "instancePath": typed_method_path(error["instancePath"]),
+            "schemaPath": typed_method_path(error["schemaPath"])}
+
+
+def error_record(error: BaseException, include_evaluation_message: bool = False) -> dict:
     code = getattr(error, "code", None)
     reason = str(error) if str(error) in ARITHMETIC_REASONS.values() else None
     if code == "PYTHON_SCHEMA_ARITHMETIC" and reason is not None:
         return {"status": "arithmetic-error", "code": code, "reason": reason}
     if code in {"SCHEMA_REF_UNRESOLVED", "PYTHON_SCHEMA_EVALUATION"}:
-        return {"status": "evaluation-error", "code": code}
+        record = {"status": "evaluation-error", "code": code}
+        if include_evaluation_message:
+            record["message"] = str(error)
+        return record
     if hasattr(error, "validator") and hasattr(error, "absolute_path"):
         return {
             "status": "validation-error",
             "error": {
                 "keyword": error.validator,
-                "instancePath": list(error.absolute_path),
-                "schemaPath": list(error.absolute_schema_path),
+                "instancePath": typed_method_path(error.absolute_path),
+                "schemaPath": typed_method_path(error.absolute_schema_path),
             },
         }
     return {"status": "unexpected-error", "type": type(error).__name__, "code": code, "message": str(error)}
@@ -290,18 +321,19 @@ def admission_error_record(error: BaseException) -> dict:
     return {"status": "unexpected-admission-error", "type": type(error).__name__, "code": code}
 
 
-def candidate_method(validator, instance: object, method: str) -> dict:
+def candidate_method(validator, instance: object, method: str,
+                     include_evaluation_message: bool = False) -> dict:
     if method == "is_valid":
         try:
             return {"status": "validity", "valid": bool(validator.is_valid(instance))}
         except BaseException as error:  # Preserve exception status for comparison.
-            return error_record(error)
+            return error_record(error, include_evaluation_message)
     if method == "validate":
         try:
             validator.validate(instance)
             return {"status": "valid"}
         except BaseException as error:  # Preserve the first schema or arithmetic outcome.
-            return error_record(error)
+            return error_record(error, include_evaluation_message)
 
     # Iteration itself must not evaluate or raise. The terminal arithmetic
     # outcome is observed only after the ordered public error prefix is yielded.
@@ -309,16 +341,16 @@ def candidate_method(validator, instance: object, method: str) -> dict:
     try:
         iterator = validator.iter_errors(instance)
     except BaseException as error:
-        return {**error_record(error), "prefix": prefix}
+        return {**error_record(error, include_evaluation_message), "prefix": prefix}
     try:
         for error in iterator:
             prefix.append({
                 "keyword": error.validator,
-                "instancePath": list(error.absolute_path),
-                "schemaPath": list(error.absolute_schema_path),
+                "instancePath": typed_method_path(error.absolute_path),
+                "schemaPath": typed_method_path(error.absolute_schema_path),
             })
     except BaseException as error:
-        return {**error_record(error), "prefix": prefix}
+        return {**error_record(error, include_evaluation_message), "prefix": prefix}
     return {"status": "end", "prefix": prefix}
 
 
@@ -440,9 +472,13 @@ def verify_legacy_ap_correction() -> tuple[dict[str, dict], dict[str, set[str]]]
 
 
 def target_method(expected: dict, method: str) -> dict:
-    target = target_record(expected)
+    target = dict(target_record(expected))
+    if "error" in target:
+        target["error"] = typed_method_diagnostic(target["error"])
+    if "prefix" in expected:
+        target["prefix"] = [typed_method_diagnostic(error) for error in expected["prefix"]]
     if expected["status"] in {"arithmetic-error", "evaluation-error"} and method == "iterate":
-        target["prefix"] = expected["prefix"]
+        target["prefix"] = [typed_method_diagnostic(error) for error in expected["prefix"]]
     return target
 
 
@@ -949,29 +985,19 @@ def main() -> None:
             or sha256(uri_operations_review_path) != RESOURCE_URI_OPERATIONS_INDEPENDENT_REVIEW_SHA256
             or sha256(uri_operations_generator_path) != RESOURCE_URI_OPERATIONS_GENERATOR_SHA256):
         raise RuntimeError("Python resource-URI operation review inputs changed")
+    uri_operations_fixture_path = EVIDENCE / uri_operations_config["file"]
+    if sha256(uri_operations_fixture_path) != uri_operations_config["sha256"]:
+        raise RuntimeError("Frozen Python resource-URI operation fixture changed")
+    uri_operations_fixture = json.loads(uri_operations_fixture_path.read_text(encoding="utf-8"))
+    if (uri_operations_fixture.get("uriAdmissionProfile") != identity_uri_profile
+            or len(uri_operations_fixture.get("uriOperations", [])) != 140):
+        raise RuntimeError("Unexpected native resource-URI operation qualifiers")
     uri_operations_profiles = json.loads(uri_operations_profiles_path.read_text(encoding="utf-8"))
     uri_operations_review = json.loads(uri_operations_review_path.read_text(encoding="utf-8"))
     expected_uri_operations_captures = {
         "3.11.17": uri_operations_config["sha256"],
         "3.12.15": "bd602fb6df7048475df71080faa45bbeb462c86a172050f1398743cb759a7970",
         "3.13.16": "c0435239437dfdb8a9c9997203354435a2422784324870c69614d94f03e50a7f",
-    }
-    uri_profile = {
-        "checkSchemaUsesClassFormatChecker": True,
-        "optionalModules": {
-            "rfc3987": False,
-            "rfc3986_validator": False,
-            "rfc3987_syntax": False,
-            "uri_template": False,
-        },
-        "registeredUriFormatCheckers": {
-            "Draft4Validator": [],
-            "Draft6Validator": [],
-            "Draft7Validator": [],
-            "Draft201909Validator": [],
-            "Draft202012Validator": [],
-        },
-        "declaredPredecessorDependency": "jsonschema>=4.25,<5 without format extras",
     }
     if (uri_operations_profiles.get("id") != "R2-SOL-PYTHON-RESOURCE-URI-OPERATIONS-PROFILES-001"
             or uri_operations_profiles.get("fixture") != uri_operations_config["file"]
@@ -981,7 +1007,11 @@ def main() -> None:
             or uri_operations_profiles.get("uriOperations") != 140
             or uri_operations_profiles.get("constructorRefusals") != 0
             or uri_operations_profiles.get("generatorSha256") != RESOURCE_URI_OPERATIONS_GENERATOR_SHA256
-            or uri_operations_profiles.get("uriAdmissionProfile") != uri_profile
+            or uri_operations_profiles.get("sourceSha256") != {
+                "schemas.py": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+                "referencing/_core.py": "d923c67da4efcc0dec46a6e3ff8476c02fbe7e25e8942515a4b14b249eb3759f",
+                "referencing/jsonschema.py": "8d767ab7ac7da13bd31cc202d2d4726858d6e6bdaa78739b62ebbb52149f2b74",
+            }
             or uri_operations_review.get("id") != "R2-SOL-PYTHON-RESOURCE-URI-OPERATIONS-INDEPENDENT-REVIEW-001"
             or uri_operations_review.get("status") != "native finite companion independently verified; implementation/source closure and artifacts remain pending"
             or uri_operations_review.get("sourceApproved") is not False
@@ -1072,7 +1102,7 @@ def main() -> None:
                     continue
                 for method in ("is_valid", "validate", "iter_errors"):
                     expected = runtime_phase_target(phase["methods"][method], method)
-                    actual = normalize_runtime_phase(candidate_method(validator, instance, method), method)
+                    actual = normalize_runtime_phase(candidate_method(validator, instance, method, include_evaluation_message=True), method)
                     runtime_error_observation_count += 1
                     if actual != expected:
                         failures.append({"profile": profile, "id": case["id"], "method": method,

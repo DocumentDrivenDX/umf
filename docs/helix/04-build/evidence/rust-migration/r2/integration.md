@@ -168,3 +168,18 @@ the named compiler SHA, as proved by the
 [refresh receipt](retained-codegen-provenance-refresh.json). Packaging, gzip,
 Python wrapper and boundary controls pass. All seven MiniRacer operations remain
 R3/R4 debt.
+
+
+The `d3d7b83f5` retry again passes the runtime phases but stops at the new URI
+profile guard before ordered candidate comparisons: the admission profile belongs
+to the immutable fixture, while its profile receipt records per-version equality
+flags. The corrected guard checks those actual owners with exact hashes.
+A separately preserved offline installed wheel environment then executes the
+entire comparator. Its path projection compares native and frozen representations
+in lossless typed Key/Index form, and six runtime-phase observations retain exact
+messages. The [complete comparator result](installed-schema-comparator.json)
+passes 2,879 cases, 7,671 methods, 263 metadata records and six runtime observations
+with zero mismatches. No production Rust or expected outcome changed. Independent
+Sol reviewed the repair and its preservation/negative controls; the final clean
+committed full-host gate remains required. CI now preserves each platform/Python
+qualification receipt as a separately named artifact.
