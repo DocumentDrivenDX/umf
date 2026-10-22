@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Rust production core
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  production-conformance:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.11.17', '3.12.15', '3.13.16']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare isolated toolchain and qualification inputs
+        run: |
+          {
+            printf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP"
+            printf 'UMF_JSON_SCHEMA_SUITE=%s/umf-json-schema-test-suite\n' "$RUNNER_TEMP"
+            printf 'UMF_R2_QUALIFICATION_PATH=%s/umf-r2-qualification.json\n' "$RUNNER_TEMP"
+          } >> "$GITHUB_ENV"
+          rm -f -- "$RUNNER_TEMP/umf-r2-qualification.json"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.0'
+      - uses: astral-sh/setup-uv@v6
+      - name: Install and resolve pinned Python
+        run: |
+          uv python install "${{ matrix.python }}"
+          python_path="$(uv python find "${{ matrix.python }}")"
+          test -x "$python_path"
+          printf 'UMF_PYTHON=%s\n' "$python_path" >> "$GITHUB_ENV"
+          printf 'UV_PYTHON=%s\n' "$python_path" >> "$GITHUB_ENV"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt
+          targets: wasm32-unknown-unknown
+      - name: Fetch pinned independent schema controls
+        run: |
+          git init "$UMF_JSON_SCHEMA_SUITE"
+          git -C "$UMF_JSON_SCHEMA_SUITE" remote add origin https://github.com/json-schema-org/JSON-Schema-Test-Suite.git
+          git -C "$UMF_JSON_SCHEMA_SUITE" fetch --depth 1 origin 89e83a74014617ffbe79a56d83d14d054cd11417
+          git -C "$UMF_JSON_SCHEMA_SUITE" checkout --detach FETCH_HEAD
+      - run: bun install --frozen-lockfile
+      - run: cargo fetch --locked
+      - run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
+      - name: Populate Python cache before offline qualification
+        run: |
+          uv venv --python "$UMF_PYTHON" "$RUNNER_TEMP/umf-build-cache"
+          uv pip install --python "$RUNNER_TEMP/umf-build-cache/bin/python" 'hatchling>=1.27,<2' 'pydantic>=2.11,<3' 'pytest>=8.4,<10'
+      - run: bunx playwright install --with-deps chromium
+      - name: Rust compiler and semantic engine
+        run: cargo test --locked --workspace
+      - name: Generated resources and fixed point
+        run: bun run check:metamodel
+      - name: Installed cross-runtime conformance
+        run: bun scripts/rust-core/conformance.ts
+      - name: Migration boundaries
+        run: bun run check:rust-boundaries
+      - name: Preserve source-bound qualification receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-production-core-${{ matrix.os }}-python-${{ matrix.python }}
+          path: ${{ env.UMF_R2_QUALIFICATION_PATH }}
+          if-no-files-found: ignore

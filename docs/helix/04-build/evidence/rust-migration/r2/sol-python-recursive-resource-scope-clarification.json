@@ -1,0 +1,105 @@
+{
+  "id": "R2-SOL-PYTHON-RESOURCE-SCOPE-CLARIFICATION-001",
+  "recordedAt": "2026-10-22T06:44:17.479050+00:00",
+  "baseDesign": {
+    "file": "sol-python-recursive-resource-scope-design.json",
+    "sha256": "8a4d6da41bfabefae4ef6e8d31f755bd7336c4bb831a61cb581f9dfd6983acea"
+  },
+  "fixture": {
+    "file": "sol-python-recursive-resource-scope-predecessor.json",
+    "sha256": "c67b6602a40235a9202a00082949e6a9a8af3db1aee614110275afb303de9b15"
+  },
+  "status": "Clarifies native source algorithms and existing error mapping; no frozen observation or production semantic correction.",
+  "nativeIdSelection": {
+    "source": "referencing/jsonschema.py _legacy_id61-66, _legacy_dollar_id53-58, _dollar_id47-50",
+    "Draft3And4": "id is inert when the same schema object contains $ref; fragment-only id is not a resource id.",
+    "Draft6And7": "$id is inert when the same schema object contains $ref; fragment-only $id is not a resource id.",
+    "Draft2019And2020": "$id is selected even when the same schema object contains $ref. Recognized schema-subresource boundary rules still apply.",
+    "implementation": "Use dialect-aware native id selection for Python source resources and runtime entry. Generic schema_id accepting either key in every object cannot implement this profile."
+  },
+  "installedTenFailures": [
+    {
+      "group": 1,
+      "case": 2
+    },
+    {
+      "group": 1,
+      "case": 4
+    },
+    {
+      "group": 3,
+      "case": 2
+    },
+    {
+      "group": 3,
+      "case": 4
+    },
+    {
+      "group": 4,
+      "case": 2
+    },
+    {
+      "group": 4,
+      "case": 4
+    },
+    {
+      "group": 5,
+      "case": 1
+    },
+    {
+      "group": 5,
+      "case": 2
+    },
+    {
+      "group": 6,
+      "case": 1
+    },
+    {
+      "group": 6,
+      "case": 2
+    }
+  ],
+  "phaseAndEnvelope": {
+    "construction": {
+      "ids": [
+        "official-7-0",
+        "official-7-1",
+        "official-8-0",
+        "official-8-1"
+      ],
+      "predecessor": {
+        "type": "ValueError",
+        "message": "Schemas require local references; no implicit network resolution"
+      },
+      "target": {
+        "status": "schema-admission-error",
+        "code": "SCHEMA_REF_UNRESOLVED"
+      },
+      "authority": "Root explicitly approved this narrow mapping for the four frozen rows. Preserve construction phase; no class/message identity requirement, no accepting arbitrary operational errors as schema refusals."
+    },
+    "runtime": {
+      "ids": [
+        "draft4-nested-pointer-inner",
+        "draft4-nested-pointer-outer",
+        "draft6-nested-pointer-inner",
+        "draft6-nested-pointer-outer",
+        "draft7-nested-pointer-inner",
+        "draft7-nested-pointer-outer"
+      ],
+      "native": "_WrappedReferencingError with PointerToNowhere, all three methods, empty iterator prefix.",
+      "cause": "Legacy id sibling is inert because the same schema object has $ref; local wrapper pointer is therefore missing in the outer resource.",
+      "target": {
+        "code": "SCHEMA_REF_UNRESOLVED",
+        "reason": "Schema reference target does not exist"
+      },
+      "authority": "Existing trusted local-reference terminal mapping; no new code, reason or compatibility correction."
+    }
+  },
+  "scopeChecks": [
+    "direct-outer-True-inner-True controls distinguish native ordinary resource descent from an anchor stack containing every entered resource.",
+    "history-middle-None/False versus True controls distinguish native lookup-history boundary promotion without permitting outer-resource overreach.",
+    "boundary-x-target controls preserve opaque id semantics, unlike recognized $defs resources.",
+    "origin raw-pair/astral controls preserve distinct source pointer targets despite identical UTF16 units."
+  ],
+  "remaining": "Luna B implementation/native tests and Luna C exact installed comparator/gates are in progress; no overall approval."
+}

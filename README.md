@@ -31,8 +31,12 @@ Edition 2024 source operations and broader conformance remain unsupported.
 
 The normal SDK bundles `umf.actions`; use `createUmfRegistry()` for built-in action declaration support. Executors remain explicitly selected. `bun run build:sdk` creates one `.cache/sdk-distribution/umf-sdk.tgz` containing the library, types and schemas, including the action vocabulary descriptor. No separate actions installation is required.
 
-Development: `bun install --frozen-lockfile`, `bun run typecheck`, `bun run test`,
-and `bun run build`. `bun run test` builds the browser library, PostgreSQL parser,
+Development requires Rust 1.90.0 for the native metamodel compiler. Install the
+pinned toolchain with `rustup toolchain install 1.90.0`, run `cargo fetch --locked`
+once to populate its dependency cache, then use `bun install --frozen-lockfile`,
+`bun run typecheck`, `bun run test` and `bun run build`. Compiler builds use locked,
+offline Cargo dependencies. Dedicated native Python/Node/Bun/WASM core entry points
+are described in [bindings/core/README.md](bindings/core/README.md). `bun run test` builds the browser library, PostgreSQL parser,
 and adapter test bundles before running every live test file in a fresh, sequential
 Bun process. This prevents accumulated VM state and keeps native ownership serial.
 The runner rejects incomplete summaries, failures and crashes; it does not retry or

@@ -1,0 +1,375 @@
+{
+  "id": "R2-SOL-INSTALLED-SERIALIZATION-CLOSURE-001",
+  "status": "Standalone harness/source-archive preflight handoff, not an overall R2 or final committed-source fullgate approval.",
+  "baseCommit": "4539232632f6c0f84b7cef3a0277b8fc5e7b7f17",
+  "script": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-core/python-serialization-conformance.py",
+    "sha256": "8ab6a3d78bee5710d0fc342b0995dfa98988fa0c42008413026f2736de78235a"
+  },
+  "coreSchemaSha256": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
+  "patch": {
+    "path": "/private/tmp/umf-r2-sol-serialization-final.patch",
+    "sha256": "59d08b8887948eeab32894d43586ab5436d2ad9584a907c3a692aab0d4eef446"
+  },
+  "change": "Canonicalize only exact native {kind:NoneType,value:null} to {kind:null}, recursively through tagged list/map key/value entries; from_tagged accepts and validates both exact None spellings. Actual tagged(None) remains null. No fixture/target/NEL correction, production source, error classification, non-null tag, value, bits, raw codepoint, or mapping order changes.",
+  "originalWheelComparator": {
+    "path": "/private/tmp/umf-r2-sol-serialization-installed.json",
+    "sha256": "e4898006a0f701e58719469496ed21d33fe976895223b539af719a74f2429f58",
+    "exitCode": 0,
+    "report": {
+      "profile": "umf.r2.python-serialization-conformance/1",
+      "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+      "pythonMinor": 11,
+      "oracleCount": 18,
+      "base": 124,
+      "ordering": 20,
+      "yamlScalars": 284,
+      "yamlCharacters": 196,
+      "yamlSourceContext": 174,
+      "yamlProfileEdges": 162,
+      "yamlBreakContext": 708,
+      "yamlDirectives": 74,
+      "yamlDirectiveTail": 0,
+      "nelCorrection": 2,
+      "cases": 1742,
+      "passed": 1742,
+      "failed": 0,
+      "mismatches": []
+    }
+  },
+  "focusedControls": {
+    "path": "/private/tmp/umf-r2-sol-serialization-controls.json",
+    "sha256": "736433fbee26d369f222d73c9280902501f898329d64a3f3e00de14661873446",
+    "report": {
+      "status": "pass",
+      "scriptSha256": "8ab6a3d78bee5710d0fc342b0995dfa98988fa0c42008413026f2736de78235a",
+      "controls": {
+        "validNoneSpellings": 2,
+        "nonNullTagsAndExactRoundtrips": 19,
+        "nestedNullListAndMapEntries": true,
+        "mappingOrderPreserved": true,
+        "inputNotMutated": true,
+        "malformedNullTagsRefusedByBothFunctions": 6,
+        "unknownInputKindRefused": true,
+        "unrelatedResultObjectRefused": true
+      }
+    }
+  },
+  "sourceArchive": {
+    "archive": "/private/tmp/umf-r2-sol-serialization/sdist/umf_core-0.10.0.tar.gz",
+    "sha256": "4e01ab31a46e0a7d8ceb80f96fec80386176574a9c3f1c72bba852f5f31df5d0",
+    "source": "/private/tmp/umf-r2-sol-serialization/source/umf_core-0.10.0",
+    "memberCount": 443,
+    "memberListSha256": "9880b55a012cceca508df2cf11044a9a4022359bf0f9a1b82bc92fd80f09dc48",
+    "missingRequiredMembers": [],
+    "excludedMembers": [],
+    "noJavascriptPath": "/private/tmp/umf-r2-sol-serialization/no-javascript-tools",
+    "tools": [
+      {
+        "name": "uv",
+        "path": "/opt/homebrew/Cellar/uv/0.13.3/bin/uv"
+      },
+      {
+        "name": "cargo",
+        "path": "/opt/homebrew/Cellar/rustup/1.29.2/bin/cargo"
+      },
+      {
+        "name": "rustc",
+        "path": "/opt/homebrew/Cellar/rustup/1.29.2/bin/rustc"
+      },
+      {
+        "name": "rustup",
+        "path": "/opt/homebrew/Cellar/rustup/1.29.2/bin/rustup"
+      },
+      {
+        "name": "python",
+        "path": "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/bin/python3.11"
+      },
+      {
+        "name": "python3",
+        "path": "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/bin/python3.11"
+      },
+      {
+        "name": "python3.11",
+        "path": "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/bin/python3.11"
+      },
+      {
+        "name": "cc",
+        "path": "/usr/bin/cc"
+      },
+      {
+        "name": "clang",
+        "path": "/usr/bin/clang"
+      },
+      {
+        "name": "gcc",
+        "path": "/usr/bin/gcc"
+      },
+      {
+        "name": "as",
+        "path": "/usr/bin/as"
+      },
+      {
+        "name": "ld",
+        "path": "/usr/bin/ld"
+      },
+      {
+        "name": "ar",
+        "path": "/usr/bin/ar"
+      },
+      {
+        "name": "ranlib",
+        "path": "/usr/bin/ranlib"
+      },
+      {
+        "name": "strip",
+        "path": "/usr/bin/strip"
+      },
+      {
+        "name": "dsymutil",
+        "path": "/usr/bin/dsymutil"
+      },
+      {
+        "name": "codesign",
+        "path": "/usr/bin/codesign"
+      },
+      {
+        "name": "install_name_tool",
+        "path": "/usr/bin/install_name_tool"
+      },
+      {
+        "name": "xcode-select",
+        "path": "/usr/bin/xcode-select"
+      },
+      {
+        "name": "xcrun",
+        "path": "/usr/bin/xcrun"
+      }
+    ],
+    "javascriptCheck": {}
+  },
+  "sourceArchiveBuild": {
+    "path": "/private/tmp/umf-r2-sol-serialization-sdist-build.log",
+    "sha256": "2def1ed49eb9c529ca87d6034f0de0c23b3c391d1c4ecbb94b4754875606fbd0",
+    "exitCode": 0
+  },
+  "offlineNoJavascriptRebuild": {
+    "command": "env PATH=/private/tmp/umf-r2-sol-serialization/no-javascript-tools CARGO=/opt/homebrew/opt/rustup/bin/cargo PYO3_PYTHON=/private/tmp/umf-r2-binding-venv/bin/python CARGO_NET_OFFLINE=true RUSTUP_TOOLCHAIN=1.90.0 UV_OFFLINE=1 /opt/homebrew/bin/uv build --wheel --out-dir /private/tmp/umf-r2-sol-serialization/rebuilt-wheel",
+    "cwd": "/private/tmp/umf-r2-sol-serialization/source/umf_core-0.10.0",
+    "log": "/private/tmp/umf-r2-sol-serialization-sdist-wheel-build.log",
+    "logSha256": "73e1a429bcd65fd0601aa75ff54cc45c701b141131de4f7f6f869fa2cf3e892b",
+    "exitCode": 0,
+    "wheel": "/private/tmp/umf-r2-sol-serialization/rebuilt-wheel/umf_core-0.10.0-cp311-abi3-macosx_11_0_arm64.whl",
+    "wheelSha256": "50aa956f03af5339269f42f7afa6c42e451cf367aecb35be21343522f647a10d"
+  },
+  "rebuiltWheelInstalledOutsideCheckout": {
+    "venv": "/private/tmp/umf-r2-sol-serialization/rebuilt-installed/venv",
+    "cwd": "/private/tmp/umf-r2-sol-serialization",
+    "PATH": "",
+    "UMF_REQUIRE_INSTALLED": "1",
+    "checks": {
+      "public": {
+        "path": "/private/tmp/umf-r2-sol-serialization-rebuilt-public.log",
+        "sha256": "5c3d0a469d452a16919196bf74ec11e46ef7f8e3b1dbb343f1e4eade6ee3c11a",
+        "exitCode": 0,
+        "report": {
+          "passed": 198
+        }
+      },
+      "core139": {
+        "path": "/private/tmp/umf-r2-sol-serialization-rebuilt-core139.json",
+        "sha256": "c41c6dba766ec5c4e2f63906b60fa9554a2a58e021498951af00539aae098a3c",
+        "exitCode": 0,
+        "report": {
+          "cases": 139,
+          "copiedTextUnits": 6000000,
+          "fixture": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json",
+          "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+          "invalid": 88,
+          "inventoryExtensionDepth": {
+            "accepted": 122,
+            "refused": 123
+          },
+          "maxDocumentDepth": 128,
+          "native": "umf-core-r2",
+          "orderedDiagnostics": true,
+          "package": "/private/tmp/umf-r2-sol-serialization/rebuilt-installed/venv/lib/python3.11/site-packages/umf/__init__.py",
+          "runtime": "3.11.17",
+          "sourceTextUnits": 4000000,
+          "status": "pass",
+          "valid": 51
+        }
+      },
+      "schemas": {
+        "path": "/private/tmp/umf-r2-sol-serialization-rebuilt-schemas.log",
+        "sha256": "c4734038166d1140a1a12e8c3671efa379cb68fb9a951de27d455f0ff0da5e70",
+        "exitCode": 0,
+        "report": {
+          "status": "pass",
+          "admissionCases": 9282,
+          "officialCases": 4995,
+          "officialEvaluated": 4995,
+          "numericCases": 2586,
+          "numericValidityResults": 2316,
+          "numericInstanceErrors": 270,
+          "numericProfiles": {
+            "umf.r2-sol-python-schema-arithmetic/1": 648,
+            "umf.r2-sol-python-schema-arithmetic-edges/1": 1938
+          },
+          "numericCandidatePython": "3.11.17",
+          "mismatches": 0,
+          "mismatchBuckets": {},
+          "firstFive": [],
+          "firstPerProfile": {},
+          "failures": []
+        }
+      },
+      "order": {
+        "path": "/private/tmp/umf-r2-sol-serialization-rebuilt-order.log",
+        "sha256": "af7cf1ed1721a3f67f0e9e8d621149ae582a843aa572e5c7eb7c180d299db2c3",
+        "exitCode": 0,
+        "report": {
+          "status": "pass",
+          "python": "3.11.17",
+          "jsonschema": "4.26.0",
+          "fixtures": {
+            "umf.r2-sol-python-schema-evaluation-order/1": {
+              "cases": 792,
+              "methodObservations": 0,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-evaluation-order-ordinary/1": {
+              "cases": 264,
+              "methodObservations": 0,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-yield-boundaries/1": {
+              "cases": 226,
+              "methodObservations": 675,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-annotation-reach/1": {
+              "cases": 96,
+              "methodObservations": 285,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-annotation-mechanism/1": {
+              "cases": 140,
+              "methodObservations": 393,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-annotation-mechanism-2019/1": {
+              "cases": 28,
+              "methodObservations": 81,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-2019-ap-target/1": {
+              "cases": 9,
+              "methodObservations": 27,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-error-metadata/1": {
+              "cases": 63,
+              "methodObservations": 0,
+              "errorObservations": 51
+            },
+            "umf.r2-sol-python-schema-unordered-targets/1": {
+              "cases": 36,
+              "methodObservations": 108,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-error-subjects/1": {
+              "cases": 63,
+              "methodObservations": 0,
+              "errorObservations": 38
+            },
+            "umf.r2-sol-python-schema-reference-terminals/1": {
+              "cases": 363,
+              "methodObservations": 1089,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-reference-indices/1": {
+              "cases": 315,
+              "methodObservations": 945,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-schema-path-segments/1": {
+              "cases": 48,
+              "methodObservations": 0,
+              "errorObservations": 42
+            },
+            "umf.r2-sol-python-schema-path-keys/1": {
+              "cases": 132,
+              "methodObservations": 0,
+              "errorObservations": 132
+            },
+            "umf.r2-sol-python-schema-annotation-order/1": {
+              "cases": 53,
+              "methodObservations": 159,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-recursive-resource-scope/1": {
+              "cases": 89,
+              "methodObservations": 255,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-resource-identity-companion/1": {
+              "cases": 114,
+              "methodObservations": 342,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-resource-anchor-companion/1": {
+              "cases": 24,
+              "methodObservations": 72,
+              "errorObservations": 0
+            },
+            "umf.r2-sol-python-resource-uri-operations/1": {
+              "cases": 24,
+              "methodObservations": 72,
+              "errorObservations": 0
+            }
+          },
+          "cases": 2879,
+          "methodObservations": 7671,
+          "errorMetadataObservations": 263,
+          "runtimeErrorObservations": 6,
+          "arithmeticErrors": 912,
+          "deferredIteratorArithmeticErrors": 474,
+          "schemaAdmissionRefusals": 29,
+          "mismatches": 0,
+          "mismatchBuckets": {},
+          "firstFive": [],
+          "failures": []
+        }
+      },
+      "serialization": {
+        "path": "/private/tmp/umf-r2-sol-serialization-rebuilt.json",
+        "sha256": "e4898006a0f701e58719469496ed21d33fe976895223b539af719a74f2429f58",
+        "exitCode": 0,
+        "report": {
+          "profile": "umf.r2.python-serialization-conformance/1",
+          "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+          "pythonMinor": 11,
+          "oracleCount": 18,
+          "base": 124,
+          "ordering": 20,
+          "yamlScalars": 284,
+          "yamlCharacters": 196,
+          "yamlSourceContext": 174,
+          "yamlProfileEdges": 162,
+          "yamlBreakContext": 708,
+          "yamlDirectives": 74,
+          "yamlDirectiveTail": 0,
+          "nelCorrection": 2,
+          "cases": 1742,
+          "passed": 1742,
+          "failed": 0,
+          "mismatches": []
+        }
+      }
+    }
+  },
+  "reportingNote": "Both frozen directive receipts use the same directive profile identifier; the existing category counter aggregates58 directive plus16 directive-tail observations as yamlDirectives74. All18 selected oracle groups and1742 cases are executed; yamlDirectiveTail0 is a counter-label alias, not an omitted fixture. No category/reporting code change was needed for this null-representation closure.",
+  "independentReview": "Separate Sol reviewer approved exact8ab6a3d7 script with valid-null, nonalias/negative-zero/raw-surrogate, recursive key/value/order/immutability and malformed-null refusal controls. Parent receives final hash/archive results separately.",
+  "remaining": "Root clean checkpoint and complete source-bound fullgate/CI receipts still required. No additional source edits planned; original and rebuilt installed environments retained."
+}

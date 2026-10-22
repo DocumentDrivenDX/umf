@@ -1,0 +1,2223 @@
+{
+  "profile": "umf.r2-sol-python-schema-unordered-targets/1",
+  "python": "3.11.17",
+  "jsonschema": "4.26.0",
+  "sourceRevision": "53de049136c7e41b482d1a73665d031cd5fbaec6",
+  "derivation": "Reviewed correction R2-SOL-CORRECTION-003. Unchanged predecessor scalar/descend kernels; only schema-valued additionalProperties extra-key traversal uses find_additional_properties insertion order without wrapping it in set(). Boolean false aggregate controls use unchanged native iter_errors. These are approved target observations, not rewritten predecessor baseline observations.",
+  "cases": [
+    {
+      "id": "draft0-ordered-first-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"additionalProperties\":{\"type\":\"number\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-ordered-arithmetic-first",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"additionalProperties\":{\"type\":\"number\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-ordered-two-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"additionalProperties\":{\"type\":\"number\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "z"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "z"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-declared-pattern-excluded",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"properties\":{\"known\":{}},\"patternProperties\":{\"^p\":{}},\"additionalProperties\":{\"type\":\"number\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "known",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-unchanged-false-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-unchanged-false-pattern-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"patternProperties\":{\"^p\":{}},\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-ordered-first-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-ordered-arithmetic-first",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-ordered-two-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "z"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "z"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-declared-pattern-excluded",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"properties\":{\"known\":{}},\"patternProperties\":{\"^p\":{}},\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "known",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-unchanged-false-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-unchanged-false-pattern-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"patternProperties\":{\"^p\":{}},\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-ordered-first-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-ordered-arithmetic-first",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-ordered-two-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "z"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "z"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-declared-pattern-excluded",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"properties\":{\"known\":{}},\"patternProperties\":{\"^p\":{}},\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "known",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-unchanged-false-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-unchanged-false-pattern-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"patternProperties\":{\"^p\":{}},\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-ordered-first-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-ordered-arithmetic-first",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-ordered-two-invalid",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "z"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "z"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-declared-pattern-excluded",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"properties\":{\"known\":{}},\"patternProperties\":{\"^p\":{}},\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "known",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-unchanged-false-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-unchanged-false-pattern-aggregate",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"patternProperties\":{\"^p\":{}},\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-ordered-first-invalid",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-ordered-arithmetic-first",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ordered-two-invalid",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "z"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "z"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-declared-pattern-excluded",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"properties\":{\"known\":{}},\"patternProperties\":{\"^p\":{}},\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "known",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-unchanged-false-aggregate",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-unchanged-false-pattern-aggregate",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"patternProperties\":{\"^p\":{}},\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-ordered-first-invalid",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-ordered-arithmetic-first",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-ordered-two-invalid",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "z"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "z"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-declared-pattern-excluded",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{\"known\":{}},\"patternProperties\":{\"^p\":{}},\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "known",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ],
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "a"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "a"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-unchanged-false-aggregate",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-unchanged-false-pattern-aggregate",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"patternProperties\":{\"^p\":{}},\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "z",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ],
+          [
+            "pSkip",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "additionalProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "additionalProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "additionalProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "additionalProperties"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

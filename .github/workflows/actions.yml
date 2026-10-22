@@ -24,6 +24,11 @@ jobs:
         run: |
           set -o pipefail
           bun run test:actions 2>&1 | tee command-execution.log
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - name: Fetch locked native compiler dependencies
+        run: cargo fetch --locked
       - name: Build bundled SDK
         run: bun run test:sdk
       - name: Test command API in Chromium

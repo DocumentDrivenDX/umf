@@ -1,0 +1,68 @@
+{
+  "profile": "umf.sol-runtime-text-resource-boundaries/1",
+  "qualification": "Reference executes ordinary closed programs over already owned JSON values. This is not source parsing or serialization; source/output writer limits are a separate boundary.",
+  "generatorSha256": "0039be3dd3dcbd927d15f4adbfcba33ed24969a3ea7291a421dc2df51ea8b2c6",
+  "reference": {
+    "runtime": "Bun 1.4.3",
+    "kernelSha256": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362"
+  },
+  "cases": [
+    {
+      "id": "concat-private-text-over-source-limit",
+      "operator": "concat",
+      "recipe": {
+        "input": {
+          "repeat": "x",
+          "units": 4000001
+        },
+        "expression": "concat(empty,input)",
+        "program": "single emit with code TEXT,path empty,severity error and expression as message"
+      },
+      "predecessor": {
+        "status": "diagnostics",
+        "count": 1,
+        "messageUtf16Units": 4000001,
+        "messageUtf8Sha256": "de55671b077f84d67060bec2cb52c9ef77a20b21a2662ba92eb7f990021284c7",
+        "code": "TEXT"
+      }
+    },
+    {
+      "id": "pointer-private-text-over-source-limit",
+      "operator": "pointer",
+      "recipe": {
+        "input": {
+          "repeat": "x",
+          "units": 4000001
+        },
+        "expression": "pointer(input)",
+        "program": "single emit with code TEXT,path empty,severity error and expression as message"
+      },
+      "predecessor": {
+        "status": "diagnostics",
+        "count": 1,
+        "messageUtf16Units": 4000001,
+        "messageUtf8Sha256": "de55671b077f84d67060bec2cb52c9ef77a20b21a2662ba92eb7f990021284c7",
+        "code": "TEXT"
+      }
+    },
+    {
+      "id": "canonical-private-text-over-source-limit",
+      "operator": "canonical",
+      "recipe": {
+        "input": {
+          "repeat": "x",
+          "units": 4000001
+        },
+        "expression": "canonical(input)",
+        "program": "single emit with code TEXT,path empty,severity error and expression as message"
+      },
+      "predecessor": {
+        "status": "diagnostics",
+        "count": 1,
+        "messageUtf16Units": 4000003,
+        "messageUtf8Sha256": "abfade8bbf8e0f23e154a12eb056e5ea1d0834e9b626c801567d8f7fda636755",
+        "code": "TEXT"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1959 @@
+{
+  "profile": "umf.r2-sol-python-schema-annotation-order/1",
+  "python": "3.11.17",
+  "jsonschema": "4.26.0",
+  "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "scope": "Known annotation family closure: fixed dialect/kind helper order, early items returns versus refs/contains/if/combinators, and required predicate priority independent of ordinary keyword insertion order. No new semantic correction or candidate-derived expectation. Local references only; no network/recursive nontermination.",
+  "cases": [
+    {
+      "id": "draft4-array-items-contains-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"contains\":{\"multipleOf\":0.5},\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-contains-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"contains\":{\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-ref-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"$ref\":\"#/missing\",\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'items': {}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'items': {}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'items': {}}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-ref-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"$ref\":\"#/missing\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'items': {}, '$ref': '#/missing'}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'items': {}, '$ref': '#/missing'}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'items': {}, '$ref': '#/missing'}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-if-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"if\":{\"contains\":{\"multipleOf\":0.5}},\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-if-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"if\":{\"contains\":{\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-allof-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"allOf\":[{\"items\":{\"multipleOf\":0.5}}],\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-allof-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"allOf\":[{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-anyof-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}],\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-anyof-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-oneof-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"oneOf\":[{},{\"items\":{\"multipleOf\":0.5}}],\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-array-items-oneof-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"oneOf\":[{},{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-object-if-comb-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"if\":{\"properties\":{\"x\":{\"multipleOf\":0.5}}},\"allOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'if': {'properties': {'x': {'multipleOf': 0.5}}}, 'allOf': [{'$ref': '#/missing'}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'if': {'properties': {'x': {'multipleOf': 0.5}}}, 'allOf': [{'$ref': '#/missing'}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'if': {'properties': {'x': {'multipleOf': 0.5}}}, 'allOf': [{'$ref': '#/missing'}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-object-if-comb-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"allOf\":[{\"$ref\":\"#/missing\"}],\"if\":{\"properties\":{\"x\":{\"multipleOf\":0.5}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'allOf': [{'$ref': '#/missing'}], 'if': {'properties': {'x': {'multipleOf': 0.5}}}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'allOf': [{'$ref': '#/missing'}], 'if': {'properties': {'x': {'multipleOf': 0.5}}}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'allOf': [{'$ref': '#/missing'}], 'if': {'properties': {'x': {'multipleOf': 0.5}}}}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-object-comb-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"oneOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'oneOf': [{'$ref': '#/missing'}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-object-comb-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"oneOf\":[{\"$ref\":\"#/missing\"}],\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-object-ref-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"$ref\":\"#/missing\"}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], '$ref': '#/missing'}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], '$ref': '#/missing'}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], '$ref': '#/missing'}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-object-ref-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"$ref\":\"#/missing\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', '$ref': '#/missing', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', '$ref': '#/missing', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', '$ref': '#/missing', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-object-dependent-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"dependentSchemas\":{\"x\":{\"$ref\":\"#/missing\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'dependentSchemas': {'x': {'$ref': '#/missing'}}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'dependentSchemas': {'x': {'$ref': '#/missing'}}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'dependentSchemas': {'x': {'$ref': '#/missing'}}}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-object-dependent-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"dependentSchemas\":{\"x\":{\"$ref\":\"#/missing\"}},\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'dependentSchemas': {'x': {'$ref': '#/missing'}}, 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'dependentSchemas': {'x': {'$ref': '#/missing'}}, 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedProperties': False, 'type': 'string', 'dependentSchemas': {'x': {'$ref': '#/missing'}}, 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-if-comb-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"if\":{\"items\":{\"multipleOf\":0.5}},\"allOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-if-comb-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"allOf\":[{\"$ref\":\"#/missing\"}],\"if\":{\"items\":{\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-comb-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}],\"oneOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'anyOf': [{}, {'items': {'multipleOf': 0.5}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'anyOf': [{}, {'items': {'multipleOf': 0.5}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'anyOf': [{}, {'items': {'multipleOf': 0.5}}], 'oneOf': [{'$ref': '#/missing'}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-comb-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"oneOf\":[{\"$ref\":\"#/missing\"}],\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'items': {'multipleOf': 0.5}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'items': {'multipleOf': 0.5}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'items': {'multipleOf': 0.5}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-ref-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"contains\":{\"multipleOf\":0.5},\"$ref\":\"#/missing\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'contains': {'multipleOf': 0.5}, '$ref': '#/missing'}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'contains': {'multipleOf': 0.5}, '$ref': '#/missing'}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', 'contains': {'multipleOf': 0.5}, '$ref': '#/missing'}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-array-ref-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"$ref\":\"#/missing\",\"contains\":{\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'contains': {'multipleOf': 0.5}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'contains': {'multipleOf': 0.5}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2019-09/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'contains': {'multipleOf': 0.5}}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-contains-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"contains\":{\"multipleOf\":0.5},\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-contains-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"contains\":{\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-ref-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"$ref\":\"#/missing\",\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'items': {}}",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-ref-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"$ref\":\"#/missing\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'items': {}, '$ref': '#/missing'}",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-if-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"if\":{\"contains\":{\"multipleOf\":0.5}},\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-if-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"if\":{\"contains\":{\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-allof-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"allOf\":[{\"items\":{\"multipleOf\":0.5}}],\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-allof-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"allOf\":[{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-anyof-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}],\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-anyof-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-oneof-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"oneOf\":[{},{\"items\":{\"multipleOf\":0.5}}],\"items\":{}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-array-items-oneof-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"items\":{},\"oneOf\":[{},{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-object-if-comb-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"if\":{\"properties\":{\"x\":{\"multipleOf\":0.5}}},\"allOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'if': {'properties': {'x': {'multipleOf': 0.5}}}, 'allOf': [{'$ref': '#/missing'}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'if': {'properties': {'x': {'multipleOf': 0.5}}}, 'allOf': [{'$ref': '#/missing'}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'if': {'properties': {'x': {'multipleOf': 0.5}}}, 'allOf': [{'$ref': '#/missing'}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-if-comb-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"allOf\":[{\"$ref\":\"#/missing\"}],\"if\":{\"properties\":{\"x\":{\"multipleOf\":0.5}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'allOf': [{'$ref': '#/missing'}], 'if': {'properties': {'x': {'multipleOf': 0.5}}}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'allOf': [{'$ref': '#/missing'}], 'if': {'properties': {'x': {'multipleOf': 0.5}}}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'allOf': [{'$ref': '#/missing'}], 'if': {'properties': {'x': {'multipleOf': 0.5}}}}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-comb-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"oneOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'oneOf': [{'$ref': '#/missing'}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-comb-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"oneOf\":[{\"$ref\":\"#/missing\"}],\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-ref-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"$ref\":\"#/missing\"}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], '$ref': '#/missing'}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], '$ref': '#/missing'}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], '$ref': '#/missing'}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-ref-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"$ref\":\"#/missing\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', '$ref': '#/missing', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', '$ref': '#/missing', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', '$ref': '#/missing', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-dependent-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"dependentSchemas\":{\"x\":{\"$ref\":\"#/missing\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'dependentSchemas': {'x': {'$ref': '#/missing'}}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'dependentSchemas': {'x': {'$ref': '#/missing'}}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}], 'dependentSchemas': {'x': {'$ref': '#/missing'}}}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-dependent-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"dependentSchemas\":{\"x\":{\"$ref\":\"#/missing\"}},\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'dependentSchemas': {'x': {'$ref': '#/missing'}}, 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'dependentSchemas': {'x': {'$ref': '#/missing'}}, 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': False, 'type': 'string', 'dependentSchemas': {'x': {'$ref': '#/missing'}}, 'anyOf': [{}, {'properties': {'x': {'multipleOf': 0.5}}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-array-if-comb-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"if\":{\"items\":{\"multipleOf\":0.5}},\"allOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-array-if-comb-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"allOf\":[{\"$ref\":\"#/missing\"}],\"if\":{\"items\":{\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-array-comb-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}],\"oneOf\":[{\"$ref\":\"#/missing\"}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'anyOf': [{}, {'items': {'multipleOf': 0.5}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'anyOf': [{}, {'items': {'multipleOf': 0.5}}], 'oneOf': [{'$ref': '#/missing'}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'anyOf': [{}, {'items': {'multipleOf': 0.5}}], 'oneOf': [{'$ref': '#/missing'}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-array-comb-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"oneOf\":[{\"$ref\":\"#/missing\"}],\"anyOf\":[{},{\"items\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'items': {'multipleOf': 0.5}}]}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'items': {'multipleOf': 0.5}}]}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'oneOf': [{'$ref': '#/missing'}], 'anyOf': [{}, {'items': {'multipleOf': 0.5}}]}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-array-ref-priority-0",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"contains\":{\"multipleOf\":0.5},\"$ref\":\"#/missing\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'contains': {'multipleOf': 0.5}, '$ref': '#/missing'}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'contains': {'multipleOf': 0.5}, '$ref': '#/missing'}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', 'contains': {'multipleOf': 0.5}, '$ref': '#/missing'}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-array-ref-priority-1",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"$ref\":\"#/missing\",\"contains\":{\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'contains': {'multipleOf': 0.5}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'contains': {'multipleOf': 0.5}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "PointerToNowhere",
+          "message": "'/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedItems': False, 'type': 'object', '$ref': '#/missing', 'contains': {'multipleOf': 0.5}}",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-object-ap-before-up",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":{\"multipleOf\":0.5},\"type\":\"string\",\"additionalProperties\":{\"$ref\":\"#/missing\"}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': {'multipleOf': 0.5}, 'type': 'string', 'additionalProperties': {'$ref': '#/missing'}}"
+        },
+        "validate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': {'multipleOf': 0.5}, 'type': 'string', 'additionalProperties': {'$ref': '#/missing'}}"
+        },
+        "iterate": {
+          "status": "evaluation-error",
+          "type": "_WrappedReferencingError",
+          "message": "PointerToNowhere: '/missing' does not exist within {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'unevaluatedProperties': {'multipleOf': 0.5}, 'type': 'string', 'additionalProperties': {'$ref': '#/missing'}}",
+          "prefix": []
+        }
+      }
+    }
+  ]
+}

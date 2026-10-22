@@ -150,6 +150,11 @@ jobs:
           rm -f docs/helix/05-deploy/microsite/dist/action-compiler.html docs/helix/05-deploy/microsite/dist/action-compiler.js docs/helix/05-deploy/microsite/dist/truss-catalog-worker.js
       - name: Reject orphan public page claims before building
         run: bun scripts/generated-page-seals.ts --inventory
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - name: Fetch locked native compiler dependencies
+        run: cargo fetch --locked
       - name: Verify generated metamodel authority and retirement boundaries
         run: |
           bun run check:metamodel

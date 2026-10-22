@@ -1,0 +1,17 @@
+{
+  "id": "umf.rust-migration.r2.python-predecessor-baseline",
+  "status": "captured-predecessor-observations",
+  "sourceRef": "origin/main",
+  "sourceCommit": "53de049136c7e41b482d1a73665d031cd5fbaec6",
+  "sourcePackage": "python/src/umf from git archive, imported outside the checkout",
+  "pythonSourceFileCount": 10,
+  "pythonSourceSha256": "da831ebf1d003cbc49821a3220381042b2432294623546b7c30c78a6f861f69b",
+  "fixture": "fixtures/metamodel/current-conformance.json",
+  "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+  "cases": 139,
+  "outcomes": 139,
+  "errors": 0,
+  "disagreementCount": 0,
+  "disagreementIds": [],
+  "note": "Historical Python observations are captured for review; they are not treated as a correctness oracle. Resolve disagreements against frozen requirements before describing target semantics."
+}

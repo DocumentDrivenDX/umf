@@ -1,0 +1,29 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-PATH-SEGMENTS-PROFILES-001",
+  "fixture": "sol-python-schema-path-segments-predecessor.json",
+  "fixtureSha256": "35bfbceb67a1aec0c3d87180c23dd1ba5435e7644eec9a5306d8f65ee9987c63",
+  "generatorSha256": "bc3bcfbc2a53b17f6c3ae4f813cc8a005c414589a62708af734f46d76af5fafb",
+  "sourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "jsonschema": "4.26.0",
+  "basePython": "3.11.17",
+  "cases": 48,
+  "errorRecords": 42,
+  "admissionRefusals": 1,
+  "runtimeRefusals": 0,
+  "completeRecordsEqual": true,
+  "profiles": [
+    {
+      "python": "3.12.15",
+      "executableSha256": "fe5e57e7f0dc374654e314d4e8f20cf2a345bda8a4e03032046f407027628a32",
+      "completeRecordsEqual": true,
+      "captureSha256": "b297aebab7ec7ea2bd340552b104cf77409cdf0daa11b23f356e3e6cced3331b"
+    },
+    {
+      "python": "3.13.16",
+      "executableSha256": "b898474cdfda938c1dd25af22d1b066d4808ba8b7e2d14e20033781d7787f87f",
+      "completeRecordsEqual": true,
+      "captureSha256": "5cc86d54cf4496c097296b027b0d5d441877aa40eaf14ee3d8a9148e27478f91"
+    }
+  ],
+  "overallR2Approved": false
+}

@@ -1,0 +1,82 @@
+{
+  "profile": "umf.sol-approved-serialization-compatibility-delta/1",
+  "id": "R2-SOL-CORRECTION-002",
+  "reviewer": "Sol independent review (/root/sol_r2_review)",
+  "status": "approved-required-correction",
+  "operation": "Python YAML writer",
+  "reason": "Predecessor writer emits rawNEL and its own reader folds that line break into space, silently losing meaning. Governing no-meaning-loss requirement requires preserving the input string. Do not reproduce predecessor writer loss.",
+  "scope": "Only YAML output representation of U0085 changes. Reader rawNEL handling remains native line-break normalization; explicitly escapedNEL preservesU0085. Default ECMAScript profile unchanged.",
+  "baseline": {
+    "fixture": "sol-python-yaml-character-predecessor.json",
+    "fixtureSha256": "7dc0b49ae945ef42c41a2f1875574eff014efaf1aafcaf4b9a02e08cf4970016",
+    "caseId": "yaml-character-000085-write",
+    "caseCanonicalSha256": "9b8b971a967cec36def80084f41597629351211e4d26122edf8c1ddf909e57a4",
+    "input": {
+      "kind": "str",
+      "codepoints": [
+        97,
+        133,
+        98
+      ]
+    },
+    "predecessorResult": {
+      "status": "value",
+      "value": {
+        "kind": "str",
+        "codepoints": [
+          37,
+          89,
+          65,
+          77,
+          76,
+          32,
+          49,
+          46,
+          50,
+          10,
+          45,
+          45,
+          45,
+          32,
+          39,
+          97,
+          133,
+          98,
+          39,
+          10
+        ]
+      },
+      "readBack": {
+        "kind": "str",
+        "codepoints": [
+          97,
+          32,
+          98
+        ]
+      }
+    },
+    "observedProfiles": [
+      "cpython3.11/ruamel0.18.15",
+      "cpython3.11/ruamel0.19.1",
+      "cpython3.12/ruamel0.18.15",
+      "cpython3.12/ruamel0.19.1",
+      "cpython3.13/ruamel0.18.15",
+      "cpython3.13/ruamel0.19.1"
+    ]
+  },
+  "target": {
+    "writerRequirement": "Emit escaped U0085 (for example \\u0085 or \\N) within YAML quoted strings, never rawNEL; applies to every string/key position. Output whitespace/escape spelling need not equal predecessor.",
+    "readBack": {
+      "kind": "str",
+      "codepoints": [
+        97,
+        133,
+        98
+      ]
+    },
+    "readerRequirement": "RawNEL source continues to act as a line break as in native ruamel. EscapedNEL is decoded after source normalization and remainsU0085."
+  },
+  "selectorGuard": "Require exact baseline fixture hash pluscaseID+canonicalcasehash and unchanged predecessor input/result; validate corrected target only for that narrowly selected observation. All other predecessor observations remain exact unless separately approved.",
+  "oracleMutations": false,
+  "overallR2Approved": false
+}

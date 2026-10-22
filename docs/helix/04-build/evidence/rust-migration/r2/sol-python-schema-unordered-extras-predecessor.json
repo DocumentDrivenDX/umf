@@ -1,0 +1,516 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-UNORDERED-EXTRAS-001",
+  "scope": "Native predecessor additionalProperties builds a set of extra keys; hash seed changes whether a type error or later arithmetic exception is observed first. This receipt documents ambiguity rather than declaring one random process the semantic oracle.",
+  "sourceRevision": "53de049136c7e41b482d1a73665d031cd5fbaec6",
+  "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "schemaText": "{\"additionalProperties\":{\"type\":\"number\",\"multipleOf\":0.5}}",
+  "instanceRecipe": {
+    "kind": "object",
+    "members": [
+      [
+        "a",
+        {
+          "kind": "string",
+          "value": "bad"
+        }
+      ],
+      [
+        "b",
+        {
+          "kind": "float",
+          "bits": "7ff8000000000000"
+        }
+      ]
+    ]
+  },
+  "records": [
+    {
+      "hashSeed": 0,
+      "python": "3.11.17",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 1,
+      "python": "3.11.17",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 2,
+      "python": "3.11.17",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 3,
+      "python": "3.11.17",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 4,
+      "python": "3.11.17",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 5,
+      "python": "3.11.17",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 0,
+      "python": "3.12.15",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 1,
+      "python": "3.12.15",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 2,
+      "python": "3.12.15",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 3,
+      "python": "3.12.15",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 4,
+      "python": "3.12.15",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 5,
+      "python": "3.12.15",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 0,
+      "python": "3.13.16",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 1,
+      "python": "3.13.16",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "hashSeed": 2,
+      "python": "3.13.16",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 3,
+      "python": "3.13.16",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 4,
+      "python": "3.13.16",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "hashSeed": 5,
+      "python": "3.13.16",
+      "jsonschema": "4.26.0",
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "keyword": "type",
+          "path": [
+            "a"
+          ]
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "class": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "path": [
+                "a"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "productionDecision": "pending explicit stable-order compatibility qualification; no candidate expected record changed",
+  "overallR2Approved": false
+}

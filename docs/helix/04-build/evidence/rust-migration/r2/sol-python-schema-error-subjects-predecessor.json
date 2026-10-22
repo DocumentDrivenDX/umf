@@ -1,0 +1,6285 @@
+{
+  "profile": "umf.r2-sol-python-schema-error-subjects/1",
+  "python": "3.11.17",
+  "jsonschema": "4.26.0",
+  "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "scope": "Exposed error.instance may be a property name or a child value even when native display instancePath is empty. Preserve display paths and actual evaluated subject separately; never recover subject solely from display pointer. Only existing facade fields are tested, without a full exception API identity claim.",
+  "cases": [
+    {
+      "id": "draft0-property-name-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "minLength",
+                  {
+                    "kind": "integer",
+                    "decimal": "2"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"propertyNames\":{\"minLength\":2}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft0-property-name-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"propertyNames\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft0-property-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"properties\":{\"x\":false}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type 'object'\n\nFailed validating 'type' in metaschema['properties']['properties']['additionalProperties']:\n    {'$schema': 'http://json-schema.org/draft-03/schema#',\n     'id': 'http://json-schema.org/draft-03/schema#',\n     'type': 'object',\n     'properties': {'type': {'type': ['string', 'array'],\n                             'items': {'type': ['string', {'$ref': '#'}]},\n                             'uniqueItems': True,\n                             'default': 'any'},\n                    'properties': {'type': 'object',\n                                   'additionalProperties': {'$ref': '#'},\n                                   'default': {}},\n                    'patternProperties': {'type': 'object',\n                                          'additionalProperties': {'$ref': '#'},\n                                          'default': {}},\n                    'additionalProperties': {'type': [{'$ref': '#'},\n                                                      'boolean'],\n                                             'default': {}},\n                    'items': {'type': [{'$ref': '#'}, 'array'],\n                              'items': {'$ref': '#'},\n                              'default': {}},\n                    'additionalItems': {'type': [{'$ref': '#'}, 'boolean'],\n                                        'default': {}},\n                    'required': {'type': 'boolean', 'default': False},\n                    'dependencies': {'type': 'object',\n                                     'additionalProperties': {'type': ['string',\n                                                                       'array',\n                                                                       {'$ref': '#'}],\n                                                              'items': {'type': 'string'}},\n                                     'default': {}},\n                    'minimum': {'type': 'number'},\n                    'maximum': {'type': 'number'},\n                    'exclusiveMinimum': {'type': 'boolean',\n                                         'default': False},\n                    'exclusiveMaximum': {'type': 'boolean',\n                                         'default': False},\n                    'minItems': {'type': 'integer',\n                                 'minimum': 0,\n                                 'default': 0},\n                    'maxItems': {'type': 'integer', 'minimum': 0},\n                    'uniqueItems': {'type': 'boolean', 'default': False},\n                    'pattern': {'type': 'string', 'format': 'regex'},\n                    'minLength': {'type': 'integer',\n                                  'minimum': 0,\n                                  'default': 0},\n                    'maxLength': {'type': 'integer'},\n                    'enum': {'type': 'array',\n                             'minItems': 1,\n                             'uniqueItems': True},\n                    'default': {'type': 'any'},\n                    'title': {'type': 'string'},\n                    'description': {'type': 'string'},\n                    'format': {'type': 'string'},\n                    'divisibleBy': {'type': 'number',\n                                    'minimum': 0,\n                                    'exclusiveMinimum': True,\n                                    'default': 1},\n                    'disallow': {'type': ['string', 'array'],\n                                 'items': {'type': ['string',\n                                                    {'$ref': '#'}]},\n                                 'uniqueItems': True},\n                    'extends': {'type': [{'$ref': '#'}, 'array'],\n                                'items': {'$ref': '#'},\n                                'default': {}},\n                    'id': {'type': 'string'},\n                    '$ref': {'type': 'string'},\n                    '$schema': {'type': 'string', 'format': 'uri'}},\n     'dependencies': {'exclusiveMinimum': 'minimum',\n                      'exclusiveMaximum': 'maximum'},\n     'default': {}}\n\nOn schema['properties']['x']:\n    False"
+      }
+    },
+    {
+      "id": "draft0-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "allOf",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"properties\":{\"x\":{\"allOf\":[false]}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft0-property-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            110,
+                            111
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"definitions\":{\"no\":false},\"properties\":{\"x\":{\"$ref\":\"#/definitions/no\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "schemaError": {
+        "type": "TypeError",
+        "message": "argument of type 'bool' is not iterable"
+      }
+    },
+    {
+      "id": "draft0-item-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"items\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type {'$ref': '#'}, 'array'\n\nFailed validating 'type' in metaschema['properties']['items']:\n    {'type': [{'$ref': '#'}, 'array'],\n     'items': {'$ref': '#'},\n     'default': {}}\n\nOn schema['items']:\n    False"
+      }
+    },
+    {
+      "id": "draft0-tuple-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"items\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type 'object'\n\nFailed validating 'type' in metaschema['properties']['items']['items']:\n    {'$schema': 'http://json-schema.org/draft-03/schema#',\n     'id': 'http://json-schema.org/draft-03/schema#',\n     'type': 'object',\n     'properties': {'type': {'type': ['string', 'array'],\n                             'items': {'type': ['string', {'$ref': '#'}]},\n                             'uniqueItems': True,\n                             'default': 'any'},\n                    'properties': {'type': 'object',\n                                   'additionalProperties': {'$ref': '#'},\n                                   'default': {}},\n                    'patternProperties': {'type': 'object',\n                                          'additionalProperties': {'$ref': '#'},\n                                          'default': {}},\n                    'additionalProperties': {'type': [{'$ref': '#'},\n                                                      'boolean'],\n                                             'default': {}},\n                    'items': {'type': [{'$ref': '#'}, 'array'],\n                              'items': {'$ref': '#'},\n                              'default': {}},\n                    'additionalItems': {'type': [{'$ref': '#'}, 'boolean'],\n                                        'default': {}},\n                    'required': {'type': 'boolean', 'default': False},\n                    'dependencies': {'type': 'object',\n                                     'additionalProperties': {'type': ['string',\n                                                                       'array',\n                                                                       {'$ref': '#'}],\n                                                              'items': {'type': 'string'}},\n                                     'default': {}},\n                    'minimum': {'type': 'number'},\n                    'maximum': {'type': 'number'},\n                    'exclusiveMinimum': {'type': 'boolean',\n                                         'default': False},\n                    'exclusiveMaximum': {'type': 'boolean',\n                                         'default': False},\n                    'minItems': {'type': 'integer',\n                                 'minimum': 0,\n                                 'default': 0},\n                    'maxItems': {'type': 'integer', 'minimum': 0},\n                    'uniqueItems': {'type': 'boolean', 'default': False},\n                    'pattern': {'type': 'string', 'format': 'regex'},\n                    'minLength': {'type': 'integer',\n                                  'minimum': 0,\n                                  'default': 0},\n                    'maxLength': {'type': 'integer'},\n                    'enum': {'type': 'array',\n                             'minItems': 1,\n                             'uniqueItems': True},\n                    'default': {'type': 'any'},\n                    'title': {'type': 'string'},\n                    'description': {'type': 'string'},\n                    'format': {'type': 'string'},\n                    'divisibleBy': {'type': 'number',\n                                    'minimum': 0,\n                                    'exclusiveMinimum': True,\n                                    'default': 1},\n                    'disallow': {'type': ['string', 'array'],\n                                 'items': {'type': ['string',\n                                                    {'$ref': '#'}]},\n                                 'uniqueItems': True},\n                    'extends': {'type': [{'$ref': '#'}, 'array'],\n                                'items': {'$ref': '#'},\n                                'default': {}},\n                    'id': {'type': 'string'},\n                    '$ref': {'type': 'string'},\n                    '$schema': {'type': 'string', 'format': 'uri'}},\n     'dependencies': {'exclusiveMinimum': 'minimum',\n                      'exclusiveMaximum': 'maximum'},\n     'default': {}}\n\nOn schema['items'][0]:\n    False"
+      }
+    },
+    {
+      "id": "draft0-prefix-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "prefixItems",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"prefixItems\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft0-item-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "$ref",
+                  {
+                    "kind": "string",
+                    "points": [
+                      35,
+                      47,
+                      100,
+                      101,
+                      102,
+                      105,
+                      110,
+                      105,
+                      116,
+                      105,
+                      111,
+                      110,
+                      115,
+                      47,
+                      110,
+                      111
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"definitions\":{\"no\":false},\"items\":{\"$ref\":\"#/definitions/no\"}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "schemaError": {
+        "type": "TypeError",
+        "message": "argument of type 'bool' is not iterable"
+      }
+    },
+    {
+      "id": "draft0-extra-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "allOf",
+                  {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "boolean",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"additionalProperties\":{\"allOf\":[false]}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft1-property-name-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "minLength",
+                  {
+                    "kind": "integer",
+                    "decimal": "2"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"propertyNames\":{\"minLength\":2}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft1-property-name-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"propertyNames\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft1-property-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"properties\":{\"x\":false}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type 'object'\n\nFailed validating 'type' in metaschema['properties']['properties']['additionalProperties']:\n    {'id': 'http://json-schema.org/draft-04/schema#',\n     '$schema': 'http://json-schema.org/draft-04/schema#',\n     'description': 'Core schema meta-schema',\n     'definitions': {'schemaArray': {'type': 'array',\n                                     'minItems': 1,\n                                     'items': {'$ref': '#'}},\n                     'positiveInteger': {'type': 'integer', 'minimum': 0},\n                     'positiveIntegerDefault0': {'allOf': [{'$ref': '#/definitions/positiveInteger'},\n                                                           {'default': 0}]},\n                     'simpleTypes': {'enum': ['array',\n                                              'boolean',\n                                              'integer',\n                                              'null',\n                                              'number',\n                                              'object',\n                                              'string']},\n                     'stringArray': {'type': 'array',\n                                     'items': {'type': 'string'},\n                                     'minItems': 1,\n                                     'uniqueItems': True}},\n     'type': 'object',\n     'properties': {'id': {'type': 'string'},\n                    '$schema': {'type': 'string'},\n                    'title': {'type': 'string'},\n                    'description': {'type': 'string'},\n                    'default': {},\n                    'multipleOf': {'type': 'number',\n                                   'minimum': 0,\n                                   'exclusiveMinimum': True},\n                    'maximum': {'type': 'number'},\n                    'exclusiveMaximum': {'type': 'boolean',\n                                         'default': False},\n                    'minimum': {'type': 'number'},\n                    'exclusiveMinimum': {'type': 'boolean',\n                                         'default': False},\n                    'maxLength': {'$ref': '#/definitions/positiveInteger'},\n                    'minLength': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'pattern': {'type': 'string', 'format': 'regex'},\n                    'additionalItems': {'anyOf': [{'type': 'boolean'},\n                                                  {'$ref': '#'}],\n                                        'default': {}},\n                    'items': {'anyOf': [{'$ref': '#'},\n                                        {'$ref': '#/definitions/schemaArray'}],\n                              'default': {}},\n                    'maxItems': {'$ref': '#/definitions/positiveInteger'},\n                    'minItems': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'uniqueItems': {'type': 'boolean', 'default': False},\n                    'maxProperties': {'$ref': '#/definitions/positiveInteger'},\n                    'minProperties': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'required': {'$ref': '#/definitions/stringArray'},\n                    'additionalProperties': {'anyOf': [{'type': 'boolean'},\n                                                       {'$ref': '#'}],\n                                             'default': {}},\n                    'definitions': {'type': 'object',\n                                    'additionalProperties': {'$ref': '#'},\n                                    'default': {}},\n                    'properties': {'type': 'object',\n                                   'additionalProperties': {'$ref': '#'},\n                                   'default': {}},\n                    'patternProperties': {'type': 'object',\n                                          'additionalProperties': {'$ref': '#'},\n                                          'default': {}},\n                    'dependencies': {'type': 'object',\n                                     'additionalProperties': {'anyOf': [{'$ref': '#'},\n                                                                        {'$ref': '#/definitions/stringArray'}]}},\n                    'enum': {'type': 'array',\n                             'minItems': 1,\n                             'uniqueItems': True},\n                    'type': {'anyOf': [{'$ref': '#/definitions/simpleTypes'},\n                                       {'type': 'array',\n                                        'items': {'$ref': '#/definitions/simpleTypes'},\n                                        'minItems': 1,\n                                        'uniqueItems': True}]},\n                    'format': {'type': 'string'},\n                    'allOf': {'$ref': '#/definitions/schemaArray'},\n                    'anyOf': {'$ref': '#/definitions/schemaArray'},\n                    'oneOf': {'$ref': '#/definitions/schemaArray'},\n                    'not': {'$ref': '#'}},\n     'dependencies': {'exclusiveMaximum': ['maximum'],\n                      'exclusiveMinimum': ['minimum']},\n     'default': {}}\n\nOn schema['properties']['x']:\n    False"
+      }
+    },
+    {
+      "id": "draft1-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "allOf",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"properties\":{\"x\":{\"allOf\":[false]}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type 'object'\n\nFailed validating 'type' in metaschema['properties']['properties']['additionalProperties']['properties']['allOf']['items']:\n    {'id': 'http://json-schema.org/draft-04/schema#',\n     '$schema': 'http://json-schema.org/draft-04/schema#',\n     'description': 'Core schema meta-schema',\n     'definitions': {'schemaArray': {'type': 'array',\n                                     'minItems': 1,\n                                     'items': {'$ref': '#'}},\n                     'positiveInteger': {'type': 'integer', 'minimum': 0},\n                     'positiveIntegerDefault0': {'allOf': [{'$ref': '#/definitions/positiveInteger'},\n                                                           {'default': 0}]},\n                     'simpleTypes': {'enum': ['array',\n                                              'boolean',\n                                              'integer',\n                                              'null',\n                                              'number',\n                                              'object',\n                                              'string']},\n                     'stringArray': {'type': 'array',\n                                     'items': {'type': 'string'},\n                                     'minItems': 1,\n                                     'uniqueItems': True}},\n     'type': 'object',\n     'properties': {'id': {'type': 'string'},\n                    '$schema': {'type': 'string'},\n                    'title': {'type': 'string'},\n                    'description': {'type': 'string'},\n                    'default': {},\n                    'multipleOf': {'type': 'number',\n                                   'minimum': 0,\n                                   'exclusiveMinimum': True},\n                    'maximum': {'type': 'number'},\n                    'exclusiveMaximum': {'type': 'boolean',\n                                         'default': False},\n                    'minimum': {'type': 'number'},\n                    'exclusiveMinimum': {'type': 'boolean',\n                                         'default': False},\n                    'maxLength': {'$ref': '#/definitions/positiveInteger'},\n                    'minLength': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'pattern': {'type': 'string', 'format': 'regex'},\n                    'additionalItems': {'anyOf': [{'type': 'boolean'},\n                                                  {'$ref': '#'}],\n                                        'default': {}},\n                    'items': {'anyOf': [{'$ref': '#'},\n                                        {'$ref': '#/definitions/schemaArray'}],\n                              'default': {}},\n                    'maxItems': {'$ref': '#/definitions/positiveInteger'},\n                    'minItems': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'uniqueItems': {'type': 'boolean', 'default': False},\n                    'maxProperties': {'$ref': '#/definitions/positiveInteger'},\n                    'minProperties': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'required': {'$ref': '#/definitions/stringArray'},\n                    'additionalProperties': {'anyOf': [{'type': 'boolean'},\n                                                       {'$ref': '#'}],\n                                             'default': {}},\n                    'definitions': {'type': 'object',\n                                    'additionalProperties': {'$ref': '#'},\n                                    'default': {}},\n                    'properties': {'type': 'object',\n                                   'additionalProperties': {'$ref': '#'},\n                                   'default': {}},\n                    'patternProperties': {'type': 'object',\n                                          'additionalProperties': {'$ref': '#'},\n                                          'default': {}},\n                    'dependencies': {'type': 'object',\n                                     'additionalProperties': {'anyOf': [{'$ref': '#'},\n                                                                        {'$ref': '#/definitions/stringArray'}]}},\n                    'enum': {'type': 'array',\n                             'minItems': 1,\n                             'uniqueItems': True},\n                    'type': {'anyOf': [{'$ref': '#/definitions/simpleTypes'},\n                                       {'type': 'array',\n                                        'items': {'$ref': '#/definitions/simpleTypes'},\n                                        'minItems': 1,\n                                        'uniqueItems': True}]},\n                    'format': {'type': 'string'},\n                    'allOf': {'$ref': '#/definitions/schemaArray'},\n                    'anyOf': {'$ref': '#/definitions/schemaArray'},\n                    'oneOf': {'$ref': '#/definitions/schemaArray'},\n                    'not': {'$ref': '#'}},\n     'dependencies': {'exclusiveMaximum': ['maximum'],\n                      'exclusiveMinimum': ['minimum']},\n     'default': {}}\n\nOn schema['properties']['x']['allOf'][0]:\n    False"
+      }
+    },
+    {
+      "id": "draft1-property-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            110,
+                            111
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"definitions\":{\"no\":false},\"properties\":{\"x\":{\"$ref\":\"#/definitions/no\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type 'object'\n\nFailed validating 'type' in metaschema['properties']['definitions']['additionalProperties']:\n    {'id': 'http://json-schema.org/draft-04/schema#',\n     '$schema': 'http://json-schema.org/draft-04/schema#',\n     'description': 'Core schema meta-schema',\n     'definitions': {'schemaArray': {'type': 'array',\n                                     'minItems': 1,\n                                     'items': {'$ref': '#'}},\n                     'positiveInteger': {'type': 'integer', 'minimum': 0},\n                     'positiveIntegerDefault0': {'allOf': [{'$ref': '#/definitions/positiveInteger'},\n                                                           {'default': 0}]},\n                     'simpleTypes': {'enum': ['array',\n                                              'boolean',\n                                              'integer',\n                                              'null',\n                                              'number',\n                                              'object',\n                                              'string']},\n                     'stringArray': {'type': 'array',\n                                     'items': {'type': 'string'},\n                                     'minItems': 1,\n                                     'uniqueItems': True}},\n     'type': 'object',\n     'properties': {'id': {'type': 'string'},\n                    '$schema': {'type': 'string'},\n                    'title': {'type': 'string'},\n                    'description': {'type': 'string'},\n                    'default': {},\n                    'multipleOf': {'type': 'number',\n                                   'minimum': 0,\n                                   'exclusiveMinimum': True},\n                    'maximum': {'type': 'number'},\n                    'exclusiveMaximum': {'type': 'boolean',\n                                         'default': False},\n                    'minimum': {'type': 'number'},\n                    'exclusiveMinimum': {'type': 'boolean',\n                                         'default': False},\n                    'maxLength': {'$ref': '#/definitions/positiveInteger'},\n                    'minLength': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'pattern': {'type': 'string', 'format': 'regex'},\n                    'additionalItems': {'anyOf': [{'type': 'boolean'},\n                                                  {'$ref': '#'}],\n                                        'default': {}},\n                    'items': {'anyOf': [{'$ref': '#'},\n                                        {'$ref': '#/definitions/schemaArray'}],\n                              'default': {}},\n                    'maxItems': {'$ref': '#/definitions/positiveInteger'},\n                    'minItems': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'uniqueItems': {'type': 'boolean', 'default': False},\n                    'maxProperties': {'$ref': '#/definitions/positiveInteger'},\n                    'minProperties': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'required': {'$ref': '#/definitions/stringArray'},\n                    'additionalProperties': {'anyOf': [{'type': 'boolean'},\n                                                       {'$ref': '#'}],\n                                             'default': {}},\n                    'definitions': {'type': 'object',\n                                    'additionalProperties': {'$ref': '#'},\n                                    'default': {}},\n                    'properties': {'type': 'object',\n                                   'additionalProperties': {'$ref': '#'},\n                                   'default': {}},\n                    'patternProperties': {'type': 'object',\n                                          'additionalProperties': {'$ref': '#'},\n                                          'default': {}},\n                    'dependencies': {'type': 'object',\n                                     'additionalProperties': {'anyOf': [{'$ref': '#'},\n                                                                        {'$ref': '#/definitions/stringArray'}]}},\n                    'enum': {'type': 'array',\n                             'minItems': 1,\n                             'uniqueItems': True},\n                    'type': {'anyOf': [{'$ref': '#/definitions/simpleTypes'},\n                                       {'type': 'array',\n                                        'items': {'$ref': '#/definitions/simpleTypes'},\n                                        'minItems': 1,\n                                        'uniqueItems': True}]},\n                    'format': {'type': 'string'},\n                    'allOf': {'$ref': '#/definitions/schemaArray'},\n                    'anyOf': {'$ref': '#/definitions/schemaArray'},\n                    'oneOf': {'$ref': '#/definitions/schemaArray'},\n                    'not': {'$ref': '#'}},\n     'dependencies': {'exclusiveMaximum': ['maximum'],\n                      'exclusiveMinimum': ['minimum']},\n     'default': {}}\n\nOn schema['definitions']['no']:\n    False"
+      }
+    },
+    {
+      "id": "draft1-item-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"items\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not valid under any of the given schemas\n\nFailed validating 'anyOf' in metaschema['properties']['items']:\n    {'anyOf': [{'$ref': '#'}, {'$ref': '#/definitions/schemaArray'}],\n     'default': {}}\n\nOn schema['items']:\n    False"
+      }
+    },
+    {
+      "id": "draft1-tuple-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"items\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "[False] is not valid under any of the given schemas\n\nFailed validating 'anyOf' in metaschema['properties']['items']:\n    {'anyOf': [{'$ref': '#'}, {'$ref': '#/definitions/schemaArray'}],\n     'default': {}}\n\nOn schema['items']:\n    [False]"
+      }
+    },
+    {
+      "id": "draft1-prefix-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "prefixItems",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"prefixItems\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft1-item-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "$ref",
+                  {
+                    "kind": "string",
+                    "points": [
+                      35,
+                      47,
+                      100,
+                      101,
+                      102,
+                      105,
+                      110,
+                      105,
+                      116,
+                      105,
+                      111,
+                      110,
+                      115,
+                      47,
+                      110,
+                      111
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"definitions\":{\"no\":false},\"items\":{\"$ref\":\"#/definitions/no\"}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type 'object'\n\nFailed validating 'type' in metaschema['properties']['definitions']['additionalProperties']:\n    {'id': 'http://json-schema.org/draft-04/schema#',\n     '$schema': 'http://json-schema.org/draft-04/schema#',\n     'description': 'Core schema meta-schema',\n     'definitions': {'schemaArray': {'type': 'array',\n                                     'minItems': 1,\n                                     'items': {'$ref': '#'}},\n                     'positiveInteger': {'type': 'integer', 'minimum': 0},\n                     'positiveIntegerDefault0': {'allOf': [{'$ref': '#/definitions/positiveInteger'},\n                                                           {'default': 0}]},\n                     'simpleTypes': {'enum': ['array',\n                                              'boolean',\n                                              'integer',\n                                              'null',\n                                              'number',\n                                              'object',\n                                              'string']},\n                     'stringArray': {'type': 'array',\n                                     'items': {'type': 'string'},\n                                     'minItems': 1,\n                                     'uniqueItems': True}},\n     'type': 'object',\n     'properties': {'id': {'type': 'string'},\n                    '$schema': {'type': 'string'},\n                    'title': {'type': 'string'},\n                    'description': {'type': 'string'},\n                    'default': {},\n                    'multipleOf': {'type': 'number',\n                                   'minimum': 0,\n                                   'exclusiveMinimum': True},\n                    'maximum': {'type': 'number'},\n                    'exclusiveMaximum': {'type': 'boolean',\n                                         'default': False},\n                    'minimum': {'type': 'number'},\n                    'exclusiveMinimum': {'type': 'boolean',\n                                         'default': False},\n                    'maxLength': {'$ref': '#/definitions/positiveInteger'},\n                    'minLength': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'pattern': {'type': 'string', 'format': 'regex'},\n                    'additionalItems': {'anyOf': [{'type': 'boolean'},\n                                                  {'$ref': '#'}],\n                                        'default': {}},\n                    'items': {'anyOf': [{'$ref': '#'},\n                                        {'$ref': '#/definitions/schemaArray'}],\n                              'default': {}},\n                    'maxItems': {'$ref': '#/definitions/positiveInteger'},\n                    'minItems': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'uniqueItems': {'type': 'boolean', 'default': False},\n                    'maxProperties': {'$ref': '#/definitions/positiveInteger'},\n                    'minProperties': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'required': {'$ref': '#/definitions/stringArray'},\n                    'additionalProperties': {'anyOf': [{'type': 'boolean'},\n                                                       {'$ref': '#'}],\n                                             'default': {}},\n                    'definitions': {'type': 'object',\n                                    'additionalProperties': {'$ref': '#'},\n                                    'default': {}},\n                    'properties': {'type': 'object',\n                                   'additionalProperties': {'$ref': '#'},\n                                   'default': {}},\n                    'patternProperties': {'type': 'object',\n                                          'additionalProperties': {'$ref': '#'},\n                                          'default': {}},\n                    'dependencies': {'type': 'object',\n                                     'additionalProperties': {'anyOf': [{'$ref': '#'},\n                                                                        {'$ref': '#/definitions/stringArray'}]}},\n                    'enum': {'type': 'array',\n                             'minItems': 1,\n                             'uniqueItems': True},\n                    'type': {'anyOf': [{'$ref': '#/definitions/simpleTypes'},\n                                       {'type': 'array',\n                                        'items': {'$ref': '#/definitions/simpleTypes'},\n                                        'minItems': 1,\n                                        'uniqueItems': True}]},\n                    'format': {'type': 'string'},\n                    'allOf': {'$ref': '#/definitions/schemaArray'},\n                    'anyOf': {'$ref': '#/definitions/schemaArray'},\n                    'oneOf': {'$ref': '#/definitions/schemaArray'},\n                    'not': {'$ref': '#'}},\n     'dependencies': {'exclusiveMaximum': ['maximum'],\n                      'exclusiveMinimum': ['minimum']},\n     'default': {}}\n\nOn schema['definitions']['no']:\n    False"
+      }
+    },
+    {
+      "id": "draft1-extra-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "allOf",
+                  {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "boolean",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"additionalProperties\":{\"allOf\":[false]}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "{'allOf': [False]} is not valid under any of the given schemas\n\nFailed validating 'anyOf' in metaschema['properties']['additionalProperties']:\n    {'anyOf': [{'type': 'boolean'}, {'$ref': '#'}], 'default': {}}\n\nOn schema['additionalProperties']:\n    {'allOf': [False]}"
+      }
+    },
+    {
+      "id": "draft2-property-name-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "minLength",
+                  {
+                    "kind": "integer",
+                    "decimal": "2"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"propertyNames\":{\"minLength\":2}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "minLength",
+          "validatorValue": {
+            "kind": "integer",
+            "decimal": "2"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames",
+            "minLength"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-property-name-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"propertyNames\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-property-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"properties\":{\"x\":false}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "properties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "allOf",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"properties\":{\"x\":{\"allOf\":[false]}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-property-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            110,
+                            111
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"definitions\":{\"no\":false},\"properties\":{\"x\":{\"$ref\":\"#/definitions/no\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-item-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"items\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-tuple-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"items\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-prefix-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "prefixItems",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"prefixItems\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft2-item-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "$ref",
+                  {
+                    "kind": "string",
+                    "points": [
+                      35,
+                      47,
+                      100,
+                      101,
+                      102,
+                      105,
+                      110,
+                      105,
+                      116,
+                      105,
+                      111,
+                      110,
+                      115,
+                      47,
+                      110,
+                      111
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"definitions\":{\"no\":false},\"items\":{\"$ref\":\"#/definitions/no\"}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            0
+          ],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-extra-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "allOf",
+                  {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "boolean",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"additionalProperties\":{\"allOf\":[false]}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "additionalProperties",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-property-name-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "minLength",
+                  {
+                    "kind": "integer",
+                    "decimal": "2"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"propertyNames\":{\"minLength\":2}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "minLength",
+          "validatorValue": {
+            "kind": "integer",
+            "decimal": "2"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames",
+            "minLength"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-property-name-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"propertyNames\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-property-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"properties\":{\"x\":false}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "properties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "allOf",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"properties\":{\"x\":{\"allOf\":[false]}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-property-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            110,
+                            111
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"definitions\":{\"no\":false},\"properties\":{\"x\":{\"$ref\":\"#/definitions/no\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-item-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"items\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-tuple-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"items\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-prefix-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "prefixItems",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"prefixItems\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft3-item-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "$ref",
+                  {
+                    "kind": "string",
+                    "points": [
+                      35,
+                      47,
+                      100,
+                      101,
+                      102,
+                      105,
+                      110,
+                      105,
+                      116,
+                      105,
+                      111,
+                      110,
+                      115,
+                      47,
+                      110,
+                      111
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"definitions\":{\"no\":false},\"items\":{\"$ref\":\"#/definitions/no\"}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            0
+          ],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-extra-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "allOf",
+                  {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "boolean",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"additionalProperties\":{\"allOf\":[false]}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "additionalProperties",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-property-name-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "minLength",
+                  {
+                    "kind": "integer",
+                    "decimal": "2"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"propertyNames\":{\"minLength\":2}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "minLength",
+          "validatorValue": {
+            "kind": "integer",
+            "decimal": "2"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames",
+            "minLength"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-property-name-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"propertyNames\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-property-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"properties\":{\"x\":false}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "properties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "allOf",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"properties\":{\"x\":{\"allOf\":[false]}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-property-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            110,
+                            111
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"definitions\":{\"no\":false},\"properties\":{\"x\":{\"$ref\":\"#/definitions/no\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-item-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"items\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-tuple-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"items\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-prefix-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "prefixItems",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"prefixItems\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft4-item-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "$ref",
+                  {
+                    "kind": "string",
+                    "points": [
+                      35,
+                      47,
+                      100,
+                      101,
+                      102,
+                      105,
+                      110,
+                      105,
+                      116,
+                      105,
+                      111,
+                      110,
+                      115,
+                      47,
+                      110,
+                      111
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"definitions\":{\"no\":false},\"items\":{\"$ref\":\"#/definitions/no\"}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            0
+          ],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-extra-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "allOf",
+                  {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "boolean",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"additionalProperties\":{\"allOf\":[false]}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "additionalProperties",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-property-name-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "minLength",
+                  {
+                    "kind": "integer",
+                    "decimal": "2"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"propertyNames\":{\"minLength\":2}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "minLength",
+          "validatorValue": {
+            "kind": "integer",
+            "decimal": "2"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames",
+            "minLength"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-property-name-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "propertyNames",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"propertyNames\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              97
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "propertyNames"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-property-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{\"x\":false}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "properties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "allOf",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{\"x\":{\"allOf\":[false]}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-property-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            110,
+                            111
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"definitions\":{\"no\":false},\"properties\":{\"x\":{\"$ref\":\"#/definitions/no\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-item-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"items\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "items",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": false
+          },
+          "instance": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "integer",
+                "decimal": "9"
+              }
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-tuple-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"items\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "[False] is not of type 'object', 'boolean'\n\nFailed validating 'type' in metaschema['allOf'][1]['properties']['items']['$dynamicRef']['allOf'][0]:\n    {'$schema': 'https://json-schema.org/draft/2020-12/schema',\n     '$id': 'https://json-schema.org/draft/2020-12/meta/core',\n     '$vocabulary': {'https://json-schema.org/draft/2020-12/vocab/core': True},\n     '$dynamicAnchor': 'meta',\n     'title': 'Core vocabulary meta-schema',\n     'type': ['object', 'boolean'],\n     'properties': {'$id': {'$ref': '#/$defs/uriReferenceString',\n                            '$comment': 'Non-empty fragments not allowed.',\n                            'pattern': '^[^#]*#?$'},\n                    '$schema': {'$ref': '#/$defs/uriString'},\n                    '$ref': {'$ref': '#/$defs/uriReferenceString'},\n                    '$anchor': {'$ref': '#/$defs/anchorString'},\n                    '$dynamicRef': {'$ref': '#/$defs/uriReferenceString'},\n                    '$dynamicAnchor': {'$ref': '#/$defs/anchorString'},\n                    '$vocabulary': {'type': 'object',\n                                    'propertyNames': {'$ref': '#/$defs/uriString'},\n                                    'additionalProperties': {'type': 'boolean'}},\n                    '$comment': {'type': 'string'},\n                    '$defs': {'type': 'object',\n                              'additionalProperties': {'$dynamicRef': '#meta'}}},\n     '$defs': {'anchorString': {'type': 'string',\n                                'pattern': '^[A-Za-z_][-A-Za-z0-9._]*$'},\n               'uriString': {'type': 'string', 'format': 'uri'},\n               'uriReferenceString': {'type': 'string',\n                                      'format': 'uri-reference'}}}\n\nOn schema['items']:\n    [False]"
+      }
+    },
+    {
+      "id": "draft5-prefix-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "prefixItems",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"prefixItems\":[false]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "prefixItems"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-item-ref-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "no",
+                  {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "items",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "$ref",
+                  {
+                    "kind": "string",
+                    "points": [
+                      35,
+                      47,
+                      100,
+                      101,
+                      102,
+                      105,
+                      110,
+                      105,
+                      116,
+                      105,
+                      111,
+                      110,
+                      115,
+                      47,
+                      110,
+                      111
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"definitions\":{\"no\":false},\"items\":{\"$ref\":\"#/definitions/no\"}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "9"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            0
+          ],
+          "schemaPath": [
+            "items"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-extra-property-nested-false-subject",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "allOf",
+                  {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "boolean",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":{\"allOf\":[false]}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "9"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "9"
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "additionalProperties",
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "default-root-false",
+      "schemaRecipe": {
+        "kind": "boolean",
+        "value": false
+      },
+      "schemaText": "false",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": []
+        }
+      ]
+    },
+    {
+      "id": "default-root-true",
+      "schemaRecipe": {
+        "kind": "boolean",
+        "value": true
+      },
+      "schemaText": "true",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": []
+    },
+    {
+      "id": "draft3-implicit-required",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "required",
+                        {
+                          "kind": "boolean",
+                          "value": true
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"properties\":{\"x\":{\"required\":true}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": []
+      },
+      "errors": [
+        {
+          "keyword": "required",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": true
+          },
+          "instance": {
+            "kind": "object",
+            "members": []
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "required"
+          ]
+        }
+      ]
+    }
+  ]
+}

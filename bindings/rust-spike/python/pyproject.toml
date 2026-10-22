@@ -1,0 +1,14 @@
+[build-system]
+requires = ["maturin==1.9.6"]
+build-backend = "maturin"
+
+[project]
+name = "umf-rust-spike"
+version = "0.1.0"
+requires-python = ">=3.9"
+description = "Experimental UMF R1 Rust binding"
+license = { text = "MIT OR Apache-2.0" }
+
+[tool.maturin]
+module-name = "_umf_rust_spike"
+bindings = "pyo3"
