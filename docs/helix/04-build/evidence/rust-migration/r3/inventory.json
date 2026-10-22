@@ -171,7 +171,7 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "d4b51865ce3e073ffcbaf50b98b558de6efee99084e3d6aa0bbe8fa80b3276bb",
+    "sourceCohortSha256": "5a16affc85a791b01236b0037e04c4398a829b3799e60aa9a30d7936db5d38a1",
     "typescriptApi": "5.9.3"
   },
   "counts": {
@@ -8610,12 +8610,12 @@
         "verify_table_migration",
         "work"
       ],
-      "bytes": 8879,
+      "bytes": 8935,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "python/src/umf/rust_codegen.py",
-      "sha256": "7afdfadfa71206f46036974edff7e1b8b73c6d1d47636346f11ff606ddf08acb"
+      "sha256": "a1d787a1475ac2e52fa13f7d3e62a821896b30f9a8d557ef1661946e10cf825e"
     },
     {
       "activationEvidence": [
@@ -8740,12 +8740,12 @@
         "test_native_control_error_retains_python_origin_and_remains_an_operation_error",
         "test_wire_serialization_bound_covers_ascii_growth"
       ],
-      "bytes": 6910,
+      "bytes": 6936,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_rust_codegen.py",
-      "sha256": "122b6fe48a27c3ab68f27ab9aef1d4291faf87daf571ab6cf7c9d3773e10e09b"
+      "sha256": "29585570049168d066872d4feaa46051ea837a31aba036df63d21cd945ecaa1d"
     },
     {
       "activationEvidence": [],
@@ -52558,11 +52558,12 @@
       "sha256": "c29cc0087cbd555dc1a964d2deed90d74cf8f3e2c28aff2b9895512fa90c88bc"
     },
     {
-      "bytes": 8879,
+      "bytes": 8935,
       "disposition": "python-core-explicit-review",
       "imports": [
         "._rust",
         "__future__",
+        "collections.abc",
         "json",
         "sys",
         "typing"
@@ -52575,7 +52576,7 @@
         "UmfCodegenError"
       ],
       "resolvedInternalImports": [],
-      "sha256": "7afdfadfa71206f46036974edff7e1b8b73c6d1d47636346f11ff606ddf08acb"
+      "sha256": "a1d787a1475ac2e52fa13f7d3e62a821896b30f9a8d557ef1661946e10cf825e"
     },
     {
       "bytes": 9924,
