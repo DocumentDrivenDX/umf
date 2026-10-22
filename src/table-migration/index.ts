@@ -5,8 +5,7 @@ import {copyJson} from '../model/json';
 import {readDocument} from '../model/document';
 import {UmfError,type Diagnostic} from '../model/types';
 import {canonical,hashCanonical} from '../compilation/bundle/hash';
-import {nativeType,literalSql} from '../table-deployment/sql';
-import type {TableColumn} from '../extensions/tables';
+import {columnDefinitionSql,literalSql,nativeType} from '../table-deployment/sql';
 import {verifyTableDeployment,type TableDeploymentBundle,type TableDeploymentStep} from '../table-deployment';
 import {discoverTableMigrationChanges} from './reviewed';
 import {phaseTableMigrationSteps,type TableMigrationPhase} from './phases';
@@ -42,17 +41,6 @@ function without(value:object,keys:string[]):Record<string,unknown>{
 }
 function withoutSourcePaths<T>(values:readonly T[]):unknown[]{
  return values.map(value=>value&&typeof value==='object'&&!Array.isArray(value)?without(value as object,['sourcePath']):value);
-}
-function sourceBoundColumnDefinition(column:TableColumn,name:string,nullable:boolean):string{
- let definition=quoteIdentifier(name)+' '+nativeType(column.nativeType);
- if(['text','varchar'].includes(column.nativeType.kind))definition+=' COLLATE pg_catalog."C"';
- if(!nullable)definition+=' NOT NULL';
- if(column.generated)definition+=' GENERATED '+(column.generated.generation==='always'?'ALWAYS':'BY DEFAULT')+' AS IDENTITY';
- if(column.default){
-  const value=column.default.kind==='literal'?literalSql(column.default.value):column.default.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':'CURRENT_TIMESTAMP';
-  definition+=' DEFAULT '+value;
- }
- return definition;
 }
 function commandOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle):boolean{
  const documents=[previous,next].map(bundle=>readDocument(bundle.source.utf8,bundle.source.format));
@@ -182,7 +170,7 @@ function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,op
    let expectedDefinition=old.definitionSql;
    if(changedName)expectedDefinition=expectedDefinition.replace(quoteIdentifier(old.name)+' ',quoteIdentifier(fresh.name)+' ');
    if(changedNull){
-    if(options?.version==='umf.table-migration-options/0.3')expectedDefinition=sourceBoundColumnDefinition(freshTableColumn,fresh.name,fresh.nullable);
+    if(options?.version==='umf.table-migration-options/0.3')expectedDefinition=columnDefinitionSql(freshTableColumn,fresh.nullable);
     else if(fresh.nullable)expectedDefinition=expectedDefinition.replace(/ NOT NULL$/,'');
     else expectedDefinition+=' NOT NULL';
    }
