@@ -94,7 +94,7 @@ still being resolved.
 | MIG-G07 | Cross-document and coordinated multi-store schema migration remain unsupported. |
 | MIG-G08 | This shared migration design is not qualified for Truss, Ashlar or other stores. Hohfeld reader integration does not close this gap. |
 | MIG-G09 | Actual managed Lakebase/Praxis acceptance remains open pending an authorized isolated target and frozen installed consumer workload. Local PostgreSQL is insufficient. |
-| MIG-G10 | Mixed 0.2 table-inventory changes and initial deployment remain outside the existing-table profile; use the separately qualified 0.1 bootstrap/add-table route. |
+| MIG-G10 | Mixed 0.2/0.3 table-inventory changes and initial deployment remain outside the existing-table profiles; use the separately qualified 0.1 bootstrap/add-table route. The successor does not close this gap. |
 | MIG-G11 | Combined column drop/append in one existing-table migration remains explicitly refused, including equal-count replacement. |
 
 Hohfeld 0.5.0 has an exact facet-free same-document integration receipt. Review
