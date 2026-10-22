@@ -110,8 +110,9 @@ prove retained instance-value recovery.
 ## Validation Plan
 
 TP-001 owns the project migration acceptance matrix. Reuse STP-085's U1/U2 native
-cases and allocate remaining US-051-AC11–16 criteria in STP-051 before residual
-implementation. Do not duplicate native primary tests.
+cases and allocate G01 in that existing suite. Allocate later uncovered
+US-051-AC11–16 criteria in STP-051 only where needed before their implementation.
+Do not duplicate native primary tests.
 
 | Family | Required proof |
 | --- | --- |
@@ -219,6 +220,99 @@ must select and design its next slice before advertising the corresponding
 capability. A change that was explicitly refused becomes supported only after
 its native and portable acceptance gates pass for the declared version/subset.
 
+## Remaining-gap delivery order
+
+Owner selection, 2026-10-21: design closure of the residuals, starting MIG-G01.
+This section supersedes the earlier unselected-residual next action. Every G01–G11
+entry remains open until its own evidence gate passes. The selected sequence
+refines MIG-00–08 and adopts the accepted U1/U2 runner, not another implementation.
+The first successor is governed by SD-007's existing optional-field design.
+
+Design and acceptance review stay in **Explain UMF schema migrations**;
+**Plan UMF and Weft Praxis asks** owns product code, contract integration and
+installed/native qualification. The current frozen release proceeds separately.
+The owner subsequently authorized implementation, merge and another release
+through the [embedder completion plan](praxis-embedder-completion-plan.md). That
+plan selects G01 and managed-consumer qualification; subsequent residual waves
+below remain separately selected scope. Do not infer release numbers or dates.
+
+Implementation-owner feasibility review, 2026-10-21: the existing required-phase
+runner executes typed backfill and DDL steps in one installation transaction,
+then captures the native witness. The paired design fits that mechanism.
+Successor compiler grouping, phase validation/prefix projection and bounded
+existing-column admission still require implementation. Held/direct-writer native
+proof remains mandatory. The implementation owner will integrate the focused
+three-document design patch after the current release; no product implementation
+was started by this planning exchange.
+
+Readiness review against released 0.5.4: the compiler currently emits existing
+tightening before the backfill loop and separately emits appended-fill default/
+requiredness steps. The successor must consume each selected tightening exactly
+once after its fill without changing the existing default. Its closed ordered
+pair must be recognized by portable phase generation, embedded verification and
+the host phase validator, which currently accepts only isolated backfill steps.
+Bind pairing by typed table/Field identity and reviewed source paths, not SQL
+text. Reject swapped, missing, duplicate, extra or partially receipted steps.
+Native catalog witnesses detect schema drift; independent row assertions remain
+necessary to prove fill correctness and present-value preservation. These are
+implementation entry constraints, not evidence that G01 has been implemented.
+
+### G01 first: existing-column fill and tightening
+
+| Slice | Work / owner | Gate before proceeding |
+| --- | --- | --- |
+| G01-A | Design owner and implementation owner reconcile SD-007 with CONTRACT-081/TD-085/STP-085; specify distinct successor profile, closed wire shapes, diagnostics and unchanged historical profiles | Exact next-source command selection, same-ID/type target, explicit scope/effect bound, one locked transaction for fill+tighten and committed-pair recovery agreed; native/browser matrix allocated to existing primary suites |
+| G01-B | Implementation owner extends portable discovery/selection/validation and ordered step generation; reuse existing boundary checker before feature edits | A complete plan or path-bearing refusal for every input; exact source/command/review-marker binding; deterministic Bun/Chromium/embedded-Python output; no host imports or unsupported combinations |
+| G01-C | Implementation owner extends existing host phase admission/witnesses only where needed | Null-only bounded Weft UPDATE and native complete-table NOT NULL enforcement in one required phase; atomic effect/constraint/progress, authority/RLS restoration, old/new client fencing, no committed-effect replay |
+| G01-D | Implementation owner produces exact installed native receipts; design owner independently reviews/replays | All cases below pass on the declared PostgreSQL/driver/package cohort; public discovery/docs and support inventory agree; G01 closes only for that subset |
+
+No dependency on G02 arbitrary transforms, G03 future-default mutation or G06
+online chunking is introduced. First qualify the selected field's fill+tighten
+journey. Then qualify composition with the already supported concurrent-index,
+constraint-validation and seed phases, or return an explicit compiler refusal
+for an unsupported combination. No compiler may emit a partial runnable plan.
+
+| Case family | Required acceptance (US-051-AC12/15/16) |
+| --- | --- |
+| Population | Empty table; all-null, mixed and already-populated birthdays. Exact date literal fills only NULL; present dates and unrelated columns/rows survive. Zero matches succeeds without fabricating changes. |
+| Intent and values | No selected fill retains fail-if-any-null behavior. Missing/changed/unused marker, wrong Field/table/command, duplicate selection, extra assignment, wrong predicate and nullable/invalid value refuse. Clock allowed only in its admitted domain; date coercion refuses. |
+| Defaults | Historical fill without future default succeeds; omitted and explicit-NULL future writes follow unchanged target semantics. Existing future default alone cannot satisfy tightening while nulls remain. Same-plan default mutation refuses in G01. |
+| Data constraints | Effect bound exceeded, duplicate fill violating a Key, CHECK/FK rejection and invalid target data roll back the uncommitted phase and its progress. No constraint/RLS bypass leaks into normal clients. |
+| Writers and privacy | Two-session probes cover active and held writers, ordinary old/new clients and direct granted writers scheduled immediately after UPDATE. There is no commit/lock release between fill and tightening. After that phase commits, native NOT NULL rejects null writes even before final publication. Unrelated scopes are filled only under explicit administrative acknowledgement; reports contain counts, not birthday values. |
+| Recovery | Fault/cancellation before and after each commit; failure between fill and tightening rolls back both; lost paired-phase/final response; exact resume after committed pair with no repeat UPDATE or clock evaluation. A later failure retains committed fill+constraint and fencing. Wrong file/head/plan, altered command/marker, native drift or privilege tamper refuses before new effects. |
+| Compatibility | Existing append fill and no-fill tightening still pass. Actual frozen historical 0.1/0.2 artifacts verify/replay; they cannot select new existing-column effects. Current successor refuses unsupported initial/table-inventory, drop+append, rename/type/default compounds. |
+| Composition and delivery | Accepted mixed phases retain complete prefix witnesses, constraint validation, explicit index recovery and final native catalog/client admission. Browser parity and wheel/source/embedded-asset hashes correspond to the same installed native cohort. |
+
+Primary native tests stay in STP-085's existing lifecycle harness; portable
+selectors/plans stay in its compiler/browser corpus. TP-001 owns the cross-cutting
+acceptance layers. CONTRACT-081/TD-085/STP-085 amendments are an entry gate,
+not deferred documentation after code. No duplicate TD-051/STP-051 framework is
+required for G01; later general portable surfaces get only missing allocations.
+
+### Subsequent residuals
+
+These are proposed bounded delivery waves. Each needs its own concrete technical
+and test design before implementation; the entire matrix is not one release.
+
+| Order / gaps | Smallest next deliverable | Dependency and closure gate |
+| --- | --- | --- |
+| 2 / G03 | Existing-column SET/DROP future default with a finite typed expression subset, independent of historical fill | Reuse G01 source/profile discipline; prove old rows unchanged and omitted versus explicit-NULL writes; exact native expression/catalog correspondence. Derived expressions require explicit capability admission. |
+| 3 / G11 then G10 | Stable-ID add/remove scheduling, then phase-aware table inventory and initial publication | First prove equal/unequal-count column replacements with complete dependency ordering. Separately model absent/new/existing table states, locks/grants, phase witnesses and bootstrap recovery. Preserve qualified legacy bootstrap. Neither gap depends on arbitrary transforms. |
+| 4 / G02 | Typed, deterministic per-row expressions first; external trusted versioned transforms only through a separately designed host protocol | Specify inputs/output, null handling, clock/locale semantics, identity, bounded effects and invalid-row policy. Weft owns admitted expression SQL. A callback or SQL string in schema metadata cannot acquire execution authority. Existing maintenance mode is sufficient for the first slice. |
+| 5 / G04 and G05 | Maintenance-mode explicit conversions with retained originals, plus logical retirement and a separately approved purge | Share a host-owned retained-data/recovery design. Freeze conversion grammar and date/timezone/rounding/error policy per conversion. Prove complete target keys/references, retained value custody, restore with later writes or honest forward repair. G05 may proceed independently for plain retirement; G04 need not wait for online mode. |
+| 6 / G06 | Online chunked backfill/rewrite as its own host capability | Depends on typed transform/conversion semantics and stable row identity/version. Design writer reconciliation, insert/update/delete/reinsert handling, checkpoints, cancellation and gap-free final activation; prove no lost edits with genuine concurrent clients. Durable phases alone do not pass. |
+| Independent qualification / G09 | Actual Lakebase/Praxis managed acceptance for each selected operation | Can start on the accepted baseline without waiting for G02–G06. Requires a selected consumer owner, authorized isolated managed target, exact package/permission/platform cohort and actual workload. Unavailable target remains an explicit blocker. |
+| Backend track / G08 | One backend at a time: genuine mutable Truss transition or immutable Ashlar publication, then selected table/file targets | Adopt shared intent/conformance; each backend owns native admission, physical strategy and recovery. Priority and host-owner commitment remain open; do not infer transactional table behavior for immutable publications. |
+| Coordination track / G07 | Verified cross-document pins/closure, then coordinated multi-store plans | US-050/CONTRACT-045 precede cross-document effects. After selected backend qualification, specify per-store outcomes/compensation and partial failure. Never advertise distributed atomicity without a qualified protocol. |
+
+G04/G05 share retained-data requirements, but neither general retirement nor a
+finite maintenance conversion must wait for every arbitrary-transform capability.
+G08 and G09 are separately selectable qualification tracks. G07 coordination
+depends on the actual participating backend profiles, not all future backends.
+The remaining choices are external-transform packaging, retention/purge policy,
+online writer protocol, managed target and backend priority. Record each when its
+wave is selected; these choices do not block the finite G01 design.
+
 ## Risks and Rollbacks
 
 | Risk | Response | Recovery |
@@ -233,9 +327,11 @@ its native and portable acceptance gates pass for the declared version/subset.
 ## Exit Criteria
 
 Plan readiness: ownership, operation semantics, dependency order and verification
-gates are recorded. MIG-00's exact interfaces and technical/test designs remain
-the implementation entry gate. Dates, named implementers, managed test target,
-retention policy and additional backend priorities are uncommitted.
+gates are recorded. G01-A's exact successor interfaces and CONTRACT-081/TD-085/
+STP-085 amendments remain its implementation entry gate; subsequent waves retain
+MIG-00's design gate. Product code belongs to the collaborating implementation
+chat. Dates, managed test target, retention policy and additional backend
+priorities are uncommitted.
 
 Execution completion requires all four operations on the selected PostgreSQL
 profile, including staged backfill and honest recovery; portable/browser and

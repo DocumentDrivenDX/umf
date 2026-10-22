@@ -175,3 +175,31 @@ stage, assert old metadata head, changed physical state, fenced clients and exac
 resume without replay. Do not assert physical rollback from an unchanged ledger.
 The release inventory marks these bounded operations qualified/refused/remaining
 and does not claim complete SD-007 field-lifecycle delivery.
+
+## Embedder completion acceptance
+
+The [completion plan](../../04-build/praxis-embedder-completion-plan.md) selects
+U4–U9, MIG-G01 and actual consumer/managed acceptance. CONTRACT-081's successor
+and SD-007 own behavior; TD-085 owns integration. Extend the current primary
+suites below. No passing count or new release is asserted by this allocation.
+
+| Coverage / fixture owner | Executable proof to add or extend | Required result |
+| --- | --- | --- |
+| U4 / schema owner | `tests/binding/table-domains.test.ts`, `tests/binding/table-deployment.test.ts`, `tests/lifecycle/legal-fixture.ts`, real native legal harness | Descriptions survive round trips and escaping; enumerated/range values have exact bounds and ordinary NULL semantics; invalid native writes fail. Same generated declarations in Chromium/embedded Python; unsupported carriers give located refusals. |
+| US-051-AC12/16, G01 portable / migration owner | `tests/binding/table-migration.test.ts`, lifecycle browser corpus and embedded `umf_codegen` parity | Existing same-ID optional→required target with selected exact null-only command compiles one paired phase. Missing/changed/unused/duplicate marker/selector, wrong predicate/target, extra assignment/returning/parameter/batch, invalid/nullable value, clock-to-date, generated/immutable and rename/type/default/dependency compounds refuse. 0.1/0.2 artifacts retain original verification/effect admission. |
+| US-051-AC12/15, G01 native / migration owner | Extend `tests/lifecycle/mixed-native.py` or focused `tests/lifecycle/existing-fill-native.py` sharing its native helpers | Empty/all-null/mixed/populated dates and qualified instants; exact existing values and unrelated data survive. Zero matches succeeds; over-bound, Key/CHECK/FK or NOT NULL failure rolls back pair/progress. Default alone does not fill NULL; future default behavior unchanged. |
+| US-051-AC15, G01 writers/recovery / runtime owner | Same installed native harness with two actual sessions and driver fault injection | Held/direct writer and writer dispatched immediately after UPDATE cannot cross pair activation; native NOT NULL rejects later NULL even before final head publication. Before/after pair commit, cancellation/lost response and later failure preserve atomic pair, fences and no repeated UPDATE/clock. Wrong file/head/plan/approval/command, native/progress/privilege drift refuses before new effects. Compose with indexes/validation/seeds or reject complete plan. |
+| U5 / host owner | New focused protocol/approval unit corpus plus existing `mixed-native.py`, `reviewed_native.py` and CLI tests | Forward-only original file/head/terminal source and target/decider approval bindings. Refuse deficient host capabilities and forged/missing approvals. Persist approval intent distinctly from committed outcome; effect/progress and final publication atomicity demonstrated on native PG, uncertain result observed without replay. Old strict inventory/verification stays exact. |
+| U6 / containment owner | New `tests/containment/` parser corpus and embedded/CLI host tests | Nested CTE/subquery/callable refs, quoted/dollar/comment/multi-statements; foreign schema, role/schema DDL, stored code, settings, external grants, unsafe function/operator/type and unknown AST nodes refuse. Allowed inventory cases pass. Bounds/deadline/control failures retain source and no check/import effects. |
+| U7/U8 / release owner | Existing installed generator/deployment/migration probes plus mirror runner with empty caches and disabled network | Every advertised OS/architecture/libc/Python cell records exact native wheel hashes, versions, sizes/notices and generation/refusal parity. Complete transitive locked offline install, RECORD/source/license correspondence; missing/tampered wheel fails with no network or source-build fallback. |
+| U9 / Hohfeld owner | Hohfeld actual reader/host suite and clean installed release; same-source Weft compiler/operation probe | Exact core 0.10 document admitted by both systems for the selected journey, preserved keys/codecs/declared meaning, explicit unknown/legacy refusals, actual native selected host effects/reads and immutable released artifact/date. No general graph-migration claim. |
+| Consumer / integration owner | Private exact eleven-table/four-migration conversion and generated plugin/batch runner, using installed candidate wheels | Every item mapped or blocked explicitly; retained applied-file digests and final source agree. Actual person/batch/owner+via/group access, sync/async calls, bounds/counts/default/NULL/replay/fault controls pass locally; private data never enters public fixtures. |
+| Managed / platform owner | Same target-bound consumer runner on explicitly authorized isolated Lakebase/Databricks target | Actual permission/server/driver/platform profile and required workload observations retained privately; public aggregate hashes and result. Unavailable target remains blocked, never replaced by local PG evidence. |
+
+Mark primary G01 tests with parseable `@covers US-051-AC12`, `@covers
+US-051-AC15` and `@covers US-051-AC16` references. Retain historic append-fill,
+no-fill tightening and actual published history controls. The release gate uses
+one frozen cohort across source, generated assets, browser, installed/native and
+offline results, plus independent review of changed material. Test fixtures and
+runners may be created in their named bounded slices; these paths are allocation,
+not evidence that those new tests already exist or pass.

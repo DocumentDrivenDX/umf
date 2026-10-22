@@ -1,5 +1,11 @@
 # UMF project documentation
 
+[Embedder completion plan](04-build/praxis-embedder-completion-plan.md) selects
+remaining U4–U9 asks, atomic existing-column NULL fill before requiredness, actual
+private consumer adoption and isolated managed acceptance, followed by another
+release. Its explicit external gates remain required; the released U1–U3 evidence
+below keeps its original scope.
+
 [Schema migration design](02-design/solution-designs/SD-007-schema-migrations.md)
 and [delivery plan](04-build/schema-migration-plan.md) define field additions,
 requiredness/default/backfill, removals and type changes. The existing

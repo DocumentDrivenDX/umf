@@ -304,3 +304,84 @@ refuse on Delta and remain available on Postgres or Truss. Lakebase minor
 upgrades can invalidate qualification until the new minor is listed. Fault
 injection at the driver boundary does not prove behavior under every network
 failure; the Postgres lane also uses a network proxy.
+
+## Embedder completion integration
+
+[CONTRACT-081](../contracts/CONTRACT-081-table-lifecycle.md#embedder-completion-successor)
+owns successor behavior; the [completion plan](../../04-build/praxis-embedder-completion-plan.md)
+owns slice dependencies. Preserve public 0.1/0.2 compiler/verifier paths unchanged.
+Adopt the new boundaries in `bun run check:access-boundaries` and table lifecycle
+checkers before feature changes; include private-import, driver-in-portable-code,
+cycle and allowed public import controls in local/pre-commit/CI coverage.
+
+### G01 components and native transaction boundary
+
+`src/table-migration/options.ts` admits the existing selector shape under a
+successor version, distinguishes an appended target from an existing same-ID
+optional-to-required target, and validates the exact original next-source command.
+The reviewed analyzer still requires the exact tightening marker. Discovery must
+explain the selected native/value effects without fabricating a fill value.
+Closed options/plan 0.3 and execution profile 0.2 schemas and embedded Python
+dispatch are updated together; old execution profile 0.1 admission stays exact.
+No default mutation, rename/type/dependent-object compound is hidden in G01.
+
+`phases.ts` schedules the selected fill and matching native requiredness step as
+one explicit `backfill-tighten` required pair. Python phase admission and source-derived prefix
+projection independently verify that pairing; do not infer it by parsing emitted
+SQL. Existing `mixed.py` executes the whole required pair inside its current
+locked installation transaction, then captures the native witness and progress.
+Complete native authority checks precede any effect. Preserve the scoped
+backfill's deliberate RLS handling and restore/verify RLS before commit. The
+source-derived final catalog requires NOT NULL and unchanged target constraints.
+Do not store row values in progress or diagnostic reports.
+
+Existing appended-fill grouping and no-fill tightening remain exact regressions.
+A failure before pair commit rolls back both UPDATE and requiredness. A later
+failure keeps the committed pair and fencing; exact progress skips that pair on
+resume. The installed native harness injects a writer immediately after UPDATE,
+a held transaction, bound/constraint failures and lost commit responses to prove
+the boundary. Current runtime capability dispatch must reject historical profiles
+attempting new effects without relaxing historical verification/replay.
+
+### Host protocol and optional SQL checker
+
+Extract U5 orchestration into separate host protocol/approval modules. Keep the
+existing Psycopg catalog verifier, locks, phase executor and finalizer as the first
+native adapter. The protocol exposes capability selection, custody/transaction
+contexts, history/progress/native observations, execution of verified steps,
+approval persistence and atomic finalization. Author-selected callbacks or SQL
+cannot provide those capabilities. Reconcile this adapter hook with G01 ownership
+before shared runtime edits; one state machine owns resume/publication.
+
+Approval receipts are host-owned and distinguish authorized intent from committed
+execution. Expose trusted decider/decision metadata through the administrative
+API/CLI rather than modifying compiler-native qualification. Verify durable
+receipt binding before dispatch and retain it alongside exact history/progress.
+Any new native metadata relation requires versioned source-selected inventory,
+owner-only privileges and strict tamper controls; legacy inventory stays exact.
+
+U6 lives in a separate optional parsed-containment module with public Python
+inspection/CLI delivery. Inspect the contributed Praxis checker first. Select a
+maintained PostgreSQL parser already qualified for the chosen host or explicitly
+qualify a new dependency. Bound input size, statement count and tree depth; walk
+every supported node, reference, callable and nested statement. Do not add regex
+exceptions or let parser success mean containment success. Portable exposure is
+claimed only if the actual parser path runs in Chromium; otherwise document the
+host-only boundary. The checker does not alter source-recompiled lifecycle plans.
+
+### Delivery and consumer boundary
+
+U4 examples use current descriptions, allowedValues and range facets with real
+native failures. U7 receipts enumerate exact installed mini-racer/platform/Python
+cohorts and the V8 dependency on production source verification. U8 extends the
+existing static mirror tool to prove full locked dependency closure offline;
+package count alone cannot establish completeness.
+
+U9 belongs to the actual Hohfeld repository reader and installed distribution.
+Use one admitted core 0.10 ontology document in Hohfeld and Weft and exercise its
+selected real host journey. Inspect local work first; a changed version constant
+or portable mock is insufficient. General graph migration remains MIG-G08.
+Consumer eleven-table/four-migration input stays private. The shared runner emits
+only aggregate source/cohort digests and observations publicly; original history
+and local/managed receipts stay in host-controlled storage. A missing isolated
+Lakebase target blocks managed acceptance, not independent source implementation.

@@ -1255,3 +1255,106 @@ is retained and all ordinary clients stay fenced. Only uncommitted atomic
 effects roll back. No release claim may imply full migration support, online
 rewrites, arbitrary transforms or retained-value recovery from this bounded
 profile.
+
+## Embedder completion successor
+
+The owner-selected [completion plan](../../04-build/praxis-embedder-completion-plan.md)
+extends the released U1–U3 profile without changing the meaning or regeneration
+of historical 0.1/0.2 plans. U4 reuses description comments and canonical enum/range
+facets. U7/U8 delivery claims MUST name actual installed platform/Python/wheel
+receipts and full locked dependency closure; generated stdlib-only code does not
+make administrative source verification V8-free.
+
+### G01 existing-column fill and tightening
+
+Use `umf.table-migration-options/0.3` and `umf.table-migration/0.3` with
+`executionProfile.version: "umf.table-migration-execution/0.2"`. Options retain
+exactly `version`, `backfills`, `concurrentIndexes`, `reviewedChanges` and
+`validations`, with the existing array bounds and closed member schemas. Neither
+0.1 nor 0.2 gains existing-column fill by reinterpretation. Retain the existing
+closed backfill selection shape `{table,column:{module,element},operation,
+scopedRows:true}` and reviewed `tighten-not-null` marker. All selectors and markers
+MUST be consumed exactly once and bound by the plan digest. The same stable table
+and Field MUST exist in both sources; the selected Field changes only from
+optional to required. Physical names, logical/native type, facets, default,
+collation, generated/immutable status and relevant dependency meanings remain
+unchanged. Generated/immutable targets and rename/type/default/dependency
+compounds refuse in this first G01 capability.
+
+The operation MUST be an original command in the exact approved next source:
+parameter-free, non-batch, bounded typed UPDATE, no returning rows, exactly one
+assignment to the selected Field, and exactly its `isNull` predicate. Only admitted
+non-null typed literals or existing qualified transaction-clock expressions are
+allowed. A clock cannot silently become a date. Weft lowers the selected data SQL;
+the host enforces its effect bound. The selection authorizes the acknowledged
+administrative scope across native NULL rows; no other values or Fields change.
+
+The compiler MUST pair the fill and reviewed NOT NULL activation in one typed
+phase with `kind: "backfill-tighten"`, `transaction: "required"` and exactly the
+ordered backfill and matching tightening step IDs. Pair correspondence uses typed
+table/Field identities, never SQL-text matching. Execution profile 0.2 admits this
+pair plus existing qualified phase kinds; execution profile 0.1 remains frozen
+and MUST reject it. Host validation MUST reject a split pair or mismatched target.
+The fixed owner-only progress relation may retain its storage version only if
+its exact receipt meaning, schema and privilege verification remain unchanged;
+no generic metadata exception is introduced.
+After predecessor, source, approval and native-authority checks, the host holds
+native exclusive locks across the UPDATE and actual complete-table NOT NULL
+activation, restores/verifies RLS and privileges, and commits effects plus phase
+receipt together. No commit/concurrent step/lock release may split that pair.
+A metadata-head fence alone is insufficient for directly granted SQL writers.
+Existing native Key/CHECK/FK constraints stay effective; bound/constraint failure
+rolls back the uncommitted pair. Whole-table validation cannot be replaced by a
+sample or a cached count.
+
+Known aborted pairs may retry. An uncertain outcome MUST be observed from exact
+source-bound progress/native witnesses before any dispatch. A committed pair
+never repeats its UPDATE or transaction-clock evaluation. Later failure retains
+committed data and NOT NULL with clients fenced until exact resume or separately
+authorized forward repair. Existing future-default semantics do not change;
+a default is not historical fill. Without selected fill, ordinary tightening
+remains fail-if-any-null. Unsupported selectors return located
+`TABLE_MIGRATION_OPTIONS` refusals; no partial executable plan is returned.
+
+### U5 host-neutral applier and approval custody
+
+The reference applier MUST check a forward-only ordered history, original file
+digests, expected predecessor, complete terminal source and exact plan authority
+before effects. A typed host adapter supplies exclusive migration custody,
+transactional effect/progress persistence, native observation, trusted identity,
+and atomic final history/head/grant publication. Its declared capabilities MUST
+satisfy the selected execution profile; three unrelated callbacks for reading,
+running SQL and recording a row cannot imply those guarantees. Unsupported host
+atomicity, fencing or uncertain-outcome observation refuses before dispatch.
+
+Approval is a separate immutable host-owned receipt bound to target installation,
+exact plan/file digests, expected predecessor, authenticated decider and decision
+time, plus the native qualification profile/evidence accepted by that decider.
+The host supplies identity and time; author metadata cannot issue approval.
+Compiler `nativeQualified:false` is preserved. Record approved authority durably
+before effects; effects/progress and final publication remain atomic under the
+existing lifecycle rules. Changed approval, target, plan, file or head refuses.
+An approval can be recorded before an aborted operation; such a receipt does not
+assert that effects committed. An uncertain result requires observation rather
+than automatic execution replay. Native installation metadata changes require an
+explicit versioned profile and exact inventory/ACL verification.
+
+### U6 parsed untrusted-SQL containment
+
+The optional containment checker accepts original SQL plus explicit target
+schema, owned-object/role inventory and supported profile. It is inert and
+returns a checked result or located refusal with source retained; it never grants
+execution authority. A real PostgreSQL parser MUST parse every statement into a
+bounded tree. Positive supported-node and object-reference closure traverses
+CTEs, subqueries, expression/callable references and all DDL/DML targets. Unknown
+nodes, ambiguous unqualified resolution and unsupported indirect effects refuse.
+
+The selected profile MUST reject foreign schemas, role/schema creation, stored
+functions/triggers/procedures, session settings and grants outside its owned
+tables/approved role inventory. Search-path assumptions, quoted identifiers,
+comments, dollar strings and multi-statement input cannot evade that closure.
+Function/operator/type references require an explicit safe admitted inventory;
+being inside an owned-schema statement does not make arbitrary calls safe.
+Trusted runtime role/timeout/fence setup is separate host code. Passing
+containment never replaces original-source regeneration, review/approval or live
+native correspondence, and never introduces raw SQL into typed G01 operations.
