@@ -1,0 +1,1 @@
+Independent source review of the final shared six-file packet. See review.json for exact hashes, scoped approval and limitations. Public expectations were not changed. The reviewer did not approve their own action or binding-inspector implementation.

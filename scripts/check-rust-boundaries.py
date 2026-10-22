@@ -17,7 +17,7 @@ except ModuleNotFoundError:
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT = ROOT / "docs/helix/04-build/evidence/rust-migration/r2/boundary-check.json"
+REPORT = ROOT / "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"
 V8_DEBT = {
     "python/umf_codegen/src/umf_codegen/_embedded.py": {
         "sha256": "06b2c4489d8b0e2068b518e920497b01f984c58ca08954017bfc932a61c9dd53",
@@ -30,6 +30,9 @@ V8_DEBT = {
         "patterns": ["mini-racer==0.14.1"],
     },
 }
+PRODUCTION_PACKAGES = ("umf-core", "umf-core-wire", "umf-metamodel", "umf-codegen")
+PRODUCTION_SOURCE_FOLDERS = tuple(f"crates/{package}/src" for package in PRODUCTION_PACKAGES)
+
 CORE_HOST_CRATES = {
     "pyo3", "napi", "napi-derive", "wasm-bindgen", "wasm-bindgen-futures", "js-sys", "web-sys",
     "v8", "rusty_v8", "deno_core", "rquickjs", "quick-js", "boa_engine",
@@ -348,7 +351,7 @@ def check_production_core() -> tuple[list[dict[str, object]], list[dict[str, obj
     info = subprocess.run([rustc, "-vV"], capture_output=True, text=True).stdout
     host = re.search(r"(?m)^host: (\S+)", info)
     for target in [host.group(1) if host else "x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]:
-        for package in ["umf-core", "umf-core-wire", "umf-metamodel"]:
+        for package in PRODUCTION_PACKAGES:
             result = cargo_tree(cargo, target, package)
             closure = parse_cargo_tree_packages(result["stdout"])
             names = {p.split("@", 1)[0] for p in closure}
@@ -357,7 +360,7 @@ def check_production_core() -> tuple[list[dict[str, object]], list[dict[str, obj
             if result["status"] != "resolved" or forbidden:
                 findings.append({"rule": "production-core-host-dependency", "path": "Cargo.toml", "target": target, "message": str(result["stderr"] or sorted(forbidden))})
             reports.append({"package": package, "target": target, "closure": sorted(closure), "status": "pass" if result["status"] == "resolved" and not forbidden else "fail"})
-    for folder in ["crates/umf-core/src", "crates/umf-core-wire/src", "crates/umf-metamodel/src"]:
+    for folder in PRODUCTION_SOURCE_FOLDERS:
         for path in sorted((ROOT / folder).rglob("*.rs")):
             source = path.read_text()
             for match in CORE_HOST_MODULES.finditer(source):

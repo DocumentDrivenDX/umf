@@ -20,9 +20,9 @@ jobs:
           {
             printf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP"
             printf 'UMF_JSON_SCHEMA_SUITE=%s/umf-json-schema-test-suite\n' "$RUNNER_TEMP"
-            printf 'UMF_R2_QUALIFICATION_PATH=%s/umf-r2-qualification.json\n' "$RUNNER_TEMP"
+            printf 'UMF_R3_QUALIFICATION_PATH=%s/umf-r3-qualification.json\n' "$RUNNER_TEMP"
           } >> "$GITHUB_ENV"
-          rm -f -- "$RUNNER_TEMP/umf-r2-qualification.json"
+          rm -f -- "$RUNNER_TEMP/umf-r3-qualification.json"
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
@@ -69,5 +69,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rust-production-core-${{ matrix.os }}-python-${{ matrix.python }}
-          path: ${{ env.UMF_R2_QUALIFICATION_PATH }}
+          path: ${{ env.UMF_R3_QUALIFICATION_PATH }}
           if-no-files-found: ignore

@@ -228,7 +228,7 @@ impl Engine {
         let document = match copy_json(value, ctx) {
             Ok(v) => v,
             Err(e) => {
-                if !is_model_admission_error(&e.code) {
+                if e.is_control_failure() || !is_model_admission_error(&e.code) {
                     return Err(e);
                 }
                 return Ok(Validation {
@@ -267,7 +267,7 @@ impl Engine {
         }
         let (document, source_snapshot) = match source.admit_core_snapshot(ctx) {
             Ok(pair) => pair,
-            Err(error) if is_model_admission_error(&error.code) => {
+            Err(error) if !error.is_control_failure() && is_model_admission_error(&error.code) => {
                 return Ok(Validation {
                     valid: false,
                     complete: false,

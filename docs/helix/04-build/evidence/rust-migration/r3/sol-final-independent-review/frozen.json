@@ -1,0 +1,1576 @@
+{
+  "cases": [
+    {
+      "id": "sol-final-via-two-hops",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"noteParentId\"},{\"module\":\"demo\",\"element\":\"caption\"},{\"module\":\"demo\",\"element\":\"amount\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"parentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"parentOwner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"noteParentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"caption\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":10,\"scale\":2}},{\"id\":\"Parent\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"parentId\"},{\"module\":\"demo\",\"element\":\"parentOwner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"parentId\"}]}],\"extensions\":{}},{\"id\":\"Grandparent\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"grandId\"},{\"module\":\"demo\",\"element\":\"grandOwner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"grandId\"}]}],\"extensions\":{}},{\"id\":\"grandId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"grandOwner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"noteParentId\"},\"name\":\"parent_id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"caption\"},\"name\":\"caption\",\"nativeType\":{\"kind\":\"text\"},\"default\":{\"kind\":\"literal\",\"value\":{\"string\":\"O'Reilly\\\\n%; SELECT 1;--\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":10,\"scale\":2},\"default\":{\"kind\":\"literal\",\"value\":{\"decimalToken\":\"12.30\"}}}],\"indexes\":[{\"id\":\"owner_lookup\",\"name\":\"owner_lookup\",\"fields\":[{\"module\":\"demo\",\"element\":\"owner\"}],\"include\":[{\"module\":\"demo\",\"element\":\"caption\"}],\"unique\":false}],\"checks\":[{\"id\":\"nonnegative\",\"name\":\"amount_nonnegative\",\"expression\":{\"op\":\"ge\",\"left\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"amount\"}},\"right\":{\"op\":\"literal\",\"value\":{\"decimalToken\":\"0.00\"}}}}],\"foreignKeys\":[{\"id\":\"parent_fk\",\"name\":\"parent_fk\",\"fields\":[{\"module\":\"demo\",\"element\":\"noteParentId\"}],\"target\":{\"record\":{\"module\":\"demo\",\"element\":\"Parent\"},\"key\":\"primary\"},\"onUpdate\":\"restrict\",\"onDelete\":\"restrict\",\"deferrable\":false,\"relationship\":{\"module\":\"demo\",\"id\":\"parent\"}}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]},\"insert\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]},\"update\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]},\"delete\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"parents\",\"record\":{\"module\":\"demo\",\"element\":\"Parent\"},\"name\":\"parents\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"parentId\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[{\"id\":\"grandparent_fk\",\"name\":\"grandparent_fk\",\"fields\":[{\"module\":\"demo\",\"element\":\"parentId\"}],\"target\":{\"record\":{\"module\":\"demo\",\"element\":\"Grandparent\"},\"key\":\"primary\"},\"onUpdate\":\"restrict\",\"onDelete\":\"restrict\",\"deferrable\":false,\"relationship\":{\"module\":\"demo\",\"id\":\"grandparent\"}}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"grandparents\",\"record\":{\"module\":\"demo\",\"element\":\"Grandparent\"},\"name\":\"grandparents\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"grandId\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}},\"relationships\":[{\"id\":\"parent\",\"name\":\"parent\",\"source\":[{\"module\":\"demo\",\"element\":\"Note\"}],\"target\":[{\"module\":\"demo\",\"element\":\"Parent\",\"key\":\"primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":1,\"max\":1},\"targetLifecycle\":\"independent\",\"directed\":true},{\"id\":\"grandparent\",\"name\":\"grandparent\",\"source\":[{\"module\":\"demo\",\"element\":\"Parent\"}],\"target\":[{\"module\":\"demo\",\"element\":\"Grandparent\",\"key\":\"primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":1,\"max\":1},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "readers": "plugin_readers"
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "compiled",
+          "bundle": {
+            "version": "umf.table-deployment/0.1",
+            "canonicalization": "RFC8785",
+            "source": {
+              "format": "json",
+              "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"noteParentId\"},{\"module\":\"demo\",\"element\":\"caption\"},{\"module\":\"demo\",\"element\":\"amount\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"parentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"parentOwner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"noteParentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"caption\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":10,\"scale\":2}},{\"id\":\"Parent\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"parentId\"},{\"module\":\"demo\",\"element\":\"parentOwner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"parentId\"}]}],\"extensions\":{}},{\"id\":\"Grandparent\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"grandId\"},{\"module\":\"demo\",\"element\":\"grandOwner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"grandId\"}]}],\"extensions\":{}},{\"id\":\"grandId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"grandOwner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"noteParentId\"},\"name\":\"parent_id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"caption\"},\"name\":\"caption\",\"nativeType\":{\"kind\":\"text\"},\"default\":{\"kind\":\"literal\",\"value\":{\"string\":\"O'Reilly\\\\n%; SELECT 1;--\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":10,\"scale\":2},\"default\":{\"kind\":\"literal\",\"value\":{\"decimalToken\":\"12.30\"}}}],\"indexes\":[{\"id\":\"owner_lookup\",\"name\":\"owner_lookup\",\"fields\":[{\"module\":\"demo\",\"element\":\"owner\"}],\"include\":[{\"module\":\"demo\",\"element\":\"caption\"}],\"unique\":false}],\"checks\":[{\"id\":\"nonnegative\",\"name\":\"amount_nonnegative\",\"expression\":{\"op\":\"ge\",\"left\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"amount\"}},\"right\":{\"op\":\"literal\",\"value\":{\"decimalToken\":\"0.00\"}}}}],\"foreignKeys\":[{\"id\":\"parent_fk\",\"name\":\"parent_fk\",\"fields\":[{\"module\":\"demo\",\"element\":\"noteParentId\"}],\"target\":{\"record\":{\"module\":\"demo\",\"element\":\"Parent\"},\"key\":\"primary\"},\"onUpdate\":\"restrict\",\"onDelete\":\"restrict\",\"deferrable\":false,\"relationship\":{\"module\":\"demo\",\"id\":\"parent\"}}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]},\"insert\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]},\"update\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]},\"delete\":{\"kind\":\"all\",\"rules\":[{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},{\"kind\":\"via\",\"path\":[{\"module\":\"demo\",\"id\":\"parent\",\"direction\":\"forward\"},{\"module\":\"demo\",\"id\":\"grandparent\",\"direction\":\"forward\"}],\"rule\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}}]}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"parents\",\"record\":{\"module\":\"demo\",\"element\":\"Parent\"},\"name\":\"parents\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"parentId\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[{\"id\":\"grandparent_fk\",\"name\":\"grandparent_fk\",\"fields\":[{\"module\":\"demo\",\"element\":\"parentId\"}],\"target\":{\"record\":{\"module\":\"demo\",\"element\":\"Grandparent\"},\"key\":\"primary\"},\"onUpdate\":\"restrict\",\"onDelete\":\"restrict\",\"deferrable\":false,\"relationship\":{\"module\":\"demo\",\"id\":\"grandparent\"}}],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"parentOwner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}},{\"id\":\"grandparents\",\"record\":{\"module\":\"demo\",\"element\":\"Grandparent\"},\"name\":\"grandparents\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"grandId\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"grandOwner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}},\"relationships\":[{\"id\":\"parent\",\"name\":\"parent\",\"source\":[{\"module\":\"demo\",\"element\":\"Note\"}],\"target\":[{\"module\":\"demo\",\"element\":\"Parent\",\"key\":\"primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":1,\"max\":1},\"targetLifecycle\":\"independent\",\"directed\":true},{\"id\":\"grandparent\",\"name\":\"grandparent\",\"source\":[{\"module\":\"demo\",\"element\":\"Parent\"}],\"target\":[{\"module\":\"demo\",\"element\":\"Grandparent\",\"key\":\"primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":1,\"max\":1},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}"
+            },
+            "sourceDigest": "09935ca0e8797ab01e5ae08a40562b142b9f6b7d99dc58faaade02354ea1e00e",
+            "configuration": {
+              "module": "demo",
+              "schema": "plugin_demo",
+              "ownerRole": "plugin_owner",
+              "personRole": "plugin_person",
+              "batchRole": "plugin_batch",
+              "groupRoles": {
+                "readers": "plugin_readers"
+              }
+            },
+            "configurationDigest": "ead4e90999e5e300906a0ae022cc8276837e4efef46fd27b077357b8c2621a46",
+            "module": "demo",
+            "profile": "postgresql18/0.1",
+            "steps": [
+              {
+                "id": "step-00001",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+                "transaction": "required",
+                "sql": "CREATE TABLE \"plugin_demo\".\"notes\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"parent_id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"caption\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" DEFAULT (E'O''Reilly\\\\n%; SELECT 1;--'::pg_catalog.text COLLATE pg_catalog.\"C\"),\n  \"amount\" pg_catalog.\"numeric\"(10,2) NOT NULL DEFAULT E'123e-1'::pg_catalog.numeric,\n  CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\"),\n  CONSTRAINT \"umf_d_7bb4da652d48e46d9b51544b00a8897f\" CHECK (\"amount\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric)),\n  CONSTRAINT \"amount_nonnegative\" CHECK ((\"amount\" >= E'0'::pg_catalog.numeric))\n)"
+              },
+              {
+                "id": "step-00002",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"notes\" ENABLE ROW LEVEL SECURITY"
+              },
+              {
+                "id": "step-00003",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"notes\" FORCE ROW LEVEL SECURITY"
+              },
+              {
+                "id": "step-00004",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+                "transaction": "required",
+                "sql": "CREATE TABLE \"plugin_demo\".\"parents\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_bae58d626c121fb354f5b1146f81172a\" PRIMARY KEY (\"id\")\n)"
+              },
+              {
+                "id": "step-00005",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"parents\" ENABLE ROW LEVEL SECURITY"
+              },
+              {
+                "id": "step-00006",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"parents\" FORCE ROW LEVEL SECURITY"
+              },
+              {
+                "id": "step-00007",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+                "transaction": "required",
+                "sql": "CREATE TABLE \"plugin_demo\".\"grandparents\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"umf_k_40d87c4336b7d99cd30503130801bc3a\" PRIMARY KEY (\"id\")\n)"
+              },
+              {
+                "id": "step-00008",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"grandparents\" ENABLE ROW LEVEL SECURITY"
+              },
+              {
+                "id": "step-00009",
+                "kind": "table",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"grandparents\" FORCE ROW LEVEL SECURITY"
+              },
+              {
+                "id": "step-00010",
+                "kind": "foreignKey",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/foreignKeys/0",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"notes\" ADD CONSTRAINT \"parent_fk\" FOREIGN KEY (\"parent_id\") REFERENCES \"plugin_demo\".\"parents\" (\"id\") ON UPDATE RESTRICT ON DELETE RESTRICT NOT DEFERRABLE"
+              },
+              {
+                "id": "step-00011",
+                "kind": "index",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/indexes/0",
+                "transaction": "required",
+                "sql": "CREATE INDEX \"owner_lookup\" ON \"plugin_demo\".\"notes\" USING btree (\"owner\") INCLUDE (\"caption\")"
+              },
+              {
+                "id": "step-00012",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+                "transaction": "required",
+                "sql": "REVOKE ALL PRIVILEGES ON TABLE \"plugin_demo\".\"notes\" FROM PUBLIC"
+              },
+              {
+                "id": "step-00013",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_select\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR SELECT TO \"plugin_person\" USING (((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\") AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"parents\" AS \"umf_v_1_0\" WHERE \"plugin_demo\".\"notes\".\"parent_id\" = \"umf_v_1_0\".\"id\" AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"grandparents\" AS \"umf_v_1_1\" WHERE \"umf_v_1_0\".\"id\" = \"umf_v_1_1\".\"id\" AND (\"umf_v_1_1\".\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))))"
+              },
+              {
+                "id": "step-00014",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+                "transaction": "required",
+                "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00015",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_insert\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR INSERT TO \"plugin_person\" WITH CHECK (((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\") AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"parents\" AS \"umf_v_1_0\" WHERE \"plugin_demo\".\"notes\".\"parent_id\" = \"umf_v_1_0\".\"id\" AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"grandparents\" AS \"umf_v_1_1\" WHERE \"umf_v_1_0\".\"id\" = \"umf_v_1_1\".\"id\" AND (\"umf_v_1_1\".\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))))"
+              },
+              {
+                "id": "step-00016",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+                "transaction": "required",
+                "sql": "GRANT INSERT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00017",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_update\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"plugin_person\" USING (((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\") AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"parents\" AS \"umf_v_1_0\" WHERE \"plugin_demo\".\"notes\".\"parent_id\" = \"umf_v_1_0\".\"id\" AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"grandparents\" AS \"umf_v_1_1\" WHERE \"umf_v_1_0\".\"id\" = \"umf_v_1_1\".\"id\" AND (\"umf_v_1_1\".\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))))))) WITH CHECK (((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\") AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"parents\" AS \"umf_v_1_0\" WHERE \"plugin_demo\".\"notes\".\"parent_id\" = \"umf_v_1_0\".\"id\" AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"grandparents\" AS \"umf_v_1_1\" WHERE \"umf_v_1_0\".\"id\" = \"umf_v_1_1\".\"id\" AND (\"umf_v_1_1\".\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))))"
+              },
+              {
+                "id": "step-00018",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+                "transaction": "required",
+                "sql": "GRANT UPDATE (\"owner\", \"parent_id\", \"caption\", \"amount\") ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00019",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_delete\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR DELETE TO \"plugin_person\" USING (((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\") AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"parents\" AS \"umf_v_1_0\" WHERE \"plugin_demo\".\"notes\".\"parent_id\" = \"umf_v_1_0\".\"id\" AND (EXISTS (SELECT 1 FROM \"plugin_demo\".\"grandparents\" AS \"umf_v_1_1\" WHERE \"umf_v_1_0\".\"id\" = \"umf_v_1_1\".\"id\" AND (\"umf_v_1_1\".\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")))))))"
+              },
+              {
+                "id": "step-00020",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+                "transaction": "required",
+                "sql": "GRANT DELETE ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00021",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_select\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR SELECT TO \"plugin_batch\" USING (TRUE)"
+              },
+              {
+                "id": "step-00022",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+                "transaction": "required",
+                "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"notes\" TO \"plugin_batch\""
+              },
+              {
+                "id": "step-00023",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_insert\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR INSERT TO \"plugin_batch\" WITH CHECK (FALSE)"
+              },
+              {
+                "id": "step-00024",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_update\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"plugin_batch\" USING (FALSE) WITH CHECK (FALSE)"
+              },
+              {
+                "id": "step-00025",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_delete\" ON \"plugin_demo\".\"notes\" AS PERMISSIVE FOR DELETE TO \"plugin_batch\" USING (FALSE)"
+              },
+              {
+                "id": "step-00026",
+                "kind": "foreignKey",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/foreignKeys/0",
+                "transaction": "required",
+                "sql": "ALTER TABLE \"plugin_demo\".\"parents\" ADD CONSTRAINT \"grandparent_fk\" FOREIGN KEY (\"id\") REFERENCES \"plugin_demo\".\"grandparents\" (\"id\") ON UPDATE RESTRICT ON DELETE RESTRICT NOT DEFERRABLE"
+              },
+              {
+                "id": "step-00027",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1",
+                "transaction": "required",
+                "sql": "REVOKE ALL PRIVILEGES ON TABLE \"plugin_demo\".\"parents\" FROM PUBLIC"
+              },
+              {
+                "id": "step-00028",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_select\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR SELECT TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00029",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/select",
+                "transaction": "required",
+                "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"parents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00030",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_insert\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR INSERT TO \"plugin_person\" WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00031",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/insert",
+                "transaction": "required",
+                "sql": "GRANT INSERT ON TABLE \"plugin_demo\".\"parents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00032",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_update\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR UPDATE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")) WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00033",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/update",
+                "transaction": "required",
+                "sql": "GRANT UPDATE (\"owner\") ON TABLE \"plugin_demo\".\"parents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00034",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_delete\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR DELETE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00035",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/person/delete",
+                "transaction": "required",
+                "sql": "GRANT DELETE ON TABLE \"plugin_demo\".\"parents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00036",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_select\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR SELECT TO \"plugin_batch\" USING (TRUE)"
+              },
+              {
+                "id": "step-00037",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/select",
+                "transaction": "required",
+                "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"parents\" TO \"plugin_batch\""
+              },
+              {
+                "id": "step-00038",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/insert",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_insert\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR INSERT TO \"plugin_batch\" WITH CHECK (FALSE)"
+              },
+              {
+                "id": "step-00039",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/update",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_update\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR UPDATE TO \"plugin_batch\" USING (FALSE) WITH CHECK (FALSE)"
+              },
+              {
+                "id": "step-00040",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/1/policy/batch/delete",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_delete\" ON \"plugin_demo\".\"parents\" AS PERMISSIVE FOR DELETE TO \"plugin_batch\" USING (FALSE)"
+              },
+              {
+                "id": "step-00041",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2",
+                "transaction": "required",
+                "sql": "REVOKE ALL PRIVILEGES ON TABLE \"plugin_demo\".\"grandparents\" FROM PUBLIC"
+              },
+              {
+                "id": "step-00042",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_select\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR SELECT TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00043",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/select",
+                "transaction": "required",
+                "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"grandparents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00044",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_insert\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR INSERT TO \"plugin_person\" WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00045",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/insert",
+                "transaction": "required",
+                "sql": "GRANT INSERT ON TABLE \"plugin_demo\".\"grandparents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00046",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_update\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR UPDATE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")) WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00047",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/update",
+                "transaction": "required",
+                "sql": "GRANT UPDATE (\"owner\") ON TABLE \"plugin_demo\".\"grandparents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00048",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_person_delete\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR DELETE TO \"plugin_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+              },
+              {
+                "id": "step-00049",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/person/delete",
+                "transaction": "required",
+                "sql": "GRANT DELETE ON TABLE \"plugin_demo\".\"grandparents\" TO \"plugin_person\""
+              },
+              {
+                "id": "step-00050",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_select\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR SELECT TO \"plugin_batch\" USING (TRUE)"
+              },
+              {
+                "id": "step-00051",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/select",
+                "transaction": "required",
+                "sql": "GRANT SELECT ON TABLE \"plugin_demo\".\"grandparents\" TO \"plugin_batch\""
+              },
+              {
+                "id": "step-00052",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/insert",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_insert\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR INSERT TO \"plugin_batch\" WITH CHECK (FALSE)"
+              },
+              {
+                "id": "step-00053",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/update",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_update\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR UPDATE TO \"plugin_batch\" USING (FALSE) WITH CHECK (FALSE)"
+              },
+              {
+                "id": "step-00054",
+                "kind": "policy",
+                "sourcePath": "/modules/0/extensions/umf.tables/tables/2/policy/batch/delete",
+                "transaction": "required",
+                "sql": "CREATE POLICY \"umf_batch_delete\" ON \"plugin_demo\".\"grandparents\" AS PERMISSIVE FOR DELETE TO \"plugin_batch\" USING (FALSE)"
+              },
+              {
+                "id": "step-00055",
+                "kind": "grant",
+                "sourcePath": "/modules/0/extensions/umf.tables",
+                "transaction": "required",
+                "sql": "GRANT USAGE ON SCHEMA \"plugin_demo\" TO \"plugin_person\", \"plugin_batch\""
+              }
+            ],
+            "expectedCatalog": {
+              "tables": [
+                {
+                  "id": "notes",
+                  "record": {
+                    "module": "demo",
+                    "element": "Note"
+                  },
+                  "name": "notes",
+                  "columns": [
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "id"
+                      },
+                      "name": "id",
+                      "nativeType": {
+                        "kind": "text"
+                      }
+                    },
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "owner"
+                      },
+                      "name": "owner",
+                      "nativeType": {
+                        "kind": "text"
+                      }
+                    },
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "noteParentId"
+                      },
+                      "name": "parent_id",
+                      "nativeType": {
+                        "kind": "text"
+                      }
+                    },
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "caption"
+                      },
+                      "name": "caption",
+                      "nativeType": {
+                        "kind": "text"
+                      },
+                      "default": {
+                        "kind": "literal",
+                        "value": {
+                          "string": "O'Reilly\\n%; SELECT 1;--"
+                        }
+                      }
+                    },
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "amount"
+                      },
+                      "name": "amount",
+                      "nativeType": {
+                        "kind": "numeric",
+                        "precision": 10,
+                        "scale": 2
+                      },
+                      "default": {
+                        "kind": "literal",
+                        "value": {
+                          "decimalToken": "12.30"
+                        }
+                      }
+                    }
+                  ],
+                  "indexes": [
+                    {
+                      "id": "owner_lookup",
+                      "name": "owner_lookup",
+                      "fields": [
+                        {
+                          "module": "demo",
+                          "element": "owner"
+                        }
+                      ],
+                      "include": [
+                        {
+                          "module": "demo",
+                          "element": "caption"
+                        }
+                      ],
+                      "unique": false
+                    }
+                  ],
+                  "checks": [
+                    {
+                      "id": "nonnegative",
+                      "name": "amount_nonnegative",
+                      "expression": {
+                        "op": "ge",
+                        "left": {
+                          "op": "field",
+                          "field": {
+                            "module": "demo",
+                            "element": "amount"
+                          }
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": {
+                            "decimalToken": "0.00"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "foreignKeys": [
+                    {
+                      "id": "parent_fk",
+                      "name": "parent_fk",
+                      "fields": [
+                        {
+                          "module": "demo",
+                          "element": "noteParentId"
+                        }
+                      ],
+                      "target": {
+                        "record": {
+                          "module": "demo",
+                          "element": "Parent"
+                        },
+                        "key": "primary"
+                      },
+                      "onUpdate": "restrict",
+                      "onDelete": "restrict",
+                      "deferrable": false,
+                      "relationship": {
+                        "module": "demo",
+                        "id": "parent"
+                      }
+                    }
+                  ],
+                  "policy": {
+                    "mode": "native-rls",
+                    "person": {
+                      "select": {
+                        "kind": "all",
+                        "rules": [
+                          {
+                            "kind": "owner",
+                            "field": {
+                              "module": "demo",
+                              "element": "owner"
+                            }
+                          },
+                          {
+                            "kind": "via",
+                            "path": [
+                              {
+                                "module": "demo",
+                                "id": "parent",
+                                "direction": "forward"
+                              },
+                              {
+                                "module": "demo",
+                                "id": "grandparent",
+                                "direction": "forward"
+                              }
+                            ],
+                            "rule": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "grandOwner"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "insert": {
+                        "kind": "all",
+                        "rules": [
+                          {
+                            "kind": "owner",
+                            "field": {
+                              "module": "demo",
+                              "element": "owner"
+                            }
+                          },
+                          {
+                            "kind": "via",
+                            "path": [
+                              {
+                                "module": "demo",
+                                "id": "parent",
+                                "direction": "forward"
+                              },
+                              {
+                                "module": "demo",
+                                "id": "grandparent",
+                                "direction": "forward"
+                              }
+                            ],
+                            "rule": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "grandOwner"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "update": {
+                        "kind": "all",
+                        "rules": [
+                          {
+                            "kind": "owner",
+                            "field": {
+                              "module": "demo",
+                              "element": "owner"
+                            }
+                          },
+                          {
+                            "kind": "via",
+                            "path": [
+                              {
+                                "module": "demo",
+                                "id": "parent",
+                                "direction": "forward"
+                              },
+                              {
+                                "module": "demo",
+                                "id": "grandparent",
+                                "direction": "forward"
+                              }
+                            ],
+                            "rule": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "grandOwner"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "delete": {
+                        "kind": "all",
+                        "rules": [
+                          {
+                            "kind": "owner",
+                            "field": {
+                              "module": "demo",
+                              "element": "owner"
+                            }
+                          },
+                          {
+                            "kind": "via",
+                            "path": [
+                              {
+                                "module": "demo",
+                                "id": "parent",
+                                "direction": "forward"
+                              },
+                              {
+                                "module": "demo",
+                                "id": "grandparent",
+                                "direction": "forward"
+                              }
+                            ],
+                            "rule": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "grandOwner"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "batch": {
+                      "select": {
+                        "kind": "allow"
+                      },
+                      "insert": {
+                        "kind": "deny"
+                      },
+                      "update": {
+                        "kind": "deny"
+                      },
+                      "delete": {
+                        "kind": "deny"
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "parents",
+                  "record": {
+                    "module": "demo",
+                    "element": "Parent"
+                  },
+                  "name": "parents",
+                  "columns": [
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "parentId"
+                      },
+                      "name": "id",
+                      "nativeType": {
+                        "kind": "text"
+                      }
+                    },
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "parentOwner"
+                      },
+                      "name": "owner",
+                      "nativeType": {
+                        "kind": "text"
+                      }
+                    }
+                  ],
+                  "indexes": [],
+                  "checks": [],
+                  "foreignKeys": [
+                    {
+                      "id": "grandparent_fk",
+                      "name": "grandparent_fk",
+                      "fields": [
+                        {
+                          "module": "demo",
+                          "element": "parentId"
+                        }
+                      ],
+                      "target": {
+                        "record": {
+                          "module": "demo",
+                          "element": "Grandparent"
+                        },
+                        "key": "primary"
+                      },
+                      "onUpdate": "restrict",
+                      "onDelete": "restrict",
+                      "deferrable": false,
+                      "relationship": {
+                        "module": "demo",
+                        "id": "grandparent"
+                      }
+                    }
+                  ],
+                  "policy": {
+                    "mode": "native-rls",
+                    "person": {
+                      "select": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "parentOwner"
+                        }
+                      },
+                      "insert": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "parentOwner"
+                        }
+                      },
+                      "update": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "parentOwner"
+                        }
+                      },
+                      "delete": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "parentOwner"
+                        }
+                      }
+                    },
+                    "batch": {
+                      "select": {
+                        "kind": "allow"
+                      },
+                      "insert": {
+                        "kind": "deny"
+                      },
+                      "update": {
+                        "kind": "deny"
+                      },
+                      "delete": {
+                        "kind": "deny"
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "grandparents",
+                  "record": {
+                    "module": "demo",
+                    "element": "Grandparent"
+                  },
+                  "name": "grandparents",
+                  "columns": [
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "grandId"
+                      },
+                      "name": "id",
+                      "nativeType": {
+                        "kind": "text"
+                      }
+                    },
+                    {
+                      "field": {
+                        "module": "demo",
+                        "element": "grandOwner"
+                      },
+                      "name": "owner",
+                      "nativeType": {
+                        "kind": "text"
+                      }
+                    }
+                  ],
+                  "indexes": [],
+                  "checks": [],
+                  "foreignKeys": [],
+                  "policy": {
+                    "mode": "native-rls",
+                    "person": {
+                      "select": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "grandOwner"
+                        }
+                      },
+                      "insert": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "grandOwner"
+                        }
+                      },
+                      "update": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "grandOwner"
+                        }
+                      },
+                      "delete": {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "grandOwner"
+                        }
+                      }
+                    },
+                    "batch": {
+                      "select": {
+                        "kind": "allow"
+                      },
+                      "insert": {
+                        "kind": "deny"
+                      },
+                      "update": {
+                        "kind": "deny"
+                      },
+                      "delete": {
+                        "kind": "deny"
+                      }
+                    }
+                  }
+                }
+              ],
+              "columns": [
+                {
+                  "table": "notes",
+                  "name": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/0",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": false,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+                },
+                {
+                  "table": "notes",
+                  "name": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/1",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": false,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+                },
+                {
+                  "table": "notes",
+                  "name": "parent_id",
+                  "field": {
+                    "module": "demo",
+                    "element": "noteParentId"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/2",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": false,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"parent_id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+                },
+                {
+                  "table": "notes",
+                  "name": "caption",
+                  "field": {
+                    "module": "demo",
+                    "element": "caption"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/3",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": true,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"caption\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" DEFAULT (E'O''Reilly\\\\n%; SELECT 1;--'::pg_catalog.text COLLATE pg_catalog.\"C\")"
+                },
+                {
+                  "table": "notes",
+                  "name": "amount",
+                  "field": {
+                    "module": "demo",
+                    "element": "amount"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/4",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "numeric",
+                  "typeMod": 655366,
+                  "nullable": false,
+                  "collation": null,
+                  "identity": "",
+                  "definitionSql": "\"amount\" pg_catalog.\"numeric\"(10,2) NOT NULL DEFAULT E'123e-1'::pg_catalog.numeric"
+                },
+                {
+                  "table": "parents",
+                  "name": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "parentId"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/1/columns/0",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": false,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+                },
+                {
+                  "table": "parents",
+                  "name": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "parentOwner"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/1/columns/1",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": false,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+                },
+                {
+                  "table": "grandparents",
+                  "name": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "grandId"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/0",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": false,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+                },
+                {
+                  "table": "grandparents",
+                  "name": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "grandOwner"
+                  },
+                  "sourcePath": "/modules/0/extensions/umf.tables/tables/2/columns/1",
+                  "typeSchema": "pg_catalog",
+                  "typeName": "text",
+                  "typeMod": -1,
+                  "nullable": false,
+                  "collation": "C",
+                  "identity": "",
+                  "definitionSql": "\"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+                }
+              ],
+              "keys": [
+                {
+                  "table": "notes",
+                  "id": "primary",
+                  "name": "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+                  "primary": true,
+                  "columns": [
+                    "id"
+                  ],
+                  "definitionSql": "CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\")"
+                },
+                {
+                  "table": "parents",
+                  "id": "primary",
+                  "name": "umf_k_bae58d626c121fb354f5b1146f81172a",
+                  "primary": true,
+                  "columns": [
+                    "id"
+                  ],
+                  "definitionSql": "CONSTRAINT \"umf_k_bae58d626c121fb354f5b1146f81172a\" PRIMARY KEY (\"id\")"
+                },
+                {
+                  "table": "grandparents",
+                  "id": "primary",
+                  "name": "umf_k_40d87c4336b7d99cd30503130801bc3a",
+                  "primary": true,
+                  "columns": [
+                    "id"
+                  ],
+                  "definitionSql": "CONSTRAINT \"umf_k_40d87c4336b7d99cd30503130801bc3a\" PRIMARY KEY (\"id\")"
+                }
+              ],
+              "checks": [
+                {
+                  "table": "notes",
+                  "id": "domain:demo.amount",
+                  "name": "umf_d_7bb4da652d48e46d9b51544b00a8897f",
+                  "definitionSql": "CONSTRAINT \"umf_d_7bb4da652d48e46d9b51544b00a8897f\" CHECK (\"amount\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))"
+                },
+                {
+                  "table": "notes",
+                  "id": "nonnegative",
+                  "name": "amount_nonnegative",
+                  "definitionSql": "CONSTRAINT \"amount_nonnegative\" CHECK ((\"amount\" >= E'0'::pg_catalog.numeric))"
+                }
+              ],
+              "foreignKeys": [
+                {
+                  "table": "notes",
+                  "id": "parent_fk",
+                  "name": "parent_fk",
+                  "targetKey": "umf_k_bae58d626c121fb354f5b1146f81172a",
+                  "definitionSql": "CONSTRAINT \"parent_fk\" FOREIGN KEY (\"parent_id\") REFERENCES \"plugin_demo\".\"parents\" (\"id\") ON UPDATE RESTRICT ON DELETE RESTRICT NOT DEFERRABLE"
+                },
+                {
+                  "table": "parents",
+                  "id": "grandparent_fk",
+                  "name": "grandparent_fk",
+                  "targetKey": "umf_k_40d87c4336b7d99cd30503130801bc3a",
+                  "definitionSql": "CONSTRAINT \"grandparent_fk\" FOREIGN KEY (\"id\") REFERENCES \"plugin_demo\".\"grandparents\" (\"id\") ON UPDATE RESTRICT ON DELETE RESTRICT NOT DEFERRABLE"
+                }
+              ],
+              "indexes": [
+                {
+                  "table": "notes",
+                  "id": "owner_lookup",
+                  "name": "owner_lookup",
+                  "unique": false,
+                  "definitionSql": "USING btree (\"owner\") INCLUDE (\"caption\")"
+                }
+              ]
+            },
+            "seedSets": [],
+            "nativeQualified": false,
+            "bundleDigest": "4fcac931731987b50e2cbe04fe664079a7f45f52481d1c6cbb34e453f6a2f408"
+          },
+          "diagnostics": []
+        }
+      },
+      "inputSha256": "dc487d0c4417f63e531f487682375c2da31533dfd63c8d70a8400f8a60f7c511",
+      "resultSha256": "608fa93eb6e21f2fa7784180712c1859ef527334dfd661e600ad88ce113d4047"
+    },
+    {
+      "id": "sol-final-config-empty",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "reviewers": ""
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles/reviewers",
+              "message": "Expected a nonempty PostgreSQL identifier of at most63 UTF-8 bytes",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "62264d92abb14c5edf33be95838f32143bec5d9be0016841bd0a7fc7fd894a47",
+      "resultSha256": "de528da8d2eeae02226f2b76e8154ce0c6abd743d53b835aed6508443922447a"
+    },
+    {
+      "id": "sol-final-config-numeric",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "reviewers": 3
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles/reviewers",
+              "message": "Expected a nonempty PostgreSQL identifier of at most63 UTF-8 bytes",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "e59422d8ca3ba6d25634aa85c6fdaf79632e74c488f13379d1e655508d3b4b1c",
+      "resultSha256": "de528da8d2eeae02226f2b76e8154ce0c6abd743d53b835aed6508443922447a"
+    },
+    {
+      "id": "sol-final-config-null",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "reviewers": null
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles/reviewers",
+              "message": "Expected a nonempty PostgreSQL identifier of at most63 UTF-8 bytes",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "71b799510a3dc9b69480477384a5227647508b78d19eb8d2ae7835e228b35997",
+      "resultSha256": "de528da8d2eeae02226f2b76e8154ce0c6abd743d53b835aed6508443922447a"
+    },
+    {
+      "id": "sol-final-config-object",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "reviewers": {}
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles/reviewers",
+              "message": "Expected a nonempty PostgreSQL identifier of at most63 UTF-8 bytes",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "64c54512d3c5358e1811dda892fbcd6c29670b9a80c4a1fe030782c6127cb9f1",
+      "resultSha256": "de528da8d2eeae02226f2b76e8154ce0c6abd743d53b835aed6508443922447a"
+    },
+    {
+      "id": "sol-final-config-nul",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "reviewers": "a\u0000b"
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles/reviewers",
+              "message": "Expected a nonempty PostgreSQL identifier of at most63 UTF-8 bytes",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "e6c22b4b51a767194c861bb512592a04d4b801dfcb993a868b113cf7dfcecfa8",
+      "resultSha256": "de528da8d2eeae02226f2b76e8154ce0c6abd743d53b835aed6508443922447a"
+    },
+    {
+      "id": "sol-final-config-long",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "reviewers": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles/reviewers",
+              "message": "Expected a nonempty PostgreSQL identifier of at most63 UTF-8 bytes",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "7474ccd0cbcbf431135184c5010712f5b9e15156485c7ae8611f38433cc82cfb",
+      "resultSha256": "de528da8d2eeae02226f2b76e8154ce0c6abd743d53b835aed6508443922447a"
+    },
+    {
+      "id": "sol-final-config-emptyalias",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "": "groupx"
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles",
+              "message": "Empty group alias",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "2c4e4f1df8649747c24b7be1f6145643d7753cb27315317f23cf4249f5d7f99f",
+      "resultSha256": "fcf11e7ef2c3562d39d5ee5563a65eb59774644a07935227c24641f961d67d59"
+    },
+    {
+      "id": "sol-final-config-schema-principal-order",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "public",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_owner",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/schema",
+              "message": "A dedicated plugin schema is required",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "ff05345858b96a3ea3166d7dc673ebdb19d0c1f807b8436a6d6c51b459712264",
+      "resultSha256": "12c05887f1fe43a0fa48958887da469fc5df2b8416d892190de25359f21c04da"
+    },
+    {
+      "id": "sol-final-config-schema-system-order",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "public",
+          "ownerRole": "plugin_owner",
+          "personRole": "pg_foo",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/schema",
+              "message": "A dedicated plugin schema is required",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "c6513b7076c523dce2a855a1fa800e2f29859080cd93e651c4624f242b805509",
+      "resultSha256": "12c05887f1fe43a0fa48958887da469fc5df2b8416d892190de25359f21c04da"
+    },
+    {
+      "id": "sol-final-config-alias-principal-order",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_owner",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "reviewers": 3
+          }
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "status": "blocked",
+          "diagnostics": [
+            {
+              "code": "TABLE_DEPLOYMENT_UNSUPPORTED",
+              "path": "/configuration/groupRoles/reviewers",
+              "message": "Expected a nonempty PostgreSQL identifier of at most63 UTF-8 bytes",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "inputSha256": "62c4b78853a68a1fd13300db8a655fd84346b4aa87a941de4006e9ada9df1872",
+      "resultSha256": "de528da8d2eeae02226f2b76e8154ce0c6abd743d53b835aed6508443922447a"
+    },
+    {
+      "id": "sol-final-row-lifecycle-null",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {},
+        "context": {
+          "record": {
+            "module": "demo",
+            "element": "Note"
+          },
+          "tableId": "notes",
+          "lifecycleDocument": null
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "null is not an object (evaluating 'document.modules')"
+        }
+      },
+      "inputSha256": "aee4b0c8e0df861fd2b134936c52410bc6e2842bd540ea5c3773825dbfc2c506",
+      "resultSha256": "018f090cbfb6d47bfabd86c88416999ac33039277f2f32b2271b345b3de959db"
+    },
+    {
+      "id": "sol-final-row-lifecycle-object",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {},
+        "context": {
+          "record": {
+            "module": "demo",
+            "element": "Note"
+          },
+          "tableId": "notes",
+          "lifecycleDocument": {}
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "undefined is not an object (evaluating 'document.modules.find')"
+        }
+      },
+      "inputSha256": "71a57bb79524fde02493f17dbba9073dd0b16590b720c05d6287d01e28096bf2",
+      "resultSha256": "aff0701d0ee23283c91afd93caf9193872506f6684bd2881a5500412e36bb139"
+    },
+    {
+      "id": "sol-final-row-lifecycle-modules-null",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {},
+        "context": {
+          "record": {
+            "module": "demo",
+            "element": "Note"
+          },
+          "tableId": "notes",
+          "lifecycleDocument": {
+            "modules": null
+          }
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "null is not an object (evaluating 'document.modules.find')"
+        }
+      },
+      "inputSha256": "33982b313a0cea3ef3a47aba0f859abced3a12b4fe9db5ab3a720f379fb57b76",
+      "resultSha256": "af519419d30aace0386f78a4337450c29b40ed5df977cb66e934b89e41ba40e7"
+    },
+    {
+      "id": "sol-final-row-lifecycle-modules-object",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {},
+        "context": {
+          "record": {
+            "module": "demo",
+            "element": "Note"
+          },
+          "tableId": "notes",
+          "lifecycleDocument": {
+            "modules": {}
+          }
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "document.modules.find is not a function. (In 'document.modules.find((m) => m.id === context.record.module)', 'document.modules.find' is undefined)"
+        }
+      },
+      "inputSha256": "b10ec2294f99ce26eb3966e5d902810f8096320d317aa5c87aaf294b23f5f245",
+      "resultSha256": "e03262090e658d3b29e1ae8bc8a15675799d29a7c4dfc6ff79bce8b24b030929"
+    }
+  ]
+}

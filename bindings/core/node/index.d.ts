@@ -38,3 +38,20 @@ export interface UmfCoreEngine {
   writeJsonValue(value: unknown): string;
 }
 export declare function createEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreEngine;
+
+export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown}
+export type UmfCodegenOperation = 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
+export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
+export interface UmfCodegenEngine {
+  call(operation: UmfCodegenOperation, request: unknown): UmfCodegenOutcome;
+  generatePythonClient(request: unknown): unknown;
+  compileTableDeployment(request: unknown): unknown;
+  verifyTableDeployment(bundle: unknown): unknown;
+  compileTableMigration(request: unknown): unknown;
+  verifyTableMigration(plan: unknown): unknown;
+  discoverTableMigrationChanges(previous: unknown, next: unknown): unknown[];
+  normalizeRowScope(input: unknown, context: unknown): unknown;
+  generateAccessPackage(request: unknown, profile: unknown): unknown;
+  diffAccessPackages(before: unknown, after: unknown): unknown;
+}
+export declare function createCodegenEngine(resources: UmfCodegenResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCodegenEngine;

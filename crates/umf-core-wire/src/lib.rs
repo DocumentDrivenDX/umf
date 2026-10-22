@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
+mod codegen;
+
 use std::collections::BTreeSet;
 
 use umf_core::serialization::Format;
@@ -681,6 +683,9 @@ fn execute_request_inner(
         .and_then(as_utf16)
         .and_then(|v| v.to_utf8().ok())
         .ok_or_else(|| fail("REQUEST", "Request op is required"))?;
+    if let Some(operation) = op.strip_prefix("codegen/") {
+        return codegen::execute(operation, &mut request, control);
+    }
     let mut resources = take_field(&mut request, "resources")
         .ok_or_else(|| fail("REQUEST", "Explicit resources are required"))?;
     let registry_value = take_field(&mut request, "registry");

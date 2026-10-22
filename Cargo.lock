@@ -985,6 +985,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "umf-codegen"
+version = "0.1.0"
+dependencies = [
+ "sha2",
+ "umf-core",
+]
+
+[[package]]
 name = "umf-core"
 version = "0.1.0"
 dependencies = [
@@ -1034,6 +1042,7 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+ "umf-codegen",
  "umf-core",
 ]
 

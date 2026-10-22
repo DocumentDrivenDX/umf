@@ -30,7 +30,7 @@ enum Runtime {
     Missing,
     Map(Rc<RefCell<Vec<(Vec<u16>, Runtime)>>>),
 }
-type Env = Vec<(Utf16, Runtime)>;
+type Env = Vec<(Utf16, Rc<Runtime>)>;
 fn k(s: &str) -> Utf16 {
     Utf16::from(s)
 }
@@ -148,7 +148,7 @@ fn find_runtime_key_metered(
     Ok(None)
 }
 fn find_env_key_metered(
-    entries: &[(Utf16, Runtime)],
+    entries: &[(Utf16, Rc<Runtime>)],
     target: &Utf16,
     ctx: &mut Context<'_>,
 ) -> Result<Option<usize>, EngineError> {
@@ -666,11 +666,18 @@ fn runtime_copy(v: &Runtime, ctx: &mut Context<'_>) -> Result<Runtime, EngineErr
     })
 }
 fn clone_env(env: &Env, ctx: &mut Context<'_>) -> Result<Env, EngineError> {
+    // Admit all slot, name-unit, and Rc-handle copies before growing the new
+    // environment. Runtime trees remain immutable and shared between scopes.
     ctx.charge_work(env.len(), Utf16::default())?;
+    let work = env.iter().fold(env.len(), |total, (name, _)| {
+        total.saturating_add(name.len())
+    });
+    ctx.charge_work(work, Utf16::default())?;
     let mut copy = Vec::with_capacity(env.len());
     for (name, value) in env {
-        ctx.charge_work(name.len(), Utf16::default())?;
-        copy.push((name.clone(), runtime_copy(value, ctx)?));
+        // Keep cooperative host checks responsive even after the upfront charge.
+        ctx.charge_work(0, Utf16::default())?;
+        copy.push((name.clone(), Rc::clone(value)));
     }
     Ok(copy)
 }
@@ -1948,10 +1955,13 @@ fn eval(
                         for (i, item) in list.iter().enumerate() {
                             let mut local = clone_env(env, ctx)?;
                             ctx.charge_work(as_name.len(), Utf16::default())?;
-                            local.push((as_name.clone(), runtime_copy(item, ctx)?));
+                            local.push((as_name.clone(), Rc::new(runtime_copy(item, ctx)?)));
                             if let Some(ref n) = idx_name {
                                 ctx.charge_work(n.len(), Utf16::default())?;
-                                local.push((n.clone(), Runtime::Json(Value::Number(i as f64))))
+                                local.push((
+                                    n.clone(),
+                                    Rc::new(Runtime::Json(Value::Number(i as f64))),
+                                ))
                             }
                             let v = eval(body, &local, doc, policy, reg, caps, ctx, diagnostics)?;
                             match name.as_str() {
@@ -2415,9 +2425,9 @@ fn exec(
                     diags,
                 )?;
                 if let Some(index) = find_env_key_metered(env, &n, ctx)? {
-                    env[index].1 = v
+                    env[index].1 = Rc::new(v)
                 } else {
-                    env.push((n, v))
+                    env.push((n, Rc::new(v)))
                 }
             }
             "for" => {
@@ -2433,11 +2443,14 @@ fn exec(
                 )?;
                 for (i, v) in as_values(values, ctx)?.into_iter().enumerate() {
                     let mut local = clone_env(env, ctx)?;
-                    local.push((utf16(get(step, "as").unwrap()).unwrap_or_default(), v));
+                    local.push((
+                        utf16(get(step, "as").unwrap()).unwrap_or_default(),
+                        Rc::new(v),
+                    ));
                     if let Some(ix) = get(step, "index") {
                         local.push((
                             utf16(ix).unwrap_or_default(),
-                            Runtime::Json(Value::Number(i as f64)),
+                            Rc::new(Runtime::Json(Value::Number(i as f64))),
                         ))
                     }
                     exec(
@@ -2667,11 +2680,11 @@ pub(crate) fn execute_constraints_admitted(
     let mut env = vec![
         (
             "doc".into(),
-            runtime_from_value(clone_private(document, ctx)?, ctx)?,
+            Rc::new(runtime_from_value(clone_private(document, ctx)?, ctx)?),
         ),
         (
             "policy".into(),
-            runtime_from_value(clone_private(policy, ctx)?, ctx)?,
+            Rc::new(runtime_from_value(clone_private(policy, ctx)?, ctx)?),
         ),
     ];
     exec(
@@ -2750,10 +2763,17 @@ mod runtime_diagnostic_tests {
             }),
         }
     }
-    fn run_expr(expression: &Value, env: &Env, ctx: &mut Context<'_>) -> Runtime {
+    fn run_expr<T>(expression: &Value, env: &[(Utf16, T)], ctx: &mut Context<'_>) -> Runtime
+    where
+        T: Clone + Into<Rc<Runtime>>,
+    {
+        let env = env
+            .iter()
+            .map(|(name, value)| (name.clone(), value.clone().into()))
+            .collect::<Env>();
         eval(
             expression,
-            env,
+            &env,
             &Value::Null,
             &Value::Null,
             &crate::registry::Registry::new(),
@@ -3504,6 +3524,10 @@ mod runtime_diagnostic_tests {
             }
         };
         let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let env = env
+            .into_iter()
+            .map(|(name, value)| (name, Rc::new(value)))
+            .collect::<Env>();
         let error = eval(
             &operation("concat", vec![variable("message")]),
             &env,
@@ -3745,5 +3769,292 @@ mod runtime_diagnostic_tests {
         let error = find_map_value_metered(&entries, &key, &mut ctx).unwrap_err();
         assert_eq!(error.code, "MAP_METER_DENIED");
         assert_eq!(observed, vec![1, 1537]);
+    }
+}
+
+#[cfg(test)]
+mod shared_env_tests {
+    use super::*;
+
+    struct NoCapabilities;
+    impl crate::engine::Capabilities for NoCapabilities {
+        fn validate_extension(
+            &mut self,
+            _token: u64,
+            _payload: &Value,
+            _context: &crate::engine::SemanticContext,
+        ) -> Result<Vec<Diagnostic>, Utf16> {
+            Ok(Vec::new())
+        }
+    }
+
+    fn object(fields: Vec<(&str, Value)>) -> Value {
+        Value::Object(
+            fields
+                .into_iter()
+                .map(|(key, value)| (Utf16::from(key), value))
+                .collect(),
+        )
+    }
+
+    fn variable(name: &str) -> Value {
+        object(vec![("var", Value::string_utf8(name))])
+    }
+
+    fn step(op: &str, fields: Vec<(&str, Value)>) -> Value {
+        let mut fields = vec![("op", Value::string_utf8(op))]
+            .into_iter()
+            .chain(fields)
+            .collect::<Vec<_>>();
+        Value::Object(
+            fields
+                .drain(..)
+                .map(|(key, value)| (Utf16::from(key), value))
+                .collect(),
+        )
+    }
+
+    fn run(expression: &Value, env: &Env, ctx: &mut Context<'_>) -> Runtime {
+        eval(
+            expression,
+            env,
+            &Value::Null,
+            &Value::Null,
+            &crate::registry::Registry::new(),
+            &mut NoCapabilities,
+            ctx,
+            &mut Vec::new(),
+        )
+        .unwrap()
+    }
+
+    fn run_steps(body: &Value, env: &mut Env, ctx: &mut Context<'_>) {
+        exec(
+            body,
+            env,
+            &Value::Null,
+            &Value::Null,
+            &crate::registry::Registry::new(),
+            &mut NoCapabilities,
+            ctx,
+            &mut Vec::new(),
+        )
+        .unwrap();
+    }
+
+    fn json_number(value: &Runtime) -> f64 {
+        match value {
+            Runtime::Json(Value::Number(number)) => *number,
+            other => panic!("expected number, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn cloned_env_shares_immutable_roots_but_variable_reads_are_owned_copies() {
+        let root = Rc::new(Runtime::Json(Value::Object(vec![(
+            Utf16::from("nested"),
+            Value::Array(vec![Value::Number(1.0)]),
+        )])));
+        let env = vec![(Utf16::from("root"), Rc::clone(&root))];
+        let mut ctx = Context::ordinary();
+        let local = clone_env(&env, &mut ctx).unwrap();
+        assert!(Rc::ptr_eq(&env[0].1, &local[0].1));
+
+        let mut evaluated = run(&variable("root"), &local, &mut ctx);
+        let Runtime::Json(Value::Object(fields)) = &mut evaluated else {
+            panic!("variable evaluation returns an owned JSON runtime copy")
+        };
+        let Value::Array(items) = &mut fields[0].1 else {
+            panic!("nested array expected")
+        };
+        items[0] = Value::Number(99.0);
+        let Runtime::Json(Value::Object(fields)) = &*root else {
+            unreachable!()
+        };
+        let Value::Array(items) = &fields[0].1 else {
+            unreachable!()
+        };
+        assert_eq!(items, &[Value::Number(1.0)]);
+    }
+
+    #[test]
+    fn scoped_if_for_map_and_filter_shadowing_never_rebinds_parent_slots() {
+        let original = Rc::new(Runtime::Json(Value::Number(7.0)));
+        let mut env = vec![(Utf16::from("x"), Rc::clone(&original))];
+        let let_x = || {
+            step(
+                "let",
+                vec![
+                    ("name", Value::string_utf8("x")),
+                    ("value", Value::Number(9.0)),
+                ],
+            )
+        };
+        let mut ctx = Context::ordinary();
+        run_steps(
+            &Value::Array(vec![step(
+                "if",
+                vec![
+                    ("test", Value::Bool(true)),
+                    ("then", Value::Array(vec![let_x()])),
+                ],
+            )]),
+            &mut env,
+            &mut ctx,
+        );
+        assert_eq!(json_number(&env[0].1), 7.0);
+        assert!(Rc::ptr_eq(&env[0].1, &original));
+
+        run_steps(
+            &Value::Array(vec![step(
+                "for",
+                vec![
+                    (
+                        "each",
+                        Value::Array(vec![Value::Number(1.0), Value::Number(2.0)]),
+                    ),
+                    ("as", Value::string_utf8("x")),
+                    ("body", Value::Array(vec![let_x()])),
+                ],
+            )]),
+            &mut env,
+            &mut ctx,
+        );
+        assert_eq!(json_number(&env[0].1), 7.0);
+        assert!(Rc::ptr_eq(&env[0].1, &original));
+
+        let values = Value::Array(vec![Value::Number(1.0), Value::Number(2.0)]);
+        for op in ["map", "filter"] {
+            let expression = object(vec![
+                ("op", Value::string_utf8(op)),
+                ("args", Value::Array(vec![values.clone()])),
+                ("as", Value::string_utf8("x")),
+                ("value", variable("x")),
+            ]);
+            let _ = run(&expression, &env, &mut ctx);
+            assert_eq!(json_number(&env[0].1), 7.0);
+            assert!(Rc::ptr_eq(&env[0].1, &original));
+        }
+    }
+
+    #[test]
+    fn map_mutations_remain_shared_across_scopes_and_nested_maps() {
+        let inner = Rc::new(Runtime::Map(Rc::new(RefCell::new(Vec::new()))));
+        let outer = Rc::new(Runtime::Map(Rc::new(RefCell::new(Vec::new()))));
+        let mut env = vec![
+            (Utf16::from("outer"), Rc::clone(&outer)),
+            (Utf16::from("inner"), Rc::clone(&inner)),
+        ];
+        let remember_inner = step(
+            "remember",
+            vec![
+                ("set", variable("inner")),
+                ("key", Value::string_utf8("nested")),
+            ],
+        );
+        let remember_outer = step(
+            "remember",
+            vec![
+                ("set", variable("outer")),
+                ("key", Value::string_utf8("child")),
+                ("value", variable("inner")),
+            ],
+        );
+        let mut ctx = Context::ordinary();
+        run_steps(
+            &Value::Array(vec![step(
+                "if",
+                vec![
+                    ("test", Value::Bool(true)),
+                    ("then", Value::Array(vec![remember_inner, remember_outer])),
+                ],
+            )]),
+            &mut env,
+            &mut ctx,
+        );
+
+        assert_eq!(inner_map_len(&inner), 1);
+        let Runtime::Map(map) = &*outer else {
+            unreachable!()
+        };
+        let entries = map.borrow();
+        assert_eq!(entries.len(), 1);
+        assert!(
+            matches!(&entries[0].1, Runtime::Map(found) if Rc::ptr_eq(found, match &*inner { Runtime::Map(map) => map, _ => unreachable!() }))
+        );
+    }
+
+    fn inner_map_len(value: &Runtime) -> usize {
+        let Runtime::Map(map) = value else {
+            unreachable!()
+        };
+        map.borrow().len()
+    }
+
+    #[test]
+    fn cloned_env_preserves_raw_utf16_and_python_text_origin() {
+        let raw = Utf16::new(vec![0xd800, b'x' as u16]);
+        let origin =
+            crate::python_value::PyText::from_codepoints(vec![0xd800, b'x' as u32]).unwrap();
+        let value = Rc::new(Runtime::Text {
+            value: raw.clone(),
+            python_origin: Some(origin.clone()),
+            python_source_path: true,
+        });
+        let env = vec![(Utf16::new(vec![0xdfff]), Rc::clone(&value))];
+        let mut ctx = Context::ordinary();
+        let local = clone_env(&env, &mut ctx).unwrap();
+        assert!(Rc::ptr_eq(&env[0].1, &local[0].1));
+        assert_eq!(local[0].0, Utf16::new(vec![0xdfff]));
+        let Runtime::Text {
+            value,
+            python_origin,
+            python_source_path,
+        } = &*local[0].1
+        else {
+            unreachable!()
+        };
+        assert_eq!(value, &raw);
+        assert_eq!(python_origin.as_ref(), Some(&origin));
+        assert!(*python_source_path);
+    }
+
+    #[test]
+    fn clone_env_polls_late_host_failures_during_name_scan() {
+        for code in ["LIMIT", "NUMBER", "VALUE_INVALID"] {
+            let env = (0..64)
+                .map(|index| {
+                    (
+                        Utf16::new(vec![b'n' as u16; 256 + index]),
+                        Rc::new(Runtime::Missing),
+                    )
+                })
+                .collect::<Env>();
+            let original = env
+                .iter()
+                .map(|(name, value)| (name.clone(), Rc::clone(value)))
+                .collect::<Env>();
+            // Two precharges, then stop before copying entry49:48/64 done.
+            let stop_call = 2 + env.len() * 3 / 4 + 1;
+            let mut calls = 0usize;
+            let mut meter = |_amount| {
+                calls += 1;
+                if calls == stop_call {
+                    Err(EngineError::new(code, Utf16::default(), "host stop"))
+                } else {
+                    Ok(())
+                }
+            };
+            let mut ctx = Context::ordinary().with_meter(&mut meter);
+            let error = clone_env(&env, &mut ctx).unwrap_err();
+            assert_eq!(error.code, code);
+            assert!(error.is_control_failure());
+            assert_eq!(calls, stop_call);
+            assert!(env
+                .iter()
+                .zip(&original)
+                .all(|((name, value), (old_name, old_value))| name == old_name
+                    && Rc::ptr_eq(value, old_value)));
+        }
     }
 }

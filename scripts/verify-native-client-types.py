@@ -11,13 +11,15 @@ from access_type_diagnostics import validate_negative
 parser=argparse.ArgumentParser()
 parser.add_argument('--environment',type=Path,required=True)
 parser.add_argument('--work-dir',type=Path,required=True)
+parser.add_argument('--generated-dir',type=Path,help='Verify an already generated package inventory, without running a generator')
 args=parser.parse_args()
 root=Path(__file__).resolve().parent.parent
 work=args.work_dir.resolve();work.mkdir(parents=True,exist_ok=True)
-environment=args.environment.resolve();generated=work/'generated'
+environment=args.environment.resolve();generated=args.generated_dir.resolve() if args.generated_dir else work/'generated'
 base=root/'tests/unified/native-types'
-subprocess.run(['bun',str(root/'tests/unified/table-client-fixture.ts'),str(generated)],cwd=root,check=True)
-subprocess.run(['bun',str(root/'tests/unified/table-client-fixture.ts'),str(generated),'--domains'],cwd=root,check=True)
+if args.generated_dir is None:
+    subprocess.run(['bun',str(root/'tests/unified/table-client-fixture.ts'),str(generated)],cwd=root,check=True)
+    subprocess.run(['bun',str(root/'tests/unified/table-client-fixture.ts'),str(generated),'--domains'],cwd=root,check=True)
 negative=base/'negative.py'
 domain_negative=base/'domain_negative.py'
 rules={6:('arg-type','reportArgumentType','invalid-argument-type'),7:('call-arg','reportCallIssue','missing-argument'),8:('arg-type','reportArgumentType','invalid-argument-type'),9:('attr-defined','reportAttributeAccessIssue','unresolved-attribute'),10:('attr-defined','reportAttributeAccessIssue','unresolved-attribute')}

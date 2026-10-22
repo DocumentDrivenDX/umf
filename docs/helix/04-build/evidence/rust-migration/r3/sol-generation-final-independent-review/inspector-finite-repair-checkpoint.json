@@ -1,0 +1,101 @@
+{
+  "scope": "Self-authored final finite inspector repairs after Luna8e handoff left known source/resource gaps. No self approval; another Sol must review complete delta before source closure.",
+  "production": "crates/umf-codegen/src/access/inspection.rs",
+  "beforeSha256": "8e3dd5d5471d1d893a278008826abf2d57339f99af50e21503c2b1cc10d046b4",
+  "afterSha256": "1bda433d442a1468199981bcb6fd5d9a51e9cf8f06c702407f6b150bd0a41ac1",
+  "beforeSource": "/private/tmp/sol-generation-inspection-before-final-repair-8e.rs",
+  "delta": "inspector-finite-repair.patch",
+  "completed_checklist": [
+    "Preserved all Luna6 semantic repairs: absent generation, expected-field closure, malformed JS truthiness/index path, PG-only module boundary and two getBinding phase guards",
+    "Preserved iterative nested reference graph, complete registered schema/callback validation, callback diagnostic ordering, raw UTF16 IDs, last-field lookup and source JSON target identity; no-context callback still refuses and CapabilityError::Engine carries terminal host origins",
+    "Replaced remaining seenSets raw Value equality with metered JSON.stringify-compatible identity after JS own-key ordering; no strict Unicode canonical hash",
+    "Corrected duplicate/missing ColumnSet native field pointers to include the columns segment",
+    "Replaced selected-key unpolled standard sort with fallible stable partition equivalent to source stable boolean comparator; polls before every key identity comparison and move",
+    "Reference key census now polls each key before copying references; pointer escaping polls inside long segments; source identity count uses O(1) UTF8 byte-length bound before allocation",
+    "Facet warning paths and key IDs reserve before copying; dependency path collection moves strings; field-column capacity census polls including empty sets; raw target allowed-key census polls",
+    "Native helper accounts for actual text conversions/uppercase and presence helper polls each notNull candidate, with Context propagated directly. Removed five whole-tree precharges used as a substitute for native-helper work",
+    "Native-name byte census implements TextEncoder replacement of unpaired surrogates under63-byte bound; native uppercase matches full pinned Bun17 uppercase-to-ASCII map (10 scalars), with metered inner text loop",
+    "Owned-and-nested Field uses source conjunction of ordinary owned presence plus separate nested presence, captured before repair; missing cardinality stays unspecified in native compatibility rather than defaulting to one"
+  ],
+  "source_controls": [
+    {
+      "fixture": "sol-generation-inspector-final-branches-review/frozen.json",
+      "sha256": "33b6b488ad721030200b60603ffa8f4bfb680e3844c73339d54fbaeb44d12cf9",
+      "cases": 3
+    },
+    {
+      "fixture": "sol-generation-binding-module-boundary-review/frozen.json",
+      "sha256": "574607790d9c91f72b4b0213facbf6f80ad8ea68c9bdaa953e3215e81dfc9120",
+      "cases": 1
+    },
+    {
+      "fixture": "sol-generation-binding-phase-review/frozen.json",
+      "sha256": "8e5870e9358ed89596a76e6f076161b65cf7e35f7bd420cf3819e76b0100971d",
+      "cases": 2
+    },
+    {
+      "fixture": "sol-generation-inspector-static-predicates-review/frozen.json",
+      "sha256": "b4fa9bc3d96988dfaf6f2b97f5c858a2cb802413487114d57ee85a0228d974d1",
+      "cases": 2
+    },
+    {
+      "fixture": "sol-generation-inspector-column-path-review/frozen.json",
+      "sha256": "7cfe8a0a308d20d8424505cf58b44659e59506e5d8f87fff17e04cc08279785a",
+      "cases": 1
+    },
+    {
+      "fixture": "sol-generation-inspector-native-name-review/frozen.json",
+      "sha256": "e3d4c2fbcf51e8625f6b438a0bba27336c1ef5da0c4cac7d38c3b32c4c997240",
+      "cases": 1
+    },
+    {
+      "fixture": "sol-generation-inspector-native-type-review/frozen.json",
+      "sha256": "05a1074b18521ed63848723854dc73300c59e12a3c95e10ebd999d3016456a05",
+      "cases": 1
+    },
+    {
+      "fixture": "sol-generation-inspector-owned-nested-review/frozen.json",
+      "sha256": "f81107a7cb366825e23e996d5da5029f0d41ccdb8cd3711ca7a892307f08e7cd",
+      "cases": 1
+    },
+    {
+      "fixture": "sol-generation-inspector-cardinality-review/frozen.json",
+      "sha256": "f52fc10d2ccb4bf2897ecf0b9d25badc3ed6fe34c28c892e48d9ea8098333765",
+      "cases": 1
+    }
+  ],
+  "new_native_source_oracle": "sol-generation-inspector-native-type-review/uppercase-ascii-source.json (Bun1.4.3 Unicode17.0; complete non-ASCII scalar enumeration to ASCII uppercase)",
+  "source_before_reports": [
+    "/private/tmp/sol-generation-inspector-repair-native.json (8e fresh:7/9; original6 fixed, fieldabsenceINPUTguard matches, targetidentity/path fail)",
+    "/private/tmp/sol-generation-inspector-native-name-before.json",
+    "/private/tmp/sol-generation-inspector-native-type-before.json",
+    "/private/tmp/sol-generation-inspector-owned-nested-before.json",
+    "/private/tmp/sol-generation-inspector-cardinality-before.json"
+  ],
+  "final_checks": [
+    {
+      "log": "/private/tmp/sol-generation-inspector-finite-check2.log",
+      "result": "cargo check passed before final helper tests"
+    },
+    {
+      "log": "/private/tmp/sol-generation-inspector-finite-tests-final.log",
+      "result": "9 focused inspector tests pass; new unit injects LIMIT/CANCELLED/VALUE_INVALID inside native uppercase, presence and selected-key operations; existing callback/collection/property late-control units preserved"
+    },
+    {
+      "log": "/private/tmp/sol-generation-inspector-finite-build-final.log",
+      "result": "fresh build passed before final isolated native replay"
+    },
+    {
+      "report": "/private/tmp/sol-generation-inspector-finite-native.json",
+      "cases": 53,
+      "matches": 53,
+      "scope": "all13 newly frozen inspector controls +binding12+generation17+PG4+coverage1+viewpointer3+UTF16order3"
+    }
+  ],
+  "limitations": [
+    "Production source not independently approved by its author",
+    "Final root formatting/sourcehash renewal and complete all-host/full-workspace coherent cohort remain root-owned",
+    "The field-absence static control is refused as INPUT by both source/native; no new unreachable-domain claim or predicate change made in this final patch"
+  ],
+  "active_processes": "None; all local tests/replays completed"
+}
