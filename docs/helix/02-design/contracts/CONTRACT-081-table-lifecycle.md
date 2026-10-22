@@ -1339,6 +1339,68 @@ assert that effects committed. An uncertain result requires observation rather
 than automatic execution replay. Native installation metadata changes require an
 explicit versioned profile and exact inventory/ACL verification.
 
+### Approval metadata transition and installation reference 0.3
+
+An owner-only approval relation is persistent administrative metadata, not an
+application table or a temporary migration object. Its existence MUST be selected
+by the exact verified plan 0.3 `approvalProfile`; a relation name, observation,
+caller boolean or opaque reference digest cannot establish that selection.
+Historical default catalog/privilege verification retains its exact inventory.
+
+Before publication, approval issuance and resume MAY verify the installed
+predecessor through a private transition context. That context MUST contain the
+current source-recompiled plan 0.3 with the exact approval profile, its exact
+expected predecessor/head and an installed bundle equal to `plan.previous`.
+Verify the complete history/source chain and ordinary predecessor catalog first;
+then admit only the fixed approval relation under that context after its native
+fixed-schema/owner/privilege proof. A changed source, predecessor/head, unknown
+metadata object or unselected profile refuses. The transition does not modify the
+predecessor plan, widen ordinary historical verification, create an implicit
+upgrade or authorize data effects. Approval rows still require their exact
+host-issued binding and current native authority before dispatch.
+
+After committed publication, trusted administrative issuance returns
+`umf.table-installation/0.3`. Its closed key set is exactly the 0.2 reference key
+set plus:
+
+- `approvalProfile`: exactly `{version:"umf.table-migration-approval/0.1",
+  relation:"umf_lifecycle_approvals",ownerOnly:true}`;
+- `approvalPlanDigest`: the digest of the latest verified applied plan 0.3,
+  equal to the reference's existing `planDigest`;
+- `approvalShape`: the exact normalized read-only native metadata snapshot,
+  including relation state/OID/owner, columns, constraints, indexes and table and
+  column ACLs, after fixed-schema proof against a protected scratch relation.
+
+The canonical `referenceDigest` covers all these fields. Issuance requires the
+latest verified history plan to select that exact profile and the entire final
+source/catalog/privilege/approval shape to agree. The existing HEAD view and its
+plan/head digests remain unchanged; no approval receipt rows are projected.
+This is catalog custody, not a compiler assertion of native qualification and
+not a new client-issued capability. Trusted deployment configuration supplies the
+expected reference; arbitrary requests cannot choose it or gain authority by
+rehashing one.
+
+Ordinary head/full correspondence observations MUST compare approval shape using
+fixed read-only PostgreSQL catalog queries, and admit exactly its one fixed
+relation in the inventory only for the checked 0.3 reference. Person/batch roles
+receive no approval-table SELECT, row/column grant, lock requiring table
+privilege, scratch DDL or access to approver, decision, timestamp or evidence
+contents. Missing/extra relation, wrong owner/ACL/structure, trigger/rule/policy,
+foreign dependency or changed profile/plan binding refuses. Existing 0.1/0.2
+references retain exact keys and inventory; adding a lookalike approval relation
+cannot make an old reference pass.
+
+The bounded normal-operation admission path retains its existing trusted
+reference, shared migration lock and privileged-catalog quiescence boundary;
+this amendment does not promise continuous approval-row/catalog inspection per
+data statement. Explicit full correspondence is required after privileged metadata
+changes before service resumes. On an installation with selected persistent
+approval metadata, new effects MUST use a successor plan that selects it;
+unsupported downgrade to a new profile 0.1/0.2 plan refuses. Historical replay
+verifies its immutable original plan and returns a reference for the verified
+current installation, including 0.3 where selected. Never delete durable approval
+rows merely to satisfy an old inventory.
+
 ### U6 parsed untrusted-SQL containment
 
 The optional containment checker accepts original SQL plus explicit target

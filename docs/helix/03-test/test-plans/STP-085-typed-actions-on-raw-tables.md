@@ -203,3 +203,36 @@ one frozen cohort across source, generated assets, browser, installed/native and
 offline results, plus independent review of changed material. Test fixtures and
 runners may be created in their named bounded slices; these paths are allocation,
 not evidence that those new tests already exist or pass.
+
+
+### Approval metadata reader and predecessor acceptance
+
+Extend `tests/lifecycle/host-native.py` and the installed G01 native harness with
+source-selected transition and final generated-reader cases. The exact test
+runner name may follow the existing host harness; these are required observations:
+
+- Record approval while the verified predecessor still uses its original source
+  profile; apply/resume accepts only the exact active plan 0.3 transition context,
+  complete predecessor/head custody and proved owner-only sidecar shape. Wrong
+  plan/head/source/profile or an unrelated extra relation refuses before effects.
+- Final application and fresh administrative inspection issue the closed
+  installation reference 0.3, with approvalPlanDigest equal to current planDigest.
+  Historical replay returns the verified current reference without reinterpreting
+  old plans. A new unsupported metadata downgrade refuses explicitly.
+- Construct a generated client from that actual final reference. A person and
+  batch principal perform supported reads/actions, while full prepared head and
+  correspondence checks succeed without approval SELECT privileges. Native direct
+  SELECT of approval rows by each audience fails; no result contains receipt
+  decider, decision, time or qualification/evidence values.
+- Extra/missing approval relation, changed owner/ACL/column/constraint/index,
+  trigger/rule/policy/foreign dependency and changed reference profile/plan/shape
+  fail explicit full correspondence. Granting person/batch table or column access
+  also refuses. Rehashing a malformed reference does not pass closed-version
+  validation. Restore exact native state between independent tamper probes.
+- Frozen 0.1/0.2 references retain their old exact key sets and strict inventories;
+  they refuse a lookalike extra approval relation. Existing plain outcome/head
+  and generated-operation tests still pass without a source-selected sidecar.
+
+Record exact installed runtime/generator/source hashes and final person/batch
+observations. This is a release-blocking data-client integration gate, not proof
+from approval-store unit tests or a successful migration return alone.

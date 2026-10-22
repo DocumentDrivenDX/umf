@@ -360,6 +360,26 @@ receipt binding before dispatch and retain it alongside exact history/progress.
 Any new native metadata relation requires versioned source-selected inventory,
 owner-only privileges and strict tamper controls; legacy inventory stays exact.
 
+The approval sidecar needs two explicit admission contexts. Before publication,
+pass a private verified plan/head/predecessor transition context through native
+catalog/privilege verification; it admits exactly the source-selected fixed
+approval relation after structure/ACL proof. Do not teach ordinary legacy
+verification to ignore that name. After publication, `head.py` issues the closed
+installation reference 0.3 from verified latest history, binding approval profile,
+plan digest and exact catalog-only shape. Reuse the existing metadata snapshot
+query machinery; issuance performs fixed scratch-schema proof under administrator
+custody, while prepared ordinary probes use read-only catalog steps.
+
+`head.py` validates the exact new key set and compares pinned approval shape in
+full head observations. `correspondence.py` admits its exact fixed relation only
+for that checked reference; default 0.1/0.2 inventory remains byte-equivalent.
+Keep HEAD view projection unchanged. Do not query approval rows or grant/lock the
+approval relation under an ordinary principal. Default fast-operation checks keep
+their current short trusted-reference/quiescence contract. Administrative inspect,
+apply, replay and uncertain-publication observation all issue the correct current
+reference; a pending sidecar alone cannot mint a final 0.3 reference. A future
+new effect on the selected approval installation must preserve its profile.
+
 U6 lives in a separate optional parsed-containment module with public Python
 inspection/CLI delivery. Inspect the contributed Praxis checker first. Select a
 maintained PostgreSQL parser already qualified for the chosen host or explicitly
