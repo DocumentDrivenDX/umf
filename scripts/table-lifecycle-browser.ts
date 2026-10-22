@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {legalSource,evolvedLegalSource,indexedLegalSource,moduleId} from '../tests/lifecycle/legal-fixture';
 import {chromium} from 'playwright';
-import {createHash} from 'node:crypto';
+import {createHash,randomUUID} from 'node:crypto';
 import {inspectTableLifecycle} from '../src/extensions/tables';
 import {generatePythonClient} from '../src/access';
 import {compileTableDeployment} from '../src/table-deployment';
@@ -15,6 +15,7 @@ import {relatedSource} from '../tests/unified/table-related-fixture';
 import {domainSource} from '../tests/unified/table-domain-fixture';
 import {legalDomainAuthoringSource} from '../tests/unified/legal-domain-authoring-fixture';
 import fixture from '../tests/binding/fixtures/table-lifecycle-note.json';
+import historicalV02NullBackfill from '../tests/lifecycle/fixtures/g01-historical-v0.2-null-backfill.json';
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',minify:true});
 if(!built.success)throw new Error('Table lifecycle browser build failed: '+built.logs.join('\n'));
 const bundle=await built.outputs[0]!.text(),expected=JSON.stringify(inspectTableLifecycle(fixture));
@@ -41,6 +42,18 @@ if(!g01Candidate)throw new Error('G01 review marker candidate missing');
 const {oldValue:_g01Old,newValue:_g01New,...g01Marker}=g01Candidate;
 const g01Request={id:'g01-002',predecessor:{id:'g01-001',digest:'a'.repeat(64)},previous:g01Previous,next:g01Next,options:{version:'umf.table-migration-options/0.3' as const,backfills:[{table:'notes',column:{module:'demo',element:'summary'},operation:'fill_summary',scopedRows:true as const}],concurrentIndexes:[],reviewedChanges:[g01Marker],validations:[]}};
 const g01Expected=compileTableMigration(g01Request);
+// Reuse the native G01 fixture builder for the future-default transition so
+// browser parity exercises the same typed source rather than a second parser.
+const g01FixturePath=`/private/tmp/umf-g01-browser-fixture-${randomUUID()}.json`;
+const g01FixtureBuild=Bun.spawnSync({cmd:['bun','tests/lifecycle/g01-native-fixture.ts',g01FixturePath],stdout:'pipe',stderr:'pipe'});
+if(g01FixtureBuild.exitCode!==0)throw new Error('G01 browser fixture build failed: '+g01FixtureBuild.stderr.toString());
+const g01Fixture=await Bun.file(g01FixturePath).json() as any;
+await Bun.file(g01FixturePath).delete();
+const g01FutureDefaultCase=g01Fixture.cases.find((item:any)=>item.id==='future-default-preserved');
+if(!g01FutureDefaultCase)throw new Error('G01 future-default fixture case missing');
+const g01FutureSource=(source:any)=>JSON.parse(source.utf8);
+const g01FutureRequest={id:g01FutureDefaultCase.plan.id,predecessor:g01FutureDefaultCase.plan.predecessor,previous:deployed(g01FutureSource(g01FutureDefaultCase.initialSource)),next:deployed(g01FutureSource(g01FutureDefaultCase.source)),options:g01FutureDefaultCase.plan.options};
+const g01FutureExpected=compileTableMigration(g01FutureRequest);
 const retiredSource=structuredClone(operationSource);retiredSource.modules[0]!.extensions['umf.tables'].commands=[];
 const seedSource:any=structuredClone(fixture);seedSource.modules[0].extensions['umf.tables'].seedSets=[{id:'bootstrap',conflict:'ignore',rows:[{table:'notes',values:[{field:{module:'demo',element:'id'},value:{string:'seed'}},{field:{module:'demo',element:'owner'},value:{string:'seed-person'}}]}]}];
 const evolutions=[
@@ -87,7 +100,7 @@ try{
  const page=await browser.newPage(),origin='http://127.0.0.1:'+server.port,externalRequests:string[]=[];
  page.on('request',r=>{if(!r.url().startsWith(origin+'/'))externalRequests.push(r.url());});await page.goto(origin);
  const result=await (page as any).evaluate(async (args:any)=>{
-  const {fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,legalDomains,legalDomainConfiguration,legalDomainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected}=args;
+  const {fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,legalDomains,legalDomainConfiguration,legalDomainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected,g01FutureRequest,g01FutureExpected,historicalV02NullBackfill}=args;
   const path='/umf.js',u=await import(path);let assertions=0;
 
   const check=(value:boolean)=>{assertions++;if(!value)throw new Error('Browser table declaration assertion '+assertions);};
@@ -158,6 +171,8 @@ try{
   const appended=u.compileTableMigration(forwardRequest);check(JSON.stringify(appended)===forward);check(appended.status==='compiled');
   check(appended.plan.steps.every((s:any)=>s.sourcePath.includes('/tables/1')));check(JSON.stringify(u.verifyTableMigration(appended.plan))===JSON.stringify(appended.plan));
   const g01=u.compileTableMigration(g01Request);check(JSON.stringify(g01)===JSON.stringify(g01Expected));check(g01.status==='compiled');check(g01.plan.version==='umf.table-migration/0.3');check(g01.plan.phases[0].kind==='backfill-tighten');check(JSON.stringify(u.verifyTableMigration(g01.plan))===JSON.stringify(g01.plan));
+  const g01Future=u.compileTableMigration(g01FutureRequest);check(JSON.stringify(g01Future)===JSON.stringify(g01FutureExpected));check(g01Future.status==='compiled');check(g01Future.plan.next.expectedCatalog.columns.find((column:any)=>column.name==='summary').definitionSql.includes('DEFAULT'));check(JSON.stringify(u.verifyTableMigration(g01Future.plan))===JSON.stringify(g01Future.plan));
+  check(JSON.stringify(u.verifyTableMigration(historicalV02NullBackfill))===JSON.stringify(historicalV02NullBackfill));
   compiled.bundle.steps[0].sql='DROP SCHEMA public CASCADE';let refused=false;
   try{u.verifyTableDeployment(compiled.bundle);}catch{refused=true;}check(refused);
   check(u.compileTableDeployment({text:JSON.stringify(fixture),configuration:{...configuration,schema:'public'}}).status==='blocked');
@@ -174,9 +189,9 @@ try{
    legalPrevious=generated.bundle;legalPredecessor={id:result.plan.id,digest:result.plan.digest};
   }
   return {assertions,metadataParity:true,deploymentParity:true,migrationParity:true,nativeQualificationClaimed:false,nodeGlobalsAbsent:true};
- },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,legalDomains,legalDomainConfiguration,legalDomainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected});
+ },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,legalDomains,legalDomainConfiguration,legalDomainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected,g01FutureRequest,g01FutureExpected,historicalV02NullBackfill});
  if(externalRequests.length)throw new Error('Table inspection caused an external request');
- const sources=['src/table-authoring/row-scope.ts','src/table-migration/options.ts','src/table-migration/reviewed.ts','src/table-migration/phases.ts','src/table-migration/phases-options.ts','tests/lifecycle/legal-fixture.ts','src/table-deployment/domains.ts','tests/unified/table-domain-fixture.ts','src/extensions/tables/temporal.ts','src/table-deployment/temporal.ts','tests/unified/table-temporal-fixture.ts','src/access/index.ts','src/access/table-client.ts','src/access/table-runtime.ts','src/access/types.ts','src/access/python-runtime.ts','src/index.ts','src/table-migration/index.ts','spec/extensions/tables/migration.schema.json','spec/extensions/tables/migration-0.3.schema.json','scripts/table-lifecycle-browser.ts','tests/unified/table-migration-fixture.ts','tests/binding/fixtures/table-lifecycle-note.json','spec/extensions/tables/schema.json','spec/extensions/tables/operation.schema.json','tests/unified/table-operation-fixture.ts','spec/extensions/tables/package.json','spec/extensions/tables/deployment.schema.json',...['types','context','expressions','columns','policies','seeds','operations','index'].map(n=>'src/extensions/tables/'+n+'.ts'),...['types','configuration','sql','policies','ddl','index'].map(n=>'src/table-deployment/'+n+'.ts')];
+ const sources=['src/table-authoring/row-scope.ts','src/table-migration/options.ts','src/table-migration/reviewed.ts','src/table-migration/phases.ts','src/table-migration/phases-options.ts','tests/lifecycle/legal-fixture.ts','tests/lifecycle/g01-native-fixture.ts','tests/lifecycle/fixtures/g01-historical-v0.2-null-backfill.json','src/table-deployment/domains.ts','tests/unified/table-domain-fixture.ts','src/extensions/tables/temporal.ts','src/table-deployment/temporal.ts','tests/unified/table-temporal-fixture.ts','src/access/index.ts','src/access/table-client.ts','src/access/table-runtime.ts','src/access/types.ts','src/access/python-runtime.ts','src/index.ts','src/table-migration/index.ts','spec/extensions/tables/migration.schema.json','spec/extensions/tables/migration-0.3.schema.json','scripts/table-lifecycle-browser.ts','tests/unified/table-migration-fixture.ts','tests/binding/fixtures/table-lifecycle-note.json','spec/extensions/tables/schema.json','spec/extensions/tables/operation.schema.json','tests/unified/table-operation-fixture.ts','spec/extensions/tables/package.json','spec/extensions/tables/deployment.schema.json',...['types','context','expressions','columns','policies','seeds','operations','index'].map(n=>'src/extensions/tables/'+n+'.ts'),...['types','configuration','sql','policies','ddl','index'].map(n=>'src/table-deployment/'+n+'.ts')];
  const sourceHashes=Object.fromEntries(await Promise.all(sources.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  const report={scope:'current-core table inspection, generated module parity, deployment and bounded migration/review-candidate parity; portable browser evidence only',browser:browser.version(),result,externalRequests,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sourceHashes};
  await Bun.write(process.env.UMF_TABLE_BROWSER_EVIDENCE??'/private/tmp/umf-table-lifecycle-browser.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
