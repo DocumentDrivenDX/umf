@@ -9,6 +9,7 @@ import importlib.util
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import venv
 import zipfile
@@ -70,7 +71,81 @@ def run(args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[s
     return subprocess.run(args, check=check, text=True, capture_output=True)
 
 
+def check_network_isolation_prefixes() -> None:
+    class Listener:
+        def bind(self, _address):
+            pass
+
+        def listen(self, _backlog):
+            pass
+
+        def settimeout(self, _timeout):
+            pass
+
+        def getsockname(self):
+            return '127.0.0.1', 43210
+
+        def accept(self):
+            raise TimeoutError
+
+        def close(self):
+            pass
+
+    cases = [
+        ('Linux', 1001, 1001, 1100, {
+            'unshare': '/usr/bin/unshare', 'sudo': '/usr/bin/sudo',
+            'setpriv': '/usr/bin/setpriv',
+        }, ['/usr/bin/sudo', '-n', '/usr/bin/unshare', '--net', '--',
+            '/usr/bin/setpriv', '--reuid', '1001', '--regid', '1100',
+            '--clear-groups', '--']),
+        ('Linux', 0, 0, 0, {'unshare': '/usr/bin/unshare'},
+         ['/usr/bin/unshare', '--net', '--']),
+        ('Darwin', 501, 501, 20, {'sandbox-exec': '/usr/bin/sandbox-exec'},
+         ['/usr/bin/sandbox-exec', '-p', '(version 1) (allow default) (deny network*)']),
+    ]
+    for system, euid, uid, gid, executables, expected_prefix in cases:
+        command = []
+
+        def fake_run(args, _command=command, _uid=uid, _gid=gid, **_kwargs):
+            _command.extend(args)
+            return subprocess.CompletedProcess(
+                args, 0, stdout=f'IDENTITY:{_uid}:{_gid}\nBLOCKED\n', stderr='')
+
+        def which(name, _executables=executables):
+            return _executables.get(name)
+
+        with (
+            patch.object(MIRROR.platform, 'system', return_value=system),
+            patch.object(MIRROR.os, 'geteuid', return_value=euid, create=True),
+            patch.object(MIRROR.os, 'getuid', return_value=uid, create=True),
+            patch.object(MIRROR.os, 'getgid', return_value=gid, create=True),
+            patch.object(MIRROR.shutil, 'which', side_effect=which),
+            patch.object(MIRROR.socket, 'socket', return_value=Listener()),
+            patch.object(MIRROR.subprocess, 'run', side_effect=fake_run),
+        ):
+            prefix, _description = MIRROR.network_isolation_prefix()
+        assert prefix == expected_prefix
+        assert command[:len(expected_prefix)] == expected_prefix
+        assert command[len(expected_prefix):len(expected_prefix) + 3] == [
+            sys.executable, '-I', '-c']
+
+    with (
+        patch.object(MIRROR.platform, 'system', return_value='Linux'),
+        patch.object(MIRROR.os, 'geteuid', return_value=1001, create=True),
+        patch.object(MIRROR.shutil, 'which', side_effect=lambda name: {
+            'unshare': '/usr/bin/unshare', 'sudo': '/usr/bin/sudo',
+        }.get(name)),
+    ):
+        try:
+            MIRROR.network_isolation_prefix()
+        except RuntimeError as error:
+            assert 'setpriv is unavailable' in str(error)
+        else:
+            raise AssertionError('Linux isolation accepted missing setpriv')
+
+
 def main() -> None:
+    check_network_isolation_prefixes()
     with tempfile.TemporaryDirectory(prefix='umf-wheel-mirror-test-') as temp:
         root = Path(temp)
         wheelhouse = root / 'wheelhouse'

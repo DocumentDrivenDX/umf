@@ -141,10 +141,18 @@ def network_isolation_prefix() -> tuple[list[str], str]:
         unshare = shutil.which('unshare')
         if not unshare:
             raise RuntimeError('Cannot qualify offline installation: unshare is unavailable')
-        prefix = ([unshare, '--net', '--'] if hasattr(os, 'geteuid') and os.geteuid() == 0
-                  else [shutil.which('sudo') or '', '-n', unshare, '--net', '--'])
-        if not prefix[0]:
-            raise RuntimeError('Cannot qualify offline installation: sudo is unavailable for unshare --net')
+        if hasattr(os, 'geteuid') and os.geteuid() == 0:
+            prefix = [unshare, '--net', '--']
+        else:
+            sudo = shutil.which('sudo')
+            setpriv = shutil.which('setpriv')
+            if not sudo:
+                raise RuntimeError('Cannot qualify offline installation: sudo is unavailable for unshare --net')
+            if not setpriv:
+                raise RuntimeError('Cannot qualify offline installation: setpriv is unavailable to restore caller identity')
+            uid, gid = os.getuid(), os.getgid()
+            prefix = [sudo, '-n', unshare, '--net', '--', setpriv,
+                      '--reuid', str(uid), '--regid', str(gid), '--clear-groups', '--']
         isolation = 'Linux network namespace (unshare --net)'
     else:
         raise RuntimeError(f'Cannot qualify offline installation: unsupported network isolation platform {system}')
@@ -154,7 +162,8 @@ def network_isolation_prefix() -> tuple[list[str], str]:
         listener.listen(1)
         listener.settimeout(0.2)
         port = listener.getsockname()[1]
-        code = """import socket, sys
+        code = """import os, socket, sys
+print(f'IDENTITY:{os.getuid()}:{os.getgid()}')
 s = socket.socket()
 try:
     s.connect(('127.0.0.1', int(sys.argv[1])))
@@ -162,7 +171,8 @@ try:
 except OSError:
     print('BLOCKED')
 """
-        probe = subprocess.run(prefix + [sys.executable, '-I', '-c', code, str(port)], text=True, capture_output=True)
+        probe = subprocess.run(prefix + [sys.executable, '-I', '-c', code, str(port)],
+                               check=False, text=True, capture_output=True)
         accepted = False
         try:
             connection, _ = listener.accept()
@@ -174,8 +184,10 @@ except OSError:
             listener.close()
     except OSError as error:
         raise RuntimeError(f'Cannot verify OS-level network isolation: {error}') from None
-    if probe.returncode or probe.stdout.strip() != 'BLOCKED' or accepted:
-        raise RuntimeError('OS-level network-denial probe did not block a loopback connection; refusing offline qualification')
+    expected_identity = f'IDENTITY:{os.getuid()}:{os.getgid()}'
+    if (probe.returncode or probe.stdout.splitlines() != [expected_identity, 'BLOCKED']
+            or accepted):
+        raise RuntimeError('OS-level isolation probe did not preserve caller identity and block loopback; refusing offline qualification')
     return prefix, isolation
 
 
