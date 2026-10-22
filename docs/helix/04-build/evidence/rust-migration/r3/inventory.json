@@ -171,7 +171,7 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "5a16affc85a791b01236b0037e04c4398a829b3799e60aa9a30d7936db5d38a1",
+    "sourceCohortSha256": "29eedd3f4389e9273782be9d54110f78b0376f329da596e9201496f01f565511",
     "typescriptApi": "5.9.3"
   },
   "counts": {
@@ -12076,7 +12076,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/generated_core.py",
-      "sha256": "0ebf12bdd71f45ec392243617197f7130d0bab1844d059a383276e7ed79adf43"
+      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
     },
     {
       "activationEvidence": [],
@@ -16577,7 +16577,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_codegen/src/umf_codegen/_release.py",
-      "sha256": "da85165c88712517405e8d32473650f70ab04e3a73328132121cdeaca57da17f"
+      "sha256": "76227fd0a0ea5935dc2abeb017b36335676ebbc761b51df2f364743970a19b53"
     },
     {
       "activationEvidence": [
@@ -28290,12 +28290,12 @@
         "visit",
         "workspaceClosure"
       ],
-      "bytes": 7039,
+      "bytes": 7391,
       "disposition": "rust-compiler-build-host-bridge",
       "language": "ts",
       "migrationObligation": "R2 native compiler process/provenance plus explicit third-party Ajv build backend; no UMF compiler fallback",
       "path": "scripts/metamodel/build.ts",
-      "sha256": "7fca29a8c84df0fb5d6411c41c175c1883b12e1202f8036c7800982a9597b4a6"
+      "sha256": "cd9a3499515a2887c3c9f80cd6fdad4bbca767b0cde5ffe098cf12fe2e001f03"
     },
     {
       "activationEvidence": [
@@ -28349,12 +28349,12 @@
         "sourceArtifact",
         "visit"
       ],
-      "bytes": 5335,
+      "bytes": 5403,
       "disposition": "rust-compiler-build-host-bridge",
       "language": "ts",
       "migrationObligation": "R2 native compiler process/provenance plus explicit third-party Ajv build backend; no UMF compiler fallback",
       "path": "scripts/metamodel/rust.ts",
-      "sha256": "031e3f2fc9c8846ae4bc749cd3abfcdd40f00416d6e6a72b87e4abdd237ba8bf"
+      "sha256": "f3459b4732527299c2f0068f96fb5eaad0cf6d32a8e1a07fb30b2a3954160493"
     },
     {
       "activationEvidence": [
@@ -53420,7 +53420,7 @@
       "path": "python/umf_access/src/umf_access/generated_core.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "0ebf12bdd71f45ec392243617197f7130d0bab1844d059a383276e7ed79adf43"
+      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
     },
     {
       "bytes": 833,
@@ -54969,7 +54969,7 @@
       "path": "python/umf_codegen/src/umf_codegen/_release.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "da85165c88712517405e8d32473650f70ab04e3a73328132121cdeaca57da17f"
+      "sha256": "76227fd0a0ea5935dc2abeb017b36335676ebbc761b51df2f364743970a19b53"
     },
     {
       "bytes": 8411,
@@ -66435,7 +66435,7 @@
         "spec/metamodel/generated/core-constraints.json",
         "spec/metamodel/generated/domain-policy.json"
       ],
-      "sha256": "1c0f4966a6c9cd279a6755c4e1b32add846d7ad0dd21abbfc14c61f9c22f5789"
+      "sha256": "afd43ffe02ffb64973cf95521991c142c54bb07151d68f018066a9b46108b911"
     },
     {
       "bytes": 284515,
@@ -66456,7 +66456,7 @@
       "resolvedImports": [
         "node_modules/ajv/dist/ajv.d.ts"
       ],
-      "sha256": "63261fd2576cd185715f90cacdc942534001764510c0d6011781a7ded55192de"
+      "sha256": "88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4"
     },
     {
       "bytes": 31768,

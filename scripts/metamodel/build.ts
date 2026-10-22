@@ -5,11 +5,15 @@ import {createHash} from 'node:crypto';
 import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
+// External compile-time inputs in the Rust CLI dependency closure. The other
+// schema-looking includes in Rust sources are behind cfg(test) and are not
+// part of this CLI build's compile-time resource set.
+const rustCompileResources=['spec/extensions/tables/operation.schema.json'];
 // The explicit Ajv backend remains a build-time dependency until the JS cutover.
 // It never executes inside the native core, CLI, Python wheel or WASM engine.
 async function compilerClosure():Promise<string[]>{
- const files=['Cargo.toml','Cargo.lock','rust-toolchain.toml'];
- for(const dir of ['crates/umf-core','crates/umf-core-wire','crates/umf-metamodel','crates/umf-cli']){
+ const files=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml',...rustCompileResources];
+ for(const dir of ['crates/umf-core','crates/umf-core-wire','crates/umf-codegen','crates/umf-metamodel','crates/umf-cli']){
   async function visit(path:string):Promise<void>{for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){if(['target','node_modules','.git','__pycache__'].includes(entry.name))continue;const child=path+'/'+entry.name;if(entry.isDirectory())await visit(child);else if(entry.isFile())files.push(child);}}
   await visit(dir);
  }

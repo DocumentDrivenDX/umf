@@ -95,3 +95,13 @@ source hashes. Affected tests pass 8/8, the temporary installed Python suite pas
 and pinned Ruff 0.17.1 passes. The complete hosted qualification gate remains
 required against the successor checked PR head; the temporary environment check
 is not a fresh wheel build.
+
+
+Hosted clean-build amendment: the metamodel source-bound CLI census now includes
+the transitive `umf-codegen` crate and its authored operation schema. Generated
+outputs and the retained V8 payload were regenerated for the expanded compiler
+provenance; independent whole-bundle comparison finds only five repeated source
+hash tokens changed. The [supplemental build review](sol-delivery-review/hosted-build-source-closure-review.json)
+records exact file and bundle identities. The original full qualification receipt
+remains scoped to its captured sources. Complete hosted qualification is required
+against the successor PR head before merge.
