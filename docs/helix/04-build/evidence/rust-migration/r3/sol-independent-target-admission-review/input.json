@@ -1,0 +1,108 @@
+{
+  "cases": [
+    {
+      "id": "sol-independent-target-dependency-keys-prefix",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{},\"keysExtra\":true},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]}},\"relationships\":[{\"id\":\"customer\",\"name\":\"Order customer\",\"source\":[{\"module\":\"commerce\",\"element\":\"Order\"}],\"target\":[{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":0,\"max\":1},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    }
+  ]
+}

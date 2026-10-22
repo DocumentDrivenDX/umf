@@ -76,8 +76,27 @@ class BoundaryRuleTests(unittest.TestCase):
         self.assertTrue(all(item["status"] == "pass" for item in reports))
         for forbidden in ["getrandom", "wasm-bindgen", "jsonschema", "ahash", "pyo3", "v8", "boa_engine"]:
             findings, reports = report(f"umf-core v0.1.0\n{forbidden} v1.0.0\n")
-            self.assertEqual(6, len(findings), forbidden)
+            self.assertEqual(2 * len(MODULE.PRODUCTION_PACKAGES), len(findings), forbidden)
             self.assertTrue(all(item["status"] == "fail" for item in reports))
+
+    def test_codegen_is_checked_on_host_and_wasm_without_entropy_exception(self):
+        with patch.object(MODULE, "cargo_tree", return_value={"status": "resolved", "stdout": "umf-codegen v0.1.0\n", "stderr": ""}) as tree, patch.object(MODULE.subprocess, "run", return_value=SimpleNamespace(stdout="host: aarch64-apple-darwin\n")):
+            findings, reports = MODULE.check_production_core()
+        self.assertEqual([], findings)
+        self.assertEqual({"aarch64-apple-darwin", "wasm32-unknown-unknown"}, {row["target"] for row in reports if row["package"] == "umf-codegen"})
+        self.assertEqual(2, sum(call.args[2] == "umf-codegen" for call in tree.call_args_list))
+        self.assertIn("crates/umf-codegen/src", MODULE.PRODUCTION_SOURCE_FOLDERS)
+
+    def test_codegen_source_host_capability_is_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="umf-codegen-boundary-") as temp:
+            root = Path(temp)
+            source = root / "crates/umf-codegen/src"
+            source.mkdir(parents=True)
+            (source / "forbidden.rs").write_text("pub fn read() { std::fs::read(\"ambient\"); }\n")
+            with patch.object(MODULE, "ROOT", root), patch.object(MODULE, "cargo_tree", return_value={"status": "resolved", "stdout": "umf-codegen v0.1.0\n", "stderr": ""}), patch.object(MODULE.subprocess, "run", return_value=SimpleNamespace(stdout="host: aarch64-apple-darwin\n")):
+                findings, _ = MODULE.check_production_core()
+            self.assertEqual(["production-core-host-capability"], [row["rule"] for row in findings])
+            self.assertEqual("crates/umf-codegen/src/forbidden.rs", findings[0]["path"])
 
     def test_inverse_cargo_tree_reports_only_active_target_parents_and_path(self):
         fixture = """wasm-bindgen v0.2.100

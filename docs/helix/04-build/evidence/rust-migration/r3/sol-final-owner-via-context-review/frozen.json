@@ -1,0 +1,303 @@
+{
+  "cases": [
+    {
+      "id": "sol-final-via-context-null",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": null
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "null is not an object (evaluating 'context.via.filter')"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-bool",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": true
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "context.via.filter is not a function. (In 'context.via.filter((b) => b.name === item.table)', 'context.via.filter' is undefined)"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-number",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": 3
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "context.via.filter is not a function. (In 'context.via.filter((b) => b.name === item.table)', 'context.via.filter' is undefined)"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-text",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": "text"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "context.via.filter is not a function. (In 'context.via.filter((b) => b.name === item.table)', 'context.via.filter' is undefined)"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-object",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": {}
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "context.via.filter is not a function. (In 'context.via.filter((b) => b.name === item.table)', 'context.via.filter' is undefined)"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-filter-object",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": {
+            "filter": {}
+          }
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "context.via.filter is not a function. (In 'context.via.filter((b) => b.name === item.table)', 'context.via.filter' is an instance of Object)"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-filter-text",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": {
+            "filter": "x"
+          }
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "context.via.filter is not a function. (In 'context.via.filter((b) => b.name === item.table)', 'context.via.filter' is \"x\")"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-missing",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {}
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "undefined is not an object (evaluating 'context.via.filter')"
+        }
+      }
+    },
+    {
+      "id": "sol-final-via-context-null-item",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "via": [
+            {
+              "table": "t",
+              "person_column": "p",
+              "key_column": "k"
+            }
+          ]
+        },
+        "context": {
+          "ownerColumns": {},
+          "via": [
+            null
+          ]
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "null is not an object (evaluating 'b.name')"
+        }
+      }
+    },
+    {
+      "id": "sol-final-owner-context-null",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "a",
+          "commands": [
+            "select"
+          ]
+        },
+        "context": null
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "undefined is not an object (evaluating 'context.ownerColumns[ownerName]')"
+        }
+      }
+    },
+    {
+      "id": "sol-final-owner-context-bool",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "a",
+          "commands": [
+            "select"
+          ]
+        },
+        "context": true
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "undefined is not an object (evaluating 'context.ownerColumns[ownerName]')"
+        }
+      }
+    },
+    {
+      "id": "sol-final-owner-context-text",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "a",
+          "commands": [
+            "select"
+          ]
+        },
+        "context": "text"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "ROW_SCOPE_FAILED",
+          "message": "undefined is not an object (evaluating 'context.ownerColumns[ownerName]')"
+        }
+      }
+    }
+  ]
+}

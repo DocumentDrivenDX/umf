@@ -1,0 +1,100 @@
+{
+  "scope": "Private additive compiler-mode schema diagnostic own-key order control; outside public operation corpus",
+  "cases": [
+    {
+      "id": "properties",
+      "schemaText": "{\"type\":\"object\",\"properties\":{\"2\":{\"type\":\"boolean\"},\"1\":{\"type\":\"string\"}}}",
+      "text": "{\"2\":1,\"1\":1}",
+      "errors": [
+        {
+          "instancePath": "/1",
+          "schemaPath": "#/properties/1/type",
+          "keyword": "type",
+          "params": {
+            "type": "string"
+          },
+          "message": "must be string"
+        },
+        {
+          "instancePath": "/2",
+          "schemaPath": "#/properties/2/type",
+          "keyword": "type",
+          "params": {
+            "type": "boolean"
+          },
+          "message": "must be boolean"
+        }
+      ]
+    },
+    {
+      "id": "patternProperties",
+      "schemaText": "{\"type\":\"object\",\"patternProperties\":{\"2\":{\"type\":\"boolean\"},\"1\":{\"type\":\"string\"}}}",
+      "text": "{\"2\":1,\"1\":1}",
+      "errors": [
+        {
+          "instancePath": "/1",
+          "schemaPath": "#/patternProperties/1/type",
+          "keyword": "type",
+          "params": {
+            "type": "string"
+          },
+          "message": "must be string"
+        },
+        {
+          "instancePath": "/2",
+          "schemaPath": "#/patternProperties/2/type",
+          "keyword": "type",
+          "params": {
+            "type": "boolean"
+          },
+          "message": "must be boolean"
+        }
+      ]
+    },
+    {
+      "id": "propertyNames",
+      "schemaText": "{\"type\":\"object\",\"propertyNames\":{\"pattern\":\"^x\"}}",
+      "text": "{\"2\":1,\"1\":1}",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/propertyNames/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^x"
+          },
+          "message": "must match pattern \"^x\"",
+          "propertyName": "1"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/propertyNames",
+          "keyword": "propertyNames",
+          "params": {
+            "propertyName": "1"
+          },
+          "message": "property name must be valid"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/propertyNames/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^x"
+          },
+          "message": "must match pattern \"^x\"",
+          "propertyName": "2"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/propertyNames",
+          "keyword": "propertyNames",
+          "params": {
+            "propertyName": "2"
+          },
+          "message": "property name must be valid"
+        }
+      ]
+    }
+  ]
+}

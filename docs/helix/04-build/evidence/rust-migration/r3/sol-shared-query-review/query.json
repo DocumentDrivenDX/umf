@@ -1,0 +1,497 @@
+{
+  "cases": [
+    {
+      "id": "query-standalone-local-output-foreign-parameter",
+      "operation": "inspectTableLifecycle",
+      "request": {
+        "umf": "0.10.0",
+        "id": "synthetic-table-lifecycle",
+        "vocabularies": {
+          "umf.tables": {
+            "version": "0.1.0"
+          },
+          "future": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "demo",
+            "namespace": "demo",
+            "elements": [
+              {
+                "id": "id",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "owner",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "Note",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "primary",
+                    "name": "primary",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "demo",
+                        "element": "id"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "queryResult",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "meaning",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {
+                  "future": {}
+                }
+              }
+            ],
+            "extensions": {
+              "umf.tables": {
+                "profile": "postgresql18/0.1",
+                "tables": [
+                  {
+                    "id": "notes",
+                    "record": {
+                      "module": "demo",
+                      "element": "Note"
+                    },
+                    "name": "notes",
+                    "columns": [
+                      {
+                        "field": {
+                          "module": "demo",
+                          "element": "id"
+                        },
+                        "name": "id",
+                        "nativeType": {
+                          "kind": "text"
+                        }
+                      },
+                      {
+                        "field": {
+                          "module": "demo",
+                          "element": "owner"
+                        },
+                        "name": "owner",
+                        "nativeType": {
+                          "kind": "text"
+                        }
+                      }
+                    ],
+                    "indexes": [],
+                    "checks": [],
+                    "foreignKeys": [],
+                    "policy": {
+                      "mode": "native-rls",
+                      "person": {
+                        "select": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "owner"
+                          }
+                        },
+                        "insert": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "owner"
+                          }
+                        },
+                        "update": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "owner"
+                          }
+                        },
+                        "delete": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "owner"
+                          }
+                        }
+                      },
+                      "batch": {
+                        "select": {
+                          "kind": "allow"
+                        },
+                        "insert": {
+                          "kind": "deny"
+                        },
+                        "update": {
+                          "kind": "deny"
+                        },
+                        "delete": {
+                          "kind": "deny"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "seedSets": [],
+                "commands": [
+                  {
+                    "version": "umf.table-operation/0.1",
+                    "id": "standalone-query",
+                    "parameters": [
+                      {
+                        "id": "external_input",
+                        "field": {
+                          "module": "other",
+                          "element": "external"
+                        }
+                      }
+                    ],
+                    "consistency": "statement",
+                    "replay": "none",
+                    "body": {
+                      "kind": "query",
+                      "language": "weft.pg-select/0.1",
+                      "sql": "select 1",
+                      "outputs": [
+                        {
+                          "name": "answer",
+                          "field": {
+                            "module": "demo",
+                            "element": "queryResult"
+                          }
+                        },
+                        {
+                          "name": "with_meaning",
+                          "field": {
+                            "module": "demo",
+                            "element": "meaning"
+                          }
+                        }
+                      ],
+                      "maxRows": 1
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "other",
+            "namespace": "other",
+            "elements": [
+              {
+                "id": "external",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {
+                  "future": {
+                    "x": 1
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "UNKNOWN_EXTENSION",
+              "path": "/vocabularies/future",
+              "message": "Exact extension version unavailable; content retained",
+              "severity": "warning"
+            },
+            {
+              "code": "TABLES_QUERY_MODULE",
+              "path": "/modules/0/extensions/umf.tables/commands/0/parameters/0/field",
+              "message": "Query domains must belong to the owning module",
+              "severity": "error"
+            },
+            {
+              "code": "TABLES_OPERATION_MEANING",
+              "path": "/modules/0/extensions/umf.tables/commands/0/parameters/0/field",
+              "message": "Selected query Field meaning needs a separately qualified interpreter",
+              "severity": "warning"
+            },
+            {
+              "code": "TABLES_OPERATION_MEANING",
+              "path": "/modules/0/extensions/umf.tables/commands/0/body/outputs/1/field",
+              "message": "Selected query Field meaning needs a separately qualified interpreter",
+              "severity": "warning"
+            }
+          ],
+          "source": {
+            "umf": "0.10.0",
+            "id": "synthetic-table-lifecycle",
+            "vocabularies": {
+              "umf.tables": {
+                "version": "0.1.0"
+              },
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "demo",
+                "namespace": "demo",
+                "elements": [
+                  {
+                    "id": "id",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "owner",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "Note",
+                    "kind": "record",
+                    "members": [
+                      {
+                        "module": "demo",
+                        "element": "id"
+                      },
+                      {
+                        "module": "demo",
+                        "element": "owner"
+                      }
+                    ],
+                    "keys": [
+                      {
+                        "id": "primary",
+                        "name": "primary",
+                        "primary": true,
+                        "fields": [
+                          {
+                            "module": "demo",
+                            "element": "id"
+                          }
+                        ]
+                      }
+                    ],
+                    "extensions": {}
+                  },
+                  {
+                    "id": "queryResult",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "meaning",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {
+                      "future": {}
+                    }
+                  }
+                ],
+                "extensions": {
+                  "umf.tables": {
+                    "profile": "postgresql18/0.1",
+                    "tables": [
+                      {
+                        "id": "notes",
+                        "record": {
+                          "module": "demo",
+                          "element": "Note"
+                        },
+                        "name": "notes",
+                        "columns": [
+                          {
+                            "field": {
+                              "module": "demo",
+                              "element": "id"
+                            },
+                            "name": "id",
+                            "nativeType": {
+                              "kind": "text"
+                            }
+                          },
+                          {
+                            "field": {
+                              "module": "demo",
+                              "element": "owner"
+                            },
+                            "name": "owner",
+                            "nativeType": {
+                              "kind": "text"
+                            }
+                          }
+                        ],
+                        "indexes": [],
+                        "checks": [],
+                        "foreignKeys": [],
+                        "policy": {
+                          "mode": "native-rls",
+                          "person": {
+                            "select": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "owner"
+                              }
+                            },
+                            "insert": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "owner"
+                              }
+                            },
+                            "update": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "owner"
+                              }
+                            },
+                            "delete": {
+                              "kind": "owner",
+                              "field": {
+                                "module": "demo",
+                                "element": "owner"
+                              }
+                            }
+                          },
+                          "batch": {
+                            "select": {
+                              "kind": "allow"
+                            },
+                            "insert": {
+                              "kind": "deny"
+                            },
+                            "update": {
+                              "kind": "deny"
+                            },
+                            "delete": {
+                              "kind": "deny"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "seedSets": [],
+                    "commands": [
+                      {
+                        "version": "umf.table-operation/0.1",
+                        "id": "standalone-query",
+                        "parameters": [
+                          {
+                            "id": "external_input",
+                            "field": {
+                              "module": "other",
+                              "element": "external"
+                            }
+                          }
+                        ],
+                        "consistency": "statement",
+                        "replay": "none",
+                        "body": {
+                          "kind": "query",
+                          "language": "weft.pg-select/0.1",
+                          "sql": "select 1",
+                          "outputs": [
+                            {
+                              "name": "answer",
+                              "field": {
+                                "module": "demo",
+                                "element": "queryResult"
+                              }
+                            },
+                            {
+                              "name": "with_meaning",
+                              "field": {
+                                "module": "demo",
+                                "element": "meaning"
+                              }
+                            }
+                          ],
+                          "maxRows": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "other",
+                "namespace": "other",
+                "elements": [
+                  {
+                    "id": "external",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {
+                      "future": {
+                        "x": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "modules": [],
+          "nativeQualified": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "cases": [
+    {
+      "id": "sol2_record_extension",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{\"future\":{\"x\":1}}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      }
+    },
+    {
+      "id": "sol2_field_extension",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{\"future\":{\"x\":1}}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      }
+    },
+    {
+      "id": "sol2_diagnostic_order",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"default\":{\"on\":\"missing\",\"value\":{\"string\":\"x\"}}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[{\"id\":\"c\",\"name\":\"c\",\"expression\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"id\"}}}],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      }
+    },
+    {
+      "id": "sol2_operation_literal_domain",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_many\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"notes\",\"fields\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"where\":{\"op\":\"eq\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"literal\",\"value\":{\"integerToken\":\"1\"}}},\"orderBy\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"direction\":\"asc\"}],\"result\":\"many\",\"maxRows\":100}}]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      }
+    },
+    {
+      "id": "sol2_parameter_domain",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"length\":{\"max\":2,\"unit\":\"unicode-scalar\"}}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_many\",\"parameters\":[{\"id\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"id\"}}],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"notes\",\"fields\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"where\":{\"op\":\"eq\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"parameter\",\"parameter\":\"owner\"}},\"orderBy\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"direction\":\"asc\"}],\"result\":\"many\",\"maxRows\":100}}]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      }
+    },
+    {
+      "id": "sol2_prefix_integer",
+      "operation": "compileTableDeployment",
+      "request": {
+        "text": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"memberOf\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"read_many\",\"parameters\":[],\"consistency\":\"statement\",\"replay\":\"none\",\"body\":{\"kind\":\"read\",\"table\":\"notes\",\"fields\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"where\":{\"op\":\"startsWith\",\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"x\"}}},\"orderBy\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"direction\":\"asc\"}],\"result\":\"many\",\"maxRows\":100}}]}}}]}",
+        "configuration": {
+          "module": "demo",
+          "schema": "plugin_demo",
+          "ownerRole": "plugin_owner",
+          "personRole": "plugin_person",
+          "batchRole": "plugin_batch",
+          "groupRoles": {
+            "z": "group_z",
+            "aa": "group_a"
+          }
+        }
+      }
+    }
+  ]
+}

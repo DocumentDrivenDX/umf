@@ -18,12 +18,13 @@ function fail(code, message, path) {
   throw new AdmissionError(code, message, path);
 }
 
-function objectKeys(value, path) {
+function objectKeys(value, path, work) {
   const proto = Object.getPrototypeOf(value);
   if (proto !== Object.prototype && proto !== null) {
     fail('UNSUPPORTED_OBJECT', 'Only plain objects are accepted', path);
   }
   const keys = Reflect.ownKeys(value);
+  work?.(keys.length);
   const members = [];
   for (const key of keys) {
     if (typeof key !== 'string') fail('UNSUPPORTED_KEY', 'Symbol keys are not JSON values', path);
@@ -32,17 +33,19 @@ function objectKeys(value, path) {
       fail('ACCESSOR_PROPERTY', 'Accessor properties are not invoked during admission', path);
     }
     if (!descriptor.enumerable) fail('NON_ENUMERABLE_PROPERTY', 'Non-enumerable properties are not JSON values', path);
+    work?.(key.length + 1);
     members.push([key, descriptor.value]);
   }
   return members;
 }
 
-function arrayItems(value, path) {
+function arrayItems(value, path, work) {
   if (Object.getPrototypeOf(value) !== Array.prototype) {
     fail('UNSUPPORTED_ARRAY_PROTOTYPE', 'Only plain arrays are accepted', path);
   }
-  const keys = Reflect.ownKeys(value);
   const length = Object.getOwnPropertyDescriptor(value, 'length')?.value;
+  work?.(Number.isSafeInteger(length) && length > 0 ? length : 1);
+  const keys = Reflect.ownKeys(value);
   if (!Number.isSafeInteger(length) || keys.length !== length + 1) {
     fail('SPARSE_OR_EXTENDED_ARRAY', 'Sparse arrays and arrays with extra properties are not JSON values', path);
   }
@@ -73,15 +76,16 @@ export function toWire(value, limits = {}) {
   const maxDepth = limits.maxDepth ?? 128;
   let values = 0;
   function visit(item, path, depth) {
+    limits.work?.(1);
     values++;
     if (values > (limits.maxValues ?? 100_000)) fail('RESOURCE_LIMIT', 'JSON value count exceeds the admission limit', path);
     if (depth > maxDepth) fail('RESOURCE_LIMIT', 'JSON nesting exceeds the admission limit', path);
     if (item === null) return {kind: 'null'};
     if (typeof item === 'boolean') return {kind: 'boolean', value: item};
     if (typeof item === 'number') return {kind: 'number', bits: numberBits(item)};
-    if (typeof item === 'string') return {kind: 'string', units: units(item)};
-    if (Array.isArray(item)) return {kind: 'array', items: arrayItems(item, path).map((entry, index) => visit(entry, `${path}/${index}`, depth + 1))};
-    if (typeof item === 'object') return {kind: 'object', members: objectKeys(item, path).map(([key, entry]) => ({key: units(key), value: visit(entry, `${path}/${escapePointer(key)}`, depth + 1)}))};
+    if (typeof item === 'string') { limits.work?.(item.length); return {kind: 'string', units: units(item)}; }
+    if (Array.isArray(item)) return {kind: 'array', items: arrayItems(item, path, limits.work).map((entry, index) => visit(entry, `${path}/${index}`, depth + 1))};
+    if (typeof item === 'object') return {kind: 'object', members: objectKeys(item, path, limits.work).map(([key, entry]) => ({key: units(key), value: visit(entry, `${path}/${escapePointer(key)}`, depth + 1)}))};
     fail('UNSUPPORTED_VALUE', `Unsupported JavaScript value type: ${typeof item}`, path);
   }
   return visit(value, '', 0);
@@ -94,11 +98,12 @@ export function encodeWire(value, limits) {
   return JSON.stringify(toWire(value, limits));
 }
 
-export function encodeRequestWire(value) {
-  return encodeWire(value, REQUEST_LIMITS);
+export function encodeRequestWire(value, work) {
+  return encodeWire(value, {...REQUEST_LIMITS, work});
 }
 
-export function fromWire(wire) {
+export function fromWire(wire, work) {
+  work?.(1);
   if (!wire || typeof wire !== 'object' || typeof wire.kind !== 'string') throw new TypeError('Malformed umf.core-wire/1 value');
   switch (wire.kind) {
     case 'null': return null;
@@ -108,14 +113,14 @@ export function fromWire(wire) {
       const bytes = Uint8Array.from(wire.bits.match(/../g), part => Number.parseInt(part, 16));
       return new DataView(bytes.buffer).getFloat64(0, false);
     }
-    case 'string': return unitsToString(wire.units);
-    case 'array': return wire.items.map(fromWire);
+    case 'string': return unitsToString(wire.units, work);
+    case 'array': work?.(wire.items.length); return wire.items.map(item => fromWire(item, work));
     case 'object': {
       const result = Object.create(null);
       for (const member of wire.members) {
-        const key = unitsToString(member.key);
+        const key = unitsToString(member.key, work);
         if (hasOwn(result, key)) throw new TypeError('Duplicate key in umf.core-wire/1 object');
-        Object.defineProperty(result, key, {value: fromWire(member.value), enumerable: true, writable: true, configurable: true});
+        Object.defineProperty(result, key, {value: fromWire(member.value, work), enumerable: true, writable: true, configurable: true});
       }
       return result;
     }
@@ -144,7 +149,8 @@ export function resultError(result) {
   };
 }
 
-function unitsToString(codeUnits) {
+function unitsToString(codeUnits, work) {
+  work?.(codeUnits?.length ?? 1);
   if (!Array.isArray(codeUnits) || codeUnits.some(unit => !Number.isInteger(unit) || unit < 0 || unit > 0xffff)) {
     throw new TypeError('Malformed UTF-16 code-unit array');
   }

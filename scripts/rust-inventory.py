@@ -21,8 +21,8 @@ else:
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-# R0 is an immutable historical capture; the live gate records the R2 cohort.
-OUT = ROOT / "docs/helix/04-build/evidence/rust-migration/r2/inventory.json"
+# Earlier milestone captures remain immutable; the live gate records the R3 cohort.
+OUT = ROOT / "docs/helix/04-build/evidence/rust-migration/r3/inventory.json"
 TS_EXPORT = re.compile(r"(?m)^\s*export\s+(?:declare\s+)?(?:async\s+)?(?:function|class|interface|type|enum|const|let|var)\s+([A-Za-z_$][\w$]*)")
 TS_IMPORT = re.compile(r"(?m)^\s*(?:import|export)\s+(?:type\s+)?(?:[^;]*?\s+from\s+)?[\"']([^\"']+)[\"']")
 PY_IMPORT = re.compile(r"(?m)^\s*(?:from\s+([\w.]+)\s+import|import\s+([\w.]+))")
@@ -368,6 +368,8 @@ def rust_module_disposition(path: str) -> tuple[str, str]:
         return "vendored-shared-yaml-parser", "R2 pinned saphyr-parser 0.1.0 with reviewed default/Python scanner profiles; preserve upstream source identity, licenses and native/WASM qualification"
     if path.startswith(("crates/umf-core/", "crates/umf-metamodel/")):
         return "production-host-free-rust-engine", "R2 full independent compiler/core conformance and metered resource qualification required"
+    if path.startswith("crates/umf-codegen/"):
+        return "production-host-free-rust-codegen", "R3 full generator/IR/emission/hash and lifecycle semantic closure; frozen predecessor, installed-host and resource qualification required before completion"
     if path.startswith("crates/umf-core-wire/"):
         return "production-private-value-transport", "R2 closed UTF16 wire; strict admission before allocation and no semantic fallback"
     if path.startswith(("bindings/core/", "crates/umf-cli/")):
@@ -668,6 +670,24 @@ def main() -> int:
         "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)), "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "**/{.venv,.virtualenv,.virtualenvs,.tox,.nox,site-packages,dist-packages,__pycache__}/**", "Python environments identified by an ancestor pyvenv.cfg (any directory name)", "bindings/core/wasm/pkg/** (generated host artifact; captured by package harness)", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
         "knownOpenItems": ["python transitive dependency closure is unlocked", "per-module dispositions are a named migration-obligation inventory and still require owner review before closure", "native evidence identities are captured in the accompanying README and plan references"]
     }
+    for operation in result["operations"]:
+        operation["historicalBaseline"] = operation["baseline"]
+        operation["baseline"] = "docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json"
+        operation["additiveRustApi"] = operation["publicApi"].replace("umf_codegen.", "umf.rust_codegen.CodegenEngine.")
+        operation["productionImplementation"] = "retained Python MiniRacer bridge; default cutover belongs to R4"
+        operation["migrationDisposition"] = "R3 complete semantic port and installed-host qualification required; R4 retires this legacy bridge"
+    result["operations"].extend([
+        {"id": "generate_access_package", "publicApi": "generateAccessPackage", "bridge": None,
+         "source": ["src/compilation/index.ts", "src/compilation/admission/index.ts", "src/compilation/targets/python"],
+         "baseline": "docs/helix/04-build/evidence/rust-migration/r3/baseline/stage-one.json",
+         "additiveRustApi": "umf.rust_codegen.CodegenEngine.generate_access_package",
+         "productionImplementation": "retained TypeScript stage-one compiler; default cutover belongs to R4"},
+        {"id": "diff_access_packages", "publicApi": "diffAccessPackages", "bridge": None,
+         "source": ["src/compilation/admission/diff.ts"],
+         "baseline": "docs/helix/04-build/evidence/rust-migration/r3/baseline/stage-one.json",
+         "additiveRustApi": "umf.rust_codegen.CodegenEngine.diff_access_packages",
+         "productionImplementation": "retained TypeScript stage-one diff; default cutover belongs to R4"},
+    ])
     payload = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     if "--check" in sys.argv:
         current = OUT.read_text() if OUT.exists() else ""

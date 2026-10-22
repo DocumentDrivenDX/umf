@@ -1,0 +1,664 @@
+{
+  "schema": "umf.r3-incremental-native-replay/1",
+  "scope": "Incremental diagnostic replay; binary hash does not independently establish a clean source/build cohort",
+  "binary": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/release/examples/r3_replay",
+  "binarySha256": "c4a44980a0f0955273658d6312f26db035c1ffa46f264482bfda12cf0807c4f7",
+  "binaryChangedDuringRun": false,
+  "fixture": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json",
+  "fixtureSha256": "40c05901135a90b4d9777b88a1f62aa0ade6aa47dcf85f054db01dad04560c78",
+  "driverScriptSha256": "444c13fa3ff53c68e3476755511107072017c6b84907ea956222958535c000f0",
+  "elapsedSeconds": 14.964467542,
+  "cases": 129,
+  "matches": 129,
+  "mismatches": [],
+  "outcomes": [
+    {
+      "id": "deployment-malformed-request",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/deterministic-group-map",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/invalid-unicode-configuration-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/missing-native-mapping-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/parent-scope",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/principal-collision-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/quoted-unicode-default",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/reserved-metadata-name-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/shared-schema-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/simple",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/typed-operation-declarations",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/unknown-configuration-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/unknown-selected-meaning-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/unqualified-codec-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/unqualified-command-refuses",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment/yaml",
+      "operation": "compileTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "migration-malformed-request",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/append-index",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/append-index-and-table",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/append-table",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/command-only-revision",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/command-retirement",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/existing-index-replacement-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/existing-policy-change-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/initial-json",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/initial-yaml",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/missing-predecessor-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/namespace-change-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/rehashed-previous-SQL-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/removal-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/self-predecessor-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/unchanged-cohort-refuses",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/unicode-id-and-yaml-next",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration/unqualified-seeds-refuse",
+      "operation": "compileTableMigration",
+      "matches": true
+    },
+    {
+      "id": "changes-malformed-bundle",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "changes-malformed-request",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "changes/extra-member-refusal",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "changes/pair-0",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "changes/pair-1",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "changes/pair-2",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "changes/pair-3",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "changes/pair-4",
+      "operation": "discoverTableMigrationChanges",
+      "matches": true
+    },
+    {
+      "id": "client-malformed-request",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/action-parameter-name-collision-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/action-selection",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/array-value",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/crlf-source",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/customer-selection",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/declared-native-domain-clock-module",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/declared-native-module",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/declared-native-temporal-module",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/foreign-field-extension-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/invalid-json-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/invalid-package-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/legacy-actions-refuse",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/legal-lifecycle-0",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/legal-lifecycle-1",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/legal-lifecycle-2",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/malformed-action-entry-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/native-nested-related-policy",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/native-related-policy",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/native-source-snapshot",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/native-yaml-profile-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/nullable-key-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/optional-value",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/original-json",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/praxis-adoption",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/reserved-name-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/source-core-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/table-lifecycle-refuses-unqualified-client",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/unicode",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/unknown-facet-refuses",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "client/yaml",
+      "operation": "generatePythonClient",
+      "matches": true
+    },
+    {
+      "id": "row-scope-malformed-request",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "row-scope/ambiguous-via-binding",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "row-scope/group-command-widening-refused",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "row-scope/policy-cycle-refused",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "row-scope/related-select-dependency-refused",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "row-scope/supplied-owner-via-group-batch",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "row-scope/unknown-content-preserved",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-malformed",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-refusal/deterministic-group-map",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-refusal/parent-scope",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-refusal/quoted-unicode-default",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-refusal/simple",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-refusal/typed-operation-declarations",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-refusal/yaml",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-self-signed-tamper/deterministic-group-map",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-self-signed-tamper/parent-scope",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-self-signed-tamper/quoted-unicode-default",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-self-signed-tamper/simple",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-self-signed-tamper/typed-operation-declarations",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-self-signed-tamper/yaml",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify-wrong-key",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify/deterministic-group-map",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify/parent-scope",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify/quoted-unicode-default",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify/simple",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify/typed-operation-declarations",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "deployment-verify/yaml",
+      "operation": "verifyTableDeployment",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-malformed",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/append-index",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/append-index-and-table",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/append-table",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/command-only-revision",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/command-retirement",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/initial-json",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/initial-yaml",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/unicode-id-and-yaml-next",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-refusal/unqualified-seeds-refuse",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/append-index",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/append-index-and-table",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/append-table",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/command-only-revision",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/command-retirement",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/initial-json",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/initial-yaml",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/unicode-id-and-yaml-next",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-self-signed-tamper/unqualified-seeds-refuse",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify-wrong-key",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/append-index",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/append-index-and-table",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/append-table",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/command-only-revision",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/command-retirement",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/initial-json",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/initial-yaml",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/unicode-id-and-yaml-next",
+      "operation": "verifyTableMigration",
+      "matches": true
+    },
+    {
+      "id": "migration-verify/unqualified-seeds-refuse",
+      "operation": "verifyTableMigration",
+      "matches": true
+    }
+  ],
+  "actualPath": "/private/tmp/sol-release-baseline.actual.json",
+  "rawPath": "/private/tmp/sol-release-baseline.stdout.jsonl",
+  "stderrPath": "/private/tmp/sol-release-baseline.stderr.log"
+}

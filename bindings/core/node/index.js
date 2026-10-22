@@ -90,7 +90,7 @@ function callbackFailureText(error) {
   return 'Host callback failed';
 }
 
-function runRequest(request, callbacks, profile, controls) {
+function runRequest(request, callbacks, profile, controls, accountHost = false) {
   if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
   const callbackBridge = (token, requestWire) => {
     const callback = callbacks.get(token);
@@ -105,10 +105,14 @@ function runRequest(request, callbacks, profile, controls) {
     }
   };
   const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
-  const response = JSON.parse(addon.executeRequestWire(encodeRequestWire(request), profile, callbackBridge, controlBridge));
+  const hostWork = accountHost ? admissionWork(controlBridge) : undefined;
+  const responseText = addon.executeRequestWire(encodeRequestWire(request, hostWork), profile, callbackBridge, controlBridge);
+  hostWork?.(responseText.length);
+  const response = JSON.parse(responseText);
   const failure = resultError(response);
   if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
-  return fromWire(JSON.parse(response.wire));
+  hostWork?.(response.wire.length);
+  return fromWire(JSON.parse(response.wire), hostWork);
 }
 
 function runRawValue(nativeFunction, input, format, controls) {
@@ -149,21 +153,7 @@ function createControlBridge(controls) {
 
 /** Create a synchronous Rust engine over an explicit immutable resource set. */
 export function createEngine(resources, options = {}) {
-  const profile = dataProperty(options, 'profile', false) ?? 'cooperative';
-  const rawControls = dataProperty(options, 'controls', false) ?? Object.create(null);
-  const controls = {
-    maxWork: dataProperty(rawControls, 'maxWork', false),
-    meter: dataProperty(rawControls, 'meter', false),
-    isCancelled: dataProperty(rawControls, 'isCancelled', false),
-    now: dataProperty(rawControls, 'now', false),
-    deadlineMs: dataProperty(rawControls, 'deadlineMs', false),
-  };
-  if (controls.maxWork !== undefined && (!Number.isSafeInteger(controls.maxWork) || controls.maxWork < 0)) throw new TypeError('controls.maxWork must be a non-negative safe integer');
-  if (controls.deadlineMs !== undefined && (typeof controls.deadlineMs !== 'number' || !Number.isFinite(controls.deadlineMs))) throw new TypeError('controls.deadlineMs must be a finite millisecond value');
-  for (const name of ['meter', 'isCancelled', 'now']) if (controls[name] !== undefined && typeof controls[name] !== 'function') throw new TypeError(`controls.${name} must be a function`);
-  if (controls.deadlineMs !== undefined && controls.now === undefined) throw new TypeError('controls.now is required with controls.deadlineMs');
-  if (profile !== 'cooperative' && profile !== 'hard-isolated') throw new TypeError('Unknown resource profile');
-  if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
+  const {profile, controls} = codegenOptions(options);
   // Each catalog payload is bounded independently by Rust admission. The
   // transport envelope may combine all of them and must not add an aggregate
   // value ceiling of its own.
@@ -203,4 +193,80 @@ export function createEngine(resources, options = {}) {
     readJsonValue(source) { return runRawValue(addon.readValueWire, source, 'json', controls); },
     writeJsonValue(value) { return runRawValue(addon.writeValueWire, value, 'json', controls); },
   });
+}
+
+function codegenOptions(options) {
+  const profile = dataProperty(options, 'profile', false) ?? 'cooperative';
+  const rawControls = dataProperty(options, 'controls', false) ?? Object.create(null);
+  const controls = {
+    maxWork: dataProperty(rawControls, 'maxWork', false),
+    meter: dataProperty(rawControls, 'meter', false),
+    isCancelled: dataProperty(rawControls, 'isCancelled', false),
+    now: dataProperty(rawControls, 'now', false),
+    deadlineMs: dataProperty(rawControls, 'deadlineMs', false),
+  };
+  if (controls.maxWork !== undefined && (!Number.isSafeInteger(controls.maxWork) || controls.maxWork < 0)) throw new TypeError('controls.maxWork must be a non-negative safe integer');
+  if (controls.deadlineMs !== undefined && (typeof controls.deadlineMs !== 'number' || !Number.isFinite(controls.deadlineMs))) throw new TypeError('controls.deadlineMs must be a finite millisecond value');
+  for (const name of ['meter', 'isCancelled', 'now']) if (controls[name] !== undefined && typeof controls[name] !== 'function') throw new TypeError(`controls.${name} must be a function`);
+  if (controls.deadlineMs !== undefined && controls.now === undefined) throw new TypeError('controls.now is required with controls.deadlineMs');
+  if (profile !== 'cooperative' && profile !== 'hard-isolated') throw new TypeError('Unknown resource profile');
+  if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
+  return {profile, controls};
+}
+
+/** Additive R3 compiler API over caller-supplied immutable resources. */
+export function createCodegenEngine(resources, options = {}) {
+  const {profile, controls} = codegenOptions(options);
+  const work = admissionWork(hasControls(controls) ? createControlBridge(controls) : undefined);
+  const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy', 'tablesPackage', 'actionsPackage', 'bindingPackage', 'stableBindingPackage'];
+  work?.(1);
+  for (const key of Reflect.ownKeys(resources)) {
+    if (typeof key !== 'string' || !names.includes(key)) throw new TypeError('Unknown explicit codegen resource');
+  }
+  const fixedResources = Object.create(null);
+  for (const name of names) {
+    const resource = dataProperty(resources, name);
+    // Catalog resources have independent one-million-value budgets. The
+    // nine-resource wrapper is not one semantic resource tree.
+    fixedResources[name] = fromWire(toWire(resource, {maxDepth: 128, maxValues: 1_000_000, work}), work);
+  }
+  function call(operation, request) {
+    if (typeof operation !== 'string') throw new TypeError('Codegen operation must be a string');
+    return runRequest({op: `codegen/${operation}`, resources: fixedResources, request}, new Map(), profile, controls, true);
+  }
+  function result(operation, request) {
+    const response = call(operation, request);
+    if (!response.ok) {
+      const failure = response.error;
+      const error = new Error(failure.message);
+      error.name = 'UmfCodegenError';
+      error.code = failure.code;
+      for (const key of ['path', 'pointer']) if (Object.hasOwn(failure, key)) error[key] = failure[key];
+      throw error;
+    }
+    return response.result;
+  }
+  return Object.freeze({
+    call,
+    generatePythonClient(request) { return result('generatePythonClient', request); },
+    compileTableDeployment(request) { return result('compileTableDeployment', request); },
+    verifyTableDeployment(bundle) { return result('verifyTableDeployment', {bundle}); },
+    compileTableMigration(request) { return result('compileTableMigration', request); },
+    verifyTableMigration(plan) { return result('verifyTableMigration', {plan}); },
+    discoverTableMigrationChanges(previous, next) { return result('discoverTableMigrationChanges', {previous, next}).changes; },
+    normalizeRowScope(input, context) { return result('normalizeRowScope', {input, context}); },
+    generateAccessPackage(request, profile) { return result('generateAccessPackage', {request, profile}); },
+    diffAccessPackages(before, after) { return result('diffAccessPackages', {before, after}); },
+  });
+}
+
+function admissionWork(bridge) {
+  if (!bridge) return undefined;
+  return (amount) => {
+    const response = bridge(amount);
+    if (response) {
+      const failure = fromWire(JSON.parse(response));
+      throw new UmfCoreError(failure.code, failure.message);
+    }
+  };
 }

@@ -44,12 +44,18 @@ impl<T: Iterator<Item = char>> BufferedInput<T> {
 
     /// Create a buffered input with an explicit scanner profile.
     pub fn with_profile(input: T, profile: ScanProfile) -> Self {
-        Self { input, buffer: ArrayDeque::default(), profile }
+        Self {
+            input,
+            buffer: ArrayDeque::default(),
+            profile,
+        }
     }
 }
 
 impl<T: Iterator<Item = char>> Input for BufferedInput<T> {
-    fn scan_profile(&self) -> ScanProfile { self.profile }
+    fn scan_profile(&self) -> ScanProfile {
+        self.profile
+    }
     #[inline]
     fn lookahead(&mut self, count: usize) {
         if self.buffer.len() >= count {

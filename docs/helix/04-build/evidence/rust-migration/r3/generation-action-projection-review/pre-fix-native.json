@@ -1,0 +1,77 @@
+{
+  "schema": "umf.r3-incremental-native-replay/1",
+  "scope": "Incremental diagnostic replay; binary hash does not independently establish a clean source/build cohort",
+  "binary": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/debug/examples/r3_replay",
+  "binarySha256": "5f64b80b713b71eb9518f6c9032796c337392a85ed18721e087fd047d4b5c114",
+  "binaryChangedDuringRun": false,
+  "fixture": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r3/generation-action-projection-review/frozen.json",
+  "fixtureSha256": "c63792b6c0612d6a0aad0038f18397c57b9f042554155e86a6663a2d7f9f73bb",
+  "driverScriptSha256": "2d83d22fb75d54598714edfacf8a5ec4dbc47ea0980f4a40c7d80e91832c5964",
+  "elapsedSeconds": 12.58120041701477,
+  "cases": 5,
+  "matches": 1,
+  "mismatches": [
+    {
+      "id": "action-alternate-key",
+      "operation": "generateAccessPackage",
+      "path": "$/result/files/1/text",
+      "reason": "values differ",
+      "expected": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"actions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d204\",\"obligationIds\":[\"o3\"],\"pointer\":\"/modules/0/elements/0\",\"reaso",
+      "actual": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"actions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d204\",\"obligationIds\":[\"o3\"],\"pointer\":\"/modules/0/elements/0\",\"reaso"
+    },
+    {
+      "id": "action-record-name",
+      "operation": "generateAccessPackage",
+      "path": "$/result/files/1/text",
+      "reason": "values differ",
+      "expected": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"actions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d199\",\"obligationIds\":[\"o3\"],\"pointer\":\"/modules/0/elements/0\",\"reaso",
+      "actual": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"actions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d199\",\"obligationIds\":[\"o3\"],\"pointer\":\"/modules/0/elements/0\",\"reaso"
+    },
+    {
+      "id": "action-collection-value",
+      "operation": "generateAccessPackage",
+      "path": "$/result/files/1/text",
+      "reason": "values differ",
+      "expected": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"actions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d265\",\"obligationIds\":[\"o3\"],\"pointer\":\"/modules/0/elements/0\",\"reaso",
+      "actual": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"actions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d265\",\"obligationIds\":[\"o3\"],\"pointer\":\"/modules/0/elements/0\",\"reaso"
+    },
+    {
+      "id": "joined-projection",
+      "operation": "generateAccessPackage",
+      "path": "$/result/files/1/text",
+      "reason": "values differ",
+      "expected": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d2\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d76\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/cardinality\",\"r",
+      "actual": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d2\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d76\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/cardinality\",\"r"
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "action-alternate-key",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "action-record-name",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "action-collection-value",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "joined-projection",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "container-projection",
+      "operation": "generateAccessPackage",
+      "matches": true
+    }
+  ],
+  "actualPath": "/private/tmp/r3-generation-action-projection-before.actual.json",
+  "rawPath": "/private/tmp/r3-generation-action-projection-before.stdout.jsonl",
+  "stderrPath": "/private/tmp/r3-generation-action-projection-before.stderr.log"
+}

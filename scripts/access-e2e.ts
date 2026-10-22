@@ -7,6 +7,9 @@ import {mkdtemp,writeFile,readFile,readdir,mkdir,realpath} from 'node:fs/promise
 import {resolve,join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+import {writeAccessPackage,checkAccessPackage} from './umf-access-generate';
+import type {AccessResult} from '../src/compilation/ir';
 import {readDocument,writeDocument,validateCoreRecordValues} from '../src/index';
 import {request,profile} from '../tests/compilation/access-fixtures';
 const options=new Map<string,string>();for(let i=2;i<process.argv.length;i+=2)options.set(process.argv[i]!,process.argv[i+1]!);
@@ -14,7 +17,32 @@ const python=options.get('--python'),wheel=options.get('--wheel'),report=options
 if(!python||!wheel||!report)throw Error('Required: --python <installed pinned environment> --wheel <source-verified wheel> --report <JSON>');
 const root=resolve(import.meta.dir,'..'),work=await mkdtemp(join(await realpath(tmpdir()),'umf-access-e2e-'));
 const commands:unknown[]=[],outcomes:unknown[]=[];
-async function execute(label:string,args:string[],expected=0){const child=Bun.spawn(args,{cwd:root,stdout:'pipe',stderr:'pipe'});const [exit,stdout,stderr]=await Promise.all([child.exited,new Response(child.stdout).text(),new Response(child.stderr).text()]);commands.push({label,args,exit,expected,stdout,stderr});assert.equal(exit,expected,label+': '+stderr);return stdout;}
+const rustEntry=options.get('--rust-node-entry');
+let rustEngine:{generateAccessPackage(request:unknown,profile:unknown):unknown}|undefined;
+if(rustEntry){
+ const binding=await import(pathToFileURL(resolve(rustEntry)).href);
+ const paths={coreSchema:'spec/core/schema.json',referenceSchema:'spec/core/semantic-type-reference.schema.json',packageSchema:'spec/core/extension-package.schema.json',constraints:'spec/metamodel/generated/core-constraints.json',domainPolicy:'spec/metamodel/generated/domain-policy.json',tablesPackage:'spec/extensions/tables/package.json',actionsPackage:'spec/extensions/actions/package.json',bindingPackage:'spec/extensions/binding/package.json',stableBindingPackage:'spec/extensions/binding-stable/package.json'};
+ const resources=Object.fromEntries(await Promise.all(Object.entries(paths).map(async([name,path])=>[name,JSON.parse(await readFile(resolve(root,path),'utf8'))])));
+ rustEngine=binding.createCodegenEngine(resources);
+}
+
+async function execute(label:string,args:string[],expected=0){
+ if(rustEngine&&args[0]==='bun'&&args[1]===root+'/scripts/umf-access-generate.ts'){
+  let exit=0,stdout='',stderr='';
+  try{
+   const flags=new Map<string,string>();for(let i=3;i<args.length;i+=2)flags.set(args[i]!,args[i+1]!);
+   const request=JSON.parse(await readFile(flags.get('--request')!,'utf8')),profile=JSON.parse(await readFile(flags.get('--profile')!,'utf8'));
+   const candidate=rustEngine.generateAccessPackage(request,profile) as AccessResult;
+   if(candidate.outcome!=='candidate')throw Error('GENERATION_REFUSED');
+   if(args[2]==='generate')await writeAccessPackage(flags.get('--output')!,candidate);
+   else if(args[2]==='check'){const drift=await checkAccessPackage(flags.get('--output')!,candidate);if(drift.length)throw Error('OUTPUT_CHANGED');}
+   else throw Error('Unknown qualification writer mode');
+  }catch(error){exit=1;stderr=String(error);}
+  commands.push({label,args:['RustNode.generateAccessPackage + host writer',...args.slice(2)],exit,expected,stdout,stderr});
+  assert.equal(exit,expected,label+': '+stderr);return stdout;
+ }
+ const child=Bun.spawn(args,{cwd:root,stdout:'pipe',stderr:'pipe'});const [exit,stdout,stderr]=await Promise.all([child.exited,new Response(child.stdout).text(),new Response(child.stderr).text()]);commands.push({label,args,exit,expected,stdout,stderr});assert.equal(exit,expected,label+': '+stderr);return stdout;
+}
 async function inventory(path:string):Promise<Record<string,string>>{const result:Record<string,string>={};async function walk(dir:string){for(const entry of await readdir(dir,{withFileTypes:true})){const p=join(dir,entry.name);if(entry.isDirectory())await walk(p);else result[p.slice(path.length+1)]=createHash('sha256').update(await readFile(p)).digest('hex');}}await walk(path);return result;}
 try{
  for(const fixture of ['engine-only','containers','alternate-key']){
@@ -124,6 +152,6 @@ print(json.dumps({'checks':checks,'count':len(checks),'python':sys.version.split
   await execute(fixture+'-invalid-schema-refuses',[...args,'generate',...flags],1);assert.deepEqual(await inventory(output),before);
   outcomes.push({fixture,...observed,sourceSha256:createHash('sha256').update(source).digest('hex'),inventory:before});
  }
- await Bun.write(report,JSON.stringify({status:'pass',scope:'public schema load and CLI generation to real installed Python creation, validation and codec round trip; no database/native or temporal qualification',work,wheelSha256:createHash('sha256').update(new Uint8Array(await Bun.file(wheel).arrayBuffer())).digest('hex'),outcomes,commands},null,2)+'\n');
+ await Bun.write(report,JSON.stringify({status:'pass',scope:rustEngine?'public schema load and Rust Node generation plus host writer to installed Python creation/codec round trip; no production CLI cutover, database/native or temporal qualification':'public schema load and CLI generation to real installed Python creation, validation and codec round trip; no database/native or temporal qualification',work,wheelSha256:createHash('sha256').update(new Uint8Array(await Bun.file(wheel).arrayBuffer())).digest('hex'),outcomes,commands},null,2)+'\n');
  console.log(JSON.stringify({status:'pass',cases:outcomes.length,report}));
 }catch(error){await Bun.write(report,JSON.stringify({status:'fail',work,outcomes,commands,error:String(error)},null,2)+'\n');throw error;}

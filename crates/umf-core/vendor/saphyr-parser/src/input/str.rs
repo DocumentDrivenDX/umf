@@ -1,9 +1,7 @@
 use crate::{
-    char_traits::{
-        is_alpha, is_blank, is_digit, is_flow, is_z,
-    },
-    input::{Input, SkipTabs},
     ScanProfile,
+    char_traits::{is_alpha, is_blank, is_digit, is_flow, is_z},
+    input::{Input, SkipTabs},
 };
 use alloc::string::String;
 
@@ -35,12 +33,18 @@ impl<'a> StrInput<'a> {
     /// Create an input with an explicit immutable scanner profile.
     #[must_use]
     pub fn with_profile(input: &'a str, profile: ScanProfile) -> Self {
-        Self { buffer: input, lookahead: 0, profile }
+        Self {
+            buffer: input,
+            lookahead: 0,
+            profile,
+        }
     }
 }
 
 impl Input for StrInput<'_> {
-    fn scan_profile(&self) -> ScanProfile { self.profile }
+    fn scan_profile(&self) -> ScanProfile {
+        self.profile
+    }
     #[inline]
     fn lookahead(&mut self, x: usize) {
         // We already have all characters that we need.

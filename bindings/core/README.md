@@ -1,8 +1,9 @@
 # Rust-backed UMF core hosts
 
-These are the R2 production entry points. The existing default TypeScript SDK
-continues to use its current implementation until the separate R7 cutover.
-`umf-codegen` still has its V8 dependency until R4. These packages are private;
+These expose the R2 production core and additive R3 compiler entry points.
+The existing default TypeScript SDK continues to use its current implementation until the separate R7 cutover.
+The existing Python `umf_codegen` distribution and default CLI retain MiniRacer
+until R4. These Rust host packages are private;
 this work does not publish a wheel, npm package or Rust crate.
 
 `crates/umf-core` owns document/schema validation, literal and constraint kernels,
@@ -49,6 +50,33 @@ actual module in Chromium, separately from native addon tests.
 callback requires an explicit startup flag and is never enabled by document data.
 The CLI executes without Node, Bun or V8.
 
+## Additive Rust compilation API (R3)
+
+Node/Bun exports `createCodegenEngine(resources, options)`. WASM exports
+`createCodegenEngine(module, resources, options)` and `initializeCodegenWasm`; Python exposes
+`umf.rust_codegen.CodegenEngine`. In addition to the five core resources above,
+provide `tablesPackage`, `actionsPackage`, `bindingPackage` (0.1.0) and
+`stableBindingPackage` (0.2.0), using the matching trusted package manifests.
+Each resource has its own catalog admission budget. The engine snapshots these
+resources; input documents cannot install schemas or callbacks.
+
+`call(operation, request)` returns the complete `{ok, result}` or `{ok, error}`
+semantic envelope. The nine operations are `generatePythonClient`,
+`generateAccessPackage`, `diffAccessPackages`, `compileTableDeployment`,
+`verifyTableDeployment`, `compileTableMigration`, `verifyTableMigration`,
+`discoverTableMigrationChanges` and `normalizeRowScope`. Host convenience methods
+return the operation result and raise semantic errors. Cooperative control
+failures remain terminal host errors. The CLI uses the same operations with a
+`codegen/` prefix in its wire request's `op` field.
+
+The generated files, diagnostics and source archives retain their existing
+contracts. Stage-one resolved IR stays private. Compiler source text retains the
+ordinary 4M limit; compiler aggregate result text has a separate 32Mi UTF-16
+budget, so a valid multi-file package can exceed 4M units. This API is additive;
+default generator CLI cutover and MiniRacer removal remain R4. The
+[R3 evidence index](../../docs/helix/04-build/evidence/rust-migration/r3/)
+records exact versions, supported subsets and qualification status.
+
 ## Values and resource controls
 
 Ordinary values preserve raw UTF-16 units, including isolated surrogates, and
@@ -69,6 +97,8 @@ Run `bun run test:rust-core` for the installed wheel, wheel rebuilt from sdist,
 packed Node/Bun addon, native CLI and real Chromium qualification. This gate
 rebuilds artifacts, installs outside the checkout, disables JavaScript discovery
 for Python/CLI checks, and refuses a passing receipt if source hashes change
-during the run. Exact versions, subsets, approved compatibility corrections and
-remaining gaps are recorded under
-[the R2 evidence directory](../../docs/helix/04-build/evidence/rust-migration/r2/).
+during the run. The current compiler and retained core qualification receipt is
+written to [the R3 evidence directory](../../docs/helix/04-build/evidence/rust-migration/r3/).
+It records exact versions, supported subsets, resource controls and source/build
+identities. Historical core compatibility corrections and predecessor evidence
+remain in [the R2 evidence directory](../../docs/helix/04-build/evidence/rust-migration/r2/).

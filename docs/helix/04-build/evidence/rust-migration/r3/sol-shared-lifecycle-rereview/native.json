@@ -1,0 +1,112 @@
+{
+  "schema": "umf.r3-incremental-native-replay/1",
+  "scope": "Incremental diagnostic replay; binary hash does not independently establish a clean source/build cohort",
+  "binary": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/debug/examples/r3_replay",
+  "binarySha256": "3559ed009862878e571d63c235ca72d88437736b5c004297b7c53437e5a57d29",
+  "binaryChangedDuringRun": false,
+  "fixture": "/private/tmp/umf-sol-r3-rereview/frozen.json",
+  "fixtureSha256": "c0eae6c291158b3047fc54910f20c74f715b87b9cbfa4fe04294682d28b2764c",
+  "driverScriptSha256": "444c13fa3ff53c68e3476755511107072017c6b84907ea956222958535c000f0",
+  "elapsedSeconds": 1.458925375,
+  "cases": 6,
+  "matches": 0,
+  "mismatches": [
+    {
+      "id": "sol2_record_extension",
+      "operation": "compileTableDeployment",
+      "path": "$/result/diagnostics",
+      "reason": "array lengths differ",
+      "expectedLength": 1,
+      "actualLength": 2
+    },
+    {
+      "id": "sol2_field_extension",
+      "operation": "compileTableDeployment",
+      "path": "$/result/diagnostics",
+      "reason": "array lengths differ",
+      "expectedLength": 1,
+      "actualLength": 2
+    },
+    {
+      "id": "sol2_diagnostic_order",
+      "operation": "compileTableDeployment",
+      "path": "$/result/diagnostics/0/code",
+      "reason": "values differ",
+      "expected": "TABLES_LOGICAL_DEFAULT",
+      "actual": "TABLES_CHECK_TYPE"
+    },
+    {
+      "id": "sol2_operation_literal_domain",
+      "operation": "compileTableDeployment",
+      "path": "$/result",
+      "reason": "object members differ",
+      "expectedMembers": [
+        "diagnostics",
+        "status"
+      ],
+      "actualMembers": [
+        "bundle",
+        "diagnostics",
+        "status"
+      ]
+    },
+    {
+      "id": "sol2_parameter_domain",
+      "operation": "compileTableDeployment",
+      "path": "$/result",
+      "reason": "object members differ",
+      "expectedMembers": [
+        "diagnostics",
+        "status"
+      ],
+      "actualMembers": [
+        "bundle",
+        "diagnostics",
+        "status"
+      ]
+    },
+    {
+      "id": "sol2_prefix_integer",
+      "operation": "compileTableDeployment",
+      "path": "$/result/diagnostics",
+      "reason": "array lengths differ",
+      "expectedLength": 2,
+      "actualLength": 1
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "sol2_record_extension",
+      "operation": "compileTableDeployment",
+      "matches": false
+    },
+    {
+      "id": "sol2_field_extension",
+      "operation": "compileTableDeployment",
+      "matches": false
+    },
+    {
+      "id": "sol2_diagnostic_order",
+      "operation": "compileTableDeployment",
+      "matches": false
+    },
+    {
+      "id": "sol2_operation_literal_domain",
+      "operation": "compileTableDeployment",
+      "matches": false
+    },
+    {
+      "id": "sol2_parameter_domain",
+      "operation": "compileTableDeployment",
+      "matches": false
+    },
+    {
+      "id": "sol2_prefix_integer",
+      "operation": "compileTableDeployment",
+      "matches": false
+    }
+  ],
+  "actualPath": "/private/tmp/umf-sol-r3-rereview/native.actual.json",
+  "rawPath": "/private/tmp/umf-sol-r3-rereview/native.stdout.jsonl",
+  "stderrPath": "/private/tmp/umf-sol-r3-rereview/native.stderr.log"
+}
