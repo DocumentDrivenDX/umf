@@ -4,9 +4,17 @@ from __future__ import annotations
 
 import json
 import sys
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
-from ._rust import UmfCoreError, _checked_envelope, _from_wire, _raise_native, _rust_core, _wire
+from ._rust import (
+    UmfCoreError,
+    _checked_envelope,
+    _from_wire,
+    _raise_native,
+    _rust_core,
+    _wire,
+)
 
 
 class UmfCodegenError(ValueError):

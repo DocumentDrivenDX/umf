@@ -84,3 +84,14 @@ identities will be recorded by the pull request.
 
 R4 still owns default generator cutover and MiniRacer removal. No package is
 published and no broader native semantic support is claimed.
+
+
+Post-qualification Ruff amendment: PR45 adds only standard-library import cleanup
+in `python/src/umf/rust_codegen.py` and test cleanup in
+`python/tests/test_rust_codegen.py`. The [supplemental review](sol-delivery-review/post-qualification-ruff-review.json)
+records exact before/after hashes and independent non-import AST equality. The
+615-case six-cohort receipt above remains immutable evidence for its original
+source hashes. Affected tests pass 8/8, the temporary installed Python suite passes 206/206,
+and pinned Ruff 0.17.1 passes. The complete hosted qualification gate remains
+required against the successor checked PR head; the temporary environment check
+is not a fresh wheel build.

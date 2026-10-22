@@ -3,6 +3,7 @@
 import json
 import sys
 from pathlib import Path
+
 import pytest
 from umf._rust import UmfCoreError, _from_wire, _rust_core, _wire
 from umf.rust_codegen import CodegenEngine
@@ -11,7 +12,7 @@ NAMES = ('coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domai
 
 
 def test_constructor_copy_observes_controls():
-    resources = dict.fromkeys(NAMES, {})
+    resources = {name: {} for name in NAMES}
     for controls, code in [({'max_work': 0}, 'RESOURCE_LIMIT'), ({'is_cancelled': lambda: True}, 'CANCELLED'),
                            ({'now': lambda: 2, 'deadline_ms': 1}, 'DEADLINE')]:
         with pytest.raises(UmfCoreError) as failure:
@@ -27,7 +28,7 @@ def test_host_callback_cannot_spoof_semantic_origin_and_preserves_text():
     def meter(_):
         raise UmfCoreError('VALUE_INVALID', text)
     with pytest.raises(UmfCoreError) as failure:
-        CodegenEngine(dict.fromkeys(NAMES, {}), meter=meter)
+        CodegenEngine({name: {} for name in NAMES}, meter=meter)
     assert failure.value.code == 'METER_FAILURE'
     assert str(failure.value) == text
 
@@ -103,7 +104,7 @@ def test_codegen_import_fails_closed_without_native_artifact(tmp_path):
         shutil.copyfile(source / name, package / name)
     result = subprocess.run([sys.executable, '-I', '-S', '-c',
                              'import sys; sys.path.insert(0, sys.argv[1]); import umf.rust_codegen', str(tmp_path)],
-                            capture_output=True, text=True)
+                            capture_output=True, text=True, check=False)
     assert result.returncode != 0
     assert 'umf-core was installed without its required Rust engine' in result.stderr
 
@@ -111,7 +112,7 @@ def test_codegen_import_fails_closed_without_native_artifact(tmp_path):
 def test_cached_resources_are_charged_before_json_serialization(monkeypatch):
     import umf.rust_codegen as compiler
     state = {'armed': False}
-    resources = dict.fromkeys(NAMES, {})
+    resources = {name: {} for name in NAMES}
     resources['coreSchema'] = {'catalog': 'x' * 10000}
     def meter(amount):
         if state['armed'] and amount >= 10000:
