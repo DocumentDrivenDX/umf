@@ -433,10 +433,11 @@ def python_console_entrypoint_roots(pyprojects: list[Path], source_paths: list[P
     return roots
 
 
-def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], source_paths: list[Path]) -> dict[str, set[str]]:
+def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], source_paths: list[Path]) -> tuple[dict[str, set[str]], list[dict[str, str]]]:
     """Resolve bounded `python -m unittest discover -s DIR -p PATTERN` roots."""
     authored = [path.resolve() for path in source_paths]
     roots: dict[str, set[str]] = {}
+    unresolved: list[dict[str, str]] = []
     for workflow, run_values in workflow_runs.items():
         if ".github/workflows/" not in workflow:
             continue
@@ -445,6 +446,9 @@ def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], sourc
                 try:
                     tokens = shlex.split(command, comments=True)
                 except ValueError:
+                    if re.match(r"^python(?:3(?:\.\d+)?)?\s+(?:-I\s+)?-m\s+unittest\s+discover(?:\s|$)", command.strip(), flags=re.ASCII):
+                        unresolved.append({"workflow": workflow, "commandSha256": sha(command.encode("utf-8")),
+                                           "reason": "malformed-unittest-discovery-command"})
                     break
                 if not tokens or not re.fullmatch(r"python(?:3(?:\.\d+)?)?", tokens[0], flags=re.ASCII):
                     continue
@@ -453,12 +457,20 @@ def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], sourc
                     index += 1
                 if tokens[index:index + 3] != ["-m", "unittest", "discover"]:
                     continue
+
+                def refuse(reason: str) -> None:
+                    unresolved.append({"workflow": workflow, "commandSha256": sha(command.encode("utf-8")), "reason": reason})
+
                 arguments = tokens[index + 3:]
                 start = None
-                pattern = None
+                pattern = "test*.py"
+                pattern_explicit = False
                 index = 0
                 while index < len(arguments):
                     token = arguments[index]
+                    if token in {"-v", "--verbose", "-q", "--quiet"}:
+                        index += 1
+                        continue
                     if token not in {"-s", "--start-directory", "-p", "--pattern"} or index + 1 >= len(arguments):
                         break
                     value = arguments[index + 1]
@@ -467,18 +479,23 @@ def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], sourc
                             break
                         start = value
                     else:
-                        if pattern is not None:
+                        if pattern_explicit:
                             break
                         pattern = value
+                        pattern_explicit = True
                     index += 2
-                if index != len(arguments) or start is None or pattern is None:
+                if index != len(arguments) or start is None:
+                    refuse("unsupported-or-incomplete-unittest-discovery-options")
                     continue
                 if Path(start).is_absolute() or ".." in Path(start).parts or not start.strip() or Path(start) == Path("."):
+                    refuse("unbounded-or-out-of-root-unittest-start-directory")
                     continue
                 if Path(pattern).name != pattern or not pattern.strip() or pattern in {"*", "*.py"}:
+                    refuse("unbounded-or-invalid-unittest-pattern")
                     continue
                 start_path = (ROOT / start).resolve()
                 if ROOT not in start_path.parents and start_path != ROOT:
+                    refuse("unittest-start-directory-resolves-outside-repository")
                     continue
                 evidence = f"workflow:{workflow} unittest discover -s {start} -p {pattern}"
                 for candidate in authored:
@@ -488,7 +505,7 @@ def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], sourc
                         continue
                     if fnmatch.fnmatchcase(candidate.name, pattern):
                         roots.setdefault(rel(candidate), set()).add(evidence)
-    return roots
+    return roots, sorted(unresolved, key=lambda item: (item["workflow"], item["commandSha256"], item["reason"]))
 
 
 def rust_module_record(path: Path) -> dict[str, object]:
@@ -662,7 +679,8 @@ def main() -> int:
     root_activation_evidence: dict[str, set[str]] = {}
     python_manifests = sorted((ROOT / "python").glob("*/pyproject.toml"))
     python_entrypoints = python_console_entrypoint_roots(python_manifests, all_script_paths)
-    unittest_discovery = workflow_unittest_discovery_roots(ts_capture.get("workflowRuns", {}), all_script_paths)
+    unittest_discovery, unresolved_workflow_activations = workflow_unittest_discovery_roots(
+        ts_capture.get("workflowRuns", {}), all_script_paths)
     for activated in (python_entrypoints, unittest_discovery):
         for path, evidence in activated.items():
             roots.add(path)
@@ -761,7 +779,9 @@ def main() -> int:
             {"id": "verify_deployment", "publicApi": "umf_codegen.verify_table_deployment", "bridge": "__umf_table_verify", "source": ["scripts/codegen/entry.ts", "src/table-deployment"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "migration", "publicApi": "umf_codegen.compile_table_migration", "bridge": "__umf_table_migrate", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "verify_migration", "publicApi": "umf_codegen.verify_table_migration", "bridge": "__umf_table_migration_verify", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"}],
-        "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)), "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "**/{.venv,.virtualenv,.virtualenvs,.tox,.nox,site-packages,dist-packages,__pycache__}/**", "Python environments identified by an ancestor pyvenv.cfg (any directory name)", "bindings/core/wasm/pkg/** (generated host artifact; captured by package harness)", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
+        "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)),
+                       "unresolvedWorkflowActivations": unresolved_workflow_activations,
+                       "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "**/{.venv,.virtualenv,.virtualenvs,.tox,.nox,site-packages,dist-packages,__pycache__}/**", "Python environments identified by an ancestor pyvenv.cfg (any directory name)", "bindings/core/wasm/pkg/** (generated host artifact; captured by package harness)", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
         "knownOpenItems": ["python transitive dependency closure is unlocked", "per-module dispositions are a named migration-obligation inventory and still require owner review before closure", "native evidence identities are captured in the accompanying README and plan references"]
     }
     payload = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n"

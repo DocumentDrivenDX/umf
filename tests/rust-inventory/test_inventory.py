@@ -46,13 +46,21 @@ class InventoryDependencyTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
             workflow_runs = {".github/workflows/optional.yml": [
                 "python -m unittest discover -s tests/lifecycle -p test_parser.py",
+                "python -I -m unittest discover -s tests/lifecycle -v",
                 "python -m unittest tests.not_discovery",
             ]}
             with patch.object(MODULE, "ROOT", root):
-                roots = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected, another, outside])
-            self.assertEqual({"tests/lifecycle/test_parser.py": {
-                "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test_parser.py"}}, roots)
-            self.assertNotIn("tests/lifecycle/test_other.py", roots)
+                roots, unresolved = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected, another, outside])
+            self.assertEqual({
+                "tests/lifecycle/test_parser.py": {
+                    "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test_parser.py",
+                    "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test*.py",
+                },
+                "tests/lifecycle/test_other.py": {
+                    "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test*.py",
+                },
+            }, roots)
+            self.assertEqual([], unresolved)
             self.assertNotIn("tests/other/test_parser.py", roots)
 
     def test_workflow_unittest_discovery_ignores_comments_help_malformed_and_broad_flags(self):
@@ -70,10 +78,20 @@ class InventoryDependencyTests(unittest.TestCase):
                 "python -m unittest discover -s ../outside -p test_parser.py",
                 "python -m unittest discover -s tests/lifecycle -p '*.py'",
                 "python -m unittest discover -s tests/lifecycle -p test_parser.py --unknown",
+                "python -m unittest discover -s tests/lifecycle -p 'unterminated",
             ]}
             with patch.object(MODULE, "ROOT", root):
-                roots = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected])
+                roots, unresolved = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected])
             self.assertEqual({}, roots)
+            self.assertEqual(8, len(unresolved))
+            self.assertTrue(all(item["workflow"] == ".github/workflows/optional.yml" for item in unresolved))
+            self.assertTrue(all(len(item["commandSha256"]) == 64 for item in unresolved))
+            self.assertEqual({
+                "unsupported-or-incomplete-unittest-discovery-options",
+                "unbounded-or-out-of-root-unittest-start-directory",
+                "unbounded-or-invalid-unittest-pattern",
+                "malformed-unittest-discovery-command",
+            }, {item["reason"] for item in unresolved})
 
     def test_rust_input_identity_covers_embedded_data_but_excludes_artifacts(self):
         import tempfile
