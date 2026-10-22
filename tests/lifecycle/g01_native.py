@@ -142,6 +142,7 @@ def _writer_barrier(dsn,cfg,table):
             while time.monotonic()<deadline:
                 state=monitor.execute('SELECT wait_event_type FROM pg_catalog.pg_stat_activity WHERE pid=%s',(pid[0],)).fetchone()
                 if state==('Lock',):return
+        print(f'writer barrier timeout: state={state!r}, outcome={outcome!r}, pid={pid!r}',flush=True)
         raise AssertionError('direct insert was not held while the backfill and NOT NULL step shared a transaction')
     return after_fill,finished,outcome,pid
 
@@ -234,7 +235,7 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 writer_finished=None;writer_outcome=None
                 if case['id']=='all-null':
                     writer_callback,writer_finished,writer_outcome,writer_pid=_writer_barrier(dsn,cfg,sql.Identifier(cfg['schema'],'notes'))
-                    def record_step(plan,step,count=count_data_step,callback=writer_callback):count(plan,step);callback(plan,step)
+                    def record_step(plan,step,transaction,count=count_data_step,callback=writer_callback):count(plan,step,transaction);callback(plan,step,transaction)
                     run_host=_HostProxy(host,on_data_step=record_step)
                 elif case['id']=='clock-unknown-commit':
                     raised=[]

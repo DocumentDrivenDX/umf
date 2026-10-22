@@ -14,7 +14,7 @@ function source(rows:{id:string;owner:string;summary?:string}[],withFillCommand=
  module.elements.push({id:'summary',kind:'field',scalarType,cardinality:'one',nullability:'absent-allowed',extensions:{}});
  module.elements.find((item:any)=>item.id==='Note')!.members.push(ref('summary'));
  payload.tables[0]!.columns.push({field:ref('summary'),name:'summary',nativeType});
- if(constraintKind==='check')payload.tables[0]!.checks.push({id:'summary_owner_allowed',name:'summary_owner_allowed',expression:{op:'eq',left:{op:'field',field:ref('owner')},right:{op:'literal',value:{string:'g01_allowed'}}}});
+ if(constraintKind==='check')payload.tables[0]!.checks.push({id:'summary_not_filled',name:'summary_not_filled',expression:{op:'ne',left:{op:'field',field:ref('summary')},right:{op:'literal',value:{string:'filled'}}}});
  if(constraintKind==='unique')payload.tables[0]!.indexes.push({id:'summary_unique',name:'summary_unique',fields:[ref('summary')],unique:true,include:[]});
  if(constraintKind==='foreignKey')payload.tables[0]!.foreignKeys.push({id:'summary_fk',name:'summary_fk',fields:[ref('summary')],target:{record:ref('Note'),key:'primary'},onUpdate:'restrict',onDelete:'restrict',deferrable:false});
  if(withFillCommand)payload.commands.push({version:'umf.table-operation/0.1',id:'fill_summary',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'notes',where:{op:'isNull',field:ref('summary')},values:[{field:ref('summary'),value}],returning:[],maxRows}});
