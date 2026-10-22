@@ -79,11 +79,14 @@ class InventoryDependencyTests(unittest.TestCase):
                 "python -m unittest discover -s tests/lifecycle -p '*.py'",
                 "python -m unittest discover -s tests/lifecycle -p test_parser.py --unknown",
                 "python -m unittest discover -s tests/lifecycle -p 'unterminated",
+                "cat <<'TEXT'\npython -m unittest discover -s tests/lifecycle -p test_parser.py\nTEXT",
+                'echo "python -m unittest discover -s tests/lifecycle -p test_parser.py\n"',
+                "python -m unittest discover \\\n-s tests/lifecycle -p test_parser.py",
             ]}
             with patch.object(MODULE, "ROOT", root):
                 roots, unresolved = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected])
             self.assertEqual({}, roots)
-            self.assertEqual(8, len(unresolved))
+            self.assertEqual(11, len(unresolved))
             self.assertTrue(all(item["workflow"] == ".github/workflows/optional.yml" for item in unresolved))
             self.assertTrue(all(len(item["commandSha256"]) == 64 for item in unresolved))
             self.assertEqual({
@@ -91,6 +94,7 @@ class InventoryDependencyTests(unittest.TestCase):
                 "unbounded-or-out-of-root-unittest-start-directory",
                 "unbounded-or-invalid-unittest-pattern",
                 "malformed-unittest-discovery-command",
+                "multiline-unittest-discovery-run-block-not-admitted",
             }, {item["reason"] for item in unresolved})
 
     def test_rust_input_identity_covers_embedded_data_but_excludes_artifacts(self):

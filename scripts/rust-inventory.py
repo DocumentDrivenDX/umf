@@ -442,7 +442,14 @@ def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], sourc
         if ".github/workflows/" not in workflow:
             continue
         for run_value in run_values:
-            for command in run_value.splitlines():
+            logical_lines = run_value.splitlines()
+            if len(logical_lines) > 1:
+                if re.search(r"python(?:3(?:\.\d+)?)?\s+(?:-I\s+)?-m\s+unittest\s+discover(?:\s|$)",
+                             run_value, flags=re.ASCII):
+                    unresolved.append({"workflow": workflow, "commandSha256": sha(run_value.encode("utf-8")),
+                                       "reason": "multiline-unittest-discovery-run-block-not-admitted"})
+                continue
+            for command in logical_lines:
                 try:
                     tokens = shlex.split(command, comments=True)
                 except ValueError:
