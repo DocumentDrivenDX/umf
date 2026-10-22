@@ -208,3 +208,52 @@ five dialects, and 28 cases / 81 observations for legacy 2019-09. The additional
 AP annotation amendment with eight named changed rows. Preserve the original
 predecessor files and enforce exact decision/hash/selector guards. Qualify the
 legacy boolean-items runtime terminal separately from constructor refusal.
+
+
+R2 installed qualification must replay all 4,995 frozen official outcomes after
+source-origin binding changes. Supplement the Draft 2019-09 recursive-reference
+cases with native controls for nested recognized resource IDs, opaque annotation
+IDs, direct subresource descent versus reference lookup, anchored and unanchored
+history barriers, and the predecessor's canonical local-root behavior. Do not
+turn an evaluator mismatch into a broader correction or normalize an unrelated
+reference failure.
+
+
+The frozen recursive-resource-scope companion has 89 cases: 85 admitted schemas
+with 255 method observations and four construction refusals. Complete records
+match CPython 3.11.17, 3.12.15 and 3.13.16. Six legacy sibling-ID/reference rows
+remain runtime unresolved-pointer terminals (18 methods), distinct from the four
+constructor refusals. This packet contributes 255 method observations; metadata/path records are
+counted separately. Exact
+[design](../../04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-design.json)
+and [clarification](../../04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-clarification.json)
+receipts govern the scope and phase guards; no native outcome is rewritten.
+
+
+The additive resource-identity companion contains 114 admitted cases / 342
+method observations, matching across the same three Python profiles. It covers
+reached opaque-content references, active legacy IDs, trailing empty fragments,
+and distinct surrogate/pair/scalar/U+FFFD/private-marker identities. Its profile
+records class format-checker use, absent optional URI/IRI modules and absent
+registered URI checkers. A further named-anchor companion adds 24 admitted cases / 72 method
+observations for lossless anchor lookup and recursive-reference context. The
+combined installed gate now has 7,671 method observations and 263 separately
+counted metadata/path records. Predecessor files remain immutable; these
+companions introduce no semantic correction.
+
+The private resource representation owns exact native u32 codepoints. Verify
+that diagnostic UTF-16 projection never feeds URI identity, anchor lookup or
+resource selection. Resource locator, path, URI, history and snapshot allocations
+and comparisons require Context admission before work. Re-run all retained
+2 MiB depth/stack controls after changes to resolver state or evaluator frames;
+focused semantic packets alone do not qualify stack behavior.
+
+
+The independently reproduced URI/dialect companion adds 24 public cases / 72
+method observations and 140 direct native URI-join operations. It covers native
+empty-reference, trailing-slash, query, fragment, authority, scheme, relative and
+dot-segment behavior, including raw codepoint bases. It also distinguishes
+`definitions` and `$defs` resource boundaries across six drafts using the pinned
+referencing child catalog. Complete predecessor records match all three qualified
+Python profiles. The public methods enter the installed gate; direct URI
+operations remain internal Rust tests. No native expectation is rewritten.

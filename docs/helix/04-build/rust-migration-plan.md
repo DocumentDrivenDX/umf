@@ -51,13 +51,22 @@ implementation-plan evidence remains scoped to the artifacts it actually tested.
 
 ### R2 current status
 
-R2 production implementation is checkpointed at `a1eb5d627`. Independent Sol
-review has closed the known source findings; 206 workspace tests, 67 compiler
-tests / 478 assertions and real Chromium 139 core plus 70,542 regex comparisons
-pass with depth/resource controls. Installed-artifact qualification and final
-overall review remain open. R2 is not complete until the full gate passes and the
-PR merges. Earlier counts and failures below are dated implementation checkpoints;
-they do not supersede the final qualification receipt. Main is integrated through
+R2 production implementation is checkpointed at `a1eb5d627`, with an installed
+harness fix at `c13120f95`. The subsequent resolver source closure passes 214
+workspace tests, 67 compiler tests / 478 assertions, canonical generation and
+fixed-point checks, 139 real Chromium core cases, lint/type checks and migration
+boundaries. Independent Sol source review has no remaining blocking findings;
+committed installed-artifact qualification and overall review remain open.
+
+The first installed cohort (`c13120f95`) passed Node/Bun/CLI/default WASM, 198
+Python public tests and the core/admission/arithmetic controls, but exposed ten
+Draft 2019-09 recursive-reference mismatches. The source correction now passes
+89 scope, 114 identity, 24 named-anchor and 24 URI/dialect cases, plus 140 direct
+native URI operations. The installed gate includes 7,671 schema method
+observations and 263 separately counted error metadata/path records. These source
+results do not replace final installed qualification. R2 is complete only after
+the full gate, overall independent review and PR merge. Earlier checkpoints below
+remain historical. Main is integrated through
 `53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41); refresh before merging.
 
 The production boundary is a shared Rust core and metamodel compiler, a native
@@ -564,3 +573,17 @@ that explicitly identified unordered branch, with seed evidence and exact target
 controls. Other diagnostic and exception ordering remains an independent gate.
 This lesson applies to R3's newly expanded seven-operation surface: freeze the
 current full behavior and decide nondeterministic cases before implementing them.
+
+
+Python resource identity needs its native codepoint representation throughout
+resolution. A diagnostic UTF-16 projection can collapse an explicit surrogate
+pair and an astral scalar, while replacement of invalid scalars loses accepted
+resource identifiers. The private Rust URI representation therefore owns exact
+u32 codepoints and applies existing ASCII URI structure operations directly;
+immutable schema-node locators bind references and anchors. Diagnostic text never
+feeds lookup. Legacy embedded IDs remain active except where a same-object
+reference suppresses them, and trailing empty fragments remain valid. The frozen
+scope, identity and named-anchor companions guard these boundaries across the
+three qualified CPython profiles, including their absence of optional URI-format
+validators. R3 must preserve this distinction wherever source text becomes an
+identity key.

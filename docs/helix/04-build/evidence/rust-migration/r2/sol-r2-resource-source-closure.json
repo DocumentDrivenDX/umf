@@ -1,0 +1,124 @@
+{
+  "id": "R2-SOL-RESOURCE-SOURCE-CLOSURE-001",
+  "capturedAt": "2026-10-22T07:48:18.182648+00:00",
+  "reviewer": "Independent Sol final reviewer; did not implement the resource source changes",
+  "status": "conditional exact-source closure approved; final native and committed-source host qualification pending",
+  "sourceApproved": true,
+  "sourceApprovalScope": "Reviewed resource-binding/history/URI/anchor/allocation finding batch at exact hashes below. Previous440a95 source approval remains historical; this receipt does not approve final artifacts or overall R2 completion.",
+  "overallR2Approved": false,
+  "sourceHeadBeforeIntegrationCommit": "c13120f95deafbbf907c828c2591ab0fe09be5df",
+  "sourceState": "Coherent formatted working-tree source awaiting the authorized integration checkpoint and final full host gate.",
+  "sourceFileHashes": {
+    "crates/umf-core/src/schema.rs": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
+    "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "d39aaf10a6d7f55f905f617d51c632aea0ad52a1926079513b682f514669bcc3",
+    "crates/umf-core/tests/schema_helper_stack.rs": "2e722b48238f40ab7fbba4b98afdc1fb1772660f903a1bc9eedb35bac882d97f",
+    "crates/umf-core/tests/schema_depth_stack.rs": "7ed7f2eb69cc0dbaeebf73d37776206e1b76571b17fd4fc5d9ea641756bcf67b",
+    "crates/umf-core/tests/schema_annotation_stack.rs": "9b17bb63e9eda16eef17aa81adf1b42ddcefe09e1d7d72020822f324bfd7eec8",
+    "crates/umf-core/src/context.rs": "ed1075ba5cc9aec32c2959c899908dc5ad08914a05a57c266eee440a3aa5ced3",
+    "crates/umf-core/src/error.rs": "6a506da38cd9e4b58852b54cb811b40c049610c84cae65269a22d1aa148ab929",
+    "crates/umf-core/src/python_value.rs": "ec72fbd70e3d02efbe4bc40c4e6aa56847128aa364de5082e0cbb565e177b633",
+    "scripts/rust-core/schema-evaluation-order-conformance.py": "d910aca6fd8e1bffa435030300b54ec198d748a0290e8a38458a1d4b026bced7",
+    "scripts/rust-core/full-conformance.ts": "8adf621099f9ca5720643e32e1c135ddfeb79cb35e0b6fd569733bd6407ab63c"
+  },
+  "governingArtifacts": [
+    "CONTRACT-080",
+    "TD-091",
+    "STP-091",
+    "ADR-006",
+    "docs/helix/04-build/rust-migration-plan.md"
+  ],
+  "closedSourceFindings": [
+    {
+      "area": "Source resource scope",
+      "closure": "Bound local pointers resolve from nearest recognized source-resource locators. Native dialect-aware ID selection retains legacy same-object $ref suppression, active legacy IDs otherwise, and trailing empty fragments. The referencing-version child catalog distinguishes definitions/$defs and other dialect-specific children."
+    },
+    {
+      "area": "Reached opaque targets",
+      "closure": "All source trees retain reference origins even in opaque containers, while resource-boundary recognition remains separate. Reached opaque local references preserve raw-pair versus astral pointer identity without promoting opaque IDs."
+    },
+    {
+      "area": "Lossless URI identity",
+      "closure": "Private PythonResourceUri owns exact u32 codepoints. Lone surrogates, explicit pairs, astral scalars, U+FFFD and marker text remain distinct; no replacement or new refusal. Diagnostic UTF-16 is one-way and is not a URI/resource identity route."
+    },
+    {
+      "area": "Native URI mechanics",
+      "closure": "Raw-codepoint parser/join follows the pinned finite native urllib grammar for empty references, slash/trailing slash, params/query/fragment, authority, scheme, relative and dot segments. Nested IDs use parser-based joining without a colon-anywhere shortcut. The single independently verified140-operation packet and24 public dialect controls are wired into native tests."
+    },
+    {
+      "area": "Recursive and dynamic scope",
+      "closure": "Draft2019 canonical # lookup and nearest-first recursive lookup history use resource locators and anchored/unanchored barriers separately from ordinary descent. Named anchors bind from native source. Python dynamic scope retargeting uses immutable node identity and metered borrowed search rather than diagnostic URI reconstruction. Scope snapshots remain branch-local."
+    },
+    {
+      "area": "Before-owned-work admission",
+      "closure": "New URI construction, comparisons, joins, locator/path/root-map/history/snapshot copies and binder scans charge Context before work/allocation. Local-reference source admission now charges path construction before append/copy. No new private text ceiling or swallowed host operational error is introduced."
+    },
+    {
+      "area": "Retained stack contract",
+      "closure": "Static and dynamic reference phases are split into non-inlined helpers. Source retains all ordinary/annotation/heavy-helper2MiB depth128 acceptance and depth129 LIMIT controls; final same-source execution remains a qualification condition."
+    }
+  ],
+  "openSourceFindingsInReviewedBatch": [],
+  "reviewMethod": [
+    "Read exact source and native test reader; compared source-ID, resource child, history and anchor mechanisms with pinned referencing0.37/jsonschema4.26 source and the immutable packets.",
+    "Independently executed exact-predecessor counterexamples during review for opaque raw-origin references, active legacy resource IDs, surrogate-ID admission and opaque legacy $defs. Their source mechanisms are now closed and bounded companions retain native outcomes.",
+    "Independently reviewed and reproduced the single finite URI/dialect packet; see its separate independent-review receipt for full commands/capture limits.",
+    "Inspected the retained ordinary evaluator, fixed-order annotation visitor, trusted terminal provenance and explicit public admission boundaries for effects of the resolver changes."
+  ],
+  "frozenEvidenceHashes": {
+    "sol-python-recursive-resource-scope-design.json": "8a4d6da41bfabefae4ef6e8d31f755bd7336c4bb831a61cb581f9dfd6983acea",
+    "sol-python-recursive-resource-scope-clarification.json": "a1ee054a022d62e36ed9bbb67c61b87f31afa29251dd649efdc6e97aa3feffb7",
+    "sol-python-recursive-resource-scope-predecessor.json": "c67b6602a40235a9202a00082949e6a9a8af3db1aee614110275afb303de9b15",
+    "sol-python-recursive-resource-scope-profiles.json": "c9953569f226700e7b03bb4529981ae644649e11e40b09597fc86b2d4c703f54",
+    "sol-python-resource-identity-design.json": "18832e1b97dc010fbee2418865541cc2c23f9468441821ed384d8a248b155b88",
+    "sol-python-resource-identity-representation.json": "7d657027d557ad143e8e057c0b9821909f641deedd85ff554ce0700a4712265f",
+    "sol-python-resource-identity-companion-predecessor.json": "75f772e29f3776969739c423c98b722f9597895bd6e2c215e4fe7f7c3fc44609",
+    "sol-python-resource-identity-companion-profiles.json": "24ad0adb3e80654d9ce105c84ffcb19f1467d124aa28aa85f81bfca1ab5ea103",
+    "sol-python-resource-anchor-companion-predecessor.json": "ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5",
+    "sol-python-resource-anchor-companion-profiles.json": "2b0502daba9e9d04d3e72da71ea2c8c325cbee3242b11de0e6a7885eccbe084d",
+    "sol-python-resource-uri-operations-predecessor.json": "e79cdee8693892517cc372f9b5b05d902199e78b734175bf10359baadeabfae9",
+    "sol-python-resource-uri-operations-profiles.json": "1017a9140607d05e84c8f5998cb23ebcb8b4cc3d97cb3c78f691da50768e86fb",
+    "sol-python-resource-uri-operations-independent-review.json": "b859d271d81252dfc66e74e6ee1557c85e0878f568b75bd1211f96cc0daf98d2"
+  },
+  "nativePackets": {
+    "originalResourceScope": {
+      "cases": 89,
+      "admittedCases": 85,
+      "methods": 255,
+      "constructorRefusals": 4
+    },
+    "identity": {
+      "cases": 114,
+      "methods": 342,
+      "constructorRefusals": 0
+    },
+    "anchor": {
+      "cases": 24,
+      "methods": 72,
+      "constructorRefusals": 0
+    },
+    "uriAndDialect": {
+      "cases": 24,
+      "methods": 72,
+      "constructorRefusals": 0,
+      "nativeUriOperations": 140
+    },
+    "installedGateTotalMethods": 7671,
+    "separateMetadataSubjectPathRecords": 263
+  },
+  "costAssessment": {
+    "immutableUriCopies": "Vec<u32> URI payloads can be duplicated across bound references/history. Actual owned copies are charged before allocation, which is permitted by the cooperative contract. Arc sharing is an optional optimization, not a source closure blocker.",
+    "limits": "No hard process-memory, preemption, universal URI/platform/standards or performance claim follows from this source approval."
+  },
+  "qualificationStateAtReview": {
+    "fullWorkspace": "Running at /private/tmp/umf-r2-resource-final-workspace.log; no final passing claim in this receipt.",
+    "rootReportedChecks": "Canonical eleven outputs, compiler67 tests/478 assertions, non-writing generated check, metamodel browser139, TypeScript configs, Ruff, authority and15 boundary controls green; reconcile durable exact-source receipts at final review."
+  },
+  "remainingApprovalConditions": [
+    "Finish fresh full workspace including all retained native reference/ordered/annotation/arithmetic/regex/serialization controls, original89+identity114+anchor24+uri24 public packets,140 direct URI operations and work-denial tests.",
+    "All normal2MiB helper/depth tests must pass without stack/depth relaxation, with current frame evidence; repeat ordinary and annotated depth128/129 on actual newly built WASM.",
+    "Commit a coherent clean checkpoint with canonical source provenance and refreshed inventory/authority/boundary/generated evidence; run final source-bound benchmark and original/sdist rebuilt-wheel/CLI/npm-packed Node/Bun/default-WASM/feature-WASM host gate.",
+    "Final installed comparisons must include9282 admission,4995 official cases,2586 arithmetic,7671 ordered/reference/annotation/resource method observations,263 metadata/subject/path records,5226 serializer and all retained shared139/runtime/regex controls using immutable fixtures and exact approved corrections.",
+    "Before/after source closure hashes and artifact inventories must reconcile; native/feature/default artifacts must match exact hashes and scope; final independent overall review and required CI/merge remain pending."
+  ],
+  "publication": "No package publication is authorized by this receipt."
+}

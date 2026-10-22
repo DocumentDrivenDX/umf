@@ -167,16 +167,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "ecd3223c0ac7ef04f800e39329cce4b4c8fb60a50ea292c46c19773de1c4d32d",
+    "sourceCohortSha256": "1ad5ea4db97f29c2145b2c3f645d3913c16bd7088f16ca8bf18c1815bb64843a",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 301,
-    "algorithmSymbols": 9739,
+    "algorithmSymbols": 9750,
     "pythonModules": 98,
-    "rustBuildInputs": 72,
-    "rustModules": 79,
-    "scriptFiles": 2886,
+    "rustBuildInputs": 73,
+    "rustModules": 80,
+    "scriptFiles": 2887,
     "sourceModules": 569,
     "typescriptModules": 471
   },
@@ -5688,6 +5688,11 @@
       "sha256": "bfb121a2aaa8fa3d77f3429ae2aaed879cc53cacad6fbe42a2513043b80fcb9a"
     },
     {
+      "bytes": 14322,
+      "path": "crates/umf-core/src/python_uri.LICENSE",
+      "sha256": "87be3b02582cd0088845ad069a3afa9ad17eee76fae7b999fbba0f8588d80dfd"
+    },
+    {
       "bytes": 1388,
       "path": "crates/umf-core/src/schema_metas.LICENSE",
       "sha256": "4f2a34d2ee51aa8cce232c73bdc446b4faf3e4adc791b4f25176b114a4227797"
@@ -6493,15 +6498,18 @@
       "sha256": "a1b3d45c8433738e0be993f0409a65f6f4239754f6564cb18ffe25dd8c0f28f6"
     },
     {
-      "bytes": 270574,
+      "bytes": 324749,
       "disposition": "production-host-free-rust-engine",
       "imports": [
+        "crate::context::WorkMeter",
+        "crate::python_value::PyText",
         "crate::python_value::PythonConsumerValue as Py",
         "crate::{\n    context::Context,\n    error::{EngineError, PythonSchemaTerminal},\n    python_regex::{PythonReVersion, PythonRegex},\n    python_value::{\n        instances_equal, value_equals_instance, InstanceKind, InstanceNumber, InstanceText,\n        InstanceView,\n    },\n    value::{copy_json, Utf16, Value},\n}",
         "num_bigint::BigInt",
         "num_traits::ToPrimitive",
         "num_traits::Zero",
-        "std::collections::BTreeSet"
+        "std::collections::BTreeSet",
+        "super::*"
       ],
       "language": "rust",
       "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
@@ -6522,7 +6530,7 @@
         "snapshot_with_context",
         "validate"
       ],
-      "sha256": "440a95b1bd4a672be707312749c4928b1b4b6428228b1b4108861b217f4bd391"
+      "sha256": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813"
     },
     {
       "bytes": 116212,
@@ -6840,6 +6848,20 @@
       "path": "crates/umf-core/tests/schema_python_path_keys.rs",
       "publicExports": [],
       "sha256": "74b767653ef1aea6b2a6f68c9f7826bd88c0ef6a16e8aa3e2cbb0d2a13de7a17"
+    },
+    {
+      "bytes": 13520,
+      "disposition": "production-host-free-rust-engine",
+      "imports": [
+        "num_bigint::BigInt",
+        "serde_json::Value as Json",
+        "umf_core::{\n    python_value::PythonSchemaPathSegment, schema::CompiledSchema, Context, EngineError, PyText,\n    PythonCompiledSchema, PythonConsumerValue as Py, PythonReVersion, PythonSchemaEvaluationMode,\n    PythonSchemaResources,\n}"
+      ],
+      "language": "rust",
+      "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
+      "path": "crates/umf-core/tests/schema_python_recursive_resource_scope.rs",
+      "publicExports": [],
+      "sha256": "d39aaf10a6d7f55f905f617d51c632aea0ad52a1926079513b682f514669bcc3"
     },
     {
       "bytes": 11048,
@@ -11395,7 +11417,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/generated_core.py",
-      "sha256": "8a2a2e6d201aca0f0049611220426598fa7fb1f4b98f776ea904181b867ed50e"
+      "sha256": "ce5439abff00b55bcece2134b1459bef531e80d93acb28099b0d9d8e878113ea"
     },
     {
       "activationEvidence": [],
@@ -31373,18 +31395,39 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "digest",
+        "existing_artifacts",
+        "file_record",
+        "main",
+        "run_checked",
+        "rust_build_flags",
+        "source_manifest",
+        "time_report",
+        "timed_binary"
+      ],
+      "bytes": 13658,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/rust-core/benchmark-r2-core.py",
+      "sha256": "0e99c0dea661f8c457faf691c2fb5b95840d3cd3662de424c089454307526c8c"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "get",
         "nested",
         "parseRegexOutcome",
         "withExamples",
         "yamlMap"
       ],
-      "bytes": 24654,
+      "bytes": 24818,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/browser-conformance.ts",
-      "sha256": "1ec475c97cebedecf37d857c1c4ea0573e6ef9508b69c1e056079b71aef065c2"
+      "sha256": "ef392b0b73898e736eb912f6c85c97c7c4d869131c8d49e2ab5f33eef5e4135d"
     },
     {
       "activationEvidence": [],
@@ -31461,6 +31504,7 @@
       ],
       "active": true,
       "algorithmSymbols": [
+        "artifactContent",
         "candidates",
         "command",
         "createNoJavascriptToolPath",
@@ -31475,12 +31519,12 @@
         "sourceClosure",
         "walk"
       ],
-      "bytes": 51622,
+      "bytes": 59120,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-core/full-conformance.ts",
-      "sha256": "ab4ced9cfb5f33d7a2a4023fba66eef1878012bd7de0b9abddac780f1004a292"
+      "sha256": "8adf621099f9ca5720643e32e1c135ddfeb79cb35e0b6fd569733bd6407ab63c"
     },
     {
       "activationEvidence": [],
@@ -31535,6 +31579,7 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "admission_error_record",
         "candidate_metadata",
         "candidate_method",
         "error_record",
@@ -31551,12 +31596,12 @@
         "verify_cross_version_profiles",
         "verify_legacy_ap_correction"
       ],
-      "bytes": 50766,
+      "bytes": 71299,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/schema-evaluation-order-conformance.py",
-      "sha256": "aa18a26f2e08b49a2a282e2ed135a041039b1075519ddaf389ec2d3e84067154"
+      "sha256": "d910aca6fd8e1bffa435030300b54ec198d748a0290e8a38458a1d4b026bced7"
     },
     {
       "activationEvidence": [],
@@ -52354,7 +52399,7 @@
       "path": "python/umf_access/src/umf_access/generated_core.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "8a2a2e6d201aca0f0049611220426598fa7fb1f4b98f776ea904181b867ed50e"
+      "sha256": "ce5439abff00b55bcece2134b1459bef531e80d93acb28099b0d9d8e878113ea"
     },
     {
       "bytes": 833,
@@ -65369,7 +65414,7 @@
         "spec/metamodel/generated/core-constraints.json",
         "spec/metamodel/generated/domain-policy.json"
       ],
-      "sha256": "1ce1f4643130fbaea88e35bac09a3d72cd10431454c0f698b2025344b6c02f70"
+      "sha256": "5c740ecc3e972bf0a42bfbb7668a8b0334b41c0187e352811d7cc0817d40c892"
     },
     {
       "bytes": 284515,
@@ -65390,7 +65435,7 @@
       "resolvedImports": [
         "node_modules/ajv/dist/ajv.d.ts"
       ],
-      "sha256": "be044776f0809710e3a7fd996010565b683774a343105738e9265290a471d571"
+      "sha256": "43708fb1b84bf0796b1cf436748792ab912ab75df16b35af9f82690b2bb313fd"
     },
     {
       "bytes": 31768,

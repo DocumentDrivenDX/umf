@@ -119,6 +119,43 @@ FIXTURES = {
         "methodObservations": 159,
         "schemaAdmissionRefusals": 0,
     },
+    "umf.r2-sol-python-recursive-resource-scope/1": {
+        "file": "sol-python-recursive-resource-scope-predecessor.json",
+        "sha256": "c67b6602a40235a9202a00082949e6a9a8af3db1aee614110275afb303de9b15",
+        "cases": 89,
+        "methodObservations": 255,
+        "schemaAdmissionRefusals": 4,
+        "admissionErrorCases": {
+            "official-7-0": "SCHEMA_REF_UNRESOLVED",
+            "official-7-1": "SCHEMA_REF_UNRESOLVED",
+            "official-8-0": "SCHEMA_REF_UNRESOLVED",
+            "official-8-1": "SCHEMA_REF_UNRESOLVED",
+        },
+    },
+    "umf.r2-sol-python-resource-identity-companion/1": {
+        "file": "sol-python-resource-identity-companion-predecessor.json",
+        "sha256": "75f772e29f3776969739c423c98b722f9597895bd6e2c215e4fe7f7c3fc44609",
+        "cases": 114,
+        "methodObservations": 342,
+        "schemaAdmissionRefusals": 0,
+        "runtimeErrorObservations": 0,
+    },
+    "umf.r2-sol-python-resource-anchor-companion/1": {
+        "file": "sol-python-resource-anchor-companion-predecessor.json",
+        "sha256": "ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5",
+        "cases": 24,
+        "methodObservations": 72,
+        "schemaAdmissionRefusals": 0,
+        "runtimeErrorObservations": 0,
+    },
+    "umf.r2-sol-python-resource-uri-operations/1": {
+        "file": "sol-python-resource-uri-operations-predecessor.json",
+        "sha256": "e79cdee8693892517cc372f9b5b05d902199e78b734175bf10359baadeabfae9",
+        "cases": 24,
+        "methodObservations": 72,
+        "schemaAdmissionRefusals": 0,
+        "runtimeErrorObservations": 0,
+    },
 }
 BASE_FIXTURES = tuple(key for key in FIXTURES if key not in {
     "umf.r2-sol-python-schema-yield-boundaries/1",
@@ -134,6 +171,10 @@ BASE_FIXTURES = tuple(key for key in FIXTURES if key not in {
     "umf.r2-sol-python-schema-path-segments/1",
     "umf.r2-sol-python-schema-path-keys/1",
     "umf.r2-sol-python-schema-annotation-order/1",
+    "umf.r2-sol-python-recursive-resource-scope/1",
+    "umf.r2-sol-python-resource-identity-companion/1",
+    "umf.r2-sol-python-resource-anchor-companion/1",
+    "umf.r2-sol-python-resource-uri-operations/1",
 })
 DECISION_SHA256 = "038cbc7c8c0de56212a562bb40eccc98276a8b1afeaf78d7d27184f1d8dc80b2"
 PROFILES_SHA256 = "727abe40d115fe5d54bf323e7a85649b1efab7f918b7f52f7b2254e9da24f172"
@@ -160,6 +201,16 @@ REFERENCE_INDICES_PROFILES_SHA256 = "fbe607c386aa26835f69c5d963b7b299d1d56e99359
 PATH_SEGMENTS_PROFILES_SHA256 = "add048101b07a240b4a0e574ec272f766223538130a5e9cfca7031ba696bd2b0"
 PATH_KEYS_PROFILES_SHA256 = "05c89f3719d2686800e866feb436b9291d9572e50b4d26390dcede3605f74fc5"
 ANNOTATION_ORDER_PROFILES_SHA256 = "08a25a650d341ce56f781f92c6ed598958ee9fd6fd0063d0dd6c99326bb040b0"
+RECURSIVE_SCOPE_PROFILES_SHA256 = "c9953569f226700e7b03bb4529981ae644649e11e40b09597fc86b2d4c703f54"
+RECURSIVE_SCOPE_DESIGN_SHA256 = "8a4d6da41bfabefae4ef6e8d31f755bd7336c4bb831a61cb581f9dfd6983acea"
+RECURSIVE_SCOPE_CLARIFICATION_SHA256 = "a1ee054a022d62e36ed9bbb67c61b87f31afa29251dd649efdc6e97aa3feffb7"
+RESOURCE_IDENTITY_PROFILES_SHA256 = "24ad0adb3e80654d9ce105c84ffcb19f1467d124aa28aa85f81bfca1ab5ea103"
+RESOURCE_IDENTITY_DESIGN_SHA256 = "18832e1b97dc010fbee2418865541cc2c23f9468441821ed384d8a248b155b88"
+RESOURCE_ANCHOR_PROFILES_SHA256 = "2b0502daba9e9d04d3e72da71ea2c8c325cbee3242b11de0e6a7885eccbe084d"
+RESOURCE_IDENTITY_REPRESENTATION_SHA256 = "7d657027d557ad143e8e057c0b9821909f641deedd85ff554ce0700a4712265f"
+RESOURCE_URI_OPERATIONS_PROFILES_SHA256 = "1017a9140607d05e84c8f5998cb23ebcb8b4cc3d97cb3c78f691da50768e86fb"
+RESOURCE_URI_OPERATIONS_INDEPENDENT_REVIEW_SHA256 = "b859d271d81252dfc66e74e6ee1557c85e0878f568b75bd1211f96cc0daf98d2"
+RESOURCE_URI_OPERATIONS_GENERATOR_SHA256 = "db2a75afe2d98c13f6c1def642c1e029198c800efd701d14cb90bfd1c1399fd8"
 REFERENCE_TERMINAL_DECISION_SHA256 = "b59548a2480f3373dce7f8b44c385afe1f7aa346aebc221f0689f6b9b6ee6da3"
 REFERENCE_PROFILE_AMENDMENT_SHA256 = "847b79e0b20840cb23a3f0479c2b29f931f868b13c237e09b5a1a2f5b92f62dc"
 
@@ -175,6 +226,8 @@ def recipe_value(recipe: dict) -> object:
     if kind == "integer":
         return int(recipe["decimal"])
     if kind == "string":
+        if "codepoints" in recipe:
+            return "".join(chr(point) for point in recipe["codepoints"])
         if "points" in recipe:
             return "".join(chr(point) for point in recipe["points"])
         return recipe["value"]
@@ -187,7 +240,12 @@ def recipe_value(recipe: dict) -> object:
     if kind == "array":
         return [recipe_value(item) for item in recipe["items"]]
     if kind == "object":
-        return {key: recipe_value(value) for key, value in recipe["members"]}
+        members = {}
+        for key, value in recipe["members"]:
+            if isinstance(key, list):
+                key = "".join(chr(point) for point in key)
+            members[key] = recipe_value(value)
+        return members
     raise RuntimeError(f"Unknown frozen schema instance recipe: {kind}")
 
 
@@ -223,6 +281,13 @@ def error_record(error: BaseException) -> dict:
             },
         }
     return {"status": "unexpected-error", "type": type(error).__name__, "code": code, "message": str(error)}
+
+
+def admission_error_record(error: BaseException) -> dict:
+    code = getattr(error, "code", None)
+    if code == "SCHEMA_REF_UNRESOLVED":
+        return {"status": "schema-admission-error", "code": code}
+    return {"status": "unexpected-admission-error", "type": type(error).__name__, "code": code}
 
 
 def candidate_method(validator, instance: object, method: str) -> dict:
@@ -709,6 +774,234 @@ def main() -> None:
         raise RuntimeError("Unexpected approved unordered-extra target")
     legacy_ap_target_cases, legacy_ap_selected_methods = verify_legacy_ap_correction()
 
+    recursive_config = FIXTURES["umf.r2-sol-python-recursive-resource-scope/1"]
+    recursive_profiles_path = EVIDENCE / "sol-python-recursive-resource-scope-profiles.json"
+    recursive_design_path = EVIDENCE / "sol-python-recursive-resource-scope-design.json"
+    recursive_clarification_path = EVIDENCE / "sol-python-recursive-resource-scope-clarification.json"
+    if (sha256(recursive_profiles_path) != RECURSIVE_SCOPE_PROFILES_SHA256
+            or sha256(recursive_design_path) != RECURSIVE_SCOPE_DESIGN_SHA256
+            or sha256(recursive_clarification_path) != RECURSIVE_SCOPE_CLARIFICATION_SHA256):
+        raise RuntimeError("Recursive resource-scope review inputs changed")
+    recursive_profiles = json.loads(recursive_profiles_path.read_text(encoding="utf-8"))
+    recursive_design = json.loads(recursive_design_path.read_text(encoding="utf-8"))
+    recursive_clarification = json.loads(recursive_clarification_path.read_text(encoding="utf-8"))
+    if (recursive_profiles.get("id") != "R2-SOL-PYTHON-RECURSIVE-RESOURCE-SCOPE-PROFILES-001"
+            or recursive_profiles.get("profile") != "umf.r2-sol-python-recursive-resource-scope/1"
+            or recursive_profiles.get("fixture") != recursive_config["file"]
+            or recursive_profiles.get("fixtureSha256") != recursive_config["sha256"]
+            or recursive_profiles.get("basePython") != "3.11.17"
+            or recursive_profiles.get("baseCaptureSha256") != recursive_config["sha256"]
+            or recursive_profiles.get("jsonschema") != "4.26.0"
+            or recursive_profiles.get("cases") != 89
+            or recursive_profiles.get("methods") != 255
+            or recursive_profiles.get("constructorRefusals") != 4
+            or recursive_design.get("id") != "R2-SOL-PYTHON-RESOURCE-SCOPE-001"
+            or recursive_design.get("fixture", {}).get("sha256") != recursive_config["sha256"]
+            or recursive_design.get("fixture", {}).get("cases") != 89
+            or recursive_design.get("fixture", {}).get("admittedCases") != 85
+            or recursive_design.get("fixture", {}).get("methods") != 255
+            or recursive_design.get("fixture", {}).get("constructorRefusals") != 4
+            or recursive_clarification.get("id") != "R2-SOL-PYTHON-RESOURCE-SCOPE-CLARIFICATION-001"
+            or recursive_clarification.get("fixture", {}).get("sha256") != recursive_config["sha256"]
+            or recursive_clarification.get("baseDesign", {}).get("sha256") != RECURSIVE_SCOPE_DESIGN_SHA256
+            or recursive_clarification.get("phaseAndEnvelope", {}).get("construction", {}).get("ids")
+            != list(recursive_config["admissionErrorCases"])
+            or recursive_clarification.get("phaseAndEnvelope", {}).get("construction", {}).get("target")
+            != {"status": "schema-admission-error", "code": "SCHEMA_REF_UNRESOLVED"}
+            or recursive_clarification.get("phaseAndEnvelope", {}).get("runtime", {}).get("ids")
+            != [
+                "draft4-nested-pointer-inner", "draft4-nested-pointer-outer",
+                "draft6-nested-pointer-inner", "draft6-nested-pointer-outer",
+                "draft7-nested-pointer-inner", "draft7-nested-pointer-outer",
+            ]
+            or recursive_clarification.get("phaseAndEnvelope", {}).get("runtime", {}).get("target", {}).get("code")
+            != "SCHEMA_REF_UNRESOLVED"):
+        raise RuntimeError("Unexpected recursive resource-scope profile/design receipt")
+    recursive_cases = {case["id"]: case for case in json.loads(
+        (EVIDENCE / recursive_config["file"]).read_text(encoding="utf-8")
+    )["cases"]}
+    runtime_reference_ids = recursive_clarification["phaseAndEnvelope"]["runtime"]["ids"]
+    if any(
+            case_id not in recursive_cases
+            or set(recursive_cases[case_id].get("methods", {})) != {"is_valid", "validate", "iterate"}
+            or any(recursive_cases[case_id]["methods"][method].get("status") != "evaluation-error"
+                   or method == "iterate" and recursive_cases[case_id]["methods"][method].get("prefix") != []
+                   for method in ("is_valid", "validate", "iterate"))
+            for case_id in runtime_reference_ids):
+        raise RuntimeError("Recursive-scope clarification runtime rows no longer match the frozen 18-method phase")
+    recursive_profile_entries = recursive_profiles.get("profiles", [])
+    expected_recursive_profiles = {
+        "3.12.15": "a2668db417d9d17c82c594392f23c00926ef1d6cc8e6c18c6c960248af0ae769",
+        "3.13.16": "e51c0ab7e215e9d9b501e8cf8a11f80412c9f73718c6376343d9f809c9b0b41e",
+    }
+    if {item.get("python") for item in recursive_profile_entries} != set(expected_recursive_profiles):
+        raise RuntimeError("Unexpected recursive resource-scope cross-version profile set")
+    for item in recursive_profile_entries:
+        if (item.get("captureSha256") != expected_recursive_profiles[item["python"]]
+                or item.get("completeCaseRecordsEqual") is not True
+                or item.get("typedSourceAndInstanceRecipesEqual") is not True
+                or item.get("cases") != 89
+                or item.get("methods") != 255
+                or item.get("constructorRefusals") != 4):
+            raise RuntimeError(f"Incomplete recursive resource-scope profile for {item.get('python')}")
+
+    identity_config = FIXTURES["umf.r2-sol-python-resource-identity-companion/1"]
+    identity_profiles_path = EVIDENCE / "sol-python-resource-identity-companion-profiles.json"
+    identity_design_path = EVIDENCE / "sol-python-resource-identity-design.json"
+    if (sha256(identity_profiles_path) != RESOURCE_IDENTITY_PROFILES_SHA256
+            or sha256(identity_design_path) != RESOURCE_IDENTITY_DESIGN_SHA256):
+        raise RuntimeError("Python resource-identity companion review inputs changed")
+    identity_profiles = json.loads(identity_profiles_path.read_text(encoding="utf-8"))
+    identity_design = json.loads(identity_design_path.read_text(encoding="utf-8"))
+    identity_uri_profile = {
+        "checkSchemaUsesClassFormatChecker": True,
+        "optionalModules": {
+            "rfc3987": False,
+            "rfc3986_validator": False,
+            "rfc3987_syntax": False,
+            "uri_template": False,
+        },
+        "registeredUriFormatCheckers": {
+            "Draft4Validator": [],
+            "Draft6Validator": [],
+            "Draft7Validator": [],
+            "Draft201909Validator": [],
+            "Draft202012Validator": [],
+        },
+        "declaredPredecessorDependency": "jsonschema>=4.25,<5 without format extras",
+    }
+    if (identity_profiles.get("id") != "R2-SOL-PYTHON-RESOURCE-IDENTITY-PROFILES-001"
+            or identity_profiles.get("profile") != "umf.r2-sol-python-resource-identity-companion/1"
+            or identity_profiles.get("fixture") != identity_config["file"]
+            or identity_profiles.get("fixtureSha256") != identity_config["sha256"]
+            or identity_profiles.get("basePython") != "3.11.17"
+            or identity_profiles.get("baseCaptureSha256") != identity_config["sha256"]
+            or identity_profiles.get("jsonschema") != "4.26.0"
+            or identity_profiles.get("referencing") != "0.37.0"
+            or identity_profiles.get("cases") != 114
+            or identity_profiles.get("methods") != 342
+            or identity_profiles.get("constructorRefusals") != 0
+            or identity_profiles.get("uriAdmissionProfile") != identity_uri_profile
+            or identity_design.get("id") != "R2-SOL-PYTHON-RESOURCE-IDENTITY-001"
+            or identity_design.get("fixture", {}).get("sha256") != identity_config["sha256"]
+            or identity_design.get("fixture", {}).get("cases") != 114
+            or identity_design.get("fixture", {}).get("methods") != 342
+            or identity_design.get("fixture", {}).get("constructorRefusals") != 0
+            or identity_design.get("nativeUriProfile") != identity_uri_profile):
+        raise RuntimeError("Unexpected Python resource-identity profile/design receipt")
+    expected_identity_profiles = {
+        "3.12.15": "da79275b90b9b6ff90af946057df117d277741710ccb1ef18be3482d63ac776b",
+        "3.13.16": "1148d7310a1979dd3180a57ca66da10bcff20715fc36051e0e061a920007483c",
+    }
+    identity_profile_entries = identity_profiles.get("profiles", [])
+    if {item.get("python") for item in identity_profile_entries} != set(expected_identity_profiles):
+        raise RuntimeError("Unexpected resource-identity cross-version profile set")
+    for item in identity_profile_entries:
+        if (item.get("captureSha256") != expected_identity_profiles[item["python"]]
+                or item.get("completeCaseRecordsEqual") is not True
+                or item.get("typedSourceAndInstanceRecipesEqual") is not True
+                or item.get("uriAdmissionProfileEqual") is not True
+                or item.get("cases") != 114
+                or item.get("methods") != 342
+                or item.get("constructorRefusals") != 0):
+            raise RuntimeError(f"Incomplete resource-identity profile for {item.get('python')}")
+
+    anchor_config = FIXTURES["umf.r2-sol-python-resource-anchor-companion/1"]
+    anchor_profiles_path = EVIDENCE / "sol-python-resource-anchor-companion-profiles.json"
+    identity_representation_path = EVIDENCE / "sol-python-resource-identity-representation.json"
+    if (sha256(anchor_profiles_path) != RESOURCE_ANCHOR_PROFILES_SHA256
+            or sha256(identity_representation_path) != RESOURCE_IDENTITY_REPRESENTATION_SHA256):
+        raise RuntimeError("Python resource-anchor review inputs changed")
+    anchor_profiles = json.loads(anchor_profiles_path.read_text(encoding="utf-8"))
+    identity_representation = json.loads(identity_representation_path.read_text(encoding="utf-8"))
+    if (anchor_profiles.get("id") != "R2-SOL-PYTHON-RESOURCE-ANCHOR-PROFILES-001"
+            or anchor_profiles.get("fixture") != anchor_config["file"]
+            or anchor_profiles.get("sha256") != anchor_config["sha256"]
+            or anchor_profiles.get("cases") != 24
+            or anchor_profiles.get("methods") != 72
+            or anchor_profiles.get("constructorRefusals") != 0
+            or anchor_profiles.get("target") != "Exact frozen predecessor; no semantic correction."
+            or identity_representation.get("id") != "R2-SOL-PYTHON-RESOURCE-IDENTITY-REPRESENTATION-001"
+            or identity_representation.get("qualification", {}).get("identity114") != identity_config["sha256"]
+            or identity_representation.get("qualification", {}).get("anchor24") != anchor_config["sha256"]):
+        raise RuntimeError("Unexpected Python resource-anchor profile/representation receipt")
+    expected_anchor_profiles = {
+        "3.11.17": "ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5",
+        "3.12.15": "c8e6f7f2a69f5efe9595dc5357b39f27a8788274462e38b964ae30da7dff00bb",
+        "3.13.16": "61383ec0c7ac95d464a6039204af009fa9a8bde737a5f66c26a8c9478f462894",
+    }
+    anchor_profile_entries = anchor_profiles.get("profiles", [])
+    if {item.get("python") for item in anchor_profile_entries} != set(expected_anchor_profiles):
+        raise RuntimeError("Unexpected resource-anchor cross-version profile set")
+    for item in anchor_profile_entries:
+        if (item.get("captureSha256") != expected_anchor_profiles[item["python"]]
+                or item.get("recordsEqual") is not True
+                or item.get("uriAdmissionProfileEqual") is not True):
+            raise RuntimeError(f"Incomplete resource-anchor profile for {item.get('python')}")
+
+    uri_operations_config = FIXTURES["umf.r2-sol-python-resource-uri-operations/1"]
+    uri_operations_profiles_path = EVIDENCE / "sol-python-resource-uri-operations-profiles.json"
+    uri_operations_review_path = EVIDENCE / "sol-python-resource-uri-operations-independent-review.json"
+    uri_operations_generator_path = EVIDENCE / "freeze-python-resource-uri-operations.py"
+    if (sha256(uri_operations_profiles_path) != RESOURCE_URI_OPERATIONS_PROFILES_SHA256
+            or sha256(uri_operations_review_path) != RESOURCE_URI_OPERATIONS_INDEPENDENT_REVIEW_SHA256
+            or sha256(uri_operations_generator_path) != RESOURCE_URI_OPERATIONS_GENERATOR_SHA256):
+        raise RuntimeError("Python resource-URI operation review inputs changed")
+    uri_operations_profiles = json.loads(uri_operations_profiles_path.read_text(encoding="utf-8"))
+    uri_operations_review = json.loads(uri_operations_review_path.read_text(encoding="utf-8"))
+    expected_uri_operations_captures = {
+        "3.11.17": uri_operations_config["sha256"],
+        "3.12.15": "bd602fb6df7048475df71080faa45bbeb462c86a172050f1398743cb759a7970",
+        "3.13.16": "c0435239437dfdb8a9c9997203354435a2422784324870c69614d94f03e50a7f",
+    }
+    uri_profile = {
+        "checkSchemaUsesClassFormatChecker": True,
+        "optionalModules": {
+            "rfc3987": False,
+            "rfc3986_validator": False,
+            "rfc3987_syntax": False,
+            "uri_template": False,
+        },
+        "registeredUriFormatCheckers": {
+            "Draft4Validator": [],
+            "Draft6Validator": [],
+            "Draft7Validator": [],
+            "Draft201909Validator": [],
+            "Draft202012Validator": [],
+        },
+        "declaredPredecessorDependency": "jsonschema>=4.25,<5 without format extras",
+    }
+    if (uri_operations_profiles.get("id") != "R2-SOL-PYTHON-RESOURCE-URI-OPERATIONS-PROFILES-001"
+            or uri_operations_profiles.get("fixture") != uri_operations_config["file"]
+            or uri_operations_profiles.get("sha256") != uri_operations_config["sha256"]
+            or uri_operations_profiles.get("cases") != 24
+            or uri_operations_profiles.get("methods") != 72
+            or uri_operations_profiles.get("uriOperations") != 140
+            or uri_operations_profiles.get("constructorRefusals") != 0
+            or uri_operations_profiles.get("generatorSha256") != RESOURCE_URI_OPERATIONS_GENERATOR_SHA256
+            or uri_operations_profiles.get("uriAdmissionProfile") != uri_profile
+            or uri_operations_review.get("id") != "R2-SOL-PYTHON-RESOURCE-URI-OPERATIONS-INDEPENDENT-REVIEW-001"
+            or uri_operations_review.get("status") != "native finite companion independently verified; implementation/source closure and artifacts remain pending"
+            or uri_operations_review.get("sourceApproved") is not False
+            or uri_operations_review.get("overallR2Approved") is not False
+            or uri_operations_review.get("fixture", {}).get("sha256") != uri_operations_config["sha256"]
+            or uri_operations_review.get("fixture", {}).get("publicCases") != 24
+            or uri_operations_review.get("fixture", {}).get("methodObservations") != 72
+            or uri_operations_review.get("fixture", {}).get("constructorRefusals") != 0
+            or uri_operations_review.get("fixture", {}).get("nativeUriOperationCases") != 140
+            or uri_operations_review.get("profiles", {}).get("sha256") != RESOURCE_URI_OPERATIONS_PROFILES_SHA256
+            or uri_operations_review.get("generator", {}).get("sha256") != RESOURCE_URI_OPERATIONS_GENERATOR_SHA256):
+        raise RuntimeError("Unexpected Python resource-URI operation profile/review receipt")
+    uri_profile_entries = uri_operations_profiles.get("profiles", [])
+    if {item.get("python") for item in uri_profile_entries} != set(expected_uri_operations_captures):
+        raise RuntimeError("Unexpected resource-URI operation cross-version profile set")
+    for item in uri_profile_entries:
+        if (item.get("captureSha256") != expected_uri_operations_captures[item["python"]]
+                or item.get("recordsEqual") is not True
+                or item.get("uriOperationsEqual") is not True
+                or item.get("uriAdmissionProfileEqual") is not True):
+            raise RuntimeError(f"Incomplete resource-URI operation profile for {item.get('python')}")
+
     failures = []
     case_count = observation_count = arithmetic_count = iterator_terminal_count = 0
     error_observation_count = 0
@@ -744,6 +1037,15 @@ def main() -> None:
             try:
                 validator = schema_validator(schema)
             except BaseException as error:
+                admission_code = config.get("admissionErrorCases", {}).get(case["id"])
+                if admission_code is not None:
+                    expected_admission = {"status": "schema-admission-error", "code": admission_code}
+                    actual_admission = admission_error_record(error)
+                    schema_refusal_count += 1
+                    if actual_admission != expected_admission:
+                        failures.append({"profile": profile, "id": case["id"], "method": "admission",
+                                         "expected": expected_admission, "actual": actual_admission})
+                    continue
                 if "schemaError" not in case or phase is not None and phase.get("phase") != "construction":
                     failures.append({"profile": profile, "id": case["id"], "method": "admission",
                                      "expected": "admitted", "actual": error_record(error)})
@@ -751,6 +1053,12 @@ def main() -> None:
                 schema_refusal_count += 1
                 continue
             if "schemaError" in case:
+                if case["id"] in config.get("admissionErrorCases", {}):
+                    failures.append({"profile": profile, "id": case["id"], "method": "admission",
+                                     "expected": {"status": "schema-admission-error",
+                                                  "code": config["admissionErrorCases"][case["id"]]},
+                                     "actual": "admitted"})
+                    continue
                 if phase is None or phase.get("phase") == "construction":
                     schema_refusal_count += 1
                     failures.append({"profile": profile, "id": case["id"], "method": "admission",

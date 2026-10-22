@@ -54,12 +54,15 @@ are not claims of complete standards or host-API support.
   [annotation](sol-python-schema-annotation-reach-predecessor.json),
   [metadata](sol-python-schema-error-metadata-predecessor.json), and
   [subject](sol-python-schema-error-subjects-predecessor.json) controls.
-- The installed ordered-evaluation gate now selects 6,930 method observations
+- The installed ordered-evaluation gate now selects 7,671 method observations
   with exact immutable predecessor/target guards, plus 263 metadata, subject and
   typed-path error records. Annotation mechanism and order companions distinguish
   native dialect-specific collector order, early returns, mark-only traversal
-  and required validity predicates. The fixed-order visitor remains under final
-  source verification; these are gate inputs, not completed artifact results.
+  and required validity predicates. The fixed-order visitor passed independent
+  source review and actual WASM controls. The resource-scope, identity, named-anchor and URI/dialect companions add
+  255, 342, 72 and 72 methods, plus 140 direct native URI-join controls. Their source tests pass; independent source review and the full
+  installed gate remain pending. These are
+  gate inputs, not completed artifact results.
 - Python regex is a separate CPython profile from ECMAScript matching. The
   reviewed controls cover 70,542 outcomes across CPython 3.11.17, 3.12.15 and
   3.13.16, including grammar, Unicode, surrogate, search and invalid-pattern
@@ -103,6 +106,17 @@ predecessor receipts are not regenerated to match the candidate.
 
 ## Evidence state and remaining gate
 
+The first installed run from `c13120f95` passes the packed Node/Bun and empty-PATH
+CLI 139-case controls, default production WASM, 198 Python public tests, 139 Python
+core vectors, 9,282 schema admission decisions and 2,586 arithmetic controls. It
+stops on ten Draft 2019-09 recursive-reference outcome mismatches. No final
+production-host receipt exists. Source-local fragments must respect nested
+resource IDs, and recursive lookup must preserve reference-resolution history
+and nonanchored barriers. The focused native-controlled correction now passes
+89 scope cases, 114 identity cases, 24 named-anchor cases and 24 URI/dialect
+cases at source level;
+independent review and committed-artifact qualification remain open.
+
 This worktree includes scoped native, fixed-point, mutation, installed-binding,
 and browser checkpoints from successive implementation snapshots. Their
 commands, hashes, and host cohorts remain in the individual evidence records;
@@ -113,8 +127,13 @@ loader issue had the same symptom as [Rust issue 157750](https://github.com/rust
 the verified local correction used an unstripped release build, and must still
 be identified by the final installed-artifact record.
 
-R2 remains open. Final committed-source qualification must rerun canonical
-generation and its non-writing/fixed-point controls, the full native and host
+The reviewed resolver source now passes 214 workspace tests, all retained 2 MiB
+stack controls, 67 compiler tests / 478 assertions, canonical generation and
+non-writing/fixed-point checks, 139 Chromium core cases, lint/type checks and
+migration boundaries. The independent source review is conditional on fresh
+committed artifacts.
+
+R2 remains open. Final committed-source qualification must exercise the full host
 corpora, an offline wheel rebuilt from the sdist, packaged Node/Bun addons, CLI,
 and production browser WASM in their installed environments. It must bind the
 receipts to exact source, lockfile, build inputs, artifacts and host versions;

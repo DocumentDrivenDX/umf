@@ -40,6 +40,11 @@ const bun = resolveTool(process.env.BUN, ['bun']);
 const gitTool = resolveTool(process.env.UMF_GIT, ['git']);
 const hashBytes = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 
+async function artifactContent(path: string) {
+  const content = await readFile(path);
+  return {bytes: content.byteLength, sha256: hashBytes(content)};
+}
+
 function command(program: string, args: string[], cwd: string, env: NodeJS.ProcessEnv = process.env) {
   const result = spawnSync(program, args, {cwd, env, encoding: 'utf8', maxBuffer: 512 * 1024 * 1024});
   if (result.stdout) process.stdout.write(result.stdout);
@@ -104,6 +109,20 @@ async function sourceClosure() {
     'docs/helix/04-build/evidence/rust-migration/r2/approved-schema-compatibility-deltas.json',
     'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-arithmetic-profiles.json',
     'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-evaluation-order-profiles.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-predecessor.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-profiles.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-design.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-clarification.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-companion-predecessor.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-companion-profiles.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-design.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-anchor-companion-predecessor.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-anchor-companion-profiles.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-representation.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-predecessor.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-profiles.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-independent-review.json',
+    'docs/helix/04-build/evidence/rust-migration/r2/freeze-python-resource-uri-operations.py',
     'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-yield-boundaries-profiles.json',
     'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-yield-boundaries-predecessor.json',
     'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-annotation-reach-predecessor.json',
@@ -259,7 +278,7 @@ async function installPythonWheel(wheel: string, workspace: string) {
     suite: outputRecord('installed-python-public-suite', suite),
     corpus: outputRecord('installed-python-139-and-controls', corpus),
     schema: outputRecord('installed-python-9282-admission-and-official-suite', schema),
-    schemaEvaluationOrder: outputRecord('installed-python-schema-evaluation-order-6930-methods-and-263-errors', schemaEvaluationOrder),
+    schemaEvaluationOrder: outputRecord('installed-python-schema-evaluation-order-reference-scope-identity-anchor-uri-7671-methods-and-263-errors', schemaEvaluationOrder),
     serialization: outputRecord('installed-python-typed-serialization-predecessor', serialization),
   };
 }
@@ -278,7 +297,10 @@ try {
   const nodeLibrary = findBinary(release, /^libumf_core_node\.(?:dylib|so)$/);
   const nodeAddon = resolve(root, 'bindings/core/node/umf_core_node.node');
   await copyFile(nodeLibrary, nodeAddon);
-  artifacts.nodeAddon = {path: relative(root, nodeAddon).split(sep).join('/'), sha256: hashBytes(await readFile(nodeAddon))};
+  artifacts.nodeAddon = {
+    path: relative(root, nodeAddon).split(sep).join('/'),
+    ...await artifactContent(nodeAddon),
+  };
 
   const tarballDir = join(workspace, 'npm-tarball');
   const installDir = join(workspace, 'npm-install');
@@ -289,7 +311,14 @@ try {
   command(npm, ['install', '--offline', '--ignore-scripts', '--no-audit', '--no-fund', '--prefix', installDir, tarball], workspace, {...process.env, npm_config_offline: 'true'});
   const installedNodeEntry = join(installDir, 'node_modules/@umf/core-rust-native/index.js');
   if (!existsSync(installedNodeEntry)) throw new Error('Packed Node addon did not install outside the checkout');
-  artifacts.nodePackage = {sha256: hashBytes(await readFile(tarball)), addonSha256: hashBytes(await readFile(join(dirname(installedNodeEntry), 'umf_core_node.node')))};
+  const nodePackageContent = await artifactContent(tarball);
+  const installedAddonContent = await artifactContent(join(dirname(installedNodeEntry), 'umf_core_node.node'));
+  artifacts.nodePackage = {
+    sha256: nodePackageContent.sha256,
+    bytes: nodePackageContent.bytes,
+    addonSha256: installedAddonContent.sha256,
+    addonBytes: installedAddonContent.bytes,
+  };
   const nodeEnv = {...process.env, UMF_CORE_NODE_PACKAGE: installedNodeEntry};
   const nodeVersion = command(node, ['-e', 'if (process.versions.bun) process.exit(2); process.stdout.write(process.version)'], workspace).stdout;
   results.node = outputRecord('packed-installed-node', command(node, [resolve(root, 'scripts/rust-core/node-conformance.mjs'), fixture], workspace, nodeEnv));
@@ -297,16 +326,23 @@ try {
 
   const cli = resolve(release, 'umf');
   results.cli = outputRecord('native-cli-139-path-empty', command(node, [resolve(root, 'scripts/rust-core/cli-core-conformance.mjs'), fixture], workspace, {...process.env, PATH: '', UMF_CLI_PATH: cli}));
-  artifacts.cli = {path: relative(root, cli).split(sep).join('/'), sha256: hashBytes(await readFile(cli))};
+  artifacts.cli = {
+    path: relative(root, cli).split(sep).join('/'),
+    ...await artifactContent(cli),
+  };
 
   const defaultWasmBuild = command(cargo, ['build', '--locked', '--release', '--target', 'wasm32-unknown-unknown', '-p', 'umf-core-wasm'], root, env);
   results.wasmDefaultBuild = outputRecord('wasm-release-default-production-build', defaultWasmBuild);
   const defaultWasmPkg = 'target/rust-core/wasm/default-pkg';
   command(wasmBindgen, ['--target', 'web', '--out-dir', defaultWasmPkg, '--out-name', 'umf_core_wasm', 'target/wasm32-unknown-unknown/release/umf_core_wasm.wasm'], root, env);
   const defaultWasmPath = resolve(root, defaultWasmPkg, 'umf_core_wasm_bg.wasm');
+  const defaultWasmContent = await artifactContent(defaultWasmPath);
+  const defaultWasmJsContent = await artifactContent(resolve(root, defaultWasmPkg, 'umf_core_wasm.js'));
   artifacts.wasmDefault = {
-    wasmSha256: hashBytes(await readFile(defaultWasmPath)),
-    jsSha256: hashBytes(await readFile(resolve(root, defaultWasmPkg, 'umf_core_wasm.js'))),
+    wasmSha256: defaultWasmContent.sha256,
+    wasmBytes: defaultWasmContent.bytes,
+    jsSha256: defaultWasmJsContent.sha256,
+    jsBytes: defaultWasmJsContent.bytes,
   };
   const defaultBrowser = command(node, ['--experimental-strip-types', resolve(root, 'scripts/rust-core/browser-conformance.ts')], workspace, {
     ...process.env,
@@ -321,9 +357,13 @@ try {
   const featureWasmPkg = 'target/rust-core/wasm/feature-pkg';
   command(wasmBindgen, ['--target', 'web', '--out-dir', featureWasmPkg, '--out-name', 'umf_core_wasm', 'target/wasm32-unknown-unknown/release/umf_core_wasm.wasm'], root, env);
   const featureWasmPath = resolve(root, featureWasmPkg, 'umf_core_wasm_bg.wasm');
+  const featureWasmContent = await artifactContent(featureWasmPath);
+  const featureWasmJsContent = await artifactContent(resolve(root, featureWasmPkg, 'umf_core_wasm.js'));
   artifacts.wasmRegexFeature = {
-    wasmSha256: hashBytes(await readFile(featureWasmPath)),
-    jsSha256: hashBytes(await readFile(resolve(root, featureWasmPkg, 'umf_core_wasm.js'))),
+    wasmSha256: featureWasmContent.sha256,
+    wasmBytes: featureWasmContent.bytes,
+    jsSha256: featureWasmJsContent.sha256,
+    jsBytes: featureWasmJsContent.bytes,
   };
   const browser = command(node, ['--experimental-strip-types', resolve(root, 'scripts/rust-core/browser-conformance.ts')], workspace, {
     ...process.env,
@@ -350,8 +390,8 @@ try {
   results.pythonBuild = outputRecord('offline-native-wheel-and-sdist-build', command(uv, ['build', '--wheel', '--sdist', '--out-dir', originalWheelDir], resolve(root, 'python'), pythonBuildEnv));
   const originalWheel = findBinary(originalWheelDir, /\.whl$/);
   const sdist = findBinary(originalWheelDir, /\.tar\.gz$/);
-  artifacts.pythonWheel = {sha256: hashBytes(await readFile(originalWheel))};
-  artifacts.pythonSdist = {sha256: hashBytes(await readFile(sdist))};
+  artifacts.pythonWheel = await artifactContent(originalWheel);
+  artifacts.pythonSdist = await artifactContent(sdist);
   const sdistListing = command('tar', ['-tzf', sdist], workspace).stdout;
   const sdistMembers = sdistListing.split(/\r?\n/).filter(Boolean);
   const forbiddenSdistMember = /(^|\/)(?:\.git|\.venv|__pycache__|node_modules|pkg|target|\.pytest_cache)(?:\/|$)|\.(?:node|wasm|dylib|dll|so|pyc|pyo|rlib|rmeta|o|a)$/i;
@@ -394,7 +434,7 @@ try {
   results.noJavascriptPath = {status: 'pass', path: noJsPath, entries: noJsTools.entries, verification: noJsTools.verification};
   results.sdistWheelBuild = outputRecord('offline-no-javascript-wheel-from-sdist', command(uv, ['build', '--wheel', '--out-dir', sdistWheelDir], sdistRoot, sdistEnv));
   const sdistWheel = findBinary(sdistWheelDir, /\.whl$/);
-  artifacts.sdistBuiltWheel = {sha256: hashBytes(await readFile(sdistWheel))};
+  artifacts.sdistBuiltWheel = await artifactContent(sdistWheel);
   results.pythonSdistInstall = await installPythonWheel(sdistWheel, join(pythonWorkspace, 'sdist-installed'));
 
   const sourceAfter = await sourceClosure();
@@ -443,6 +483,104 @@ try {
       pythonSchemaEvaluationOrderDecision: {
         path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-evaluation-order-decision.json',
         sha256: hashBytes(await readFile(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-evaluation-order-decision.json'))),
+      },
+      pythonSchemaRecursiveResourceScope: {
+        predecessor: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-predecessor.json',
+          sha256: 'c67b6602a40235a9202a00082949e6a9a8af3db1aee614110275afb303de9b15',
+          cases: 89,
+          admittedCases: 85,
+          methodObservations: 255,
+          constructorRefusals: 4,
+        },
+        profiles: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-profiles.json',
+          sha256: 'c9953569f226700e7b03bb4529981ae644649e11e40b09597fc86b2d4c703f54',
+          confirmedPython: ['3.11.17', '3.12.15', '3.13.16'],
+          sharedExpectedCases: 89,
+          sharedExpectedMethods: 255,
+        },
+        design: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-design.json',
+          sha256: '8a4d6da41bfabefae4ef6e8d31f755bd7336c4bb831a61cb581f9dfd6983acea',
+        },
+        clarification: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-clarification.json',
+          sha256: 'a1ee054a022d62e36ed9bbb67c61b87f31afa29251dd649efdc6e97aa3feffb7',
+          constructionRefusalRows: 4,
+          runtimeUnresolvedPointerRows: 6,
+          runtimeMethodObservations: 18,
+        },
+      },
+      pythonSchemaResourceIdentityCompanion: {
+        predecessor: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-companion-predecessor.json',
+          sha256: '75f772e29f3776969739c423c98b722f9597895bd6e2c215e4fe7f7c3fc44609',
+          cases: 114,
+          methodObservations: 342,
+          constructorRefusals: 0,
+          runtimeTerminals: 0,
+        },
+        profiles: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-companion-profiles.json',
+          sha256: '24ad0adb3e80654d9ce105c84ffcb19f1467d124aa28aa85f81bfca1ab5ea103',
+          confirmedPython: ['3.11.17', '3.12.15', '3.13.16'],
+          sharedExpectedCases: 114,
+          sharedExpectedMethods: 342,
+          uriAdmissionProfileEqual: true,
+        },
+        design: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-design.json',
+          sha256: '18832e1b97dc010fbee2418865541cc2c23f9468441821ed384d8a248b155b88',
+        },
+      },
+      pythonSchemaResourceAnchorCompanion: {
+        predecessor: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-anchor-companion-predecessor.json',
+          sha256: 'ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5',
+          cases: 24,
+          methodObservations: 72,
+          constructorRefusals: 0,
+          runtimeTerminals: 0,
+        },
+        profiles: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-anchor-companion-profiles.json',
+          sha256: '2b0502daba9e9d04d3e72da71ea2c8c325cbee3242b11de0e6a7885eccbe084d',
+          confirmedPython: ['3.11.17', '3.12.15', '3.13.16'],
+          sharedExpectedCases: 24,
+          sharedExpectedMethods: 72,
+          uriAdmissionProfileEqual: true,
+        },
+        representation: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-representation.json',
+          sha256: '7d657027d557ad143e8e057c0b9821909f641deedd85ff554ce0700a4712265f',
+        },
+      },
+      pythonSchemaResourceUriOperations: {
+        predecessor: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-predecessor.json',
+          sha256: 'e79cdee8693892517cc372f9b5b05d902199e78b734175bf10359baadeabfae9',
+          cases: 24,
+          methodObservations: 72,
+          constructorRefusals: 0,
+          nativeUriOperationCases: 140,
+        },
+        profiles: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-profiles.json',
+          sha256: '1017a9140607d05e84c8f5998cb23ebcb8b4cc3d97cb3c78f691da50768e86fb',
+          confirmedPython: ['3.11.17', '3.12.15', '3.13.16'],
+          sharedExpectedCases: 24,
+          sharedExpectedMethods: 72,
+          uriOperations: 140,
+        },
+        independentReview: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-independent-review.json',
+          sha256: 'b859d271d81252dfc66e74e6ee1557c85e0878f568b75bd1211f96cc0daf98d2',
+        },
+        generator: {
+          path: 'docs/helix/04-build/evidence/rust-migration/r2/freeze-python-resource-uri-operations.py',
+          sha256: 'db2a75afe2d98c13f6c1def642c1e029198c800efd701d14cb90bfd1c1399fd8',
+        },
       },
       pythonSchemaEvaluationOrderOutcomes: [
         {
@@ -544,6 +682,14 @@ try {
         sha256: hashBytes(await readFile(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-evaluation-order-profiles.json'))),
         confirmedPython: ['3.11.17', '3.12.15', '3.13.16'],
         sharedMethodObservations: 3168,
+      },
+      pythonSchemaResourceUriOperationsProfiles: {
+        path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-profiles.json',
+        sha256: '1017a9140607d05e84c8f5998cb23ebcb8b4cc3d97cb3c78f691da50768e86fb',
+        confirmedPython: ['3.11.17', '3.12.15', '3.13.16'],
+        publicCases: 24,
+        sharedMethodObservations: 72,
+        nativeUriOperationCases: 140,
       },
       pythonSchemaYieldBoundariesCrossVersionConfirmation: {
         path: 'docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-yield-boundaries-profiles.json',
@@ -739,7 +885,7 @@ try {
     },
     results,
     qualifications: {
-      python: 'wheel install and wheel rebuilt from sdist, outside checkout; full public Python suite, frozen 139 and host controls, 9,282 schema admission decisions, official JSON Schema outcome controls, 2,586 Python numeric schema predecessor cases, 6,930 Python schema evaluation-order/reference/annotation method observations including the approved narrow legacy2019 additionalProperties correction, 263 error metadata/subject/path records, and 6 runtime TypeError observations with phase attribution',
+      python: 'wheel install and wheel rebuilt from sdist, outside checkout; full public Python suite, frozen 139 and host controls, 9,282 schema admission decisions, official JSON Schema outcome controls, 2,586 Python numeric schema predecessor cases, 7,671 Python schema evaluation-order/reference/annotation/resource-scope/resource-identity/anchor/URI public method observations including the approved narrow legacy2019 additionalProperties correction, 263 error metadata/subject/path records, and 6 runtime TypeError observations with phase attribution',
       javascript: 'npm-packed native addon installed outside checkout, tested under Node and Bun',
       browser: 'real Chromium qualifies the default shipped WASM separately for 139 boundaries and the conformance-feature WASM for 70,542 frozen Python regex outcomes plus the 139 core boundaries, with no external requests',
       cli: 'native binary validated against the frozen 139 corpus with PATH empty',

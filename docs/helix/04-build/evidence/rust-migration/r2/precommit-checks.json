@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-22T06:22:08.061854+00:00",
+  "capturedAt": "2026-10-22T07:50:21.712647+00:00",
   "checks": {
     "authority": {
       "argv": [
@@ -9,7 +9,7 @@
       "counts": {},
       "exitCode": 0,
       "log": "precommit-authority.log",
-      "sha256": "0620994fcbf02b015867eb209068967b5145224a9348e9679c26fa4bffc50d93",
+      "sha256": "7d3a7678a2f02b037df36a46d71de2f6f9f6d6a097f9b14168c67ed4a4c64185",
       "status": "pass"
     },
     "compiler": {
@@ -25,7 +25,7 @@
       },
       "exitCode": 0,
       "log": "precommit-compiler.log",
-      "sha256": "cebd084ea3afe43d642b839b41cb93cb12a8c45781c94e62f0b0483fe38f390c",
+      "sha256": "662133d445da2ea04e1537be88903b130fc4484f8017b29cf77c56c8375472a0",
       "status": "pass"
     },
     "generated": {
@@ -52,7 +52,7 @@
       },
       "exitCode": 0,
       "log": "precommit-metamodel-browser.log",
-      "sha256": "4b6bbe88fad8664c1a5b1b0322602ce5f9dc8669306c1b7182068e4cc0362573",
+      "sha256": "e94af3f025b7c55e81c10ebe96b43fcd3b3c7597da800b5fa32e6f1819bf04c5",
       "status": "pass"
     },
     "ruff": {
@@ -82,16 +82,36 @@
       "log": "precommit-typecheck.log",
       "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
       "status": "pass"
+    },
+    "workspace": {
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--workspace"
+      ],
+      "counts": {
+        "failed": 0,
+        "ignored": 0,
+        "passed": 214,
+        "resultSuites": 45
+      },
+      "exitCode": 0,
+      "log": "resource-final-workspace.log",
+      "sha256": "6666cef19d16839c8ec35f33b1ee46a7fcd650ceaf0b670db67c58dacd2e81d8",
+      "status": "pass"
     }
   },
-  "gitHeadBeforeImplementationCommit": "9d1d42ab1e3fb2179a4edcb51aa577967925b208",
-  "qualification": "coherent source checks; installed-host qualification is pending a committed source closure",
+  "gitHeadBeforeImplementationCommit": "c13120f95deafbbf907c828c2591ab0fe09be5df",
+  "qualification": "Reviewed resource source; workspace source unchanged by final license addition. Canonical/compiler/browser checks rerun after license entered compiler source closure. Final installed artifacts remain pending.",
   "schema": "umf.rust-migration-r2-precommit-checks/1",
   "sourceHashes": {
     "bindings/core/wasm/src/lib.rs": "ac3faa1ad52ebe9be630072caad24560a6e3ef9f4806248229a3a90a6af147e6",
-    "crates/umf-core/src/schema.rs": "440a95b1bd4a672be707312749c4928b1b4b6428228b1b4108861b217f4bd391",
+    "crates/umf-core/src/python_uri.LICENSE": "87be3b02582cd0088845ad069a3afa9ad17eee76fae7b999fbba0f8588d80dfd",
+    "crates/umf-core/src/schema.rs": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
     "scripts/rust-core/browser-conformance.ts": "ef392b0b73898e736eb912f6c85c97c7c4d869131c8d49e2ab5f33eef5e4135d",
-    "scripts/rust-core/full-conformance.ts": "ab4ced9cfb5f33d7a2a4023fba66eef1878012bd7de0b9abddac780f1004a292",
-    "spec/metamodel/generated/manifest.json": "b974429720cf9cb021719b476d544282204ea94041898f6f23fbcd827bfdc862"
+    "scripts/rust-core/full-conformance.ts": "8adf621099f9ca5720643e32e1c135ddfeb79cb35e0b6fd569733bd6407ab63c",
+    "spec/metamodel/generated/manifest.json": "0f6fb7720ad6d82f5108dacee32580d7f056bf31230a9688189a6e9e85507d10"
   }
 }

@@ -59,6 +59,7 @@ pub struct CompiledSchema {
     python_exact_values:
         std::collections::BTreeMap<usize, std::sync::Arc<crate::python_value::PythonConsumerValue>>,
     python_reference_targets: std::collections::BTreeMap<usize, PythonReferenceTarget>,
+    python_resource_roots: std::collections::BTreeMap<usize, PythonResourceLocator>,
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
@@ -76,13 +77,83 @@ pub(crate) struct EvaluationOutcome {
 #[derive(Clone, Debug)]
 struct PythonReferenceTarget {
     resource: Option<usize>,
+    /// Pointer from the supplied tree root to the nearest recognized schema
+    /// resource base. A reference fragment is resolved from this base.
+    resource_root_indices: Vec<usize>,
+    source_resource_uri: Option<PythonResourceUri>,
+    source_resource_recursive_anchor: bool,
     indices: Vec<usize>,
     failure: Option<PythonReferenceFailure>,
+}
+
+/// Python resource identity remains in native codepoints. Diagnostic UTF-16
+/// is a one-way display boundary and is never used for scope equality/lookup.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+struct PythonResourceUri(Vec<u32>);
+impl PythonResourceUri {
+    fn from_points(points: &[u32], ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        ctx.charge_work_u64(points.len() as u64 + 1, Utf16::default())?;
+        Ok(Self(points.to_vec()))
+    }
+    fn len(&self) -> usize {
+        self.0.len()
+    }
+    fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
+    fn points(&self) -> &[u32] {
+        &self.0
+    }
+    fn same(&self, other: &Self, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+        ctx.charge_work_u64(self.len().min(other.len()) as u64 + 1, Utf16::default())?;
+        Ok(self == other)
+    }
+    fn display_path(&self, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+        ctx.charge_work_u64(
+            (self.len() as u64).saturating_mul(2).saturating_add(1),
+            Utf16::default(),
+        )?;
+        let mut units = Vec::with_capacity(self.len().saturating_mul(2).saturating_add(1));
+        for point in &self.0 {
+            if *point <= u16::MAX as u32 {
+                units.push(*point as u16);
+            } else if let Some(character) = char::from_u32(*point) {
+                let mut buffer = [0u16; 2];
+                units.extend_from_slice(character.encode_utf16(&mut buffer));
+            } else {
+                return Err(schema_error(
+                    &Utf16::default(),
+                    "Invalid Python URI codepoint",
+                ));
+            }
+        }
+        units.push(b'#' as u16);
+        Ok(Utf16::new(units))
+    }
+    fn join(&self, reference: &Self, ctx: &mut Context<'_>) -> Result<Option<Self>, EngineError> {
+        ctx.charge_work_u64(
+            (self.len() as u64)
+                .saturating_add(reference.len() as u64)
+                .saturating_mul(40)
+                .saturating_add(100),
+            Utf16::default(),
+        )?;
+        Ok(resolve_relative_python_uri(self.points(), reference.points()).map(Self))
+    }
+}
+#[derive(Clone, Debug)]
+struct PythonResourceLocator {
+    uri: PythonResourceUri,
+    resource: Option<usize>,
+    root_indices: Vec<usize>,
+    recursive_anchor: bool,
 }
 
 #[derive(Clone, Copy, Debug)]
 enum PythonReferenceFailure {
     InvalidArrayIndex,
+    InvalidTraversal,
+    Unresolved,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -99,7 +170,10 @@ enum CompiledRegex {
 struct Evaluated {
     properties: BTreeSet<Vec<u32>>,
     items: BTreeSet<usize>,
-    dynamic_scope: Vec<(Vec<u16>, Utf16)>,
+    dynamic_scope: Vec<(Vec<u16>, Utf16, usize)>,
+    /// Python Draft 2019-09 resolver history. Each evaluator branch owns its
+    /// snapshot; a reference lookup updates only the descended resolver.
+    python_recursive_history: Vec<PythonResourceLocator>,
     mode: EvaluationMode,
     collect_annotations: bool,
     annotation_scan: bool,
@@ -108,12 +182,19 @@ struct Evaluated {
 impl Evaluated {
     fn child(&self, ctx: &mut Context<'_>, path: &Utf16) -> Result<Self, EngineError> {
         ctx.charge_work(path.len(), Utf16::default())?;
-        for (name, scope) in &self.dynamic_scope {
+        for entry in &self.python_recursive_history {
+            ctx.charge_work_u64(
+                entry.uri.len() as u64 + entry.root_indices.len() as u64 + 2,
+                Utf16::default(),
+            )?;
+        }
+        for (name, scope, _) in &self.dynamic_scope {
             ctx.charge_work(1, Utf16::default())?;
             ctx.charge_work_u64(name.len() as u64 + scope.len() as u64 + 2, Utf16::default())?;
         }
         Ok(Self {
             dynamic_scope: self.dynamic_scope.clone(),
+            python_recursive_history: self.python_recursive_history.clone(),
             mode: self.mode,
             collect_annotations: self.collect_annotations,
             ..Self::default()
@@ -788,10 +869,13 @@ impl CompiledSchema {
             &source_schema,
             &compiled.schema,
             None,
+            None,
+            dialect,
             &mut compiled.python_reference_targets,
+            &mut compiled.python_resource_roots,
             ctx,
         )?;
-        for (resource_index, ((_, source), (_, target))) in resources
+        for (resource_index, ((id, source), (_, target))) in resources
             .entries
             .iter()
             .zip(compiled.resources.entries.iter())
@@ -809,7 +893,10 @@ impl CompiledSchema {
                 source,
                 target,
                 Some(resource_index),
+                Some(id),
+                dialect,
                 &mut compiled.python_reference_targets,
+                &mut compiled.python_resource_roots,
                 ctx,
             )?;
         }
@@ -899,32 +986,43 @@ impl CompiledSchema {
         &self.schema
     }
     pub fn snapshot_with_context(&self, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
-        let origin_cost = self
-            .python_text_origins
-            .iter()
-            .map(|(path, text)| path.len().saturating_add(text.len()))
-            .chain(
-                self.python_member_keys
-                    .iter()
-                    .map(|((path, _), text)| path.len().saturating_add(text.len())),
-            )
-            .chain(
-                self.python_source_strings
-                    .values()
-                    .map(crate::python_value::PyText::len),
-            )
-            .chain(
-                self.python_source_keys
-                    .values()
-                    .map(crate::python_value::PyText::len),
-            )
-            .chain(
-                self.python_reference_targets
-                    .values()
-                    .map(|target| target.indices.len()),
-            )
-            .sum::<usize>();
-        ctx.charge_work(origin_cost, Utf16::default())?;
+        for (path, text) in &self.python_text_origins {
+            ctx.charge_work_u64(path.len() as u64 + text.len() as u64 + 2, Utf16::default())?;
+        }
+        for ((path, _), text) in &self.python_member_keys {
+            ctx.charge_work_u64(path.len() as u64 + text.len() as u64 + 3, Utf16::default())?;
+        }
+        for text in self
+            .python_source_strings
+            .values()
+            .chain(self.python_source_keys.values())
+        {
+            ctx.charge_work_u64(text.len() as u64 + 2, Utf16::default())?;
+        }
+        for target in self.python_reference_targets.values() {
+            ctx.charge_work_u64(
+                target.indices.len() as u64
+                    + target.resource_root_indices.len() as u64
+                    + target
+                        .source_resource_uri
+                        .as_ref()
+                        .map_or(0, |uri| uri.len() as u64)
+                    + 3,
+                Utf16::default(),
+            )?;
+        }
+        for root in self.python_resource_roots.values() {
+            ctx.charge_work_u64(
+                root.uri.len() as u64 + root.root_indices.len() as u64 + 3,
+                Utf16::default(),
+            )?;
+        }
+        ctx.charge_work(
+            self.python_exact_values
+                .len()
+                .saturating_add(self.resources.entries.len()),
+            Utf16::default(),
+        )?;
         let schema = copy_json(&self.schema, ctx)?;
         let mut entries = Vec::with_capacity(self.resources.entries.len());
         for (id, value) in &self.resources.entries {
@@ -944,6 +1042,7 @@ impl CompiledSchema {
             python_source_keys: self.python_source_keys.clone(),
             python_exact_values: self.python_exact_values.clone(),
             python_reference_targets: self.python_reference_targets.clone(),
+            python_resource_roots: self.python_resource_roots.clone(),
         })
     }
     fn compile_pattern(
@@ -1196,6 +1295,7 @@ impl CompiledSchema {
             python_source_keys: std::collections::BTreeMap::new(),
             python_exact_values: std::collections::BTreeMap::new(),
             python_reference_targets: std::collections::BTreeMap::new(),
+            python_resource_roots: std::collections::BTreeMap::new(),
         };
         if apply_local_reference_gate {
             validate_local_reference_gate(&compiled.schema, &Utf16::default(), ctx)?;
@@ -1630,21 +1730,267 @@ impl CompiledSchema {
         })
     }
 
+    fn python_record_reference_lookup(
+        &self,
+        keyword: &str,
+        reference: &Value,
+        evaluated: &mut Evaluated,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        if !matches!(self.regex_profile, RegexProfile::Python(_)) {
+            return Ok(());
+        }
+        ctx.charge_work_u64(
+            btree_index_lookup_work(self.python_reference_targets.len()),
+            Utf16::default(),
+        )?;
+        let Some(bound) = self
+            .python_reference_targets
+            .get(&(reference as *const Value as usize))
+        else {
+            return Ok(());
+        };
+        let Some(current_uri) = bound.source_resource_uri.as_ref() else {
+            return Ok(());
+        };
+        if current_uri.is_empty() {
+            return Ok(());
+        }
+        // Source consumers admit local references; recursiveRef always looks up #.
+        // Preserve the lookup distinction for explicitly supplied strict resources.
+        ctx.charge_work_u64(
+            btree_index_lookup_work(self.python_source_strings.len()),
+            Utf16::default(),
+        )?;
+        let source = if let Value::String(value) = reference {
+            self.python_source_strings
+                .get(&(value as *const Utf16 as usize))
+        } else {
+            None
+        };
+        let lookup_owned =
+            if keyword == "$recursiveRef" && self.dialect == SchemaDialect::Draft2019_09 {
+                None
+            } else if let Some(source) = source {
+                ctx.charge_work(source.len(), Utf16::default())?;
+                let end = source
+                    .codepoints()
+                    .iter()
+                    .position(|p| *p == b'#' as u32)
+                    .unwrap_or(source.len());
+                if end == 0 {
+                    None
+                } else {
+                    let base = PythonResourceUri::from_points(&source.codepoints()[..end], ctx)?;
+                    current_uri.join(&base, ctx)?.or(Some(base))
+                }
+            } else {
+                None
+            };
+        let should_push = evaluated.python_recursive_history.is_empty()
+            || if let Some(lookup) = &lookup_owned {
+                !lookup.same(current_uri, ctx)?
+            } else {
+                false
+            };
+        if should_push {
+            ctx.charge_work_u64(
+                current_uri.len() as u64
+                    + bound.resource_root_indices.len() as u64
+                    + evaluated.python_recursive_history.len() as u64
+                    + 3,
+                Utf16::default(),
+            )?;
+            evaluated.python_recursive_history.insert(
+                0,
+                PythonResourceLocator {
+                    uri: current_uri.clone(),
+                    resource: bound.resource,
+                    root_indices: bound.resource_root_indices.clone(),
+                    recursive_anchor: bound.source_resource_recursive_anchor,
+                },
+            );
+        }
+        Ok(())
+    }
+    fn python_recursive_retarget<'a>(
+        &'a self,
+        reference: &Value,
+        evaluated: &Evaluated,
+        ctx: &mut Context<'_>,
+    ) -> Result<(&'a Value, Utf16), EngineError> {
+        let (mut target, mut path) = self.resolve_python_source_resource(reference, ctx)?;
+        if !matches!(get(target, "$recursiveAnchor"), Some(Value::Bool(true))) {
+            return Ok((target, path));
+        }
+        for entry in &evaluated.python_recursive_history {
+            ctx.charge_work(1, Utf16::default())?;
+            if !entry.recursive_anchor {
+                break;
+            }
+            (target, path) =
+                self.python_resource_location(entry.resource, &entry.root_indices, ctx)?;
+        }
+        Ok((target, path))
+    }
+    fn python_resource_display_path(
+        &self,
+        root: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Utf16, EngineError> {
+        ctx.charge_work_u64(
+            btree_index_lookup_work(self.python_resource_roots.len()) + 1,
+            Utf16::default(),
+        )?;
+        if let Some(locator) = self
+            .python_resource_roots
+            .get(&(root as *const Value as usize))
+        {
+            locator.uri.display_path(ctx)
+        } else {
+            ctx.charge_work(1, Utf16::default())?;
+            Ok(Utf16::from("#"))
+        }
+    }
+
+    fn python_resource_location<'a>(
+        &'a self,
+        resource: Option<usize>,
+        indices: &[usize],
+        ctx: &mut Context<'_>,
+    ) -> Result<(&'a Value, Utf16), EngineError> {
+        ctx.charge_work_u64(indices.len() as u64 + 1, Utf16::default())?;
+        let mut current = if let Some(index) = resource {
+            self.resources.entries.get(index).map(|(_, v)| v)
+        } else {
+            Some(&self.schema)
+        }
+        .ok_or_else(|| schema_error(&Utf16::default(), "Python source resource is unavailable"))?;
+        let mut path = self.python_resource_display_path(current, ctx)?;
+        for index in indices {
+            current = match current {
+                Value::Object(members) => {
+                    let (key, value) = members
+                        .get(*index)
+                        .ok_or_else(|| schema_error(&path, "Python source resource changed"))?;
+                    path = self.schema_pointer(&path, key, ctx)?;
+                    value
+                }
+                Value::Array(items) => {
+                    let value = items
+                        .get(*index)
+                        .ok_or_else(|| schema_error(&path, "Python source resource changed"))?;
+                    ctx.charge_work(path.len().saturating_add(22), Utf16::default())?;
+                    path = append_schema_path(&path, &index.to_string());
+                    value
+                }
+                _ => return Err(schema_error(&path, "Python source resource changed")),
+            };
+            path = self.effective_schema_path(current, &path, ctx)?;
+        }
+        Ok((current, path))
+    }
+    fn python_scope_node<'a>(
+        &'a self,
+        address: usize,
+        ctx: &mut Context<'_>,
+    ) -> Result<&'a Value, EngineError> {
+        fn find<'a>(
+            node: &'a Value,
+            address: usize,
+            ctx: &mut Context<'_>,
+        ) -> Result<Option<&'a Value>, EngineError> {
+            ctx.charge_work(1, Utf16::default())?;
+            if node as *const Value as usize == address {
+                return Ok(Some(node));
+            }
+            match node {
+                Value::Object(members) => {
+                    for (_, child) in members {
+                        if let Some(found) = find(child, address, ctx)? {
+                            return Ok(Some(found));
+                        }
+                    }
+                }
+                Value::Array(items) => {
+                    for child in items {
+                        if let Some(found) = find(child, address, ctx)? {
+                            return Ok(Some(found));
+                        }
+                    }
+                }
+                _ => {}
+            }
+            Ok(None)
+        }
+        if let Some(node) = find(&self.schema, address, ctx)? {
+            return Ok(node);
+        }
+        for (_, root) in &self.resources.entries {
+            if let Some(node) = find(root, address, ctx)? {
+                return Ok(node);
+            }
+        }
+        Err(schema_error(
+            &Utf16::default(),
+            "Python dynamic scope node is unavailable",
+        ))
+    }
+
+    fn resolve_python_source_resource<'a>(
+        &'a self,
+        reference: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<(&'a Value, Utf16), EngineError> {
+        ctx.charge_work_u64(
+            btree_index_lookup_work(self.python_reference_targets.len()),
+            Utf16::default(),
+        )?;
+        if let Some(bound) = self
+            .python_reference_targets
+            .get(&(reference as *const Value as usize))
+        {
+            self.python_resource_location(bound.resource, &bound.resource_root_indices, ctx)
+        } else {
+            self.python_resource_location(None, &[], ctx)
+        }
+    }
+
     fn resolve_ref<'a>(
         &'a self,
         reference: &Value,
         path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<(&'a Value, Utf16), EngineError> {
+        ctx.charge_work_u64(
+            path.len() as u64 + btree_index_lookup_work(self.python_reference_targets.len()) + 1,
+            Utf16::default(),
+        )?;
         if let Some(target) = self
             .python_reference_targets
             .get(&(reference as *const Value as usize))
         {
+            if matches!(target.failure, Some(PythonReferenceFailure::Unresolved)) {
+                return Err(EngineError::new(
+                    "SCHEMA_REF_UNRESOLVED",
+                    path.clone(),
+                    "Schema reference target does not exist",
+                )
+                .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
+            }
             if let Some(PythonReferenceFailure::InvalidArrayIndex) = target.failure {
                 return Err(EngineError::new(
                     "PYTHON_SCHEMA_EVALUATION",
                     path.clone(),
                     "Invalid array index in schema reference",
+                )
+                .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
+            }
+            if let Some(PythonReferenceFailure::InvalidTraversal) = target.failure {
+                return Err(EngineError::new(
+                    "PYTHON_SCHEMA_EVALUATION",
+                    path.clone(),
+                    "Invalid schema reference traversal",
                 )
                 .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
             }
@@ -1654,14 +2000,39 @@ impl CompiledSchema {
                 Some(&self.schema)
             }
             .ok_or_else(|| schema_error(path, "Python source reference resource is unavailable"))?;
-            let mut target_path = if let Some(index) = target.resource {
-                let id = &self.resources.entries[index].0;
-                let mut units = id.units().to_vec();
-                units.push(b'#' as u16);
-                Utf16::new(units)
-            } else {
-                schema_origin_path(&self.schema)
-            };
+            let mut target_path = self.python_resource_display_path(current, ctx)?;
+            ctx.charge_work_u64(
+                target.indices.len() as u64 + target.resource_root_indices.len() as u64,
+                Utf16::default(),
+            )?;
+            for index in &target.resource_root_indices {
+                current = match current {
+                    Value::Object(members) => {
+                        let (key, value) = members.get(*index).ok_or_else(|| {
+                            schema_error(path, "Python source reference resource changed")
+                        })?;
+                        target_path = self.schema_pointer(&target_path, key, ctx)?;
+                        value
+                    }
+                    Value::Array(items) => {
+                        let value = items.get(*index).ok_or_else(|| {
+                            schema_error(path, "Python source reference resource changed")
+                        })?;
+                        ctx.charge_work(target_path.len().saturating_add(22), Utf16::default())?;
+                        target_path = append_schema_path(&target_path, &index.to_string());
+                        value
+                    }
+                    _ => {
+                        return Err(schema_error(
+                            path,
+                            "Python source reference resource changed",
+                        ))
+                    }
+                };
+            }
+            if !target.resource_root_indices.is_empty() {
+                target_path = self.effective_schema_path(current, &target_path, ctx)?;
+            }
             for index in &target.indices {
                 current = match current {
                     Value::Object(members) => {
@@ -1675,11 +2046,18 @@ impl CompiledSchema {
                         let value = items.get(*index).ok_or_else(|| {
                             schema_error(path, "Python source reference target changed")
                         })?;
+                        ctx.charge_work(target_path.len().saturating_add(22), Utf16::default())?;
                         target_path = append_schema_path(&target_path, &index.to_string());
                         value
                     }
                     _ => return Err(schema_error(path, "Python source reference target changed")),
                 };
+                // Pointer traversal can enter a recognized resource in any dialect.
+                // `tsp` must then be relative to that resource so evaluation
+                // errors and subsequent references use the correct origin.
+                if matches!(self.regex_profile, RegexProfile::Python(_)) {
+                    target_path = self.effective_schema_path(current, &target_path, ctx)?;
+                }
             }
             return Ok((current, target_path));
         }
@@ -1872,16 +2250,20 @@ impl CompiledSchema {
                 anchor.len() as u64 + scoped_path.len() as u64 + 2,
                 Utf16::default(),
             )?;
-            evaluated
-                .dynamic_scope
-                .push((anchor.units().to_vec(), scoped_path.clone()));
+            evaluated.dynamic_scope.push((
+                anchor.units().to_vec(),
+                scoped_path.clone(),
+                schema as *const Value as usize,
+            ));
         } else if self.dialect == SchemaDialect::Draft2019_09
             && matches!(get(schema, "$recursiveAnchor"), Some(Value::Bool(true)))
         {
             ctx.charge_work_u64(scoped_path.len() as u64 + 1, Utf16::default())?;
-            evaluated
-                .dynamic_scope
-                .push((Vec::new(), scoped_path.clone()));
+            evaluated.dynamic_scope.push((
+                Vec::new(),
+                scoped_path.clone(),
+                schema as *const Value as usize,
+            ));
         }
         let result = if evaluated.annotation_scan
             && (self.uses_python_2019_annotation_profile()
@@ -1901,6 +2283,22 @@ impl CompiledSchema {
         path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Utf16, EngineError> {
+        if matches!(self.regex_profile, RegexProfile::Python(_)) {
+            ctx.charge_work_u64(
+                path.len() as u64 + btree_index_lookup_work(self.python_resource_roots.len()) + 1,
+                Utf16::default(),
+            )?;
+            if std::ptr::eq(schema, &self.schema) {
+                return Ok(path.clone());
+            }
+            if let Some(resource) = self
+                .python_resource_roots
+                .get(&(schema as *const Value as usize))
+            {
+                return resource.uri.display_path(ctx);
+            }
+            return Ok(path.clone());
+        }
         let id_len = get(schema, "$id")
             .or_else(|| get(schema, "id"))
             .and_then(|value| match value {
@@ -1922,6 +2320,7 @@ impl CompiledSchema {
             .to_utf8()
             .ok()
             .and_then(|text| text.split_once('#').map(|(base, _)| base.to_owned()))
+            .filter(|base| !base.is_empty())
             .or_else(|| schema_id(&self.schema))
             .unwrap_or_default();
         let effective = if id.contains(':') {
@@ -2182,212 +2581,334 @@ impl CompiledSchema {
         unevaluated_properties: &mut Option<(&Value, Utf16)>,
         unevaluated_items: &mut Option<(&Value, Utf16)>,
     ) -> Result<(), EngineError> {
+        // Keep static recursion independent of the larger dynamic resolver
+        // temporaries; both retain their original semantic/error paths.
         match keyword {
-            "$ref" => {
-                let (target, tsp) = self.resolve_eval_ref(rule, &kp, ctx)?;
-                // The Draft 3 predecessor's reference applicator treats
-                // boolean targets as mappings and raises TypeError. Keep
-                // this a runtime failure: unrelated `definitions` values
-                // remain inert and schema construction still succeeds.
-                if self.dialect == SchemaDialect::Draft3
-                    && matches!(target, Value::Bool(_))
-                    && draft3_reference_crosses_subresource(&tsp, ctx)?
-                {
-                    return Err(EngineError::new(
-                        "PYTHON_SCHEMA_EVALUATION",
-                        ip.clone(),
-                        "Draft 3 reference target is not an object schema",
-                    )
-                    .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
-                }
-                if matches!(self.regex_profile, RegexProfile::Python(_))
-                    && !matches!(target, Value::Object(_) | Value::Bool(_))
-                {
-                    return Err(EngineError::new(
-                        "PYTHON_SCHEMA_EVALUATION",
-                        ip.clone(),
-                        "Schema reference target is not an object or boolean schema",
-                    )
-                    .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
-                }
-                if evaluated.annotation_scan
-                    && (self.uses_python_2020_annotation_profile()
-                        || self.uses_python_2019_annotation_profile())
-                {
-                    self.collect_schema_annotations(
-                        &tsp,
-                        target,
-                        data,
-                        ip,
-                        depth + 1,
-                        ctx,
-                        evaluated,
-                    )?;
-                    return Ok(());
-                }
-                let mut reference_errors = Vec::new();
-                let mut reference_annotations = evaluated.child(ctx, ip)?;
-                if let Err(error) = self.eval(
-                    target,
-                    data,
-                    ip,
-                    &tsp,
-                    depth + 1,
-                    ctx,
-                    &mut reference_errors,
-                    &mut reference_annotations,
-                ) {
-                    if matches!(self.regex_profile, RegexProfile::Python(_)) {
-                        for error in &mut reference_errors {
-                            if error
-                                .python_error
-                                .as_ref()
-                                .is_some_and(|metadata| metadata.validator.is_none())
-                            {
-                                ctx.charge_work(kp.len(), Utf16::default())?;
-                                error.schema_path = kp.clone();
-                            }
-                        }
-                        rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
-                        prefix_reference_errors(&mut reference_errors, sp, ctx)?;
-                    }
-                    out.extend(reference_errors);
-                    return Err(error);
-                }
-                if matches!(self.regex_profile, RegexProfile::Python(_)) {
-                    for error in &mut reference_errors {
-                        if error
-                            .python_error
-                            .as_ref()
-                            .is_some_and(|metadata| metadata.validator.is_none())
-                        {
-                            ctx.charge_work(sp.len(), Utf16::default())?;
-                            error.schema_path = sp.clone();
-                        }
-                    }
-                    rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
-                    prefix_reference_errors(&mut reference_errors, sp, ctx)?;
-                }
-                if reference_errors.is_empty() {
-                    evaluated.merge(reference_annotations, ctx, ip)?;
-                }
-                out.extend(reference_errors);
-            }
-            "$dynamicRef" | "$recursiveRef" => {
-                let (mut target, mut tsp) = self.resolve_eval_ref(rule, &kp, ctx)?;
-                if matches!(self.regex_profile, RegexProfile::Python(_))
-                    && !matches!(target, Value::Object(_) | Value::Bool(_))
-                {
-                    return Err(EngineError::new(
-                        "PYTHON_SCHEMA_EVALUATION",
-                        ip.clone(),
-                        "Schema reference target is not an object or boolean schema",
-                    )
-                    .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
-                }
-                if let Some(reference) = as_utf8(rule) {
-                    let fragment = reference.split_once('#').map(|(_, f)| f).unwrap_or("");
-                    let recursive = keyword == "$recursiveRef"
-                        && matches!(get(target, "$recursiveAnchor"), Some(Value::Bool(true)));
-                    let dynamic = keyword == "$dynamicRef"
-                        && !fragment.is_empty()
-                        && !fragment.starts_with('/')
-                        && get(target, "$dynamicAnchor").and_then(as_utf8).as_deref()
-                            == Some(fragment);
-                    if recursive || dynamic {
-                        let anchor_name = if recursive {
-                            Vec::new()
-                        } else {
-                            fragment.encode_utf16().collect::<Vec<_>>()
-                        };
-                        if let Some((_, dynamic_path)) = evaluated
-                            .dynamic_scope
-                            .iter()
-                            .find(|(anchor, _)| anchor == &anchor_name)
-                        {
-                            let dynamic_ref = Value::String(dynamic_path.clone());
-                            (target, tsp) =
-                                self.resolve_eval_ref(&dynamic_ref, dynamic_path, ctx)?;
-                            if matches!(self.regex_profile, RegexProfile::Python(_))
-                                && !matches!(target, Value::Object(_) | Value::Bool(_))
-                            {
-                                return Err(EngineError::new(
-                                    "PYTHON_SCHEMA_EVALUATION",
-                                    ip.clone(),
-                                    "Schema reference target is not an object or boolean schema",
-                                )
-                                .with_python_schema_terminal(
-                                    PythonSchemaTerminal::LocalReference,
-                                ));
-                            }
-                        }
-                    }
-                }
-                if evaluated.annotation_scan
-                    && (self.uses_python_2020_annotation_profile()
-                        || self.uses_python_2019_annotation_profile())
-                {
-                    self.collect_schema_annotations(
-                        &tsp,
-                        target,
-                        data,
-                        ip,
-                        depth + 1,
-                        ctx,
-                        evaluated,
-                    )?;
-                    return Ok(());
-                }
-                let mut reference_errors = Vec::new();
-                let mut reference_annotations = evaluated.child(ctx, ip)?;
-                if let Err(error) = self.eval(
-                    target,
-                    data,
-                    ip,
-                    &tsp,
-                    depth + 1,
-                    ctx,
-                    &mut reference_errors,
-                    &mut reference_annotations,
-                ) {
-                    if matches!(self.regex_profile, RegexProfile::Python(_)) {
-                        for error in &mut reference_errors {
-                            if error
-                                .python_error
-                                .as_ref()
-                                .is_some_and(|metadata| metadata.validator.is_none())
-                            {
-                                ctx.charge_work(kp.len(), Utf16::default())?;
-                                error.schema_path = kp.clone();
-                            }
-                        }
-                        rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
-                        prefix_reference_errors(&mut reference_errors, &kp, ctx)?;
-                    }
-                    out.extend(reference_errors);
-                    return Err(error);
-                }
-                if matches!(self.regex_profile, RegexProfile::Python(_)) {
-                    for error in &mut reference_errors {
-                        if error
-                            .python_error
-                            .as_ref()
-                            .is_some_and(|metadata| metadata.validator.is_none())
-                        {
-                            ctx.charge_work(kp.len(), Utf16::default())?;
-                            error.schema_path = kp.clone();
-                        }
-                    }
-                    rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
-                    prefix_reference_errors(&mut reference_errors, &kp, ctx)?;
-                }
-                if reference_errors.is_empty() {
-                    evaluated.merge(reference_annotations, ctx, ip)?;
-                }
-                out.extend(reference_errors);
-            }
-            _ => {}
+            "$ref" => self.eval_static_reference(
+                schema,
+                members,
+                keyword,
+                rule,
+                kp,
+                data,
+                ip,
+                sp,
+                depth,
+                ctx,
+                out,
+                evaluated,
+                mode,
+                initial_error_count,
+                annotation_scan_complete,
+                unevaluated_properties,
+                unevaluated_items,
+            ),
+            "$dynamicRef" | "$recursiveRef" => self.eval_dynamic_reference(
+                schema,
+                members,
+                keyword,
+                rule,
+                kp,
+                data,
+                ip,
+                sp,
+                depth,
+                ctx,
+                out,
+                evaluated,
+                mode,
+                initial_error_count,
+                annotation_scan_complete,
+                unevaluated_properties,
+                unevaluated_items,
+            ),
+            _ => Ok(()),
         }
+    }
+
+    #[inline(never)]
+    #[allow(unused_variables)]
+    fn eval_static_reference<T: InstanceView>(
+        &self,
+        schema: &Value,
+        members: &[(Utf16, Value)],
+        keyword: &str,
+        rule: &Value,
+        kp: &Utf16,
+        data: &T,
+        ip: &Utf16,
+        sp: &Utf16,
+        depth: usize,
+        ctx: &mut Context<'_>,
+        out: &mut Vec<StructuralError>,
+        evaluated: &mut Evaluated,
+        mode: EvaluationMode,
+        initial_error_count: usize,
+        annotation_scan_complete: &mut bool,
+        unevaluated_properties: &mut Option<(&Value, Utf16)>,
+        unevaluated_items: &mut Option<(&Value, Utf16)>,
+    ) -> Result<(), EngineError> {
+        let (target, tsp) = self.resolve_eval_ref(rule, &kp, ctx)?;
+        // The Draft 3 predecessor's reference applicator treats
+        // boolean targets as mappings and raises TypeError. Keep
+        // this a runtime failure: unrelated `definitions` values
+        // remain inert and schema construction still succeeds.
+        if self.dialect == SchemaDialect::Draft3
+            && matches!(target, Value::Bool(_))
+            && draft3_reference_crosses_subresource(&tsp, ctx)?
+        {
+            return Err(EngineError::new(
+                "PYTHON_SCHEMA_EVALUATION",
+                ip.clone(),
+                "Draft 3 reference target is not an object schema",
+            )
+            .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
+        }
+        if matches!(self.regex_profile, RegexProfile::Python(_))
+            && !matches!(target, Value::Object(_) | Value::Bool(_))
+        {
+            return Err(EngineError::new(
+                "PYTHON_SCHEMA_EVALUATION",
+                ip.clone(),
+                "Schema reference target is not an object or boolean schema",
+            )
+            .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
+        }
+        let mut reference_annotations = evaluated.child(ctx, ip)?;
+        self.python_record_reference_lookup(keyword, rule, &mut reference_annotations, ctx)?;
+        if evaluated.annotation_scan
+            && (self.uses_python_2020_annotation_profile()
+                || self.uses_python_2019_annotation_profile())
+        {
+            self.collect_schema_annotations(
+                &tsp,
+                target,
+                data,
+                ip,
+                depth + 1,
+                ctx,
+                &mut reference_annotations,
+            )?;
+            evaluated.merge(reference_annotations, ctx, ip)?;
+            return Ok(());
+        }
+        let mut reference_errors = Vec::new();
+        if let Err(error) = self.eval(
+            target,
+            data,
+            ip,
+            &tsp,
+            depth + 1,
+            ctx,
+            &mut reference_errors,
+            &mut reference_annotations,
+        ) {
+            if matches!(self.regex_profile, RegexProfile::Python(_)) {
+                for error in &mut reference_errors {
+                    if error
+                        .python_error
+                        .as_ref()
+                        .is_some_and(|metadata| metadata.validator.is_none())
+                    {
+                        ctx.charge_work(kp.len(), Utf16::default())?;
+                        error.schema_path = kp.clone();
+                    }
+                }
+                rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
+                prefix_reference_errors(&mut reference_errors, sp, ctx)?;
+            }
+            out.extend(reference_errors);
+            return Err(error);
+        }
+        if matches!(self.regex_profile, RegexProfile::Python(_)) {
+            for error in &mut reference_errors {
+                if error
+                    .python_error
+                    .as_ref()
+                    .is_some_and(|metadata| metadata.validator.is_none())
+                {
+                    ctx.charge_work(sp.len(), Utf16::default())?;
+                    error.schema_path = sp.clone();
+                }
+            }
+            rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
+            prefix_reference_errors(&mut reference_errors, sp, ctx)?;
+        }
+        if reference_errors.is_empty() {
+            evaluated.merge(reference_annotations, ctx, ip)?;
+        }
+        out.extend(reference_errors);
+
+        Ok(())
+    }
+
+    #[inline(never)]
+    #[allow(unused_variables)]
+    fn eval_dynamic_reference<T: InstanceView>(
+        &self,
+        schema: &Value,
+        members: &[(Utf16, Value)],
+        keyword: &str,
+        rule: &Value,
+        kp: &Utf16,
+        data: &T,
+        ip: &Utf16,
+        sp: &Utf16,
+        depth: usize,
+        ctx: &mut Context<'_>,
+        out: &mut Vec<StructuralError>,
+        evaluated: &mut Evaluated,
+        mode: EvaluationMode,
+        initial_error_count: usize,
+        annotation_scan_complete: &mut bool,
+        unevaluated_properties: &mut Option<(&Value, Utf16)>,
+        unevaluated_items: &mut Option<(&Value, Utf16)>,
+    ) -> Result<(), EngineError> {
+        let python_recursive = keyword == "$recursiveRef"
+            && self.dialect == SchemaDialect::Draft2019_09
+            && matches!(self.regex_profile, RegexProfile::Python(_));
+        let (mut target, mut tsp) = if python_recursive {
+            self.python_recursive_retarget(rule, evaluated, ctx)?
+        } else {
+            self.resolve_eval_ref(rule, &kp, ctx)?
+        };
+        if matches!(self.regex_profile, RegexProfile::Python(_))
+            && !matches!(target, Value::Object(_) | Value::Bool(_))
+        {
+            return Err(EngineError::new(
+                "PYTHON_SCHEMA_EVALUATION",
+                ip.clone(),
+                "Schema reference target is not an object or boolean schema",
+            )
+            .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
+        }
+        if let Value::String(reference) = rule {
+            ctx.charge_work_u64(
+                (reference.len() as u64).saturating_mul(4).saturating_add(1),
+                Utf16::default(),
+            )?;
+        }
+        if let Value::Object(members) = target {
+            ctx.charge_work_u64((members.len() as u64).saturating_mul(40), Utf16::default())?;
+        }
+        if let Some(Value::String(anchor)) = get(target, "$dynamicAnchor") {
+            ctx.charge_work_u64((anchor.len() as u64).saturating_mul(3), Utf16::default())?;
+        }
+        if let Some(reference) = as_utf8(rule) {
+            let fragment = reference.split_once('#').map(|(_, f)| f).unwrap_or("");
+            let recursive = !matches!(self.regex_profile, RegexProfile::Python(_))
+                && keyword == "$recursiveRef"
+                && matches!(get(target, "$recursiveAnchor"), Some(Value::Bool(true)));
+            let dynamic = keyword == "$dynamicRef"
+                && !fragment.is_empty()
+                && !fragment.starts_with('/')
+                && get(target, "$dynamicAnchor").and_then(as_utf8).as_deref() == Some(fragment);
+            if recursive || dynamic {
+                let anchor_name = if recursive {
+                    Vec::new()
+                } else {
+                    fragment.encode_utf16().collect::<Vec<_>>()
+                };
+                let mut selected_scope = None;
+                for (anchor, dynamic_path, node_address) in &evaluated.dynamic_scope {
+                    ctx.charge_work_u64(
+                        anchor.len().min(anchor_name.len()) as u64 + 1,
+                        Utf16::default(),
+                    )?;
+                    if anchor == &anchor_name {
+                        selected_scope = Some((dynamic_path, node_address));
+                        break;
+                    }
+                }
+                if let Some((dynamic_path, node_address)) = selected_scope {
+                    ctx.charge_work(dynamic_path.len(), Utf16::default())?;
+                    if matches!(self.regex_profile, RegexProfile::Python(_)) {
+                        // The scope owns a stable node identity. Its diagnostic
+                        // path is display-only and may collapse Python codepoints.
+                        target = self.python_scope_node(*node_address, ctx)?;
+                        tsp = dynamic_path.clone();
+                    } else {
+                        let dynamic_ref = Value::String(dynamic_path.clone());
+                        (target, tsp) = self.resolve_eval_ref(&dynamic_ref, dynamic_path, ctx)?;
+                    }
+                    if matches!(self.regex_profile, RegexProfile::Python(_))
+                        && !matches!(target, Value::Object(_) | Value::Bool(_))
+                    {
+                        return Err(EngineError::new(
+                            "PYTHON_SCHEMA_EVALUATION",
+                            ip.clone(),
+                            "Schema reference target is not an object or boolean schema",
+                        )
+                        .with_python_schema_terminal(PythonSchemaTerminal::LocalReference));
+                    }
+                }
+            }
+        }
+        let mut reference_annotations = evaluated.child(ctx, ip)?;
+        self.python_record_reference_lookup(keyword, rule, &mut reference_annotations, ctx)?;
+        if evaluated.annotation_scan
+            && (self.uses_python_2020_annotation_profile()
+                || self.uses_python_2019_annotation_profile())
+        {
+            self.collect_schema_annotations(
+                &tsp,
+                target,
+                data,
+                ip,
+                depth + 1,
+                ctx,
+                &mut reference_annotations,
+            )?;
+            evaluated.merge(reference_annotations, ctx, ip)?;
+            return Ok(());
+        }
+        let mut reference_errors = Vec::new();
+        if let Err(error) = self.eval(
+            target,
+            data,
+            ip,
+            &tsp,
+            depth + 1,
+            ctx,
+            &mut reference_errors,
+            &mut reference_annotations,
+        ) {
+            if matches!(self.regex_profile, RegexProfile::Python(_)) {
+                for error in &mut reference_errors {
+                    if error
+                        .python_error
+                        .as_ref()
+                        .is_some_and(|metadata| metadata.validator.is_none())
+                    {
+                        ctx.charge_work(kp.len(), Utf16::default())?;
+                        error.schema_path = kp.clone();
+                    }
+                }
+                rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
+                prefix_reference_errors(&mut reference_errors, &kp, ctx)?;
+            }
+            out.extend(reference_errors);
+            return Err(error);
+        }
+        if matches!(self.regex_profile, RegexProfile::Python(_)) {
+            for error in &mut reference_errors {
+                if error
+                    .python_error
+                    .as_ref()
+                    .is_some_and(|metadata| metadata.validator.is_none())
+                {
+                    ctx.charge_work(kp.len(), Utf16::default())?;
+                    error.schema_path = kp.clone();
+                }
+            }
+            rebase_reference_errors(&mut reference_errors, &tsp, ctx)?;
+            prefix_reference_errors(&mut reference_errors, &kp, ctx)?;
+        }
+        if reference_errors.is_empty() {
+            evaluated.merge(reference_annotations, ctx, ip)?;
+        }
+        out.extend(reference_errors);
+
         Ok(())
     }
 
@@ -4975,10 +5496,11 @@ fn validate_local_reference_gate(
     path: &Utf16,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
-    ctx.charge_work(1, path.clone())?;
+    ctx.charge_work(path.len().saturating_add(1), Utf16::default())?;
     match value {
         Value::Array(items) => {
             for (index, item) in items.iter().enumerate() {
+                ctx.charge_work(path.len().saturating_add(22), Utf16::default())?;
                 validate_local_reference_gate(
                     item,
                     &append_schema_path(path, &index.to_string()),
@@ -4988,6 +5510,10 @@ fn validate_local_reference_gate(
         }
         Value::Object(members) => {
             for (key, item) in members {
+                ctx.charge_work_u64(
+                    path.len() as u64 + (key.len() as u64).saturating_mul(2) + 30,
+                    Utf16::default(),
+                )?;
                 let child = append_schema_pointer(path, key);
                 if key == &Utf16::from("$ref") || key == &Utf16::from("$dynamicRef") {
                     if !matches!(item, Value::String(reference) if reference.units().first() == Some(&(b'#' as u16)))
@@ -5085,6 +5611,7 @@ fn validate_schema_against_metaschema(
         python_source_keys: std::collections::BTreeMap::new(),
         python_exact_values: std::collections::BTreeMap::new(),
         python_reference_targets: std::collections::BTreeMap::new(),
+        python_resource_roots: std::collections::BTreeMap::new(),
     };
     let errors = meta.validate_instance(schema, ctx)?;
     if let Some(error) = errors.first() {
@@ -5596,6 +6123,226 @@ fn resolve_relative_uri(base: &str, reference: &str) -> Option<String> {
     }
     let path = format!("/{}", parts.join("/"));
     Some(format!("{scheme}://{authority}{path}"))
+}
+
+/// Resolve a relative URI using only ASCII URI delimiters while preserving
+/// Python source code points, including lone surrogates, in the URI payload.
+fn resolve_relative_python_uri(base: &[u32], reference: &[u32]) -> Option<Vec<u32>> {
+    // Port of the qualified CPython urllib.parse.urljoin grammar. Payload
+    // codepoints remain opaque; only ASCII structural characters are parsed.
+    const RELATIVE: &[&str] = &[
+        "", "ftp", "http", "gopher", "nntp", "imap", "wais", "file", "https", "shttp", "mms",
+        "prospero", "rtsp", "rtsps", "rtspu", "sftp", "svn", "svn+ssh", "ws", "wss",
+    ];
+    const NETLOC: &[&str] = &[
+        "", "ftp", "http", "gopher", "nntp", "telnet", "imap", "wais", "file", "mms", "https",
+        "shttp", "snews", "prospero", "rtsp", "rtsps", "rtspu", "rsync", "svn", "svn+ssh", "sftp",
+        "nfs", "git", "git+ssh", "ws", "wss",
+    ];
+    const PARAMS: &[&str] = &[
+        "", "ftp", "hdl", "prospero", "http", "imap", "https", "shttp", "rtsp", "rtsps", "rtspu",
+        "sip", "sips", "mms", "sftp", "tel",
+    ];
+    fn in_set(points: &[u32], words: &[&str]) -> bool {
+        words
+            .iter()
+            .any(|word| points.iter().copied().eq(word.bytes().map(u32::from)))
+    }
+    struct Parts {
+        scheme: Vec<u32>,
+        netloc: Vec<u32>,
+        path: Vec<u32>,
+        params: Vec<u32>,
+        query: Vec<u32>,
+        fragment: Vec<u32>,
+    }
+    fn parse(raw: &[u32], default_scheme: &[u32]) -> Parts {
+        let start = raw
+            .iter()
+            .position(|point| *point > 0x20)
+            .unwrap_or(raw.len());
+        let cleaned: Vec<u32> = raw[start..]
+            .iter()
+            .copied()
+            .filter(|point| !matches!(*point, 9 | 10 | 13))
+            .collect();
+        let mut remaining = cleaned.as_slice();
+        let mut scheme = default_scheme.to_vec();
+        if let Some(colon) = remaining.iter().position(|point| *point == b':' as u32) {
+            if colon > 0
+                && matches!(remaining[0], 65..=90 | 97..=122)
+                && remaining[..colon]
+                    .iter()
+                    .all(|point| matches!(*point, 65..=90 | 97..=122 | 48..=57 | 43 | 45 | 46))
+            {
+                scheme = remaining[..colon]
+                    .iter()
+                    .map(|point| {
+                        if (65..=90).contains(point) {
+                            point + 32
+                        } else {
+                            *point
+                        }
+                    })
+                    .collect();
+                remaining = &remaining[colon + 1..];
+            }
+        }
+        let netloc = if remaining.starts_with(&[47, 47]) {
+            let end = remaining[2..]
+                .iter()
+                .position(|point| matches!(*point, 47 | 63 | 35))
+                .map_or(remaining.len(), |i| i + 2);
+            let netloc = remaining[2..end].to_vec();
+            remaining = &remaining[end..];
+            netloc
+        } else {
+            Vec::new()
+        };
+        let fragment = if let Some(index) = remaining.iter().position(|point| *point == 35) {
+            let fragment = remaining[index + 1..].to_vec();
+            remaining = &remaining[..index];
+            fragment
+        } else {
+            Vec::new()
+        };
+        let query = if let Some(index) = remaining.iter().position(|point| *point == 63) {
+            let query = remaining[index + 1..].to_vec();
+            remaining = &remaining[..index];
+            query
+        } else {
+            Vec::new()
+        };
+        let params = if in_set(&scheme, PARAMS) {
+            let start = remaining
+                .iter()
+                .rposition(|point| *point == 47)
+                .unwrap_or(0);
+            if let Some(index) = remaining[start..]
+                .iter()
+                .position(|point| *point == 59)
+                .map(|i| start + i)
+            {
+                let params = remaining[index + 1..].to_vec();
+                remaining = &remaining[..index];
+                params
+            } else {
+                Vec::new()
+            }
+        } else {
+            Vec::new()
+        };
+        Parts {
+            scheme,
+            netloc,
+            path: remaining.to_vec(),
+            params,
+            query,
+            fragment,
+        }
+    }
+    fn unparse(parts: Parts) -> Vec<u32> {
+        let mut path = parts.path;
+        if !parts.params.is_empty() {
+            path.push(59);
+            path.extend(parts.params);
+        }
+        let mut out = Vec::new();
+        if !parts.scheme.is_empty() {
+            out.extend_from_slice(&parts.scheme);
+            out.push(58);
+        }
+        if !parts.netloc.is_empty()
+            || (!parts.scheme.is_empty() && in_set(&parts.scheme, NETLOC))
+            || path.starts_with(&[47, 47])
+        {
+            out.extend_from_slice(&[47, 47]);
+            out.extend(parts.netloc);
+            if !path.is_empty() && path.first() != Some(&47) {
+                out.push(47);
+            }
+        }
+        out.extend(path);
+        if !parts.query.is_empty() {
+            out.push(63);
+            out.extend(parts.query);
+        }
+        if !parts.fragment.is_empty() {
+            out.push(35);
+            out.extend(parts.fragment);
+        }
+        out
+    }
+    if base.is_empty() {
+        return Some(reference.to_vec());
+    }
+    if reference.is_empty() {
+        return Some(base.to_vec());
+    }
+    let base = parse(base, &[]);
+    let mut target = parse(reference, &base.scheme);
+    if target.scheme != base.scheme || !in_set(&target.scheme, RELATIVE) {
+        return Some(reference.to_vec());
+    }
+    if in_set(&target.scheme, NETLOC) {
+        if !target.netloc.is_empty() {
+            return Some(unparse(target));
+        }
+        target.netloc = base.netloc;
+    }
+    if target.path.is_empty() && target.params.is_empty() {
+        target.path = base.path;
+        target.params = base.params;
+        if target.query.is_empty() {
+            target.query = base.query;
+        }
+        return Some(unparse(target));
+    }
+    let mut segments: Vec<&[u32]>;
+    if target.path.first() == Some(&47) {
+        segments = target.path.split(|point| *point == 47).collect();
+    } else {
+        segments = base.path.split(|point| *point == 47).collect();
+        if segments.last().is_some_and(|part| !part.is_empty()) {
+            segments.pop();
+        }
+        segments.extend(target.path.split(|point| *point == 47));
+        let len = segments.len();
+        // Python removes redundant empty interior segments only for a
+        // relative path. Preserve absolute-path double slashes and trailing /.
+        let mut index = 0;
+        segments.retain(|part| {
+            let keep = index == 0 || index + 1 == len || !part.is_empty();
+            index += 1;
+            keep
+        });
+    }
+    let trailing_dot = segments
+        .last()
+        .is_some_and(|part| *part == [46] || *part == [46, 46]);
+    let mut resolved: Vec<&[u32]> = Vec::new();
+    for segment in segments {
+        if segment == [46, 46] {
+            resolved.pop();
+        } else if segment != [46] {
+            resolved.push(segment);
+        }
+    }
+    if trailing_dot {
+        resolved.push(&[]);
+    }
+    let mut path = Vec::new();
+    for (index, segment) in resolved.iter().enumerate() {
+        if index > 0 {
+            path.push(47);
+        }
+        path.extend_from_slice(segment);
+    }
+    if path.is_empty() {
+        path.push(47);
+    }
+    target.path = path;
+    Some(unparse(target))
 }
 
 /// Locate a nested schema resource by its resolved identifier without fetching
@@ -6392,18 +7139,207 @@ fn bind_python_reference_targets(
     source: &crate::python_value::PythonConsumerValue,
     target: &Value,
     resource: Option<usize>,
+    supplied_resource_uri: Option<&crate::python_value::PyText>,
+    dialect: SchemaDialect,
     references: &mut std::collections::BTreeMap<usize, PythonReferenceTarget>,
+    resource_roots: &mut std::collections::BTreeMap<usize, PythonResourceLocator>,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
+    use crate::python_value::PyText;
     use crate::python_value::PythonConsumerValue as Py;
+
+    fn key_is(key: &PyText, expected: &str) -> bool {
+        key.codepoints()
+            .iter()
+            .copied()
+            .eq(expected.as_bytes().iter().map(|byte| *byte as u32))
+    }
+
+    fn source_id(
+        source: &Py,
+        dialect: SchemaDialect,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<PythonResourceUri>, EngineError> {
+        let Py::Object(members) = source else {
+            return Ok(None);
+        };
+        let legacy = matches!(
+            dialect,
+            SchemaDialect::Draft3
+                | SchemaDialect::Draft4
+                | SchemaDialect::Draft6
+                | SchemaDialect::Draft7
+        );
+        let mut selected = None;
+        let field = if matches!(dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4) {
+            "id"
+        } else {
+            "$id"
+        };
+        for (key, value) in members {
+            ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+            if legacy && key_is(key, "$ref") {
+                return Ok(None);
+            }
+            if key_is(key, field) {
+                if let Py::String(text) = value {
+                    selected = Some(text);
+                }
+            }
+        }
+        let Some(text) = selected else {
+            return Ok(None);
+        };
+        ctx.charge_work(text.len(), Utf16::default())?;
+        let points = text.codepoints();
+        if legacy && points.first() == Some(&(b'#' as u32)) {
+            return Ok(None);
+        }
+        // referencing.Resource.id strips the accepted trailing empty fragment.
+        let end = points
+            .iter()
+            .rposition(|point| *point != b'#' as u32)
+            .map_or(0, |index| index + 1);
+        Ok(Some(PythonResourceUri::from_points(&points[..end], ctx)?))
+    }
+
+    fn source_recursive_anchor(source: &Py, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+        let Py::Object(members) = source else {
+            return Ok(false);
+        };
+        for (key, value) in members {
+            ctx.charge_work(key.codepoints().len().saturating_add(1), Utf16::default())?;
+            if key_is(key, "$recursiveAnchor") {
+                return Ok(matches!(value, Py::Bool(true)));
+            }
+        }
+        Ok(false)
+    }
+
+    fn is_resource_boundary(
+        source: &Py,
+        dialect: SchemaDialect,
+        is_supplied_root: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<bool, EngineError> {
+        if is_supplied_root {
+            return Ok(true);
+        }
+        Ok(source_id(source, dialect, ctx)?.is_some())
+    }
+
+    fn at_indices<'a>(mut value: &'a Py, indices: &[usize]) -> Option<&'a Py> {
+        for index in indices {
+            value = match value {
+                Py::Object(members) => &members.get(*index)?.1,
+                Py::Array(items) => items.get(*index)?,
+                _ => return None,
+            };
+        }
+        Some(value)
+    }
+
+    fn source_anchor(
+        node: &Py,
+        name: &[u32],
+        dialect: SchemaDialect,
+        root: bool,
+        indices: &mut Vec<usize>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<Vec<usize>>, EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        // An anchor belongs to its own recognized resource. Opaque objects
+        // are never visited by schema_child_paths and cannot introduce one.
+        if !root && source_id(node, dialect, ctx)?.is_some() {
+            return Ok(None);
+        }
+        if let Py::Object(members) = node {
+            let legacy = matches!(
+                dialect,
+                SchemaDialect::Draft3
+                    | SchemaDialect::Draft4
+                    | SchemaDialect::Draft6
+                    | SchemaDialect::Draft7
+            );
+            let mut ref_sibling = false;
+            let mut matched = false;
+            for (key, value) in members {
+                ctx.charge_work_u64(
+                    (key.len().min(14) as u64 + 1).saturating_mul(4),
+                    Utf16::default(),
+                )?;
+                if key_is(key, "$ref") {
+                    ref_sibling = true;
+                }
+                let field = if matches!(dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4) {
+                    "id"
+                } else {
+                    "$id"
+                };
+                let anchor_field = if legacy {
+                    key_is(key, field)
+                } else {
+                    key_is(key, "$anchor")
+                        || (dialect == SchemaDialect::Draft2020_12 && key_is(key, "$dynamicAnchor"))
+                };
+                if anchor_field {
+                    if let Py::String(text) = value {
+                        let points = text.codepoints();
+                        let candidate = if legacy {
+                            if points.first() != Some(&(b'#' as u32)) {
+                                continue;
+                            }
+                            &points[1..]
+                        } else {
+                            points
+                        };
+                        ctx.charge_work_u64(
+                            candidate.len().min(name.len()) as u64 + 1,
+                            Utf16::default(),
+                        )?;
+                        matched |= candidate == name;
+                    }
+                }
+            }
+            if matched && !(legacy && ref_sibling) {
+                ctx.charge_work(indices.len(), Utf16::default())?;
+                return Ok(Some(indices.clone()));
+            }
+        }
+        for child_path in schema_child_paths(node, dialect, ctx)? {
+            ctx.charge_work_u64(
+                (child_path.len() as u64).saturating_mul(2),
+                Utf16::default(),
+            )?;
+            let child = at_indices(node, &child_path)
+                .ok_or_else(|| schema_error(&Utf16::default(), "Python anchor source changed"))?;
+            let old_len = indices.len();
+            indices.extend_from_slice(&child_path);
+            let found = source_anchor(child, name, dialect, false, indices, ctx)?;
+            indices.truncate(old_len);
+            if found.is_some() {
+                return Ok(found);
+            }
+        }
+        Ok(None)
+    }
+
     fn source_pointer(
-        root: &Py,
+        resource_root: &Py,
         reference: &crate::python_value::PyText,
+        dialect: SchemaDialect,
+        recursive: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Option<(Vec<usize>, Option<PythonReferenceFailure>)>, EngineError> {
-        let raw_points = reference.codepoints();
+        // The native recursive applicator always calls lookup("#"), even
+        // when the admitted keyword text contains a different fragment.
+        let raw_points = if recursive {
+            &[b'#' as u32][..]
+        } else {
+            reference.codepoints()
+        };
         ctx.charge_work_u64(
-            (raw_points.len() as u64).saturating_mul(2),
+            (raw_points.len() as u64).saturating_mul(4),
             Utf16::default(),
         )?;
         let points = percent_decode_python_points(raw_points);
@@ -6414,9 +7350,22 @@ fn bind_python_reference_targets(
             return Ok(Some((Vec::new(), None)));
         }
         if points.get(1) != Some(&(b'/' as u32)) {
-            return Ok(None);
+            let mut indices = Vec::new();
+            return Ok(Some(
+                match source_anchor(
+                    resource_root,
+                    &points[1..],
+                    dialect,
+                    true,
+                    &mut indices,
+                    ctx,
+                )? {
+                    Some(indices) => (indices, None),
+                    None => (Vec::new(), Some(PythonReferenceFailure::Unresolved)),
+                },
+            ));
         }
-        let mut current = root;
+        let mut current = resource_root;
         let mut indices = Vec::new();
         let mut failure = None;
         for raw in points[2..].split(|point| *point == b'/' as u32) {
@@ -6428,7 +7377,10 @@ fn bind_python_reference_targets(
                     match raw.get(at + 1) {
                         Some(value) if *value == b'0' as u32 => part.push(b'~' as u32),
                         Some(value) if *value == b'1' as u32 => part.push(b'/' as u32),
-                        _ => return Ok(None),
+                        _ => {
+                            failure = Some(PythonReferenceFailure::Unresolved);
+                            break;
+                        }
                     }
                     at += 2;
                 } else {
@@ -6438,90 +7390,177 @@ fn bind_python_reference_targets(
             }
             match current {
                 Py::Object(members) => {
-                    let Some((index, (_key, value))) = members
-                        .iter()
-                        .enumerate()
-                        .find(|(_, (key, _))| key.codepoints() == part.as_slice())
-                    else {
-                        return Ok(None);
+                    let mut found = None;
+                    for (index, (key, value)) in members.iter().enumerate() {
+                        ctx.charge_work_u64(
+                            key.len().min(part.len()) as u64 + 1,
+                            Utf16::default(),
+                        )?;
+                        if key.codepoints() == part.as_slice() {
+                            found = Some((index, value));
+                            break;
+                        }
+                    }
+                    let Some((index, value)) = found else {
+                        failure = Some(PythonReferenceFailure::Unresolved);
+                        break;
                     };
+                    ctx.charge_work(1, Utf16::default())?;
                     indices.push(index);
                     current = value;
                 }
                 Py::Array(items) => {
                     let index = match parse_python_sequence_index(&part, items.len(), ctx)? {
                         Ok(Some(index)) => index,
-                        Ok(None) => return Ok(None),
+                        Ok(None) => {
+                            failure = Some(PythonReferenceFailure::Unresolved);
+                            break;
+                        }
                         Err(()) => {
                             failure = Some(PythonReferenceFailure::InvalidArrayIndex);
                             break;
                         }
                     };
                     let Some(value) = items.get(index) else {
-                        return Ok(None);
+                        failure = Some(PythonReferenceFailure::Unresolved);
+                        break;
                     };
                     current = value;
+                    ctx.charge_work(1, Utf16::default())?;
                     indices.push(index);
                 }
-                _ => return Ok(None),
+                _ => {
+                    failure = Some(PythonReferenceFailure::InvalidTraversal);
+                    break;
+                }
             }
         }
         Ok(Some((indices, failure)))
     }
     fn visit(
-        root: &Py,
         source: &Py,
         target: &Value,
         resource: Option<usize>,
+        dialect: SchemaDialect,
         indices: &mut Vec<usize>,
+        schema_position: bool,
+        resource_root: &Py,
+        resource_root_indices: &[usize],
+        resource_uri: Option<&PythonResourceUri>,
+        resource_recursive_anchor: bool,
         references: &mut std::collections::BTreeMap<usize, PythonReferenceTarget>,
+        resource_roots: &mut std::collections::BTreeMap<usize, PythonResourceLocator>,
         ctx: &mut Context<'_>,
     ) -> Result<(), EngineError> {
         ctx.charge_work(1, Utf16::default())?;
-        match (source, target) {
-            (Py::Array(source_items), Value::Array(target_items))
-                if source_items.len() == target_items.len() =>
-            {
-                for (index, (source_item, target_item)) in
-                    source_items.iter().zip(target_items).enumerate()
-                {
-                    indices.push(index);
-                    visit(
-                        root,
-                        source_item,
-                        target_item,
-                        resource,
-                        indices,
-                        references,
-                        ctx,
-                    )?;
-                    indices.pop();
-                }
+        let boundary = if schema_position {
+            is_resource_boundary(source, dialect, indices.is_empty(), ctx)?
+        } else {
+            false
+        };
+        let current_resource_indices = if boundary {
+            ctx.charge_work(indices.len(), Utf16::default())?;
+            Some(indices.clone())
+        } else {
+            None
+        };
+        let current_resource_root = if current_resource_indices.is_some() {
+            source
+        } else {
+            resource_root
+        };
+        let current_resource_indices = current_resource_indices
+            .as_deref()
+            .unwrap_or(resource_root_indices);
+        ctx.charge_work(current_resource_indices.len(), Utf16::default())?;
+        let is_new_resource = schema_position && current_resource_indices != resource_root_indices;
+        let current_uri_owned = if is_new_resource {
+            if let Some(id) = source_id(source, dialect, ctx)? {
+                let parent_len = resource_uri.map(|uri| uri.len()).unwrap_or(0);
+                ctx.charge_work_u64(
+                    id.len() as u64 * 4 + parent_len as u64 * 4 + 8,
+                    Utf16::default(),
+                )?;
+                Some(if let Some(parent) = resource_uri {
+                    parent.join(&id, ctx)?.unwrap_or(id)
+                } else {
+                    id
+                })
+            } else {
+                None
             }
+        } else {
+            None
+        };
+        let current_uri = current_uri_owned.as_ref().or(resource_uri);
+        let current_anchor = if is_new_resource {
+            source_recursive_anchor(source, ctx)?
+        } else {
+            resource_recursive_anchor
+        };
+        if boundary {
+            if let Some(uri) = current_uri {
+                ctx.charge_work_u64(
+                    uri.len() as u64
+                        + current_resource_indices.len() as u64
+                        + btree_index_lookup_work(resource_roots.len())
+                        + 2,
+                    Utf16::default(),
+                )?;
+                resource_roots.insert(
+                    target as *const Value as usize,
+                    PythonResourceLocator {
+                        uri: uri.clone(),
+                        resource,
+                        root_indices: current_resource_indices.to_vec(),
+                        recursive_anchor: current_anchor,
+                    },
+                );
+            }
+        }
+        match (source, target) {
             (Py::Object(source_items), Value::Object(target_items))
                 if source_items.len() == target_items.len() =>
             {
-                for (index, ((source_key, source_item), (_, target_item))) in
+                for (_index, ((source_key, source_item), (_, target_item))) in
                     source_items.iter().zip(target_items).enumerate()
                 {
-                    if matches!(
-                        source_key.codepoints(),
-                        [0x24, 0x72, 0x65, 0x66]
-                            | [0x24, 0x64, 0x79, 0x6e, 0x61, 0x6d, 0x69, 0x63, 0x52, 0x65, 0x66]
-                            | [
-                                0x24, 0x72, 0x65, 0x63, 0x75, 0x72, 0x73, 0x69, 0x76, 0x65, 0x52,
-                                0x65, 0x66
-                            ]
-                    ) {
+                    ctx.charge_work_u64(
+                        (source_key.len().min(14) as u64 + 1).saturating_mul(3),
+                        Utf16::default(),
+                    )?;
+                    let is_reference =
+                        ["$ref", "$dynamicRef", "$recursiveRef"]
+                            .iter()
+                            .any(|keyword| {
+                                key_is(source_key, keyword)
+                                    && active_keywords(dialect).contains(keyword)
+                            });
+                    if is_reference {
                         if let Py::String(reference) = source_item {
                             ctx.charge_work(reference.len(), Utf16::default())?;
-                            if let Some((target_indices, failure)) =
-                                source_pointer(root, reference, ctx)?
-                            {
+                            if let Some((target_indices, failure)) = source_pointer(
+                                current_resource_root,
+                                reference,
+                                dialect,
+                                key_is(source_key, "$recursiveRef")
+                                    && dialect == SchemaDialect::Draft2019_09,
+                                ctx,
+                            )? {
+                                ctx.charge_work_u64(
+                                    current_resource_indices.len() as u64
+                                        + current_uri.map_or(0, |uri| uri.len() as u64)
+                                        + btree_index_lookup_work(references.len())
+                                        + 2,
+                                    Utf16::default(),
+                                )?;
                                 references.insert(
                                     target_item as *const Value as usize,
                                     PythonReferenceTarget {
                                         resource,
+                                        resource_root_indices: current_resource_indices.to_vec(),
+                                        source_resource_uri: current_uri.cloned(),
+                                        source_resource_recursive_anchor: current_anchor,
                                         indices: target_indices,
                                         failure,
                                     },
@@ -6529,14 +7568,129 @@ fn bind_python_reference_targets(
                             }
                         }
                     }
+                }
+                let schema_paths = if schema_position {
+                    schema_child_paths(source, dialect, ctx)?
+                } else {
+                    Vec::new()
+                };
+                for child_path in &schema_paths {
+                    ctx.charge_work_u64(
+                        (child_path.len() as u64).saturating_mul(2),
+                        Utf16::default(),
+                    )?;
+                    let source_child = at_indices(source, &child_path).ok_or_else(|| {
+                        EngineError::new(
+                            "SCHEMA_INVALID",
+                            Utf16::default(),
+                            "Python reference source projection changed its tree shape",
+                        )
+                    })?;
+                    let target_child = at_value_indices(target, &child_path).ok_or_else(|| {
+                        EngineError::new(
+                            "SCHEMA_INVALID",
+                            Utf16::default(),
+                            "Python reference source projection changed its tree shape",
+                        )
+                    })?;
+                    let old_len = indices.len();
+                    ctx.charge_work(child_path.len(), Utf16::default())?;
+                    indices.extend_from_slice(&child_path);
+                    visit(
+                        source_child,
+                        target_child,
+                        resource,
+                        dialect,
+                        indices,
+                        true,
+                        current_resource_root,
+                        current_resource_indices,
+                        current_uri,
+                        current_anchor,
+                        references,
+                        resource_roots,
+                        ctx,
+                    )?;
+                    indices.truncate(old_len);
+                }
+                ctx.charge_work_u64(
+                    source_items.len() as u64 + schema_paths.len() as u64 + 1,
+                    Utf16::default(),
+                )?;
+                let mut covered_members = vec![false; source_items.len()];
+                for path in &schema_paths {
+                    if let Some(index) = path.first() {
+                        covered_members[*index] = true;
+                    }
+                }
+                for child_path in immediate_child_paths(source, ctx)? {
+                    ctx.charge_work(1, Utf16::default())?;
+                    if child_path
+                        .first()
+                        .is_some_and(|index| covered_members[*index])
+                    {
+                        continue;
+                    }
+                    ctx.charge_work_u64(
+                        (child_path.len() as u64).saturating_mul(2),
+                        Utf16::default(),
+                    )?;
+                    let source_child = at_indices(source, &child_path).ok_or_else(|| {
+                        EngineError::new(
+                            "SCHEMA_INVALID",
+                            Utf16::default(),
+                            "Python reference source projection changed its tree shape",
+                        )
+                    })?;
+                    let target_child = at_value_indices(target, &child_path).ok_or_else(|| {
+                        EngineError::new(
+                            "SCHEMA_INVALID",
+                            Utf16::default(),
+                            "Python reference source projection changed its tree shape",
+                        )
+                    })?;
+                    let old_len = indices.len();
+                    ctx.charge_work(child_path.len(), Utf16::default())?;
+                    indices.extend_from_slice(&child_path);
+                    visit(
+                        source_child,
+                        target_child,
+                        resource,
+                        dialect,
+                        indices,
+                        false,
+                        current_resource_root,
+                        current_resource_indices,
+                        current_uri,
+                        current_anchor,
+                        references,
+                        resource_roots,
+                        ctx,
+                    )?;
+                    indices.truncate(old_len);
+                }
+            }
+            (Py::Array(source_items), Value::Array(target_items))
+                if source_items.len() == target_items.len() =>
+            {
+                for (index, (source_child, target_child)) in
+                    source_items.iter().zip(target_items).enumerate()
+                {
+                    ctx.charge_work(1, Utf16::default())?;
                     indices.push(index);
                     visit(
-                        root,
-                        source_item,
-                        target_item,
+                        source_child,
+                        target_child,
                         resource,
+                        dialect,
                         indices,
+                        false,
+                        resource_root,
+                        resource_root_indices,
+                        resource_uri,
+                        resource_recursive_anchor,
                         references,
+                        resource_roots,
                         ctx,
                     )?;
                     indices.pop();
@@ -6557,13 +7711,222 @@ fn bind_python_reference_targets(
         }
         Ok(())
     }
+
+    fn at_value_indices<'a>(mut value: &'a Value, indices: &[usize]) -> Option<&'a Value> {
+        for index in indices {
+            value = match value {
+                Value::Object(members) => &members.get(*index)?.1,
+                Value::Array(items) => items.get(*index)?,
+                _ => return None,
+            };
+        }
+        Some(value)
+    }
+
+    fn immediate_child_paths(
+        schema: &Py,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<Vec<usize>>, EngineError> {
+        let mut result = Vec::new();
+        match schema {
+            Py::Object(members) => {
+                for (member_index, (_, value)) in members.iter().enumerate() {
+                    if matches!(value, Py::Object(_) | Py::Array(_)) {
+                        ctx.charge_work(2, Utf16::default())?;
+                        result.push(vec![member_index]);
+                    }
+                }
+            }
+            Py::Array(items) => {
+                for index in 0..items.len() {
+                    ctx.charge_work(1, Utf16::default())?;
+                    result.push(vec![index]);
+                }
+            }
+            _ => {}
+        }
+        Ok(result)
+    }
+
+    fn schema_child_paths(
+        schema: &Py,
+        dialect: SchemaDialect,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<Vec<usize>>, EngineError> {
+        let Py::Object(members) = schema else {
+            return Ok(Vec::new());
+        };
+        let mut result = Vec::new();
+        for (member_index, (key, value)) in members.iter().enumerate() {
+            ctx.charge_work_u64(
+                (key.len().min(24) as u64 + 1).saturating_mul(28),
+                Utf16::default(),
+            )?;
+            let keyword = [
+                "items",
+                "additionalItems",
+                "contains",
+                "contentSchema",
+                "prefixItems",
+                "properties",
+                "patternProperties",
+                "additionalProperties",
+                "dependencies",
+                "dependentSchemas",
+                "propertyNames",
+                "allOf",
+                "anyOf",
+                "oneOf",
+                "not",
+                "if",
+                "then",
+                "else",
+                "extends",
+                "type",
+                "disallow",
+                "definitions",
+                "$defs",
+                "unevaluatedItems",
+                "unevaluatedProperties",
+            ]
+            .iter()
+            .copied()
+            .find(|candidate| key_is(key, candidate));
+            let Some(keyword) = keyword else { continue };
+            let recognized = match keyword {
+                "definitions"
+                | "properties"
+                | "patternProperties"
+                | "items"
+                | "additionalItems"
+                | "additionalProperties" => true,
+                "$defs"
+                | "dependentSchemas"
+                | "contentSchema"
+                | "unevaluatedItems"
+                | "unevaluatedProperties" => matches!(
+                    dialect,
+                    SchemaDialect::Draft2019_09 | SchemaDialect::Draft2020_12
+                ),
+                "prefixItems" => dialect == SchemaDialect::Draft2020_12,
+                "dependencies" => matches!(
+                    dialect,
+                    SchemaDialect::Draft3
+                        | SchemaDialect::Draft4
+                        | SchemaDialect::Draft6
+                        | SchemaDialect::Draft7
+                ),
+                "extends" => dialect == SchemaDialect::Draft3,
+                "allOf" | "anyOf" | "oneOf" | "not" => dialect != SchemaDialect::Draft3,
+                "contains" | "propertyNames" => {
+                    !matches!(dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
+                }
+                "if" | "then" | "else" => matches!(
+                    dialect,
+                    SchemaDialect::Draft7
+                        | SchemaDialect::Draft2019_09
+                        | SchemaDialect::Draft2020_12
+                ),
+                _ => false,
+            };
+            if !recognized
+                || (keyword == "additionalItems" && dialect == SchemaDialect::Draft2020_12)
+            {
+                continue;
+            }
+            if matches!(dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
+                && matches!(keyword, "additionalItems" | "additionalProperties")
+                && !matches!(value, Py::Object(_))
+            {
+                continue;
+            }
+            match (keyword, value) {
+                ("items", Py::Array(items))
+                | ("allOf" | "anyOf" | "oneOf" | "extends" | "prefixItems", Py::Array(items)) => {
+                    for item_index in 0..items.len() {
+                        ctx.charge_work(3, Utf16::default())?;
+                        result.push(vec![member_index, item_index]);
+                    }
+                }
+                (
+                    "properties" | "patternProperties" | "definitions" | "$defs"
+                    | "dependentSchemas",
+                    Py::Object(children),
+                ) => {
+                    for child_index in 0..children.len() {
+                        ctx.charge_work(3, Utf16::default())?;
+                        result.push(vec![member_index, child_index]);
+                    }
+                }
+                ("dependencies", Py::Object(children)) => {
+                    if children
+                        .first()
+                        .is_some_and(|(_, child)| matches!(child, Py::Object(_)))
+                    {
+                        for child_index in 0..children.len() {
+                            ctx.charge_work(3, Utf16::default())?;
+                            result.push(vec![member_index, child_index]);
+                        }
+                    }
+                }
+                ("type" | "disallow", Py::Object(_)) if dialect == SchemaDialect::Draft3 => {
+                    ctx.charge_work(2, Utf16::default())?;
+                    result.push(vec![member_index]);
+                }
+                ("type" | "disallow", Py::Array(items)) if dialect == SchemaDialect::Draft3 => {
+                    for (child_index, child) in items.iter().enumerate() {
+                        if matches!(child, Py::Object(_)) {
+                            ctx.charge_work(3, Utf16::default())?;
+                            result.push(vec![member_index, child_index]);
+                        }
+                    }
+                }
+                (
+                    "additionalItems"
+                    | "additionalProperties"
+                    | "contains"
+                    | "contentSchema"
+                    | "not"
+                    | "if"
+                    | "then"
+                    | "else"
+                    | "propertyNames"
+                    | "unevaluatedItems"
+                    | "unevaluatedProperties",
+                    _,
+                )
+                | ("items", _)
+                | ("extends", _) => {
+                    ctx.charge_work(2, Utf16::default())?;
+                    result.push(vec![member_index]);
+                }
+                _ => {}
+            }
+        }
+        Ok(result)
+    }
+
+    let mut indices = Vec::new();
+    let supplied_uri = if let Some(uri) = supplied_resource_uri {
+        Some(PythonResourceUri::from_points(uri.codepoints(), ctx)?)
+    } else {
+        None
+    };
+    let root_uri = source_id(source, dialect, ctx)?.or(supplied_uri);
+    let root_anchor = source_recursive_anchor(source, ctx)?;
     visit(
-        source,
         source,
         target,
         resource,
-        &mut Vec::new(),
+        dialect,
+        &mut indices,
+        true,
+        source,
+        &[],
+        root_uri.as_ref(),
+        root_anchor,
         references,
+        resource_roots,
         ctx,
     )
 }
@@ -7077,4 +8440,92 @@ fn append_instance_path(p: &Utf16, s: &Utf16) -> Utf16 {
         }
     }
     Utf16::new(u)
+}
+
+#[cfg(test)]
+mod python_resource_work_tests {
+    use super::*;
+    use crate::context::WorkMeter;
+
+    #[test]
+    fn native_uri_operation_families_match_frozen_cpython_profiles() {
+        let receipt: serde_json::Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-predecessor.json")).unwrap();
+        let cases = receipt["uriOperations"].as_array().unwrap();
+        assert_eq!(cases.len(), 140);
+        let points = |value: &serde_json::Value| {
+            value
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|point| point.as_u64().unwrap() as u32)
+                .collect::<Vec<_>>()
+        };
+        for (index, case) in cases.iter().enumerate() {
+            let base = PythonResourceUri(points(&case["base"]));
+            let reference = PythonResourceUri(points(&case["reference"]));
+            let result = base
+                .join(&reference, &mut Context::ordinary())
+                .unwrap()
+                .unwrap();
+            assert_eq!(
+                result.points(),
+                points(&case["result"]),
+                "native URI operation {index}"
+            );
+        }
+    }
+
+    #[test]
+    fn native_uri_common_prefix_work_is_admitted_before_comparison() {
+        let mut left = vec![0xd800; 50_000];
+        left.push(0x10000);
+        let mut right = left.clone();
+        *right.last_mut().unwrap() = 0xd800;
+        let left = PythonResourceUri(left);
+        let right = PythonResourceUri(right);
+        let mut observed = 0;
+        let mut meter = |work: usize| {
+            observed = work;
+            Err(EngineError::new(
+                "DENIED_URI_COMPARE",
+                Utf16::default(),
+                "denied",
+            ))
+        };
+        let mut meter: &mut WorkMeter<'_> = &mut meter;
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        assert_eq!(
+            left.same(&right, &mut ctx).unwrap_err().code,
+            "DENIED_URI_COMPARE"
+        );
+        assert_eq!(observed, 50_002);
+        assert!(!left.same(&right, &mut Context::ordinary()).unwrap());
+    }
+
+    #[test]
+    fn native_uri_join_admits_all_input_work_before_owned_buffers() {
+        let base = PythonResourceUri(
+            "https://example.test/root.json"
+                .chars()
+                .map(u32::from)
+                .collect(),
+        );
+        let relative = PythonResourceUri(vec![0xd800; 50_000]);
+        let mut observed = 0;
+        let mut meter = |work: usize| {
+            observed = work;
+            Err(EngineError::new(
+                "DENIED_URI_JOIN",
+                Utf16::default(),
+                "denied",
+            ))
+        };
+        let mut meter: &mut WorkMeter<'_> = &mut meter;
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        assert_eq!(
+            base.join(&relative, &mut ctx).unwrap_err().code,
+            "DENIED_URI_JOIN"
+        );
+        assert!(observed >= (base.len() + relative.len()) * 10);
+    }
 }

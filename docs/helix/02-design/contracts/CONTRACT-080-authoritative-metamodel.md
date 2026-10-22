@@ -630,3 +630,30 @@ evaluation-time failure. Normalize it as a trusted internal
 `Draft 2019-09 boolean items annotation has no length`. An `additionalItems`
 member triggers the native all-index early return instead. Preserve construction
 admission, iterator prefix, and first-error/predicate short-circuits.
+
+
+Python source-reference metadata must bind local fragments against the nearest
+recognized schema resource, preserving source code points and typed pointer
+indices. An ID inside opaque annotation content is not automatically a new
+schema-resource boundary. Resource-base changes and reference lookup history are
+distinct: ordinary subresource descent changes the effective base without adding
+a lookup-history frame. The qualified Draft 2019-09 recursive-reference profile
+resolves its canonical local root and follows native nearest-first history,
+stopping at the first nonanchored resource barrier. Preserve source admission,
+explicit-resource-only resolution, and existing nonlocal-reference refusals.
+These are internal resolver semantics; no ambient retrieval or public carrier
+change is introduced.
+
+
+The Python resource-source compatibility profile is qualified against plain
+`jsonschema` 4.26.0 with optional URI/IRI format modules absent, as captured by
+the native resource-origin evidence. Accepted surrogate and explicit-pair IDs
+must remain lossless internal identities; replacing them with U+FFFD, collapsing
+them into scalar-equivalent UTF-16, or rejecting them is not compatible. Optional
+format-extra/plugin combinations are not qualified by this base dependency
+profile. Private PythonResourceUri values own exact native u32 codepoints and apply
+ASCII URI delimiter, join and dot-segment operations structurally. Immutable
+source-node locators select resources and anchors. Diagnostic UTF-16 projection
+is one-way and never feeds identity or lookup; no escape codec or public carrier
+change is introduced. Context admits owned URI, path, history and resource-map
+copies and comparisons before work/allocation, without a private text ceiling.

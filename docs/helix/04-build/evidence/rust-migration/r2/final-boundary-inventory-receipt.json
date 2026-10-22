@@ -21,11 +21,11 @@
   },
   "boundaryTests": {
     "count": 15,
-    "durationSeconds": 0.136,
+    "durationSeconds": 0.168,
     "status": "pass"
   },
-  "capturedAt": "2026-10-22T06:17:38.138749+00:00",
-  "cohortStatus": "post-format precommit source check; final installed qualification binds a committed source closure separately",
+  "capturedAt": "2026-10-22T07:46:59.085195+00:00",
+  "cohortStatus": "reviewed resource source checkpoint before final installed qualification; all commands exit 0",
   "commands": {
     "boundary_check": {
       "argv": [
@@ -64,25 +64,25 @@
       "log": "final-inventory_regenerate.log"
     }
   },
-  "gitHead": "9d1d42ab1e3fb2179a4edcb51aa577967925b208",
+  "gitHead": "c13120f95deafbbf907c828c2591ab0fe09be5df",
   "inventory": {
     "activeScripts": 301,
-    "sha256": "f275dfa71d2847290bf2cabcebc48240dddad731576fab774c602022bba5b59c",
+    "sha256": "2db7ad4ecc294922c09ab275be1b5b3c3cdef2987c73fe1552b11afa7e4d190d",
     "sourceModules": 569,
     "status": "current"
   },
   "rawLogHashes": {
     "final-boundary_check.log": "d56764f77e32977f134a994795c03c09cbe112de5f8d5dfbfebd837f2bf71c72",
-    "final-boundary_tests.log": "174f661e0ae782023312c3c52500f8cc0a58ca558c4744b611fd1a11de8d7e38",
+    "final-boundary_tests.log": "136569bf5cb04ee33b40524fbcd09f1120eeb24c0d8787cba8f9396960ea4a50",
     "final-inventory_check.log": "5c8a6d851a6319ab3386c1bd41696d519dcd974a32814a1384de06b3cf466d7e",
     "final-inventory_regenerate.log": "59b2ca00c5fe0946fe5978ebeb146d053bc83919ffbbee12cd7c58d27b91f25c"
   },
   "schema": "umf.rust-migration-r2-final-boundary-inventory/1",
   "sourceHashes": {
-    "crates/umf-core/src/schema.rs": "440a95b1bd4a672be707312749c4928b1b4b6428228b1b4108861b217f4bd391",
+    "crates/umf-core/src/schema.rs": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
     "scripts/check-rust-boundaries.py": "5ab65e90ada39a73b386a226f77dc99d57640597c5f385bfd0d3cc12e965f6bd",
     "scripts/rust-inventory.py": "27ff795ef0473d235b98ce02b34f31c4e64aca2dc1de4c5add4936d27c607209",
-    "spec/metamodel/generated/manifest.json": "b974429720cf9cb021719b476d544282204ea94041898f6f23fbcd827bfdc862"
+    "spec/metamodel/generated/manifest.json": "0f6fb7720ad6d82f5108dacee32580d7f056bf31230a9688189a6e9e85507d10"
   },
   "toolchain": "rustc 1.90.0 (1159e78c4 2025-09-14)"
 }
