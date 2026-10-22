@@ -29,13 +29,14 @@ ddx:
 
 ## Scope
 
-Owner selection, 2026-10-21: implement the remaining U4–U9 embedder asks, qualify
-actual consumer adoption, implement the bounded MIG-G01 existing-column fill,
+Owner selection, clarified 2026-10-22: implement the remaining upstream U4–U9
+embedder asks, provide a consumer adoption handoff, implement bounded MIG-G01 fill,
 then cut another release. This plan uses the existing WS-5–9 registry. It does
 not reopen delivered U1–U3 or turn every MIG-G01–G11 residual into this release.
-MIG-G09 managed consumer qualification is selected here; the other residuals keep
-their existing limits unless needed by the inspected consumer workload and
-explicitly reconciled before implementation.
+Actual Praxis changes belong to its owner. Read-only consumer inspection informs
+upstream fixtures; this work does not edit the Praxis codebase. MIG-G09 managed
+consumer qualification remains an explicit unverified residual rather than a
+gate on this upstream release. Other residuals retain their stated limits.
 
 Governing artifacts are the [retained revision2 request](../00-discover/inputs/praxis-table-lifecycle-asks-v2-2026-10-21.md),
 [roadmap](../01-frame/praxis-lifecycle-roadmap.md),
@@ -106,9 +107,9 @@ Slice IDs identify work in this plan, not new workstreams or tracker items.
 | EC-06 / WS-5, WS-9 | U7 release owner builds exact mini-racer/Python/platform/wheel matrix and publishes installed receipts, sizes and notices | EC-00; final cells rerun after EC-02–05 | Each advertised cell installs from exact wheel hashes, runs generation/discovery/migration/refusal parity and production verification path; unavailable or untested cells explicitly unsupported |
 | EC-07 / WS-9 | U8 release owner resolves complete transitive wheel closure and produces static hash-pinned Simple Repository API mirror plus locked offline recipe | EC-06 lock/cohort | Empty-cache clean and network-disabled fresh install with all dependencies, wheel/source/license inventory, generate/check/apply probes and no source build/network fallback; tampered/missing dependency refuses |
 | EC-08 / WS-8 | U9 Hohfeld owner reconciles current-core reader, same-document Weft journey and actual installed Hohfeld distribution; publish immutable release with recorded date | EC-00; relevant boundary controls | Current-core source parsed without relabeling, selected model/Key/codec/query behavior and explicit unsupported/legacy controls, real selected host journey, clean installed release and published asset hashes/date |
-| EC-09 / WS-5–7 | Consumer integration owner ports exact private schema/history to admitted current-core declarations and generated per-person/batch clients, removing replaced emitter/planner/policy code only after acceptance | EC-02–05; installed candidate | Every source/history item accounted for; original applied bytes/digests retained; actual plugin and scheduled batch, sync/async, two-person/group/owner+via access, defaults/NULL/bounds/counts/replay and failure recovery pass on isolated local PG |
-| EC-10 / WS-7, WS-9 | Consumer/platform owner runs the same required workload on an explicitly selected isolated Lakebase/Databricks target | EC-09; external target gate | Record actual server, driver, permission/platform limits, scoped client/DDL/migration/recovery evidence and consumer acceptance; local proxies or synthetic fixtures cannot close this gate |
-| EC-11 / WS-5–9 | Integration/release owner freezes assets and cohort, obtains source/evidence review, merges and publishes another immutable release | EC-02–10 | All selected gates pass, CI green, installed/browser/native/mirror/source hashes agree, new release assets/index entry or complete mirror available, Hohfeld release linked and exact support inventory published |
+| EC-09 / WS-5–7 | UMF integration owner supplies upstream conversion APIs, fabricated domain fixtures and a Praxis-owner handoff; actual consumer port stays outside this task | EC-02–05; installed candidate | Explicit policy/domain conversion and refusal evidence; handoff preserves original applied history and identifies host-ledger transition needs without fabricating generated history |
+| EC-10 / WS-7, WS-9 | External consumer/platform owner qualifies actual adoption on an authorized isolated Lakebase/Databricks target | External follow-up after EC-09 handoff | Keep MIG-G09 unverified in the release inventory until genuine consumer/server/driver/permission/recovery evidence is supplied; local proxies cannot close it |
+| EC-11 / WS-5–9 | Integration/release owner freezes assets and cohort, obtains source/evidence review, merges and publishes another immutable release | EC-02–09 upstream gates | CI green, installed/browser/native/mirror/source hashes agree, new release assets/index entry or complete mirror available, Hohfeld release linked and exact support inventory including external residuals published |
 
 EC-02/03, EC-04, EC-05 and EC-06/08 can progress independently after boundary
 adoption. G01 owns compiler/options/schema/phase admission; U5 owns new host
@@ -161,24 +162,24 @@ not a promised publication date.
 
 ### External gate and executable handoff
 
-Managed qualification requires an authenticated, authorized isolated target,
+External managed qualification requires an authenticated, authorized isolated target,
 selected Databricks/Lakebase profile, database/schema/role provisioning authority,
 allowed network path and consumer test configuration. The integration owner has
 requested profile/test-target information without requesting credential content.
-While waiting, complete all independent slices and prepare the target-bound
-runner and redacted manifest. The runner must verify target identity/permissions,
-create only authorized disposable objects, run EC-10 acceptance, retain a private
-receipt and emit an aggregate public digest/result. Do not execute against a guessed
-production target. An unavailable target is an explicit remaining blocker, not
-permission to close EC-10 or the full goal. Record the exact input needed and a
-ready-to-run command/configuration schema without secrets.
+The Praxis owner supplies the target-bound consumer runner and private receipt;
+this upstream task supplies reproducible fixtures and package/support custody.
+Any runner must verify target identity/permissions and create only authorized
+disposable objects. Do not execute against a guessed production target. Missing
+managed evidence leaves EC-10 and MIG-G09 unverified; it does not block the
+clarified upstream release scope. No managed adoption claim follows from it.
 
 Hohfeld delivery similarly requires its repository/release authority and actual
 installed release. Inspect existing changes before editing; finish missing
 behavior rather than replacing working current-core support. A public release
 candidate may be prepared while external tests are pending, but the requested
-fully completed release must not be reported until all selected gates pass or
-the human explicitly changes scope.
+fully completed release must not be reported until all selected upstream gates
+pass. The owner's 2026-10-22 scope correction excludes changes to Praxis and
+consumer-owned acceptance work; this is not a waiver of upstream qualification.
 
 ## Continuation Evidence
 
@@ -290,6 +291,14 @@ remains open. No new release or PR has been published at this checkpoint.
 
 ## Risks and Rollbacks
 
+Owner clarification, 2026-10-22: no Praxis files have been edited. The supplied
+handoff asks its owner to convert authoring/typed calls, reconcile ten versus
+eleven tables, preserve four original migration pairs, design ledger transition,
+and qualify local/managed adoption before removing consumer code. EC-09 now owns
+upstream fixtures and that handoff only; EC-10 is external follow-up. Earlier
+checkpoints describing consumer acceptance as a release gate are superseded by
+this explicit scope decision. MIG-G09 stays open in the candidate inventory.
+
 | Risk | Response and recovery |
 | --- | --- |
 | Fill and tighten separated by a commit | Compiler emits one typed paired phase; host rejects split phases. Uncommitted pair rolls back; after commit retain data/constraint and fencing until exact resume or approved forward repair. |
@@ -308,8 +317,9 @@ Full execution completes only when:
 
 - U4–U9 and the selected finite G01 behavior pass their stated source/native,
   browser and installed gates; the new profile preserves historical verification.
-- Actual local consumer adoption and authorized managed EC-10 acceptance pass,
-  with private source custody and a genuine consumer replacement decision.
+- Upstream domain and conversion fixtures pass, and the Praxis owner receives
+  an adoption handoff preserving original history. Actual consumer replacement
+  and managed EC-10 acceptance remain externally owned, unverified residuals.
 - The complete offline mirror and advertised V8 matrix pass exact-cohort tests;
   actual Hohfeld current-core release assets and date are available.
 - Independent changed-source/evidence review, CI and final package/hash custody
