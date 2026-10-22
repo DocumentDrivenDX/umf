@@ -169,12 +169,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "858e12f9e4e7be6567b1340cf62d64d946c26c87c80dd35f85a2ae0b75fdc23b",
+    "sourceCohortSha256": "f4770e31d88b49430dd00ca4816cb072033dba59f9444560fdaa97727b094401",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 301,
-    "algorithmSymbols": 9812,
+    "algorithmSymbols": 9813,
     "pythonModules": 98,
     "rustBuildInputs": 73,
     "rustModules": 80,
@@ -18618,12 +18618,12 @@
         "scan_text",
         "sha"
       ],
-      "bytes": 30411,
+      "bytes": 30671,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/check-rust-boundaries.py",
-      "sha256": "5ab65e90ada39a73b386a226f77dc99d57640597c5f385bfd0d3cc12e965f6bd"
+      "sha256": "092a0fdc45b095948d92d08bb5d6c011c11055d7da34cea87d9a1ebd34df1edd"
     },
     {
       "activationEvidence": [],
@@ -42495,6 +42495,7 @@
         "report",
         "test_allowed_relative_typescript_import",
         "test_browser_library_rejects_node_engine_import",
+        "test_cargo_tree_forces_plain_labels_when_ci_requests_color",
         "test_cross_package_private_import_is_rejected",
         "test_current_v8_is_only_allowed_at_exact_pre_r4_sources",
         "test_feature_tree_parser_captures_only_named_package_features",
@@ -42504,12 +42505,12 @@
         "test_temporary_manifests_exercise_core_dependency_policy",
         "test_wasm_entropy_exception_is_target_path_feature_and_source_exact"
       ],
-      "bytes": 6696,
+      "bytes": 7918,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/rust-inventory/test_boundaries.py",
-      "sha256": "8983d90a162feb9316aa5719c08f08ff3b2f268e0ff5729a86914a536567648b"
+      "sha256": "ad5c743fa936f51149d51ada0fc5ef826e0bbc9e6e096c395a3f900db5f3cc1c"
     },
     {
       "activationEvidence": [

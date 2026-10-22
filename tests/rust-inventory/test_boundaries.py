@@ -103,6 +103,25 @@ class BoundaryRuleTests(unittest.TestCase):
 '''
         self.assertEqual(["default", "getrandom", "runtime-rng"], MODULE.parse_cargo_feature_tree(fixture, "ahash"))
 
+    def test_cargo_tree_forces_plain_labels_when_ci_requests_color(self):
+        fixture = """wasm-bindgen v0.2.100
+├── getrandom v0.3.4
+│   └── ahash v0.8.12
+│       └── jsonschema v0.29.1
+│           └── umf-rust-spike-core v0.1.0
+├── js-sys v0.3.77
+└── umf-rust-spike-wasm v0.1.0
+"""
+        result = SimpleNamespace(returncode=0, stdout=fixture, stderr="")
+        with patch.dict(MODULE.os.environ, {"CARGO_TERM_COLOR": "always"}):
+            with patch.object(MODULE.subprocess, "run", return_value=result) as run:
+                captured = MODULE.cargo_tree("/toolchain/bin/cargo", "wasm32-unknown-unknown", "umf-rust-spike-wasm", inverse="wasm-bindgen")
+        self.assertEqual("never", run.call_args.kwargs["env"]["CARGO_TERM_COLOR"])
+        self.assertEqual(["/toolchain/bin/cargo", "--color", "never", "tree"], run.call_args.args[0][:4])
+        incoming, paths = MODULE.parse_inverse_cargo_tree(captured["stdout"])
+        self.assertEqual(["getrandom@0.3.4", "js-sys@0.3.77", "umf-rust-spike-wasm@0.1.0"], incoming)
+        self.assertEqual([["wasm-bindgen@0.2.100", "getrandom@0.3.4", "ahash@0.8.12", "jsonschema@0.29.1", "umf-rust-spike-core@0.1.0"]], paths)
+
 
 if __name__ == "__main__":
     unittest.main()

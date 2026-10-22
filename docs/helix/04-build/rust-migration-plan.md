@@ -71,6 +71,9 @@ Linux CPython 3.13 installed-artifact gate passes at `bdf469560`; its later inve
 failure does not invalidate that scoped runtime receipt or establish delivery.
 Main is integrated through `53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41);
 refresh and incorporate later main work before merging. R3 is next after delivery.
+The census repair passes on Linux. A subsequent boundary failure was traced to
+CI-forced Cargo ANSI coloring; requesting plain tool output preserves the exact
+R1 dependency exception and passes an offline Linux forced-color control.
 
 The production boundary is a shared Rust core and metamodel compiler, a native
 CLI, Python abi3 extension, Node/Bun native addon and browser WASM loader. Python

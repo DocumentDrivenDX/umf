@@ -214,3 +214,12 @@ closure `831aef59b6a802be82fa5aa7b9d9078d6ff459acd6025763aa7bb881c911fb8d`.
 The job subsequently refused the stale inventory; this receipt establishes runtime
 qualification, not overall CI success or qualification of the later census fix.
 The current local runtime qualification precedes these CI-only/tool repairs.
+
+
+The next Linux run confirms the census is current. Its remaining R1 entropy
+exception failure was output formatting: hosted CI sets `CARGO_TERM_COLOR=always`,
+which inserts ANSI escapes into Cargo tree glyphs. The checker now explicitly
+requests plain output; pinned exception identities, paths, parents, features and
+source checks are unchanged. The [offline Linux forced-color control](ci-linux-forced-color-boundary-control.json)
+passes 578 module boundaries with zero findings and all nine embedded negative
+controls. This scopes a checker repair; fresh CI and merge remain delivery gates.

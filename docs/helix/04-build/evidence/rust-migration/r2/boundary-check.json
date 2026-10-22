@@ -194,6 +194,8 @@
           ],
           [
             "/opt/homebrew/opt/rustup/bin/cargo",
+            "--color",
+            "never",
             "tree",
             "--locked",
             "--offline",
@@ -316,6 +318,8 @@
           ],
           [
             "/opt/homebrew/opt/rustup/bin/cargo",
+            "--color",
+            "never",
             "tree",
             "--locked",
             "--offline",
@@ -471,6 +475,8 @@
       "featureTreeCommands": [
         [
           "/opt/homebrew/opt/rustup/bin/cargo",
+          "--color",
+          "never",
           "tree",
           "--locked",
           "--offline",
@@ -485,6 +491,8 @@
         ],
         [
           "/opt/homebrew/opt/rustup/bin/cargo",
+          "--color",
+          "never",
           "tree",
           "--locked",
           "--offline",

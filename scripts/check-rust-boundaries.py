@@ -183,6 +183,8 @@ def cargo_metadata(platform: str) -> dict[str, object]:
     command = [cargo, "metadata", "--format-version", "1", "--locked", "--offline", "--filter-platform", platform]
     env = os.environ.copy()
     env["PATH"] = str(Path(cargo).parent) + os.pathsep + env.get("PATH", "")
+    # These outputs are parsed as JSON/tree records; hosted CI exports `always`.
+    env["CARGO_TERM_COLOR"] = "never"
     proc = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, env=env)
     if proc.returncode:
         return {"status": "error", "stderr": proc.stderr.strip(), "command": command}
@@ -194,13 +196,15 @@ def cargo_metadata(platform: str) -> dict[str, object]:
 
 
 def cargo_tree(cargo: str, platform: str, package: str, *, inverse: str | None = None, edges: str = "normal") -> dict[str, object]:
-    command = [cargo, "tree", "--locked", "--offline", "--target", platform, "-p", package, "--edges", edges]
+    command = [cargo, "--color", "never", "tree", "--locked", "--offline", "--target", platform, "-p", package, "--edges", edges]
     if inverse:
         command.extend(["-i", inverse])
     elif edges == "normal":
         command.extend(["--format", "{p}", "--prefix", "none"])
     env = os.environ.copy()
     env["PATH"] = str(Path(cargo).parent) + os.pathsep + env.get("PATH", "")
+    # cargo tree is consumed by label parsers, so do not inherit CI's ANSI output.
+    env["CARGO_TERM_COLOR"] = "never"
     proc = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, env=env)
     return {"status": "resolved" if proc.returncode == 0 else "error", "command": command,
             "stdout": proc.stdout, "stderr": proc.stderr.strip()}
