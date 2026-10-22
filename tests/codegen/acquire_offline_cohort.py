@@ -8,22 +8,21 @@ entire install and probes under an OS-enforced network-denial sandbox.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import importlib.util
 import json
-import os
 import platform
 import shutil
 import subprocess
 import sys
 import tempfile
-import urllib.request
 import urllib.parse
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TEMPLATE_PATH = ROOT / 'python/packaging/embedder-wheel-lock.template.json'
-CORE_VERSION = '0.10.0'
 CORE_SHA256 = '49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9'
 CORE_URL = ('https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.4/'
             'umf_core-0.10.0-py3-none-any.whl')
@@ -44,6 +43,10 @@ parser.add_argument('--weft-wheel-url', required=True)
 parser.add_argument('--weft-wheel-filename', required=True)
 parser.add_argument('--weft-wheel-sha256', required=True)
 parser.add_argument('--mini-racer-wheel', required=True, type=Path)
+parser.add_argument('--cached-release-wheelhouse', type=Path,
+                    help='Optional local cache containing the named core and Weft release wheels')
+parser.add_argument('--pypi-wheel-cache', type=Path,
+                    help='Optional local wheel cache; selection still uses the current runner tags')
 args = parser.parse_args()
 
 if args.output_dir.exists():
@@ -73,6 +76,15 @@ def fetch(url: str, target: Path, expected_sha: str) -> None:
         target.unlink(missing_ok=True)
         raise SystemExit(f'Artifact SHA-256 mismatch for {target.name}: {actual}')
 
+def acquire_release_wheel(url: str, target: Path, expected_sha: str) -> None:
+    cached = args.cached_release_wheelhouse / target.name if args.cached_release_wheelhouse else None
+    if cached is None:
+        fetch(url, target, expected_sha)
+        return
+    if not cached.is_file() or MIRROR.sha256(cached) != expected_sha:
+        raise SystemExit(f'Cached immutable release wheel is missing or has the wrong hash: {cached}')
+    shutil.copyfile(cached, target)
+
 def pypi_artifact_hash(project_url: str, filename: str) -> tuple[str, str]:
     parts = [part for part in urllib.parse.urlparse(project_url).path.split('/') if part]
     if len(parts) < 3 or parts[0] != 'project':
@@ -88,8 +100,8 @@ def pypi_artifact_hash(project_url: str, filename: str) -> tuple[str, str]:
         raise SystemExit(f'PyPI release metadata omits the selected wheel hash: {project} {version} {filename}')
     return api_url, digest
 
-fetch(CORE_URL, wheelhouse / 'umf_core-0.10.0-py3-none-any.whl', CORE_SHA256)
-fetch(args.weft_wheel_url, wheelhouse / args.weft_wheel_filename, args.weft_wheel_sha256)
+acquire_release_wheel(CORE_URL, wheelhouse / 'umf_core-0.10.0-py3-none-any.whl', CORE_SHA256)
+acquire_release_wheel(args.weft_wheel_url, wheelhouse / args.weft_wheel_filename, args.weft_wheel_sha256)
 
 mini_metadata = MIRROR.wheel_metadata(args.mini_racer_wheel)
 if mini_metadata['distribution'] != 'mini-racer' or mini_metadata['version'] != '0.14.1':
@@ -108,24 +120,51 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-cohort-') as temporary:
     for candidate in sorted(candidate_wheels.glob('*.whl')):
         shutil.copyfile(candidate, wheelhouse / candidate.name)
 
-template = source_template
-template['intendedCells'] = [cell]
-for package in template['packages']:
-    name = package['distribution']
-    source = package['source']
-    if name == 'umf-access' or name == 'umf-codegen':
-        source['commit'] = args.source_commit
-    elif name == 'umf-core':
-        source.update({'url': CORE_URL, 'sha256': CORE_SHA256, 'release': 'umf-v0.5.4'})
-    elif name == 'weft-sql':
-        source.update({'url': args.weft_wheel_url, 'sha256': args.weft_wheel_sha256,
-                       'release': 'weft v0.4.49'})
-    elif source.get('kind') == 'pypi-wheel':
-        normalized = MIRROR.normalized_name(name)
-        selected = next((path for path in wheelhouse.glob('*.whl')
-                         if MIRROR.wheel_metadata(path)['distribution'] == normalized), None)
-        if selected is None:
-            raise SystemExit(f'Missing selected PyPI wheel for {name}')
+    # Keep all temporary inputs alive until pip has consumed the requirements
+    # file. Acquire the dependencies before looking up their PyPI file hashes.
+    template = copy.deepcopy(source_template)
+    template['intendedCells'] = [cell]
+    for package in template['packages']:
+        name = package['distribution']
+        source = package['source']
+        if name in ('umf-access', 'umf-codegen'):
+            source['commit'] = args.source_commit
+        elif name == 'umf-core':
+            source.update({'url': CORE_URL, 'sha256': CORE_SHA256, 'release': 'umf-v0.5.4'})
+        elif name == 'weft-sql':
+            source.update({'url': args.weft_wheel_url, 'sha256': args.weft_wheel_sha256,
+                           'release': 'weft v0.4.49'})
+
+    dependencies = [
+        f"{package['distribution']}=={package['version']}"
+        for package in template['packages']
+        if package['distribution'] not in ('umf-access', 'umf-codegen', 'umf-core', 'weft-sql', 'mini-racer')
+    ]
+    requirements = temp / 'pypi-dependencies.txt'
+    requirements.write_text('\n'.join(dependencies) + '\n', encoding='utf-8')
+    download = [
+        sys.executable, '-m', 'pip', '--isolated', 'download', '--disable-pip-version-check',
+        '--no-cache-dir', '--only-binary=:all:', '--no-deps', '--dest', str(wheelhouse),
+    ]
+    if args.pypi_wheel_cache:
+        download += ['--no-index', '--find-links', str(args.pypi_wheel_cache)]
+    else:
+        download += ['--index-url', 'https://pypi.org/simple']
+    subprocess.run(download + ['-r', str(requirements)], check=True)
+
+    wheels_by_distribution: dict[str, list[Path]] = {}
+    for path in wheelhouse.glob('*.whl'):
+        distribution = MIRROR.wheel_metadata(path)['distribution']
+        wheels_by_distribution.setdefault(distribution, []).append(path)
+    for package in template['packages']:
+        source = package['source']
+        if source.get('kind') != 'pypi-wheel':
+            continue
+        name = package['distribution']
+        candidates = wheels_by_distribution.get(MIRROR.normalized_name(name), [])
+        if len(candidates) != 1:
+            raise SystemExit(f'Expected one selected PyPI wheel for {name}, found {len(candidates)}')
+        selected = candidates[0]
         api_url, publisher_hash = pypi_artifact_hash(source['url'], selected.name)
         actual_hash = MIRROR.sha256(selected)
         if publisher_hash != actual_hash:
@@ -134,26 +173,12 @@ for package in template['packages']:
                        'publisherArtifactSha256': publisher_hash,
                        'publisherHashSource': 'PyPI JSON release metadata'})
 
-dependencies = [
-    f"{package['distribution']}=={package['version']}"
-    for package in template['packages']
-    if package['distribution'] not in ('umf-access', 'umf-codegen', 'umf-core', 'weft-sql', 'mini-racer')
-]
-requirements = temp / 'pypi-dependencies.txt'
-requirements.write_text('\n'.join(dependencies) + '\n', encoding='utf-8')
-subprocess.run([
-    sys.executable, '-m', 'pip', '--isolated', 'download', '--disable-pip-version-check',
-    '--no-cache-dir', '--index-url', 'https://pypi.org/simple',
-    '--only-binary=:all:', '--no-deps', '--dest', str(wheelhouse),
-    '-r', str(requirements),
-], check=True)
-
-template_path = args.output_dir / 'cohort-template.json'
-template_path.write_text(json.dumps(template, indent=2, sort_keys=True) + '\n', encoding='utf-8')
-lock_path = args.output_dir / 'cohort.lock.json'
-locked = MIRROR.capture_lock(template_path, wheelhouse, lock_path)
-if len(locked['packages']) != 18 or len(locked['wheels']) != 18:
-    raise SystemExit(f'Expected the complete 18-wheel cohort, got {len(locked["packages"])} packages and {len(locked["wheels"])} wheels')
+    template_path = args.output_dir / 'cohort-template.json'
+    template_path.write_text(json.dumps(template, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+    lock_path = args.output_dir / 'cohort.lock.json'
+    locked = MIRROR.capture_lock(template_path, wheelhouse, lock_path)
+    if len(locked['packages']) != 18 or len(locked['wheels']) != 18:
+        raise SystemExit(f'Expected the complete 18-wheel cohort, got {len(locked["packages"])} packages and {len(locked["wheels"])} wheels')
 print(json.dumps({
     'status': 'acquired-and-locked', 'cell': cell, 'sourceCommit': args.source_commit,
     'lock': str(lock_path), 'lockSha256': MIRROR.sha256(lock_path),
