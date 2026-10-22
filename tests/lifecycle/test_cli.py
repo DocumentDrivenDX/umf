@@ -7,7 +7,8 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
 
 from umf_access.lifecycle import CatalogError
 from umf_access.lifecycle.cli import check_chain, main
@@ -50,6 +51,80 @@ class LifecycleCLI(unittest.TestCase):
         with patch('psycopg.connect',side_effect=AssertionError('unapproved connection')),contextlib.redirect_stderr(io.StringIO()) as errors:
             self.assertEqual(main(['apply','--plan',str(FIXTURES/'plan-001.json'),'--approved-digest','wrong','--expected-head','initial']),1)
             self.assertEqual(json.loads(errors.getvalue())['code'],'approval-required')
+
+    def test_v03_approved_digest_alone_does_not_create_host_receipt(self):
+        plan=_host_plan()
+        with patch('umf_codegen.verify_table_migration',return_value=plan), \
+             patch('psycopg.connect',side_effect=AssertionError('must not connect')), \
+             contextlib.redirect_stderr(io.StringIO()) as errors:
+            result=main(['apply','--plan',str(FIXTURES/'plan-001.json'),
+                '--approved-digest',plan['digest'],'--expected-head','a'*64,
+                *_host_args()])
+        self.assertEqual(result,1)
+        self.assertEqual(json.loads(errors.getvalue())['code'],'approval-receipt-required')
+
+    def test_approve_persists_explicit_host_identity_and_returns_receipt_id(self):
+        plan=_host_plan()
+        receipt=SimpleNamespace(receipt_id='receipt-123',decision='approved',
+            binding_digest='b'*64,
+            decider='trusted_admin',decided_at='2026-10-21T12:00:00+00:00',
+            qualification_profile='local-pg18-v1',evidence_digest='c'*64)
+        host=SimpleNamespace(record_approval=lambda request,**kwargs:receipt)
+        connection=MagicMock()
+        with patch('umf_codegen.verify_table_migration',return_value=plan), \
+             patch('psycopg.connect',return_value=connection), \
+             patch('umf_access.lifecycle.cli._execute'), \
+             patch('umf_access.lifecycle.cli.PsycopgMigrationHost',return_value=host), \
+             contextlib.redirect_stdout(io.StringIO()) as output:
+            result=main(['approve','--plan',str(FIXTURES/'plan-001.json'),
+                '--expected-head','a'*64,*_host_args()])
+        self.assertEqual(result,0)
+        payload=json.loads(output.getvalue())
+        self.assertEqual(payload['receiptId'],'receipt-123')
+        self.assertEqual(payload['installationId'],'stable-test')
+
+    def test_v03_apply_routes_exact_receipt_identifier_and_sanitizes_dsn(self):
+        plan=_host_plan()
+        connection=MagicMock()
+        host=object()
+        with patch('umf_codegen.verify_table_migration',return_value=plan), \
+             patch('psycopg.connect',return_value=connection), \
+             patch('umf_access.lifecycle.cli._execute'), \
+             patch('umf_access.lifecycle.cli.PsycopgMigrationHost',return_value=host), \
+             patch('umf_access.lifecycle.cli.apply_migration_on_host',return_value={'status':'committed'}) as apply, \
+             contextlib.redirect_stdout(io.StringIO()) as output:
+            result=main(['apply','--plan',str(FIXTURES/'plan-001.json'),
+                '--expected-head','a'*64,'--approval-id','receipt-123',*_host_args()])
+        self.assertEqual(result,0)
+        self.assertEqual(json.loads(output.getvalue())['status'],'committed')
+        self.assertEqual(apply.call_args.kwargs['approval_id'],'receipt-123')
+
+    def test_v03_apply_process_boundary_sanitizes_dsn(self):
+        plan=_host_plan()
+        with patch('umf_codegen.verify_table_migration',return_value=plan), \
+             patch('psycopg.connect',side_effect=RuntimeError('postgresql://secret@db/password')), \
+             patch('umf_access.lifecycle.cli._execute'), \
+             contextlib.redirect_stderr(io.StringIO()) as errors:
+            result=main(['apply','--plan',str(FIXTURES/'plan-001.json'),
+                '--expected-head','a'*64,'--approval-id','receipt-123',
+                '--dsn','postgresql://secret@db/password',*_host_args()])
+        self.assertEqual(result,1)
+        rendered=errors.getvalue()
+        self.assertNotIn('secret',rendered)
+        self.assertNotIn('password',rendered)
+        self.assertEqual(json.loads(rendered)['code'],'LIFECYCLE_FAILED')
+
+
+def _host_plan():
+    return {'version':'umf.table-migration/0.3','digest':'d'*64,
+        'approvalProfile':{'version':'umf.table-migration-approval/0.1',
+            'relation':'umf_lifecycle_approvals','ownerOnly':True},
+        'next':{'configuration':{'ownerRole':'test_owner'}}}
+
+
+def _host_args():
+    return ['--installation-id','stable-test','--target-profile','local-pg18',
+        '--qualification-profile','local-pg18-v1','--evidence-digest','c'*64]
 
 
 if __name__=='__main__':

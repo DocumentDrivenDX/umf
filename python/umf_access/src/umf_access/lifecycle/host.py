@@ -8,10 +8,10 @@ this protocol.
 """
 from __future__ import annotations
 
-from contextlib import AbstractContextManager, contextmanager
-from dataclasses import dataclass
 import hashlib
 import re
+from contextlib import AbstractContextManager, contextmanager
+from dataclasses import dataclass
 from typing import Any, Protocol, runtime_checkable
 
 from .approval import ApprovalBinding, ApprovalReceipt, TargetIdentity
@@ -187,11 +187,13 @@ class PsycopgMigrationHost:
     """
 
     def __init__(self, connection: Any, *, person_roles: tuple[str, ...],
-                 target_profile: str, statement_timeout_ms: int = 30_000,
+                 target_profile: str, installation_id: str,
+                 statement_timeout_ms: int = 30_000,
                  lock_timeout_ms: int = 5_000):
         self._connection = connection
         self._person_roles = person_roles
         self._target_profile = target_profile
+        self._installation_id = installation_id
         self._statement_timeout_ms = statement_timeout_ms
         self._lock_timeout_ms = lock_timeout_ms
         self._capabilities = HostCapabilities(*(True for _ in range(10)))
@@ -218,13 +220,14 @@ class PsycopgMigrationHost:
                 (lock_key,)) != (True,):
             raise CatalogError("migration-busy")
         try:
-            target = _target_identity(connection, source, self._target_profile)
+            target = _target_identity(connection, source, self._target_profile,
+                                      self._installation_id)
             yield _PsycopgLease(self, plan, target, expected_head, file_digest)
         finally:
             try:
                 _one(connection, "SELECT pg_catalog.pg_advisory_unlock(%s)",
                      (lock_key,))
-            except Exception:
+            except Exception:  # noqa: BLE001 -- cleanup boundary sanitizes native driver failures
                 raise CatalogError("migration-session-cleanup-failed-observe-progress") from None
 
     @contextmanager
@@ -241,7 +244,7 @@ class PsycopgMigrationHost:
                         qualification_profile: str,
                         evidence_digest: str) -> ApprovalReceipt:
         from .ledger import _authorize_new_effects, _verified_plan
-        from .progress import _phase_digest, _verified_phases
+        from .progress import _verified_phases
 
         plan = _verified_plan(request.plan)
         if (plan.get("version") != "umf.table-migration/0.3"
@@ -264,8 +267,7 @@ class PsycopgMigrationHost:
                                              request.file_digest, binding)
             lease.verify_predecessor(bound_request)
             with self._atomic():
-                from .approval import (_record_approval,
-                                       _verify_approval_relation)
+                from .approval import _record_approval, _verify_approval_relation
                 from .catalog import _installation
                 with _installation(self._connection, plan["next"],
                         statement_timeout_ms=self._statement_timeout_ms,
@@ -313,9 +315,9 @@ class _PsycopgLease:
             return _approval_row(self.connection, self.schema, binding)
 
     def verify_predecessor(self, request: MigrationRequest) -> None:
-        from .ledger import (_history_rows, _verify_installed)
-        from .ledger_schema import _verify_history_schema
         from .catalog import _installation
+        from .ledger import _history_rows, _verify_installed
+        from .ledger_schema import _verify_history_schema
 
         self.binding = request.binding
         if (self.binding is not None and self.binding.target != self.target):
@@ -330,16 +332,16 @@ class _PsycopgLease:
             if not history:
                 raise CatalogError("ledger-history-missing")
             latest = history[-1]
-            if (latest["entryDigest"] != request.expected_head
+            if ((latest["entryDigest"] != request.expected_head
                     or request.plan["predecessor"] != {
                         "id": latest["plan"]["id"],
                         "digest": latest["plan"]["digest"]}
-                    or latest["plan"]["toBundleDigest"] != request.plan["fromBundleDigest"]):
+                    or latest["plan"]["toBundleDigest"] != request.plan["fromBundleDigest"])
+                    and not any(entry["plan"]["digest"] == request.plan["digest"]
+                                and entry.get("fileDigest") == request.file_digest
+                                for entry in history)):
                 # Exact replay is handled from immutable history separately.
-                if not any(entry["plan"]["digest"] == request.plan["digest"]
-                           and entry.get("fileDigest") == request.file_digest
-                           for entry in history):
-                    raise CatalogError("ledger-head-mismatch")
+                raise CatalogError("ledger-head-mismatch")
             _verify_installed(self.connection, latest, self.host._person_roles,
                               self.host._statement_timeout_ms,
                               self.host._lock_timeout_ms)
@@ -347,9 +349,12 @@ class _PsycopgLease:
                                          self.host._person_roles)
 
     def read_progress(self, binding: ApprovalBinding) -> PhaseReceipt | None:
-        from .progress import (_assert_progress_binding, _progress_rows,
-                               _verify_progress_schema)
         from .catalog import _installation
+        from .progress import (
+            _assert_progress_binding,
+            _progress_rows,
+            _verify_progress_schema,
+        )
 
         with self.host._atomic(), _installation(
                 self.connection, self.bundle,
@@ -373,11 +378,13 @@ class _PsycopgLease:
 
     def begin(self, request: MigrationRequest, initial: PhaseReceipt) -> None:
         from .catalog import _installation
-        from .mixed import (_lock_phase_tables, _verify_mixed_metadata_inventory,
-                            _verify_phase_execution_boundary)
+        from .mixed import (
+            _lock_phase_tables,
+            _verify_mixed_metadata_inventory,
+            _verify_phase_execution_boundary,
+        )
         from .phase_fence import _head_grants
-        from .progress import (_create_progress, _verify_progress_schema,
-                               _write_progress)
+        from .progress import _create_progress, _verify_progress_schema, _write_progress
 
         with self.host._atomic(), _installation(
                 self.connection, self.bundle,
@@ -415,8 +422,11 @@ class _PsycopgLease:
     def required_phase(self, phase: dict[str, Any], *,
                        prior: PhaseReceipt | None):
         from .catalog import _installation
-        from .mixed import (_lock_phase_tables, _verify_mixed_metadata_inventory,
-                            _verify_phase_execution_boundary)
+        from .mixed import (
+            _lock_phase_tables,
+            _verify_mixed_metadata_inventory,
+            _verify_phase_execution_boundary,
+        )
 
         with self.host._atomic(), _installation(
                 self.connection, self.bundle,
@@ -434,8 +444,11 @@ class _PsycopgLease:
     def record_concurrent_intent(self, phase: dict[str, Any], *,
                                  prior: PhaseReceipt) -> PhaseReceipt:
         from .catalog import _installation
-        from .mixed import (_lock_phase_tables, _verify_mixed_metadata_inventory,
-                            _verify_phase_execution_boundary)
+        from .mixed import (
+            _lock_phase_tables,
+            _verify_mixed_metadata_inventory,
+            _verify_phase_execution_boundary,
+        )
         from .progress import _write_progress
 
         with self.host._atomic(), _installation(
@@ -481,8 +494,13 @@ class _PsycopgLease:
     def observe_concurrent(self, plan: dict[str, Any], phase: dict[str, Any],
                            prior: PhaseReceipt) -> tuple[str, dict[str, Any] | None]:
         from .catalog import _installation
-        from .mixed import (_lock_phase_tables, _verify_index_shape, _verify_mixed_metadata_inventory,
-                            _verify_phase_execution_boundary, _without_concurrent_effect)
+        from .mixed import (
+            _lock_phase_tables,
+            _verify_index_shape,
+            _verify_mixed_metadata_inventory,
+            _verify_phase_execution_boundary,
+            _without_concurrent_effect,
+        )
         from .witness import _capture_witness
 
         with self.connection.transaction(), _installation(
@@ -506,8 +524,13 @@ class _PsycopgLease:
                                      prior: PhaseReceipt,
                                      native_witness: dict[str, Any]) -> PhaseReceipt:
         from .catalog import _installation
-        from .mixed import (_lock_phase_tables, _verify_index_shape, _verify_mixed_metadata_inventory,
-                            _verify_phase_execution_boundary, _without_concurrent_effect)
+        from .mixed import (
+            _lock_phase_tables,
+            _verify_index_shape,
+            _verify_mixed_metadata_inventory,
+            _verify_phase_execution_boundary,
+            _without_concurrent_effect,
+        )
         from .progress import _write_progress
         from .witness import _capture_witness
 
@@ -540,8 +563,7 @@ class _PsycopgLease:
         from .ledger import _finalize_phased_migration
         from .mixed import _verify_mixed_metadata_inventory
         from .phase_fence import _head_grants, _verify_phase_head
-        from .progress import (_delete_progress, _drop_progress,
-                               _verify_progress_schema)
+        from .progress import _delete_progress, _drop_progress, _verify_progress_schema
         from .witness import _capture_witness
 
         binding = request.binding
@@ -679,8 +701,10 @@ class _PsycopgRequiredPhase:
         return self.lease.observe_prefix(plan)
 
     def record_completion(self, receipt: PhaseReceipt) -> None:
-        from .mixed import _verify_mixed_metadata_inventory
-        from .mixed import _verify_phase_execution_boundary
+        from .mixed import (
+            _verify_mixed_metadata_inventory,
+            _verify_phase_execution_boundary,
+        )
         from .progress import _write_progress
 
         if (self.prior is None or self.cursor != len(self.steps)
@@ -730,6 +754,7 @@ def _steps_for_phase(plan: dict[str, Any], phase: dict[str, Any]) -> list[dict[s
 def apply_migration_on_host(host: MigrationHost, plan: dict[str, Any], *,
                             expected_head: str, file_digest: str,
                             qualification_profile: str, evidence_digest: str,
+                            approval_id: str | None = None,
                             statement_timeout_ms: int = 30_000,
                             lock_timeout_ms: int = 5_000) -> dict[str, Any]:
     """Apply a current source-verified 0.3 plan through host custody.
@@ -774,6 +799,8 @@ def apply_migration_on_host(host: MigrationHost, plan: dict[str, Any], *,
         request = MigrationRequest(source_plan, expected_head, file_digest, binding)
         lease.verify_predecessor(request)
         approval = verify_host_approval(lease, binding)
+        if approval_id is not None and approval.receipt_id != approval_id:
+            raise CatalogError("approval-receipt-mismatch")
         published = lease.observe_final_publication(request, approval)
         if published is not None:
             return published
@@ -895,17 +922,17 @@ def apply_migration_on_host(host: MigrationHost, plan: dict[str, Any], *,
 
 
 def _target_identity(connection: Any, source: dict[str, Any],
-                     profile: str) -> TargetIdentity:
+                     profile: str, installation_id: str) -> TargetIdentity:
     from .catalog import _one
 
-    row = _one(connection, "SELECT d.oid,d.datname,s.system_identifier "
-                "FROM pg_catalog.pg_database d CROSS JOIN pg_catalog.pg_control_system() s "
+    row = _one(connection, "SELECT d.oid,d.datname FROM pg_catalog.pg_database d "
                 "WHERE d.datname=pg_catalog.current_database()")
     cfg = source["configuration"]
     if (row is None or type(profile) is not str or not profile
+            or type(installation_id) is not str or not installation_id
             or type(cfg.get("module")) is not str or not cfg["module"]):
         raise CatalogError("approval-target-identity-invalid")
-    return TargetIdentity("postgresql", profile, str(row[2]), row[0], row[1],
+    return TargetIdentity("postgresql", profile, installation_id, row[0], row[1],
                           cfg["schema"], cfg["module"], cfg["ownerRole"])
 
 

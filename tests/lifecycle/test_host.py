@@ -3,7 +3,11 @@
 import unittest
 
 from umf_access.lifecycle import CatalogError
-from umf_access.lifecycle.approval import ApprovalBinding, ApprovalReceipt, TargetIdentity
+from umf_access.lifecycle.approval import (
+    ApprovalBinding,
+    ApprovalReceipt,
+    TargetIdentity,
+)
 from umf_access.lifecycle.host import HostCapabilities
 
 
@@ -11,7 +15,7 @@ class MigrationHostContracts(unittest.TestCase):
     def setUp(self):
         self.target = TargetIdentity(
             engine="postgresql", profile="postgresql/18.6",
-            system_id="7351243056048184231", database_oid=16384,
+            installation_id="local-lifecycle", database_oid=16384,
             database="umf_test", schema="legal_lifecycle",
             module="legal_lifecycle", owner_role="legal_lifecycle_owner",
         )

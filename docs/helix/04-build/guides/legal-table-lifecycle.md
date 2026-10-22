@@ -82,15 +82,39 @@ discovery function above to author review markers, then compile the request.
 predecessors and the final source. A trusted file manifest can bind original file
 bytes; a rehashed plan alone does not provide host authority.
 
-`umf-table apply` routes plans with the v0.2 execution profile to the public
-`umf_access.lifecycle.apply_mixed_migration` runner. It requires an explicitly
-supplied idle-autocommit connection, approved plan digest, expected head and
-person-role set. The CLI accepts the explicit DSN and approval arguments, owns its
-connection transaction/session behavior, and reports success only after durable
-publication. The mixed runner holds the session lock across phases, fences normal
-lifecycle data access while progress is incomplete, and resumes only the same
-approved source-bound plan. Legacy transaction-only plans continue through
-`apply_table_migration`; import and compilation execute no database effects.
+`umf-table apply` preserves the recorded v0.1/v0.2 runner routes. For v0.3
+plans, first record a durable host approval, then apply using that exact receipt:
+
+```sh
+umf-table approve --plan migration.json --dsn "$ADMIN_DSN" \
+  --expected-head "$PRIOR_ENTRY_DIGEST" --installation-id legal-prod-east \
+  --target-profile local-postgresql18 --qualification-profile pg18-maintenance-v1 \
+  --evidence-digest "$QUALIFICATION_EVIDENCE_SHA256" --decision approved
+
+umf-table apply --plan migration.json --dsn "$ADMIN_DSN" \
+  --expected-head "$PRIOR_ENTRY_DIGEST" --approval-id "$HOST_RECEIPT_ID" \
+  --installation-id legal-prod-east --target-profile local-postgresql18 \
+  --qualification-profile pg18-maintenance-v1 \
+  --evidence-digest "$QUALIFICATION_EVIDENCE_SHA256"
+```
+
+The approval command connects with the trusted administrative credential and
+sets the configured installation owner role. PostgreSQL records the authenticated
+`session_user` and decision time; the host's stable `installation-id`, target
+profile, original plan-file SHA-256, plan/source digest, predecessor head and
+ordered phase hashes are included in the binding. The selected qualification
+profile and its evidence digest are also bound. Treat the receipt ID as a
+host-issued reference, not source metadata. `--approved-digest` remains only the
+legacy plan-digest gate; it cannot create or substitute for a v0.3 receipt, and
+`nativeQualified: false` stays false.
+
+The apply command recomputes the binding from the current database identity,
+exact plan bytes, predecessor, profile and phase list, then requires the stored
+receipt ID to match that binding before effects. A missing receipt reports
+`approval-receipt-required`. The adapter owns the idle-autocommit connection,
+locks, whole-phase transactions, durable progress, head fence and publication.
+It reports success only after durable finalization and observes uncertain commits
+before continuing. Import, check and compile commands perform no database effects.
 
 UMF owns source comparison, review candidates, plan binding and refusal. Weft owns
 lowering declared typed data operations such as the scoped backfill. The native

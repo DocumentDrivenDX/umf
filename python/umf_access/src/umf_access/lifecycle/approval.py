@@ -14,8 +14,16 @@ from datetime import datetime
 from typing import Any
 from uuid import uuid4
 
-from .catalog import (CatalogError, _all, _columns, _constraint_shapes, _execute,
-                      _index_shapes, _one, _q)
+from .catalog import (
+    CatalogError,
+    _all,
+    _columns,
+    _constraint_shapes,
+    _execute,
+    _index_shapes,
+    _one,
+    _q,
+)
 
 APPROVAL_PROFILE = {
     "version": "umf.table-migration-approval/0.1",
@@ -79,7 +87,7 @@ class TargetIdentity:
 
     engine: str
     profile: str
-    system_id: str
+    installation_id: str
     database_oid: int
     database: str
     schema: str
@@ -87,7 +95,7 @@ class TargetIdentity:
     owner_role: str
 
     def as_json(self) -> dict[str, Any]:
-        if (self.engine != "postgresql" or not self.profile or not self.system_id
+        if (self.engine != "postgresql" or not self.profile or not self.installation_id
                 or type(self.database_oid) is not int or self.database_oid <= 0
                 or any(type(value) is not str or not value for value in
                        (self.database, self.schema, self.module, self.owner_role))):
@@ -95,7 +103,7 @@ class TargetIdentity:
         return {
             "engine": self.engine,
             "profile": self.profile,
-            "systemId": self.system_id,
+            "installationId": self.installation_id,
             "databaseOid": self.database_oid,
             "database": self.database,
             "schema": self.schema,
@@ -165,7 +173,7 @@ class ApprovalReceipt:
 
     def verify(self, binding: ApprovalBinding) -> None:
         try:
-            decided_at = datetime.fromisoformat(self.decided_at.replace("Z", "+00:00"))
+            decided_at = datetime.fromisoformat(self.decided_at)
         except (AttributeError, ValueError):
             decided_at = None
         if (type(self.receipt_id) is not str or not self.receipt_id
