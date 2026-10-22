@@ -17,9 +17,31 @@ def text(points: list[int]) -> str:
     return "".join(chr(point) for point in points)
 
 
+def canonical_tagged(value: dict[str, Any]) -> dict[str, Any]:
+    """Unify only the two captured spellings of Python None, recursively."""
+    kind = value["kind"]
+    if kind == "NoneType":
+        if set(value) != {"kind", "value"} or value["value"] is not None:
+            raise ValueError("Malformed frozen NoneType tag")
+        return {"kind": "null"}
+    if kind == "null":
+        if set(value) != {"kind"}:
+            raise ValueError("Malformed null tag")
+        return {"kind": "null"}
+    if kind == "list":
+        return {**value, "items": [canonical_tagged(item) for item in value["items"]]}
+    if kind == "dict":
+        return {**value, "entries": [
+            [canonical_tagged(key), canonical_tagged(item)]
+            for key, item in value["entries"]
+        ]}
+    return value
+
+
 def from_tagged(value: dict[str, Any]) -> Any:
     kind = value["kind"]
-    if kind == "null":
+    if kind in {"null", "NoneType"}:
+        canonical_tagged(value)  # Validate the exact native None spellings.
         return None
     if kind == "bool":
         return value["value"]
@@ -126,6 +148,8 @@ def main() -> int:
                     raise RuntimeError("The approved NEL correction baseline no longer matches its selected case")
                 wanted = correction.get("target", {}).get("readBack")
                 correction_applied = True
+            if expected["status"] == "value":
+                wanted = canonical_tagged(wanted)
             passed = (actual["status"] == expected["status"] and
                       (expected["status"] != "value" or actual.get("value") == wanted))
             counts[category] += 1

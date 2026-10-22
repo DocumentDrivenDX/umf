@@ -183,3 +183,21 @@ with zero mismatches. No production Rust or expected outcome changed. Independen
 Sol reviewed the repair and its preservation/negative controls; the final clean
 committed full-host gate remains required. CI now preserves each platform/Python
 qualification receipt as a separately named artifact.
+
+
+The `453923263` integrated run reaches serialization after every preceding host
+and schema gate passes. Its 14 null-tag mismatches come from the two frozen
+spellings of Python None, not production behavior. The reviewed comparison helper
+canonicalizes only exact `{kind: NoneType, value: null}` and `{kind: null}` tags,
+recursively preserving list/map structure, order and all other tags. Malformed
+aliases refuse. No fixture, NEL correction or Rust implementation changes.
+
+The [standalone archive/rebuild receipt](installed-serialization-archive-rebuild.json)
+qualifies 1,742/1,742 serializer observations on both original and rebuilt wheels,
+a 443-member source archive with required sources and no forbidden artifacts, and
+an offline wheel rebuild with JavaScript absent from PATH. The rebuilt wheel
+also passes 198 public tests, 139 core vectors, 9,282 admission decisions, 4,995
+official cases, 2,586 arithmetic controls, 7,671 ordered method observations and
+263 metadata records. These standalone results precede the final clean integrated
+receipt. The shared directive-profile category includes all 16 tail observations
+within its 74 entries; none are omitted by the zero separate-tail counter.

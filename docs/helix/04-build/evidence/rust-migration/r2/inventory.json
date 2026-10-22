@@ -167,12 +167,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "e2ed661166baa060e1c45884f300d6dc2a9c677a19c6df0fe613a2baa4a5f70f",
+    "sourceCohortSha256": "7d6e061644ccb00077daee3a3b03e2157005de50fd91657a9971eea15d6d4dd1",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 301,
-    "algorithmSymbols": 9752,
+    "algorithmSymbols": 9753,
     "pythonModules": 98,
     "rustBuildInputs": 73,
     "rustModules": 80,
@@ -31562,18 +31562,19 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "canonical_tagged",
         "case_canonical_hash",
         "from_tagged",
         "main",
         "tagged",
         "text"
       ],
-      "bytes": 7336,
+      "bytes": 8331,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/python-serialization-conformance.py",
-      "sha256": "1ecc62ead8828ee38262e545fcd398d131e1dba4ce7d3d9729f01a46130da8c4"
+      "sha256": "8ab6a3d78bee5710d0fc342b0995dfa98988fa0c42008413026f2736de78235a"
     },
     {
       "activationEvidence": [],

@@ -600,3 +600,14 @@ records toolchain, source/resource hashes, limits, work totals and timing scopes
 Retained codegen assets require a provenance refresh after canonical generation;
 this checkpoint proves their decompressed JavaScript changes only the compiler
 SHA and keeps all seven MiniRacer operations visible for R3/R4.
+
+
+Before a final all-host run, execute every installed comparator end to end in a
+retained environment. Exact fixture hashes alone cannot validate a comparison
+harness. Native receipts can use different lossless spellings for None or schema
+paths; establish a typed comparison representation, preserve numeric-string keys
+and raw codepoints, and keep qualified exception messages. Verify receipt fields
+against their actual owners and retain malformed-input/identity controls. This
+checkpoint's standalone original/rebuilt wheels pass all serializer, schema and
+public tests after comparison-only repairs; frozen native expectations stay
+immutable.
