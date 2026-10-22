@@ -1,0 +1,47 @@
+{
+  "profile": "umf.r2-independent-ci-environment-scope-review/1",
+  "capturedAt": "2026-10-22T08:47:51.512399+00:00",
+  "reviewer": "Independent Sol reviewer (/root/sol_r2_final_review)",
+  "status": "Narrow CI delivery fix approved; fresh source-closure qualification and PR CI remain pending.",
+  "scope": "Only .github/workflows/rust-core.yml changes: remove invalid jobs.env runner context and initialize UMF_JSON_SCHEMA_SUITE using runtime RUNNER_TEMP through GITHUB_ENV after checkout.",
+  "reviewedHeadBeforeFix": "1c4e8297fd2b10aa5f6423f2b7574858e55b34ea",
+  "workflow": {
+    "path": ".github/workflows/rust-core.yml",
+    "sha256": "a9c12b6e454f7a1f442599133f2abcb17403c62335451cc079215e997f10dfac"
+  },
+  "core": {
+    "path": "crates/umf-core/src/schema.rs",
+    "sha256": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813"
+  },
+  "independentControls": {
+    "exactDiffReconstruction": "New file equals HEAD with only the two reviewed removal/insertion sites changed.",
+    "shellExecution": "Exact assignment step executed successfully with spaces in RUNNER_TEMP and GITHUB_ENV paths; expected one-line value written.",
+    "sixJobMatrixPinsGatesAndArtifactUpload": "Unchanged; Ubuntu/macOS \u00d7 CPython3.11.17/3.12.15/3.13.16, all tool pins, corpus fetch, semantic/compiler/installed/boundary gates and always source-bound upload retained.",
+    "productionCoreHarnessResources": "Unchanged."
+  },
+  "actionlint": {
+    "version": "1.7.12",
+    "binary": "/private/tmp/actionlint-v1.7.12/actionlint",
+    "binarySha256": "8db11704dc296f096216db4db65d86cd7f0ebfdf4c38453a1da276b137b88388",
+    "archiveSha256": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f",
+    "matchingPublishedChecksumEntry": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f  actionlint_1.7.12_darwin_arm64.tar.gz",
+    "checksumFile": "/private/tmp/actionlint-v1.7.12/checksums.txt",
+    "checksumFileSha256": "433028cf0ba3c42163ea1a668dedce30fcdbe84fe912b1a5e288c006eab8a4f5",
+    "independentlyRerunCommand": [
+      "actionlint",
+      ".github/workflows/rust-core.yml"
+    ],
+    "exitCode": 0,
+    "diagnostics": []
+  },
+  "approval": {
+    "narrowFixApproved": true,
+    "priorImplementationApprovalRetained": true,
+    "deliveryComplete": false,
+    "remaining": [
+      "Commit/push exact workflow fix and refresh source-bound qualification for new workflow hash.",
+      "Require PR CI/matrix success and reviewed merge."
+    ]
+  },
+  "publication": false
+}

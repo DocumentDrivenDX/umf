@@ -13,10 +13,10 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python: ['3.11.17', '3.12.15', '3.13.16']
     runs-on: ${{ matrix.os }}
-    env:
-      UMF_JSON_SCHEMA_SUITE: ${{ runner.temp }}/umf-json-schema-test-suite
     steps:
       - uses: actions/checkout@v4
+      - name: Set pinned schema controls path
+        run: printf 'UMF_JSON_SCHEMA_SUITE=%s/umf-json-schema-test-suite\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
