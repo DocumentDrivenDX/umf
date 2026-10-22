@@ -2,6 +2,8 @@
 import {legalSource,evolvedLegalSource,indexedLegalSource,moduleId} from '../tests/lifecycle/legal-fixture';
 import {chromium} from 'playwright';
 import {createHash,randomUUID} from 'node:crypto';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {inspectTableLifecycle} from '../src/extensions/tables';
 import {generatePythonClient} from '../src/access';
 import {compileTableDeployment} from '../src/table-deployment';
@@ -44,7 +46,7 @@ const g01Request={id:'g01-002',predecessor:{id:'g01-001',digest:'a'.repeat(64)},
 const g01Expected=compileTableMigration(g01Request);
 // Reuse the native G01 fixture builder for the future-default transition so
 // browser parity exercises the same typed source rather than a second parser.
-const g01FixturePath=`/private/tmp/umf-g01-browser-fixture-${randomUUID()}.json`;
+const g01FixturePath=join(tmpdir(),`umf-g01-browser-fixture-${randomUUID()}.json`);
 const g01FixtureBuild=Bun.spawnSync({cmd:['bun','tests/lifecycle/g01-native-fixture.ts',g01FixturePath],stdout:'pipe',stderr:'pipe'});
 if(g01FixtureBuild.exitCode!==0)throw new Error('G01 browser fixture build failed: '+g01FixtureBuild.stderr.toString());
 const g01Fixture=await Bun.file(g01FixturePath).json() as any;
