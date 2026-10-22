@@ -137,6 +137,7 @@ jobs:
 
 
   python-codegen:
+    name: python-codegen (${{ matrix.os }}, Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
