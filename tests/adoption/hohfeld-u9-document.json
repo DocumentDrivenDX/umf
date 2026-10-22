@@ -1,0 +1,71 @@
+{
+  "umf": "0.10.0",
+  "id": "u9-public-reader-probe",
+  "vocabularies": {
+    "umf.ddd": { "version": "0.1.0" }
+  },
+  "extensions": {},
+  "modules": [
+    {
+      "id": "u9demo",
+      "namespace": "u9demo",
+      "extensions": {
+        "umf.ddd": { "kind": "bounded-context", "terms": [] }
+      },
+      "elements": [
+        {
+          "id": "Thing",
+          "kind": "record",
+          "name": "Thing",
+          "members": [
+            { "module": "u9demo", "element": "Thing.id" },
+            { "module": "u9demo", "element": "Thing.note" }
+          ],
+          "keys": [
+            {
+              "id": "primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [{ "module": "u9demo", "element": "Thing.id" }]
+            }
+          ],
+          "extensions": {
+            "umf.ddd": {
+              "kind": "entity",
+              "fields": {
+                "id": {
+                  "type": { "kind": "scalar", "name": "string" },
+                  "cardinality": "one"
+                },
+                "note": {
+                  "type": { "kind": "scalar", "name": "string" },
+                  "cardinality": "optional"
+                }
+              },
+              "identity": { "fields": ["id"], "scope": "context" }
+            }
+          }
+        },
+        {
+          "id": "Thing.id",
+          "kind": "field",
+          "name": "id",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Thing.note",
+          "kind": "field",
+          "name": "note",
+          "scalarType": "string",
+          "nullability": "absent-allowed",
+          "cardinality": "one",
+          "extensions": {}
+        }
+      ],
+      "relationships": []
+    }
+  ]
+}
