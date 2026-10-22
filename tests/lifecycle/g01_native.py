@@ -42,25 +42,30 @@ def bundle(source,cfg):
     return result['bundle']
 
 class _TransactionProxy:
-    def __init__(self, transaction, on_data_step=None):
+    def __init__(self, transaction, on_data_step=None, before_statement=None):
         self._transaction=transaction
         self._on_data_step=on_data_step
+        self._before_statement=before_statement
     def __getattr__(self,name):return getattr(self._transaction,name)
+    def execute_statement(self,statement):
+        if self._before_statement is not None:self._before_statement(self._transaction,statement)
+        return self._transaction.execute_statement(statement)
     def execute_data_step(self,plan,step):
         self._transaction.execute_data_step(plan,step)
-        if self._on_data_step is not None:self._on_data_step(plan,step)
+        if self._on_data_step is not None:self._on_data_step(plan,step,self._transaction)
 
 class _LeaseProxy:
-    def __init__(self,lease,on_data_step=None,after_phase=None,fail_finalize=False):
+    def __init__(self,lease,on_data_step=None,before_statement=None,after_phase=None,fail_finalize=False):
         self._lease=lease
         self._on_data_step=on_data_step
+        self._before_statement=before_statement
         self._after_phase=after_phase
         self._fail_finalize=fail_finalize
     def __getattr__(self,name):return getattr(self._lease,name)
     @contextmanager
     def required_phase(self,phase,*,prior):
         with self._lease.required_phase(phase,prior=prior) as transaction:
-            yield _TransactionProxy(transaction,self._on_data_step)
+            yield _TransactionProxy(transaction,self._on_data_step,self._before_statement)
         if self._after_phase is not None:self._after_phase(phase)
     def finalize(self,request,approval):
         if self._fail_finalize:
@@ -76,6 +81,41 @@ class _HostProxy:
     def acquire(self,*args,**kwargs):
         with self._host.acquire(*args,**kwargs) as lease:
             yield _LeaseProxy(lease,**self._kwargs)
+
+def _inject_null_before_tighten(cfg,observations):
+    def inject(transaction,statement):
+        if 'SET NOT NULL' not in statement:return
+        connection=transaction.lease.connection
+        elevated=connection.execute('SELECT session_user').fetchone()[0]
+        connection.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(elevated)))
+        connection.execute(sql.SQL('INSERT INTO {} (id,owner,summary) VALUES (%s,%s,NULL)').format(sql.Identifier(cfg['schema'],'notes')),('g01_fault_null','g01_alice'))
+        observations['rowsAfterFillBeforeTighten']=connection.execute(sql.SQL('SELECT id,summary FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'notes'))).fetchall()
+        connection.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
+        try:
+            transaction.execute_statement(statement)
+        except psycopg.errors.NotNullViolation as error:
+            observations['tightenSqlstate']=error.sqlstate
+            raise
+        raise AssertionError('planned SET NOT NULL accepted an injected NULL row')
+    return inject
+
+def _observe_bounded_effect(cfg,observations):
+    from umf_access.lifecycle import backfills
+    original=backfills._apply_backfill
+    def observe(connection,plan,step):
+        observations['dataStepAttempt']=step['id']
+        try:return original(connection,plan,step)
+        except CatalogError as error:
+            if str(error)=='backfill-effect-bound':
+                observations['boundError']=str(error)
+                observations['rowsAfterRejectedBound']=connection.execute(sql.SQL('SELECT id,summary FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'notes'))).fetchall()
+                observations['dataStepId']=step['id']
+            raise
+        except psycopg.Error as error:
+            observations['nativeSqlstate']=error.sqlstate
+            observations['nativeDataStepId']=step['id']
+            raise
+    return backfills,original,observe
 
 def _writer_barrier(dsn,cfg,table):
     attempting=threading.Event();finished=threading.Event();outcome=[];pid=[]
@@ -93,7 +133,7 @@ def _writer_barrier(dsn,cfg,table):
                     outcome.append('insert-succeeded-in-pair-gap')
         except psycopg.Error as error:outcome.append(type(error).__name__)
         finally:finished.set()
-    def after_fill(plan,step):
+    def after_fill(plan,step,_transaction=None):
         if step['kind']!='backfill' or attempting.is_set():return
         thread=threading.Thread(target=writer,daemon=True);thread.start()
         if not attempting.wait(10):raise AssertionError('writer did not reach the backfill/tighten barrier')
@@ -108,6 +148,7 @@ def _writer_barrier(dsn,cfg,table):
 with psycopg.connect(args.dsn,autocommit=True) as admin:
     server=admin.execute('SELECT pg_catalog.version()').fetchone()[0]
     for case in fixture['cases']:
+        print('running '+case['id'],flush=True)
         cfg=case['configuration'];db='g01_'+uuid4().hex[:10]
         owner,person,batch=cfg['ownerRole'],cfg['personRole'],cfg['batchRole']
         individuals=('g01_alice','g01_bob')
@@ -148,15 +189,31 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 request=MigrationRequest(plan,head,file_digest)
                 approval=host.record_approval(request,decision='approved',qualification_profile='postgresql18/0.1',evidence_digest=evidence_digest)
                 check(case['id']+'-host-recorded-source-bound-approval',approval.decision=='approved' and approval.evidence_digest==evidence_digest)
-                if case.get('expectedFailure') in ('backfill-effect-bound','native-check-violation'):
-                    if case['expectedFailure']=='native-check-violation':
-                        native_check=connection.execute("SELECT count(*) FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class r ON r.oid=c.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=r.relnamespace WHERE n.nspname=%s AND r.relname='notes' AND c.conname='summary_allowed'",(cfg['schema'],)).fetchone()
-                        check(case['id']+'-real-native-check-is-installed',native_check==(1,))
-                    try:apply_migration_on_host(host,plan,expected_head=head,file_digest=file_digest,qualification_profile='postgresql18/0.1',evidence_digest=evidence_digest,approval_id=approval.receipt_id)
-                    except CatalogError as error:
-                        check(case['id']+'-backfill-failure-is-atomic',True)
-                        checks.append(case['id']+'-native-error-'+str(error))
-                    else:raise AssertionError(f"{case['id']} unexpectedly committed")
+                if case.get('expectedFailure') in ('backfill-effect-bound','native-not-null-violation','native-constraint-violation'):
+                    observations={}
+                    run_host=host
+                    backfill_module=original_backfill=wrapped_backfill=None
+                    if case['expectedFailure']=='native-not-null-violation':
+                        run_host=_HostProxy(host,before_statement=_inject_null_before_tighten(cfg,observations))
+                    else:
+                        backfill_module,original_backfill,wrapped_backfill=_observe_bounded_effect(cfg,observations)
+                        backfill_module._apply_backfill=wrapped_backfill
+                    try:
+                        try:apply_migration_on_host(run_host,plan,expected_head=head,file_digest=file_digest,qualification_profile='postgresql18/0.1',evidence_digest=evidence_digest,approval_id=approval.receipt_id)
+                        except (CatalogError,HostOutcomeUnknown) as error:
+                            check(case['id']+'-expected-native-failure-observed',True)
+                            checks.append(case['id']+'-outer-error-'+str(error))
+                        else:raise AssertionError(f"{case['id']} unexpectedly committed")
+                    finally:
+                        if backfill_module is not None:backfill_module._apply_backfill=original_backfill
+                    if case['expectedFailure']=='native-not-null-violation':
+                        check(case['id']+'-real-not-null-sqlstate-reached-after-successful-fill',observations.get('tightenSqlstate')=='23502' and observations.get('rowsAfterFillBeforeTighten')==[('a','filled'),('b','filled'),('g01_fault_null',None)])
+                    elif case['expectedFailure']=='native-constraint-violation':
+                        sqlstates={'check':'23514','unique':'23505','foreignKey':'23503'}
+                        constraint_kind=case['id'].split('-')[0] if case['id'].startswith('check-') else 'unique' if case['id'].startswith('unique-') else 'foreignKey'
+                        check(case['id']+'-source-declared-native-constraint-failed-in-backfill',observations.get('nativeSqlstate')==sqlstates[constraint_kind] and observations.get('nativeDataStepId')==plan['steps'][0]['id'] and observations.get('dataStepAttempt')==plan['steps'][0]['id'])
+                    else:
+                        check(case['id']+'-exact-effect-bound-reached-after-native-update',observations.get('boundError')=='backfill-effect-bound' and observations.get('dataStepId')==plan['steps'][0]['id'] and observations.get('rowsAfterRejectedBound')==[('a','filled'),('b','filled')])
                     connection.execute('RESET ROLE')
                     rows=connection.execute(sql.SQL('SELECT id,summary FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'notes'))).fetchall()
                     check(case['id']+'-paired-fill-and-tighten-roll-back-together',rows==[tuple(row) for row in case['expectedRows']])
@@ -164,15 +221,22 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                     check(case['id']+'-requiredness-ddl-rolls-back-with-fill',nullability==('YES',))
                     continue
                 phase_calls=[]
-                def count_data_step(_plan,step,calls=phase_calls):
+                clock_witnesses=[]
+                def count_data_step(_plan,step,transaction,calls=phase_calls):
                     if step['kind']=='backfill':calls.append(step['id'])
+                    if step['kind']=='backfill' and case['id']=='clock-unknown-commit':
+                        native=transaction.lease.connection
+                        elevated=native.execute('SELECT session_user').fetchone()[0]
+                        native.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(elevated)))
+                        clock_witnesses.extend(native.execute(sql.SQL('SELECT summary,transaction_timestamp() FROM {} WHERE id=%s').format(sql.Identifier(cfg['schema'],'notes')),('a',)).fetchone())
+                        native.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)))
                 run_host=host
                 writer_finished=None;writer_outcome=None
                 if case['id']=='all-null':
                     writer_callback,writer_finished,writer_outcome,writer_pid=_writer_barrier(dsn,cfg,sql.Identifier(cfg['schema'],'notes'))
                     def record_step(plan,step,count=count_data_step,callback=writer_callback):count(plan,step);callback(plan,step)
                     run_host=_HostProxy(host,on_data_step=record_step)
-                elif case['id']=='paired-unknown-commit':
+                elif case['id']=='clock-unknown-commit':
                     raised=[]
                     def after_commit(phase,raised_once=raised):
                         if phase['kind']=='backfill-tighten' and not raised_once:
@@ -196,13 +260,21 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                             blocked=monitor.execute("SELECT wait_event_type,wait_event,pg_catalog.pg_blocking_pids(pid),state FROM pg_catalog.pg_stat_activity WHERE pid=%s",(writer_pid[0],)).fetchone()
                         raise AssertionError(f'direct writer did not resume with NOT NULL after pair: {writer_outcome!r}, blocked={blocked!r}')
                     check('all-null-direct-writer-held-until-atomic-pair-commit',True)
-                if case['id'] in ('paired-unknown-commit','paired-finalize-retry'):
+                if case['id'] in ('clock-unknown-commit','paired-finalize-retry'):
                     check(case['id']+'-paired-backfill-dispatched-once',len(phase_calls)==1)
                 check(case['id']+'-public-host-runner-published',applied['status']=='committed' and applied['generation']==2)
                 connection.execute('RESET ROLE')
                 rows=connection.execute(sql.SQL('SELECT id,summary FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'notes'))).fetchall()
                 expected_rows=[tuple(row) for row in case['expectedRows']]
-                if rows!=expected_rows:raise AssertionError(f"{case['id']} rows {rows!r} != {expected_rows!r}")
+                if case['id']=='clock-unknown-commit':
+                    check(case['id']+'-transaction-clock-witness-captured-once',len(clock_witnesses)==2 and clock_witnesses[0]==clock_witnesses[1])
+                    check(case['id']+'-clock-value-not-repeated-after-unknown-commit',len(phase_calls)==1 and rows[0][1]==clock_witnesses[0])
+                elif case['id']=='date-literal':
+                    expected_rows=[(row_id,value.isoformat() if hasattr(value,'isoformat') else value) for row_id,value in expected_rows]
+                    rows=[(row_id,value.isoformat() if hasattr(value,'isoformat') else value) for row_id,value in rows]
+                    if rows!=expected_rows:raise AssertionError(f"{case['id']} rows {rows!r} != {expected_rows!r}")
+                else:
+                    if rows!=expected_rows:raise AssertionError(f"{case['id']} rows {rows!r} != {expected_rows!r}")
                 check(case['id']+'-native-existing-rows-match-fill-semantics',True)
                 nullability=connection.execute("SELECT is_nullable FROM information_schema.columns WHERE table_schema=%s AND table_name='notes' AND column_name='summary'",(cfg['schema'],)).fetchone()
                 check(case['id']+'-native-column-is-required-after-pair',nullability==('NO',))
