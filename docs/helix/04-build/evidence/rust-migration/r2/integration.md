@@ -223,3 +223,32 @@ requests plain output; pinned exception identities, paths, parents, features and
 source checks are unchanged. The [offline Linux forced-color control](ci-linux-forced-color-boundary-control.json)
 passes 578 module boundaries with zero findings and all nine embedded negative
 controls. This scopes a checker repair; fresh CI and merge remain delivery gates.
+
+
+## Hosted production qualification
+
+The [independent hosted qualification review](sol-r2-hosted-qualification-review.json)
+approves all six source-bound cohorts and this evidence-only follow-up with no
+findings; final repository CI and reviewed merge remain external delivery gates.
+
+All six [hosted cohorts](ci-production-qualification/index.json) pass at reviewed
+head `06b108a03cb86c1786afead2ced7d32af55a7f14`: Ubuntu and macOS, each with
+CPython3.11.17/3.12.15/3.13.16, Node26.12.0, Bun1.4.3 and Cargo1.90.0. Each
+original and offline sdist-rebuilt wheel passes the complete comparisons above,
+including 198 public tests, with zero mismatches. All native CLI, packed Node/Bun,
+default Chromium WASM and regex-feature Chromium WASM gates pass separately.
+
+All receipts retain source commit `bb1555c483bd43f546e67413993d8098afc24573`
+(the PR's synthetic merge), whose tree `88021edc5421dcacedb48e10d87523f18eb2266a`
+equals the reviewed head. Their 439 source hashes form closure
+`2896e4e122cad5e2fde4b4ef04789fddfddb350e8fb054c3a5bc57ed2c83c1cd`. For each
+receipt, all 67 qualification-input bindings and 42 raw-output hashes reconcile;
+raw reports, exact counts, interpreter identities, empty startup Git state and
+no-JavaScript/archive controls pass. Downloaded receipt ZIP bytes match GitHub's
+artifact digests. Binary artifact sizes/hashes are CI observations and checked for
+internal consistency; CI binary bytes were not downloaded.
+
+The older local receipt and intermediate failed/historical CI observations retain
+their original source identity. Evidence-only follow-ups do not relabel this
+qualification and must preserve its source closure. PR43 records final repository
+checks and merge. The seven MiniRacer codegen operations remain R3/R4 work.

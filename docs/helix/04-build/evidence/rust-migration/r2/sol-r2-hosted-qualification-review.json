@@ -1,0 +1,138 @@
+{
+  "id": "R2-SOL-HOSTED-QUALIFICATION-REVIEW-001",
+  "profile": "umf.r2-independent-hosted-qualification-review/1",
+  "capturedAt": "2026-10-22T10:09:57.464936+00:00",
+  "reviewer": "Independent Sol reviewer (/root/sol_r2_final_review)",
+  "status": "Six-cohort hosted qualification and evidence-only metadata batch approved; broader required CI and actual PR merge remain pending.",
+  "hostedQualificationApproved": true,
+  "evidenceMetadataApproved": true,
+  "priorProductionImplementationApprovalRetained": true,
+  "deliveryApproved": false,
+  "deliveryComplete": false,
+  "reviewedHead": "06b108a03cb86c1786afead2ced7d32af55a7f14",
+  "receiptSourceCommit": "bb1555c483bd43f546e67413993d8098afc24573",
+  "reviewedGitTree": "88021edc5421dcacedb48e10d87523f18eb2266a",
+  "sourceClosureSha256": "2896e4e122cad5e2fde4b4ef04789fddfddb350e8fb054c3a5bc57ed2c83c1cd",
+  "sourceFileCount": 439,
+  "run": {
+    "id": 39757121940,
+    "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/39757121940",
+    "conclusion": "success",
+    "event": "pull_request"
+  },
+  "evidenceIndex": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/index.json",
+    "sha256": "7981ef6b20298fcc996667e91bb06e7d8767e131feae0f517b2764f849aaf0af"
+  },
+  "reviewedEvidenceHashes": {
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/README.md": "0be761ef997f3eaca6f59600f25ce0de85f2b901bdb45d9d614434e7b71e1c57",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/expected-source.json": "d11d0002d08e61e8a920bb3a5900e5dd8ec1978d7dd04246e8e73389e52b4687",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/independent-audit.json": "fbe110f306c4c641c35dadb1c9063805595a09be895b2ea8467813c84e790103",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/index.json": "7981ef6b20298fcc996667e91bb06e7d8767e131feae0f517b2764f849aaf0af",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/macos-python-3.11.17.json": "7d972b8d690fae749dab37ac786dae51d7f74b6742f92b30e8a2bd884b9dbd96",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/macos-python-3.12.15.json": "fc2cf4eea3d60a54b92e992cf60978739acf0b51cb9d38a79a7c5151e8839aa0",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/macos-python-3.13.16.json": "fdadc4475a8359e7039030c31b395bf0715eabb51c86f103d8ec05e1533fd326",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/ubuntu-python-3.11.17.json": "3cbace1f299dd8174dd2444406258683988ec7de2263d439cb7dac491373d9db",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/ubuntu-python-3.12.15.json": "694df9f4d71298600049e359bde5b46c708ac45512df7a5321a9b6a82f4edc1e",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/ubuntu-python-3.13.16.json": "f0dd2f116e53bc501b3905faa3dea7032235f1dffc81914f32d955378b1cdfa3",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/verification.json": "38fde3233585ae31d7b9583bf09e8b1b4619d21613e587f2ab0fefb19730506b",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-production-qualification/verify-ci-receipts.py": "b834f0725884445e98d476696b5bf50026b32565d854b80c4b547f3056b61795"
+  },
+  "reviewedDocumentationHashes": {
+    "docs/helix/04-build/rust-migration-plan.md": "7280a7291294a0964b3413491a6da0d56be68611e95cfb2a5e9e8aade456b99c",
+    "docs/helix/04-build/evidence/rust-migration/r2/integration.md": "10a1a958705a207f5f951baf58177d46100e01b1c024d8cfb4da01b317d0c314"
+  },
+  "findings": [],
+  "independentChecks": {
+    "sixDistinctCohorts": "Exactly Ubuntu/macOS x CPython3.11.17/3.12.15/3.13.16, six unique successful job IDs and artifact IDs, correct run/head/platform/Python names and labels.",
+    "receiptArchiveBytes": "Each downloaded GitHub ZIP digest and byte length matches its API artifact record; each contains only umf-r2-qualification.json and its bytes equal the indexed copied receipt.",
+    "sourceProvenance": "Each receipt preserves synthetic merge bb1555c483bd43f546e67413993d8098afc24573; its tree88021edc5421dcacedb48e10d87523f18eb2266a equals reviewed06b108a03cb86c1786afead2ced7d32af55a7f14. No receipt is relabelled.",
+    "sourceClosure": "Exact439-entry expected snapshot, committed source blobs, recomputed closure2896e4e122cad5e2fde4b4ef04789fddfddb350e8fb054c3a5bc57ed2c83c1cd, current source bytes and empty qualification-start Git state reconcile.",
+    "perReceiptRawAndInputs": "42 raw stdout/stderr digest fields and67 source-bound qualification-input hashes verified; every JSON report equals parsed raw output.",
+    "bothWheelCohorts": "Per receipt and per original/offline-sdist-rebuilt wheel:198 public tests,139 shared cases,9282 admissions,4995 official outcomes,2586 arithmetic controls including270 arithmetic terminals,7671 ordered methods,263 metadata/path records,6 runtime observations,29 construction refusals,1742 serializer outcomes across18 oracle groups, zero mismatches/failures. Raw public test summaries independently show198 passed and no failed/error/skipped counts.",
+    "otherHosts": "Each receipt separately passes packed Node26.12.0/Bun1.4.3, empty-PATH CLI, default Chromium WASM139, and featureWASM139+70542 regex comparisons/15 parser controls/wide work/depth128/129 ordinary and annotated probes, host controls and zero external requests.",
+    "archiveNoJavascriptAndArtifacts": "443-member required/forbidden source archive audit, no-JavaScript discovery, offline rebuild, positive artifact sizes/digest fields and packed-addon/CLI digest relations pass.",
+    "copyAndIndex": "All six copied receipts and all index job/artifact/digest/size records match independent audit; all indexed job step conclusions success. Copied verifier/verification/independent-audit bytes match reviewed originals.",
+    "sourceContinuity": "All439 current source-file hashes remain unchanged by this metadata batch. Four closure changes from historical475 cohort are exactly workflow/checker/full-harness/inventory repairs, independently reviewed before CI.",
+    "documentation": "Current plan/integration claim only the executed06b/bb1555 hosted cohort, preserve historical local/failed receipts and seven MiniRacer/R7 debt, and retain required-check/merge conditions. README historical replay corrected to --skip-current and explains committed-source replay versus current439 continuity; helper unchanged."
+  },
+  "matrix": [
+    {
+      "platform": "macos-latest",
+      "python": "3.11.17",
+      "receipt": "macos-python-3.11.17.json",
+      "receiptSha256": "7d972b8d690fae749dab37ac786dae51d7f74b6742f92b30e8a2bd884b9dbd96",
+      "jobId": 119751837261,
+      "jobConclusion": "success",
+      "artifactId": 12417786600,
+      "artifactZipSha256": "4809a0e49f371c3c7a4586a19743a9a2330406f8a479f665a8c3b345f9a17ab0",
+      "artifactZipBytes": 36224
+    },
+    {
+      "platform": "macos-latest",
+      "python": "3.12.15",
+      "receipt": "macos-python-3.12.15.json",
+      "receiptSha256": "fc2cf4eea3d60a54b92e992cf60978739acf0b51cb9d38a79a7c5151e8839aa0",
+      "jobId": 119751837228,
+      "jobConclusion": "success",
+      "artifactId": 12417062921,
+      "artifactZipSha256": "5c27bcf4f3c67616326198f7aa6bc7d0c1e3f0f69e5ed9358bb15d552d41ff95",
+      "artifactZipBytes": 36234
+    },
+    {
+      "platform": "macos-latest",
+      "python": "3.13.16",
+      "receipt": "macos-python-3.13.16.json",
+      "receiptSha256": "fdadc4475a8359e7039030c31b395bf0715eabb51c86f103d8ec05e1533fd326",
+      "jobId": 119751837312,
+      "jobConclusion": "success",
+      "artifactId": 12417283040,
+      "artifactZipSha256": "403d64ebf5bd33d87fa930facd1522760586345b4f5a15e533b1232828e8d66a",
+      "artifactZipBytes": 36227
+    },
+    {
+      "platform": "ubuntu-latest",
+      "python": "3.11.17",
+      "receipt": "ubuntu-python-3.11.17.json",
+      "receiptSha256": "3cbace1f299dd8174dd2444406258683988ec7de2263d439cb7dac491373d9db",
+      "jobId": 119751836922,
+      "jobConclusion": "success",
+      "artifactId": 12417502834,
+      "artifactZipSha256": "2e5cd830dbbadf6896d0be351ceb676f0b31796f2c819878b4bb593c3b55afa3",
+      "artifactZipBytes": 36153
+    },
+    {
+      "platform": "ubuntu-latest",
+      "python": "3.12.15",
+      "receipt": "ubuntu-python-3.12.15.json",
+      "receiptSha256": "694df9f4d71298600049e359bde5b46c708ac45512df7a5321a9b6a82f4edc1e",
+      "jobId": 119751837427,
+      "jobConclusion": "success",
+      "artifactId": 12418120207,
+      "artifactZipSha256": "97cbb60851863195007c9fdf1c8b0967b18b6b499b56fde2436f73e202b5f268",
+      "artifactZipBytes": 36149
+    },
+    {
+      "platform": "ubuntu-latest",
+      "python": "3.13.16",
+      "receipt": "ubuntu-python-3.13.16.json",
+      "receiptSha256": "f0dd2f116e53bc501b3905faa3dea7032235f1dffc81914f32d955378b1cdfa3",
+      "jobId": 119751837540,
+      "jobConclusion": "success",
+      "artifactId": 12417696658,
+      "artifactZipSha256": "1918b9f84dc74976f52c62c54818d4423c6d76ad874d4f2396fac260b25d898b",
+      "artifactZipBytes": 36155
+    }
+  ],
+  "scopeLimits": [
+    "Receipt ZIP bytes were independently verified. CI native/package/WASM/wheel binaries themselves were not downloaded; their sizes and digests are CI observations checked for format and receipt-internal consistency.",
+    "This approves the six hosted cohorts at reviewed06b, preserving their synthetic merge source identity. Evidence-only commits are not relabelled as execution by these receipts; current439-byte continuity is explicitly checked.",
+    "Default TypeScript core remains R7; all seven MiniRacer operations remain R3/R4; no package publication, broad unexecuted platform/standard or hard resource guarantee is claimed."
+  ],
+  "remainingDeliveryGates": [
+    "The broader required native-session/mixed-migration CI gate was still running when this review was recorded; require its success and all other required repository checks.",
+    "Commit/push the reviewed metadata batch; hold merge until all required checks for the final PR state pass. Source changes would need renewed review/qualification; evidence-only follow-ups must preserve the qualified439-file closure.",
+    "Record actual reviewed PR43 merge and final landing; no completed merge is claimed by this receipt."
+  ],
+  "documentationLinkAmendment": "Root may add the link to this exact receipt without changing qualified source, corpus counts or support claims."
+}

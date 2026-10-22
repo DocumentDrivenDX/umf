@@ -51,29 +51,36 @@ implementation-plan evidence remains scoped to the artifacts it actually tested.
 
 ### R2 current status
 
-R2 implementation and local installed-artifact qualification are complete at
-`475b5d3d6b722ab73a17f77410eddb91ce45e056`. The clean source closure passes the
-full production gate: both original and offline sdist-rebuilt Python wheels,
-packed Node/Bun, empty-PATH Rust CLI, and actual Chromium default/feature WASM.
-All comparisons report zero mismatches. Native workspace: 214 tests; compiler:
-67 tests / 478 assertions and eleven-output fixed-point/no-write controls.
+R2 implementation and qualification are complete for the production core and
+metamodel compiler. The six hosted Ubuntu/macOS × CPython 3.11.17/3.12.15/3.13.16
+cohorts pass at reviewed source `06b108a03cb86c1786afead2ced7d32af55a7f14`,
+closure `2896e4e122cad5e2fde4b4ef04789fddfddb350e8fb054c3a5bc57ed2c83c1cd`.
+The [CI receipt index](evidence/rust-migration/r2/ci-production-qualification/index.json)
+preserves job/artifact identities, original receipt labels, hashes and support scope.
+The local installed-artifact receipt at `475b5d3d6b722ab73a17f77410eddb91ce45e056`
+remains a separate historical qualification. Both original and offline sdist-rebuilt
+Python wheels, packed Node/Bun, empty-PATH Rust CLI and actual Chromium
+default/feature WASM pass with zero mismatches. Native workspace: 214 tests;
+compiler: 67 tests / 478 assertions and eleven-output fixed-point/no-write controls.
 
-The [final integration record](evidence/rust-migration/r2/integration.md) gives
-exact source/artifact hashes, host versions, support subsets, sizes, benchmark and
-review evidence. The [final independent Sol review](evidence/rust-migration/r2/sol-r2-final-review.json)
-approves implementation and local qualification with no open findings. PR CI and
-merge are the final delivery gate; the repository merge record identifies landing. Earlier checkpoint notes
-below describe states at capture and do not override final qualification.
-CI exposed generated-environment contamination and an unsupported local Python
-parser in the inventory census. The repair must preserve stale refusal, reject
-unparseable authored source, and pass independent review plus fresh CI. The first
-Linux CPython 3.13 installed-artifact gate passes at `bdf469560`; its later inventory
-failure does not invalidate that scoped runtime receipt or establish delivery.
+The [integration record](evidence/rust-migration/r2/integration.md) gives exact
+source/artifact hashes, host versions, support subsets, sizes, benchmark and review
+evidence. Independent Sol implementation and delivery reviews are retained there.
+[PR43](https://github.com/DocumentDrivenDX/umf/pull/43) is the delivery record; all
+required repository checks and reviewed merge remain the landing gate. Evidence
+follow-ups must preserve the qualified source closure and must not relabel earlier
+receipts as execution of a later commit. Earlier checkpoint notes below describe
+states at capture and do not override final qualification.
 Main is integrated through `53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41);
 refresh and incorporate later main work before merging. R3 is next after delivery.
-The census repair passes on Linux. A subsequent boundary failure was traced to
-CI-forced Cargo ANSI coloring; requesting plain tool output preserves the exact
-R1 dependency exception and passes an offline Linux forced-color control.
+
+CI also qualified the inventory repairs: exclude generated Python environments,
+require a supported parser and refuse unparseable authored source. The 47 symbols
+previously omitted by Python3.9 are restored; all authored and Rust source records
+remain covered. Provision Rustfmt before package builds, and request plain Cargo
+output when parsing dependency trees. These changes retain the exact R1 exception
+and production host-dependency refusals; the Linux forced-color control and
+hosted boundary gate pass.
 
 The production boundary is a shared Rust core and metamodel compiler, a native
 CLI, Python abi3 extension, Node/Bun native addon and browser WASM loader. Python
