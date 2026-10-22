@@ -167,7 +167,7 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "1ad5ea4db97f29c2145b2c3f645d3913c16bd7088f16ca8bf18c1815bb64843a",
+    "sourceCohortSha256": "b1437dae2c81010459d0042f4d4bb2b9ce8a417286278a234bb5f1b7d04494bb",
     "typescriptApi": "5.9.3"
   },
   "counts": {
@@ -15918,7 +15918,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_codegen/src/umf_codegen/_release.py",
-      "sha256": "dc9138a04917a8bc10cc21b652e20b9625413255cbfacb2bdd2f11086bb7964e"
+      "sha256": "da85165c88712517405e8d32473650f70ab04e3a73328132121cdeaca57da17f"
     },
     {
       "activationEvidence": [
@@ -31596,12 +31596,12 @@
         "verify_cross_version_profiles",
         "verify_legacy_ap_correction"
       ],
-      "bytes": 71299,
+      "bytes": 71431,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/schema-evaluation-order-conformance.py",
-      "sha256": "d910aca6fd8e1bffa435030300b54ec198d748a0290e8a38458a1d4b026bced7"
+      "sha256": "3ed8f2ef44bd935b35d4360b1794ef5bfb20cced62ab5bed370d435e4ba5c078"
     },
     {
       "activationEvidence": [],
@@ -53948,7 +53948,7 @@
       "path": "python/umf_codegen/src/umf_codegen/_release.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "dc9138a04917a8bc10cc21b652e20b9625413255cbfacb2bdd2f11086bb7964e"
+      "sha256": "da85165c88712517405e8d32473650f70ab04e3a73328132121cdeaca57da17f"
     },
     {
       "bytes": 8411,

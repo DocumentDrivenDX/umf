@@ -587,3 +587,16 @@ scope, identity and named-anchor companions guard these boundaries across the
 three qualified CPython profiles, including their absence of optional URI-format
 validators. R3 must preserve this distinction wherever source text becomes an
 identity key.
+
+
+The first representative R2 native benchmark is source-bound to `2c8781dbe`: a
+500-call complete-validation batch achieves 34.429 calls/s, with 2,703 constraint
+steps per call; admission copying achieves 40,409.484 calls/s. Fresh-process wall
+time including parsing and Engine setup is 154.972 ms for one validation; peak
+RSS is 10,223,616 bytes (10,485,760 bytes for the batch process). Treat these as a
+single local macOS arm64 workload, without cross-host or speedup extrapolation.
+The [benchmark receipt](evidence/rust-migration/r2/native-admission-validation-benchmark.json)
+records toolchain, source/resource hashes, limits, work totals and timing scopes.
+Retained codegen assets require a provenance refresh after canonical generation;
+this checkpoint proves their decompressed JavaScript changes only the compiler
+SHA and keeps all seven MiniRacer operations visible for R3/R4.

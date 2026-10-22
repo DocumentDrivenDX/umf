@@ -141,3 +141,30 @@ check the source archive excludes generated binaries and undeclared caches; and
 record any remaining disagreements without relaxing frozen controls. Independent
 Sol review and approval are pending after that coherent source-bound run. No PR
 merge or release is claimed here.
+
+
+The clean `2c8781dbe` installed run resolves all ten former official-suite
+mismatches: 4,995 official cases, 9,282 admission decisions and 2,586 arithmetic
+controls pass. It also passes 198 Python public tests, the 139-vector installed
+Python/Node/Bun/CLI/default-WASM controls and feature-WASM regex/depth/work probes.
+It stops before ordered candidate comparisons on a harness receipt-field error: the
+path-segments profile counts 42 `errorRecords`, while its helper requested
+`methods`. The narrow harness repair selects the actual field; immutable receipt
+hashes, counts and outcomes remain unchanged. This failed run is not the final
+production-host receipt.
+
+The [native benchmark](native-admission-validation-benchmark.json), bound to the
+clean `2c8781dbe` source and exact resources, measures 500 representative complete
+validations at 34.429 calls/s and admission copying at 40,409.484 calls/s. Each
+validation executes 2,703 constraint steps and 7,924,651 admitted work units. A
+fresh process, including setup, completes one validation in 154.972 ms with
+10,223,616 bytes peak RSS; the batch process peaks at 10,485,760 bytes. These are
+local macOS arm64 measurements, not a speedup comparison, cache-cold claim or
+hard memory guarantee. Runtime setup is outside per-call timers.
+
+The retained codegen assets are refreshed after canonical compiler provenance
+changes. Their decompressed JavaScript is byte-identical after replacing only
+the named compiler SHA, as proved by the
+[refresh receipt](retained-codegen-provenance-refresh.json). Packaging, gzip,
+Python wrapper and boundary controls pass. All seven MiniRacer operations remain
+R3/R4 debt.

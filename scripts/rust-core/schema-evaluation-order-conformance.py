@@ -522,7 +522,8 @@ def verify_cross_version_profiles(filename: str, expected_sha: str, receipt_id: 
 
 def verify_complete_profile_receipt(filename: str, expected_sha: str, receipt_id: str,
                                     fixture: str, fixture_sha: str, cases: int,
-                                    methods: int, refusals: int = 0) -> None:
+                                    observations: int, refusals: int = 0,
+                                    observation_field: str = "methods") -> None:
     path = EVIDENCE / filename
     if sha256(path) != expected_sha:
         raise RuntimeError(f"Cross-version schema receipt changed: {filename}")
@@ -533,7 +534,7 @@ def verify_complete_profile_receipt(filename: str, expected_sha: str, receipt_id
             or receipt.get("jsonschema") != "4.26.0"
             or receipt.get("basePython") != "3.11.17"
             or receipt.get("cases") != cases
-            or receipt.get("methods") != methods
+            or receipt.get(observation_field) != observations
             or receipt.get("admissionRefusals") != refusals
             or receipt.get("completeRecordsEqual") is not True
             or {profile.get("python") for profile in receipt.get("profiles", [])} != {"3.12.15", "3.13.16"}
@@ -688,6 +689,7 @@ def main() -> None:
         "R2-SOL-PYTHON-SCHEMA-PATH-SEGMENTS-PROFILES-001",
         "sol-python-schema-path-segments-predecessor.json",
         FIXTURES["umf.r2-sol-python-schema-path-segments/1"]["sha256"], 48, 42, 1,
+        observation_field="errorRecords",
     )
     path_keys_profiles_path = EVIDENCE / "sol-python-schema-path-keys-profiles.json"
     if sha256(path_keys_profiles_path) != PATH_KEYS_PROFILES_SHA256:
