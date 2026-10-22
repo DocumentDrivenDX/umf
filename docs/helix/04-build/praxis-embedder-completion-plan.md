@@ -250,6 +250,44 @@ inventory exception or discard durable approvals. CLI receipt custody, this
 successor boundary, native atomic/recovery tests and independent review are the
 next U5/G01 gates.
 
+### Review continuation, 2026-10-22
+
+Closed approval metadata/reference 0.3 and three-state host verification are
+integrated at `2fea3f678`. The native U5 harness observes apply and immediate
+replay, person/batch correspondence, denied approval-table reads and a generated
+action. This is provisional source-runtime evidence, not a frozen installed
+cohort. Sol review still requires historical 0.3 replay after a later migration
+and executable command-only publication; both are implementation work in progress.
+G01's writer barrier has reached a blocked person UPDATE and native NOT NULL
+refusal after pair commit. Final acceptance additionally requires exact failure
+causes inside the pair, rollback after dispatched UPDATE, date/clock coverage and
+independent installed replay; no generic CatalogError counts as constraint proof.
+
+Type checking, 92-module Python boundaries and 381 schemas pass at this source
+checkpoint. The complete offline acquisition helper ordering/lifetime fix is
+integrated at `9a79c8909`; its actual macOS 27 ARM64/Python 3.14 run acquires all
+eighteen distributions and passes network-disabled install/probe plus missing and
+tampered wheel controls. Earlier actual Python 3.11 receipts and four intended CI
+cells remain separately scoped. Final source freeze and runner-specific CI
+receipts remain open.
+
+The same exact public document now passes Bun DDD inspection and installed
+Hohfeld 0.5.0/Truss 0.0.45/Weft 0.4.49 execution on PostgreSQL 18. The public
+[U9 receipt](evidence/hohfeld-public-reader-u9-20261021.json) qualifies that
+facet-free document only. Independent review finds released Hohfeld can silently
+ignore Field allowedValues and unknown Field extensions. This violates its own
+unsupported-construct refusal contract; a bounded reader fix is being prepared in
+an isolated Hohfeld checkout. U9 remains open pending that fix, review and renewed
+installed evidence; no general reader conformance is claimed.
+
+Private source inspection accounts for ten tables, 48 columns, two foreign keys,
+ten explicit indexes, one enum check and one range check, with no ignored checks.
+Nine tables carry scope and one explicitly reviewed table is unscoped. Scope
+forms include owner, group, via and parent-through behavior. Original four SQL
+and snapshot pairs remain untouched. This inventory does not establish EC-09
+conversion or acceptance. The managed target request is still pending and EC-10
+remains open. No new release or PR has been published at this checkpoint.
+
 ## Risks and Rollbacks
 
 | Risk | Response and recovery |
