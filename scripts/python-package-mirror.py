@@ -6,11 +6,16 @@ import argparse
 import hashlib
 import html
 import json
+import os
+import platform
 import re
 import shutil
+import socket
+import subprocess
+import sys
 import zipfile
 from email.parser import BytesParser
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 PROFILE = 'umf.embedder-wheel-lock/1'
@@ -38,6 +43,142 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def safe_license_path(value: str) -> PurePosixPath:
+    if not value or '\\' in value or value.startswith('/') or re.match(r'^[A-Za-z]:', value):
+        raise ValueError(f'Unsafe License-File path: {value!r}')
+    parts = value.split('/')
+    if any(part in ('', '.', '..') for part in parts):
+        raise ValueError(f'Unsafe License-File path: {value!r}')
+    return PurePosixPath(*parts)
+
+
+def resolve_license_files(archive: zipfile.ZipFile, metadata_path: str, metadata: Any) -> list[str]:
+    dist_info = metadata_path.split('.dist-info/', 1)[0] + '.dist-info'
+    raw_version = metadata.get('Metadata-Version', '')
+    if not re.fullmatch(r'\d+\.\d+', raw_version):
+        raise ValueError('Invalid wheel Metadata-Version') from None
+    metadata_version = tuple(int(part) for part in raw_version.split('.')[:2])
+    resolved: list[str] = []
+    infos = {info.filename: info for info in archive.infolist()}
+    for value in metadata.get_all('License-File', []):
+        relative = safe_license_path(value)
+        if metadata_version >= (2, 4):
+            archive_path = str(PurePosixPath(dist_info) / 'licenses' / relative)
+        else:
+            # Before Metadata 2.4, License-File paths were archive-root relative.
+            archive_path = str(relative)
+        info = infos.get(archive_path)
+        if info is None or info.is_dir():
+            raise ValueError(f'Wheel omits declared license file {value!r} at {archive_path!r}')
+        resolved.append(archive_path)
+    return resolved
+
+
+def reject_direct_url_requirements(requirements: list[str], wheel: str) -> None:
+    for requirement in requirements:
+        if '@' in requirement:
+            raise ValueError(f'Direct-URL Requires-Dist is not allowed in an offline wheel closure: {wheel}: {requirement}')
+
+
+def runner_identity() -> dict[str, Any]:
+    system = platform.system()
+    identity: dict[str, Any] = {'system': system, 'architecture': platform.machine().lower()}
+    if system == 'Linux':
+        try:
+            identity['distribution'] = platform.freedesktop_os_release()
+        except (AttributeError, OSError):
+            identity['distribution'] = {}
+        identity['libc'] = platform.libc_ver()
+    elif system == 'Darwin':
+        identity['macVersion'] = platform.mac_ver()[0]
+    return identity
+
+
+def select_runner_cell(cells: list[dict[str, Any]], python_version: str) -> dict[str, Any] | None:
+    identity = runner_identity()
+    aliases = {'amd64': 'x86_64', 'aarch64': 'arm64'}
+    architecture = aliases.get(identity['architecture'], identity['architecture'])
+    for cell in cells:
+        if cell.get('python') != python_version or cell.get('architecture') != architecture:
+            continue
+        os_name = cell.get('os', '')
+        if os_name.startswith('ubuntu-'):
+            distribution = identity.get('distribution', {})
+            expected_release = os_name.removeprefix('ubuntu-')
+            if identity['system'] != 'Linux' or distribution.get('ID') != 'ubuntu' or distribution.get('VERSION_ID') != expected_release:
+                continue
+            libc_name, libc_version = identity.get('libc', ('', ''))
+            if libc_name.lower() != 'glibc' or not libc_version:
+                continue
+            expected_min = cell.get('libc', '').removeprefix('glibc >= ')
+            try:
+                actual_tuple = tuple(int(part) for part in libc_version.split('.')[:2])
+                minimum_tuple = tuple(int(part) for part in expected_min.split('.')[:2])
+            except ValueError:
+                continue
+            if actual_tuple < minimum_tuple:
+                continue
+        elif os_name.startswith('macos-'):
+            expected_major = os_name.removeprefix('macos-')
+            actual_major = identity.get('macVersion', '').split('.', 1)[0]
+            if identity['system'] != 'Darwin' or actual_major != expected_major:
+                continue
+        else:
+            continue
+        return cell
+    return None
+
+
+def network_isolation_prefix() -> tuple[list[str], str]:
+    system = platform.system()
+    if system == 'Darwin':
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+            raise RuntimeError('Cannot qualify offline installation: sandbox-exec is unavailable')
+        prefix = [sandbox, '-p', '(version 1) (allow default) (deny network*)']
+        isolation = 'macOS sandbox-exec deny network*'
+    elif system == 'Linux':
+        unshare = shutil.which('unshare')
+        if not unshare:
+            raise RuntimeError('Cannot qualify offline installation: unshare is unavailable')
+        prefix = ([unshare, '--net', '--'] if hasattr(os, 'geteuid') and os.geteuid() == 0
+                  else [shutil.which('sudo') or '', '-n', unshare, '--net', '--'])
+        if not prefix[0]:
+            raise RuntimeError('Cannot qualify offline installation: sudo is unavailable for unshare --net')
+        isolation = 'Linux network namespace (unshare --net)'
+    else:
+        raise RuntimeError(f'Cannot qualify offline installation: unsupported network isolation platform {system}')
+    try:
+        listener = socket.socket()
+        listener.bind(('127.0.0.1', 0))
+        listener.listen(1)
+        listener.settimeout(0.2)
+        port = listener.getsockname()[1]
+        code = """import socket, sys
+s = socket.socket()
+try:
+    s.connect(('127.0.0.1', int(sys.argv[1])))
+    print('ALLOWED')
+except OSError:
+    print('BLOCKED')
+"""
+        probe = subprocess.run(prefix + [sys.executable, '-I', '-c', code, str(port)], text=True, capture_output=True)
+        accepted = False
+        try:
+            connection, _ = listener.accept()
+            connection.close()
+            accepted = True
+        except TimeoutError:
+            pass
+        finally:
+            listener.close()
+    except OSError as error:
+        raise RuntimeError(f'Cannot verify OS-level network isolation: {error}') from None
+    if probe.returncode or probe.stdout.strip() != 'BLOCKED' or accepted:
+        raise RuntimeError('OS-level network-denial probe did not block a loopback connection; refusing offline qualification')
+    return prefix, isolation
+
+
 def wheel_metadata(path: Path) -> dict[str, Any]:
     if path.is_symlink() or not path.is_file() or not path.name.endswith('.whl'):
         raise ValueError(f'Not a regular wheel: {path.name}')
@@ -50,9 +191,9 @@ def wheel_metadata(path: Path) -> dict[str, Any]:
                 raise ValueError(f'Wheel must have exactly one METADATA and RECORD: {path.name}')
             metadata = BytesParser().parsebytes(archive.read(metadata_names[0]))
             license_files = metadata.get_all('License-File', [])
-            missing_licenses = [name for name in license_files if name not in names]
-            if missing_licenses:
-                raise ValueError(f'Wheel omits declared license files: {path.name}: {missing_licenses}')
+            resolved_license_files = resolve_license_files(archive, metadata_names[0], metadata)
+            requirements = metadata.get_all('Requires-Dist', [])
+            reject_direct_url_requirements(requirements, path.name)
     except (OSError, zipfile.BadZipFile) as error:
         raise ValueError(f'Invalid wheel {path.name}: {error}') from None
     name = metadata.get('Name')
@@ -68,7 +209,8 @@ def wheel_metadata(path: Path) -> dict[str, Any]:
         'licenseExpression': metadata.get('License-Expression'),
         'license': metadata.get('License'),
         'licenseFiles': license_files,
-        'requiresDist': metadata.get_all('Requires-Dist', []),
+        'licenseFilePaths': resolved_license_files,
+        'requiresDist': requirements,
     }
 
 
@@ -135,17 +277,21 @@ def capture_lock(template_path: Path, wheelhouse: Path, output_path: Path) -> di
         raise ValueError(f'Wheelhouse is missing declared distributions: {absent}')
     if output_path.exists():
         raise ValueError('Refusing to overwrite an existing lock')
-    supported_cells = template.get('supportedCells')
+    intended_cells = template.get('intendedCells', template.get('supportedCells'))
     optional_profiles = template.get('optionalProfiles', {})
-    if not isinstance(supported_cells, list) or not supported_cells:
-        raise ValueError('Lock template must declare supported platform/Python cells')
+    if not isinstance(intended_cells, list) or not intended_cells:
+        raise ValueError('Lock template must declare intended platform/Python qualification cells')
     if not isinstance(optional_profiles, dict):
         raise ValueError('Optional profiles must be an object')
+    cohort = template.get('cohort', 'default')
+    if not isinstance(cohort, str) or not cohort:
+        raise ValueError('Lock template cohort must be a non-empty string')
     locked = {
         'profile': PROFILE,
         'status': 'locked',
+        'cohort': cohort,
         'templateSha256': sha256(template_path),
-        'supportedCells': supported_cells,
+        'intendedCells': intended_cells,
         'optionalProfiles': optional_profiles,
         'packages': [
             {'distribution': name, 'version': expected[name]['version'], 'source': expected[name]['source']}
@@ -255,9 +401,10 @@ def build_mirror(lock_path: Path, wheelhouse: Path, output: Path) -> dict[str, A
     (output / 'requirements.lock').write_text('\n'.join(requirements) + '\n', encoding='utf-8')
     manifest = {
         'profile': 'local-wheel-mirror/2',
+        'cohort': lock.get('cohort', 'default'),
         'networkUsed': False,
         'lockSha256': sha256(lock_path),
-        'supportedCells': lock.get('supportedCells', []),
+        'intendedCells': lock.get('intendedCells', lock.get('supportedCells', [])),
         'optionalProfiles': lock.get('optionalProfiles', {}),
         'wheelCount': len(wheels),
         'distributions': distributions,

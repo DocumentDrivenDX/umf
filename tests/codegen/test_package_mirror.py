@@ -27,20 +27,32 @@ def _record_hash(data: bytes) -> str:
     return 'sha256=' + value
 
 
-def make_wheel(path: Path, name: str, version: str, requires: str | None = None) -> None:
+def make_wheel(
+    path: Path,
+    name: str,
+    version: str,
+    requires: str | None = None,
+    *,
+    metadata_version: str = '2.4',
+    license_file: str = 'LICENSE.txt',
+    archive_license_file: str | None = None,
+) -> None:
     canonical = name.replace('-', '_')
     dist_info = f'{canonical}-{version}.dist-info'
+    actual_license_file = archive_license_file or (
+        f'{dist_info}/licenses/{license_file}' if metadata_version >= '2.4' else license_file
+    )
     payloads = {
         f'{canonical}/__init__.py': f"VALUE = '{name}:{version}'\n".encode(),
         f'{dist_info}/METADATA': (
-            'Metadata-Version: 2.3\n'
+            f'Metadata-Version: {metadata_version}\n'
             f'Name: {name}\nVersion: {version}\nLicense: MIT\n'
-            f'License-File: {dist_info}/licenses/LICENSE.txt\n'
+            f'License-File: {license_file}\n'
             + (f'Requires-Dist: {requires}\n' if requires else '')
             + '\n'
         ).encode(),
         f'{dist_info}/WHEEL': b'Wheel-Version: 1.0\nGenerator: test\nRoot-Is-Purelib: true\nTag: py3-none-any\n\n',
-        f'{dist_info}/licenses/LICENSE.txt': b'MIT License\n',
+        actual_license_file: b'MIT License\n',
     }
     record = f'{dist_info}/RECORD'
     rows = [[filename, _record_hash(data), str(len(data))] for filename, data in payloads.items()]
@@ -71,18 +83,23 @@ def main() -> None:
         template.write_text(json.dumps({
             'profile': MIRROR.PROFILE,
             'status': 'template',
-            'supportedCells': [{'os': 'fixture', 'architecture': 'x86_64', 'libc': 'n/a', 'python': '3.11'}],
+            'intendedCells': [{'os': 'fixture', 'architecture': 'x86_64', 'libc': 'n/a', 'python': '3.11'}],
             'packages': [
                 {'distribution': 'demo-pkg', 'version': '1.2.3', 'source': {'kind': 'fixture', 'source': 'unit-test'}},
                 {'distribution': 'fixture-dep', 'version': '2.0', 'source': {'kind': 'fixture', 'source': 'unit-test'}},
             ],
             'optionalProfiles': {'optional-parser': {'includedInDefaultMirror': False, 'license': 'separate qualification'}},
         }), encoding='utf-8')
+        if MIRROR.runner_identity()['system'] == 'Darwin':
+            assert MIRROR.select_runner_cell([{
+                'os': 'macos-14', 'architecture': 'arm64', 'libc': 'not applicable', 'python': '3.11',
+            }], '3.11') is None, 'a local macOS release outside 14 must not satisfy the macos-14 cell'
         lock = root / 'wheel-lock.json'
         result = MIRROR.capture_lock(template, wheelhouse, lock)
         assert result['status'] == 'locked' and len(result['wheels']) == 2
         assert result['wheels'][0]['sha256'] and result['wheels'][0]['size'] > 0
-        assert result['wheels'][0]['licenseFiles'] == ['demo_pkg-1.2.3.dist-info/licenses/LICENSE.txt']
+        assert result['wheels'][0]['licenseFiles'] == ['LICENSE.txt']
+        assert result['wheels'][0]['licenseFilePaths'] == ['demo_pkg-1.2.3.dist-info/licenses/LICENSE.txt']
         assert result['packages'][0]['source']['kind'] == 'fixture'
 
         mismatched_provenance = json.loads(lock.read_text())
@@ -96,6 +113,27 @@ def main() -> None:
         else:
             raise AssertionError('package and wheel source provenance mismatch was accepted')
 
+        legacy_wheel = root / 'legacy_pkg-1.0-py3-none-any.whl'
+        make_wheel(legacy_wheel, 'legacy-pkg', '1.0', metadata_version='2.3')
+        assert MIRROR.wheel_metadata(legacy_wheel)['licenseFilePaths'] == ['LICENSE.txt']
+        for unsafe in ('../LICENSE.txt', '/LICENSE.txt', 'C:/LICENSE.txt', r'..\\LICENSE.txt'):
+            unsafe_wheel = root / ('unsafe-' + str(len(unsafe)) + '-py3-none-any.whl')
+            make_wheel(unsafe_wheel, 'unsafe', '1.0', license_file=unsafe)
+            try:
+                MIRROR.wheel_metadata(unsafe_wheel)
+            except ValueError as error:
+                assert 'Unsafe License-File path' in str(error)
+            else:
+                raise AssertionError(f'unsafe license path was accepted: {unsafe}')
+        direct_uri_wheel = root / 'direct_uri-1.0-py3-none-any.whl'
+        make_wheel(direct_uri_wheel, 'direct-uri', '1.0', 'demo-pkg@https://example.invalid/demo-pkg.whl')
+        try:
+            MIRROR.wheel_metadata(direct_uri_wheel)
+        except ValueError as error:
+            assert 'Direct-URL Requires-Dist' in str(error)
+        else:
+            raise AssertionError('direct-URL dependency was accepted')
+
         mirror_path = root / 'mirror'
         manifest = MIRROR.build_mirror(lock, wheelhouse, mirror_path)
         assert manifest['networkUsed'] is False and manifest['wheelCount'] == 2
@@ -108,14 +146,15 @@ def main() -> None:
         venv.EnvBuilder(with_pip=True).create(environment)
         python = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
         file_index = mirror_path.joinpath('simple').as_uri()
-        install = run([
+        network_prefix, isolation_name = MIRROR.network_isolation_prefix()
+        install = run(network_prefix + [
             str(python), '-I', '-m', 'pip', '--isolated', 'install',
             '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:',
             '--require-hashes', '--index-url', file_index,
             '-r', str(mirror_path / 'requirements.lock'),
         ])
         assert install.returncode == 0, install.stderr
-        observed = run([str(python), '-I', '-c', "import demo_pkg,fixture_dep; assert demo_pkg.VALUE=='demo-pkg:1.2.3' and fixture_dep.VALUE=='fixture-dep:2.0'"])
+        observed = run(network_prefix + [str(python), '-I', '-c', "import demo_pkg,fixture_dep; assert demo_pkg.VALUE=='demo-pkg:1.2.3' and fixture_dep.VALUE=='fixture-dep:2.0'"])
         assert observed.returncode == 0, observed.stderr
 
         missing = mirror_path / 'files' / dep.name
@@ -123,7 +162,7 @@ def main() -> None:
         missing_env = root / 'missing-venv'
         venv.EnvBuilder(with_pip=True).create(missing_env)
         missing_python = missing_env / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
-        missing_result = run([
+        missing_result = run(network_prefix + [
             str(missing_python), '-I', '-m', 'pip', '--isolated', 'install',
             '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:',
             '--require-hashes', '--index-url', file_index,
@@ -137,7 +176,7 @@ def main() -> None:
         tampered_env = root / 'tampered-venv'
         venv.EnvBuilder(with_pip=True).create(tampered_env)
         tampered_python = tampered_env / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
-        tampered_result = run([
+        tampered_result = run(network_prefix + [
             str(tampered_python), '-I', '-m', 'pip', '--isolated', 'install',
             '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:',
             '--require-hashes', '--index-url', file_index,

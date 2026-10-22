@@ -1,0 +1,34 @@
+{
+  "profile": "umf.embedder-wheel-lock/1",
+  "status": "template",
+  "cohort": "optional-admin-sql-containment",
+  "description": "Separate optional admin SQL containment parser cohort. Not included in the default runtime lock or mirror.",
+  "intendedCells": [
+    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.27", "python": "3.11"},
+    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.27", "python": "3.14"},
+    {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.11"},
+    {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.14"}
+  ],
+  "packages": [
+    {
+      "distribution": "pglast",
+      "version": "7.20",
+      "source": {
+        "kind": "pypi-wheel-with-sdist-license-source",
+        "releasePage": "https://pypi.org/project/pglast/7.20/",
+        "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+        "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+        "sdistSizeBytes": 3434321,
+        "pypiAttestation": "not provided for this release",
+        "licenseExpression": "GPL-3.0-or-later",
+        "licenseEvidence": {"path": "pglast-7.20/PKG-INFO", "sha256": "837968169d3a232e44bf6b3e26919413581dea52178483ba272fb418bf5d9697"},
+        "wheelLicenseFiles": [],
+        "licenseNotice": "The four selected wheels contain no standalone license files. Preserve the pinned sdist and its PKG-INFO license evidence with this optional distribution. The sdist also includes the bundled libpg_query notice.",
+        "sourceNoticeFiles": [
+          {"path": "pglast-7.20/libpg_query/LICENSE", "license": "BSD-3-Clause-style libpg_query redistribution notice", "sha256": "f9352c20940619a380a5e9f23cebe34d8f797cfbd747fc236a7a3e5fc8ef9b41"}
+        ]
+      }
+    }
+  ],
+  "optionalProfiles": {}
+}

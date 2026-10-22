@@ -5,11 +5,18 @@ from __future__ import annotations
 import argparse
 import hashlib
 import importlib.metadata
+import importlib.util
 import json
 import platform
 import sys
 import zipfile
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+SPEC = importlib.util.spec_from_file_location('python_package_mirror', ROOT / 'scripts/python-package-mirror.py')
+assert SPEC and SPEC.loader
+MIRROR = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MIRROR)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--wheelhouse', required=True, type=Path)
@@ -54,11 +61,11 @@ with zipfile.ZipFile(wheel) as archive:
         fields.setdefault(key.lower(), []).append(value.strip())
     if fields.get('name') != ['mini-racer'] or fields.get('version') != [pins['version']]:
         raise SystemExit('Wheel metadata differs from pinned name/version')
+    wheel_metadata = MIRROR.wheel_metadata(wheel)
     declared_licenses = fields.get('license-expression') or fields.get('license') or []
     files = archive.namelist()
     declared_license_files = fields.get('license-file', [])
-    if any(path not in files for path in declared_license_files):
-        raise SystemExit('Wheel is missing one or more declared license files')
+    resolved_license_files = wheel_metadata['licenseFilePaths']
     notices = [
         {'path': name, 'sha256': hashlib.sha256(archive.read(name)).hexdigest()}
         for name in files
@@ -68,10 +75,28 @@ if importlib.metadata.version('mini-racer') != pins['version']:
     raise SystemExit('Installed mini-racer version differs from pinned wheel')
 system = platform.system().lower()
 arch = platform.machine().lower()
+runner = MIRROR.runner_identity()
 if args.expected_os == 'ubuntu-24.04' and (system != 'linux' or arch not in ('x86_64', 'amd64')):
     raise SystemExit(f'Unexpected runner identity: {system}/{arch}')
 if args.expected_os == 'macos-14' and (system != 'darwin' or arch not in ('arm64', 'aarch64')):
     raise SystemExit(f'Unexpected runner identity: {system}/{arch}')
+if args.expected_os == 'ubuntu-24.04':
+    release = runner.get('distribution', {})
+    if release.get('ID') != 'ubuntu' or release.get('VERSION_ID') != '24.04':
+        raise SystemExit(f'Runner OS release differs from ubuntu-24.04: {release}')
+elif args.expected_os == 'macos-14':
+    actual_major = runner.get('macVersion', '').split('.', 1)[0]
+    if actual_major != '14':
+        raise SystemExit(f'Runner OS release differs from macos-14: {runner.get("macVersion")}')
+else:
+    raise SystemExit(f'Unsupported expected OS label: {args.expected_os}')
+if MIRROR.select_runner_cell([{
+    'os': args.expected_os,
+    'architecture': args.expected_arch,
+    'libc': 'glibc >= 2.27' if args.expected_os == 'ubuntu-24.04' else 'not applicable',
+    'python': args.expected_python,
+}], args.expected_python) is None:
+    raise SystemExit('Runner identity does not satisfy the exact platform/Python cell')
 if arch not in (args.expected_arch.lower(), {'x86_64': 'amd64', 'arm64': 'aarch64'}.get(args.expected_arch.lower(), '')):
     raise SystemExit(f'Unexpected architecture: {arch}')
 if platform.python_version_tuple()[:2] != tuple(args.expected_python.split('.')):
@@ -113,7 +138,8 @@ with zipfile.ZipFile(wheel) as archive:
 receipt = {
     'profile': 'umf-codegen-installed-matrix/1',
     'sourceCommit': args.source_commit,
-    'cell': {'os': args.expected_os, 'architecture': arch, 'libc': platform.libc_ver(), 'python': platform.python_version()},
+    'cell': {'os': args.expected_os, 'architecture': arch, 'libc': platform.libc_ver(),
+             'python': platform.python_version(), 'runnerIdentity': runner},
     'distribution': {
         'umf-codegen': importlib.metadata.version('umf-codegen'),
         'mini-racer': importlib.metadata.version('mini-racer'),
@@ -125,6 +151,7 @@ receipt = {
         'wheelTags': wheel_tags,
         'declaredLicense': declared_licenses,
         'declaredLicenseFiles': declared_license_files,
+        'resolvedLicenseFiles': resolved_license_files,
         'licenseAndNoticeFiles': notices,
         'upstream': {
             'publisher': pins['upstreamPublisher'],
