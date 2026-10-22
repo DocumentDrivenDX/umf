@@ -201,6 +201,55 @@ before shared runtime edits. Next action: complete EC-00/01, then execute indepe
 implementation slices. Add completed
 slice IDs, safe evidence paths and material blockers here at the next checkpoint.
 
+### Source and local qualification checkpoint
+
+The governing plan is committed at `40316ae54`. Parallel integration includes
+G01 compiler/schema and history fixes (`d03d2d053`, `fc169ae21`), the U5 host
+boundary (`f5cc72a40`), U6 containment (`905e52581`), U7/U8 tooling (`b9ee3430e`)
+and U4 authoring (`7409eacc8`). Candidate versions are SDK 0.5.5, access
+0.1.0.dev7 and codegen 0.1.0a4 (`086becf5c`); none is published.
+
+EC-01 admission precedes feature changes. The integrated Python graph checks 92
+modules with zero violations; focused migration/history/boundary regressions pass
+76 tests/442 assertions. G01's Chromium corpus passes 96 assertions; U4 extends
+browser parity to 98 and has eight local PostgreSQL domain/comment checks. Final
+installed-cohort qualification remains open. The old 0.5.4 oracle is retained
+separately. Review found and the compiler owner fixed historical 0.2 NULL-literal
+verification and selection of a command introduced only in next source.
+Independent fix review and native writer/recovery gates remain open.
+
+U6's five real-parser test families and boundary negative controls pass. Source
+review found no blocker within its inert subset; see the
+[API/refusal guide](guides/sql-containment.md). Native catalog and execution
+authority are separate. Its installed optional matrix still needs CI receipts.
+
+U7/U8 have four intended cells, not four final tested-cell claims. Twenty-four
+pinned dependency wheels were acquired. Review found release blockers in relative
+License-File handling, actual OS identity and network isolation/remote dependency
+closure. Fixes and the complete final candidate offline install remain in
+progress; the lock template is not an installation lock.
+
+Hohfeld 0.5.0 is verified as published at 2026-10-21T22:49:32Z. Downloaded wheel
+and sdist match published SHA-256 digests. Its installed reader passes 29 tests;
+its installed Truss adapter passes two native full-corpus acceptance tests on
+disposable PostgreSQL 18.6. The test/harness bytes match the released sdist. The
+independent same-document UMF/Weft/Hohfeld journey and explicit legacy controls
+remain open. This makes no full-core conformance claim.
+
+The available private cohort has ten table declarations plus its module and four
+SQL/snapshot pairs; all four snapshots also contain ten tables. The upstream
+eleven-table statement remains unreconciled. No private source is copied here.
+Authorized isolated managed-target information is pending; EC-09/10 acceptance is
+not claimed.
+
+U5's persistent approval relation exposes an integration gap: generated-reader
+inventory admits only its original fixed metadata. Before final qualification,
+select a closed successor installation-reference/metadata profile binding exact
+approval relation/ACL proof to verified source/history. Do not add an old-profile
+inventory exception or discard durable approvals. CLI receipt custody, this
+successor boundary, native atomic/recovery tests and independent review are the
+next U5/G01 gates.
+
 ## Risks and Rollbacks
 
 | Risk | Response and recovery |
