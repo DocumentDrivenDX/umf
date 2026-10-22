@@ -5,9 +5,9 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 590,
+  "total": 594,
   "counts": {
-    "SATISFIED": 78,
+    "SATISFIED": 82,
     "UNTESTED": 288,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
@@ -5158,6 +5158,42 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/dashboard/profile.test.ts:74"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-078-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:13"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-078-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:30"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-078-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:52"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-078-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:77"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     }

@@ -106,6 +106,17 @@ forward slashes (diff now only shows the real additions). Consequences:
   and `list_workbook_structure.py` (+ `read_hyper_schema.py`); docs in `lakeview-intake.md`, `tableau-intake.md`.
 - More real Lakeview dashboards: `C:\Users\garyf\synaptiqrepos\Synaptiq-dbx-dashboard-monitoring\dashboards\`
 
+## Progress 2026-10-21: Lakeview importer (step 3), uncommitted
+
+`umf.lakeview` 0.1.0 + `importLakeviewDashboard` / `exportLakeviewDashboard` /
+`inspectLakeview` / `getLakeviewNative` in `src/adapters/lakeview/` (`index.ts` retention,
+`project.ts` neutral projection + loss report). Docs FEAT-027, US-078, CONTRACT-056,
+TD-078; tests `tests/lakeview/interchange.test.ts` (US-078-AC1..4 SATISFIED); fixture
+`fixtures/lakeview/marketing-campaign.lvdash.json` (copy of the source above).
+All 4 local Synaptiq monitoring dashboards + marketing export token-exactly and
+project validly (256/305 items neutral); those 4 are NOT committed (private).
+Profile gaps found: no field-less `COUNT(*)`, no per-visual query filters (only reported).
+
 ## Suggested next steps
 
 1. Rerun the full suite; commit the branch (repo is HELIX-governed — see `AGENTS.md`).

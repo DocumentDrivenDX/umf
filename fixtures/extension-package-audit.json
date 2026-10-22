@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 62,
-  "passed": 62,
+  "packages": 63,
+  "passed": 63,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -335,6 +335,19 @@
         "subset": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; qualified JSON-LD-to-RDF proposals with explicitly recorded strict/binary64 numeric policies with explicit quantization and finite-overflow blocks; optional generalized dataset projection through umf.generalized-rdf; malformed terms omitted with explicit loss events; compound-literal direction conversion with graph/list round-trip evidence; no network"
       },
       "evidenceCount": 30,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/lakeview/package.json",
+      "id": "umf.lakeview",
+      "version": "0.1.0",
+      "native": {
+        "system": "Databricks AI/BI (Lakeview) dashboard",
+        "version": "observed .lvdash.json, widget spec versions 1-3",
+        "subset": "Exact retention and export of exported dashboard files; neutral projection of counter, bar, line, area, scatter, pie, heatmap, table, text and filter widgets; no Databricks workspace oracle"
+      },
+      "evidenceCount": 2,
       "passed": true,
       "failures": []
     },
