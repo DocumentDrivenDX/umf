@@ -51,23 +51,21 @@ implementation-plan evidence remains scoped to the artifacts it actually tested.
 
 ### R2 current status
 
-R2 production implementation is checkpointed at `a1eb5d627`, with an installed
-harness fix at `c13120f95`. The subsequent resolver source closure passes 214
-workspace tests, 67 compiler tests / 478 assertions, canonical generation and
-fixed-point checks, 139 real Chromium core cases, lint/type checks and migration
-boundaries. Independent Sol source review has no remaining blocking findings;
-committed installed-artifact qualification and overall review remain open.
+R2 implementation and local installed-artifact qualification are complete at
+`7c2842dd68e66c06c5e4b22e8857e465b8efd561`. The clean source closure passes the
+full production gate: both original and offline sdist-rebuilt Python wheels,
+packed Node/Bun, empty-PATH Rust CLI, and actual Chromium default/feature WASM.
+All comparisons report zero mismatches. Native workspace: 214 tests; compiler:
+67 tests / 478 assertions and eleven-output fixed-point/no-write controls.
 
-The first installed cohort (`c13120f95`) passed Node/Bun/CLI/default WASM, 198
-Python public tests and the core/admission/arithmetic controls, but exposed ten
-Draft 2019-09 recursive-reference mismatches. The source correction now passes
-89 scope, 114 identity, 24 named-anchor and 24 URI/dialect cases, plus 140 direct
-native URI operations. The installed gate includes 7,671 schema method
-observations and 263 separately counted error metadata/path records. These source
-results do not replace final installed qualification. R2 is complete only after
-the full gate, overall independent review and PR merge. Earlier checkpoints below
-remain historical. Main is integrated through
-`53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41); refresh before merging.
+The [final integration record](evidence/rust-migration/r2/integration.md) gives
+exact source/artifact hashes, host versions, support subsets, sizes, benchmark and
+review evidence. The [final independent Sol review](evidence/rust-migration/r2/sol-r2-final-review.json)
+approves implementation and local qualification with no open findings. PR CI and
+merge are the final delivery gate; the repository merge record identifies landing. Earlier checkpoint notes
+below describe states at capture and do not override final qualification.
+Main is integrated through `53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41);
+refresh and incorporate later main work before merging. R3 is next after delivery.
 
 The production boundary is a shared Rust core and metamodel compiler, a native
 CLI, Python abi3 extension, Node/Bun native addon and browser WASM loader. Python
@@ -421,29 +419,25 @@ active goal's available metering at implementation checkpoints and retain honest
 limits on agent-wide accounting. Estimate remaining work from actual port/test
 results; no calendar, performance or monetary promise is made.
 
-Current state: main synchronized through `53de049136c7e41b482d1a73665d031cd5fbaec6`
-(PR41), with a fresh fetch confirming no later main changes. The production
-freeze is complete. Luna implementation and Sol independent review remain active. The owned UTF-16 value,
-closed private wire, explicit immutable resources and host callback tokens are
-frozen. Cooperative limits are the supported profile; HardIsolated must fail
-before work. Production core/compound compiler closures have no R1 entropy
-exception. The native compiler owns nine portable outputs; the Bun assembler
-adds the explicit Ajv standalone backend and final manifest (eleven total).
-The synchronous TypeScript build APIs now delegate to native Rust rather than
-retain executable compiler logic. Full semantic and installed parity is pending.
+The production freeze and implementation are complete. Rust owns nine portable
+compiler outputs; the Bun assembler adds the pinned Ajv standalone backend and
+final manifest, eleven total. The synchronous TypeScript build APIs delegate to
+native Rust. Cooperative limits, closed private wire, explicit immutable resources
+and trusted host callback tokens are qualified; HardIsolated refuses before work.
+Production core/compiler closures have no R1 entropy exception.
 
-Initial integration checks: TypeScript typechecks and authored-authority checks
-pass; nine boundary negative controls and four inventory controls pass; four JS
-host-admission tests pass. The separate R2 live inventory and boundary capture
-preserve the immutable R0/R1 cohorts. See
-[R2 integration evidence](evidence/rust-migration/r2/integration.md) for exact
-commands, intentional debt-pin/lock adaptation and outstanding qualification.
-Next: finish compiler/schema/serialization, full literals/program/registry and
-installed native/Python/Node/Bun/Chromium paths; run the full frozen and mutation
-corpus, resolve Sol review findings, refresh evidence and main, then PR/merge.
-R2 completion requires all work represented by its row above; unresolved support
-subsets are gaps, not permission to call a smaller port complete.
+The [production-host receipt](evidence/rust-migration/r2/production-host-qualification.json)
+binds 439 files to the clean `7c2842dd6` source and records every installed host
+and both wheel paths. Its archive audit covers 443 members and a verified offline
+rebuild without JavaScript. Independent native/predecessor and mutation controls,
+source-bound compilation, actual browser probes and boundary checks supply the
+remaining R2 evidence. Final independent Sol review approves that implementation
+and local qualification. PR CI/merge govern delivery; no publication or later
+family cutover is implied.
 
+The following dated checkpoints retain implementation history. Current source,
+qualification and support claims are defined by the status above and the final
+integration record.
 
 ### R2 review checkpoint — 2026-10-21
 

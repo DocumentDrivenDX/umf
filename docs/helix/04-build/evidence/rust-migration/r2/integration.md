@@ -1,6 +1,6 @@
 # R2 integration record
 
-This is the current integration status for R2, not its completion receipt. The
+R2 implementation and local installed-artifact qualification are complete. The
 [production contract](../../../../02-design/contracts/CONTRACT-080-authoritative-metamodel.md),
 [technical design](../../../../02-design/technical-designs/TD-091-authoritative-metamodel.md),
 [test plan](../../../../03-test/test-plans/STP-091-authoritative-metamodel.md),
@@ -59,10 +59,10 @@ are not claims of complete standards or host-API support.
   typed-path error records. Annotation mechanism and order companions distinguish
   native dialect-specific collector order, early returns, mark-only traversal
   and required validity predicates. The fixed-order visitor passed independent
-  source review and actual WASM controls. The resource-scope, identity, named-anchor and URI/dialect companions add
-  255, 342, 72 and 72 methods, plus 140 direct native URI-join controls. Their source tests pass; independent source review and the full
-  installed gate remain pending. These are
-  gate inputs, not completed artifact results.
+  source review and actual WASM controls. The resource-scope, identity, named-anchor
+  and URI/dialect companions add 255, 342, 72 and 72 methods, plus 140 direct
+  native URI-join controls. Both installed wheel cohorts pass the public
+  comparisons; internal URI controls pass in the native workspace.
 - Python regex is a separate CPython profile from ECMAScript matching. The
   reviewed controls cover 70,542 outcomes across CPython 3.11.17, 3.12.15 and
   3.13.16, including grammar, Unicode, surrogate, search and invalid-pattern
@@ -104,100 +104,90 @@ YAML scanner profile, Python regex versions, and source-aware diagnostic
 projection—are documented in their linked decisions and CONTRACT-080. Frozen
 predecessor receipts are not regenerated to match the candidate.
 
-## Evidence state and remaining gate
+## Final local qualification
 
-The first installed run from `c13120f95` passes the packed Node/Bun and empty-PATH
-CLI 139-case controls, default production WASM, 198 Python public tests, 139 Python
-core vectors, 9,282 schema admission decisions and 2,586 arithmetic controls. It
-stops on ten Draft 2019-09 recursive-reference outcome mismatches. No final
-production-host receipt exists. Source-local fragments must respect nested
-resource IDs, and recursive lookup must preserve reference-resolution history
-and nonanchored barriers. The focused native-controlled correction now passes
-89 scope cases, 114 identity cases, 24 named-anchor cases and 24 URI/dialect
-cases at source level;
-independent review and committed-artifact qualification remain open.
+The [production-host receipt](production-host-qualification.json) passes from
+clean commit `7c2842dd68e66c06c5e4b22e8857e465b8efd561`. Its 439 source-file hashes form
+closure `81ee3b24a1aac55ca87d572ce5cd7f36b74ce2843550b52049cdacca9757c6a1`; the closure is identical
+before and after the run. The [raw integrated log](production-host-qualification.log)
+and individual reports retain commands, versions, counts and observations.
 
-This worktree includes scoped native, fixed-point, mutation, installed-binding,
-and browser checkpoints from successive implementation snapshots. Their
-commands, hashes, and host cohorts remain in the individual evidence records;
-any checkpoint predating the final source snapshot is historical. In particular,
-the earlier compiler parity run, initial browser run, retained-core suite, and
-abi3 loader repair are not substitutes for a source-bound final receipt. The
-loader issue had the same symptom as [Rust issue 157750](https://github.com/rust-lang/rust/issues/157750);
-the verified local correction used an unstripped release build, and must still
-be identified by the final installed-artifact record.
+| Installed cohort | Qualified observations |
+| --- | --- |
+| CPython 3.11.17 / Pydantic 2.14.1 / pytest 9.1.1, original wheel | 198 public tests, 139 core cases, 9,282 schema admissions, 4,995 official cases, 2,586 arithmetic controls, 7,671 ordered methods, 263 metadata/path records, six runtime-phase observations, 1,742 serializer observations; zero mismatches |
+| Same Python cohort, wheel rebuilt offline from sdist | The same complete tests and comparisons; outside checkout, empty runtime PATH |
+| Node 26.12.1 / Bun 1.4.3, npm-packed addon | 139 core cases each, ordered diagnostics and host controls |
+| Native Rust CLI | 139 cases with PATH empty |
+| Chromium 153.0.8010.12, default shipped WASM | 139 core cases, source/copy/depth and host controls; zero external requests |
+| Same Chromium, conformance-feature WASM | 139 core cases, 70,542 regex outcomes, 15 outcome-parser controls, wide-work and ordinary/annotated depth probes; zero external requests |
 
-The reviewed resolver source now passes 214 workspace tests, all retained 2 MiB
-stack controls, 67 compiler tests / 478 assertions, canonical generation and
-non-writing/fixed-point checks, 139 Chromium core cases, lint/type checks and
-migration boundaries. The independent source review is conditional on fresh
-committed artifacts.
+The native workspace passes 214 tests across 45 suites, including unchanged
+2 MiB stack controls and semantic depth 128/129. The compiler passes 67 tests /
+478 assertions, eleven-output generation, fixed-point and non-writing controls.
+A separate real-Chromium metamodel run passes 139 cases. Lint/type checks,
+authority and migration boundaries pass, including 15 inventory/boundary tests.
+The [precommit record](precommit-checks.json),
+[resource implementation](sol-python-resource-implementation.json), and
+[source review](sol-r2-resource-source-closure.json) bind those source checks.
 
-R2 remains open. Final committed-source qualification must exercise the full host
-corpora, an offline wheel rebuilt from the sdist, packaged Node/Bun addons, CLI,
-and production browser WASM in their installed environments. It must bind the
-receipts to exact source, lockfile, build inputs, artifacts and host versions;
-check the source archive excludes generated binaries and undeclared caches; and
-record any remaining disagreements without relaxing frozen controls. Independent
-Sol review and approval are pending after that coherent source-bound run. No PR
-merge or release is claimed here.
+The sdist audit passes all 443 members, with required sources present and no
+forbidden binaries or build directories. Its wheel rebuild runs offline with
+JavaScript absent from PATH. Exact local artifact sizes follow; hashes and
+separate default/feature WASM loader sizes are in the production-host receipt.
 
+| Artifact | Bytes |
+| --- | ---: |
+| Rust CLI | 4,982,464 |
+| Node/Bun addon | 4,459,600 |
+| npm package | 1,710,143 |
+| Default browser WASM | 3,642,217 |
+| Python wheel | 1,968,645 |
+| Python source archive | 2,222,170 |
+| Wheel rebuilt from archive | 1,969,269 |
 
-The clean `2c8781dbe` installed run resolves all ten former official-suite
-mismatches: 4,995 official cases, 9,282 admission decisions and 2,586 arithmetic
-controls pass. It also passes 198 Python public tests, the 139-vector installed
-Python/Node/Bun/CLI/default-WASM controls and feature-WASM regex/depth/work probes.
-It stops before ordered candidate comparisons on a harness receipt-field error: the
-path-segments profile counts 42 `errorRecords`, while its helper requested
-`methods`. The narrow harness repair selects the actual field; immutable receipt
-hashes, counts and outcomes remain unchanged. This failed run is not the final
-production-host receipt.
+The [native benchmark](native-admission-validation-benchmark.json) measures a
+500-call complete-validation batch at 34.429 calls/s and admission copying at
+40,409.484 calls/s. Each validation executes 2,703 constraint steps and 7,924,651
+admitted work units. Fresh-process wall time including parsing and Engine setup
+is 154.972 ms with 10,223,616 bytes peak RSS; batch peak RSS is 10,485,760 bytes.
+Its clean source checkpoint `2c8781dbe` has identical runtime, resource and
+benchmark inputs to the final qualification. These are local macOS arm64
+measurements without speedup, cache-cold, cross-host or hard-memory claims.
 
-The [native benchmark](native-admission-validation-benchmark.json), bound to the
-clean `2c8781dbe` source and exact resources, measures 500 representative complete
-validations at 34.429 calls/s and admission copying at 40,409.484 calls/s. Each
-validation executes 2,703 constraint steps and 7,924,651 admitted work units. A
-fresh process, including setup, completes one validation in 154.972 ms with
-10,223,616 bytes peak RSS; the batch process peaks at 10,485,760 bytes. These are
-local macOS arm64 measurements, not a speedup comparison, cache-cold claim or
-hard memory guarantee. Runtime setup is outside per-call timers.
+The [retained codegen refresh](retained-codegen-provenance-refresh.json) proves
+its decompressed JavaScript changes only five occurrences of the named compiler
+provenance SHA. Packaging, gzip, Python wrapper and boundary controls pass; all
+seven MiniRacer operations remain R3/R4 debt.
 
-The retained codegen assets are refreshed after canonical compiler provenance
-changes. Their decompressed JavaScript is byte-identical after replacing only
-the named compiler SHA, as proved by the
-[refresh receipt](retained-codegen-provenance-refresh.json). Packaging, gzip,
-Python wrapper and boundary controls pass. All seven MiniRacer operations remain
-R3/R4 debt.
+## Review and delivery
 
+The [final independent Sol review](sol-r2-final-review.json) approves R2
+implementation and local source-bound qualification with no open findings. It
+reconciles the source, comparator, serializer and installed-artifact evidence.
+PR CI and merge provide the final delivery gate; their repository state records
+landing separately from local qualification.
+CI retains source-bound receipts for each Ubuntu/macOS and Python 3.11.17,
+3.12.15 and 3.13.16 matrix job. Local installed qualification above covers
+CPython 3.11.17; cross-version native predecessor receipts are separate evidence
+and do not substitute for those CI jobs. No package publication is claimed.
 
-The `d3d7b83f5` retry again passes the runtime phases but stops at the new URI
-profile guard before ordered candidate comparisons: the admission profile belongs
-to the immutable fixture, while its profile receipt records per-version equality
-flags. The corrected guard checks those actual owners with exact hashes.
-A separately preserved offline installed wheel environment then executes the
-entire comparator. Its path projection compares native and frozen representations
-in lossless typed Key/Index form, and six runtime-phase observations retain exact
-messages. The [complete comparator result](installed-schema-comparator.json)
-passes 2,879 cases, 7,671 methods, 263 metadata records and six runtime observations
-with zero mismatches. No production Rust or expected outcome changed. Independent
-Sol reviewed the repair and its preservation/negative controls; the final clean
-committed full-host gate remains required. CI now preserves each platform/Python
-qualification receipt as a separately named artifact.
+## Historical failures and lessons
 
+The `c13120f95` run exposed ten recursive-reference mismatches, repaired against
+immutable native scope, codepoint-identity, anchor and URI/dialect companions.
+Later [2c8781dbe](installed-2c8781dbe-failed.log),
+[d3d7b83f5](installed-d3d7b83f5-failed.log), and
+[453923263](installed-453923263-failed.log) runs stopped on harness receipt-field,
+typed-path/message projection and None-tag mismatches. Comparison repairs preserve
+all native expectations; they introduce no additional semantic correction.
+The [complete ordered comparator](installed-schema-comparator.json) and
+[serializer/archive rebuild](installed-serialization-archive-rebuild.json) were
+executed in retained installed environments before the final integrated run.
+All 16 directive-tail cases are included within the 74 shared directive-profile
+observations; the separate tail category counter does not represent omitted work.
 
-The `453923263` integrated run reaches serialization after every preceding host
-and schema gate passes. Its 14 null-tag mismatches come from the two frozen
-spellings of Python None, not production behavior. The reviewed comparison helper
-canonicalizes only exact `{kind: NoneType, value: null}` and `{kind: null}` tags,
-recursively preserving list/map structure, order and all other tags. Malformed
-aliases refuse. No fixture, NEL correction or Rust implementation changes.
-
-The [standalone archive/rebuild receipt](installed-serialization-archive-rebuild.json)
-qualifies 1,742/1,742 serializer observations on both original and rebuilt wheels,
-a 443-member source archive with required sources and no forbidden artifacts, and
-an offline wheel rebuild with JavaScript absent from PATH. The rebuilt wheel
-also passes 198 public tests, 139 core vectors, 9,282 admission decisions, 4,995
-official cases, 2,586 arithmetic controls, 7,671 ordered method observations and
-263 metadata records. These standalone results precede the final clean integrated
-receipt. The shared directive-profile category includes all 16 tail observations
-within its 74 entries; none are omitted by the zero separate-tail counter.
+Keep resource identities in native codepoints through lookup, separate display
+projection from identity, meter owned work before allocation, and repeat the
+unchanged stack controls after evaluator-state changes. For later slices, run
+every installed comparator end to end before the all-host gate and verify
+lossless comparison representations and receipt-field ownership independently.
