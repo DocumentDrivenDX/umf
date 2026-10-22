@@ -299,6 +299,36 @@ upstream fixtures and that handoff only; EC-10 is external follow-up. Earlier
 checkpoints describing consumer acceptance as a release gate are superseded by
 this explicit scope decision. MIG-G09 stays open in the candidate inventory.
 
+Final U9 scope review qualifies the released Hohfeld 0.5.0 exact facet-free
+current-core document journey and actual release date, satisfying EC-08's
+selected subset. Additional Field refusal fixes pass source review and the
+upstream default suite but are unreleased follow-up changes; they are not
+advertised as part of Hohfeld 0.5.0. Earlier checkpoints requiring their release
+overexpanded U9 and are superseded. No broader facet closure is inferred from
+projected metadata: the provider receives original source and owns native
+constraint semantics. Preserve that distinction in the release inventory.
+
+Draft UMF PR 44 runs hosted qualification. U5 fixes are source-reviewed and its
+installed native tamper/lost-publication harness passes. G01's unchanged-default
+refusal was fixed by sharing the existing typed column renderer between
+deployment and successor migration compilation, retaining historical paths.
+The scoped installed v2 cohort at source `435ed5844` has source/wheel/installed
+equality for 88 access and 18 codegen files and 1,657 installed RECORD hashes;
+its thirteen-case native fixture is undergoing independent replay. These package
+bytes are frozen independently of later tooling-only inventory updates.
+
+Independent design/native review now accepts that exact v2 cohort: thirteen
+installed G01 scenarios, nine supplemental checks including actual lock timeout
+SQLSTATE 55P03 before any fill, and the installed host replay/tamper/lost-response
+journey. The [preserved review packet](evidence/schema-migration-design-review/g01-review.json)
+records hashes, original probes, fixture archive, native reports and cleanup.
+G01 is closed only for its standalone single-Field maintenance subset; G02–G11
+remain open as individually enumerated. Browser parity passes 103 assertions,
+including unchanged future defaults and the original 0.2 fixture. A fresh SDK
+archive installs and passes 139 conformance cases. Remaining release gates are
+final tooling source review, actual platform/offline cohort receipts, final
+source/asset correspondence and immutable merge/release/post-download checks.
+
 | Risk | Response and recovery |
 | --- | --- |
 | Fill and tighten separated by a commit | Compiler emits one typed paired phase; host rejects split phases. Uncommitted pair rolls back; after commit retain data/constraint and fencing until exact resume or approved forward repair. |

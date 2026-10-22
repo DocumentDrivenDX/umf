@@ -376,7 +376,7 @@ def _run_approval_tamper_matrix(connection, host, plan, file_digest,
         outcome = _apply_before_first_phase(
             selected_host, selected_plan, selected_head, selected_file,
             qualification_profile, evidence_digest, selected_approval)
-        if outcome == "accepted-before-progress":
+        if outcome in {"accepted-before-progress", "unexpected-completion"}:
             raise RuntimeError("tamper-accepted:" + label)
         if _native_snapshot(connection, schema) != before:
             raise RuntimeError("tamper-mutated-native-state:" + label)

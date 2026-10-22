@@ -99,11 +99,13 @@ jobs:
           --wheel /tmp/umf-p1-wheels/*.whl
           --report /tmp/umf-p1-compatibility.json
       - name: Check installed session scheduling and lease fault handling
-        run: |
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_outcomes.py' -v
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_native_binding.py' -v
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
+      - name: Check installed table read values
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
+      - name: Check installed table outcomes
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_table_outcomes.py' -v
+      - name: Check installed native binding
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_native_binding.py' -v
       - name: Check portable sync and async clients
         run: >-
           bun test tests/access-native-table.test.ts tests/access-native-domains.test.ts tests/access-unified.test.ts tests/access-unified-sync.test.ts

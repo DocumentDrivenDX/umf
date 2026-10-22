@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit",
+  "checks": [
+    "default-preserving-plan-is-one-atomic-pair",
+    "held-direct-writer-refuses-before-any-fill-dispatch",
+    "held-writer-completed-without-error",
+    "exact-retry-after-lock-refusal-commits-one-fill",
+    "historical-fill-is-explicit-and-preserves-present-values",
+    "future-default-native-expression-is-unchanged",
+    "omitted-value-uses-preserved-future-default",
+    "explicit-null-still-refuses-despite-future-default",
+    "applied-replay-does-not-dispatch-fill-again"
+  ],
+  "heldWriterFailure": "CatalogError:catalog-verification-failed",
+  "nativeLockSqlstates": [
+    "55P03"
+  ],
+  "nativeLockStatements": [
+    "LOCK TABLE \"rv_g01_69384c8c42\".\"notes\" IN ACCESS EXCLUSIVE MODE"
+  ]
+}

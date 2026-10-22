@@ -75,14 +75,18 @@ history does not restore deleted values or reverse a completed data mutation.
 
 ## Known Issues and Support
 
-G01 remains open pending independent installed native signoff. Its selected
+G01 has [independent installed design/native signoff](../04-build/evidence/schema-migration-design-review/g01-review.json).
+Its selected
 subset is one existing optional Field becoming required, unchanged identity,
 type, facets and future default, a standalone locked pair, and a finite literal
 or qualified transaction-clock assignment to NULL cells. Maintenance execution
-does not imply online reconciliation or arbitrary transforms. Exact date/clock,
-failure reachability, writer, rollback and resume evidence must qualify the final
-claim. U5 historical replay and command-only publication review findings are
-still being resolved.
+does not imply online reconciliation or arbitrary transforms. Thirteen native
+scenarios and nine supplemental checks qualify date/clock, actual native failure
+causes, writer locking, rollback, future defaults and resume for the recorded
+Py3.11.17/PostgreSQL 18.6/Weft 0.4.49/Psycopg 3.2.13 cohort. U5 historical replay
+and command-only publication findings are fixed and
+source-reviewed; installed tamper and lost-publication-response checks pass.
+Hosted qualification and final publication remain open.
 
 | Residual | Candidate limit and next action |
 | --- | --- |
@@ -97,11 +101,15 @@ still being resolved.
 | MIG-G10 | Mixed 0.2/0.3 table-inventory changes and initial deployment remain outside the existing-table profiles; use the separately qualified 0.1 bootstrap/add-table route. The successor does not close this gap. |
 | MIG-G11 | Combined column drop/append in one existing-table migration remains explicitly refused, including equal-count replacement. |
 
-Hohfeld 0.5.0 has an exact facet-free same-document integration receipt. Review
-found that its reader can silently ignore Field restrictions/extensions; U9 stays
-open pending a bounded reader refusal fix and renewed installed evidence. No
-general core or graph migration conformance is claimed. Actual private consumer
-replacement and managed acceptance are not yet established.
+Hohfeld 0.5.0, published 2026-10-21, has an exact facet-free same-document
+integration receipt against core 0.10.0, Weft 0.4.49 and Truss 0.0.45. That
+bounded current-core journey satisfies the selected U9 scope; it does not claim
+general core, facet or graph-migration conformance. Additional reader refusal
+corrections are reviewed upstream follow-up changes, remain unreleased and are
+excluded from this distribution's claims. Provider-owned original-source
+semantics require native evidence; omission from reader metadata alone does not
+prove end-to-end loss. Actual private consumer replacement and managed
+acceptance remain externally owned and unverified.
 
 ## References
 
