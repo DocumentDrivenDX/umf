@@ -4,6 +4,8 @@
       ".git/**",
       "node_modules/**",
       "target/**",
+      "**/{.venv,.virtualenv,.virtualenvs,.tox,.nox,site-packages,dist-packages,__pycache__}/**",
+      "Python environments identified by an ancestor pyvenv.cfg (any directory name)",
       "bindings/core/wasm/pkg/** (generated host artifact; captured by package harness)",
       "docs/helix/04-build/evidence/rust-migration/r0/**"
     ],
@@ -167,16 +169,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "eacd94309562a21f3e19dd6b2f31cfcc1433d1b3eb79dfb80431210a0dae3870",
+    "sourceCohortSha256": "858e12f9e4e7be6567b1340cf62d64d946c26c87c80dd35f85a2ae0b75fdc23b",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 301,
-    "algorithmSymbols": 9757,
+    "algorithmSymbols": 9812,
     "pythonModules": 98,
     "rustBuildInputs": 73,
     "rustModules": 80,
-    "scriptFiles": 2887,
+    "scriptFiles": 2886,
     "sourceModules": 569,
     "typescriptModules": 471
   },
@@ -5342,6 +5344,46 @@
           "kind": "runtime",
           "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
           "package": "pydantic",
+          "project": "python/pyproject.toml",
+          "projectName": "umf-core",
+          "requirement": "pydantic>=2.11,<3",
+          "resolution": "unlocked"
+        },
+        {
+          "group": "dependency-groups.dev",
+          "kind": "development",
+          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
+          "package": "pytest",
+          "project": "python/pyproject.toml",
+          "projectName": "umf-core",
+          "requirement": "pytest>=8.4,<10",
+          "resolution": "unlocked"
+        },
+        {
+          "group": "dependency-groups.dev",
+          "kind": "development",
+          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
+          "package": "ruff",
+          "project": "python/pyproject.toml",
+          "projectName": "umf-core",
+          "requirement": "ruff>=0.13",
+          "resolution": "unlocked"
+        },
+        {
+          "group": "build-system.requires",
+          "kind": "build-requirement",
+          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
+          "package": "hatchling",
+          "project": "python/pyproject.toml",
+          "projectName": "umf-core",
+          "requirement": "hatchling>=1.27,<2",
+          "resolution": "unlocked"
+        },
+        {
+          "group": "project.dependencies",
+          "kind": "runtime",
+          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
+          "package": "pydantic",
           "project": "python/umf_access/pyproject.toml",
           "projectName": "umf_access",
           "requirement": "pydantic>=2.13,<3",
@@ -5386,50 +5428,15 @@
           "projectName": "umf-codegen",
           "requirement": "hatchling==1.27.0",
           "resolution": "unlocked"
-        },
-        {
-          "group": "project.dependencies",
-          "kind": "runtime",
-          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
-          "package": "pydantic",
-          "project": "python/pyproject.toml",
-          "projectName": "umf-core",
-          "requirement": "pydantic>=2.11,<3",
-          "resolution": "unlocked"
-        },
-        {
-          "group": "dependency-groups.dev",
-          "kind": "development",
-          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
-          "package": "pytest",
-          "project": "python/pyproject.toml",
-          "projectName": "umf-core",
-          "requirement": "pytest>=8.4,<10",
-          "resolution": "unlocked"
-        },
-        {
-          "group": "dependency-groups.dev",
-          "kind": "development",
-          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
-          "package": "ruff",
-          "project": "python/pyproject.toml",
-          "projectName": "umf-core",
-          "requirement": "ruff>=0.13",
-          "resolution": "unlocked"
-        },
-        {
-          "group": "build-system.requires",
-          "kind": "build-requirement",
-          "migrationDisposition": "declared requirement; selected versions are separately recorded in the target-specific uv resolution snapshot",
-          "package": "hatchling",
-          "project": "python/pyproject.toml",
-          "projectName": "umf-core",
-          "requirement": "hatchling>=1.27,<2",
-          "resolution": "unlocked"
         }
       ],
       "lockfile": null,
       "projects": [
+        {
+          "path": "python/pyproject.toml",
+          "sha256": "7b138b0e9c1f71faa3346ae6f2493ab7eb4429517d26caa534eb7d5bb757da72",
+          "text": "[build-system]\nrequires = [\"hatchling>=1.27,<2\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nlicense = \"MIT OR Apache-2.0\"\nlicense-files = [\"LICENSE.md\", \"LICENSE-MIT\", \"LICENSE-APACHE\"]\nname = \"umf-core\"\nversion = \"0.10.0\"\ndescription = \"Official Python document models and extension machinery for UMF\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\ndependencies = [\"pydantic>=2.11,<3\"]\n\n[project.urls]\nRepository = \"https://github.com/DocumentDrivenDX/umf\"\n\n[tool.hatch.build.targets.wheel]\npackages = [\"src/umf\"]\n\n[tool.hatch.build.targets.sdist.force-include]\n\"../spec/core/schema.json\" = \"spec/core/schema.json\"\n\"../spec/core/semantic-type-reference.schema.json\" = \"spec/core/semantic-type-reference.schema.json\"\n\"../spec/core/extension-package.schema.json\" = \"spec/core/extension-package.schema.json\"\n\"../spec/metamodel/generated\" = \"spec/metamodel/generated\"\n\"../spec/extensions/domain-pack\" = \"spec/extensions/domain-pack\"\n\"../spec/extensions/dataset-source\" = \"spec/extensions/dataset-source\"\n\"../fixtures/metamodel/current-conformance.json\" = \"fixtures/metamodel/current-conformance.json\"\n\n[dependency-groups]\ndev = [\"pytest>=8.4,<10\", \"ruff>=0.13\"]\n\n[tool.hatch.build.hooks.custom]\n\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]\n"
+        },
         {
           "path": "python/umf_access/pyproject.toml",
           "sha256": "51607f442f4ee2785904396ce51450322d2b95f57445eaf82a6464f774fdcfcd",
@@ -5439,11 +5446,6 @@
           "path": "python/umf_codegen/pyproject.toml",
           "sha256": "ee3fe91f0c26558fdf9d85191e521044d4bc11f8d08176c81b037d28790f8012",
           "text": "[build-system]\nrequires = [\"hatchling==1.27.0\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nname = \"umf-codegen\"\nversion = \"0.1.0a3\"\ndescription = \"Pinned UMF typed Python client generation with an embedded portable generator\"\nrequires-python = \">=3.11,<3.15\"\nlicense = \"MIT OR Apache-2.0\"\nlicense-files = [\"LICENSE.md\", \"LICENSE-MIT\", \"LICENSE-APACHE\"]\ndependencies = [\"mini-racer==0.14.1\"]\nreadme = \"README.md\"\n\n[project.scripts]\numf-codegen = \"umf_codegen.__main__:main\"\n\n[tool.hatch.build.targets.wheel]\npackages = [\"src/umf_codegen\"]\n\n[tool.hatch.build.targets.sdist]\ninclude = [\"/src\", \"/pyproject.toml\", \"/README.md\", \"/LICENSE.md\", \"/LICENSE-MIT\", \"/LICENSE-APACHE\", \"/hatch_build.py\"]\n\n[tool.hatch.build.hooks.custom]\n"
-        },
-        {
-          "path": "python/pyproject.toml",
-          "sha256": "7b138b0e9c1f71faa3346ae6f2493ab7eb4429517d26caa534eb7d5bb757da72",
-          "text": "[build-system]\nrequires = [\"hatchling>=1.27,<2\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nlicense = \"MIT OR Apache-2.0\"\nlicense-files = [\"LICENSE.md\", \"LICENSE-MIT\", \"LICENSE-APACHE\"]\nname = \"umf-core\"\nversion = \"0.10.0\"\ndescription = \"Official Python document models and extension machinery for UMF\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\ndependencies = [\"pydantic>=2.11,<3\"]\n\n[project.urls]\nRepository = \"https://github.com/DocumentDrivenDX/umf\"\n\n[tool.hatch.build.targets.wheel]\npackages = [\"src/umf\"]\n\n[tool.hatch.build.targets.sdist.force-include]\n\"../spec/core/schema.json\" = \"spec/core/schema.json\"\n\"../spec/core/semantic-type-reference.schema.json\" = \"spec/core/semantic-type-reference.schema.json\"\n\"../spec/core/extension-package.schema.json\" = \"spec/core/extension-package.schema.json\"\n\"../spec/metamodel/generated\" = \"spec/metamodel/generated\"\n\"../spec/extensions/domain-pack\" = \"spec/extensions/domain-pack\"\n\"../spec/extensions/dataset-source\" = \"spec/extensions/dataset-source\"\n\"../fixtures/metamodel/current-conformance.json\" = \"fixtures/metamodel/current-conformance.json\"\n\n[dependency-groups]\ndev = [\"pytest>=8.4,<10\", \"ruff>=0.13\"]\n\n[tool.hatch.build.hooks.custom]\n\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]\n"
         }
       ],
       "resolverSnapshots": [
@@ -7768,17 +7770,6 @@
       "migrationObligation": "No current activation edge discovered",
       "path": "docs/helix/05-deploy/schema-browser/validator-facade.ts",
       "sha256": "695c7a9d0dcaa530e010fa618d74cac291249ccc99464c87f2f57da1d92aad45"
-    },
-    {
-      "activationEvidence": [],
-      "active": false,
-      "algorithmSymbols": [],
-      "bytes": 2391,
-      "disposition": "unreferenced-script-source",
-      "language": "py",
-      "migrationObligation": "No current package/workflow/import activation edge discovered",
-      "path": "python/.venv/bin/activate_this.py",
-      "sha256": "18113a23f6fda87d0e45b015072fe45a67a58593beb8e777930d4176258b2526"
     },
     {
       "activationEvidence": [],
@@ -31661,10 +31652,12 @@
         "bun_closure",
         "compact_json",
         "dependency_disposition",
+        "generated_path",
         "json_differences",
         "json_pointer_escape",
         "main",
         "module_record",
+        "parse_python_source",
         "py_symbols",
         "python_project_declarations",
         "rel",
@@ -31674,17 +31667,18 @@
         "script_disposition",
         "sha",
         "source_disposition",
+        "source_files",
         "stale_inventory_diagnostics",
         "text",
         "tracked_or_existing",
         "ts_symbols"
       ],
-      "bytes": 43556,
+      "bytes": 46368,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-inventory.py",
-      "sha256": "7e9c6f143d5bf391432b94a1dc10fd92474988969f78a816ae39c329ca871556"
+      "sha256": "88cd90bfc6fa337b2fa891b6605dc9880cdcabc00d7f0406027b659e2a837f1f"
     },
     {
       "activationEvidence": [],
@@ -42524,18 +42518,23 @@
       "active": true,
       "algorithmSymbols": [
         "InventoryDependencyTests",
+        "test_check_ignores_environment_drift_but_refuses_real_source_without_writing",
         "test_current_python_manifests_capture_runtime_names_not_build_backend",
+        "test_environment_presence_does_not_change_authored_source_selection",
+        "test_environment_symlinks_cannot_alias_authored_or_installed_files",
+        "test_old_inventory_interpreter_refuses_before_any_capture",
         "test_python_toml_separates_runtime_optional_dev_and_build_groups",
         "test_real_bun_lock_direct_versions_match_package_manifest",
         "test_rust_input_identity_covers_embedded_data_but_excludes_artifacts",
-        "test_shared_transitive_keeps_exact_version_origins_and_disposition"
+        "test_shared_transitive_keeps_exact_version_origins_and_disposition",
+        "test_source_parse_errors_are_explicit_instead_of_zero_symbol_captures"
       ],
-      "bytes": 5908,
+      "bytes": 11776,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/rust-inventory/test_inventory.py",
-      "sha256": "e0667ef7fcb4899720b8729fb51f6299ff36ff9a8881ce1b720371009ff17bd8"
+      "sha256": "bb700502718ada00496eb4017a3c8d3ed5901f202bc223065a2a1fddadcfb127"
     },
     {
       "activationEvidence": [],
@@ -45684,7 +45683,55 @@
     {
       "activationEvidence": [],
       "active": false,
-      "algorithmSymbols": [],
+      "algorithmSymbols": [
+        "AsyncCancelTransport",
+        "AsyncHost",
+        "ConcurrentCancelTransport",
+        "GroupHost",
+        "Host",
+        "Misreported",
+        "ReadCancelTransport",
+        "RefusalHost",
+        "Response",
+        "ReusedCancelTransport",
+        "SyncCancelTransport",
+        "TimeoutHost",
+        "Waiting",
+        "__getitem__",
+        "__init__",
+        "__init__",
+        "__init__",
+        "__init__",
+        "__init__",
+        "__init__",
+        "__init__",
+        "__init__",
+        "__init__",
+        "__len__",
+        "batch_response",
+        "bind",
+        "call",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "fail_group_sibling",
+        "item",
+        "main",
+        "perform",
+        "raising",
+        "refusal",
+        "run",
+        "settlement"
+      ],
       "bytes": 25214,
       "disposition": "unreferenced-test-source",
       "language": "py",

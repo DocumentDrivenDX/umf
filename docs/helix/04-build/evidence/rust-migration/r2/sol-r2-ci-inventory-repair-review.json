@@ -1,0 +1,110 @@
+{
+  "id": "R2-SOL-CI-INVENTORY-REPAIR-REVIEW-001",
+  "profile": "umf.r2-independent-ci-inventory-repair-review/1",
+  "capturedAt": "2026-10-22T09:28:19.386136+00:00",
+  "reviewer": "Independent Sol reviewer (/root/sol_r2_final_review)",
+  "status": "Narrow inventory and declared Rustfmt delivery repair approved; final-head CI and merge remain pending.",
+  "sourceHeadBeforeRepair": "bdf469560e0e8b4a81aac394266b2c738f04a169",
+  "reviewedFiles": {
+    "scripts/rust-inventory.py": "88cd90bfc6fa337b2fa891b6605dc9880cdcabc00d7f0406027b659e2a837f1f",
+    "tests/rust-inventory/test_inventory.py": "bb700502718ada00496eb4017a3c8d3ed5901f202bc223065a2a1fddadcfb127",
+    "docs/helix/04-build/evidence/rust-migration/r2/inventory.json": "6c7d99cb76fee78a8286d084e5d264bbb889bd3347e0c4179d3d51f6fefee403",
+    ".github/workflows/python.yml": "c5d7a9aa46ab94844cfe29a2fae5cb72a6a3e764b6172a4ef53b48fa8c9e74a9",
+    ".github/workflows/rust-core.yml": "1a5dc70d4567521cdc1bc476df1289ad8814d5da658051115bc11adebab761e6",
+    ".github/workflows/rust-spike.yml": "9e0458b9073bcdcd0f073ab9c4e723aa7fdc1b6f62f5a7dd9b2ad5334b7f5228"
+  },
+  "coreSchemaSha256": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
+  "findings": [],
+  "independentControls": {
+    "inventoryUnitTests": {
+      "interpreter": "CPython3.11.17",
+      "tests": 10,
+      "result": "pass"
+    },
+    "unsupportedInterpreterObservation": "Initial default local Python3.9 test invocation correctly encountered the declared refusal; qualified3.11.17 rerun passed. Python3.9 is not claimed supported for inventory capture.",
+    "actionlint": {
+      "version": "1.7.12",
+      "allThreeChangedWorkflows": "pass; no diagnostics"
+    },
+    "generatedEnvironmentCoverage": "Reviewed exact tests and source: conventional environments/site-packages, arbitrary ancestor pyvenv.cfg, lexical and resolved symlink aliases excluded; ordinary venv-named authored source retained; environment presence does not alter selected source.",
+    "parseFailureCoverage": "Unknown authored Python syntax raises explicit census failure instead of empty symbol lists; Python below3.11 refuses before capture.",
+    "staleCheckCoverage": "Generated environment-only drift accepted; real authored-source drift returns1 and leaves golden bytes unchanged.",
+    "workflowDiff": "Only explicit components:rustfmt added to each of the three pinned1.90.0 toolchain steps; all existing matrices, toolchain/target pins, commands and qualification/upload gates retained."
+  },
+  "independentGoldenComparison": {
+    "authoredSourceModules": 569,
+    "authoredSourceModuleRecords": "Byte-for-byte equal as parsed records; no removal or modification.",
+    "rustModuleAndBuildInputRecords": "Unchanged; no removal or modification.",
+    "removedScriptRows": [
+      "python/.venv/bin/activate_this.py"
+    ],
+    "addedScriptRows": [],
+    "changedScriptRecords": [
+      "scripts/rust-inventory.py",
+      "tests/rust-inventory/test_inventory.py",
+      "tests/unified/adoption_probe.py"
+    ],
+    "recoveredAuthoredSymbols": {
+      "path": "tests/unified/adoption_probe.py",
+      "previous": 0,
+      "qualifiedPython311": 47
+    },
+    "counts": {
+      "activeScriptFiles": 301,
+      "algorithmSymbols": 9812,
+      "pythonModules": 98,
+      "rustBuildInputs": 73,
+      "rustModules": 80,
+      "scriptFiles": 2886,
+      "sourceModules": 569,
+      "typescriptModules": 471
+    },
+    "exclusionAccounting": "Explicit generated-environment exclusions are recorded in the golden census. No authored source loss or golden normalization of unexplained Linux drift."
+  },
+  "historicalRuntimeReceipt": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r2/ci-bdf469-ubuntu-python313-qualification.json",
+    "sha256": "0d52ff9ef607afa7f4c2ad3e2b753cf657479e5cf7f75529aef73fdbc0e27f5e",
+    "sourceCommit": "bdf469560e0e8b4a81aac394266b2c738f04a169",
+    "sourceClosureSha256": "831aef59b6a802be82fa5aa7b9d9078d6ff459acd6025763aa7bb881c911fb8d",
+    "qualification": "Runtime/artifact gate passed before later inventory check failed. This is not final-head CI success and is not relabelled as qualification of the inventory repair."
+  },
+  "documentationReview": "Current integration and plan diagnosis distinguishes generated-environment capture and47 recovered authored symbols, and truthfully scopes the earlier Linux runtime receipt and outstanding delivery CI.",
+  "approval": {
+    "narrowRepairApproved": true,
+    "priorProductionImplementationApprovalRetained": true,
+    "newCohortArtifactsApproved": false,
+    "deliveryComplete": false,
+    "remaining": [
+      "Commit and push this exact reviewed source/test/golden/toolchain cohort.",
+      "Require fresh final-head CI including the six Ubuntu/macOS and pinned-Python qualification jobs; download and verify their source-bound job-local receipts.",
+      "Refresh final independent delivery evidence for the new closure and complete reviewed PR merge."
+    ]
+  },
+  "scope": "No production Rust/resource/frozen expectation semantics changed. This review does not claim final CI, merge, publication, later migration slices or unexecuted platforms.",
+  "supportingImplementerQualification": {
+    "goldenChecks": "CPython3.11.17/3.12.15/3.13.16 all pass",
+    "logs": {
+      "311": {
+        "path": "/private/tmp/umf-r2-sol-inventory-check-311.log",
+        "sha256": "5c8a6d851a6319ab3386c1bd41696d519dcd974a32814a1384de06b3cf466d7e",
+        "result": "pass as reported by implementer"
+      },
+      "312": {
+        "path": "/private/tmp/umf-r2-sol-inventory-check-312.log",
+        "sha256": "dfef27647b117e5044829a8cef40ff689f33f0bb0e10c3dcfafa56fb53dbbba0",
+        "result": "pass as reported by implementer"
+      },
+      "313": {
+        "path": "/private/tmp/umf-r2-sol-inventory-check-313.log",
+        "sha256": "dfef27647b117e5044829a8cef40ff689f33f0bb0e10c3dcfafa56fb53dbbba0",
+        "result": "pass as reported by implementer"
+      },
+      "boundaries": {
+        "path": "/private/tmp/umf-r2-sol-inventory-boundaries.log",
+        "sha256": "38edf2ba5b2af200410ad56dec2b584a07e3232792419d2e5604f8032549b6ca",
+        "result": "578 modules / zero findings and20 controls pass as reported by implementer"
+      }
+    },
+    "qualification": "Additional implementer results; independent source/golden review and qualified3.11 tests are recorded above."
+  }
+}

@@ -17,6 +17,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.90.0
+          components: rustfmt
       - run: python -m pip install ./python pytest ruff==0.17.1 build
       - run: python -m pytest python/tests -q
       - run: ruff check python

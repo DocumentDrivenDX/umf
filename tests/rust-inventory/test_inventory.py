@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Regression controls for exact dependency resolution in the R0 census."""
+import contextlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import re
+import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location("rust_inventory", ROOT / "scripts/rust-inventory.py")
@@ -31,6 +35,94 @@ class InventoryDependencyTests(unittest.TestCase):
                 (root / "crates/umf-core/src/schema_metas.json").write_text("changed")
                 after = {item["path"]: item["sha256"] for item in MODULE.rust_build_inputs()}
                 self.assertNotEqual(before["crates/umf-core/src/schema_metas.json"], after["crates/umf-core/src/schema_metas.json"])
+
+    def test_environment_presence_does_not_change_authored_source_selection(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            authored = ["python/src/umf/owned.py", "python/src/venv/owned.py",
+                        "python/src/environment_helpers.py", "scripts/owned.ts"]
+            for name in authored:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("def owned(): pass" if path.suffix == ".py" else "export function owned() {}")
+            with patch.object(MODULE, "ROOT", root):
+                before = MODULE.source_files([root / "python", root / "scripts"])
+                generated = ["python/.venv/bin/activate_this.py",
+                             "python/nested/.venv/lib/python3.13/site-packages/vendor.py",
+                             "python/venv/pyvenv.cfg", "python/venv/Scripts/activate_this.py",
+                             "python/custom-name/pyvenv.cfg", "python/custom-name/bin/generated.py",
+                             "python/.tox/py311/vendor.py", "python/.nox/test/vendor.py",
+                             "python/lib/python3.12/site-packages/vendor.py",
+                             "python/Lib/site-packages/vendor.py",
+                             "python/lib/python3/dist-packages/vendor.py"]
+                for name in generated:
+                    path = root / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text("generated environment content is not Python source")
+                self.assertEqual(before, MODULE.source_files([root / "python", root / "scripts"]))
+                self.assertEqual(set(authored), {MODULE.rel(path) for path in before})
+
+    def test_environment_symlinks_cannot_alias_authored_or_installed_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            owned = root / "python/src/owned.py"
+            installed = root / "python/.venv/vendor.py"
+            for path in [owned, installed]:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("def value(): pass")
+            generated_alias = root / "python/.venv/alias.py"
+            generated_alias.symlink_to(owned)
+            authored_alias = root / "python/installed-alias.py"
+            authored_alias.symlink_to(installed)
+            regular_alias = root / "python/owned-alias.py"
+            regular_alias.symlink_to(owned)
+            with patch.object(MODULE, "ROOT", root):
+                self.assertEqual([], MODULE.tracked_or_existing([generated_alias, authored_alias]))
+                self.assertEqual([owned], MODULE.tracked_or_existing([regular_alias, owned]))
+
+    def test_source_parse_errors_are_explicit_instead_of_zero_symbol_captures(self):
+        for capture in [MODULE.algorithm_names, MODULE.py_symbols]:
+            with self.assertRaisesRegex(RuntimeError, "broken.py.*never silently omits"):
+                capture(Path("broken.py"), "def broken(: pass")
+        self.assertEqual(["owned"], MODULE.algorithm_names(Path("owned.py"), "def owned(): pass"))
+
+    def test_old_inventory_interpreter_refuses_before_any_capture(self):
+        with patch.object(MODULE.sys, "version_info", (3, 9)), patch.object(MODULE.subprocess, "check_output") as capture:
+            error = io.StringIO()
+            with contextlib.redirect_stderr(error):
+                self.assertEqual(2, MODULE.main())
+            self.assertIn("requires Python 3.11", error.getvalue())
+            capture.assert_not_called()
+
+    def test_check_ignores_environment_drift_but_refuses_real_source_without_writing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            (root / "scripts").mkdir()
+            source = root / "scripts/owned.py"
+            source.write_text("def owned(): pass")
+            for name, value in {"package.json": {}, "bun.lock": {"packages": {}}}.items():
+                (root / name).write_text(json.dumps(value))
+            for name in ["Cargo.toml", "Cargo.lock"]:
+                (root / name).write_text("")
+            golden = root / "golden.json"
+            capture = json.dumps({"typescriptVersion": "fixture", "files": {}})
+            with patch.object(MODULE, "ROOT", root), patch.object(MODULE, "OUT", golden), patch.object(MODULE, "__file__", str(root / "scripts/rust-inventory.py")), patch.object(MODULE.subprocess, "check_output", return_value=capture):
+                with patch.object(MODULE.sys, "argv", ["rust-inventory.py"]), contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(0, MODULE.main())
+                before = golden.read_bytes()
+                generated = root / "python/arbitrary-environment"
+                generated.mkdir(parents=True)
+                (generated / "pyvenv.cfg").write_text("home = /python")
+                (generated / "vendor.py").write_text("def installed_only(): pass")
+                with patch.object(MODULE.sys, "argv", ["rust-inventory.py", "--check"]), contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(0, MODULE.main())
+                self.assertEqual(before, golden.read_bytes())
+                source.write_text("def owned(): pass\ndef authored_change(): pass")
+                error = io.StringIO()
+                with patch.object(MODULE.sys, "argv", ["rust-inventory.py", "--check"]), contextlib.redirect_stderr(error):
+                    self.assertEqual(1, MODULE.main())
+                self.assertIn("Rust inventory is stale", error.getvalue())
+                self.assertEqual(before, golden.read_bytes())
 
     def test_shared_transitive_keeps_exact_version_origins_and_disposition(self):
         package = {"dependencies": {"@typespec/compiler": "1.16.0", "ajv": "8.20.0"}, "devDependencies": {}}

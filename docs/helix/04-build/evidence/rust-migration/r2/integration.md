@@ -197,7 +197,20 @@ CI delivery preflight repairs runner-context placement, exact Python provisionin
 through uv with absolute interpreter paths, isolated Rust toolchain state, and
 the hook integration fixture. CI writes receipts to a fresh job-local path; a
 failed job cannot upload the committed local receipt as a new witness. The
-[reviewed preflight](ci-delivery-preflight.json) retains all gates. Linux inventory
-drift remains a delivery condition; bounded JSON Pointer diagnostics preserve the
-stale refusal and will identify the underlying field. The current local runtime
-qualification precedes these CI-only/tool-diagnostic repairs.
+[reviewed preflight](ci-delivery-preflight.json) retains all gates. The
+[Linux diagnostic](ci-linux-inventory-bdf469.txt) identified two inventory defects:
+a local virtualenv activation script entered the source census, and Python 3.9
+silently omitted 47 symbols from an authored file that Python 3.11 parses. The
+repair excludes generated environments, requires Python 3.11+, and refuses
+unparseable source instead of emitting an incomplete census. CI explicitly
+provisions the declared Rustfmt component before package builds. The [repair preflight](ci-inventory-repair.json) passes inventory checks on all
+three qualified Python versions, 20 inventory/boundary controls, 578 module
+boundaries with zero findings, and workflow lint. Fresh final-source CI remains
+a merge condition.
+
+The retained [Linux CPython 3.13 receipt](ci-bdf469-ubuntu-python313-qualification.json)
+qualifies the complete installed-artifact gate at `bdf469560e0e8b4a81aac394266b2c738f04a169`,
+closure `831aef59b6a802be82fa5aa7b9d9078d6ff459acd6025763aa7bb881c911fb8d`.
+The job subsequently refused the stale inventory; this receipt establishes runtime
+qualification, not overall CI success or qualification of the later census fix.
+The current local runtime qualification precedes these CI-only/tool repairs.

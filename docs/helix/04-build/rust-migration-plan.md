@@ -64,6 +64,11 @@ review evidence. The [final independent Sol review](evidence/rust-migration/r2/s
 approves implementation and local qualification with no open findings. PR CI and
 merge are the final delivery gate; the repository merge record identifies landing. Earlier checkpoint notes
 below describe states at capture and do not override final qualification.
+CI exposed generated-environment contamination and an unsupported local Python
+parser in the inventory census. The repair must preserve stale refusal, reject
+unparseable authored source, and pass independent review plus fresh CI. The first
+Linux CPython 3.13 installed-artifact gate passes at `bdf469560`; its later inventory
+failure does not invalidate that scoped runtime receipt or establish delivery.
 Main is integrated through `53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41);
 refresh and incorporate later main work before merging. R3 is next after delivery.
 

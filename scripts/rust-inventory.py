@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
-"""Emit a source-bound, machine-readable census for the Rust migration."""
+"""Emit a source-bound, machine-readable census for the Rust migration.
+
+Requires Python 3.11+ to parse the repository's authored Python source.
+For example: uv run --offline --no-project --python '>=3.11' python
+scripts/rust-inventory.py --check. Never regenerate using an older parser.
+"""
 from __future__ import annotations
 
 import ast
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
-try:
+if sys.version_info >= (3, 11):
     import tomllib
-except ModuleNotFoundError:  # local legacy Python; CI uses the standard-library tomllib on 3.12
-    from pip._vendor import tomli as tomllib
+else:
+    tomllib = None  # main refuses before any source/dependency capture.
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -118,8 +124,70 @@ def rel(path: Path) -> str:
     return path.relative_to(ROOT).as_posix()
 
 
+# These are generated/install locations, not first-party source roots. A
+# virtualenv may also have any user-selected name; pyvenv.cfg identifies it.
+GENERATED_DIRECTORY_NAMES = frozenset({
+    ".git", "node_modules", "target", "__pycache__", ".venv", ".virtualenv",
+    ".virtualenvs", ".tox", ".nox", "site-packages", "dist-packages",
+})
+
+
+def generated_path(path: Path) -> bool:
+    """Check lexical paths AND resolved destinations before admitting files."""
+    try:
+        parts = path.relative_to(ROOT).parts
+    except ValueError:
+        return True
+    directories = parts if path.is_dir() else parts[:-1]
+    if any(part in GENERATED_DIRECTORY_NAMES for part in directories):
+        return True
+    if any(directories[i:i + 2] == ("wasm", "pkg")
+           for i in range(len(directories) - 1)):
+        return True
+    current = path if path.is_dir() else path.parent
+    while current != ROOT:
+        if (current / "pyvenv.cfg").is_file():
+            return True
+        current = current.parent
+    return False
+
+
 def tracked_or_existing(paths: list[Path]) -> list[Path]:
-    return sorted({p.resolve() for p in paths if p.is_file() and ROOT in p.resolve().parents and not rel(p.resolve()).startswith("bindings/core/wasm/pkg/")})
+    selected = set()
+    for path in paths:
+        # Filter before resolve: a .venv symlink to authored source must not
+        # enter via an environment path, nor source aliases to installed code.
+        if not path.is_file() or generated_path(path):
+            continue
+        resolved = path.resolve()
+        if ROOT in resolved.parents and not generated_path(resolved):
+            selected.add(resolved)
+    return sorted(selected)
+
+
+def source_files(bases: list[Path], suffixes: set[str] | None = None) -> list[Path]:
+    paths = []
+    for base in bases:
+        if not base.is_dir() or generated_path(base):
+            continue
+        for directory, subdirectories, names in os.walk(base, followlinks=False):
+            current = Path(directory)
+            subdirectories[:] = sorted(name for name in subdirectories
+                                       if not generated_path(current / name)
+                                       and not generated_path((current / name).resolve()))
+            paths.extend(current / name for name in names
+                         if suffixes is None or Path(name).suffix in suffixes)
+    return tracked_or_existing(paths)
+
+
+def parse_python_source(path: Path, source: str) -> ast.Module:
+    try:
+        return ast.parse(source, filename=str(path))
+    except SyntaxError as error:
+        raise RuntimeError(
+            f"Cannot census Python source {path}: {error.msg} at line {error.lineno}. "
+            "Use an interpreter supporting this source; inventory never silently omits syntax."
+        ) from error
 
 
 def ts_symbols(source: str) -> list[str]:
@@ -131,10 +199,7 @@ def ts_symbols(source: str) -> list[str]:
 
 
 def py_symbols(path: Path, source: str) -> list[str]:
-    try:
-        tree = ast.parse(source)
-    except SyntaxError:
-        return []
+    tree = parse_python_source(path, source)
     exports = None
     for node in tree.body:
         if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "__all__" for t in node.targets):
@@ -255,7 +320,7 @@ def module_record(path: Path) -> dict[str, object]:
         lang = "python"
         resolved = []
         try:
-            tree = ast.parse(source)
+            tree = parse_python_source(path, source)
             module_root = next((marker for marker in ("/src/umf/", "/src/umf_access/", "/src/umf_codegen/") if marker in path.as_posix()), None)
             if module_root:
                 root_text = path.as_posix().split(module_root, 1)[0] + module_root.strip("/")
@@ -279,7 +344,7 @@ def module_record(path: Path) -> dict[str, object]:
                                 resolved.append(alias.name)
                     if target and (root_path.joinpath(*target.split(".")).with_suffix(".py").exists() or root_path.joinpath(*target.split("."), "__init__.py").exists()):
                         resolved.append(target)
-        except (SyntaxError, ValueError):
+        except ValueError:
             pass
         resolved_imports = sorted(set(resolved))
     disposition, obligation = source_disposition(p)
@@ -293,10 +358,7 @@ def module_record(path: Path) -> dict[str, object]:
 
 def algorithm_names(path: Path, source: str) -> list[str]:
     if path.suffix == ".py":
-        try:
-            tree = ast.parse(source)
-        except SyntaxError:
-            return []
+        tree = parse_python_source(path, source)
         return sorted(n.name for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)))
     return sorted(set(a or b for a, b in FUNC_TS.findall(source)))
 
@@ -326,7 +388,7 @@ def rust_build_inputs() -> list[dict[str, object]]:
     for base in (ROOT / "crates", ROOT / "bindings"):
         if not base.exists():
             continue
-        for path in base.rglob("*"):
+        for path in source_files([base]):
             if not path.is_file() or path.suffix == ".rs":
                 continue
             parts = path.relative_to(ROOT).parts
@@ -481,15 +543,20 @@ def dependency_disposition(name: str, origins: list[dict[str, object]]) -> str:
 
 
 def main() -> int:
+    if sys.version_info < (3, 11):
+        print("Rust inventory requires Python 3.11 or newer to census authored syntax; "
+              "run with a qualified interpreter, for example: "
+              "uv run --offline --no-project --python '>=3.11' python scripts/rust-inventory.py --check",
+              file=sys.stderr)
+        return 2
     ts_capture = json.loads(subprocess.check_output(["bun", "scripts/rust-inventory-typescript.ts"], cwd=ROOT, text=True))
     package = json.loads((ROOT / "package.json").read_text())
     # Bun lock uses JSON with trailing commas.
     lock_text = (ROOT / "bun.lock").read_text()
     lock = json.loads(re.sub(r",\s*([}\]])", r"\1", lock_text))
-    source_paths = tracked_or_existing(list((ROOT / "src").rglob("*.ts")) +
-        list((ROOT / "python/src").rglob("*.py")) +
-        list((ROOT / "python/umf_access/src").rglob("*.py")) +
-        list((ROOT / "python/umf_codegen/src").rglob("*.py")))
+    source_paths = sorted(source_files([ROOT / "src"], {".ts"}) + source_files([
+        ROOT / "python/src", ROOT / "python/umf_access/src", ROOT / "python/umf_codegen/src",
+    ], {".py"}))
     modules = [module_record(p) for p in source_paths]
     for module in modules:
         captured = ts_capture["files"].get(module["path"])
@@ -500,7 +567,7 @@ def main() -> int:
             module["imports"] = captured["imports"]
             module["resolvedImports"] = captured["resolvedImports"]
     code_roots = [ROOT / "scripts", ROOT / "tests", ROOT / "tools", ROOT / "docs/helix/05-deploy/schema-browser", ROOT / "python", ROOT / "bindings"]
-    all_script_paths = tracked_or_existing([p for base in code_roots if base.exists() for p in base.rglob("*") if p.suffix in {".ts", ".py", ".js", ".mjs", ".cjs"}])
+    all_script_paths = source_files(code_roots, {".ts", ".py", ".js", ".mjs", ".cjs"})
     activation_files = [ROOT / "package.json", *sorted((ROOT / ".github/workflows").glob("*.yml")), ROOT / ".githooks/pre-commit"]
     activation_text = "\n".join(text(p) for p in activation_files if p.exists())
     roots = set()
@@ -531,16 +598,13 @@ def main() -> int:
         imported = list(ts_script_imports.get(current, []))
         source_path = ROOT / current
         if source_path.suffix == ".py":
-            try:
-                tree = ast.parse(text(source_path))
-                for node in ast.walk(tree):
-                    if isinstance(node, ast.ImportFrom) and node.module:
-                        imported.extend(script_paths_by_stem.get(node.module.rsplit(".", 1)[-1], []))
-                    elif isinstance(node, ast.Import):
-                        for alias in node.names:
-                            imported.extend(script_paths_by_stem.get(alias.name.rsplit(".", 1)[-1], []))
-            except SyntaxError:
-                pass
+            tree = parse_python_source(source_path, text(source_path))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ImportFrom) and node.module:
+                    imported.extend(script_paths_by_stem.get(node.module.rsplit(".", 1)[-1], []))
+                elif isinstance(node, ast.Import):
+                    for alias in node.names:
+                        imported.extend(script_paths_by_stem.get(alias.name.rsplit(".", 1)[-1], []))
         for path in imported:
             if path in {rel(p) for p in all_script_paths} and path not in reachable:
                 reachable.add(path)
@@ -568,13 +632,13 @@ def main() -> int:
         if snapshot.exists():
             py_resolution.append({"project": project, "path": rel(snapshot), "sha256": sha(snapshot.read_bytes()),
                                   "target": "aarch64-apple-darwin / CPython 3.11", "kind": "non-installing uv resolution snapshot; candidate versions and hashes, not repository lock or installed qualification"})
-    for path in sorted((ROOT / "python").glob("*/pyproject.toml")) + [ROOT / "python/pyproject.toml"]:
+    for path in tracked_or_existing(sorted((ROOT / "python").glob("*/pyproject.toml")) + [ROOT / "python/pyproject.toml"]):
         if path.exists():
             source = text(path)
             pyprojects.append({"path": rel(path), "sha256": sha(path.read_bytes()), "text": source})
             project_data = tomllib.loads(source)
             py_direct.extend(python_project_declarations(project_data, rel(path)))
-    rust_paths = tracked_or_existing([p for base in [ROOT / "crates", ROOT / "bindings"] if base.exists() for p in base.rglob("*.rs")])
+    rust_paths = source_files([ROOT / "crates", ROOT / "bindings"], {".rs"})
     rust_modules = [rust_module_record(p) for p in rust_paths]
     rust_inputs = rust_build_inputs()
     result = {
@@ -601,7 +665,7 @@ def main() -> int:
             {"id": "verify_deployment", "publicApi": "umf_codegen.verify_table_deployment", "bridge": "__umf_table_verify", "source": ["scripts/codegen/entry.ts", "src/table-deployment"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "migration", "publicApi": "umf_codegen.compile_table_migration", "bridge": "__umf_table_migrate", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "verify_migration", "publicApi": "umf_codegen.verify_table_migration", "bridge": "__umf_table_migration_verify", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"}],
-        "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)), "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "bindings/core/wasm/pkg/** (generated host artifact; captured by package harness)", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
+        "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)), "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "**/{.venv,.virtualenv,.virtualenvs,.tox,.nox,site-packages,dist-packages,__pycache__}/**", "Python environments identified by an ancestor pyvenv.cfg (any directory name)", "bindings/core/wasm/pkg/** (generated host artifact; captured by package harness)", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
         "knownOpenItems": ["python transitive dependency closure is unlocked", "per-module dispositions are a named migration-obligation inventory and still require owner review before closure", "native evidence identities are captured in the accompanying README and plan references"]
     }
     payload = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
