@@ -15,7 +15,8 @@ except ModuleNotFoundError:  # local legacy Python; CI uses the standard-library
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "docs/helix/04-build/evidence/rust-migration/r0/inventory.json"
+# R0 is an immutable historical capture; the live gate records the R2 cohort.
+OUT = ROOT / "docs/helix/04-build/evidence/rust-migration/r2/inventory.json"
 TS_EXPORT = re.compile(r"(?m)^\s*export\s+(?:declare\s+)?(?:async\s+)?(?:function|class|interface|type|enum|const|let|var)\s+([A-Za-z_$][\w$]*)")
 TS_IMPORT = re.compile(r"(?m)^\s*(?:import|export)\s+(?:type\s+)?(?:[^;]*?\s+from\s+)?[\"']([^\"']+)[\"']")
 PY_IMPORT = re.compile(r"(?m)^\s*(?:from\s+([\w.]+)\s+import|import\s+([\w.]+))")
@@ -35,7 +36,7 @@ def rel(path: Path) -> str:
 
 
 def tracked_or_existing(paths: list[Path]) -> list[Path]:
-    return sorted({p.resolve() for p in paths if p.is_file() and ROOT in p.resolve().parents})
+    return sorted({p.resolve() for p in paths if p.is_file() and ROOT in p.resolve().parents and not rel(p.resolve()).startswith("bindings/core/wasm/pkg/")})
 
 
 def ts_symbols(source: str) -> list[str]:
@@ -142,11 +143,12 @@ def source_disposition(path: str) -> tuple[str, str]:
     if path.startswith("python/src/umf/"):
         name = path.removeprefix("python/src/umf/")
         explicit = {
+            "_rust.py": ("production-python-rust-host-boundary", "R2 strict host admission, immutable resource loading, callback/token and exact diagnostic transport; installed qualification required"),
             "__init__.py": ("python-public-core-surface", "R2/R4 preserve public imports and behavior during cutover"),
-            "constraint_kernel.py": ("shared-constraint-interpreter", "R2 port generic interpreter; consume generated inert program as authority"),
+            "constraint_kernel.py": ("rust-constraint-compatibility-delegate", "R2 native delegation implemented; require installed program/policy parity before closure"),
             "generated_resources.py": ("generated-data-loader", "R2/R4 retain ADR-005-derived resources and standard Python package loading"),
             "json.py": ("python-native-json-admission", "R2 port or bind exact source admission with Python host-value preservation"),
-            "literal_kernel.py": ("shared-literal-interpreter", "R2 port generic exact literal mechanics; consume generated policy"),
+            "literal_kernel.py": ("rust-literal-compatibility-delegate", "R2 native literal/interval delegation implemented; require exact policy and host parity before closure"),
             "models.py": ("python-model-presentation", "R2 preserve Pydantic/public shapes while shared admission moves to Rust"),
             "registry.py": ("python-registry-binding", "R2 preserve callback/resource host capability registration"),
             "schemas.py": ("python-schema-presentation", "R2 retain schema API and generated shapes; generic validation moves to Rust"),
@@ -217,6 +219,15 @@ def algorithm_names(path: Path, source: str) -> list[str]:
 
 
 def rust_module_disposition(path: str) -> tuple[str, str]:
+    if path.startswith("crates/umf-core/vendor/saphyr-parser/"):
+        return "vendored-shared-yaml-parser", "R2 pinned saphyr-parser 0.1.0 with reviewed default/Python scanner profiles; preserve upstream source identity, licenses and native/WASM qualification"
+    if path.startswith(("crates/umf-core/", "crates/umf-metamodel/")):
+        return "production-host-free-rust-engine", "R2 full independent compiler/core conformance and metered resource qualification required"
+    if path.startswith("crates/umf-core-wire/"):
+        return "production-private-value-transport", "R2 closed UTF16 wire; strict admission before allocation and no semantic fallback"
+    if path.startswith(("bindings/core/", "crates/umf-cli/")):
+        return "production-host-binding", "R2 installed target-specific compatibility, callback and resource evidence required"
+
     if path.startswith("crates/rust-spike-core/"):
         return "host-free-shared-rust-spike", "R1 prototype only; close only with source-bound conformance and target-qualified dependency evidence"
     if path.startswith("crates/rust-spike-cli/"):
@@ -224,6 +235,27 @@ def rust_module_disposition(path: str) -> tuple[str, str]:
     if path.startswith("bindings/rust-spike/"):
         return "rust-language-binding-host-adapter", "R1 binding glue; keep runtime-specific imports in the corresponding host adapter"
     return "rust-spike-workspace-support", "R1 build or test support; individual migration disposition required before closure"
+
+
+def rust_build_inputs() -> list[dict[str, object]]:
+    """Bind embedded data, licenses and build inputs, not generated artifacts."""
+    inputs = [ROOT / name for name in ("rust-toolchain.toml", ".cargo/config.toml")]
+    for base in (ROOT / "crates", ROOT / "bindings"):
+        if not base.exists():
+            continue
+        for path in base.rglob("*"):
+            if not path.is_file() or path.suffix == ".rs":
+                continue
+            parts = path.relative_to(ROOT).parts
+            if any(part in ("target", "node_modules", ".git", "__pycache__") for part in parts):
+                continue
+            if any(parts[i:i + 2] == ("wasm", "pkg") for i in range(len(parts) - 1)):
+                continue
+            if path.suffix in (".node", ".so", ".dylib", ".dll", ".wasm", ".pyd", ".pyc"):
+                continue
+            inputs.append(path)
+    return [{"path": rel(path), "sha256": sha(path.read_bytes()), "bytes": path.stat().st_size}
+            for path in tracked_or_existing(inputs)]
 
 
 def rust_module_record(path: Path) -> dict[str, object]:
@@ -237,6 +269,11 @@ def rust_module_record(path: Path) -> dict[str, object]:
 
 
 def script_disposition(path: str, active: bool) -> tuple[str, str]:
+    if path.startswith("bindings/core/"):
+        return "production-rust-host-glue", "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required"
+    if path.startswith("scripts/metamodel/"):
+        return "rust-compiler-build-host-bridge", "R2 native compiler process/provenance plus explicit third-party Ajv build backend; no UMF compiler fallback"
+
     if path.startswith("tests/") or path.startswith("python/") and "/tests/" in path:
         return ("test-oracle-fixture-algorithm", "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default") if active else ("unreferenced-test-source", "Retained test/evidence source with no discovered current activation edge")
     if path.startswith("docs/helix/05-deploy/"):
@@ -456,15 +493,17 @@ def main() -> int:
             py_direct.extend(python_project_declarations(project_data, rel(path)))
     rust_paths = tracked_or_existing([p for base in [ROOT / "crates", ROOT / "bindings"] if base.exists() for p in base.rglob("*.rs")])
     rust_modules = [rust_module_record(p) for p in rust_paths]
+    rust_inputs = rust_build_inputs()
     result = {
-        "schema": "umf.rust-migration-inventory/0.1",
-        "capture": {"inventoryFormat": "0.1", "inventoryScript": rel(Path(__file__).resolve()),
-                    "typescriptApi": ts_capture["typescriptVersion"], "sourceCohortSha256": sha(("\n".join(f"{m['path']} {m['sha256']}" for m in modules) + "\n" + "\n".join(f"{s['path']} {s['sha256']}" for s in scripts) + "\n" + sha((ROOT / "package.json").read_bytes()) + "\n" + sha((ROOT / "bun.lock").read_bytes())).encode())},
-        "counts": {"sourceModules": len(modules), "typescriptModules": sum(m["language"] == "typescript" for m in modules),
+        "schema": "umf.rust-migration-inventory/0.2",
+        "capture": {"inventoryFormat": "0.2", "inventoryScript": rel(Path(__file__).resolve()),
+                    "typescriptApi": ts_capture["typescriptVersion"], "sourceCohortSha256": sha(("\n".join(f"{m['path']} {m['sha256']}" for m in modules) + "\n" + "\n".join(f"{s['path']} {s['sha256']}" for s in scripts) + "\n" + "\n".join(f"{m['path']} {m['sha256']}" for m in rust_modules) + "\n" + "\n".join(f"{m['path']} {m['sha256']}" for m in rust_inputs) + "\n" + "\n".join(f"{p['path']} {p['sha256']}" for p in pyprojects) + "\n" + sha((ROOT / "Cargo.lock").read_bytes()) + "\n" + sha((ROOT / "Cargo.toml").read_bytes()) + "\n" + sha((ROOT / "package.json").read_bytes()) + "\n" + sha((ROOT / "bun.lock").read_bytes())).encode())},
+        "counts": {"sourceModules": len(modules), "rustModules": len(rust_modules), "rustBuildInputs": len(rust_inputs), "typescriptModules": sum(m["language"] == "typescript" for m in modules),
                    "pythonModules": sum(m["language"] == "python" for m in modules), "scriptFiles": len(scripts),
                    "activeScriptFiles": sum(s["active"] for s in scripts), "algorithmSymbols": sum(len(s["algorithmSymbols"]) for s in scripts)},
         "sourceModules": modules,
-        "rustSpikeModules": rust_modules,
+        "rustModules": rust_modules,
+        "rustBuildInputs": rust_inputs,
         "scripts": scripts,
         "dependencies": {"javascript": {"direct": package.get("dependencies", {}), "devDirect": package.get("devDependencies", {}),
                                              "lockfileSha256": sha((ROOT / "bun.lock").read_bytes()), "resolvedClosure": bun_closure(package, lock),
@@ -472,16 +511,18 @@ def main() -> int:
                           "python": {"lockfile": None, "status": "direct declarations captured; repository has no Python lock; separate non-installing resolver snapshots capture candidate closure for one target", "projects": pyprojects,
                                      "directDeclarations": py_direct, "resolverSnapshots": py_resolution}},
         "operations": [
+            {"id": "discover_changes", "publicApi": "umf_codegen.discover_table_migration_changes", "bridge": "__umf_table_migration_changes", "source": ["scripts/codegen/entry.ts", "src/table-migration/reviewed.ts"], "baseline": None, "migrationDisposition": "R3/R4; added by integrated main PR41 after R0 historical capture; upstream installed evidence under praxis-u123-adoption, new independent Rust baseline still required before port"},
+            {"id": "row_scope", "publicApi": "umf_codegen.normalize_row_scope", "bridge": "__umf_row_scope", "source": ["scripts/codegen/entry.ts", "src/table-authoring/row-scope.ts"], "baseline": None, "migrationDisposition": "R3/R4; added by integrated main PR41 after R0 historical capture; upstream row-scope corpus retained, new independent Rust baseline still required before port"},
             {"id": "generate", "publicApi": "umf_codegen.generate_python_client", "bridge": "__umf_codegen", "source": ["scripts/codegen/entry.ts", "src/access"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "deployment", "publicApi": "umf_codegen.compile_table_deployment", "bridge": "__umf_table_deploy", "source": ["scripts/codegen/entry.ts", "src/table-deployment"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "verify_deployment", "publicApi": "umf_codegen.verify_table_deployment", "bridge": "__umf_table_verify", "source": ["scripts/codegen/entry.ts", "src/table-deployment"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "migration", "publicApi": "umf_codegen.compile_table_migration", "bridge": "__umf_table_migrate", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"},
             {"id": "verify_migration", "publicApi": "umf_codegen.verify_table_migration", "bridge": "__umf_table_migration_verify", "source": ["scripts/codegen/entry.ts", "src/table-migration"], "baseline": "docs/helix/04-build/evidence/rust-migration/r0/codegen-baseline.json"}],
-        "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)), "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
+        "activation": {"roots": sorted(roots), "unresolvedCommandPaths": sorted(set(unknown_activation_roots)), "explicitTraversalExclusions": [".git/**", "node_modules/**", "target/**", "bindings/core/wasm/pkg/** (generated host artifact; captured by package harness)", "docs/helix/04-build/evidence/rust-migration/r0/**"]},
         "knownOpenItems": ["python transitive dependency closure is unlocked", "per-module dispositions are a named migration-obligation inventory and still require owner review before closure", "native evidence identities are captured in the accompanying README and plan references"]
     }
     payload = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
-    if len(sys.argv) > 1 and sys.argv[1] == "--check":
+    if "--check" in sys.argv:
         current = OUT.read_text() if OUT.exists() else ""
         if current != payload:
             print(f"Rust inventory is stale: {OUT}", file=sys.stderr)

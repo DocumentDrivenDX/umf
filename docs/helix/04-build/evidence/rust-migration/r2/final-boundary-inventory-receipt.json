@@ -1,0 +1,88 @@
+{
+  "boundary": {
+    "cargoStatus": "resolved",
+    "checkedSourceModules": 578,
+    "findingCount": 0,
+    "negativeControls": {
+      "allowedPureRustDependency": "pass",
+      "allowedRelativeImportAccepted": "pass",
+      "bindingSourceEngineImportRejected": "pass",
+      "forbiddenHostDependency": "pass",
+      "legacyV8AllowedOnlyAtExactDebtFile": "pass",
+      "privateCrossPackageImportRejected": "pass",
+      "temporaryManifestAllowedDependency": "pass",
+      "temporaryManifestForbiddenDependency": "pass",
+      "unscopedV8ImportRejected": "pass"
+    },
+    "productionCoreStatus": "pass",
+    "sha256": "d56764f77e32977f134a994795c03c09cbe112de5f8d5dfbfebd837f2bf71c72",
+    "status": "pass",
+    "v8DebtCount": 2
+  },
+  "boundaryTests": {
+    "count": 15,
+    "durationSeconds": 0.136,
+    "status": "pass"
+  },
+  "capturedAt": "2026-10-22T06:17:38.138749+00:00",
+  "cohortStatus": "post-format precommit source check; final installed qualification binds a committed source closure separately",
+  "commands": {
+    "boundary_check": {
+      "argv": [
+        "python3",
+        "scripts/check-rust-boundaries.py"
+      ],
+      "exitCode": 0,
+      "log": "final-boundary_check.log"
+    },
+    "boundary_tests": {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.rust-inventory.test_boundaries",
+        "tests.rust-inventory.test_inventory"
+      ],
+      "exitCode": 0,
+      "log": "final-boundary_tests.log"
+    },
+    "inventory_check": {
+      "argv": [
+        "python3",
+        "scripts/rust-inventory.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "final-inventory_check.log"
+    },
+    "inventory_regenerate": {
+      "argv": [
+        "python3",
+        "scripts/rust-inventory.py"
+      ],
+      "exitCode": 0,
+      "log": "final-inventory_regenerate.log"
+    }
+  },
+  "gitHead": "9d1d42ab1e3fb2179a4edcb51aa577967925b208",
+  "inventory": {
+    "activeScripts": 301,
+    "sha256": "f275dfa71d2847290bf2cabcebc48240dddad731576fab774c602022bba5b59c",
+    "sourceModules": 569,
+    "status": "current"
+  },
+  "rawLogHashes": {
+    "final-boundary_check.log": "d56764f77e32977f134a994795c03c09cbe112de5f8d5dfbfebd837f2bf71c72",
+    "final-boundary_tests.log": "174f661e0ae782023312c3c52500f8cc0a58ca558c4744b611fd1a11de8d7e38",
+    "final-inventory_check.log": "5c8a6d851a6319ab3386c1bd41696d519dcd974a32814a1384de06b3cf466d7e",
+    "final-inventory_regenerate.log": "59b2ca00c5fe0946fe5978ebeb146d053bc83919ffbbee12cd7c58d27b91f25c"
+  },
+  "schema": "umf.rust-migration-r2-final-boundary-inventory/1",
+  "sourceHashes": {
+    "crates/umf-core/src/schema.rs": "440a95b1bd4a672be707312749c4928b1b4b6428228b1b4108861b217f4bd391",
+    "scripts/check-rust-boundaries.py": "5ab65e90ada39a73b386a226f77dc99d57640597c5f385bfd0d3cc12e965f6bd",
+    "scripts/rust-inventory.py": "27ff795ef0473d235b98ce02b34f31c4e64aca2dc1de4c5add4936d27c607209",
+    "spec/metamodel/generated/manifest.json": "b974429720cf9cb021719b476d544282204ea94041898f6f23fbcd827bfdc862"
+  },
+  "toolchain": "rustc 1.90.0 (1159e78c4 2025-09-14)"
+}

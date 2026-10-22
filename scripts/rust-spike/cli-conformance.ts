@@ -8,7 +8,7 @@ const canonical = (value: any): string => JSON.stringify(value && typeof value =
   ? Array.isArray(value) ? value.map(item => JSON.parse(canonical(item)))
     : Object.fromEntries(Object.keys(value).sort().map(key => [key, JSON.parse(canonical(value[key]))]))
   : value);
-const cases = [
+const cases:any[] = [
   ...requests(),
   {op:'source-roundtrip',sourceUnits:[1,2,3,4],options:{capacity:3}},
   {op:'validate-record',model:JSON.parse(modelText),sourceUnits:requests().find(request=>request.op==='validate-record')!.sourceUnits,record:recordInput,options:{cancelAtStep:2}},
@@ -55,7 +55,7 @@ for (const [index, [request, actual]] of cases.map((request, index) => [request,
       if (valid && canonical(actual.retainedModel) !== canonical(request.model)) throw new Error('CLI lost unknown extension content');
     }
   } else {
-    const expectedGeneration = expected.generationCases[generationIndex++];
+    const expectedGeneration = expected.generationCases[generationIndex++]!;
     if (expectedGeneration.caseName === 'unknown-record-extension') {
       if (actual.code !== 'UNSUPPORTED_RECORD' || actual.complete !== false) throw new Error(`CLI generator did not refuse unknown selected Record extensions: ${JSON.stringify(actual)}`);
       results.push({index,op:request.op,ok:actual.ok,code:actual.code});

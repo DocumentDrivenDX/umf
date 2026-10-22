@@ -1,0 +1,47 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-ARITHMETIC-001",
+  "status": "reviewed-production-decision",
+  "overallR2Approved": false,
+  "scope": "Python schema consumer numeric keyword execution; public portable Value and Python schema source admission unchanged",
+  "oracle": {
+    "umfRevision": "53de049136c7e41b482d1a73665d031cd5fbaec6",
+    "python": "3.11.17",
+    "jsonschema": "4.26.0",
+    "sourceHashes": {
+      "/private/tmp/umf-r2-predecessor-53de049/python/src/umf/schemas.py": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+      "/private/tmp/umf-r2-predecessor-53de049/python/src/umf/json.py": "3b9362c4111fb96b5e79604e7150eacf88be07a8232013a1d2695afae97c7539",
+      "/private/tmp/umf-r2-binding-venv/lib/python3.11/site-packages/jsonschema/_keywords.py": "afcfc3aea01f9fa40bc109e65c4820bde89253e51a20bda9da7b8f20d7a57c57",
+      "/private/tmp/umf-r2-binding-venv/lib/python3.11/site-packages/jsonschema/_types.py": "7ff9e44c36eb8dadc4ddfb083530bbdf2fe03174d4db5d08fc7eea2b434ddf47",
+      "/private/tmp/umf-r2-binding-venv/lib/python3.11/site-packages/jsonschema/_legacy_keywords.py": "dad5aec113d66d84bb10097cc01202feb69b1aebf527875f60ba8d10fa528610",
+      "/private/tmp/umf-r2-binding-venv/lib/python3.11/site-packages/jsonschema/validators.py": "97f171b995b4b0ca05530a9366a1252fb1753f99f3cb7b1068b6d9aab1096fa5"
+    }
+  },
+  "fixtures": {
+    "sol-python-schema-arithmetic-predecessor.json": {
+      "sha256": "79318a3247e8b00d048c7213c402e09adb7779bfe771f84755005da40da1ee6d",
+      "cases": 648
+    },
+    "sol-python-schema-arithmetic-edges-predecessor.json": {
+      "sha256": "fd6521e6d8673c02529401650303675f2ebe54fae6004ba8df1d0577acbadda2",
+      "cases": 1938
+    }
+  },
+  "requiredSemantics": [
+    "Keep Python Integer versus Float instance and schema-origin distinctions for dialect-specific integer type and divisor operation selection.",
+    "Evaluate ordered comparisons using the predecessor active comparison predicate; unordered NaN does not satisfy <= or >= and therefore passes numeric exclusive bounds.",
+    "An integer schema divisor uses Python remainder; a float divisor uses float quotient and int comparison, with exact Fraction fallback only after int conversion OverflowError. Preserve predecessor exceptions from quotient conversion and Fraction conversion.",
+    "Preserve all finite, infinite, NaN, arbitrary integer and signed-zero instance carriers already admitted by the Python consumer profile. Schema source remains the separately frozen portable admission profile."
+  ],
+  "exceptionMapping": {
+    "nativeExpectedEvidence": "Retain native ValueError/OverflowError class and message in immutable predecessor observations.",
+    "rustTarget": "EngineError with stable code PYTHON_SCHEMA_ARITHMETIC and deterministic reason for the failed Python arithmetic operation.",
+    "pythonFacade": "Raise existing UmfCoreError; never turn the exception into is_valid=False, a validation diagnostic, or _NativeSchemaError.",
+    "qualification": "This new Rust consumer error envelope preserves success/invalid/refusal distinctions. Exact predecessor Python exception class and message identity is not claimed. No blanket jsonschema API compatibility claim."
+  },
+  "resourceRequirements": [
+    "Use the same generic schema evaluator. No Python runtime or host arithmetic fallback.",
+    "Charge Context before BigInt remainder, rational numerator/denominator construction, shifts, comparison and formatting; propagate meter/cancellation/limit errors.",
+    "No new private source/value cap and no loosening ordinary UMF admission."
+  ],
+  "verificationStatus": "Independent pre-fix native comparison: original648 has108 differences; companion1938 has299 differences. Owner implementation and fresh coherent native/installed verification pending."
+}

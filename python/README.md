@@ -12,9 +12,22 @@ Install the qualified release wheel:
 pip install https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.1/umf_core-0.10.0-py3-none-any.whl
 ```
 
-For development, use `pip install ./python` from a checkout. PyPI publication
-is not configured; the GitHub release and its checksums identify the distributed
-wheel. The separately distributed experimental `umf_access` host adapter is
+The release URL above identifies the existing published Python artifact. The
+R2 development source builds a platform-specific native Rust extension instead:
+
+```sh
+rustup toolchain install 1.90.0
+pip install ./python
+```
+
+Building from a checkout or source distribution requires Cargo/Rust 1.90.0 and
+the locked Cargo dependencies. An installed native wheel does not require Cargo,
+Node, Bun or V8. Native import failures are explicit; there is no semantic
+fallback. Pydantic remains the Python access-model dependency. This development
+change does not publish or replace the release linked above.
+
+The GitHub release and its checksums identify the distributed wheel.
+PyPI publication is not configured. The separately distributed experimental `umf_access` host adapter is
 not required to read or validate UMF documents.
 
 ```python
@@ -51,6 +64,12 @@ versions, permitted scopes, a JSON Schema and optional semantic callback.
 Callbacks receive copies; schema references must be local. Documents never
 authorize loading code or fetching schemas. `schema_validator()` is reusable
 for consumer-owned schemas and honors their declared dialect.
+
+The R2 Rust-backed production hosts and their resource controls are described in
+[bindings/core/README.md](../bindings/core/README.md). Ordinary UMF values retain
+the portable safe-number/UTF-16 profile. Standalone Python consumer-schema
+validation uses a separate native Python value profile; exact tested runtime
+versions and compatibility limits belong to the R2 qualification evidence.
 
 Run `python -m pytest python/tests` from the repository root. Build with
 `uv build --project python`. The source distribution includes the current

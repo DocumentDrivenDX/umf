@@ -67,7 +67,7 @@ const result = {
   },
   scope: {coreVersion:'0.10.0',operations:['source-roundtrip','validate-record','generate-keyed-record'],completeClaim:false,
     platformsQualified:[`${platform()}-${arch()}`],pythonVersions:['3.11'],nodeBindingRuntimes:['Node', 'Bun'],browser:'Chromium'},
-  artifacts: await Promise.all(artifacts.map(async ([label,path]) => ({...(await describe(label,path)),installedPath:path.replace(root,'<worktree>')}))),
+  artifacts: await Promise.all(artifacts.map(async ([label,path]:any) => ({...(await describe(label,path)),installedPath:path.replace(root,'<worktree>')}))),
   source: await Promise.all(sourceFiles.map(file => describe(file,resolve(root,file)))),
   measurements: {
     cli: await runJson('cli-conformance.json'),python:pythonDetails.measurement,node:nodeDetails.measurement,bun:bunDetails.measurement,

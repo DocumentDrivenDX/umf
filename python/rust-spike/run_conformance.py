@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Run conformance cases against the installed native Python wheel only."""
 import json
-import resource
 import os
+import resource
 import subprocess
 import sys
 import time

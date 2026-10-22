@@ -1,22 +1,28 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Current-core structural and model-program validation."""
+"""Current-core structural and model-program validation through Rust."""
 
-from .constraint_kernel import run_core_constraints
-from .json import copy_json
-from .models import Document
+from ._rust import validate_document as rust_validate_document
 from .registry import Diagnostic, Registry, Validation
-from .schemas import core_structure_diagnostics
 
 
-def validate_document(value, registry: Registry | None = None) -> Validation:
-    try:
-        data = value.to_dict() if isinstance(value, Document) else copy_json(value)
-        structural = core_structure_diagnostics(data)
-        if structural:
-            return Validation(False, False, structural)
-        document = Document.model_validate(data)
-    except (ValueError, TypeError) as error:
-        return Validation(False, False, (Diagnostic("STRUCTURE", "", str(error)),))
-    diagnostics = run_core_constraints(document.to_dict(), registry)
-    valid = not any(diagnostic.severity == "error" for diagnostic in diagnostics)
-    return Validation(valid, valid and not diagnostics, tuple(diagnostics))
+def validate_document(
+    value,
+    registry: Registry | None = None,
+    *,
+    max_work: int | None = None,
+    meter=None,
+    is_cancelled=None,
+    now=None,
+    deadline_ms: int | None = None,
+) -> Validation:
+    result = rust_validate_document(
+        value,
+        registry,
+        max_work=max_work,
+        meter=meter,
+        is_cancelled=is_cancelled,
+        now=now,
+        deadline_ms=deadline_ms,
+    )
+    diagnostics = tuple(Diagnostic(**diagnostic) for diagnostic in result["diagnostics"])
+    return Validation(result["valid"], result["complete"], diagnostics)

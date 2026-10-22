@@ -4,6 +4,8 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location("rust_boundaries", ROOT / "scripts/check-rust-boundaries.py")
@@ -19,6 +21,14 @@ class BoundaryRuleTests(unittest.TestCase):
             debt[path] = record
         self.assertEqual([], MODULE.scan_text("python/umf_codegen/src/umf_codegen/_embedded.py", "from py_mini_racer import MiniRacer", allowed_debt=debt))
         self.assertTrue(MODULE.scan_text("python/umf_access/src/umf_access/values.py", "import py_mini_racer", allowed_debt=debt))
+
+    def test_production_core_cannot_restore_retired_runtime_or_reference_fallback(self):
+        for source in ["from jsonschema import Draft7Validator", "from ruamel.yaml import YAML"]:
+            findings = MODULE.scan_text("python/src/umf/schema.py", source)
+            self.assertEqual("retired-python-core-runtime", findings[0]["rule"])
+        findings = MODULE.scan_text("bindings/core/node/index.js", "import {validateDocument} from '../../../../src/validation/document';")
+        self.assertEqual("rust-binding-semantic-fallback", findings[0]["rule"])
+        self.assertEqual([], MODULE.scan_text("src/validation/document.ts", "import {validate} from './reference'"))
 
     def test_cross_package_private_import_is_rejected(self):
         findings = MODULE.scan_text("python/src/umf/example.py", "from umf_access._internal import private_api")
@@ -56,6 +66,18 @@ class BoundaryRuleTests(unittest.TestCase):
         self.assertEqual("unqualified", MODULE.qualify_wasm_entropy_exception(**multiple)["status"])
         drift = {**good, "source_hashes": {**good["source_hashes"], "Cargo.lock": "drift"}}
         self.assertEqual("unqualified", MODULE.qualify_wasm_entropy_exception(**drift)["status"])
+
+    def test_production_graph_has_no_spike_entropy_exception(self):
+        def report(source):
+            with patch.object(MODULE, "cargo_tree", return_value={"status": "resolved", "stdout": source, "stderr": ""}), patch.object(MODULE.subprocess, "run", return_value=SimpleNamespace(stdout="host: x86_64-unknown-linux-gnu\n")):
+                return MODULE.check_production_core()
+        findings, reports = report("umf-core v0.1.0\nserde v1.0.219\n")
+        self.assertEqual([], findings)
+        self.assertTrue(all(item["status"] == "pass" for item in reports))
+        for forbidden in ["getrandom", "wasm-bindgen", "jsonschema", "ahash", "pyo3", "v8", "boa_engine"]:
+            findings, reports = report(f"umf-core v0.1.0\n{forbidden} v1.0.0\n")
+            self.assertEqual(6, len(findings), forbidden)
+            self.assertTrue(all(item["status"] == "fail" for item in reports))
 
     def test_inverse_cargo_tree_reports_only_active_target_parents_and_path(self):
         fixture = """wasm-bindgen v0.2.100

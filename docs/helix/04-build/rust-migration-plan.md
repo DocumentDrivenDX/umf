@@ -36,7 +36,7 @@ from the complete Python generator operation surface; then finish the broader
 single-source migration. Neither milestone implies new native semantic support.
 The owner authorizes R0–R2 in this worktree, with Sol planning/review and Luna
 implementation in parallel. R2 includes resolving production interfaces/resources,
-implementation, tests, review, main integration and the PR/merge handoff. R3–R8
+implementation, tests, review, main integration and the PR creation and merge. R3–R8
 and package publication remain separate actions.
 
 Governing artifacts: [ADR-006](../02-design/adr/ADR-006-shared-rust-implementation.md),
@@ -49,10 +49,42 @@ CONTRACT-079 (unified access), and CONTRACT-081 (table lifecycle). Before portin
 contract, design, tests and execution record, including amendments. Older
 implementation-plan evidence remains scoped to the artifacts it actually tested.
 
-### Current evidence and inventory
+### R2 current status
 
-Repository inspection on 2026-10-21 found no first-party Cargo manifest outside
-fixtures/evidence. This is a migration, not consolidation of an existing Rust core.
+R2 implementation is under final source and installed-artifact review. It is not
+complete until the current source passes the full gate, Sol approves, and the PR
+merges. Earlier counts and failures below are dated implementation checkpoints;
+they do not supersede the final qualification receipt. Main is integrated through
+`53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41); refresh before merging.
+
+The production boundary is a shared Rust core and metamodel compiler, a native
+CLI, Python abi3 extension, Node/Bun native addon and browser WASM loader. Python
+core execution uses Rust. The default TypeScript SDK remains its retained R7
+reference, and `umf-codegen` still uses MiniRacer for seven operations until R3/R4.
+Cooperative resource controls and trusted callbacks are explicit host capabilities;
+HardIsolated refuses before work. Runtime text fields are metered without a private
+4M ceiling; actual source/serialized text retains that ceiling. Ordinary trees and
+independently admitted catalog resources retain their separate budgets.
+
+Review expanded the original shared 139-vector gate with independent retained
+runtime, Python consumer, six-dialect schema, regex and serializer corpora. Exact
+scope, hashes and approved corrections belong to the R2 evidence directory.
+Future slices must baseline their complete current operation surface and qualify
+public raw-value entry points as well as installed wrappers. Late review also
+requires trusted internal terminal provenance (host errors cannot be classified
+by text), reached local-reference phase/order controls, and evaluator depth
+qualification on ordinary native thread and actual WASM stacks. Annotation
+collection is versioned: declared-key/item marking and validity predicates must
+follow the native collector phase, with correction-001
+[amendment](evidence/rust-migration/r2/approved-python-schema-2019-ap-correction.json)
+explicitly selecting the same-defect 2019 additional-property rule. Native
+fixtures remain immutable; exact target selection belongs in the evidence gate.
+
+### Historical starting inventory (R0)
+
+The initial R0 inspection found no first-party Cargo manifest outside fixtures/evidence.
+The table records that starting point; the R2 production crates and expanded
+seven-operation generator debt are recorded below and in the live R2 inventory.
 
 | Surface | Current implementation / evidence | Migration obligation |
 | --- | --- | --- |
@@ -114,7 +146,7 @@ versions as supported APIs. Historical fixtures remain usable as inert controls.
 | R0 | Baseline and boundary map; ADR-006, architecture, TP-001 | None | Machine-readable public operation/export/dependency census across TS/Python, generated CLI commands and active tool algorithms; classify every module and upstream dependency. Freeze current positive/negative vectors, all five codegen operations, exact bytes/hashes and native evidence identities. Establish proposed boundary checker before semantic ports. |
 | R1 | Representation and binding spike; CONTRACT-001/080, ADR-004/006 | R0 | Minimal Rust native/Python/Node/Bun/browser vertical slice: lossless source-code-unit transport, current generated-schema structural model admission and a dynamically emitted Key-class block compared byte-for-byte with the current TypeScript generator. Semantic validation remains incomplete; full package generation remains R3. Freeze the experimental request/capability protocol and per-slice test allocations. Exercise unknowns, Unicode, numerics, callback errors, cancellation and installed packages. Select/pin tools, supported platforms and ABI; record rejected options. No broad rewrite until this passes. |
 | R2 | Core model/compiler/kernel; ADR-005, CONTRACT-080, TD-091, STP-091 | R1 | Rust metamodel compiler, structural admission, exact literal/constraint kernels, serialization, registry, copying and diagnostics. Self-validation and byte-identical regeneration; frozen vectors, rule mutations and Rust/Python/Node/Bun/Chromium parity. Installed `umf-core` compatibility, including consumer-supplied extensions. |
-| R3 | Generators and portable plans; CONTRACT-067/068/079/081 | R2 | Rust current access/API-description generator, compiler IR/emission/bundle hashing and deployment/migration compiler/verifier closure. All five embedded operations match frozen outputs/refusals; unchanged generated clients type-check under pinned mypy/pyright/ty and run table/ontology calls. Writer fault/path/drift/atomicity checks pass. |
+| R3 | Generators and portable plans; CONTRACT-067/068/079/081 | R2 | Rust current access/API-description generator, compiler IR/emission/bundle hashing and deployment/migration compiler/verifier closure. All seven currently embedded operations match frozen outputs/refusals (the original five plus PR41 change discovery and row-scope normalization); unchanged generated clients type-check under pinned mypy/pyright/ty and run table/ontology calls. Writer fault/path/drift/atomicity checks pass. |
 | R4 | V8-free Python and native CLI cutover; ADR-006, TP-001 | R3 | Installed native wheels for `umf-core` and `umf-codegen`, preserving names/public functions and CLI generate/check behavior; Rust CLI exposes qualified portable operations and verifiers. Remove MiniRacer, embedded JS payload/runtime loading, obsolete V8 package/build paths and transitive engine dependencies. Fresh offline runtime tests with JS runtimes unavailable; inspect wheel dependency and binary closure. Milestone A below. |
 | R5 | Remaining shared operations; CONTRACT-001–011 and each current family contract/test plan | R2; R4 before broad cutover | Port model operations, core ideals, extensions/actions/security, domain-pack algorithms, adapters and projections in bounded dependency order. For each family: fixtures, loss reports, unknown guards, both recovery directions, independent native oracles, browser/native/wrapper parity and removal of old semantic implementation. Each family is separately reviewable; unresolved families stay visible in the census. |
 | R6 | Python access and consumer bridges; ADR-004, CONTRACT-067–075/079, current consumer contracts | R3; relevant R5 families | Move remaining UMF-owned shared request/codec/planner/checking algorithms into Rust. Thin Python drivers/session/async/transport glue retains host ownership; generated client stays stdlib-only. Replay genuine installed native PostgreSQL/Weft/Truss/Ashlar/TableSpec integrations for changed paths, including cancellation, transactions, authorization and exact results. Preserve unrelated held/unsupported scopes. |
@@ -376,8 +408,9 @@ active goal's available metering at implementation checkpoints and retain honest
 limits on agent-wide accounting. Estimate remaining work from actual port/test
 results; no calendar, performance or monetary promise is made.
 
-Current state: main synchronized through `2ede4c879`; the production freeze is
-complete and three Luna implementation shards are active. The owned UTF-16 value,
+Current state: main synchronized through `53de049136c7e41b482d1a73665d031cd5fbaec6`
+(PR41), with a fresh fetch confirming no later main changes. The production
+freeze is complete. Luna implementation and Sol independent review remain active. The owned UTF-16 value,
 closed private wire, explicit immutable resources and host callback tokens are
 frozen. Cooperative limits are the supported profile; HardIsolated must fail
 before work. Production core/compound compiler closures have no R1 entropy
@@ -397,3 +430,133 @@ installed native/Python/Node/Bun/Chromium paths; run the full frozen and mutatio
 corpus, resolve Sol review findings, refresh evidence and main, then PR/merge.
 R2 completion requires all work represented by its row above; unresolved support
 subsets are gaps, not permission to call a smaller port complete.
+
+
+### R2 review checkpoint — 2026-10-21
+
+Sol has not approved R2. Its second review found YAML surrogate and numeric
+profile defects, unmetered runtime copies, dialect-sensitive schema behavior,
+UTF-16 regex admission, wrapper overhead consuming semantic limits, callback
+text narrowing, and incomplete installed-host/CI qualification. These are closure
+requirements, not deferred migration slices. Compiler/YAML corrections now pass
+49 Rust tests and 26 compiler/parity tests (209 assertions); remaining runtime
+and binding fixes require a coherent rebuild and fresh independent review.
+
+The compiler bridge now builds in its own target directory, retains an immutable
+private executable with a checked digest, and attests the source closure before
+and after the complete Rust/Ajv generation pass. Direct copied strings retain the
+predecessor's unrestricted aggregate text size, with work charged before copies;
+the 4M UTF-16 limit applies to source/serialized output. Transport limits must
+account for protocol overhead separately and preserve valid depth-128 payloads.
+A bounded iterative transport parser is required; serde recursion protection is
+not disabled. Production binding capabilities must exercise cooperative metering,
+mid-work cancellation, injected deadlines and reentry in installed artifacts.
+
+The current upstream V8 bridge exposes seven operations. R3/R4 must independently
+baseline and port the two PR41 additions as well as the historical five; R2 does
+not remove MiniRacer from umf-codegen. Python consumer schema compatibility must
+cover the predecessor's six declared dialects, with native versions and tested
+keywords recorded explicitly. Completion still requires the entire R2 row, clean
+installed wheel/sdist/npm/CLI/WASM evidence, Sol approval, and reviewed PR/merge.
+
+
+### Native Python profile and final integration checkpoint
+
+R2 now implements the Python consumer carrier and source/value serialization
+profile inside the shared Rust evaluator/parser/writer. The native boundary
+corpus expanded beyond the shared 139 cases: schema construction has 9,282
+decisions across six dialects, instance validation has 4,995 pinned official
+cases, and regex has 70,542 independently reviewed outcomes across three Python
+profiles. Installed CPython 3.11 checks currently pass 197 public tests and all
+schema/core comparisons. These intermediate results do not replace the final
+committed-source artifact receipt or overall Sol review.
+
+Native serializer review required exact Python code-point identity, safe-source
+int/float identity, ruamel lexical scalar grammar and YAML character admission.
+JSON read/write and YAML read preserve insertion order; YAML write recursively
+sorts mappings by Python code-point lexical order. Frozen native observations
+now total 1,872 (372 initial + 60 ordering + 852 scalar + 588 character), without
+changing prior expectations. R2-SOL-CORRECTION-002 explicitly fixes the old YAML
+writer's silent NEL loss by escaping U+0085; native raw-source normalization
+remains unchanged. The existing schema annotation correction remains separately
+guarded as R2-SOL-CORRECTION-001.
+
+The retained TypeScript core suite passes 239 tests in 38 isolated processes
+(9,682 assertions). Production Rust, compiler fixed point, metamodel browser,
+TypeScript configurations and boundary controls passed at the latest integration
+checkpoint. Sol still requires complete generic constraint behavior for typed
+diagnostics, final Python character-profile verification, a committed source
+checkpoint, fresh installed multi-host qualification and independent final
+review. Main remains at PR41 after refresh. R3/R4 still own all seven V8 bridge
+operations; no package publication or broad native adapter requalification is
+claimed by R2.
+
+
+The subsequent source-context corpus adds 522 native observations (2,394 total
+serializer observations). It exposed ruamel's distinct scanner line-break and
+reader-column behavior for NEL/LS/PS and implicit timestamp key identity. Sol
+approved R2-SOL-YAML-PARSER-PROFILE-001 before implementation: a narrow source-pinned
+saphyr-parser 0.1.0 vendor patch with immutable default/Python scan profiles, shared
+by all native/WASM targets. The vendor lives under the existing attested core
+closure, retains upstream identity/licenses and is included in offline sdists.
+Source rewriting and blanket block-scalar rejection were rejected as incompatible.
+The final gate also adds combined-resource CLI/WASM transport and missing-loader
+controls, and native model/program/policy mutation tests. These remain closure
+work until actual execution and independent review pass.
+
+
+### Interpreter and direct Rust API lessons
+
+The frozen retained-TypeScript operator comparison now includes 6,271 ordinary
+cases and 2,619 edge cases, including 805 expected coercion refusals. Review found
+that preserving only model-specific vectors was insufficient: generic Missing,
+Map/container, numeric coercion, own `length`, and object-construction origins
+are observable interpreter behavior. R2-SOL-RUNTIME-OBJECT-PROVENANCE-001 retains
+private copied-versus-expression object origins without changing Value or wire
+formats. The stable Rust coercion-error mapping is qualified separately from
+JavaScript exception class/message identity. Native numeric coercion contributes
+1,548 additional independent boundary observations.
+
+Python serialization now has 5,226 frozen observations across its six native
+profiles, including 48 reserved-directive tail controls. Shared scanner bulk-read
+and buffered-input paths must implement the selected profile consistently; a
+passing string-input path alone is insufficient. The vendor manifest disables
+automatic upstream development-harness discovery while retaining its five
+self-contained library unit tests; the workspace suite has executed successfully.
+
+Direct Rust callers also need admission guarantees. Public raw-Value subsystem
+entry points admit each input tree with the caller Context; crate-private
+already-admitted paths preserve earlier engine admission and avoid charging
+private wrappers against payload limits. Optional literal policies are validated
+eagerly even if a program never calls a literal operator. Removing an unused
+contextless resource snapshot helper prevents an unmetered public copy path.
+Apply the same public/private boundary discipline to R3 families. These findings
+are being closed before the final committed-source installed-host receipt and
+overall Sol approval; intermediate passing checkpoints are not R2 completion.
+
+
+### R2 compatibility and resource lessons for later slices
+
+A matching validity corpus does not establish API compatibility. Python consumer
+review additionally checks native integer/float origin, nonfinite arithmetic,
+keyword order, first-error evaluation, deferred iterator exceptions, nested
+sibling traversal and annotation work at its actual evaluation phase. Future
+ports must baseline public methods and traversal behavior, not only a final
+boolean or flattened diagnostic list. Keep independent predecessor fixtures
+immutable and record approved target corrections separately.
+
+Resource admission must precede raw evaluator allocations as well as normalized
+engine output: snapshots, annotation/state copies, dynamic key comparisons,
+error parameters and typed host projection all participate. Use separate
+already-admitted internal helpers without imposing private text caps or charging
+transport wrappers against payload budgets. Wide work totals/estimates and host
+notification chunks must behave consistently on native and wasm32; actual
+Chromium probes qualify that boundary. These cooperative controls do not imply
+hard process isolation.
+
+Native hash-set traversal is not a reproducible ordering contract. The reviewed
+Python additional-properties correction chooses owned object insertion order for
+that explicitly identified unordered branch, with seed evidence and exact target
+controls. Other diagnostic and exception ordering remains an independent gate.
+This lesson applies to R3's newly expanded seven-operation surface: freeze the
+current full behavior and decide nondeterministic cases before implementing them.

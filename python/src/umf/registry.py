@@ -1,13 +1,11 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit consumer registration; document content never loads executable code."""
 
+import sys
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from jsonschema import Draft202012Validator
-
-from .json import copy_json
-from .schemas import local_references
+from ._rust import _raise_native, copy_python_consumer_value, new_registry
 
 
 @dataclass(frozen=True)
@@ -37,32 +35,27 @@ class Extension:
 class Registry:
     def __init__(self):
         self._entries = {}
+        self._rust_registry = new_registry()
 
     def register(self, extension: Extension) -> None:
-        key = (extension.id, extension.version)
-        if key in self._entries:
-            raise ValueError(f"Extension already registered: {key}")
-        if not extension.id or not extension.version or not extension.scopes:
-            raise ValueError("Extension identity, version and scopes required")
-        if any(
-            scope not in ("document", "module", "element") for scope in extension.scopes
-        ):
-            raise ValueError("Unsupported extension scope")
-        schema = copy_json(extension.schema)
-
-        local_references(schema)
-        Draft202012Validator.check_schema(schema)
-        # Copy caller-owned schema so later mutation cannot change admission.
-        self._entries[key] = (
-            Extension(
+        if extension.semantics is not None and not callable(extension.semantics):
+            raise TypeError("Extension semantics must be callable")
+        # Consumer schemas keep Python code-point identity (including an
+        # explicit surrogate pair) while Rust admits and owns the snapshot.
+        schema = copy_python_consumer_value(extension.schema)
+        try:
+            self._rust_registry.register(
                 extension.id,
                 extension.version,
-                extension.scopes,
+                list(extension.scopes),
                 schema,
+                sys.version_info.minor,
                 extension.semantics,
-            ),
-            Draft202012Validator(schema),
-        )
+            )
+        except ValueError as error:
+            _raise_native(error)
+        key = (extension.id, extension.version)
+        self._entries[key] = (Extension(extension.id, extension.version, tuple(extension.scopes), schema, extension.semantics), None)
 
     def get(self, id: str, version: str):
         return self._entries.get((id, version))

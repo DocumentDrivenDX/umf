@@ -21,3 +21,9 @@ __pycache__/
 
 # Rust migration spike build and installed-package artifacts.
 /target/
+
+# Production Rust host artifacts are built/staged and qualified by the harness.
+/bindings/core/node/*.node
+/bindings/core/wasm/pkg/
+/python/src/umf/_rust_core*.so
+/python/src/umf/_rust_core*.pyd

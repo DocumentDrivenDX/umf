@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Rust production core
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  production-conformance:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.11.17', '3.12.15', '3.13.16']
+    runs-on: ${{ matrix.os }}
+    env:
+      UMF_JSON_SCHEMA_SUITE: ${{ runner.temp }}/umf-json-schema-test-suite
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.0'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
+      - name: Fetch pinned independent schema controls
+        run: |
+          git init "$UMF_JSON_SCHEMA_SUITE"
+          git -C "$UMF_JSON_SCHEMA_SUITE" remote add origin https://github.com/json-schema-org/JSON-Schema-Test-Suite.git
+          git -C "$UMF_JSON_SCHEMA_SUITE" fetch --depth 1 origin 89e83a74014617ffbe79a56d83d14d054cd11417
+          git -C "$UMF_JSON_SCHEMA_SUITE" checkout --detach FETCH_HEAD
+      - run: bun install --frozen-lockfile
+      - run: cargo fetch --locked
+      - run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
+      - name: Populate Python cache before offline qualification
+        run: |
+          uv venv --python python "$RUNNER_TEMP/umf-build-cache"
+          uv pip install --python "$RUNNER_TEMP/umf-build-cache/bin/python" 'hatchling>=1.27,<2' 'pydantic>=2.11,<3' 'pytest>=8.4,<10'
+      - run: bunx playwright install --with-deps chromium
+      - name: Rust compiler and semantic engine
+        run: cargo test --locked --workspace
+      - name: Generated resources and fixed point
+        run: bun run check:metamodel
+      - name: Installed cross-runtime conformance
+        run: bun scripts/rust-core/conformance.ts
+        env:
+          UMF_PYTHON: python
+      - name: Migration boundaries
+        run: bun run check:rust-boundaries

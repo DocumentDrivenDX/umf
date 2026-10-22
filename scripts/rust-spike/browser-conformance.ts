@@ -39,15 +39,15 @@ try {
     let missingCryptoLoaded = false;
     const missingCrypto = await initializeWasm(() => { missingCryptoLoaded=true; return generated.default(); }, {crypto:undefined});
     if(missingCryptoLoaded) throw new Error('WASM loader ran without browser crypto capability');
-    const capability=JSON.parse(missingCrypto.run(JSON.stringify(data.requests.find(request=>request.op==='validate-record'))));
+    const capability=JSON.parse(missingCrypto.run(JSON.stringify(data.requests.find((request:any)=>request.op==='validate-record'))));
     if(capability.code!=='CAPABILITY_REQUIRED'||capability.complete!==false) throw new Error(`WASM missing-crypto refusal was not explicit: ${JSON.stringify(capability)}`);
     const binding = await initializeWasm(async () => { await generated.default(); return generated; });
     const bootMs = performance.now() - bootStarted;
-    const normalize = value => value && typeof value === 'object'
+    const normalize = (value:any):any => value && typeof value === 'object'
       ? Array.isArray(value) ? value.map(normalize)
         : Object.fromEntries(Object.keys(value).sort().map(key=>[key,normalize(value[key])]))
       : value;
-    const same = (a,b) => JSON.stringify(normalize(a)) === JSON.stringify(normalize(b));
+    const same = (a:any,b:any) => JSON.stringify(normalize(a)) === JSON.stringify(normalize(b));
     const checks = [];
     let generationIndex=0;
     for (const [index, request] of data.requests.entries()) {
@@ -67,7 +67,7 @@ try {
         }
         const valid = request.model.umf === '0.10.0' ? data.expected.validation.valid : data.expected.unsupportedValidation.valid;
         if (actual.valid !== valid || actual.tsComparable?.valid !== valid) throw new Error(`TS validity mismatch ${index}`);
-        if (valid && (actual.complete !== false || !actual.diagnostics?.some(d => /INCOMPLETE/.test(d.code)))) throw new Error('structural result claimed complete');
+        if (valid && (actual.complete !== false || !actual.diagnostics?.some((d:any) => /INCOMPLETE/.test(d.code)))) throw new Error('structural result claimed complete');
         if (valid && !same(actual.retainedModel,request.model)) throw new Error('unknown extension data changed');
       } else {
         const expectedGeneration=data.expected.generationCases[generationIndex++];
@@ -93,13 +93,13 @@ try {
       }
       checks.push({index,op:request.op,ok:actual.ok,code:actual.code});
     }
-    const units = text => Array.from({length:text.length},(_,index)=>text.charCodeAt(index));
+    const units = (text:string) => Array.from({length:text.length},(_,index)=>text.charCodeAt(index));
     const callbackInput = data.callbackRequest;
-    const received = [];
-    const callbackResult = JSON.parse(binding.run_with_validator(JSON.stringify(callbackInput),text=>received.push(units(text))));
+    const received:number[][] = [];
+    const callbackResult = JSON.parse(binding.run_with_validator(JSON.stringify(callbackInput),(text:string)=>received.push(units(text))));
     if (!same(received,[callbackInput.sourceUnits]) || callbackResult.complete === true) throw new Error('original callback source units changed');
-    const validationCallback=data.validationCallbackRequest,validationReceived=[];
-    const validationResult=JSON.parse(binding.run_with_validator(JSON.stringify(validationCallback),text=>validationReceived.push(units(text))));
+    const validationCallback=data.validationCallbackRequest,validationReceived:number[][]=[];
+    const validationResult=JSON.parse(binding.run_with_validator(JSON.stringify(validationCallback),(text:string)=>validationReceived.push(units(text))));
     if(!same(validationReceived,[validationCallback.sourceUnits])||validationResult.valid!==true||validationResult.complete!==false) throw new Error('validator callback did not run through actual structural validation');
     let threw = false;
     try {
@@ -107,8 +107,8 @@ try {
       threw = callbackError.code === 'CALLBACK_ERROR' && callbackError.complete === false;
     } catch (error) { threw = error instanceof Error && error.message === 'R1 callback sentinel'; }
     if (!threw) throw new Error('callback exception swallowed or converted to complete success');
-    const reentrantReceived=[];
-    const reentrantResult=JSON.parse(binding.run_with_validator(JSON.stringify(validationCallback),text=>{
+    const reentrantReceived:number[][]=[];
+    const reentrantResult=JSON.parse(binding.run_with_validator(JSON.stringify(validationCallback),(text:string)=>{
       reentrantReceived.push(units(text));
       const nested=JSON.parse(binding.run(JSON.stringify({op:'source-roundtrip',sourceUnits:units('nested')})));
       if (!same(nested.sourceUnits,units('nested'))) throw new Error('nested WASM call changed source');
@@ -130,7 +130,7 @@ try {
     const count=10000, started=performance.now();
     for(let index=0;index<count;index++) binding.run(timedRequest);
     const elapsedMs=performance.now()-started;
-    window.__r1result={status:'pass',engine:binding.engine_version,cases:checks,
+    (window as any).__r1result={status:'pass',engine:binding.engine_version,cases:checks,
       callbacks:{rawSource:{expectedUnits:callbackInput.sourceUnits,receivedUnits:received[0],exact:same(received,[callbackInput.sourceUnits])},
         validationSource:{unitCount:validationCallback.sourceUnits.length,exact:same(validationReceived,[validationCallback.sourceUnits])},
         reentrantValidation:{unitCount:validationCallback.sourceUnits.length,exact:same(reentrantReceived,[validationCallback.sourceUnits])}},
@@ -146,7 +146,7 @@ try {
   result.localRequestCount = requests.length;
 
   // Fresh browser contexts have independent JS/WASM instances and randomized hash seeds.
-  const repeatResults = [];
+  const repeatResults:any[] = [];
   for (let index=0; index<3; index++) {
     const context=await browser.newContext();
     try {
@@ -154,14 +154,15 @@ try {
       repeatPage.on('request',request=>requests.push(request.url()));
       await repeatPage.goto(`http://127.0.0.1:${server.port}/tests/rust-spike/browser-shell.html`);
       repeatResults.push(await repeatPage.evaluate(async ({modelText,generationRequest})=>{
-        const units=text=>Array.from({length:text.length},(_,index)=>text.charCodeAt(index));
-        const generated=await import('/target/rust-spike/wasm/pkg/umf_rust_spike_wasm.js');
+        const units=(text:string)=>Array.from({length:text.length},(_,index)=>text.charCodeAt(index));
+        const generatedUrl='/target/rust-spike/wasm/pkg/umf_rust_spike_wasm.js';
+        const generated=await import(generatedUrl);
         const glue=await import(new URL('/bindings/rust-spike/wasm/index.js',location.href).href);
         const binding=await glue.initializeWasm(async()=>{await generated.default();return generated;});
         const validate=JSON.parse(binding.run(JSON.stringify({op:'validate-record',model:JSON.parse(modelText),sourceUnits:units(modelText),record:{identity:{module:'m',element:'Item'},values:[]}})));
         const generation=JSON.parse(binding.run(JSON.stringify(generationRequest)));
         return {valid:validate.valid,complete:validate.complete,pythonSource:generation.pythonSource,sourceDigest:generation.sourceDigest};
-      },{modelText:vectors.modelText,generationRequest:vectors.requests.find(request=>request.op==='generate-keyed-record'&&request.model.id==='rust-spike-r1')}));
+      },{modelText:vectors.modelText,generationRequest:vectors.requests.find((request:any)=>request.op==='generate-keyed-record'&&request.model.id==='rust-spike-r1')}));
     } finally { await context.close(); }
   }
   if(repeatResults.some(value=>JSON.stringify(value)!==JSON.stringify(repeatResults[0]))) throw new Error('Independent browser contexts produced nondeterministic schema/generator results');

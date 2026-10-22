@@ -30,7 +30,7 @@ const assetRoot=resolve(root,'python/umf_codegen/src/umf_codegen/_assets');
 const manifestBytes=await readFile(join(assetRoot,'manifest.json'));
 const manifest=JSON.parse(manifestBytes.toString('utf8'));
 const build=await Bun.build({entrypoints:[resolve(root,'scripts/codegen/entry.ts')],target:'browser',format:'iife',minify:true,metafile:true,
-  banner:'// SPDX-License-Identifier: MIT OR Apache-2.0\n// Bundled dependencies retain their individual licenses in notices/.',naming:'generator.js',preserveSymlinks:true});
+  banner:'// SPDX-License-Identifier: MIT OR Apache-2.0\n// Bundled dependencies retain their individual licenses in notices/.',naming:'generator.js',preserveSymlinks:true} as Parameters<typeof Bun.build>[0] & {preserveSymlinks:boolean});
 if(!build.success||!build.metafile||Object.values(build.metafile.outputs).some(item=>item.imports.length))throw new Error(build.logs.map(log=>log.message).join('\n')||'Codegen entry did not produce one self-contained bundle');
 const bundle=await build.outputs[0]!.text();
 const bundleBytes=Buffer.from(bundle,'utf8');

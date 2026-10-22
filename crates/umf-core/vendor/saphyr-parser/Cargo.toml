@@ -1,0 +1,23 @@
+# Production manifest for the vendored upstream crate. Its pristine registry manifest is
+# retained as Cargo.toml.upstream; upstream dev tools are excluded from this product crate.
+[package]
+autotests = false
+autobenches = false
+autoexamples = false
+name = "saphyr-parser"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85.0"
+license = "MIT OR Apache-2.0"
+description = "Vendored saphyr-parser 0.1.0 with an explicit ruamel-compatible scanner profile"
+
+[lib]
+name = "saphyr_parser"
+path = "src/lib.rs"
+
+[features]
+debug_prints = []
+
+[dependencies]
+arraydeque = { version = "0.5.1", default-features = false }
+thiserror = { version = "2.0.20", default-features = false }

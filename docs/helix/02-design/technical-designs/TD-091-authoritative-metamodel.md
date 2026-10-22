@@ -154,3 +154,39 @@ compatibility is reviewed/pinned with fresh evidence. Do not bypass an unsupport
 interpreter check or infer free-threaded/PyPy support. The source-build and wheel
 inventories include all resources, licenses, build scripts and runtime loading
 inputs; installed tests run outside the checkout with no executable fallback.
+
+
+### R2 expanded compatibility findings
+
+Sol's review separated Python regex semantics from strict keyword admission. The
+selected implementation is a Rust-owned Python pattern parser and heap-based
+matcher over code points, with explicitly versioned CPython Unicode/grammar data;
+ECMAScript Unicode matching remains a distinct profile. Grammar, classes, flags,
+backreferences, conditionals, lookarounds and raw-surrogate behavior require frozen
+independent CPython controls. The Python boundary's astral-scalar versus explicit
+surrogate-pair distinction is unresolved and must be reviewed before qualification.
+
+Consumer metaschema admission uses pinned third-party metaschema data and the same
+generic Rust evaluator. It must match the six dialects and the predecessor's
+local-reference guard, rather than adding another handwritten keyword-policy
+table in a host wrapper. Native registry compatibility obtains the current core
+version from its supplied package resource, and Python registrations pass their
+explicit consumer regex/profile choice.
+
+The source closure includes embedded schema/Unicode data and their licenses as
+well as Rust modules and Cargo inputs. Cache and output provenance hash exact
+bytes; a clean build cannot depend on undeclared temporary data or an existing
+mutable executable. Installed qualification includes the wheel rebuilt offline
+from its sdist and npm-packed addons outside the checkout. No final support claim
+is established by the implementation decisions alone.
+
+
+The production YAML mechanism is the reviewed saphyr-parser 0.1.0 vendor patch
+in `crates/umf-core/vendor/saphyr-parser`, governed by
+R2-SOL-YAML-PARSER-PROFILE-001. Default and Python adapters share one event/parser
+kernel with explicit immutable scanner profiles. The Python profile models native
+line-break classification separately from marker advancement; preprocessing NEL
+into spaces or newlines cannot preserve the native contextual behavior. Scalar
+key admission retains resolver identity before value flattening. The vendor sits
+inside the existing recursive compiler/source-build closure, including hidden
+license files; it is not an additional runtime or wrapper implementation.

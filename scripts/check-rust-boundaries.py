@@ -10,24 +10,29 @@ import shutil
 import subprocess
 import sys
 import tempfile
+try:
+    import tomllib
+except ModuleNotFoundError:
+    from pip._vendor import tomli as tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT = ROOT / "docs/helix/04-build/evidence/rust-migration/r0/boundary-check.json"
+REPORT = ROOT / "docs/helix/04-build/evidence/rust-migration/r2/boundary-check.json"
 V8_DEBT = {
     "python/umf_codegen/src/umf_codegen/_embedded.py": {
-        "sha256": "d24722ae87839a6f729399b59400d0cfbdcba45b654f22ee0ecac23b37aaccd5",
-        "reason": "Retained current five-operation Python V8 bridge as explicitly scoped pre-R4 migration debt.",
+        "sha256": "06b2c4489d8b0e2068b518e920497b01f984c58ca08954017bfc932a61c9dd53",
+        "reason": "Retained seven-operation Python V8 bridge after main PR41 added discover_changes and row_scope; all remain explicitly scoped R3/R4 debt, with R0 five-operation capture historical.",
         "patterns": ["py_mini_racer", "MiniRacer"],
     },
     "python/umf_codegen/pyproject.toml": {
-        "sha256": "d130d0929d78a074f9d3b157a8356224e513140bc81a423a52b4248af44b5795",
-        "reason": "Pinned MiniRacer distribution dependency is the same pre-R4 Python generator debt.",
+        "sha256": "ee3fe91f0c26558fdf9d85191e521044d4bc11f8d08176c81b037d28790f8012",
+        "reason": "Pinned MiniRacer dependency remains pre-R4 debt; main PR40/41 changed only the package version through 0.1.0a3.",
         "patterns": ["mini-racer==0.14.1"],
     },
 }
 CORE_HOST_CRATES = {
     "pyo3", "napi", "napi-derive", "wasm-bindgen", "wasm-bindgen-futures", "js-sys", "web-sys",
+    "v8", "rusty_v8", "deno_core", "rquickjs", "quick-js", "boa_engine",
     "clap", "tokio", "async-std", "reqwest", "ureq", "hyper", "axum", "actix-web", "std_fs",
 }
 WASM_R1_ENTROPY_EXCEPTION = {
@@ -44,6 +49,8 @@ WASM_R1_ENTROPY_EXCEPTION = {
 CORE_HOST_MODULES = re.compile(r"\b(?:std::(?:fs|net|process|thread|time|env)|tokio::|async_std::|reqwest::|ureq::|napi::|pyo3::|wasm_bindgen::|web_sys::|js_sys::)")
 FORBIDDEN_PY_IMPORTS = re.compile(r"(?m)^\s*(?:from\s+py_mini_racer\b|import\s+py_mini_racer\b|from\s+quickjs\b|import\s+quickjs\b)")
 FORBIDDEN_TS_IMPORTS = re.compile(r"(?m)^\s*(?:import|export)\b[^\n]*?['\"](?:node:vm|node:v8|vm2|quickjs-emscripten|pyodide)['\"]")
+RETIRED_CORE_RUNTIME_IMPORTS = re.compile(r"(?m)^\s*(?:from\s+(?:jsonschema|ruamel)(?:\.|\s)|import\s+(?:jsonschema|ruamel)(?:\.|\s|$))")
+RUST_BINDING_FALLBACK = re.compile(r"""(?m)(?:from\s*|import\s*\()?["'](?:[^"']*/)?src/(?:validation|model|registry)/[^"']*["']""")
 PRIVATE_CROSS_PACKAGE_IMPORT = re.compile(r"(?m)^\s*from\s+(umf|umf_access|umf_codegen)\._[A-Za-z0-9_.]*\s+import")
 GENERATED_MARKER = re.compile(r"Generated (?:from|by)\s+[^\n]+", re.IGNORECASE)
 
@@ -56,6 +63,10 @@ def scan_text(path: str, source: str, *, allowed_debt: dict[str, dict[str, objec
     findings = []
     allowed_debt = allowed_debt or {}
     is_engine_source = path.startswith("src/") or path.startswith("python/src/") or path.startswith("python/umf_access/src/") or path.startswith("python/umf_codegen/src/") or path.startswith("bindings/")
+    if path.startswith("python/src/umf/") and path.endswith(".py") and RETIRED_CORE_RUNTIME_IMPORTS.search(source):
+        findings.append({"rule": "retired-python-core-runtime", "path": path, "message": "Production Python core imports a retired schema/YAML semantic runtime"})
+    if path.startswith("bindings/core/") and path.endswith((".ts", ".js", ".mjs")) and RUST_BINDING_FALLBACK.search(source):
+        findings.append({"rule": "rust-binding-semantic-fallback", "path": path, "message": "Production Rust binding reaches the separate TypeScript reference semantic implementation"})
     if is_engine_source and FORBIDDEN_TS_IMPORTS.search(source):
         findings.append({"rule": "forbidden-javascript-engine-import", "path": path, "message": "UMF library source imports a JavaScript engine/runtime loader"})
     if is_engine_source and path.endswith(".py"):
@@ -102,6 +113,17 @@ def fixture_manifest_dependencies(manifest: Path) -> set[str]:
             if match:
                 names.add(match.group(1))
     return names
+
+
+def legacy_lock_qualification() -> dict[str, object]:
+    baseline_path = ROOT / "docs/helix/04-build/evidence/rust-migration/r2/r1-lock-baseline.json"
+    if sha(baseline_path) != "fd9ad4af6fa6522dd921854214574c88e63624d22f58a9eae4f42b92ba83254c":
+        return {"status": "fail", "changedHistoricalPackages": ["baseline-integrity"], "historicalLockfileSha256": "invalid"}
+    baseline = json.loads(baseline_path.read_text())
+    current = tomllib.loads((ROOT / "Cargo.lock").read_text())["package"]
+    changed = [p["name"] + "@" + p["version"] for p in baseline["packages"] if p not in current]
+    return {"status": "pass" if not changed else "fail", "changedHistoricalPackages": changed,
+            "historicalLockfileSha256": baseline["sourceLockfileSha256"], "currentLockfileSha256": sha(ROOT / "Cargo.lock")}
 
 
 def qualify_wasm_entropy_exception(*, target: str, wasm_bindgen_ids: list[str], paths: list[list[str]], incoming_edges: list[dict[str, object]], source_hashes: dict[str, str], features: dict[str, list[str]]) -> dict[str, object]:
@@ -283,6 +305,9 @@ def check_cargo() -> tuple[list[dict[str, object]], dict[str, object]]:
                 wasm_bindgen_ids = [binding_tree["stdout"].splitlines()[0].split(" v", 1)[0] + "@" + binding_tree["stdout"].splitlines()[0].split(" v", 1)[1].split()[0]]
                 incoming_wasm_edges = [{"name": value.split("@", 1)[0], "version": value.split("@", 1)[1]} for value in incoming]
             source_hashes = {path: sha(ROOT / path) if (ROOT / path).is_file() else "missing" for path in WASM_R1_ENTROPY_EXCEPTION["sourceHashes"]}
+            legacy_lock = legacy_lock_qualification()
+            if legacy_lock["status"] == "pass":
+                source_hashes["Cargo.lock"] = legacy_lock["historicalLockfileSha256"]
             feature_trees = {name: cargo_tree(cargo, platform, "umf-rust-spike-wasm", inverse=name, edges="features") for name in ("ahash", "getrandom")}
             active_features = {name: parse_cargo_feature_tree(tree["stdout"], name) for name, tree in feature_trees.items() if tree["status"] == "resolved"}
             for name, tree in feature_trees.items():
@@ -292,6 +317,7 @@ def check_cargo() -> tuple[list[dict[str, object]], dict[str, object]]:
                 wasm_exception = qualify_wasm_entropy_exception(target=platform, wasm_bindgen_ids=wasm_bindgen_ids,
                     paths=core_paths, incoming_edges=incoming_wasm_edges,
                     source_hashes=source_hashes, features=active_features)
+                wasm_exception["additiveWorkspaceLockQualification"] = legacy_lock
                 wasm_exception["bindingInverseTree"] = {"directParents": incoming, "corePathsFromWasmBindgen": inverse_paths}
                 wasm_exception["featureTreeCommands"] = [tree["command"] for tree in feature_trees.values()]
                 if wasm_exception["status"] != "qualified-r1-wasm-entropy-exception":
@@ -309,6 +335,30 @@ def check_cargo() -> tuple[list[dict[str, object]], dict[str, object]]:
     host_free = "unverified" if status != "resolved" else "qualified-with-r1-wasm-entropy-exception" if wasm_exception.get("status") == "qualified-r1-wasm-entropy-exception" else "pass" if not findings else "fail"
     return findings, {"status": status, "lockfileSha256": lock_hash, "hostFreeCore": host_free, "wasmEntropyException": wasm_exception, "corePackages": sorted(all_core_packages),
                       "activeCoreClosureByTarget": {target: sorted(closure) for target, closure in all_core_closures.items()}, "targets": reports, "rustcVersion": rust_version}
+
+
+def check_production_core() -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    findings, reports = [], []
+    cargo = shutil.which("cargo") or "/opt/homebrew/opt/rustup/bin/cargo"
+    rustc = shutil.which("rustc") or "/opt/homebrew/opt/rustup/bin/rustc"
+    info = subprocess.run([rustc, "-vV"], capture_output=True, text=True).stdout
+    host = re.search(r"(?m)^host: (\S+)", info)
+    for target in [host.group(1) if host else "x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]:
+        for package in ["umf-core", "umf-core-wire", "umf-metamodel"]:
+            result = cargo_tree(cargo, target, package)
+            closure = parse_cargo_tree_packages(result["stdout"])
+            names = {p.split("@", 1)[0] for p in closure}
+            # Production has no R1 entropy exception, including transitive getrandom.
+            forbidden = names & (CORE_HOST_CRATES | {"getrandom", "jsonschema", "ahash"})
+            if result["status"] != "resolved" or forbidden:
+                findings.append({"rule": "production-core-host-dependency", "path": "Cargo.toml", "target": target, "message": str(result["stderr"] or sorted(forbidden))})
+            reports.append({"package": package, "target": target, "closure": sorted(closure), "status": "pass" if result["status"] == "resolved" and not forbidden else "fail"})
+    for folder in ["crates/umf-core/src", "crates/umf-core-wire/src", "crates/umf-metamodel/src"]:
+        for path in sorted((ROOT / folder).rglob("*.rs")):
+            source = path.read_text()
+            for match in CORE_HOST_MODULES.finditer(source):
+                findings.append({"rule": "production-core-host-capability", "path": path.relative_to(ROOT).as_posix(), "message": match.group(0)})
+    return findings, reports
 
 
 def generated_provenance() -> tuple[list[dict[str, object]], list[dict[str, object]]]:
@@ -349,6 +399,8 @@ def run(check_controls: bool = True) -> dict[str, object]:
         findings.extend(scan_text(p, path.read_text(encoding="utf-8", errors="replace"), allowed_debt=active_debt))
     cargo_findings, cargo_summary = check_cargo()
     findings.extend(cargo_findings)
+    production_findings, production_reports = check_production_core()
+    findings.extend(production_findings)
     provenance_findings, provenance = generated_provenance()
     findings.extend(provenance_findings)
     controls = {}
@@ -373,7 +425,7 @@ def run(check_controls: bool = True) -> dict[str, object]:
                     "temporaryManifestForbiddenDependency": "pass" if core_dependency_findings(forbidden_names) else "fail",
                     "bindingSourceEngineImportRejected": "pass" if scan_text("bindings/rust-spike/node/index.js", "import vm from 'node:vm';") else "fail"}
     return {"schema": "umf.rust-boundary-check/0.1", "status": "pass" if not findings and all(v == "pass" for v in controls.values()) else "fail", "checkedSourceModules": len(library_paths),
-            "cargo": cargo_summary, "generatedProvenance": provenance, "v8Debt": debt_status, "negativeControls": controls, "findings": findings}
+            "cargo": cargo_summary, "productionCore": production_reports, "generatedProvenance": provenance, "v8Debt": debt_status, "negativeControls": controls, "findings": findings}
 
 
 def main() -> int:
@@ -388,7 +440,7 @@ def main() -> int:
     result = run(check_controls=True)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"status": result["status"], "checkedSourceModules": result["checkedSourceModules"], "cargo": result["cargo"], "v8DebtCount": len(result["v8Debt"]), "negativeControls": result["negativeControls"], "findingCount": len(result["findings"])}))
+    print(json.dumps({"status": result["status"], "checkedSourceModules": result["checkedSourceModules"], "cargoStatus": result["cargo"]["status"], "productionCoreStatus": "pass" if all(r["status"] == "pass" for r in result["productionCore"]) else "fail", "v8DebtCount": len(result["v8Debt"]), "negativeControls": result["negativeControls"], "findingCount": len(result["findings"])}))
     if result["findings"]:
         for finding in result["findings"]:
             print(f"{finding['rule']}: {finding.get('path')}: {finding['message']}", file=sys.stderr)

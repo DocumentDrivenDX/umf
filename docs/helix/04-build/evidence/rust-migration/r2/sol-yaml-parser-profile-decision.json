@@ -1,0 +1,47 @@
+{
+  "profile": "umf.sol-production-review-decision/1",
+  "id": "R2-SOL-YAML-PARSER-PROFILE-001",
+  "reviewer": "Sol independent review (/root/sol_r2_review)",
+  "status": "approved-design-required-implementation-and-review",
+  "decision": "Permit narrowly vendored/patched saphyr-parser0.1.0 with explicit scanner/reader profile, shared by default and Python serialization paths. Do not retain a heuristic global NEL replacement or blanket block rejection.",
+  "evidence": {
+    "nativeFixtures": [
+      "sol-python-yaml-character-predecessor.json",
+      "sol-python-yaml-source-context-predecessor.json"
+    ],
+    "nativeReader": "ruamel Reader.forward1.2 increments column for rawNEL/LS/PS without resettingline; Scanner.scan_line_break classifies NEL/LS/PS asbreaks, mappingNELtoLF and retainingLS/PS. This is observably context-dependent.",
+    "publicUpstreamApi": "Input can override lookahead/classifiers, but scanner Marker and skip_nl are private, unconditional LF-style line/column reset; read_break always emitsLF. Existing API cannot model the required nativeprofile solely through input rewriting.",
+    "upstreamSourceHashes": {
+      "Cargo.toml": "6780112761491f5429e06a5fdd27dcc8be0b0170e1c8fa58e00d9217bc367193",
+      "LICENSE": "932dc213b1bbd3d5950e155cf0c8f065aaa6e520d01f410cfaacec5798b8215b",
+      "src/input.rs": "f68b0b4a950c173e6f243d36d2ec6cbe7ea6df9e8afcfd793c9e60ebc9a0cbc2",
+      "src/input/str.rs": "682f3bce5271f912b94b8f1ad750b1b537d8f963317a2aa54744ddce94328eea",
+      "src/input/buffered.rs": "3d5724e12547705f06078c9f9cc42926b95dbba861e23ed2ca64957f3f53daf3",
+      "src/scanner.rs": "7ade9225e788fa5342e0f80cde363bc08e7a3371d726dc5376263f36d68a4bc5",
+      "src/parser.rs": "c900082aeb04c3ba58ef834a2a8fb9af12e33d93180852a29ee30cb515af334f",
+      "src/char_traits.rs": "388abcd61eeb036738e6e94b034494fccf25dee368d00256c14cba6426bba1b4"
+    }
+  },
+  "interface": {
+    "concept": "Explicit immutable ScanProfile::{Yaml12,PythonRuamel12} passed by trusted host code through Parser string constructor to the same Input/Scanner implementation. Existing Parser constructors retain Yaml12 default.",
+    "suggestedEntryPoint": "Parser::new_from_str_with_profile(source:&str, profile:ScanProfile)",
+    "integration": "yaml_events/prepare_yaml_events accept an explicit profile selected by the Rust source/value adapter, never source document text. Both profiles use same scanner/parser/event/span implementation and generic value assembly.",
+    "internalFlexibility": "Private method names/layout may evolve, but all raw-read, bulk-read, whitespace/comment, document-indicator, break classification, marker advance, and scalar folding paths must honor one consistent selected profile."
+  },
+  "implementationConstraints": [
+    "Vendor exact pinned0.1.0 source with upstream identity/checksum and focused patch explanation. Retain both copyright owners and all required MIT/Apache license texts, including hidden .licenses content referenced by LICENSE.",
+    "Place vendored source beneath an already attested production crate or explicitly extend native/compiler/source-build closure; Cargo path/patch must make every production native/WASM target use the same patched dependency.",
+    "Preserve default profile behavior and predecessor11compiler artifacts modulo exact generated provenance.",
+    "Implement native NEL/LS/PS scanner and column semantics, including comments, plain/quoted/flow/block scalar contexts. Match independently frozen observations; no candidate-driven changes to oracle files.",
+    "Keep timestamp tag/key decision before value flattening; quoteddatekeys admitted, implicit timestamp keys rejected, timestamp values retained as strings.",
+    "No global source normalization that changes token/indentation structure, no new restrictive subset, no separate Python YAML scanner/parser copy.",
+    "No entropy/environment/network access introduced. Existing input4MUTF16, depth/value, event admission and cooperative precharges/cancel/deadline remain. Additional variable work/copies must be admitted before allocation; avoid unbounded source expansion.",
+    "Source distribution must include all patched parser sources/licenses and build with no JavaScript tools/offline cache; native and realWASM require fresh execution."
+  ],
+  "qualification": [
+    "Original139, all Python372+60+852+588+522 observations, with only separately guarded approved NEL writer correction.",
+    "Add production scanner-profile unit tests that verify defaultYaml12 unchanged and nativePython lexical distinctions without relying only on copied fixtures.",
+    "Final source/dependency/license review and exact source/binary receipts before overallR2 approval."
+  ],
+  "overallR2Approved": false
+}

@@ -14,6 +14,24 @@ SPEC.loader.exec_module(MODULE)
 
 
 class InventoryDependencyTests(unittest.TestCase):
+    def test_rust_input_identity_covers_embedded_data_but_excludes_artifacts(self):
+        import tempfile
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            for name in ("crates/umf-core/src/schema_metas.json", "crates/umf-core/src/schema_metas.LICENSE",
+                         "crates/umf-core/Cargo.toml", "crates/umf-core/vendor/saphyr-parser/.licenses/MIT-2023", "crates/umf-core/target/temporary.json",
+                         "bindings/core/wasm/pkg/generated.js", "bindings/core/node/engine.node"):
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("first")
+            with patch.object(MODULE, "ROOT", root):
+                before = {item["path"]: item["sha256"] for item in MODULE.rust_build_inputs()}
+                self.assertEqual({"crates/umf-core/src/schema_metas.json", "crates/umf-core/src/schema_metas.LICENSE", "crates/umf-core/Cargo.toml", "crates/umf-core/vendor/saphyr-parser/.licenses/MIT-2023"}, set(before))
+                (root / "crates/umf-core/src/schema_metas.json").write_text("changed")
+                after = {item["path"]: item["sha256"] for item in MODULE.rust_build_inputs()}
+                self.assertNotEqual(before["crates/umf-core/src/schema_metas.json"], after["crates/umf-core/src/schema_metas.json"])
+
     def test_shared_transitive_keeps_exact_version_origins_and_disposition(self):
         package = {"dependencies": {"@typespec/compiler": "1.16.0", "ajv": "8.20.0"}, "devDependencies": {}}
         lock = {"packages": {
@@ -66,7 +84,10 @@ dev = ["pytest>=8"]
             declarations.extend(MODULE.python_project_declarations(MODULE.tomllib.loads(path.read_text()), path.relative_to(ROOT).as_posix()))
         runtime = {(entry["projectName"], entry["package"]) for entry in declarations if entry["kind"] == "runtime"}
         self.assertIn(("umf-core", "pydantic"), runtime)
-        self.assertIn(("umf-core", "jsonschema"), runtime)
+        # R2 retires Python schema/YAML execution in favor of the native engine.
+        self.assertNotIn(("umf-core", "jsonschema"), runtime)
+        self.assertNotIn(("umf-core", "ruamel-yaml"), runtime)
+        self.assertEqual({"pydantic"}, {package for project, package in runtime if project == "umf-core"})
         self.assertIn(("umf-codegen", "mini-racer"), runtime)
         self.assertNotIn(("umf-core", "hatchling.build"), runtime)
         self.assertTrue(any(entry["kind"] == "build-requirement" and entry["package"] == "hatchling" for entry in declarations))

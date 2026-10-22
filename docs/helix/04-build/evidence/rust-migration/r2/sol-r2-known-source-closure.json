@@ -1,0 +1,227 @@
+{
+  "id": "R2-SOL-KNOWN-SOURCE-CLOSURE-001",
+  "status": "conditional-known-source-closure-approved-awaiting-exact-final-qualification",
+  "capturedAt": "2026-10-22T06:09:25.852870+00:00",
+  "reviewer": "Independent Sol final reviewer; did not implement the reviewed production changes",
+  "sourceApproved": true,
+  "sourceApprovalScope": "Conditional approval of the reviewed known-finding source closure at the exact hashes below. This is not final installed-artifact, platform, release, or overall R2 approval.",
+  "overallR2Approved": false,
+  "sourceHeadBeforeIntegrationCommit": "9d1d42ab1e3fb2179a4edcb51aa577967925b208",
+  "sourceState": "Reviewed working-tree source awaiting the authorized integration code commit; receipt does not relabel prior test cohorts as current.",
+  "sourceFileHashes": {
+    "crates/umf-core/src/schema.rs": "440a95b1bd4a672be707312749c4928b1b4b6428228b1b4108861b217f4bd391",
+    "crates/umf-core/src/context.rs": "ed1075ba5cc9aec32c2959c899908dc5ad08914a05a57c266eee440a3aa5ced3",
+    "crates/umf-core/src/error.rs": "6a506da38cd9e4b58852b54cb811b40c049610c84cae65269a22d1aa148ab929",
+    "crates/umf-core/src/python_value.rs": "ec72fbd70e3d02efbe4bc40c4e6aa56847128aa364de5082e0cbb565e177b633",
+    "crates/umf-core/tests/schema_python_annotation_order.rs": "5c571920a5281b3ffb2dbaf42e60d603ed956bf3f8f39622bf06e9dffc68bfa9",
+    "crates/umf-core/tests/schema_helper_stack.rs": "2e722b48238f40ab7fbba4b98afdc1fb1772660f903a1bc9eedb35bac882d97f",
+    "crates/umf-core/tests/schema_depth_stack.rs": "7ed7f2eb69cc0dbaeebf73d37776206e1b76571b17fd4fc5d9ea641756bcf67b",
+    "crates/umf-core/tests/schema_annotation_stack.rs": "9b17bb63e9eda16eef17aa81adf1b42ddcefe09e1d7d72020822f324bfd7eec8",
+    "crates/umf-core/tests/schema_terminal_provenance.rs": "54784736304ba1a1240c8aedad8e4df5cad6a8f3a228a05d0e49e83053cf8d13",
+    "crates/umf-core/tests/schema_python_reference_paths.rs": "c6bea65675e0aa5214531b862375af1ecc82b91c3e6cae700b43447613589354",
+    "crates/umf-core/tests/schema_python_path_keys.rs": "74b767653ef1aea6b2a6f68c9f7826bd88c0ef6a16e8aa3e2cbb0d2a13de7a17",
+    "bindings/core/python/src/lib.rs": "77a26eb81789262400f14211763999f3dfcdb433f522972208c2ba58c8824d65",
+    "python/src/umf/schemas.py": "4729344e8aa9846281b6af82d0398e3aad41d778b59cf5895f5e7a3d219f642d",
+    "bindings/core/wasm/src/lib.rs": "ac3faa1ad52ebe9be630072caad24560a6e3ef9f4806248229a3a90a6af147e6",
+    "scripts/rust-core/browser-conformance.ts": "ef392b0b73898e736eb912f6c85c97c7c4d869131c8d49e2ab5f33eef5e4135d",
+    "scripts/rust-core/schema-evaluation-order-conformance.py": "aa18a26f2e08b49a2a282e2ed135a041039b1075519ddaf389ec2d3e84067154"
+  },
+  "governingArtifacts": [
+    "CONTRACT-001",
+    "CONTRACT-080",
+    "TD-091",
+    "STP-091",
+    "ADR-005",
+    "ADR-006",
+    "docs/helix/04-build/rust-migration-plan.md"
+  ],
+  "closedSourceFindings": [
+    {
+      "area": "Native annotation helper semantics",
+      "closure": "Dedicated borrowed-member visitor follows dialect/kind-specific native helper order independently of ordinary keyword order. Draft 2020 items returns before references; legacy 2019 resolves references before its item return. Mark-only properties/items and required FirstError predicates reuse the shared evaluator; approved 2019 additionalProperties amendment remains selected explicitly. Scope wrapper restores dynamic scope on every result."
+    },
+    {
+      "area": "Post-frame-split dispatch",
+      "closure": "Both ordinary dispatch and annotation visitor route additionalProperties directly to the extracted additional-property helper. Pattern and item branch routing preserve the relevant semantics and early returns."
+    },
+    {
+      "area": "Diagnostic construction before admission",
+      "closure": "Implicit Draft 3 required and both dependency forms admit message, parameter and diagnostic copies before owned construction. The required-schema suffix and extracted additional-property properties/patternProperties paths also admit their owned path work before append allocation."
+    },
+    {
+      "area": "Recursive stack implementation",
+      "closure": "Large keyword phases are split into non-inlined helpers without raising the ordinary stack or lowering depth. Source retains explicit depth 128 acceptance / 129 LIMIT controls on normal 2 MiB native threads, including additionalProperties, items, pattern-plus-annotation and combinator/reference paths. Passing exact-source execution remains a qualification condition."
+    },
+    {
+      "area": "Trusted terminal provenance",
+      "closure": "Only crate-private evaluator provenance permits deferred semantic terminals. Context strips provenance from errors returned by meter, host control, fallible cancellation and fallible clock, including previously returned semantic error objects."
+    },
+    {
+      "area": "Typed source paths and metadata",
+      "closure": "Python facade consumes trusted typed schema path segments, original validator/rule metadata and independent physical instance paths or explicit subject overrides. Ordinary raw schema keys retain source identity. Marked-path expansion is admitted using its actual six-hex-units-per-codepoint form."
+    },
+    {
+      "area": "Public admitted boundary",
+      "closure": "The generic already-admitted validate_instance helper is crate-private. Public Value validation retains copy/admission and public PythonCompiledSchema evaluation retains typed instance admission."
+    },
+    {
+      "area": "Frozen reference adapter",
+      "closure": "Test-only target mapping recognizes exactly the two frozen missing-pointer exception wrappers, PointerToNowhere and _WrappedReferencingError, as SCHEMA_REF_UNRESOLVED. Other evaluation errors retain their existing mapping; frozen fixtures are unchanged."
+    }
+  ],
+  "openSourceFindingsInReviewedBatch": [],
+  "reviewMethod": [
+    "Read-only independent inspection of the source and exact known-finding closures.",
+    "Compared dedicated helper order against pinned jsonschema 4.26.0 _utils and _legacy_keywords source, plus immutable independently frozen predecessor/profile controls.",
+    "Inspected meaningful native regression controls for 53 cases / 159 method observations, 300000-unit borrowed-key denial and semantic-text host-error collision, ordinary 2 MiB depth paths, typed path/reference projection and host-terminal replay.",
+    "Independently read the earlier post-route workspace log: 206 passed, zero failed across 44 result groups. That run used schema dd2be3576b0bf4cc6a70c3f38ae971a4daf1296f0fdec7c579ded9df3043f196 before the final narrow path-admission charges and is historical checkpoint evidence only."
+  ],
+  "frozenEvidenceHashes": {
+    "sol-python-schema-annotation-order-predecessor.json": "47bd4de4cc8c6d3b15c187694e93a443e40ab878610133f10399f8c0ebb32c5c",
+    "sol-python-schema-annotation-order-profiles.json": "08a25a650d341ce56f781f92c6ed598958ee9fd6fd0063d0dd6c99326bb040b0",
+    "approved-python-schema-2019-ap-correction.json": "e4f8210cbea8959d20dfd738791fe3a214564c8f7e90c7967e7bc499bc1d21f2",
+    "sol-python-schema-reference-terminal-decision.json": "b59548a2480f3373dce7f8b44c385afe1f7aa346aebc221f0689f6b9b6ee6da3",
+    "sol-python-schema-reference-profile-amendment.json": "847b79e0b20840cb23a3f0479c2b29f931f868b13c237e09b5a1a2f5b92f62dc",
+    "sol-python-schema-path-keys-predecessor.json": "e9151ff4ae770e372b7251b897fa1278b88f77da47c13ebfcd72d8314c74bbd9",
+    "sol-python-schema-path-segments-predecessor.json": "35bfbceb67a1aec0c3d87180c23dd1ba5435e7644eec9a5306d8f65ee9987c63"
+  },
+  "remainingApprovalConditions": [
+    "Fresh native workspace and explicit normal 2 MiB depth/helper tests, plus fresh frame evidence, must pass after the exact final source checkpoint without larger test stacks or relaxed depth.",
+    "Fresh actual Chromium execution must prove ordinary and annotation visitor depth 128 acceptance and depth 129 LIMIT using the same production core; default production WASM remains separately qualified from conformance-feature probes.",
+    "Canonical eleven-output regeneration/fixed-point/non-writing controls, complete required authority/inventory/boundary/type/regression checks and exact compiler/source provenance must reconcile to the final checkpoint.",
+    "Final committed-source host qualification must build and execute fresh original and offline sdist-rebuilt Python wheels outside checkout, with no discoverable JavaScript runtime during sdist rebuild and no executable runtime fallback.",
+    "Both installed wheels must replay all required shared 139, schema admission 9282, official-suite 4995, arithmetic 2586, ordered/reference/annotation 6930 method observations, 263 metadata/subject/path records and serializer 5226 controls with exact approved correction guards.",
+    "CLI, npm-packed Node/Bun addons, default WASM, conformance probes including reviewed regex 70542 outcomes, retained runtime 8890 controls and other governed host checks must pass with hashed artifacts and exact environment/tool inputs.",
+    "Before/after source closure hashes must match, artifact inventories must exclude undeclared generated binaries/caches from source archives, and independent final review must reconcile the complete source-bound receipts before overall R2 approval."
+  ],
+  "unchangedScopeLimits": [
+    "Default TypeScript SDK remains the retained R7 reference.",
+    "Seven MiniRacer codegen operations remain R3/R4 work.",
+    "No package publication or new broad native/platform support claim is approved."
+  ],
+  "updatedAt": "2026-10-22T06:22:05.121407+00:00",
+  "reviewAmendments": [
+    {
+      "id": "R2-SOL-KNOWN-SOURCE-CLOSURE-001-H1",
+      "capturedAt": "2026-10-22T06:17:02.751191+00:00",
+      "previousReceiptSha256": "f57cc295ffe515255040fada894fbe73935e85915e338ac503510abff6bb41c7",
+      "scope": "Only the browser qualification TSV parser and cfg(conformance)-only regex probe; production schema source is unchanged.",
+      "previousFileHashes": {
+        "scripts/rust-core/browser-conformance.ts": "38d7553c98d4b315e9cea70b80bf694e4daf0ea3f3620d148425f47a2f983d9c",
+        "bindings/core/wasm/src/lib.rs": "7a7740cdd84ab347d0cce1774a3e40a54d2c7cb758249510ec3bb742756e2d8b"
+      },
+      "reviewedFileHashes": {
+        "scripts/rust-core/browser-conformance.ts": "1ec475c97cebedecf37d857c1c4ea0573e6ef9508b69c1e056079b71aef065c2",
+        "bindings/core/wasm/src/lib.rs": "ac3faa1ad52ebe9be630072caad24560a6e3ef9f4806248229a3a90a6af147e6"
+      },
+      "sourceApproved": true,
+      "overallR2Approved": false,
+      "findings": [],
+      "closure": [
+        "All three immutable native TSV corpora are parsed as exactly seven fields: minor, case ID, operation, status, span, text codepoints, pattern codepoints. Tab splitting preserves empty codepoint fields.",
+        "Rows bind exactly to frozen fixture operation/pattern/text; only Python minors 11/12/13 are accepted. Unique minor/case identity and exact expected corpus sizes establish complete profile coverage.",
+        "M requires a search operation and an exact canonical nonnegative safe-integer start/end span within codepoint text bounds. E/N require the literal no-span marker -. Unknown statuses, arbitrary spans, malformed rows and duplicates fail.",
+        "The browser compares actual probe strings exactly for every row, including every match span. No normalization of arbitrary actual errors or spans was introduced.",
+        "The cfg(conformance)-only Rust probe emits E only for PYTHON_REGEX_SYNTAX; other compile errors and all unexpected search/profile/operation failures produce X, which cannot satisfy a frozen E/N/M expectation."
+      ],
+      "independentObservedCheck": {
+        "runtime": "Bun; exact parseRegexOutcome and its controls extracted from reviewed browser source and transpiled with Bun.Transpiler",
+        "parserControls": 15,
+        "outcomes": {
+          "independent": 19116,
+          "independent-info": 45360,
+          "independent-hex": 6066
+        },
+        "uniqueCasesPerProfile": {
+          "independent": 6372,
+          "independent-info": 15120,
+          "independent-hex": 2022
+        },
+        "totalRows": 70542,
+        "status": "pass",
+        "captureLimit": "Reviewer check exercises parser, fixture binding, unique complete coverage and controls, not WASM execution. Actual full Chromium/probe qualification remains required."
+      },
+      "remainingCondition": "Fresh feature WASM build and actual Chromium must compare all 70542 outcomes, shared 139 controls and ordinary/annotated depth 128 acceptance/129 refusal. Default production WASM remains separately qualified in the final source-bound host gate."
+    },
+    {
+      "id": "R2-SOL-KNOWN-SOURCE-CLOSURE-001-H2",
+      "capturedAt": "2026-10-22T06:22:05.121407+00:00",
+      "scope": "Explicit erased Map generic arguments and tuple-return annotations at the three frozen-corpus map constructors.",
+      "previousBrowserSha256": "1ec475c97cebedecf37d857c1c4ea0573e6ef9508b69c1e056079b71aef065c2",
+      "reviewedBrowserSha256": "cade207986b79d9368c673cff149ff25fcb9415f632fe4e1059bd065c3ab793d",
+      "sourceApproved": true,
+      "overallR2Approved": false,
+      "independentCheck": "Removing exactly those annotations reconstructs the preceding reviewed browser source byte-for-byte (SHA 1ec475c97cebedecf37d857c1c4ea0573e6ef9508b69c1e056079b71aef065c2); Bun.Transpiler emits identical full-file JavaScript.",
+      "qualification": "Actual complete Chromium feature gate replay passed at the cade207 browser source against the same hashed feature artifact; implementation handoff source identifies that exact cohort."
+    },
+    {
+      "id": "R2-SOL-KNOWN-SOURCE-CLOSURE-001-H3",
+      "capturedAt": "2026-10-22T06:22:05.121407+00:00",
+      "scope": "Only erased seven-string field tuple and two-number span tuple assertions after existing exact-length/span guards.",
+      "previousBrowserSha256": "cade207986b79d9368c673cff149ff25fcb9415f632fe4e1059bd065c3ab793d",
+      "reviewedBrowserSha256": "ef392b0b73898e736eb912f6c85c97c7c4d869131c8d49e2ab5f33eef5e4135d",
+      "sourceApproved": true,
+      "overallR2Approved": false,
+      "independentCheck": "Removing exactly the two tuple assertions reconstructs cade207 byte-for-byte; Bun.Transpiler emits identical full-file JavaScript. The final source-bound host gate must replay the latest harness.",
+      "previousReviewReceiptSha256": "eeb7179abe8fd218704f602ecc130ad75a7dcfa7894aedf85f6659b9b2a75ff7"
+    }
+  ],
+  "verifiedNarrowBatchQualification": {
+    "implementationReceipt": "docs/helix/04-build/evidence/rust-migration/r2/sol-annotation-visitor-implementation.json",
+    "implementationReceiptSha256": "9ba545825fff9dba4c2af490e62490c09068a545b7cef9fc8ea348dc2c79750f",
+    "productionSchemaSha256": "440a95b1bd4a672be707312749c4928b1b4b6428228b1b4108861b217f4bd391",
+    "independentVerification": "Read the implementation handoff, verified every native/build/browser/frame log digest, source hashes except the separately reviewed erased browser annotations, and all named feature artifact digests. Independently summed the native result groups and checked the browser report.",
+    "native": {
+      "passed": 206,
+      "failed": 0,
+      "resultGroups": 44,
+      "schemaSourceExact": true,
+      "includes": "Four normal 2 MiB heavy-helper depth controls, ordinary and annotation depth controls, frozen annotation order/provenance and retained workspace corpora."
+    },
+    "featureBrowser": {
+      "status": "pass",
+      "engineVersion": "umf-core-r2",
+      "wasmQualification": "python-regex-feature",
+      "cases": 139,
+      "regexOutcomeParserControls": 15,
+      "wideWorkCounter": "u64-portable-chunks-and-refusal",
+      "pythonRegexCasesPerProfile": 6372,
+      "pythonRegexComparisons": 19116,
+      "pythonRegexInfoCasesPerProfile": 15120,
+      "pythonRegexInfoComparisons": 45360,
+      "pythonRegexHexCasesPerProfile": 2022,
+      "pythonRegexHexComparisons": 6066,
+      "pythonRegexProfiles": [
+        11,
+        12,
+        13
+      ],
+      "schemaDepth128Accepted129Refused": true,
+      "annotatedVisitorDepth128Accepted129Refused": true,
+      "rawSurrogateCallback": true,
+      "jsonYamlRoundTrip": true,
+      "copiedTextUnits": 6000000,
+      "sourceTextUnits": 4000000,
+      "maxDocumentDepth": 128,
+      "inventoryExtensionDepth": {
+        "accepted": 122,
+        "refused": 123
+      },
+      "hostControls": [
+        "meter",
+        "cancel",
+        "deadline",
+        "reentry"
+      ],
+      "chromium": "153.0.8010.12",
+      "externalRequests": 0
+    },
+    "featureWasmSha256": "4192bd6c496bf25eaced87f63f878f9cf38feec60d8520b738107c4da4ae9348",
+    "captureLimits": [
+      "The native run preceded only the cfg(conformance)-only probe classification and browser harness changes; production schema/test bytes are exact.",
+      "The actual browser run used source cade207; current ef392b source differs by independently proved erased tuple assertions only.",
+      "This working-tree narrow-batch proof is not the final committed-source installed original-wheel/sdist-wheel/CLI/packed-addon/default-WASM/feature-WASM host qualification."
+    ],
+    "overallR2Approved": false
+  }
+}

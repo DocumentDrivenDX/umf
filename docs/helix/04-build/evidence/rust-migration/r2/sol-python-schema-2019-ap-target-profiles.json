@@ -1,0 +1,50 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-2019-AP-TARGET-PROFILES-001",
+  "status": "independent-proposed-target-qualification-not-semantic-approval",
+  "generatorSha256": "aed7196e4a09ac886d2c46342f6e7b2faf6c4a40759223a526fd2ed9ddc80526",
+  "jsonschema": "4.26.0",
+  "basePython": "3.11.17",
+  "fixtures": {
+    "sol-python-schema-2019-ap-native.json": "8666440936228516f5357d1776a26c69189bf6843139607c56c63da2c2128d07",
+    "sol-python-schema-2019-ap-target-proposal.json": "68807db9a1256d2e2f1ed9598ac99db40e39c83a3d5407b7cc947ee4a0d907f3"
+  },
+  "cases": 37,
+  "methods": 108,
+  "admissionRefusals": 1,
+  "profiles": [
+    {
+      "python": "3.12.15",
+      "executableSha256": "fe5e57e7f0dc374654e314d4e8f20cf2a345bda8a4e03032046f407027628a32",
+      "captures": [
+        {
+          "fixture": "sol-python-schema-2019-ap-native.json",
+          "completeRecordsEqual": true,
+          "captureSha256": "7f58c8e4027f5d34b18133866b5349aceddf967f729614b11dc2d2d48bad8846"
+        },
+        {
+          "fixture": "sol-python-schema-2019-ap-target-proposal.json",
+          "completeRecordsEqual": true,
+          "captureSha256": "b0c35a1af9e8335eb4c581e12c0917752a93a94077c69b4b07832fc3a53cf37f"
+        }
+      ]
+    },
+    {
+      "python": "3.13.16",
+      "executableSha256": "b898474cdfda938c1dd25af22d1b066d4808ba8b7e2d14e20033781d7787f87f",
+      "captures": [
+        {
+          "fixture": "sol-python-schema-2019-ap-native.json",
+          "completeRecordsEqual": true,
+          "captureSha256": "b39e3e8dbe05518db8e6f4046b92c47303c3dafb771629f14850c6de1781beb7"
+        },
+        {
+          "fixture": "sol-python-schema-2019-ap-target-proposal.json",
+          "completeRecordsEqual": true,
+          "captureSha256": "c9ddf40d36b014a39c4f896b64eba62c0491f4b378903f710b0c155069261e55"
+        }
+      ]
+    }
+  ],
+  "completeRecordsEqual": true,
+  "overallR2Approved": false
+}

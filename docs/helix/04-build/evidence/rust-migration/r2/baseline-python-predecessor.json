@@ -1,0 +1,2676 @@
+{
+  "receipt": {
+    "id": "umf.rust-migration.r2.python-predecessor-baseline",
+    "status": "captured-predecessor-observations",
+    "sourceRef": "origin/main",
+    "sourceCommit": "53de049136c7e41b482d1a73665d031cd5fbaec6",
+    "sourcePackage": "python/src/umf from git archive, imported outside the checkout",
+    "pythonSourceFileCount": 10,
+    "pythonSourceSha256": "da831ebf1d003cbc49821a3220381042b2432294623546b7c30c78a6f861f69b",
+    "fixture": "fixtures/metamodel/current-conformance.json",
+    "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+    "cases": 139,
+    "outcomes": 139,
+    "errors": 0,
+    "disagreementCount": 0,
+    "disagreementIds": [],
+    "note": "Historical Python observations are captured for review; they are not treated as a correctness oracle. Resolve disagreements against frozen requirements before describing target semantics."
+  },
+  "outcomes": [
+    {
+      "id": "schema-properties/valid",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/duplicate-equal-integers",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/allowedValues/1",
+            "message": "Duplicate equal allowed value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/duplicate-equal-decimals",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/1/allowedValues/1",
+            "message": "Duplicate equal allowed value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/duplicate-equal-binary",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/3/allowedValues/1",
+            "message": "Duplicate equal allowed value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/invalid-default-domain",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/default/value",
+            "message": "Literal does not match scalar family",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/default-not-in-set",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/default/value",
+            "message": "Literal is not an allowed value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/fractional-integer",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/examples/0",
+            "message": "Numeric value would require rounding",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-rounding",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/1/examples/0",
+            "message": "Numeric value would require rounding",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/collection-size",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/5/default/value",
+            "message": "Collection size outside bounds",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/min-length",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/2/examples/0",
+            "message": "Literal length outside bounds",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/surrogate",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/2/examples/0",
+            "message": "Unpaired Unicode surrogate",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/empty-range",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/1/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/1/default/value",
+            "message": "Literal outside numeric range",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/unpaired-flag",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/1/facets/range/maxInclusive",
+            "message": "Inclusive flag requires its bound",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/inverted-length",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/2/facets/length",
+            "message": "Minimum exceeds maximum",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/2/examples/0",
+            "message": "Literal length outside bounds",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/2/default/value",
+            "message": "Literal length outside bounds",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/inverted-size",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/5/facets/collectionSize",
+            "message": "Minimum exceeds maximum",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/5/examples/0",
+            "message": "Collection size outside bounds",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/5/default/value",
+            "message": "Collection size outside bounds",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/collection-bound-on-scalar",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/4/facets/collectionSize",
+            "message": "Collection bounds require array/map Field",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/range-on-string",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/2/facets/range",
+            "message": "Range requires integer/decimal Field",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/2/default/value",
+            "message": "Expected exact JSON numeric token",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/unknown-default-behavior",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/default/on",
+            "message": "must pass \"enum\" keyword validation",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/null-numeric-bound",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/4/facets/range/min",
+            "message": "Numeric bounds cannot be null",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/5/default/value/facets/range/min",
+            "message": "Numeric bounds cannot be null",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/unknown-facet-inverted-range",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_FACET",
+            "path": "/modules/0/elements/4/facets/future",
+            "message": "Facet member retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/4/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+            "path": "/modules/0/elements/5/examples/0/facets/future",
+            "message": "Unknown relevant qualifier: future",
+            "severity": "warning"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+            "path": "/modules/0/elements/5/default/value/facets/future",
+            "message": "Unknown relevant qualifier: future",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/empty-discrete-integer-range",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/4/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/5/default/value",
+            "message": "Literal outside numeric range",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/empty-discrete-decimal-range",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/1/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/signed8-min-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/signed8-min-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/signed8-max-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/signed8-max-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/unsigned8-min-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/unsigned8-min-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/unsigned8-max-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/unsigned8-max-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale0-min-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale0-min-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale0-max-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale0-max-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale2-min-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale2-min-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale2-max-domain-extreme-exclusive",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/facets/range",
+            "message": "Empty or inverted numeric interval",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-properties/decimal-scale2-max-domain-extreme-inclusive",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "keys/primary-and-alternate",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/no-primary",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/explicit-false-primary",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/key-list-order-not-identity",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/rename-keeps-id",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/record-without-keys",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/empty-record",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/opaque-singular-key",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/0/elements/0/key",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/unknown-qualifier",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_KEY_QUALIFIER",
+            "path": "/modules/0/elements/0/keys/0/a~1b~0c",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/unknown-member-qualifier",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_KEY_QUALIFIER",
+            "path": "/modules/0/elements/0/members/0/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/same-key-id-in-other-record",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/allowed-boolean",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/allowed-binary",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/allowed-decimal",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/composite-key",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/empty-keys",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/keys",
+            "message": "must NOT have fewer than 1 items",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/empty-components",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/keys/0/fields",
+            "message": "must NOT have fewer than 1 items",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/missing-id",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/keys/0",
+            "message": "must have required property 'id'",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/missing-name",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/keys/0",
+            "message": "must have required property 'name'",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/empty-name",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/keys/0/name",
+            "message": "must NOT have fewer than 1 characters",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/string-primary",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/keys/0/primary",
+            "message": "must be boolean",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/non-record-keys",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/kind",
+            "message": "must pass \"const\" keyword validation",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0",
+            "message": "must match \"then\" schema",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/kind",
+            "message": "must pass \"const\" keyword validation",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0",
+            "message": "must match \"then\" schema",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/non-record-members",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/kind",
+            "message": "must pass \"const\" keyword validation",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0",
+            "message": "must match \"then\" schema",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/missing-members",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0",
+            "message": "must have required property 'members'",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0",
+            "message": "must match \"then\" schema",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/duplicate-id",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_DUPLICATE_ID",
+            "path": "/modules/0/elements/0/keys/1/id",
+            "message": "Key ID is not unique within the Record",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/duplicate-name",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_DUPLICATE_NAME",
+            "path": "/modules/0/elements/0/keys/1/name",
+            "message": "Key name is not unique within the Record",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/multiple-primary",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_PRIMARY_COUNT",
+            "path": "/modules/0/elements/0/keys/1/primary",
+            "message": "At most one key may be primary",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/duplicate-set-order-independent",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_DUPLICATE_SET",
+            "path": "/modules/0/elements/0/keys/1/fields",
+            "message": "Key component set duplicates another key, regardless of order",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/duplicate-ref-with-unknown",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_DUPLICATE_FIELD",
+            "path": "/modules/0/elements/0/keys/0/fields",
+            "message": "Key repeats a Field identity",
+            "severity": "error"
+          },
+          {
+            "code": "UNKNOWN_KEY_QUALIFIER",
+            "path": "/modules/0/elements/0/keys/0/fields/1/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/duplicate-member-with-unknown",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_KEY_QUALIFIER",
+            "path": "/modules/0/elements/0/members/2/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_DUPLICATE_MEMBER",
+            "path": "/modules/0/elements/0/members/2",
+            "message": "Record membership repeats a Field identity",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/missing-member",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_MEMBER_MISSING",
+            "path": "/modules/0/elements/0/members/2",
+            "message": "Member Field does not exist",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/record-as-member",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_MEMBER_KIND",
+            "path": "/modules/0/elements/0/members/2",
+            "message": "Record members must be explicit Fields",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/multiple-owners",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_MEMBER_OWNER",
+            "path": "/modules/0/elements/3/members/0",
+            "message": "Field already belongs to another Record: /modules/0/elements/0",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/cross-record-field",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_OWNER",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component is not a member of its owning Record",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/missing-component",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_OWNER",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component is not a member of its owning Record",
+            "severity": "error"
+          },
+          {
+            "code": "KEY_FIELD_MISSING",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key Field does not exist",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/availability-absent-allowed",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_REQUIRED",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly supply a value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/availability-unspecified",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_REQUIRED",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly supply a value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/availability-future",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_NULLABILITY",
+            "path": "/modules/0/elements/1/nullability",
+            "message": "Availability label retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_REQUIRED",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly supply a value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/availability-undefined",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_REQUIRED",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly supply a value",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/shape-array",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_SINGULAR",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly be singular",
+            "severity": "error"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/shape-map",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_SINGULAR",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly be singular",
+            "severity": "error"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/shape-unspecified",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_SINGULAR",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly be singular",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/shape-future",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CARDINALITY",
+            "path": "/modules/0/elements/1/cardinality",
+            "message": "Container label retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_SINGULAR",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly be singular",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/shape-undefined",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_FIELD_SINGULAR",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key component must explicitly be singular",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/undefined-equality-float",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/undefined-equality-date",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/undefined-equality-time",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/undefined-equality-timestamp",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/undefined-equality-future",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SCALAR_TYPE",
+            "path": "/modules/0/elements/1/scalarType",
+            "message": "Scalar family retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/undefined-equality-undefined",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/record-valued-field",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_EQUALITY",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Key equality is undefined for this component",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/unqualified-decimal",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "KEY_DECIMAL_DOMAIN",
+            "path": "/modules/0/elements/0/keys/0/fields/0",
+            "message": "Decimal key equality requires explicit precision and scale",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/invalid-decimal-scale",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "FACET_SCALE",
+            "path": "/modules/0/elements/1/facets/scale",
+            "message": "Scale must not exceed precision",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "keys/legacy-profile",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/many-to-one",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/one-to-one",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/many-to-many",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/heterogeneous",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/self",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/undirected",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/alternate-key",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/bounded",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/reified-enrollment",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/owned",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/no-relationships",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/empty-relationships",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/renamed-key",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/future-qualifiers",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+            "path": "/modules/0/relationships/0/a~1b~0c",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+            "path": "/modules/0/relationships/0/sourceMultiplicity/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+            "path": "/modules/0/relationships/0/target/0/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/future-lifecycle",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_RELATIONSHIP_LIFECYCLE",
+            "path": "/modules/0/relationships/0/targetLifecycle",
+            "message": "Future lifecycle retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/duplicate-id",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_DUPLICATE_ID",
+            "path": "/modules/0/relationships/1/id",
+            "message": "Relationship ID must be unique in its module",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/duplicate-name",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_DUPLICATE_NAME",
+            "path": "/modules/0/relationships/1/name",
+            "message": "Relationship name must be unique in its module",
+            "severity": "error"
+          },
+          {
+            "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+            "path": "/modules/0/relationships/1/inverse",
+            "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/duplicate-source",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+            "path": "/modules/0/relationships/0/source/1/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_DUPLICATE_ENDPOINT",
+            "path": "/modules/0/relationships/0/source/1",
+            "message": "Endpoint Record repeats, regardless of qualifiers or target key",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/duplicate-target",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_DUPLICATE_ENDPOINT",
+            "path": "/modules/0/relationships/0/target/1",
+            "message": "Endpoint Record repeats, regardless of qualifiers or target key",
+            "severity": "error"
+          },
+          {
+            "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+            "path": "/modules/0/relationships/0/inverse",
+            "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/missing-endpoint",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_ENDPOINT_MISSING",
+            "path": "/modules/0/relationships/0/target/0",
+            "message": "Endpoint does not resolve by exact module and element IDs",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/field-endpoint",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_ENDPOINT_KIND",
+            "path": "/modules/0/relationships/0/source/0",
+            "message": "Endpoint must be a Record",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/unkeyed-endpoint",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_ENDPOINT_KEY",
+            "path": "/modules/0/relationships/0/source/0",
+            "message": "Endpoint must have authored Keys",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/key-name-not-id",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_TARGET_KEY",
+            "path": "/modules/0/relationships/0/target/0/key",
+            "message": "Target key must resolve by its stable ID",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/missing-target-key",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/target/0",
+            "message": "must have required property 'key'",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/unkeyed-association",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_ENDPOINT_KEY",
+            "path": "/modules/0/relationships/0/associationRecord",
+            "message": "Endpoint must have authored Keys",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/inverted-bounds",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_MULTIPLICITY",
+            "path": "/modules/0/relationships/0/sourceMultiplicity",
+            "message": "Maximum must be at least the minimum",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/invalid-max--1",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must be >= 1",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must pass \"const\" keyword validation",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must match a schema in anyOf",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/invalid-max-0",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must be >= 1",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must pass \"const\" keyword validation",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must match a schema in anyOf",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/invalid-max-1.5",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must be integer",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must pass \"const\" keyword validation",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must match a schema in anyOf",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/invalid-max-many",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must be integer",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must pass \"const\" keyword validation",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/targetMultiplicity/max",
+            "message": "must match a schema in anyOf",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/owned-undirected",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_LIFECYCLE",
+            "path": "/modules/0/relationships/0/targetLifecycle",
+            "message": "Owned target lifecycle requires a directed relationship",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/inverse-collision",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+            "path": "/modules/0/relationships/1/inverse",
+            "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/inverse-forward-collision",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+            "path": "/modules/0/relationships/1/source/0",
+            "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/same-forward-name-other-module",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/inverse-collision-other-module",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+            "path": "/modules/1/relationships/0/inverse",
+            "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/empty-source",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/relationships/0/source",
+            "message": "must NOT have fewer than 1 items",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "relationships/old-version",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "structure/current-valid",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "structure/current-missing-vocabularies",
+      "outcome": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "",
+            "message": "must have required property 'vocabularies'",
+            "severity": "error"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "domains/all-current-scalars",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "domains/unknown-scalar-retained",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_SCALAR_TYPE",
+            "path": "/modules/0/elements/0/scalarType",
+            "message": "Scalar family retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "unknown/current-extension-and-fields",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/0/elements/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "unknown/current-unknown-semantic-type-qualifier",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/0/semanticTypes/0/a~1b~0c",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "registry/callback-context",
+      "outcome": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "BASELINE_CALLBACK",
+            "path": "/extensions/example.baseline-callback",
+            "message": "callback-document:document:sentinel",
+            "severity": "warning"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "defaults/missing-applies",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "defaults/present-null-applies",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    },
+    {
+      "id": "domains/uuid-literal-version-boundary",
+      "outcome": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "error": null
+    }
+  ],
+  "disagreements": []
+}

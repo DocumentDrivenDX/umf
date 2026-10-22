@@ -237,7 +237,9 @@ owns semantic admission and all model decisions. No wrapper may replace core rul
 
 The shared Rust types are `Format::{Json,Yaml}`, `EngineError {code,path,message}`,
 `Diagnostic {code,path,message,severity}`, and
-`Validation {valid,complete,diagnostics}`. Paths/messages preserve UTF-16. Public
+`Validation {valid,complete,diagnostics}`. Engine-error paths/messages and all
+three diagnostic text fields (including consumer-supplied codes) preserve UTF-16.
+Closed machine error codes remain UTF-8 identifiers. Public
 entry points return owned snapshots or `Result<_,EngineError>`; validation returns
 its contracted invalid/incomplete diagnostic report for ordinary invalid documents.
 `Engine::new(ResourceSet)` admits and privately owns immutable resources;
@@ -254,7 +256,7 @@ concrete Rust lifetime/allocation details may evolve without changing these mean
 The core evaluator's diagnostic codes, pointer paths, messages and ordering match
 frozen current controls; no error-count truncation is permitted. Consumer schema
 and registry admission MUST retain their existing dialect/resource behavior,
-including Python's declared Draft 7 validator surface, strict unknown-keyword
+including Python's existing Draft 3/4/6/7/2019-09/2020-12 validator surfaces, strict unknown-keyword
 refusal where currently required, exact identity conflicts, boolean schemas and
 no implicit retrieval. A new restrictive schema subset cannot silently replace
 an accepted current capability. Unsupported implementation cases remain an open
@@ -271,10 +273,14 @@ binding. Missing semantic capabilities report incomplete; documents cannot load
 callbacks, fetch resources or select installed code by text. Registry instances
 and invocation budgets MUST NOT depend on mutable global defaults.
 
-Ordinary limits remain 4,000,000 UTF-16 text units, depth 128 and 100,000 traversed
-values; the explicit synchronous catalog scope retains 1,000,000 values. Preserve
+Ordinary source and serialized output limits remain 4,000,000 UTF-16 text units,
+with depth 128 and 100,000 traversed semantic values; the explicit synchronous catalog scope retains 1,000,000 values. Preserve
 the existing 5,000,000 constraint-instruction ceiling and charge copies,
-enumeration, sorting, exact arithmetic and nested interpretation. The invocation
+enumeration, sorting, exact arithmetic and nested interpretation. Copied values and private canonical/interpreter intermediates do not acquire a
+new fixed aggregate text ceiling. Their owned work must still be charged before
+allocation. Transport wrapper overhead must not consume an independently admitted
+payload's text, depth or value allowance; protocol parsing remains explicitly
+bounded by already-owned input and frame depth. The invocation
 `Context` owns counters, an optional caller meter and cooperative cancellation;
 clock deadlines require an explicit host clock capability. Resource failure,
 cancellation or callback failure publishes no partial successful result. Reentrant
@@ -390,3 +396,237 @@ The empty capability implementation refuses unknown tokens. `Engine` current
 resources are supplied explicitly by each distribution's embedded resource module;
 they must match the compiler manifest. Rust tests may construct mutated resources
 through the same admission API. Core code never opens package files itself.
+
+
+#### R2 compatibility review clarifications
+
+Strict unknown-keyword admission and regex language are separate choices. Core
+and TypeScript registry schemas use ECMAScript Unicode semantics. Python consumer
+and extension schemas use an explicit Python regex version profile; a JavaScript
+regex engine plus a few text rewrites cannot substitute for that capability. The
+Rust Python grammar/matcher owns execution and versioned Unicode data. Unsupported
+version profiles are explicit, and support claims require installed version evidence.
+The predecessor's local-reference guard, dialect-specific metaschema admission and
+active keyword sets remain native Rust policy, including inert annotation behavior.
+
+The exact predecessor admission corpus and official six-draft instance corpus are
+independent controls, not new metamodel authority. Existing deviations from an
+external test suite require an explicit reviewed compatibility decision. Python
+code-point-origin distinctions that share the same UTF-16 sequence (an astral
+scalar versus an explicit surrogate pair) remain an open review gate; no full
+Python string-identity/regex-parity claim may silently exclude them.
+
+
+#### Python diagnostic path provenance
+
+The internal Rust `Diagnostic` carries `python_source_path` provenance in addition
+to its four public fields. Only native schema path construction sets this marker;
+Python/Node/WASM callback adapters set it false. The Python binding decodes marked
+source-pointer segments only when this trusted provenance is present. Callback
+codes or marker-looking path text MUST NOT select decoding. Schema resource URI
+prefixes remain literal; internal pointer decoding MUST NOT rewrite `$id` content.
+The closed wire and public Python/JavaScript diagnostics remain exactly
+code/path/message/severity. This metadata preserves native Python path identity
+without extending document-controlled executable policy.
+
+
+The Rust-only diagnostic metadata also retains optional `PythonDiagnosticText`
+(code/path/message as `PyText`) for trusted Python callback results. Operational
+errors may retain `python_message_origin` for a raised Python host exception.
+These fields preserve native code-point identity through core processing; they
+are never inferred from user text and never extend the closed wire or public
+four-field diagnostic shape. Host conversion, including final diagnostics and
+exceptions, uses the invocation Context before allocation. This does not relax
+the ordinary safe-number/UTF-16 value envelope.
+
+The Python source/value serialization profile is selected explicitly by its
+binding and implemented in the shared Rust parser/writer kernel. It preserves
+Python code-point key/text identity, int versus float origin, and predecessor
+YAML numeric resolution. JSON reading/writing and YAML reading preserve insertion
+order; YAML writing sorts each mapping recursively by Python Unicode code-point
+lexical order, as frozen in R2-SOL-PYTHON-SERIALIZATION-001-A1. Default ECMAScript/Bun serialization is
+unchanged. The frozen source/output budget remains 4M UTF-16 units; copied values
+and private intermediates have no new 4M field ceiling. Serializer whitespace is
+presentation; value/type/origin preservation remains mandatory. See decision
+R2-SOL-PYTHON-SERIALIZATION-001 and its independently captured native boundaries.
+
+
+R2-SOL-CORRECTION-002 fixes the predecessor Python YAML writer's silent U+0085
+(NEL) loss. YAML output MUST escape NEL in every string/key position so reading
+the result preserves the original code point. Raw NEL in source retains native
+ruamel line-break normalization; escaped NEL remains U+0085. This narrow reviewed
+correction is guarded by its frozen native fixture, selected case and case hash;
+it does not authorize other compatibility changes or alter the default
+ECMAScript profile. Python YAML source character admission and scalar resolution
+otherwise match the independently frozen native profiles.
+
+
+R2-SOL-YAML-PARSER-PROFILE-001 permits a narrow, source-pinned vendor patch of
+saphyr-parser 0.1.0 under `crates/umf-core/vendor/saphyr-parser`. Both serialization
+profiles MUST use that shared scanner/parser implementation. Trusted Rust code
+selects the immutable scanner profile; document content cannot select it. Existing
+constructors retain the default YAML 1.2 behavior. The Python profile preserves
+the native reader/scanner line-break and column behavior, including NEL/LS/PS,
+and resolves implicit timestamp keys before flattening timestamp values to strings.
+Global source rewriting and blanket scalar rejection do not satisfy this contract.
+The vendored source, focused patch record, upstream hashes and all referenced
+licenses belong to compiler attestations, inventory and offline sdist inputs.
+Existing limits, cooperative controls and native/browser qualification apply.
+
+
+The closed constraint interpreter preserves private logical object origins from
+the retained TypeScript reference: recursively copied document/program/policy
+objects have null-prototype coercion behavior, while evaluated object expressions,
+`without` results and normalized diagnostics have ordinary-object coercion behavior.
+Container transformations retain child origins unless the reference constructs a
+new object. Equality and canonical identity ignore this private origin. This is
+interpreter state, not a public Value, Python carrier, resource or wire extension,
+and requires no host prototype inspection. Primitive comparison uses shared Rust
+ECMAScript coercion, with UTF-16 string ordering and private numeric intermediates;
+it does not relax ordinary finite/safe-number admission.
+
+Native reference coercion refusals use the stable Rust `CONSTRAINT_COERCION` error
+envelope. Qualification compares exact successful diagnostics and the explicitly
+reviewed refusal mapping; it does not claim JavaScript `TypeError` class identity.
+Operational limit/meter/cancellation failures cannot substitute for this mapping.
+Python text origins remain output metadata and cannot alter ordinary ECMAScript
+comparison. Composition materializes only trusted schema-path fragments before
+joining them with arbitrary literal text, preserving marker-looking literal/URI
+content and preventing a global trusted-path flag from affecting the new string.
+
+
+Public Rust literal entry points admit each raw Value argument independently under
+the ordinary envelope before delegating to private already-admitted mechanisms.
+This enforces the new Rust public boundary; the retained TypeScript literal
+helpers themselves do not perform the same defensive copies. Contextful schema
+resource snapshots replace the initial contextless cloning helper.
+
+The interpreter's computed strings and diagnostics use work/allocation admission,
+without a fixed text-field ceiling. In particular, `concat`, `pointer` and
+`canonical` must preserve preowned values larger than 4M units. The 4M UTF-16
+limit remains specific to actual JSON/YAML source and serialized payload output;
+protocol envelopes and copied/computed field values do not acquire that limit.
+
+
+R2's Python standalone consumer validator retains the predecessor's broad
+instance-numeric behavior separately from ordinary safe-number schema-source
+admission. The evaluator distinguishes Python integer/float origin, including
+older-draft integer and divisor mechanics, and preserves NaN/infinity comparison
+and arithmetic-error classifications. Arithmetic conversion failures remain
+instance errors through stable `PYTHON_SCHEMA_ARITHMETIC`, with deterministic
+reasons. Native Python exception class/message identity is recorded in the frozen
+oracle and is not part of the Rust facade claim. The 648-case and 1,938-case
+independent arithmetic corpora qualify the tested subset alongside the six-dialect
+schema suite; they do not imply the entire jsonschema Python API is implemented.
+
+
+Python consumer evaluation order is observable. The shared Rust evaluator must
+support first-error evaluation for `is_valid` and `validate`, including predicate
+subcalls, without executing later work after the result is known. `iter_errors`
+preserves the ordered public diagnostic prefix and raises a deferred arithmetic
+terminal error only when iteration reaches it. Candidate errors buffered inside
+combinators must not leak as public diagnostics or suppress required exceptions.
+Meter/cancellation/deadline errors propagate; they are not validation failures.
+This is one generic evaluator with explicit evaluation modes, not a Python
+semantic implementation. Frozen ordered-keyword/combinator controls qualify the
+predecessor behavior alongside arithmetic and official-suite controls.
+
+Work totals and deliberately superlinear operation estimates use u64 on native
+and wasm32. Host notifications split wide estimates into the same chunks of at
+most u32::MAX units on both targets, checking capabilities between chunks before
+opaque work. This prevents a hidden wasm32 total ceiling or clamped arithmetic
+estimate; it does not add process-memory or hard-preemption guarantees.
+
+
+The Python native predecessor's schema-valued `additionalProperties` traverses a
+hash set of extra keys. Independent seed controls show different early validation
+and arithmetic outcomes for the same owned object. R2 deliberately uses owned
+object insertion order for that branch instead of reproducing host hash entropy.
+The correction is limited to this identified unordered traversal; it does not
+permit reordering deterministic keyword, array, property or combinator checks,
+or treating arithmetic/operational errors as ordinary invalidity. Aggregate
+false-schema diagnostics and exact target controls remain separately qualified.
+
+
+The exact unordered-extra rule is recorded as
+[R2-SOL-CORRECTION-003](../../04-build/evidence/rust-migration/r2/approved-python-schema-unordered-extras-correction.json),
+with unchanged seed-dependent predecessor evidence and a separately frozen
+insertion-order target corpus. Only schema-valued `additionalProperties` replaces
+native `set(extras)` traversal; false-schema aggregates retain deterministic
+native sorted-name/pattern behavior. Exact field/path/rule metadata and all other
+method traversal remain independent gates.
+
+
+Compiled Python error projection carries trusted keyword/rule metadata and a
+physical instance location independently from native display paths. A display
+path may identify a referenced keyword, omit a false-schema descent, or name a
+missing Draft 3 property; it cannot safely recover `validator_value` or `instance`.
+Use the actual source rule with preserved Python origin, and resolve ordinary
+subjects in the shared admitted snapshot. Ephemeral subjects such as property
+names use an explicit typed override. Override presence distinguishes an actual
+null from no override. Do not copy the whole instance into every error or infer
+metadata from path spellings. These are Python record fields; public core
+Diagnostic and Value/wire shapes remain unchanged.
+
+
+[R2-SOL-PYTHON-SCHEMA-ERROR-ORIGIN-001](../../04-build/evidence/rust-migration/r2/sol-python-schema-error-origin-decision.json)
+qualifies the exposed validator, validator_value, instance and path fields. The
+normalized Rust error envelope remains in use; exact native exception class,
+message formatting and the entire jsonschema exception API are not claimed.
+
+
+The supplemental
+[subject-phase receipt](../../04-build/evidence/rust-migration/r2/sol-python-schema-error-subject-phases.json)
+separates 11 construction refusals from two legally admitted Draft 3 schemas whose
+boolean reference targets raise at evaluation. Preserve that phase. The latter
+maps to `PYTHON_SCHEMA_EVALUATION` with deterministic reason `Draft 3 reference
+target is not an object schema`; this is a trusted internal semantic terminal alongside approved
+arithmetic and reached local-reference failures. First-error evaluation
+may avoid unneeded later branches; all-errors iteration raises the terminal at
+its ordered position. Resource/meter/cancellation/deadline failures remain outer
+errors. The original combined-capture fixture is immutable; its `schemaError`
+label alone is not evidence of constructor refusal.
+
+
+Reached local schema references preserve evaluation phase and method ordering.
+Missing local targets retain `SCHEMA_REF_UNRESOLVED`; reached targets that are
+neither object nor boolean schemas use `PYTHON_SCHEMA_EVALUATION` with reason
+`Schema reference target is not an object or boolean schema`. The earlier Draft 3
+boolean-target reason remains distinct. These are semantic terminals, not source
+admission failures or ordinary invalidity. Native first-error and predicate
+short-circuits remain observable; iteration preserves diagnostics yielded before
+the reached terminal. The frozen reference controls cover 363 admitted cases and
+1,089 method observations across the three pinned Python versions.
+
+Terminal classification uses trusted internal provenance, never public code or
+message text. Context removes that provenance from every host-capability error,
+including an error object previously returned by a kernel. Host meter, control,
+cancellation and clock failures always remain outer errors. Recursive evaluator
+frames must support the admitted depth on an ordinary 2 MiB native thread and
+the actual browser WASM stack; increasing the test stack is not qualification.
+
+
+Python schema display paths retain typed segments from the actual evaluated
+source: `Key(PyText)` for object members and `Index` for array positions. Preserve
+these through reference display rebasing and keyword prefixing. Numeric object
+keys remain strings, while array positions remain integers even when the caller's
+root contains only a reference. Neither pointer spelling nor traversal of the
+original root can recover that distinction. This metadata is private to Python
+error projection, with copies charged before allocation.
+
+
+The reviewed correction-001 amendment is limited to the Draft 2019-09
+schema-object `additionalProperties` annotation defect: evaluate actual extra
+values with the existing first-error validity predicate, excluding declared and
+pattern-matched names, and mark successful extra keys. It replaces the native
+collector's use of the rule's member names. Independently frozen native/target
+controls name eight changed rows; this is one general algorithm rule, not a
+fixture-specific production test. Preserve all other legacy collector behavior.
+
+Reached Draft 2019-09 item-annotation collection with boolean `items` and no
+`additionalItems`, after required reference processing, retains its native
+evaluation-time failure. Normalize it as a trusted internal
+`PYTHON_SCHEMA_EVALUATION` terminal with reason
+`Draft 2019-09 boolean items annotation has no length`. An `additionalItems`
+member triggers the native all-index early return instead. Preserve construction
+admission, iterator prefix, and first-error/predicate short-circuits.
