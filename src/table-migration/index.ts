@@ -449,6 +449,10 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
    const selected=existingG01Fills[0]!,oldDocument=readDocument(previous!.source.utf8,previous!.source.format),newDocument=readDocument(next.source.utf8,next.source.format);
    const nextField=newDocument.modules.find(module=>module.id===selected.column.module)?.elements.find(element=>element.id===selected.column.element);
    if(nextField?.kind==='field')nextField.nullability='absent-allowed';
+   const oldPayload=oldDocument.modules.find(module=>module.id===selected.column.module)?.extensions?.['umf.tables'] as {commands?:{id:string}[]}|undefined;
+   const newPayload=newDocument.modules.find(module=>module.id===selected.column.module)?.extensions?.['umf.tables'] as {commands?:{id:string}[]}|undefined;
+   if(oldPayload?.commands)oldPayload.commands=oldPayload.commands.filter(command=>command.id!==selected.operation);
+   if(newPayload?.commands)newPayload.commands=newPayload.commands.filter(command=>command.id!==selected.operation);
    const oldCatalog=copyJson(previous!.expectedCatalog) as any,newCatalog=copyJson(next.expectedCatalog) as any;
    for(const catalog of [oldCatalog,newCatalog]){const column=catalog.columns.find((item:any)=>item.table===selected.table&&refKey(item.field)===refKey(selected.column));if(column){delete column.nullable;delete column.definitionSql;delete column.sourcePath;}}
    const marker=options!.reviewedChanges?.filter(item=>item.kind==='tighten-not-null'&&item.path===next.expectedCatalog.columns.find(column=>column.table===selected.table&&refKey(column.field)===refKey(selected.column))?.sourcePath)??[];
