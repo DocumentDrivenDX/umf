@@ -8,9 +8,9 @@ export interface MigrationValidationSelection {
  kind:'check'|'foreignKey';
 }
 
-/** Version 0.2 adds mixed-phase intent while retaining the 0.1 selections. */
+/** Version 0.2 adds mixed-phase intent; 0.3 adds an existing-column fill. */
 export interface TableMigrationPhasesOptions {
- version:'umf.table-migration-options/0.2';
+ version:'umf.table-migration-options/0.2'|'umf.table-migration-options/0.3';
  backfills:{table:string;column:TableRef;operation:string;scopedRows:true}[];
  concurrentIndexes:{table:string;index:string}[];
  reviewedChanges:unknown[];
@@ -18,11 +18,11 @@ export interface TableMigrationPhasesOptions {
 }
 
 export type MigrationPhaseTransaction='required'|'forbidden';
-export type MigrationPhaseKind='transaction'|'backfill'|'concurrent-index'|'constraint-add'|'constraint-validation'|'seed';
+export type MigrationPhaseKind='transaction'|'backfill'|'backfill-tighten'|'concurrent-index'|'constraint-add'|'constraint-validation'|'seed';
 
 /** Durable execution profile, bound by the enclosing migration plan digest. */
 export interface TableMigrationExecutionProfile {
- version:'umf.table-migration-execution/0.1';
+ version:'umf.table-migration-execution/0.1'|'umf.table-migration-execution/0.2';
  progressRelation:'umf_lifecycle_progress';
  ownerOnly:true;
 }
